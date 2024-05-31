@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.embeddedhtml": "html",
+        "efi.h": "c",
+        "multiboot2.h": "c"
+    }
+}

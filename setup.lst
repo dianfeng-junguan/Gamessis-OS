@@ -1,0 +1,78 @@
+     1                                  section .multiboot2 align=8
+     2                                  MULTIBOOT2_HEADER_MAGIC    equ 0xe85250d6
+     3                                  MULTIBOOT2_HEADER_LENGTH   equ multiboot2_header_end - multiboot2_header
+     4                                  MULTIBOOT2_HEADER_FLAGS    equ 0x00000000
+     5                                  multiboot2_header:
+     6 00000000 D65052E8                    dd MULTIBOOT2_HEADER_MAGIC
+     7 00000004 00000000                    dd MULTIBOOT2_HEADER_FLAGS ;要求有meminfo和bios dev info
+     8 00000008 28000000                    dd MULTIBOOT2_HEADER_LENGTH
+     9 0000000C 02AFAD17                    dd - (MULTIBOOT2_HEADER_MAGIC + MULTIBOOT2_HEADER_LENGTH)
+    10                                  mem_info_req:
+    11 00000010 04000000                    dd 4
+    12 00000014 10000000                    dd 16
+    13 00000018 00000000                    dd 0
+    14 0000001C 00000000                    dd 0
+    15                                  end_tag:
+    16 00000020 00000000                    dd 0
+    17 00000024 08000000                    dd 8
+    18                                  multiboot2_header_end:
+    19                                  
+    20                                  section .entry
+    21                                  global loader_start
+    22                                  extern loadermain
+    23                                  extern main
+    24                                      
+    25                                  ;一些全局变量的设置
+    26                                  ;ADDRS WHERE GLOBAL VARS ARE STORED
+    27                                  KERNEL_SIZE equ 0xf000
+    28                                  GDT equ 0x500
+    29                                  IDT equ 0
+    30                                  PAGE_INDEX EQU 0x1000        ;必须是0x1000对齐不然会出问题
+    31                                  PAGES EQU 0x2000
+    32                                  STACK_AREA EQU 0x9d00        ;以节为单位
+    33                                  STACK_AREA_OFFSET equ 0x2c00-1
+    34                                  
+    35                                  init32:
+    36                                      
+    37                                      ; ;填充页目录和页表
+    38                                      ; ;fill_page_index
+    39                                      ; mov esi,PAGE_INDEX
+    40                                      ; shr esi,4
+    41                                      ; mov es,si
+    42                                      
+    43                                      ; mov eax,PAGES
+    44                                      ; mov ecx,1024
+    45                                      ; mov edi,0
+    46                                      ; add eax,7;+7=该页存在，用户可读写
+    47                                      ; rep_PAGE_INDEX:
+    48                                      ; stosd;mov es:[edi],eax
+    49                                      ; add eax,4096
+    50                                      ; loop rep_PAGE_INDEX
+    51                                      
+    52                                  
+    53                                      ; mov ecx,8*1024;max: 1024*1024 PAGE_TABLE
+    54                                      ; mov edi,PAGES
+    55                                      ; shr edi,4
+    56                                      ; mov es,di
+    57                                      ; mov di,0
+    58                                  
+    59                                      ; mov eax,0x0+7
+    60                                      ; rep_paging:
+    61                                      ; ;mov dword es:[edi],eax
+    62                                      ; stosd
+    63                                      ; add eax,0x1000
+    64                                      ; loop rep_paging
+    65                                      
+    66                                  
+    67                                      ; mov esp,STACK_AREA_END;堆栈区0x29600-0x30000
+    68                                      
+    69                                      ; mov eax,PAGE_INDEX
+    70                                      ; mov cr3,eax
+    71                                      ; mov eax,cr0
+    72                                      ; or eax,0x80000000
+    73                                      ; mov cr0,eax
+    74                                      
+    75                                      ;进入内核
+    76 00000000 E9(00000000)                jmp main
+    77                                  
+    78                                  STACK_AREA_END equ 0x9fc00-1
