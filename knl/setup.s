@@ -7,6 +7,12 @@ multiboot2_header:
     dd MULTIBOOT2_HEADER_FLAGS ;要求有meminfo和bios dev info
     dd MULTIBOOT2_HEADER_LENGTH
     dd - (MULTIBOOT2_HEADER_MAGIC + MULTIBOOT2_HEADER_LENGTH)
+tag_info_req:
+    dw 1
+    dw 0
+    dd 16
+    dd 0
+    dd 0
 mem_info_req:
     dd 4
     dd 16
@@ -73,6 +79,8 @@ init32:
     ; mov cr0,eax
     
     ;进入内核
-    jmp main
+    push ebx
+    push MULTIBOOT2_HEADER_MAGIC
+    call main
 
 STACK_AREA_END equ 0x9fc00-1

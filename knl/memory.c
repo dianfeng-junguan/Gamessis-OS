@@ -6,6 +6,20 @@ unsigned int page_map[PAGE_BITMAP_NR]={0};
 page_item *page_index=PAGE_INDEX_ADDR;
 page_item *page_table=PAGE_TABLE_ADDR;
 unsigned int vmalloc_map[VMALLOC_PGN/32]={0};
+mem_t mmap_struct[MAX_MEM_STRUCT];
+//以kb为单位
+int high_mem_base=1024;
+int mmap_t_i=0;
+void set_high_mem_base(int base)
+{
+    high_mem_base=base;
+}
+void set_mem_area(int base,int len,int type)
+{
+    mmap_struct[mmap_t_i].base=base;
+    mmap_struct[mmap_t_i].len=len;
+    mmap_struct[mmap_t_i++].type=type;
+}
 int vmalloc()
 {
     for(int i=0;i<VMALLOC_PGN/32;i++)

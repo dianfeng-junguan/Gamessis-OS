@@ -66,6 +66,8 @@ typedef struct{
     int type;
     int flag;
     char name[36];
+    int start_port;
+    int port_c;
     driver *drv;
 }device;
 #endif //GMS_KNL_DEVDRV_H

@@ -4,6 +4,11 @@
         "efi.h": "c",
         "multiboot2.h": "c",
         "devdrv.h": "c",
-        "devman.h": "c"
+        "devman.h": "c",
+        "memory.h": "c",
+        "typename.h": "c",
+        "page.h": "c",
+        "str.h": "c",
+        "syscall.h": "c"
     }
 }

@@ -3,6 +3,7 @@
 #include <int.h>
 #include <memory.h>
 #include <devman.h>
+#include <proc.h>
 
 #include <tty.h>
 #include <disk.h>
@@ -14,7 +15,7 @@ void main(unsigned long magic,unsigned long addr)
     struct multiboot_header* mbi;
     mbi=(struct multiboot_header*)addr;
     init_logging();
-    if(mbi->magic!=MULTIBOOT2_HEADER_MAGIC)
+    if(magic!=MULTIBOOT2_HEADER_MAGIC)
     {
         printf("warning:multiboot2 magic does not match.\n");
         
@@ -47,12 +48,15 @@ void main(unsigned long magic,unsigned long addr)
 			printf("mem_lower = %uKB, mem_upper = %uKB\n",
 				   ((struct multiboot_tag_basic_meminfo *)tag)->mem_lower,
 				   ((struct multiboot_tag_basic_meminfo *)tag)->mem_upper);
+			set_high_mem_base(((struct multiboot_tag_basic_meminfo *)tag)->mem_lower);
 			break;
 		case MULTIBOOT_TAG_TYPE_BOOTDEV:
 			printf("Boot device 0x%x,%u,%u\n",
 				   ((struct multiboot_tag_bootdev *)tag)->biosdev,
 				   ((struct multiboot_tag_bootdev *)tag)->slice,
 				   ((struct multiboot_tag_bootdev *)tag)->part);
+			//此处应该注册设备
+
 			break;
 		case MULTIBOOT_TAG_TYPE_MMAP:
 		{
@@ -63,13 +67,42 @@ void main(unsigned long magic,unsigned long addr)
 			for (mmap = ((struct multiboot_tag_mmap *)tag)->entries;
 				 (multiboot_uint8_t *)mmap < (multiboot_uint8_t *)tag + tag->size;
 				 mmap = (multiboot_memory_map_t *)((unsigned long)mmap + ((struct multiboot_tag_mmap *)tag)->entry_size))
-				printf(" base_addr = 0x%x%x,"
-					   " length = 0x%x%x, type = 0x%x\n",
+				{
+
+					printf(" base_addr = 0x%x%x,"
+					   " length = 0x%x%x, type = 0x%x,",
 					   (unsigned)(mmap->addr >> 32),
 					   (unsigned)(mmap->addr & 0xffffffff),
 					   (unsigned)(mmap->len >> 32),
 					   (unsigned)(mmap->len & 0xffffffff),
 					   (unsigned)mmap->type);
+					set_mem_area(mmap->addr,mmap->len,mmap->type);
+					switch (mmap->type)
+					{
+					case 1:
+						printf("available RAM\n");
+						break;
+					
+					case 2:
+						printf("\n");
+						break;
+					case 3:
+						printf("ACPI info\n");
+						break;
+					case 4:
+						printf("reserved mem needed to preserve on hibernation\n");
+						break;
+					case 5:
+						printf("defected mem\n");
+						break;
+					case 0:
+						printf("reserved mem\n");
+						break;
+					default:
+						break;
+					}
+
+				}
 		}
 		break;
 		case MULTIBOOT_TAG_TYPE_FRAMEBUFFER:
@@ -157,6 +190,7 @@ void main(unsigned long magic,unsigned long addr)
 	init_int();
 	init_memory();
 	init_drvdev_man();
+	init_proc();
     //自带驱动
     init_tty();
     init_kb();
