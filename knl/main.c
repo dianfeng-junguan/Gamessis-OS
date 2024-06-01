@@ -1,5 +1,14 @@
 #include <multiboot2.h>
 #include <log.h>
+#include <int.h>
+#include <memory.h>
+#include <devman.h>
+
+#include <tty.h>
+#include <disk.h>
+#include <fat16.h>
+#include <kb.h>
+int manage_proc_lock=1;
 void main(unsigned long magic,unsigned long addr)
 {
     struct multiboot_header* mbi;
@@ -144,6 +153,15 @@ void main(unsigned long magic,unsigned long addr)
 	}
 	tag = (struct multiboot_tag *)((multiboot_uint8_t *)tag + ((tag->size + 7) & ~7));
 	printf("Total mbi size 0x%x\n", (unsigned)tag - addr);
-    
+    //初始化区域
+	init_int();
+	init_memory();
+	init_drvdev_man();
+    //自带驱动
+    init_tty();
+    init_kb();
+    init_disk();
+    init_fat16();
+	manage_proc_lock=0;
     while (1);
 }
