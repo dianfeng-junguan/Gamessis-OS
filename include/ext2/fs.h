@@ -199,13 +199,13 @@ struct dir_entry
   unsigned short inode;		// i 节点。
   char name[NAME_LEN];		// 文件名。
 };
-
+/*
 extern struct m_inode inode_table[NR_INODE];	// 定义i 节点表数组（32 项）。
 extern struct file file_table[NR_FILE];	// 文件表数组（64 项）。
 extern struct super_block super_block[NR_SUPER];	// 超级块数组（8 项）。
 extern struct buffer_head *start_buffer;	// 缓冲区起始内存位置。
 extern int nr_buffers;		// 缓冲块数。
-
+ 
 //// 磁盘操作函数原型。
 // 检测驱动器中软盘是否改变。
 extern void check_disk_change (int dev);
@@ -270,6 +270,6 @@ extern struct super_block *get_super (int dev);
 extern int ROOT_DEV;
 
 // 安装根文件系统。
-extern void mount_root (void);
+extern void mount_root (void); */
 
 #endif

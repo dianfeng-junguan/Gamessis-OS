@@ -9,6 +9,7 @@
 #define DRV_FLAG_EMPTY 0
 #define DEV_FLAG_USED 1
 #define DRV_FLAG_USED 1
+#define DEV_FLAG_BUSY 2
 
 #define DEV_TYPE_BLKDEV 1
 #define DEV_TYPE_CHRDEV 2
@@ -34,9 +35,11 @@ typedef struct{
     char* path;
     vfs_dir_entry entry;
     int fid;
+    int dev;//设备号
     char *dev_p;
     void* cwd;//entry
     char* dir_path;
+    int cmd;//request cmd
 }driver_args;
 typedef int (*driverfunc)(driver_args*);
 typedef struct{
@@ -63,11 +66,24 @@ typedef struct{
     int *func_thunk;
 }driver;
 typedef struct{
+    int slave_dev;//从设备号
     int type;
     int flag;
     char name[36];
     int start_port;
     int port_c;
+    
+    void (*request_fn) ();	// 请求操作的函数指针。(处理请求的函数)
+    struct driver_args *current_request;	// 当前正在执行的req
     driver *drv;
 }device;
+
+// // 块设备结构。
+// struct blk_dev_struct
+// {
+//   void (*request_fn) (void);	// 请求操作的函数指针。(处理请求的函数)
+//   struct request *current_request;	// 请求信息结构。
+// };
+
+
 #endif //GMS_KNL_DEVDRV_H

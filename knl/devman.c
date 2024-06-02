@@ -4,6 +4,8 @@
 #include "str.h"
 device devs[MAX_DEVICES]={0};
 driver drvs[MAX_DRIVERS]={0};
+driver_args reqs[NR_REQS];
+static int rhead=0,rtail=0;
 int init_drvdev_man()
 {
     
@@ -110,4 +112,21 @@ device *get_dev(int devi)
 driver *get_drv(int drvi)
 {
     return &drvs[drvi];
+}
+
+//发送一个操作设备的申请
+int make_request(driver_args* args)
+{
+    if(rhead==(rtail+1)%NR_REQS)return -1;//满了
+    reqs[rtail]=*args;
+    rtail=(rtail+1)%NR_REQS;
+    return 0;
+}
+//取出一个申请并且执行
+int do_req()
+{
+    if(rhead==rtail)return 0;
+    driver_args* arg=&reqs[rhead];
+    rhead=(rhead+1)%NR_REQS;
+    return sys_operate_dev(devs[arg->dev].name,arg->cmd,arg);
 }

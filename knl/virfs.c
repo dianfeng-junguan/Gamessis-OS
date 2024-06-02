@@ -8,9 +8,12 @@
 #include "mem.h"
 #include "proc.h"
 #include "devman.h"
+#include <syscall.h>
 volume vols[MAX_VOLUMES];
 vfs_dir_entry opened[MAX_OPEN_FILES]={0};
 fifo_t fifos[MAX_FIFOS]={0};
+
+struct buffer_head buffer_heads[NR_BUFFERHEADS];
 int setup_sys_vol(void *disk_drv, void *fs_drv)
 {
     vols[0].name[0]='C';
@@ -195,4 +198,103 @@ vfs_dir_entry *get_vfs_entry(int fno)
         }
     }
     return NULL;
+}
+
+//把块设备的存储块映射到内存中。
+int bmap(int dev,struct buffer_head* bh,int blkn)
+{
+    //先查找重复
+    for(int i=0;i<NR_BUFFERHEADS;i++)
+    {
+        if(buffer_heads[i].b_blocknr==blkn&& buffer_heads[i].b_dev==dev)//为空
+        {
+            bh=&buffer_heads[i];
+            return 0;
+        }
+    }
+    bh=bread(dev,blkn);
+    if(!bh)return -1;
+    //申请新的映射
+    bh->b_blocknr=blkn;
+    bh->b_dev=dev;
+    bh->b_dirt=0;
+    bh->b_uptodate=1;
+    return 0;
+}
+//申请一块新的缓存
+struct buffer_head* new_buffer()
+{
+    for(int i=0;i<NR_BUFFERHEADS;i++)
+    {
+        if(buffer_heads[i].b_blocknr==-1)//为空
+        {
+            return &buffer_heads[i];
+        }
+    }
+    return NULL;
+}
+//把新的缓冲区接到原来链表结尾。
+int add_buffer(struct buffer_head *addition,struct buffer_head* list)
+{
+    if(!list){
+        list=addition;
+        return 0;    
+    }
+    while (list->b_next)
+    {
+        list=list->b_next;
+    }
+    list->b_next=addition;
+    addition->b_prev=list;
+    return 0;
+}
+
+//回写缓冲区内容(同步，只同步这一块)
+int bsync(struct buffer_head* bh)
+{
+    driver_args arg;
+    arg.dev=bh->b_dev;
+    arg.cmd=DRVF_WRITE;
+    arg.src_addr=bh->b_data;
+    arg.len=BLOCK_SIZE;
+    arg.lba=bh->b_blocknr;
+    return make_request(&arg);
+}
+//回写缓冲区内容(同步，同步整个链)
+int bsynca(struct buffer_head *bh)
+{
+    if(!bh)return -1;
+    struct buffer_head* tmp=bh->b_next;
+    while(bh)
+    {
+        bsync(bh);
+        bh=tmp;
+        if(tmp)tmp=tmp->b_next;
+    }
+    return 0;
+}
+//释放缓冲区（只释放这一块）
+int brelse(struct buffer_head* bh)
+{
+    if(bh->b_blocknr==-1)return 0;
+    if(!bh)return -1;
+    if(bh->b_prev)
+    {
+        bh->b_prev->b_next=bh->b_next;
+    }
+    bh->b_blocknr=-1;
+    return 0;
+}
+//释放缓冲区（释放整个链的）
+int brelsea(struct buffer_head* bh)
+{
+    if(!bh)return -1;
+    struct buffer_head* tmp=bh->b_next;
+    while(bh)
+    {
+        brelse(bh);
+        bh=tmp;
+        if(tmp)tmp=tmp->b_next;
+    }
+    return 0;
 }
