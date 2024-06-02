@@ -258,6 +258,7 @@ int bsync(struct buffer_head* bh)
     arg.src_addr=bh->b_data;
     arg.len=BLOCK_SIZE;
     arg.lba=bh->b_blocknr;
+    //lock_buffer(bh);//锁定缓冲区
     return make_request(&arg);
 }
 //回写缓冲区内容(同步，同步整个链)
@@ -297,4 +298,23 @@ int brelsea(struct buffer_head* bh)
         if(tmp)tmp=tmp->b_next;
     }
     return 0;
+}
+//从设备中读取指定设备的指定块并返回缓冲区
+struct buffer_head* bread(int dev,int blk)
+{
+    struct buffer_head *bh=new_buffer();
+    if(!bh)return -1;//申请失败
+    bh->b_dev=dev;
+    bh->b_blocknr=blk;
+    bh->b_uptodate=1;
+    bh->b_dirt;
+
+    driver_args arg;
+    arg.dev=dev;
+    arg.cmd=DRVF_READ;
+    arg.dist_addr=bh->b_data;
+    arg.len=BLOCK_SIZE;
+    arg.lba=bh->b_blocknr;
+    //lock_buffer(bh);//锁定缓冲块直到读取完成
+    return make_request(&arg);
 }

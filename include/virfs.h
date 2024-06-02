@@ -87,7 +87,12 @@ int brelse(struct buffer_head* bh);
 int brelsea(struct buffer_head* bh);
 //从设备中读取指定设备的指定块并返回缓冲区
 struct buffer_head* bread(int dev,int blk);
-
+//锁定缓冲块
+int lock_buffer(struct buffer_head* bh);
+//解锁缓冲块
+int unlock_buffer(struct buffer_head* bh);
+//等待缓冲块解锁
+int wait_on_buffer(struct buffer_head* bh);
 
 //返回文件描述符
 int sys_open(char *path, int mode);
