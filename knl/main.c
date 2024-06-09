@@ -55,6 +55,7 @@ void main(unsigned long magic,unsigned long addr)
 				   ((struct multiboot_tag_bootdev *)tag)->biosdev,
 				   ((struct multiboot_tag_bootdev *)tag)->slice,
 				   ((struct multiboot_tag_bootdev *)tag)->part);
+			
 			//此处应该注册设备
 
 			break;
@@ -195,6 +196,7 @@ void main(unsigned long magic,unsigned long addr)
     init_tty();
     init_kb();
     init_disk();
+	
     init_fat16();
 	manage_proc_lock=0;
     while (1);

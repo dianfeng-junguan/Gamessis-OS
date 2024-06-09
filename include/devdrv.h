@@ -11,10 +11,16 @@
 #define DRV_FLAG_USED 1
 #define DEV_FLAG_BUSY 2
 
+
 #define DEV_TYPE_BLKDEV 1
 #define DEV_TYPE_CHRDEV 2
+#define DEV_STYPE_HD 1
 #define MAX_DRIVERS 32
 #define MAX_DEVICES 64
+
+#define REQ_STAT_READY 1
+#define REQ_STAT_DONE 2
+#define REQ_STAT_WORKING 3
 #define _ONLY_DATA_
 #include "virfs.h"
 typedef struct{
@@ -40,6 +46,7 @@ typedef struct{
     void* cwd;//entry
     char* dir_path;
     int cmd;//request cmd
+    int stat;
 }driver_args;
 typedef int (*driverfunc)(driver_args*);
 typedef struct{
@@ -65,13 +72,23 @@ typedef struct{
     driverfunc mfree;
     int *func_thunk;
 }driver;
-typedef struct{
-    int slave_dev;//从设备号
+typedef struct
+{
+    int start_sec;
+    int end_sec;
     int type;
+}partition_t;
+
+typedef struct{
+    int lock;//锁
+    int slave_dev;//从设备号
+    int type;//设备大类
+    int stype;//细化设备类别
     int flag;
     char name[36];
     int start_port;
     int port_c;
+    partition_t par[4];//块设备专用-分区表
     
     void (*request_fn) ();	// 请求操作的函数指针。(处理请求的函数)
     struct driver_args *current_request;	// 当前正在执行的req

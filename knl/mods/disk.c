@@ -3,6 +3,7 @@
 #include "int.h"
 #include "devman.h"
 #include "syscall.h"
+#include <virfs.h>
 #define NULL ((void*)0)
 disk_req disk_reqs[MAX_DISK_REQUEST_COUNT];
 disk_req *running_req=NULL;
@@ -21,6 +22,7 @@ int init_disk()
     disk_devi= reg_device(&dev_disk);
     disk_drvi= reg_driver(&drv_disk);
     dev_disk.drv=&drv_disk;
+    scan_dev(disk_devi);
     return 0;
 }
 
@@ -48,6 +50,14 @@ int disk_int_handler_c()
     {
         for(int i=0;i<running_req->sec_n*256;i++)
             outw(port,*p++);
+    }else if(running_req->func==DISKREQ_CHECK)
+    {
+        char stat=inb(port+7);
+        if(stat&0x40)
+        {
+            running_req->result=DISK_CHK_OK;
+        }else
+            running_req->result=DISK_CHK_ERR;
     }
     running_req->stat=REQ_STAT_DONE;
     //set_proc_stat(running_req->pid,READY);
@@ -95,6 +105,7 @@ int execute_request(){
         //write_disk(running_req->lba,running_req->sec_n,running_req->buf);
         break;
     case DISKREQ_CHECK:
+        r=async_check_disk(running_req->disk);
         break;
     default:
         break;
@@ -173,4 +184,102 @@ int read_disk(driver_args* args)
 int write_disk(driver_args* args)
 {
     return write_disk_asm(args->lba,args->sec_c,args->src_addr);
+}
+int inline chk_result(int r)
+{
+    while(disk_reqs[r].stat!=REQ_STAT_DONE);
+    return disk_reqs[r].result==DISK_CHK_OK?1:0;
+}
+int disk_existent(int disk)
+{
+    switch (disk)
+    {
+    case DISK_MAJOR_MAJOR:
+        return sys_find_dev("hd0")!=-1;
+        break;
+    
+    case DISK_MAJOR_SLAVE:
+        return sys_find_dev("hd1")!=-1;
+        break;
+        
+    case DISK_SLAVE_MAJOR:
+        return sys_find_dev("hd2")!=-1;
+        break;
+        
+    case DISK_SLAVE_SLAVE:
+        return sys_find_dev("hd3")!=-1;
+        break;
+    default:
+        break;
+    }
+    return 0;
+}
+int hd_iterate()
+{
+    char *name;
+    
+    int r[4];
+    r[0]=request(DISK_MAJOR_MAJOR,DISKREQ_CHECK,0,0,0);
+    r[1]=request(DISK_MAJOR_SLAVE,DISKREQ_CHECK,0,0,0);
+    r[2]=request(DISK_SLAVE_MAJOR,DISKREQ_CHECK,0,0,0);
+    r[3]=request(DISK_SLAVE_SLAVE,DISKREQ_CHECK,0,0,0);
+    for(int i=0;i<4;i++)
+    {
+        int disk;
+        switch (i)
+        {
+        case 0:disk=DISK_MAJOR_MAJOR;break;
+        case 1:disk=DISK_MAJOR_SLAVE;break;
+        case 2:disk=DISK_SLAVE_MAJOR;break;
+        case 3:disk=DISK_SLAVE_SLAVE;break;
+        default:
+            return -1;
+            break;
+        }
+        if(chk_result(r[i])&&!disk_existent(disk))
+        {
+            //新硬盘
+            device hd={
+                .type=DEV_TYPE_BLKDEV,
+                .stype=DEV_STYPE_HD,
+                .slave_dev=disk,
+                .start_port=i<2?PORT_DISK_MAJOR:PORT_DISK_SLAVE
+            };
+            reg_device(&hd);
+        }else if(!chk_result(r[i])&&disk_existent(disk))
+        {
+            switch (i)
+            {
+            case 0:name="hd0";break;
+            case 1:name="hd1";break;
+            case 2:name="hd2";break;
+            case 3:name="hd3";break;
+            }
+            //有硬盘被卸载了
+            int devi=sys_find_dev(name);
+            dispose_device(get_dev(devi));
+        }
+    }
+}
+
+int async_check_disk(int disk)
+{
+    if(disk==DISK_MAJOR_MAJOR){
+        //遍历四块hd
+        outb(PORT_DISK_MAJOR+6,0xa0);//主硬盘
+        outb(PORT_DISK_MAJOR+7,DISK_CMD_CHECK);
+    }else if(disk==DISK_MAJOR_SLAVE){
+        //遍历四块hd
+        outb(PORT_DISK_MAJOR+6,0xb0);//主硬盘
+        outb(PORT_DISK_MAJOR+7,DISK_CMD_CHECK);
+    }else if(disk==DISK_SLAVE_MAJOR){
+        //遍历四块hd
+        outb(PORT_DISK_SLAVE+6,0xa0);//主硬盘
+        outb(PORT_DISK_SLAVE+7,DISK_CMD_CHECK);
+    }else if(disk==DISK_SLAVE_SLAVE){
+        //遍历四块hd
+        outb(PORT_DISK_SLAVE+6,0xb0);//主硬盘
+        outb(PORT_DISK_SLAVE+7,DISK_CMD_CHECK);
+    }
+    return 0;
 }

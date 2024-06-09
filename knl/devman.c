@@ -119,8 +119,9 @@ int make_request(driver_args* args)
 {
     if(rhead==(rtail+1)%NR_REQS)return -1;//满了
     reqs[rtail]=*args;
+    int r=rtail;
     rtail=(rtail+1)%NR_REQS;
-    return 0;
+    return r;
 }
 //取出一个申请并且执行
 int do_req()
@@ -129,4 +130,10 @@ int do_req()
     driver_args* arg=&reqs[rhead];
     rhead=(rhead+1)%NR_REQS;
     return sys_operate_dev(devs[arg->dev].name,arg->cmd,arg);
+}
+
+
+void wait_on_req(int reqi)
+{
+    while(reqs[reqi].stat!=REQ_STAT_DONE);
 }

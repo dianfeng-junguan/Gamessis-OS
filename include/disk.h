@@ -19,6 +19,9 @@
 #define DISK_CMD_READ 0x20
 #define DISK_CMD_WRITE 0x30
 #define DISK_CMD_CHECK 0xec
+
+#define DISK_CHK_OK 1
+#define DISK_CHK_ERR 2
 #include "devdrv.h"
 typedef struct{
     int func;	//调用功能号
@@ -28,6 +31,7 @@ typedef struct{
     char *buf;	//目标或者源缓冲区地址
     int pid;	//发起请求的进程号
     int stat;	//请求状态
+    int result; //检查磁盘结果
 }disk_req;
 int read_disk_asm(int lba,int sec_n,char* mem_addr);
 int write_disk_asm(int lba, int sec_n, char* mem_ptr);
@@ -35,11 +39,16 @@ int read_disk(driver_args* args);
 int write_disk(driver_args* args);
 int async_read_disk(int disk,unsigned int lba,int sec_n,char* mem_addr);
 int async_write_disk(int disk,unsigned int lba, int sec_n, char* mem_ptr);
+int async_check_disk(int disk);
 int disk_int_handler();
 int disk_int_handler_c();
 int request(int disk,int func,int lba,int secn,char *buf);
 int execute_request();
 int check_dreq_stat(int req_id);
+
+int hd_iterate();
+
+
 //counts:扇区数
 int dllmain(void*,int,void*);
 #endif

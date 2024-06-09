@@ -17,6 +17,7 @@
         "proc.h": "c",
         "int.h": "c",
         "errno.h": "c",
-        "types.h": "c"
+        "types.h": "c",
+        "typeinfo": "c"
     }
 }

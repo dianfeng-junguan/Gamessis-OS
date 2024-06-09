@@ -17,5 +17,6 @@ int call_drv_func(int drv_n,int func_n,driver_args* args);
 int sys_operate_dev(char *name,int func,driver_args* args);
 //发送一个操作设备的申请
 int make_request(driver_args* args);
+void wait_on_req(int reqi);
 //取出一个申请并且执行
 int do_req();

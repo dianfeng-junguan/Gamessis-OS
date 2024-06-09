@@ -13,8 +13,9 @@ volume vols[MAX_VOLUMES];
 vfs_dir_entry opened[MAX_OPEN_FILES]={0};
 fifo_t fifos[MAX_FIFOS]={0};
 super_block sbs[MAX_SUPERBLOCKS];
+fs_operations fs[MAX_FS];
 
-struct buffer_head buffer_heads[NR_BUFFERHEADS];
+buffer_head buffer_heads[NR_BUFFERHEADS];
 int setup_sys_vol(void *disk_drv, void *fs_drv)
 {
     vols[0].name[0]='C';
@@ -73,27 +74,13 @@ int reg_vol(int disk_drvi, int fs_drvi, char *name)
         {
             extern driver *drvs;
             vols[i].stat=VOLUME_STAT_READY;
-            vols[i].fs_drv= get_drv(fs_drvi);
+            vols[i].fs= &fs[fs_drvi];
             vols[i].disk_drv= get_drv(disk_drvi);
             strcpy(vols[i].name,name);
             return i;
         }
     }
     return -1;
-}
-int identify_vol(int disk_drvi)
-{
-    extern driver drvs[];
-    for(int i=0;i<MAX_DRIVERS;i++)
-    {
-        if(drvs[i].flag&DRV_FLAG_USED)
-        {
-            driver_args arg={
-                
-
-            }
-        }
-    }
 }
 int sys_open(char *path, int mode)
 {
@@ -119,15 +106,17 @@ int sys_open(char *path, int mode)
     driver_args arg={
             .path=path+rec+1
     };
+    vfs_dir_entry dir;
+    vfs_dir_entry res;
     int voln=i;
-    if(((driver*)vols[i].fs_drv)->find(&arg)==-1)//找不到文件
+    if(vols[i].fs->find(path+rec+1,dir,&res)==-1)//找不到文件 ((driver*)vols[i].fs_drv)->find(&arg)==-1
     {
         if(mode&FILE_MODE_WRITE) {
-            return ((driver *) vols[i].fs_drv)->touch(&arg);
+            return ((driver *) vols[i].fs_drv)->touch(&arg);//这里之后要改
         }else
             return -1;
     }
-    vfs_dir_entry entry=arg.entry;
+    vfs_dir_entry entry=res;//=arg.entry;
     int j=-1;
     for(i=0;i<MAX_OPEN_FILES;i++)
     {
@@ -165,30 +154,40 @@ int sys_close(int fno)
     }
     return -1;
 }
-int sys_write(int fno, char *src, int pos, int len)
+int sys_write(int fno, char *src, int len)
 {
     vfs_dir_entry *f= get_vfs_entry(fno);
     if(!f)return -1;
-    driver_args args={
+    if(f->type==FTYPE_REG)
+    {
+        return vfs_write_file(f,src,len);
+    }
+    return -1;
+   /*  driver_args args={
             .fid=f->id,
             .src_addr=src,
             .len=len,
             .pos=pos
     };
-    return ((driver*)vols[f->voln].fs_drv)->write(&args);
+    return ((driver*)vols[f->voln].fs_drv)->write(&args); */
 }
-int sys_read(int fno, char *dist, int pos, int len)
+int sys_read(int fno, char *dist,  int len)
 {
     vfs_dir_entry *f= get_vfs_entry(fno);
     if(!f)return -1;
-    driver_args args={
-            .fid=f->id,
-            .dist_addr=dist,
-            .len=len,
-            .pos=pos,
-            .entry=*f
-    };
-    return ((driver*)vols[f->voln].fs_drv)->read(&args);
+    if(f->type==FTYPE_REG)
+    {
+        return vfs_read_file(f,dist,len);
+    }
+    return -1;
+    // driver_args args={
+    //         .fid=f->id,
+    //         .dist_addr=dist,
+    //         .len=len,
+    //         .pos=pos,
+    //         .entry=*f
+    // };
+    // return ((driver*)vols[f->voln].fs_drv)->read(&args);
 }
 int sys_seek(int fno, int offset, int origin)
 {
@@ -215,121 +214,159 @@ vfs_dir_entry *get_vfs_entry(int fno)
     return NULL;
 }
 
-//把块设备的存储块映射到内存中。
-int bmap(int dev,struct buffer_head* bh,int blkn)
-{
-    //先查找重复
-    for(int i=0;i<NR_BUFFERHEADS;i++)
-    {
-        if(buffer_heads[i].b_blocknr==blkn&& buffer_heads[i].b_dev==dev)//为空
-        {
-            bh=&buffer_heads[i];
-            return 0;
-        }
-    }
-    bh=bread(dev,blkn);
-    if(!bh)return -1;
-    //申请新的映射
-    bh->b_blocknr=blkn;
-    bh->b_dev=dev;
-    bh->b_dirt=0;
-    bh->b_uptodate=1;
-    return 0;
-}
-//申请一块新的缓存
-struct buffer_head* new_buffer()
-{
-    for(int i=0;i<NR_BUFFERHEADS;i++)
-    {
-        if(buffer_heads[i].b_blocknr==-1)//为空
-        {
-            return &buffer_heads[i];
-        }
-    }
-    return NULL;
-}
-//把新的缓冲区接到原来链表结尾。
-int add_buffer(struct buffer_head *addition,struct buffer_head* list)
-{
-    if(!list){
-        list=addition;
-        return 0;    
-    }
-    while (list->b_next)
-    {
-        list=list->b_next;
-    }
-    list->b_next=addition;
-    addition->b_prev=list;
-    return 0;
-}
-
-//回写缓冲区内容(同步，只同步这一块)
-int bsync(struct buffer_head* bh)
-{
-    driver_args arg;
-    arg.dev=bh->b_dev;
-    arg.cmd=DRVF_WRITE;
-    arg.src_addr=bh->b_data;
-    arg.len=BLOCK_SIZE;
-    arg.lba=bh->b_blocknr;
-    //lock_buffer(bh);//锁定缓冲区
-    return make_request(&arg);
-}
-//回写缓冲区内容(同步，同步整个链)
-int bsynca(struct buffer_head *bh)
-{
-    if(!bh)return -1;
-    struct buffer_head* tmp=bh->b_next;
-    while(bh)
-    {
-        bsync(bh);
-        bh=tmp;
-        if(tmp)tmp=tmp->b_next;
-    }
-    return 0;
-}
 //释放缓冲区（只释放这一块）
-int brelse(struct buffer_head* bh)
+int brelse(buffer_head* bh)
 {
-    if(bh->b_blocknr==-1)return 0;
-    if(!bh)return -1;
-    if(bh->b_prev)
-    {
-        bh->b_prev->b_next=bh->b_next;
-    }
-    bh->b_blocknr=-1;
-    return 0;
-}
-//释放缓冲区（释放整个链的）
-int brelsea(struct buffer_head* bh)
-{
-    if(!bh)return -1;
-    struct buffer_head* tmp=bh->b_next;
-    while(bh)
-    {
-        brelse(bh);
-        bh=tmp;
-        if(tmp)tmp=tmp->b_next;
-    }
+    wait_on_buf(bh);
+    if(bh->b_count==0)return -1;
+    bh->b_count--;
     return 0;
 }
 //从设备中读取指定设备的指定块并返回缓冲区
-struct buffer_head* bread(int dev,int blk)
+buffer_head* bread(int dev,int blk)
 {
-    struct buffer_head *bh=new_buffer();
-    if(!bh)return -1;//申请失败
-    bh->b_dev=dev;
-    bh->b_blocknr=blk;
-    bh->b_uptodate=1;
-    bh->b_dirt;
 
-    driver_args arg;
-    arg.dev=dev;
-    arg.cmd=DRVF_READ;
-    arg.dist_addr=bh->b_data;
-    arg.len=BLOCK_SIZE;
-    arg.lba=bh->b_blocknr;
-    //lock_buffer(bh);//锁定缓冲块直到读取完成
-    return make_request(&arg);
+    buffer_head *bh=get_buf(dev,blk);
+    if(!bh)return -1;//申请失败
+    if(!bh->b_uptodate)
+    {
+        driver_args arg;
+        arg.dev=dev;
+        arg.cmd=DRVF_READ;
+        arg.dist_addr=bh->b_data;
+        arg.len=BLOCK_SIZE;
+        arg.lba=bh->b_blocknr;
+        //lock_buffer(bh);//锁定缓冲块直到读取完成
+        int reqi=make_request(&arg);
+        wait_on_req(reqi);
+    }
+    return bh;
+}
+
+
+int vfs_read_file(vfs_dir_entry *f,char *buf,int len)
+{
+    int dev=f->dev;
+    do{
+        int block=get_according_bnr(f);
+        buffer_head* bh=bread(dev,block);
+        int size=len>BLOCK_SIZE?BLOCK_SIZE:len;//一次最多读一块，如果len大于一块，就只能读一块
+        memcpy(buf,bh->b_data,size);
+        len-=BLOCK_SIZE;
+        //读写指针后移
+        f->ptr+=size;
+        brelse(bh);
+    }while(len>0);
+    return 0;
+}
+int vfs_write_file(vfs_dir_entry *f,char *buf,int len)
+{
+    int dev=f->dev;
+    do{
+        int block=get_according_bnr(f);
+        buffer_head* bh=get_buf(dev,block);
+        int size=len>BLOCK_SIZE?BLOCK_SIZE:len;//一次最多读一块，如果len大于一块，就只能读一块
+        memcpy(bh->b_data,buf,size);
+        len-=BLOCK_SIZE;
+        //读写指针后移
+        f->ptr+=size;
+        bh->b_dirt=1;//修改置位
+        brelse(bh);
+    }while(len>0);
+    return 0;
+}
+
+int vfs_seek_file(vfs_dir_entry *f,int offset,int origin)
+{
+    switch (origin)
+    {
+    case SEEK_SET:
+        f->ptr=offset;
+        break;
+    case SEEK_CUR:
+        f->ptr+=offset;
+        break;
+    case SEEK_END:
+        f->ptr=f->size;
+        break;
+    default:
+        break;
+    }
+    return f->ptr;
+}
+//返回文件ptr在块设备中的块号
+int get_according_bnr(vfs_dir_entry *f)
+{
+    return f->vol->fs->get_according_bnr(f);
+
+}
+//获取或者新建一个和dev上block相对应的缓冲区。
+buffer_head* get_buf(int dev,int block)
+{
+    for(int i=0;i<NR_BUFFERHEADS;i++)
+    {
+        if(buffer_heads[i].b_dev==dev&&buffer_heads[i].b_blocknr==block)
+        {
+            repeat:
+            wait_on_buf(&buffer_heads[i]);//等待解锁
+            if(buffer_heads[i].b_count>0)//别的进程正在用
+                goto repeat;
+            if(!(buffer_heads[i].b_dev==dev&&buffer_heads[i].b_blocknr==block))//别的进程修改了
+                continue;
+            return &buffer_heads[i];
+        }
+    }
+    //空头中找
+    for(int i=0;i<NR_BUFFERHEADS;i++)
+    {
+        if(buffer_heads[i].b_count==0)
+        {
+            if(buffer_heads[i].b_dirt)
+            {
+                sync_buf(&buffer_heads[i]);
+                wait_on_buf(&buffer_heads[i]);
+            }
+            buffer_heads[i].b_count++;
+            return &buffer_heads[i];
+        }
+    }
+}
+
+void wait_on_buf(buffer_head* bh)
+{
+    //等待缓冲区解锁
+    while (bh->b_lock);
+    
+}
+
+//扫描块设备，读取分区，识别文件系统
+int scan_dev(int dev)
+{
+    device *blkdev=get_dev(dev);
+    buffer_head* bh=bread(dev,0);
+    if(!bh)return -1;
+    dpt_t* dpte=bh->b_data+0x1be;
+    for(int i=0;i<4;i++)
+    {
+        blkdev->par[i].type=dpte->type;
+        int stlba=dpte->start_lba;
+        blkdev->par[i].start_sec=stlba;
+        int i;
+        for(i=0;i<MAX_FS;i++)
+        {
+            if(fs[i].read_superblock&&fs[i].read_superblock(dev,stlba)==0)
+            {
+                reg_vol(dev,i,blkdev->name);//识别成功，注册卷
+            }
+        }
+        if(i==MAX_FS)
+        {
+            printf("err:unrecognised partition fs.\n");
+        }
+
+        blkdev->par[i].end_sec=dpte->end_lba;
+        dpte++;
+    }
+    brelse(bh);
+    return 0;
 }

@@ -18,13 +18,17 @@
 #define VOLUME_STAT_READY 1
 #define MAX_VOLUMES 26
 #define MAX_SUPERBLOCKS 26
-
+#define MAX_FS 32
 #define BLOCK_SIZE 512
 typedef char buffer_block[BLOCK_SIZE];	// 块缓冲区。
 #define NR_BUFFERHEADS 32
+
+#define FTYPE_REG 0
+#define FTYPE_BLKDEV 1
+#define FTYPE_CHRDEV 2
 // 缓冲区头数据结构。（极为重要！！！）
 // 在程序中常用bh 来表示buffer_head 类型的缩写。
-typedef struct buffer_head
+typedef struct _buffer_head
 {
   char *b_data;			/* pointer to data block (1024 bytes) *///指针。
   unsigned long b_blocknr;	/* block number */// 块号。
@@ -33,29 +37,14 @@ typedef struct buffer_head
   unsigned char b_dirt;		/* 0-clean,1-dirty *///修改标志:0 未修改,1 已修改.
   unsigned char b_count;	/* users using this block */// 使用的用户数。
   unsigned char b_lock;		/* 0 - ok, 1 -locked */// 缓冲区是否被锁定。
-  struct task_struct *b_wait;	// 指向等待该缓冲区解锁的任务。
-  struct buffer_head *b_prev;	// hash 队列上前一块（这四个指针用于缓冲区的管理）。
-  struct buffer_head *b_next;	// hash 队列上下一块。
-  struct buffer_head *b_prev_free;	// 空闲表上前一块。
-  struct buffer_head *b_next_free;	// 空闲表上下一块。
-};
+  struct process *b_wait;	// 指向等待该缓冲区解锁的任务。
+  struct _buffer_head *b_prev;	// hash 队列上前一块（这四个指针用于缓冲区的管理）。
+  struct _buffer_head *b_next;	// hash 队列上下一块。
+  struct _buffer_head *b_prev_free;	// 空闲表上前一块。
+  struct _buffer_head *b_next_free;	// 空闲表上下一块。
+}buffer_head;
 
 
-typedef struct _vfs_dentry_{
-    int fno;    //文件描述符
-    int mode;   //打开模式
-    int voln;   //属于哪一个卷
-    int link_c; //被引用的次数
-    int type;   //文件类型
-    int id;     //文件在字文件系统里的id，如果id一样而且在一个卷内，就认为是同一个文件
-    int ptr;    //读写指针
-    struct _vfs_dentry_* parent;//上级目录
-    struct buffer_head* buffer;//文件对应的缓冲区
-
-    char name[32];//管道文件的名字
-    int pa;     //用于管道文件：对应的物理地址
-    int m_size; //管道文件的大小,目前限定在4kb
-}vfs_dir_entry;
 typedef struct {
     int pa;
     int size;
@@ -76,46 +65,101 @@ typedef struct
   unsigned int block_size;//块大小
   unsigned char name[8];//超级块上面的名称
 }super_block;
+typedef struct
+{
+    int (*read_superblock)(int dev,int blk);//返回的是超级块数组索引
+    int (*get_according_bnr)(vfs_dir_entry f);
+    int (*find)(char *name,vfs_dir_entry dir,vfs_dir_entry* result);//返回的是
+}fs_operations;
+
+
 typedef struct {
     char name[8];
     void *disk_drv;
     void *fs_drv;
+    fs_operations *fs;
     int stat;
 }volume;
+typedef struct _vfs_dentry_{
+    int fno;    //文件描述符
+    int mode;   //打开模式
+    int voln;   //属于哪一个卷
+    volume* vol;
+    int link_c; //被引用的次数
+    int type;   //文件类型
+    int id;     //文件在字文件系统里的id，如果id一样而且在一个卷内，就认为是同一个文件
+    int size;   //文件大小
+    int ptr;    //读写指针
+    int dev;    //属于哪个设备
+    struct _vfs_dentry_* parent;//上级目录
+    struct buffer_head* buffer;//文件对应的缓冲区
 
-int setup_sys_vol(void *disk_drv, void *fs_drv);//系统盘符，用特殊方法装载
-int free_vol(int voli);
-int reg_vol(int disk_drvi, int fs_drvi, char *name);
-int identify_vol(int disk_drvi);//识别这个卷上面的文件系统，返回fs_drvi
+    char name[32];//管道文件的名字
+    int pa;     //用于管道文件：对应的物理地址
+    int m_size; //管道文件的大小,目前限定在4kb
+}vfs_dir_entry;
+typedef struct
+{
+    unsigned char type;
+    unsigned char start_head;
+    unsigned short start_sec;
+    unsigned char fs_flag;
+    unsigned char end_head;
+    unsigned short end_sec;
+    unsigned int start_lba;
+    unsigned int end_lba;
+}dpt_t;
+#define NONACTIVE_PAR 0
+#define ACTIVE_PAR 0x80
+// int setup_sys_vol(void *disk_drv, void *fs_drv);//系统盘符，用特殊方法装载
+// int free_vol(int voli);
+// int reg_vol(int disk_drvi, int fs_drvi, char *name);
+// int identify_vol(int disk_drvi);//识别这个卷上面的文件系统，返回fs_drvi
 
-//把块设备的存储块映射到内存中。
-int bmap(int dev,struct buffer_head* bh,int blkn);
-//申请一块新的缓存
-struct buffer_head* new_buffer();
-//把新的缓冲区接到原来链表结尾。
-int add_buffer(struct buffer_head *addition,struct buffer_head* list);
-//回写缓冲区内容(同步，只同步这一块)
-int bsync(struct buffer_head* bh);
-//回写缓冲区内容(同步，同步整个链)
-int bsynca(struct buffer_head *bh);
+// //把块设备的存储块映射到内存中。
+// int bmap(int dev,struct buffer_head* bh,int blkn);
+// //申请一块新的缓存
+// struct buffer_head* new_buffer();
+// //把新的缓冲区接到原来链表结尾。
+// int add_buffer(struct buffer_head *addition,struct buffer_head* list);
+// //回写缓冲区内容(同步，只同步这一块)
+// int bsync(struct buffer_head* bh);
+// //回写缓冲区内容(同步，同步整个链)
+// int bsynca(struct buffer_head *bh);
 //释放缓冲区（只释放这一块）
-int brelse(struct buffer_head* bh);
-//释放缓冲区（释放整个链的）
-int brelsea(struct buffer_head* bh);
-//从设备中读取指定设备的指定块并返回缓冲区
-struct buffer_head* bread(int dev,int blk);
-//锁定缓冲块
-int lock_buffer(struct buffer_head* bh);
-//解锁缓冲块
-int unlock_buffer(struct buffer_head* bh);
-//等待缓冲块解锁
-int wait_on_buffer(struct buffer_head* bh);
+int brelse(buffer_head* bh);
+//获取或者新建一个和dev上block相对应的缓冲区。
+buffer_head* get_buf(int dev,int block);
+void wait_on_buf(buffer_head* bh);
+
+int sync_buf(buffer_head* bh);
+// //释放缓冲区（释放整个链的）
+// int brelsea(struct buffer_head* bh);
+// //从设备中读取指定设备的指定块并返回缓冲区
+// struct buffer_head* bread(int dev,int blk);
+// //锁定缓冲块
+// int lock_buffer(struct buffer_head* bh);
+// //解锁缓冲块
+// int unlock_buffer(struct buffer_head* bh);
+// //等待缓冲块解锁
+// int wait_on_buffer(struct buffer_head* bh);
+//扫描块设备，读取分区，识别文件系统
+int scan_dev(int dev);
+//写常规文件
+int vfs_read_file(vfs_dir_entry *f,char *buf,int len);
+int vfs_write_file(vfs_dir_entry *f,char *buf,int len);
+#define SEEK_SET 0
+#define SEEK_END 1
+#define SEEK_CUR 2
+int vfs_seek_file(vfs_dir_entry *f,int offset,int origin);
+//返回文件ptr在块设备中的块号
+int get_according_bnr(vfs_dir_entry *f);
 
 //返回文件描述符
 int sys_open(char *path, int mode);
 int sys_close(int fno);
-int sys_write(int fno, char *src, int pos, int len);
-int sys_read(int fno, char *dist, int pos, int len);
+int sys_write(int fno, char *src, int len);
+int sys_read(int fno, char *dist, int len);
 int sys_seek(int fno, int offset, int origin);
 int sys_tell(int fno);
 
