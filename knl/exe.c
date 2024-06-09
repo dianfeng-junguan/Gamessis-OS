@@ -159,8 +159,9 @@ int load_pe(struct process *proc)
 
     IMAGE_DOS_HEADER tdh;
     IMAGE_NT_HEADERS32 tnth;
-    sys_read(exefno, &tdh, 0, sizeof(tdh));
-    sys_read(exefno, &tnth, tdh.e_lfanew, sizeof(tnth));
+    sys_read(exefno, &tdh, sizeof(tdh));
+    sys_seek(exefno,tdh.e_lfanew,SEEK_SET);
+    sys_read(exefno, &tnth, sizeof(tnth));
 
     //是否需要移动base(先不检查)
     unsigned int nbase=tnth.OptionalHeader.ImageBase;
@@ -187,7 +188,8 @@ int load_pe(struct process *proc)
 
     //proc->tss.eip=tnth.OptionalHeader.AddressOfEntryPoint+nbase;
     //存放文件头
-    sys_read(exefno, nbase, 0, PAGE_SIZE);
+    sys_seek(exefno,0,SEEK_SET);
+    sys_read(exefno, nbase, PAGE_SIZE);
     //dos头
     PIMAGE_DOS_HEADER dosh=nbase;
     PIMAGE_NT_HEADERS32 nth=nbase+dosh->e_lfanew;
@@ -213,7 +215,8 @@ int load_pe(struct process *proc)
         if(disca)
             continue;
         //直接读，缺页内核解决
-        sys_read(exefno, psec->VirtualAddress + nbase, psec->PointerToRawData, psec->SizeOfRawData);
+        sys_seek(exefno,psec->PointerToRawData,SEEK_SET);
+        sys_read(exefno, psec->VirtualAddress + nbase,  psec->SizeOfRawData);
 
     }
 
@@ -345,7 +348,7 @@ int dispose_library(int dlln)
     dlls[dlln].flag=DLL_STAT_EMPTY;
     return 0;
 }
-#include <elf.h>
+/* #include <elf.h>
 int load_elf(struct process* proc)
 {
     int fno=proc->exef->fno;
@@ -389,7 +392,7 @@ int load_elf(struct process* proc)
     //加载依赖库
 
     return 0;
-}
+} */
 
 int sys_insmod(char *path)
 {

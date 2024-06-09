@@ -65,26 +65,11 @@ typedef struct
   unsigned int block_size;//块大小
   unsigned char name[8];//超级块上面的名称
 }super_block;
-typedef struct
-{
-    int (*read_superblock)(int dev,int blk);//返回的是超级块数组索引
-    int (*get_according_bnr)(vfs_dir_entry f);
-    int (*find)(char *name,vfs_dir_entry dir,vfs_dir_entry* result);//返回的是
-}fs_operations;
 
-
-typedef struct {
-    char name[8];
-    void *disk_drv;
-    void *fs_drv;
-    fs_operations *fs;
-    int stat;
-}volume;
 typedef struct _vfs_dentry_{
     int fno;    //文件描述符
     int mode;   //打开模式
     int voln;   //属于哪一个卷
-    volume* vol;
     int link_c; //被引用的次数
     int type;   //文件类型
     int id;     //文件在字文件系统里的id，如果id一样而且在一个卷内，就认为是同一个文件
@@ -98,6 +83,21 @@ typedef struct _vfs_dentry_{
     int pa;     //用于管道文件：对应的物理地址
     int m_size; //管道文件的大小,目前限定在4kb
 }vfs_dir_entry;
+typedef struct
+{
+    int (*read_superblock)(int dev,int blk);//返回的是超级块数组索引
+    int (*get_according_bnr)(vfs_dir_entry *f);
+    int (*find)(char *name,vfs_dir_entry dir,vfs_dir_entry* result);//返回的是
+}fs_operations;
+
+
+typedef struct {
+    char name[8];
+    void *disk_drv;
+    void *fs_drv;
+    fs_operations *fs;
+    int stat;
+}volume;
 typedef struct
 {
     unsigned char type;

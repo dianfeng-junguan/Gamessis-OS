@@ -9,6 +9,7 @@
 #include "proc.h"
 #include "devman.h"
 #include <syscall.h>
+#include <log.h>
 volume vols[MAX_VOLUMES];
 vfs_dir_entry opened[MAX_OPEN_FILES]={0};
 fifo_t fifos[MAX_FIFOS]={0};
@@ -220,6 +221,8 @@ int brelse(buffer_head* bh)
     wait_on_buf(bh);
     if(bh->b_count==0)return -1;
     bh->b_count--;
+    if(bh->b_count==0)
+        vmfree(bh->b_data);
     return 0;
 }
 //从设备中读取指定设备的指定块并返回缓冲区
@@ -297,7 +300,7 @@ int vfs_seek_file(vfs_dir_entry *f,int offset,int origin)
 //返回文件ptr在块设备中的块号
 int get_according_bnr(vfs_dir_entry *f)
 {
-    return f->vol->fs->get_according_bnr(f);
+    return vols[f->voln].fs->get_according_bnr(f);
 
 }
 //获取或者新建一个和dev上block相对应的缓冲区。
@@ -327,6 +330,8 @@ buffer_head* get_buf(int dev,int block)
                 wait_on_buf(&buffer_heads[i]);
             }
             buffer_heads[i].b_count++;
+            //给buffer分配一个实际的缓冲区
+            buffer_heads[i].b_data=vmalloc();
             return &buffer_heads[i];
         }
     }
@@ -369,4 +374,12 @@ int scan_dev(int dev)
     }
     brelse(bh);
     return 0;
+}
+
+int sync_buf(buffer_head* bh)
+{
+    int dev=bh->b_dev;
+    int block=bh->b_blocknr;
+    //这里需要调用块设备写函数write_block
+
 }

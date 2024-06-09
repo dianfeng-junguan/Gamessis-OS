@@ -22,6 +22,7 @@ int init_disk()
     disk_devi= reg_device(&dev_disk);
     disk_drvi= reg_driver(&drv_disk);
     dev_disk.drv=&drv_disk;
+    hd_iterate();
     scan_dev(disk_devi);
     return 0;
 }
@@ -185,7 +186,7 @@ int write_disk(driver_args* args)
 {
     return write_disk_asm(args->lba,args->sec_c,args->src_addr);
 }
-int inline chk_result(int r)
+int chk_result(int r)
 {
     while(disk_reqs[r].stat!=REQ_STAT_DONE);
     return disk_reqs[r].result==DISK_CHK_OK?1:0;

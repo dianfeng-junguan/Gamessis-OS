@@ -57,7 +57,7 @@ turn_on_int:
 	mov al, 11111000b 
 	out 021h, al 
 	call io_delay
-	mov al, 11101111b ;disk int 10111111
+	mov al, 10101111b ;disk int 10111111
 	out 0A1h, al 
 	call io_delay
 

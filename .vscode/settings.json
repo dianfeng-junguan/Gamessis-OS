@@ -18,6 +18,8 @@
         "int.h": "c",
         "errno.h": "c",
         "types.h": "c",
-        "typeinfo": "c"
+        "typeinfo": "c",
+        "exe.h": "c",
+        "pe.h": "c"
     }
 }

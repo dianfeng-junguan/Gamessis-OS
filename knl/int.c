@@ -31,7 +31,7 @@ void init_int(){
         set_gate(i,default_int_proc,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
 	set_gate(0x21,key_proc,GDT_SEL_CODE,GATE_PRESENT|TRAP_GATE);
 	set_gate(0x20,clock,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-	//set_gate(0x2e,disk_int_handler,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
+	set_gate(0x2e,disk_int_handler,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
     set_gate(0x80,_syscall,GDT_SEL_CODE,GATE_PRESENT|TRAP_GATE);//
     //set_gate(0x2c,mouse_proc,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
     //启动8259A
@@ -185,8 +185,8 @@ int syscall(int func,int b,int c,int d,int e,int f)
         case 10:chk_vm(b,c);
         case 11:return sys_open(b,c);
         case 12:return sys_close(b);
-        case 13:return sys_read(b,c,d,e);
-        case 14:return sys_write(b,c,d,e);
+        case 13:return sys_read(b,c,d);
+        case 14:return sys_write(b,c,d);
         case 15:return sys_seek(b,c,d);
         case 16:return sys_tell(b);
         case 17:return reg_vol(b,c,d);
