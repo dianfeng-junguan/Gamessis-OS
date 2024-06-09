@@ -12,6 +12,11 @@
         "syscall.h": "c",
         "virfs.h": "c",
         "fs.h": "c",
-        "ext2.h": "c"
+        "ext2.h": "c",
+        "vfs.h": "c",
+        "proc.h": "c",
+        "int.h": "c",
+        "errno.h": "c",
+        "types.h": "c"
     }
 }
