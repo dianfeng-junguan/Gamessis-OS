@@ -12,6 +12,7 @@
 volume vols[MAX_VOLUMES];
 vfs_dir_entry opened[MAX_OPEN_FILES]={0};
 fifo_t fifos[MAX_FIFOS]={0};
+super_block sbs[MAX_SUPERBLOCKS];
 
 struct buffer_head buffer_heads[NR_BUFFERHEADS];
 int setup_sys_vol(void *disk_drv, void *fs_drv)
@@ -79,6 +80,20 @@ int reg_vol(int disk_drvi, int fs_drvi, char *name)
         }
     }
     return -1;
+}
+int identify_vol(int disk_drvi)
+{
+    extern driver drvs[];
+    for(int i=0;i<MAX_DRIVERS;i++)
+    {
+        if(drvs[i].flag&DRV_FLAG_USED)
+        {
+            driver_args arg={
+                
+
+            }
+        }
+    }
 }
 int sys_open(char *path, int mode)
 {

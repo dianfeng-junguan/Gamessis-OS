@@ -17,6 +17,7 @@
 #define VOLUME_STAT_EMPTY 0
 #define VOLUME_STAT_READY 1
 #define MAX_VOLUMES 26
+#define MAX_SUPERBLOCKS 26
 
 #define BLOCK_SIZE 512
 typedef char buffer_block[BLOCK_SIZE];	// 块缓冲区。
@@ -61,15 +62,31 @@ typedef struct {
     int flag;
     int id;
 }fifo_t;
+
+typedef struct 
+{
+  unsigned short ninodes;	// 节点数。
+  unsigned short nzones;	// 逻辑块数。
+  unsigned short imap_blocks;	// i 节点位图所占用的数据块数。
+  unsigned short zmap_blocks;	// 逻辑块位图所占用的数据块数。
+  unsigned short firstdatazone;	// 第一个数据逻辑块。
+  unsigned short log_zone_size;	// log(数据块数/逻辑块)。（以2 为底）。
+  unsigned long  max_size;	// 文件最大长度。
+  unsigned short magic;	// 文件系统魔数。
+  unsigned int block_size;//块大小
+  unsigned char name[8];//超级块上面的名称
+}super_block;
 typedef struct {
     char name[8];
     void *disk_drv;
     void *fs_drv;
     int stat;
 }volume;
+
 int setup_sys_vol(void *disk_drv, void *fs_drv);//系统盘符，用特殊方法装载
 int free_vol(int voli);
 int reg_vol(int disk_drvi, int fs_drvi, char *name);
+int identify_vol(int disk_drvi);//识别这个卷上面的文件系统，返回fs_drvi
 
 //把块设备的存储块映射到内存中。
 int bmap(int dev,struct buffer_head* bh,int blkn);
