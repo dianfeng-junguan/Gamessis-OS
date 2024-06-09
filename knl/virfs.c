@@ -381,5 +381,6 @@ int sync_buf(buffer_head* bh)
     int dev=bh->b_dev;
     int block=bh->b_blocknr;
     //这里需要调用块设备写函数write_block
+    return write_block(dev,block,bh->b_data,BLOCK_SIZE);
 
 }

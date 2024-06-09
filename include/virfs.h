@@ -154,7 +154,9 @@ int vfs_write_file(vfs_dir_entry *f,char *buf,int len);
 int vfs_seek_file(vfs_dir_entry *f,int offset,int origin);
 //返回文件ptr在块设备中的块号
 int get_according_bnr(vfs_dir_entry *f);
-
+//块设备操作
+int write_block(int dev,int block,char *buf,int len);
+int read_block(int dev,int block,char* buf,int len);
 //返回文件描述符
 int sys_open(char *path, int mode);
 int sys_close(int fno);
