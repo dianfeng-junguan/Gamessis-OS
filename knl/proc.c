@@ -24,8 +24,8 @@ void init_proc(){
     task[zi].stat=READY;
     int xi= _LDT_IND(zi)*8;
     zi=_TSS_IND(zi)*8;
-    asm volatile("lldt %0"::"m"(xi));
-    asm volatile("ltr %0"::"m"(zi));
+    //asm volatile("lldt %0"::"m"(xi));
+    //asm volatile("ltr %0"::"m"(zi));
 }
 
 int create_proc()

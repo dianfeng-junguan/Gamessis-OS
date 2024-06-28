@@ -91,4 +91,4 @@ bt_msg:
 	db "error occurs at:%x",'\n',0
 idtptr:
 	dw 255*8
-	dd 0x0
+	dd 0

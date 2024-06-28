@@ -77,10 +77,39 @@ init32:
     ; mov eax,cr0
     ; or eax,0x80000000
     ; mov cr0,eax
-    
+    cli
+    ;设置一下gdt
+    lgdt [temp_gdtptr]
+    jmp dword 0x8:.switch_cs
+.switch_cs:
+    mov ax,0x10
+    mov ds,ax
+    mov ss,ax
+    mov es,ax
+    mov gs,ax
+    mov fs,ax
     ;进入内核
     push ebx
     push MULTIBOOT2_HEADER_MAGIC
     call main
 
 STACK_AREA_END equ 0x9fc00-1
+global gdtptr
+gdtptr:
+    dw 256*8
+    dd 0x800
+temp_gdtptr:
+    dw 3*8
+    dd gdt_temp
+gdt_temp:
+    dq 0
+    .code:
+        dw 0xffff
+        db 0,0,0
+        dw 0xcf9e
+        db 0
+    .data:
+        dw 0xffff
+        db 0,0,0
+        dw 0xcf92
+        db 0

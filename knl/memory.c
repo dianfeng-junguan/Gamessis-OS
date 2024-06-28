@@ -10,6 +10,28 @@ mem_t mmap_struct[MAX_MEM_STRUCT];
 //以kb为单位
 int high_mem_base=1024;
 int mmap_t_i=0;
+
+int init_paging()
+{
+    //设置页目录
+    unsigned int pt=PAGE_TABLE_ADDR;
+    page_item *pde=page_index;
+    for(int i=0;i<256;i++)//256 PDE表示内核空间
+    {
+        set_page_item(pde+i,pt,PAGE_PRESENT|PAGE_RWX);
+        for(int j=0;j<1024;j++)
+        {
+            set_page_item(pt,i*0x400000+j*0x1000,PAGE_PRESENT|PAGE_RWX);
+            pt+=4;
+        }
+        
+    }
+    //开启分页模式
+    asm volatile("mov %0,%%eax\r\n mov %%eax,%%cr3\r\n"\
+                    "mov %%cr0,%%eax\r\n"
+                    "or $0x80000000,%%eax\r\n"
+                    "mov %%eax,%%cr0":"=m"(page_index));
+}
 void set_high_mem_base(int base)
 {
     high_mem_base=base;
@@ -156,6 +178,14 @@ void set_page_item(page_item *item_addr,int phy_addr,int attr)
     *item_addr=0;
     *item_addr|=phy_addr&0xfffff000;
     *item_addr|=attr;
+}
+
+void set_4mb_pde(page_item* pde,int pa)
+{
+    *pde=0;
+    *pde|=PAGE_PRESENT|PAGE_4MB_PAGE|PDE_4MB_PAT;
+    unsigned int hipa=pa&0xffc00000;
+    *pde|=hipa;
 }
 /* 
 int req_page_at(int addr,int pgn)

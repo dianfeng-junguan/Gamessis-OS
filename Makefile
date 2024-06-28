@@ -37,4 +37,6 @@ umount:
 run:
 	@sudo qemu-system-x86_64 -hda hd.img -m 1G
 debug:
-	@qemu-system-i386 -hda hd.img -m 1G -s -S
+	@qemu-system-i386 hd.img -m 2G -s -S
+bochs:
+	@bochsdbg -q -f bochsrc.bxrc

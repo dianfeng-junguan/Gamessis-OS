@@ -4,8 +4,8 @@ global disk_int_handler
 extern disk_int_handler_c
 extern eoi
 disk_int_handler:
-    ;call eoi
-    ;call disk_int_handler_c
+    call eoi
+    call disk_int_handler_c
     iret
 read_disk_asm:
     push ebp

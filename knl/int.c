@@ -10,6 +10,7 @@
 gate *idt=IDT_ADDR;
 extern int disk_int_handler();
 void init_int(){
+    //asm volatile("sidt %0"::"m"(idt));
     set_gate(0,divide_err,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
     set_gate(1,debug,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
     set_gate(2,default_int_proc,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);

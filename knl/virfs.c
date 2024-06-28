@@ -162,6 +162,10 @@ int sys_write(int fno, char *src, int len)
     if(f->type==FTYPE_REG)
     {
         return vfs_write_file(f,src,len);
+    }else if(f->type==FTYPE_BLKDEV)
+    {
+        int block=get_according_bnr(f);
+        return write_block(f->dev,block,src,len);
     }
     return -1;
    /*  driver_args args={
@@ -179,6 +183,10 @@ int sys_read(int fno, char *dist,  int len)
     if(f->type==FTYPE_REG)
     {
         return vfs_read_file(f,dist,len);
+    }else if(f->type==FTYPE_BLKDEV)
+    {
+        int block=get_according_bnr(f);
+        return read_block(f->dev,block,dist,len);
     }
     return -1;
     // driver_args args={
@@ -383,4 +391,28 @@ int sync_buf(buffer_head* bh)
     //这里需要调用块设备写函数write_block
     return write_block(dev,block,bh->b_data,BLOCK_SIZE);
 
+}
+//操作块设备函数
+int write_block(int dev,int block,char *buf,int len)
+{
+    do{
+        buffer_head* bh=get_buf(dev,block);
+        int size=len>BLOCK_SIZE?BLOCK_SIZE:len;//一次最多读一块，如果len大于一块，就只能读一块
+        memcpy(bh->b_data,buf,size);
+        len-=BLOCK_SIZE;
+        bh->b_dirt=1;//修改置位
+        brelse(bh);
+    }while(len>0);
+    return 0;
+}
+int read_block(int dev,int block,char* buf,int len)
+{
+    do{
+        buffer_head* bh=bread(dev,block);
+        int size=len>BLOCK_SIZE?BLOCK_SIZE:len;//一次最多读一块，如果len大于一块，就只能读一块
+        memcpy(buf,bh->b_data,size);
+        len-=BLOCK_SIZE;
+        brelse(bh);
+    }while(len>0);
+    return 0;
 }

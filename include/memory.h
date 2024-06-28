@@ -16,8 +16,8 @@ typedef struct
 #define MEM_TYPE_ACPI 3
 #define MEM_TYPE_HIBER_PRESERVE 4
 
-#define PAGE_INDEX_ADDR 0x1000
-#define PAGE_TABLE_ADDR 0x2000
+#define PAGE_INDEX_ADDR 0x100000
+#define PAGE_TABLE_ADDR 0x101000
 typedef unsigned int page_item;
 //内存页的分配-不是指页表
 void init_memory();
@@ -37,9 +37,12 @@ int check_page(int num);
 int get_phyaddr(int num);
 //页表页目录部分
 void set_page_item(page_item *item_addr,int phy_addr,int attr);
+void set_4mb_pde(page_item* pde,int pa);
 
 void page_err();
 //vmalloc区部分
 int vmalloc();
 int vmfree(int ptr);
 int chk_vm(int base, int pgn);
+
+int init_paging();

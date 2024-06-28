@@ -22,6 +22,7 @@
 
 #define DISK_CHK_OK 1
 #define DISK_CHK_ERR 2
+#define MAX_DISK_CHKTIME 500
 #include "devdrv.h"
 typedef struct{
     int func;	//调用功能号
@@ -32,6 +33,7 @@ typedef struct{
     int pid;	//发起请求的进程号
     int stat;	//请求状态
     int result; //检查磁盘结果
+    int time;   //请求使用的时间（用来检查是否超时）
 }disk_req;
 int read_disk_asm(int lba,int sec_n,char* mem_addr);
 int write_disk_asm(int lba, int sec_n, char* mem_ptr);

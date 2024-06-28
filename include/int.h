@@ -1,6 +1,6 @@
 #ifndef _H_INTERRUPT
 #define _H_INTERRUPT
-#define IDT_ADDR 0x0
+#define IDT_ADDR 0
 #define m8259ACTRL 0x20
 #define m8259ADATA 0X21
 #define f8259ACTRL 0xA0

@@ -6,6 +6,8 @@
 #define PAGE_PRESENT 1
 #define PAGE_RWX 2
 #define PAGE_FOR_ALL 4
+#define PAGE_4MB_PAGE 0x80
+#define PDE_4MB_PAT 0x1000
 #define PAGE_INDEX_SIZE 0x400000
 #define PAGE_SIZE 0x1000
 

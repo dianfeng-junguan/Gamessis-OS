@@ -3,7 +3,7 @@ OUTPUT_ARCH(i386)
 ENTRY(init32)
 
 SECTIONS {
-    . = 1M;
+    . = 0x201000;
     .entry :
     {
         init32 = .;
@@ -13,13 +13,11 @@ SECTIONS {
     {
         *(.multiboot2)
     }
-    . = 4M;
     .bss :
     {
         kstack = .;
         *(.bss)
     }
-    . = 16M;
     .text :
     {
         kmain = .;

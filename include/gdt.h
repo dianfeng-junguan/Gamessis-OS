@@ -1,6 +1,6 @@
 #pragma once
 #pragma pack(1)
-#define GDT_ADDR 0x500
+#define GDT_ADDR 0x800
 //可执行
 #define SEG_X 0x8
 #define SEG_R 0x4
@@ -19,8 +19,9 @@
 #define GATE_INT 0xe
 #define SEG_PRESENT 0x80
 #define SEG_DPL_3 0x60
-#define SEG_CONFORMING_RW_CODE (0xe|SEG_NON_SYS_GATE|SEG_4KB_GRANUALITY|SEG_PRESENT)
-#define SEG_RW_DATA (0x2|SEG_NON_SYS_GATE|SEG_4KB_GRANUALITY|SEG_PRESENT)
+#define SEG_32BIT 0x4000
+#define SEG_CONFORMING_RW_CODE 0xcf9e//(0xe|SEG_NON_SYS_GATE|SEG_4KB_GRANUALITY|SEG_PRESENT|SEG_32BIT)
+#define SEG_RW_DATA 0xcf92//(0x2|SEG_NON_SYS_GATE|SEG_4KB_GRANUALITY|SEG_PRESENT|SEG_32BIT)
 #define SEG_STACK (0x6|SEG_NON_SYS_GATE|SEG_PRESENT)
 
 #define SEL_LDT 0x4
@@ -39,6 +40,8 @@ typedef struct
     u16 attr;
     u8 base_hi8;
 }descriptor;
+
+int init_gdt();
 void fill_desc(u32 base, u32 limit,u16 attr,u32 index);
 void fill_gate(u32 index,u32 offset,u16 selector,u16 attr);
 void fill_ldt_desc(u32 base, u32 limit,u16 attr,descriptor *desc);

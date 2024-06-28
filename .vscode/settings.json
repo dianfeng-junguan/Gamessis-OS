@@ -20,6 +20,7 @@
         "types.h": "c",
         "typeinfo": "c",
         "exe.h": "c",
-        "pe.h": "c"
+        "pe.h": "c",
+        "gdt.h": "c"
     }
 }

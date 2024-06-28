@@ -1,13 +1,22 @@
 #include "gdt.h"
 #include "int.h"
 descriptor *gdt=GDT_ADDR;
+extern char *gdtptr;
+int init_gdt()
+{
+    //asm volatile("sgdt %0"::"m"(gdt));
+    fill_desc(0,0xffffffff,SEG_CONFORMING_RW_CODE,1);
+    fill_desc(0,0xffffffff,SEG_RW_DATA,2);
+    asm volatile("lgdt %0":"=m"(gdtptr));
+
+}
 void fill_desc(u32 base, u32 limit,u16 attr,u32 index)
 {
     gdt[index].base_lo16=base&0xffff;
     gdt[index].base_mid8=(base>>16)&0xff;
     gdt[index].base_hi8=(base>>24)&0xff;
     gdt[index].limit_lo16=limit&0xffff;
-    gdt[index].attr=attr|limit>>16&0xf;
+    gdt[index].attr=attr;
 
 }
 

@@ -4,6 +4,7 @@
 #include "devman.h"
 #include "syscall.h"
 #include <virfs.h>
+#include <log.h>
 #define NULL ((void*)0)
 disk_req disk_reqs[MAX_DISK_REQUEST_COUNT];
 disk_req *running_req=NULL;
@@ -14,8 +15,8 @@ device dev_disk={
        .flag=DEV_FLAG_USED
 };
 driver drv_disk={
-        .read=read_disk,
-        .write=write_disk
+        .read=async_read_disk,
+        .write=async_write_disk
 };
 int init_disk()
 {
@@ -87,7 +88,22 @@ int request(int disk,int func,int lba,int secn,char *buf){
 int execute_request(){
     //查看是否有已经在运行的请求
     if(running_req!=NULL)
-        return 2;
+    {
+        if(running_req->func!=DISKREQ_CHECK)
+            return 2;
+        running_req->time++;
+        if(running_req->time>MAX_DISK_CHKTIME)
+        {
+            //检测硬盘超时，视为没有硬盘连接
+            running_req->result=DISK_CHK_ERR;
+            running_req->stat=REQ_STAT_DONE;
+            running_req=NULL;
+        }else
+        {
+            //未到时间继续等待
+            return 2;
+        }
+    }
     if(head==tail)return 1;//检查是否为空
     running_req=&disk_reqs[head];
     head=(head+1)%MAX_DISK_REQUEST_COUNT;
@@ -127,8 +143,8 @@ int async_read_disk(int disk,unsigned int lba,int sec_n,char* mem_addr)
     outb(port+3,lba&0xff);
     outb(port+4,(lba>>8)&0xff);
     outb(port+5,(lba>>16)&0xff);
-    char drv=slave_disk?0b00010000:0;
-    char lba_hi=(lba>>24)&0xf|drv|0b11100000;
+    char drv=slave_disk?0x10:0;
+    char lba_hi=(lba>>24)&0xf|drv|0xe0;
     outb(port+6,lba_hi);
     outb(port+7,DISK_CMD_READ);
     return 0;
@@ -158,8 +174,8 @@ int async_write_disk(int disk,unsigned int lba, int sec_n, char* mem_ptr)
     outb(port+3,lba&0xff);
     outb(port+4,(lba>>8)&0xff);
     outb(port+5,(lba>>16)&0xff);
-    char drv=slave_disk?0b00010000:0;
-    unsigned char lba_hi=(lba>>24)&0xf|drv|0b11100000;
+    char drv=slave_disk?0x10:0;
+    unsigned char lba_hi=(lba>>24)&0xf|drv|0xe0;
     outb(port+6,lba_hi);
     outb(port+7,DISK_CMD_WRITE);
     while (1)
@@ -265,22 +281,27 @@ int hd_iterate()
 
 int async_check_disk(int disk)
 {
-    if(disk==DISK_MAJOR_MAJOR){
-        //遍历四块hd
-        outb(PORT_DISK_MAJOR+6,0xa0);//主硬盘
-        outb(PORT_DISK_MAJOR+7,DISK_CMD_CHECK);
-    }else if(disk==DISK_MAJOR_SLAVE){
-        //遍历四块hd
-        outb(PORT_DISK_MAJOR+6,0xb0);//主硬盘
-        outb(PORT_DISK_MAJOR+7,DISK_CMD_CHECK);
-    }else if(disk==DISK_SLAVE_MAJOR){
-        //遍历四块hd
-        outb(PORT_DISK_SLAVE+6,0xa0);//主硬盘
-        outb(PORT_DISK_SLAVE+7,DISK_CMD_CHECK);
-    }else if(disk==DISK_SLAVE_SLAVE){
-        //遍历四块hd
-        outb(PORT_DISK_SLAVE+6,0xb0);//主硬盘
-        outb(PORT_DISK_SLAVE+7,DISK_CMD_CHECK);
-    }
+    unsigned short disknr=PORT_DISK_MAJOR;
+    unsigned short chkcmd=0xe0;
+    if(disk==DISK_SLAVE_MAJOR||disk==DISK_SLAVE_SLAVE)
+        disknr=PORT_DISK_SLAVE;
+    if(disk==DISK_MAJOR_SLAVE||disk==DISK_SLAVE_SLAVE)
+        chkcmd=0xf0;
+    outb(disknr+2,1);
+    outb(disknr+3,0);
+    outb(disknr+4,0);
+    outb(disknr+5,0);
+    outb(disknr+6,chkcmd);//主硬盘
+    outb(disknr+7,DISK_CMD_CHECK);
+    // unsigned short stat=0;
+    // while(!(stat&0x40))
+    // {
+    //     stat=inb(disknr+7);
+    //     // if(stat&1)
+    //     // {
+    //     //     printf("DISK ERR\n");
+    //     //     return -1;
+    //     // }
+    // }
     return 0;
 }
