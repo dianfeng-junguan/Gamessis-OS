@@ -24,7 +24,6 @@ int init_disk()
     disk_drvi= reg_driver(&drv_disk);
     dev_disk.drv=&drv_disk;
     hd_iterate();
-    scan_dev(disk_devi);
     return 0;
 }
 
@@ -147,6 +146,7 @@ int async_read_disk(int disk,unsigned int lba,int sec_n,char* mem_addr)
     char lba_hi=(lba>>24)&0xf|drv|0xe0;
     outb(port+6,lba_hi);
     outb(port+7,DISK_CMD_READ);
+    request(disk,DISKREQ_READ,lba,sec_n,mem_addr);
     return 0;
 }
 int async_write_disk(int disk,unsigned int lba, int sec_n, char* mem_ptr)
@@ -192,6 +192,7 @@ int async_write_disk(int disk,unsigned int lba, int sec_n, char* mem_ptr)
         if(t==0x8)break;
     }
     
+    request(disk,DISKREQ_WRITE,lba,sec_n,mem_ptr);
     return 0;
 }
 int read_disk(driver_args* args)
@@ -303,5 +304,24 @@ int async_check_disk(int disk)
     //     //     return -1;
     //     // }
     // }
+    return 0;
+}
+
+//接口函数：负责接收VFS的请求然后执行
+int hd_do_req(driver_args *args)
+{
+    switch (args->cmd)
+    {
+    case DRVF_READ:
+        request(args->disk,DISKREQ_READ,args->lba,args->sec_c,args->dist_addr);
+        break;
+    case DRVF_WRITE:
+        request(args->disk,DISKREQ_WRITE,args->lba,args->sec_c,args->src_addr);
+        break;
+    case DRVF_CHK:
+        request(args->disk,DISKREQ_CHECK,args->lba,args->sec_c,args->dist_addr);
+        break;
+    default:return -1;
+    }
     return 0;
 }

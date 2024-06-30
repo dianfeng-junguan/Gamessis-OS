@@ -10,10 +10,11 @@
 #define DISK_MAJOR_SLAVE 1
 #define DISK_SLAVE_MAJOR 2
 #define	DISK_SLAVE_SLAVE 3
-#define	REQ_STAT_READY 0
-#define REQ_STAT_WORKING 1
-#define REQ_STAT_DONE 2
-#define REQ_STAT_ERR 3	
+#define REQ_STAT_EMPTY 0	
+#define	REQ_STAT_READY 1
+#define REQ_STAT_WORKING 2
+#define REQ_STAT_DONE 3
+#define REQ_STAT_ERR 4	
 #define PORT_DISK_MAJOR 0X1F0
 #define PORT_DISK_SLAVE 0X170
 #define DISK_CMD_READ 0x20
@@ -22,7 +23,7 @@
 
 #define DISK_CHK_OK 1
 #define DISK_CHK_ERR 2
-#define MAX_DISK_CHKTIME 500
+#define MAX_DISK_CHKTIME 50
 #include "devdrv.h"
 typedef struct{
     int func;	//调用功能号
@@ -50,6 +51,8 @@ int check_dreq_stat(int req_id);
 
 int hd_iterate();
 
+//接口函数：负责接收VFS的请求然后执行
+int hd_do_req(driver_args *args);
 
 //counts:扇区数
 int dllmain(void*,int,void*);

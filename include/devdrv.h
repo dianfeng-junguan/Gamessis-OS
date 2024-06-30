@@ -14,7 +14,11 @@
 
 #define DEV_TYPE_BLKDEV 1
 #define DEV_TYPE_CHRDEV 2
-#define DEV_STYPE_HD 1
+#define DEV_TYPE_OTHERS 3
+#define DEV_STYPE_HD        1
+#define DEV_STYPE_TTY       2
+#define DEV_STYPE_MOUSE     3
+#define DEV_STYPE_KEYBOARD  4
 #define MAX_DRIVERS 32
 #define MAX_DEVICES 64
 
@@ -23,7 +27,7 @@
 #define REQ_STAT_WORKING 3
 #define _ONLY_DATA_
 #include "virfs.h"
-typedef struct{
+typedef struct _dev_req{
     int lba;
     int dist_addr;
     int src_addr;
@@ -47,6 +51,8 @@ typedef struct{
     char* dir_path;
     int cmd;//request cmd
     int stat;
+    int disk;//具体磁盘
+    struct _dev_req *next;
 }driver_args;
 typedef int (*driverfunc)(driver_args*);
 typedef struct{
@@ -79,7 +85,7 @@ typedef struct
     int type;
 }partition_t;
 
-typedef struct{
+typedef struct _device{
     int lock;//锁
     int slave_dev;//从设备号
     int type;//设备大类
@@ -91,10 +97,31 @@ typedef struct{
     partition_t par[4];//块设备专用-分区表
     
     void (*request_fn) ();	// 请求操作的函数指针。(处理请求的函数)
-    struct driver_args *current_request;	// 当前正在执行的req
     driver *drv;
-}device;
+    driver_args* running_req;
+    driver_args* waiting_reqs;
+    struct _device* next;
+    struct _device* prev;
+    int operi;//对应operation的数组下标
 
+}device,blk_dev,chr_dev;
+#define DEVTREE_BLKDEVI 0
+#define DEVTREE_CHRDEVI 1
+#define DEVTREE_OTHERDEVI 2
+
+typedef struct
+{
+    void (*read)();
+    void (*write)();
+    void (*check)();
+    void (*seek)();
+    void (*tell)();
+
+}dev_operations;
+#define OPERATIONS_HD 0
+#define OPERATIONS_TTY 1
+#define OPERATIONS_MOUSE 2
+#define OPERATIONS_KEYBOARD 3
 // // 块设备结构。
 // struct blk_dev_struct
 // {

@@ -4,6 +4,7 @@
 #include "devman.h"
 #include "devdrv.h"
 #include "str.h"
+#include <syscall.h>
 char *m_ptr=0xb8000;
 static int videox=0,videoy=0,stline,endline;
 char *video_base,*video_end,*vpage_base;
@@ -273,6 +274,26 @@ void set_color(char color)
     m_color=color;
 }
 
+int tty_do_req(driver_args *args)
+{
+    switch (args->cmd)
+    {
+    case DRVF_READ:
+        read_tty(args);
+        break;
+    case DRVF_WRITE:
+        write_tty(args);
+        break;
+    case DRVF_SEEK:
+        seek_tty(args);
+        break;
+    case DRVF_TELL:
+        tell_monitor(args);
+        break;
+    default:return -1;
+    }
+    return 0;
+}
 //=======
 //VBE
 //0x103（800*600， 256色）

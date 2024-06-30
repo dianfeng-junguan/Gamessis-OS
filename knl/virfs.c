@@ -10,6 +10,7 @@
 #include "devman.h"
 #include <syscall.h>
 #include <log.h>
+#include <disk.h>
 volume vols[MAX_VOLUMES];
 vfs_dir_entry opened[MAX_OPEN_FILES]={0};
 fifo_t fifos[MAX_FIFOS]={0};
@@ -250,6 +251,7 @@ buffer_head* bread(int dev,int blk)
         //lock_buffer(bh);//锁定缓冲块直到读取完成
         int reqi=make_request(&arg);
         wait_on_req(reqi);
+        clear_req(reqi);
     }
     return bh;
 }
@@ -414,5 +416,18 @@ int read_block(int dev,int block,char* buf,int len)
         len-=BLOCK_SIZE;
         brelse(bh);
     }while(len>0);
+    return 0;
+}
+
+int init_vfs()
+{
+    //扫描块设备
+    extern device *dev_tree[];
+    extern device devs[];
+    blk_dev* p=dev_tree[DEVTREE_BLKDEVI];
+    for(;p;p=p->next)
+    {
+        if(scan_dev(p-devs)!=0)return -1;
+    }
     return 0;
 }

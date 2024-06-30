@@ -40,5 +40,7 @@
 #define DRVF_TOUCH 9
 #define DRVF_MKDIR 10
 #define DRVF_LS 11
+#define DRVF_SEEK 12
+#define DRVF_TELL 13
 int syscall(int func,int b,int c,int d,int e,int f);
 int exec(char *path);

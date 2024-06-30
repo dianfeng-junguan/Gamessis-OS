@@ -36,6 +36,8 @@ void scrup();
 void cls(driver_args *args);
 void set_color(char color);
 void set_cur();
+
+int tty_do_req(driver_args *args);
 //以下是VBE使用的函数
 /*
 #define RGB_BLACK 0

@@ -143,6 +143,7 @@ int sync_buf(buffer_head* bh);
 // int unlock_buffer(struct buffer_head* bh);
 // //等待缓冲块解锁
 // int wait_on_buffer(struct buffer_head* bh);
+int init_vfs();
 //扫描块设备，读取分区，识别文件系统
 int scan_dev(int dev);
 //写常规文件

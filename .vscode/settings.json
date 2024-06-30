@@ -21,6 +21,8 @@
         "typeinfo": "c",
         "exe.h": "c",
         "pe.h": "c",
-        "gdt.h": "c"
+        "gdt.h": "c",
+        "disk.h": "c",
+        "tty.h": "c"
     }
 }
