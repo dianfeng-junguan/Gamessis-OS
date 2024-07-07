@@ -8,6 +8,7 @@
 #define NULL ((void*)0)
 disk_req disk_reqs[MAX_DISK_REQUEST_COUNT];
 disk_req *running_req=NULL;
+driver_args *running_devman_req=NULL;
 static int head=0,tail=0;
 int disk_drvi=0,disk_devi=0;
 device dev_disk={
@@ -18,11 +19,12 @@ driver drv_disk={
         .read=async_read_disk,
         .write=async_write_disk
 };
+int disks[4];//四块硬盘的dev号
 int init_disk()
 {
-    disk_devi= reg_device(&dev_disk);
-    disk_drvi= reg_driver(&drv_disk);
-    dev_disk.drv=&drv_disk;
+    //disk_devi= reg_device(&dev_disk);
+    //disk_drvi= reg_driver(&drv_disk);
+    //dev_disk.drv=&drv_disk;
     hd_iterate();
     return 0;
 }
@@ -54,13 +56,26 @@ int disk_int_handler_c()
     }else if(running_req->func==DISKREQ_CHECK)
     {
         char stat=inb(port+7);
-        if(stat&0x40)
+        short dat=inw(port);
+        if(1)
         {
             running_req->result=DISK_CHK_OK;
         }else
+        {
+            char err=inb(port+1);//错误原因
+            printf("checking disk err:%x\nresetting hd\n",err);
             running_req->result=DISK_CHK_ERR;
+            request(running_req->disk,DISKREQ_RESET,0,0,0);
+        }
+    }else if(running_req->func==DISKREQ_RESET)
+    {
+        int stat=inb(port+7);
+        printf("reset disk done.\nstat now:%x\n",stat);
     }
     running_req->stat=REQ_STAT_DONE;
+    running_req->args->stat=REQ_STAT_EMPTY;
+    running_devman_req->stat=REQ_STAT_DONE;
+    running_devman_req=NULL;
     //set_proc_stat(running_req->pid,READY);
     running_req=NULL;
     return 0;
@@ -88,9 +103,9 @@ int execute_request(){
     //查看是否有已经在运行的请求
     if(running_req!=NULL)
     {
+        running_req->time++;
         if(running_req->func!=DISKREQ_CHECK)
             return 2;
-        running_req->time++;
         if(running_req->time>MAX_DISK_CHKTIME)
         {
             //检测硬盘超时，视为没有硬盘连接
@@ -123,13 +138,20 @@ int execute_request(){
     case DISKREQ_CHECK:
         r=async_check_disk(running_req->disk);
         break;
+    case DISKREQ_RESET:
+        r=async_reset_disk(running_req->disk);
+        break;
     default:
         break;
     }
     if(r==-1)return -1;
     return 0;
 }
-
+int async_reset_disk(int disk)
+{
+    outb(PORT_DISK_CONTROL,DISK_CMD_RESET);
+    return 0;
+}
 int async_read_disk(int disk,unsigned int lba,int sec_n,char* mem_addr)
 {
     unsigned short port=PORT_DISK_MAJOR;
@@ -146,7 +168,25 @@ int async_read_disk(int disk,unsigned int lba,int sec_n,char* mem_addr)
     char lba_hi=(lba>>24)&0xf|drv|0xe0;
     outb(port+6,lba_hi);
     outb(port+7,DISK_CMD_READ);
-    request(disk,DISKREQ_READ,lba,sec_n,mem_addr);
+
+    // unsigned short stat=0;
+    // while (1)
+    // {
+    //     byte t=inb(port+7);
+    //     //logf("stat:%x",t);
+    //     byte err=t&1;
+    //     // if(err!=0)
+    //     // {
+    //     //     printf("ERR writing disk\n");
+    //     //     return -1;
+    //     // }
+    //     t&=0x88;
+    //     if(t==0x8)break;
+    // }
+    // for(int i=0;i<running_req->sec_n*256;i++)
+    // {
+    //     *mem_addr++=inw(port);
+    // }
     return 0;
 }
 int async_write_disk(int disk,unsigned int lba, int sec_n, char* mem_ptr)
@@ -178,30 +218,43 @@ int async_write_disk(int disk,unsigned int lba, int sec_n, char* mem_ptr)
     unsigned char lba_hi=(lba>>24)&0xf|drv|0xe0;
     outb(port+6,lba_hi);
     outb(port+7,DISK_CMD_WRITE);
-    while (1)
-    {
-        byte t=inb(0x1f7);
-        //logf("stat:%x",t);
-        byte err=t&1;
-        if(err!=0)
-        {
-            //printf("ERR writing disk\n");
-            return -1;
-        }
-        t&=0x88;
-        if(t==0x8)break;
-    }
-    
-    request(disk,DISKREQ_WRITE,lba,sec_n,mem_ptr);
+    // while (1)
+    // {
+    //     byte t=inb(port+7);
+    //     //logf("stat:%x",t);
+    //     byte err=t&1;
+    //     if(err!=0)
+    //     {
+    //         printf("ERR writing disk\n");
+    //         return -1;
+    //     }
+    //     t&=0x88;
+    //     if(t==0x8)break;
+    // }
+    // short *p=mem_ptr;
+    // for(int i=0;i<running_req->sec_n*256;i++)
+    //         outw(port,*p++);
     return 0;
 }
 int read_disk(driver_args* args)
 {
-    return read_disk_asm(args->lba,args->sec_c,args->dist_addr);
+    int ret=read_disk_asm(args->lba,args->sec_c,args->dist_addr);
+    
+    running_req->stat=REQ_STAT_DONE;
+    running_req->args->stat=REQ_STAT_EMPTY;
+    //set_proc_stat(running_req->pid,READY);
+    running_req=NULL;
+    return ret;
 }
 int write_disk(driver_args* args)
 {
-    return write_disk_asm(args->lba,args->sec_c,args->src_addr);
+    int ret=write_disk_asm(args->lba,args->sec_c,args->src_addr);
+    
+    running_req->stat=REQ_STAT_DONE;
+    running_req->args->stat=REQ_STAT_EMPTY;
+    //set_proc_stat(running_req->pid,READY);
+    running_req=NULL;
+    return ret;
 }
 int chk_result(int r)
 {
@@ -237,10 +290,10 @@ int hd_iterate()
     char *name;
     
     int r[4];
-    r[0]=request(DISK_MAJOR_MAJOR,DISKREQ_CHECK,0,0,0);
-    r[1]=request(DISK_MAJOR_SLAVE,DISKREQ_CHECK,0,0,0);
-    r[2]=request(DISK_SLAVE_MAJOR,DISKREQ_CHECK,0,0,0);
-    r[3]=request(DISK_SLAVE_SLAVE,DISKREQ_CHECK,0,0,0);
+    r[0]=request(DISK_MAJOR_MAJOR,DISKREQ_CHECK,0,1,0);
+    r[1]=request(DISK_MAJOR_SLAVE,DISKREQ_CHECK,0,1,0);
+    r[2]=request(DISK_SLAVE_MAJOR,DISKREQ_CHECK,0,1,0);
+    r[3]=request(DISK_SLAVE_SLAVE,DISKREQ_CHECK,0,1,0);
     for(int i=0;i<4;i++)
     {
         int disk;
@@ -254,7 +307,7 @@ int hd_iterate()
             return -1;
             break;
         }
-        if(chk_result(r[i])&&!disk_existent(disk))
+        if(chk_result(r[i]))//&&!disk_existent(disk)
         {
             //新硬盘
             device hd={
@@ -263,8 +316,8 @@ int hd_iterate()
                 .slave_dev=disk,
                 .start_port=i<2?PORT_DISK_MAJOR:PORT_DISK_SLAVE
             };
-            reg_device(&hd);
-        }else if(!chk_result(r[i])&&disk_existent(disk))
+            disks[i]=reg_device(&hd);
+        }else if(!chk_result(r[i]))//&&disk_existent(disk)
         {
             switch (i)
             {
@@ -277,6 +330,7 @@ int hd_iterate()
             int devi=sys_find_dev(name);
             dispose_device(get_dev(devi));
         }
+
     }
 }
 
@@ -310,18 +364,22 @@ int async_check_disk(int disk)
 //接口函数：负责接收VFS的请求然后执行
 int hd_do_req(driver_args *args)
 {
+    int diski=0;
+    for(;disks[diski]!=args->dev;diski++);
     switch (args->cmd)
     {
     case DRVF_READ:
-        request(args->disk,DISKREQ_READ,args->lba,args->sec_c,args->dist_addr);
+        request(diski,DISKREQ_READ,args->lba,args->sec_c,args->dist_addr);
         break;
     case DRVF_WRITE:
-        request(args->disk,DISKREQ_WRITE,args->lba,args->sec_c,args->src_addr);
+        request(diski,DISKREQ_WRITE,args->lba,args->sec_c,args->src_addr);
         break;
     case DRVF_CHK:
-        request(args->disk,DISKREQ_CHECK,args->lba,args->sec_c,args->dist_addr);
+        request(diski,DISKREQ_CHECK,args->lba,args->sec_c,args->dist_addr);
         break;
     default:return -1;
     }
+    args->stat=REQ_STAT_WORKING;
+    running_devman_req=args;
     return 0;
 }

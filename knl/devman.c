@@ -190,7 +190,7 @@ int make_request(driver_args* args)
     int i=0;
     for(;i<NR_REQS;i++)
     {
-        if(reqs[i].stat=REQ_STAT_EMPTY)break;
+        if(reqs[i].stat==REQ_STAT_EMPTY)break;
     }
     if(i==NR_REQS)return -1;//满了
     reqs[i]=*args;//放入数组
@@ -200,7 +200,7 @@ int make_request(driver_args* args)
         dev->waiting_reqs=&reqs[i];
     else{
         driver_args* p=dev->waiting_reqs;
-        for(;p;p=p->next);
+        for(;p->next;p=p->next);
         p->next=&reqs[i];
         reqs[i].next=NULL;
     }

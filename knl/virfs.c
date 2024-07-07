@@ -248,6 +248,7 @@ buffer_head* bread(int dev,int blk)
         arg.dist_addr=bh->b_data;
         arg.len=BLOCK_SIZE;
         arg.lba=bh->b_blocknr;
+        arg.sec_c=BLOCK_SIZE/512;//之后会改
         //lock_buffer(bh);//锁定缓冲块直到读取完成
         int reqi=make_request(&arg);
         wait_on_req(reqi);

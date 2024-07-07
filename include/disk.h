@@ -6,24 +6,22 @@
 #define DISKREQ_READ 0
 #define DISKREQ_WRITE 1
 #define DISKREQ_CHECK 2
+#define DISKREQ_RESET 3
 #define DISK_MAJOR_MAJOR 0
 #define DISK_MAJOR_SLAVE 1
 #define DISK_SLAVE_MAJOR 2
 #define	DISK_SLAVE_SLAVE 3
-#define REQ_STAT_EMPTY 0	
-#define	REQ_STAT_READY 1
-#define REQ_STAT_WORKING 2
-#define REQ_STAT_DONE 3
-#define REQ_STAT_ERR 4	
 #define PORT_DISK_MAJOR 0X1F0
 #define PORT_DISK_SLAVE 0X170
+#define PORT_DISK_CONTROL 0X3f6
 #define DISK_CMD_READ 0x20
 #define DISK_CMD_WRITE 0x30
-#define DISK_CMD_CHECK 0xec
+#define DISK_CMD_CHECK 0x90
+#define DISK_CMD_RESET 0xc
 
 #define DISK_CHK_OK 1
 #define DISK_CHK_ERR 2
-#define MAX_DISK_CHKTIME 50
+#define MAX_DISK_CHKTIME 10
 #include "devdrv.h"
 typedef struct{
     int func;	//调用功能号
@@ -35,6 +33,7 @@ typedef struct{
     int stat;	//请求状态
     int result; //检查磁盘结果
     int time;   //请求使用的时间（用来检查是否超时）
+    driver_args *args; //参数
 }disk_req;
 int read_disk_asm(int lba,int sec_n,char* mem_addr);
 int write_disk_asm(int lba, int sec_n, char* mem_ptr);

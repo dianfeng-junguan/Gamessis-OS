@@ -22,9 +22,11 @@
 #define MAX_DRIVERS 32
 #define MAX_DEVICES 64
 
-#define REQ_STAT_READY 1
-#define REQ_STAT_DONE 2
-#define REQ_STAT_WORKING 3
+#define REQ_STAT_EMPTY 0	
+#define	REQ_STAT_READY 1
+#define REQ_STAT_WORKING 2
+#define REQ_STAT_DONE 3
+#define REQ_STAT_ERR 4	
 #define _ONLY_DATA_
 #include "virfs.h"
 typedef struct _dev_req{

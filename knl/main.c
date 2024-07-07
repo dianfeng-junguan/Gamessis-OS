@@ -198,7 +198,8 @@ void main(unsigned long magic,unsigned long addr)
     init_kb();
     init_disk();
 
-    init_fat16();
+	init_vfs();
+    //init_fat16();
 	manage_proc_lock=0;
     while (1);
 }
