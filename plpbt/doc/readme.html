@@ -1,0 +1,2705 @@
+<html>
+<head> 
+    <title>Plop
+    </title>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/printlayout.css"> 		
+</head>
+
+<body>
+URL: <a href=http://www.plop.at/en/bootmanager/full.html>http://www.plop.at/en/bootmanager/full.html</a><br><a name=l_index></a><br><h1>Table of Contents</h1><hr>    <a name=full></a>
+<div align=right>Last update 07/Feb/2012</div><table class=contentsNoBorders border=0 cellspacing=0 cellpadding=2><tr><td align=right>1.</td><td><a href=#l_intro>Introduction</a></td></tr>
+<tr><td align=right>2.</td><td><a href=#l_startmodes>Overview of install/start modes</a></td></tr>
+<tr><td align=right>3.</td><td><a href=#l_features>Features</a></td></tr>
+<tr><td align=right>4.</td><td><a href=#l_screenshots>Screenshots</a></td></tr>
+<tr><td align=right>5.</td><td><a href=#l_licence>Licence</a></td></tr>
+<tr><td align=right>6.</td><td><a href=#l_download>Download</a></td></tr>
+<tr><td align=right>7.</td><td><a href=#l_thebootmanager>The Boot Manager</a></td></tr>
+<tr><td align=right>8.</td><td><a href=#l_mbrinstall>Install to the hard disk MBR (Master Boot Record)</a></td></tr>
+<tr><td align=right>9.</td><td><a href=#l_plpbt.bin>plpbt.bin - LiveCD and other ways to start the Boot Manager</a></td></tr>
+<tr><td align=right>10.</td><td><a href=#l_iso>Create your own ISO file with your modified plpbt.bin</a></td></tr>
+<tr><td align=right>11.</td><td><a href=#l_plpcfgbt>plpcfgbt - configure plpbt.bin</a></td></tr>
+<tr><td align=right>12.</td><td><a href=#l_plpbt-parameter>plpbt.bin parameters</a></td></tr>
+<tr><td align=right>13.</td><td><a href=#l_rom>Create a PCI boot manager option ROM (save in bios)</a></td></tr>
+<tr><td align=right>14.</td><td><a href=#l_plpbt4win>plpbt4win</a></td></tr>
+<tr><td align=right>15.</td><td><a href=#l_plpgenbtldr>plpgenbtldr</a></td></tr>
+<tr><td align=right>16.</td><td><a href=#l_pcmcia>PCMCIA CardBus driver - USB PC-Card</a></td></tr>
+<tr><td align=right>17.</td><td><a href=#l_usbinfo>USB info</a></td></tr>
+<tr><td align=right>18.</td><td><a href=#l_usbdos>DOS and the USB driver</a></td></tr>
+<tr><td align=right>19.</td><td><a href=#l_usbdriverdetect>Detect the USB driver</a></td></tr>
+<tr><td align=right>20.</td><td><a href=#l_hiddenpartitions>Hidden partition / Cleared partition</a></td></tr>
+<tr><td align=right>21.</td><td><a href=#l_linuxloaders>Linux Boot Managers to the boot sector</a></td></tr>
+<tr><td align=right>22.</td><td><a href=#l_examples>Examples</a></td></tr>
+<tr><td align=right>23.</td><td><a href=#l_nod32>NOD32 Virus report</a></td></tr>
+<tr><td align=right>24.</td><td><a href=#l_faq>FAQ's - Frequently asked questions</a></td></tr>
+</table><a name=l_intro></a><br><h1>Introduction</h1><hr>    <a name=full></a>
+
+<p>
+The Plop Boot Manager is a small program to boot different operating systems.
+The boot manager has a built-in ide cdrom and usb driver to access that
+hardware without the help/need of a bios.
+You can boot the operating systems from <b>hard disk</b>, <b>floppy</b>,
+<b>CD/DVD</b> or from <b>USB</b>. 
+
+
+You can start the boot manager from floppy, CD, network and there are many more ways to start the boot manager.
+
+
+You can install the boot manager on your hard disk. There is no extra partition required for the boot manager.
+
+</p>
+<p>Programming language: Assembler<br>
+Software developer: Elmar Hanlhofer
+</p>
+ 
+
+<p>The current version is <a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a>.<br>
+</p>
+
+<a name=l_startmodes></a><br><h1>Overview of install/start modes</h1><hr>    <a name=full></a>
+
+
+<table border=0 cellspacing=0 cellpadding=0 class=box>
+<tr>
+    <td class=boxtdr>Hard disk installation</td>
+    <td>The boot manager will be installed as primary boot manager to your
+    hard disk. No extra partition and required. The
+    boot manager will be in the first
+    sectors of your hard disk before the first partition begins. The boot manager
+    starts even when no operating system exists.
+    </td>
+</tr>
+<tr>
+    <td class=boxtd>Start&nbsp;from&nbsp;external&nbsp;media<br>
+    Floppy<br>
+    CDROM/DVD<br>
+    USB drive
+    </td>
+    <td class=boxtd2>
+    It's not required to install the boot manager to your hard disk. You
+    can start it from those media and use the boot manager with some
+    limitations.
+    </td>
+</tr>
+<tr>
+    <td class=boxtd>Start&nbsp;from&nbsp;other&nbsp;boot&nbsp;managers<br>
+    LiLo<br>
+    Syslinux<br>
+    Grub<br>
+    Grub4Dos<br>
+    Grub2<br>
+    Windows boot.ini<br>
+    Windows BCD<br>
+    </td>
+    <td class=boxtd2>
+    You can still use your preferred boot manager and additionally use features
+    from the Plop Boot Manager (like boot the usb drive,...).<br>
+    <br>
+    The boot manager can run in hidden mode, so you have for example an entry
+    in your preferred boot manager to boot the usb drive and when you use this 
+    entry then it starts
+    immediately without any additional menu. This can be useful for the usb boot function.
+    </td>
+</tr>
+<tr>
+    <td class=boxtd>Start from network</td>
+    <td class=boxtd2>With help of pxelinux it's possible to start the boot manager from the 
+    network.
+    </td>
+</tr>
+<tr>
+    <td class=boxtd>Start from your bios as option rom</td>
+    <td class=boxtd2>You can store the boot manager as option rom in your bios. There
+    is no need for any hard disk or anything else to start the
+    boot manager. It can be used as PNP part of your bios or
+    the boot manager can hook the INT19 to take control as first boot device.
+    </td>
+</tr>
+</table>
+    
+
+<a name=l_features></a><br><h1>Features</h1><hr>    <a name=full></a>
+
+<ul>
+    <li>USB boot without BIOS support (UHCI, OHCI and EHCI)</li>
+    <li>CD/DVD boot without BIOS support (IDE)</li>
+    <li>PCMCIA CardBus support to enable boot from USB PC-Cards</li>
+    <li>Floppy boot</li>
+    <li>Different profiles for operating systems</li>
+    <li>Define up to 16 partitions</li>
+    <li>No extra partition for the boot manager</li>
+    <li>Hidden boot, maybe you have a rescue system installed and the user should not see that
+    there is another system installed</li>
+    <li>Boot countdown</li>
+    <li>Hide partitions</li>
+    <li>Password protection for the computer and the boot manager setup</li>
+    <li>Backup of partition table data</li>
+    <li>Text mode user interface 80x50</li>
+    <li>Graphical user interface 640x480, 800x600, 1024x786, 1280x1024</li>
+    <li>MBR partition table edit</li>
+    <li>Start of the boot manager from hard disk, floppy, USB, CD, DVD</li>
+    <li>Starting from Windows boot menu</li>
+    <li>Starting from LILO, GRUB, Syslinux, Isolinux, Pxelinux (network)</li>
+    <li>It can be used as PCI option ROM in your BIOS</li>
+    <li>Access the whole USB hard disk (up to 2TB) even when the bios has a 128 GiB limit</li>
+    <li>You can run the boot manager over the network</li>
+    <li>Start the network card bootrom from the boot manager to boot from the network</li>
+</ul>
+
+
+<a name=l_screenshots></a><br><h1>Screenshots</h1><hr>    <a name=full></a>
+
+
+<table border=0 cellpadding=5 cellspacing=5 align=center>
+<tr>
+    <td align=center>
+    <p>Main menu</p>
+    <a href=/slide16en01.html>
+    <img src=/images/bootmanagerv5/bootmngr5_1_small.jpg title=mainmenu class=mimg><br>
+    zoom</a>
+    </td>
+
+    <td align=center>
+    <p>Main menu (text mode)</p>
+    <a href=/slide16en02.html>
+    <img src=/images/bootmanagerv5/bootmngr5_2_small.jpg title=mainmenu class=mimg><br>
+    zoom</a>
+    </td>
+</tr>
+<tr><td colspan=2>&nbsp;</td></tr>
+<tr>
+    <td align=center>
+    <p>Profile partitions</p>
+    <a href=/slide16en03.html>
+    <img src=/images/bootmanagerv5/bootmngr5_3_small.jpg title=mainmenu class=mimg><br>
+    zoom</a>
+    </td>
+
+    <td align=center>
+    <p>MBR partition edit</p>
+    <a href=/slide16en04.html>
+    <img src=/images/bootmanagerv5/bootmngr5_4_small.jpg title=mainmenu class=mimg><br>
+    zoom</a>
+    </td>
+</tr>
+
+</table>
+
+
+<a name=l_licence></a><br><h1>Licence</h1><hr>    <a name=full></a>
+<br>
+<p>
+    <b>The Plop Boot Manager licence conditions:</b>
+    <p>    
+   This licence conditions are also used for the boot manager tools that are written
+   by Elmar Hanlhofer and not released under the GPL.
+    </p>
+    <ul>
+	<li>The programs are free to use for personal and commercial use.</li>
+	<li>The programs may not be sold&sup1;.</li>
+	<li>The origin of this software must not be misrepresented; 
+	you must not claim that you wrote the original software. If 
+	you use this software in a product, an acknowledgment in the 
+	product documentation would be appreciated but is not required.
+	</li>
+	<li>
+    This software is provided 'as-is', without any express or implied warranty. 
+    In no event will the authors be held liable for any damages arising from 
+    the use of this software.
+	
+	</li>
+    </ul>
+</p>
+<br>
+    <p>
+    &sup1; You can add the tools to <b>non-profit</b> products for free. <br>
+    Example: You sell a CD and charge only the price for the blank CD without the
+    work to create the final CD (and so on).
+    </p>
+    
+
+
+<a name=l_download></a><br><h1>Download</h1><hr>    <a name=full></a>
+    
+<p>
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+    <table border=0 cellspacing=3 cellpadding=3 class=box align=center>
+    <tr>
+	<td>
+	    <input type="image" src="http://www.plop.at/images/btn_en_donate_SM.gif" border="0" name="submit" alt="PayPal">
+	</td>
+	
+	<td>
+	    Please donate a few Euros or Dollars to keep the software for free and the development continues.	</td>
+	
+	<td>
+	    <input type="hidden" name="cmd" value="_s-xclick">
+	    <input type="hidden" name="hosted_button_id" value="FJ4BBXYT3ELQ4">
+	    <input type="image" src="http://www.plop.at/images/btn_en_donate_SM.gif" border="0" name="submit" alt="PayPal">
+	</td>
+    </tr>
+    </table>
+</form>
+
+</p>
+    <br>
+    <br>
+<center>
+<table border=0 cellspacing=0 cellpadding=0 class=box align=center>
+<tr>
+    <td class=boxtdr><a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip target=_blank>plpbt-5.0.14.zip</a></td>
+    <td class=boxtdr>2012-02-11</td>
+    <td >Plop Boot Manager 5.0.14    
+    </td>
+</tr>
+	<tr>
+    <td class=boxtd><a href=http://download.plop.at/files/bootmngr/plpbt-5.0.13.zip target=_blank>plpbt-5.0.13.zip</a></td>
+    <td class=boxtd>2011-08-14</td>
+    <td class=boxtd2>Plop Boot Manager 5.0.13    
+    </td>
+</tr>
+	</table>
+<br><br>
+<h3>Tools</h3>
+
+<table border=0 cellspacing=0 cellpadding=0 class=box align=center>
+<tr>
+    <td class=boxtdr><a href=http://download.plop.at/files/bootmngr/plpbtrom-0.6.zip target=_blank>plpbtrom-0.6.zip</a></td>
+    <td class=boxtdr>2011-08-14</td>
+    <td >Create a PCI Option ROM    
+    </td>
+</tr>
+	<tr>
+    <td class=boxtd><a href=http://download.plop.at/files/bootmngr/plpbt-createiso.zip target=_blank>plpbt-createiso.zip</a></td>
+    <td class=boxtd>2010-06-08</td>
+    <td class=boxtd2>Create custom boot manager cd's    
+    </td>
+</tr>
+	<tr>
+    <td class=boxtd><a href=http://download.plop.at/files/bootmngr/plpcfgbt-0.11.zip target=_blank>plpcfgbt-0.11.zip</a></td>
+    <td class=boxtd>2012-02-03</td>
+    <td class=boxtd2>Tool to configure the boot manager file plpbt.bin (Windows/Linux)    
+    </td>
+</tr>
+	<tr>
+    <td class=boxtd><a href=http://download.plop.at/files/bootmngr/plpdisd-0.2.zip target=_blank>plpdisd-0.2.zip</a></td>
+    <td class=boxtd>2010-10-16</td>
+    <td class=boxtd2>Deactivate the USB driver under DOS    
+    </td>
+</tr>
+	<tr>
+    <td class=boxtd><a href=http://download.plop.at/files/bootmngr/plpchk-0.1.zip target=_blank>plpchk-0.1.zip</a></td>
+    <td class=boxtd>2010-10-14</td>
+    <td class=boxtd2>Detect the USB driver under DOS    
+    </td>
+</tr>
+	<tr>
+    <td class=boxtd><a href=http://download.plop.at/files/bootmngr/plpmkboot-0.1.zip target=_blank>plpmkboot-0.1.zip</a></td>
+    <td class=boxtd>2012-02-03</td>
+    <td class=boxtd2>plpbt.bin native FAT boot    
+    </td>
+</tr>
+	</table>
+
+</center>
+<br>
+
+<a name=l_thebootmanager></a><br><h1>The Boot Manager</h1><hr>    <a name=full></a>
+
+<table class=contents cellspacing=0 cellpadding=2>
+<tr><td><a href=#b0>1. Hotkeys - Global keys</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<tr><td><a href=#b1>2. Main menu</a></td></tr>
+<tr><td><a href=#b2>2.1. Main menu hotkeys</a></td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td><a href=#b3>3. Setup</a></td></tr>
+<tr><td><a href=#b4>3.1. Partitions</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b5>Edit label</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b6>Select Device</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b7>Partition ID</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b8>Edit MBR/Import data</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b9>Clear partition data</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b10>Reset changes</a></td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td><a href=#b11>3.2. Profiles</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b12>Edit label</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b13>Show in main menu</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b14>Linked partitions</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b15>Configure partition entries</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b16>Linked partitions - hotkeys</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b17>Clear profile data</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b18>Reset changes</a></td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td><a href=#b19>3.3. Boot manager</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b20>Startmode</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b21>Boot countdown</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b22>Edit boot countdown</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b23>Select at start</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b24>Default profile</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b25>Show floppy boot</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b26>Show cdrom boot</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b27>Show usb boot</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b28>Force USB 1.1</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b29>Use Mass Stor Dev</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b30>Text mode after boot</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b31>Graphicmode</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b32>Zoom animation</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b33>Font</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b34>Starfield</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b35>Master password</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b36>Setup password</a></td></tr>
+</table>
+
+<br>
+<a name=hotkeys></a>
+<a name=b0></a>
+<h3>1. Hotkeys - Global keys</h3>
+
+<blockquote>
+    <table border=0 cellspacing=0 cellpadding=0>
+    <tr>
+	<td>Cursor up/down &nbsp;</td><td>Move the bar</td>
+    </tr>
+    <tr>
+	<td>Enter &nbsp;</td><td>Choose selection</td>
+    </tr>
+    <tr>
+	<td>ESC	&nbsp;</td><td>Close window</td>
+    </tr>
+    <tr>
+	<td>CTRL - ESC &nbsp;</td><td>Switch to text mode</td>
+    </tr>
+    <tr>
+	<td>CTRL - PAGE UP &nbsp;</td><td>Switch to higher screen resolution</td>
+    </tr>
+    <tr>
+	<td>CTRL - PAGE DOWN &nbsp;</td><td>Switch to lower screen resolution</td>
+    </tr>
+    <tr>
+	<td>z &nbsp;</td><td>Enable/Disable window zoom animation</td>
+    </tr>
+    </table>
+</blockquote>
+
+
+<br>
+<hr>
+<a name=b1></a>
+<h3>2. Main menu</h3>
+<blockquote>
+    <p>
+    In the main menu you see all visible profiles to boot an operating system. You can start 
+    an operating system from floppy, cd/dvd, usb or network. You can go to the setup of the boot manager, 
+    partitions and profiles. If your bios supports APM, you can shut down your computer.
+    </p>
+</blockquote>
+
+<br>
+<a name=b2></a>
+<h3>2.1. Main menu hotkeys</h3>
+<blockquote>
+    <table border=0 cellspacing=0 cellpadding=5>
+    <tr>
+	<td>1-9&nbsp;</td><td>Boot profile</td>
+    </tr>
+    <tr>
+	<td>q&nbsp;</td><td>Quick boot, open a list of all possible hardcoded partitions to boot</td>
+    </tr>
+    <tr>
+	<td>w&nbsp;</td><td>Write MBR with the profile settings, but do not boot</td>
+    </tr>
+    <tr>
+	<td>f&nbsp;</td><td>Boot floppy</td>
+    </tr>
+    <tr>
+	<td>c&nbsp;</td><td>Boot CD/DVD</td>
+    </tr>
+    <tr valign=top>
+	<td>u&nbsp;</td><td>Boot USB
+	</td>
+    </tr>
+    <tr>
+	<td>n&nbsp;</td><td>Network boot</td>
+    </tr>
+    </table>
+        <p>
+    <b>Special additional keys for USB boot:</b>
+    <ul>
+	<li><p>Press SHIFT-u to force USB 1.1</p></li>
+	<li><p>Press CTRL-u to wait for a key press before starting the operating system. 
+	    When a drive was found, then you can press "s" to skip the device
+	    or you can boot from the drive.</p>
+	</li>
+	<li><p>Press ALT-u to wait for a key press before detecting the usb device type. 
+	    When a device was found, then you can press "s" to skip the device 
+	    or you can boot from the device when it's as mass storage device.</p>
+	</li>
+    </ul>
+    <b>Difference CTRL-u and ALT-u:</b>
+    <ul>
+    When you use CTRL-u and the boot manager finds an usb device, then the
+    boot manager identifies it. Because of the stripped down usb implementation,
+    it's possible that the boot manager sometimes hangs on some computers. 
+    With ALT-u, the identification
+    of the usb drives happens when you press enter. When you press "s", then
+    the boot manager skips the device and it should not hang.    
+    </ul>
+    </p>
+    
+
+</blockquote>
+
+<br>
+<hr>
+<a name=b3></a>
+<h3>3. Setup</h3>
+
+<a name=b4></a>
+<h3>3.1. Partitions</h3>
+<blockquote>
+    <p>
+	You can manage your partitions here. The install program creates an entry for all 
+	primary partitions it finds. The names are from <span class=cmd>HDA1</span> up to 
+	<span class=cmd>HDD4</span>. <span class=cmd>HD</span> means hard disk. 
+	<span class=cmd>HDA</span> stands for hard disk <span class=cmd>A</span> and 
+	is the first hard disk. The numbers <span class=cmd>1-4</span> are the numbers 
+	of the primary partitions.
+    </p>
+    <p>
+    Notice for linux users: <span class=cmd>HDA</span> has nothing to do with the devices in linux like
+    <span class=cmd>/dev/hda</span>. 
+    </p>
+</blockquote>
+
+<a name=b5></a>
+<h4>Edit label</h4>
+<blockquote>
+    <p>
+    You can change the label for the partition. This label is used in the boot manager. 
+    The maximum length is 16 chars.
+    </p>
+</blockquote>
+
+<a name=b6></a>
+<h4>Select Device</h4>
+<blockquote>
+    <p>
+    Here, you choose the hard disk of the partition.
+
+    </p>
+	
+    <p>
+	HDA = Hard disk 1<br>
+	HDB = Hard disk 2<br>
+	HDC = Hard disk 3<br>
+	HDD = Hard disk 4<br>
+    </p>
+</blockquote>
+
+<a name=b7></a>
+<h4>Partition ID</h4>
+<blockquote>
+    <p>
+    There are 2 ways to set the ID of a partition.
+    </p>
+</blockquote>
+
+<h4>1. Enter partition ID</h4>
+<blockquote>
+    <p>
+    You can enter the hexadecimal value for the partition.
+
+    </p>
+</blockquote>
+
+<h4>2. Select ID from list</h4>
+<blockquote>
+    <p>
+    This list has the mostly used partition ID's. If the requested ID is not in the list, 
+    then use <span class=cmd>Enter partition ID</span>.
+    </p>
+</blockquote>
+
+<a name=b8></a>
+<h4>Edit MBR/Import data</h4>
+<blockquote>
+    <p>
+    This is used to change the values of partitions in the MBR.
+    </p>
+
+    <p>
+	<span class=cmd>BP</span> means boot manager partition. This values are stored
+	in the boot manager.
+    </p>
+    <p>
+	<span class=cmd>P1-P4</span> this are the current values of the primary partitions
+	in the MBR.
+    </p>
+    
+    <p>
+	You can edit the hexadecimal values in the partition table. You can select a 
+	row with <span class=cmd>s (select)</span> and paste the values to the row 
+	where the cursor is with <span class=cmd>p</span>. With this 
+	function, you can import partition values to the boot manager or change values in the MBR.
+	This can be very useful in emergency cases.
+
+    </p>
+</blockquote>
+
+<a name=b9></a>
+<h4>Clear partition data</h4>
+<blockquote>
+    <p>
+    Clearing the data means clearing of the partition data in the boot manager. The data on the 
+    partition itself is unchanged.
+    </p>
+</blockquote>
+
+<a name=b10></a>
+<h4>Reset changes</h4>
+<blockquote>
+    <p>
+    Use it if you changed something and you want to restore the whole values of the partition 
+    in the boot manager. This is possible until you close the partition edit window.
+    
+    </p>
+</blockquote>
+
+<br>
+<a name=b11></a>
+<h3>3.2. Profiles</h3>
+<blockquote>
+    <p>
+    Profiles are used to start different operating systems from different hard disks and partitions. 
+    It's also possible to detect changes in the MBR made by other software and import or forget the changes.
+    </p>
+    
+    <p>
+    If you have an operating system installed and you install the boot manager, the installer creates 
+    a profile to boot the current operating system.
+    </p>
+</blockquote>
+
+<a name=b12></a>
+<h4>Edit label</h4>
+<blockquote>
+    <p>
+    You can edit the label of the profile. This label is shown in the main menu. It's useful to use a 
+    label to see what operating system is going to boot. The maximum length is 16 chars.
+    </p>
+</blockquote>
+
+<a name=b13></a>
+<h4>Show in main menu</h4>
+<blockquote>
+    <p>
+    With this option you select if the profile is shown in the main menu or not. Only visible profiles 
+    can be booted. It also has effects on the <span class=cmd>default profile</span> in the 
+    boot manager setup.    
+    </p>
+</blockquote>
+
+<a name=b14></a>
+<h4>Linked partitions</h4>
+<blockquote>
+    <p>
+    You select from which hard disk, partition and bios device number you want to boot with this profile. 
+    You can also select what partitions or cleared partitions should be used for the MBR.
+    </p>
+</blockquote>
+
+<a name=partentries></a>
+<a name=b15></a>
+<h4>Configure partition entries</h4>
+<blockquote>
+    <p>
+	There are 3 states for a partition entry
+    </p>
+    
+<h4>1. a selected partition</h4>
+<blockquote>
+    <p>
+    Press enter to choose a partition from a list with all partition of this hard disk 
+    available from <span class=cmd>Partitions</span>.
+    </p>
+    <p>
+    If another software changes
+     this entry in the MBR, the boot manager detects this change at the 
+    next startup. You can choose if you want to import the new values or forget them.
+    </p>
+</blockquote>
+
+<h4>2. don't touch</h4>
+<blockquote>
+    <p>
+    The partition entry in the MBR will not be changed from the boot manager. That is the default setting. 
+    </p>
+    <p>
+    If a software changes this entry in the MBR the boot manager cannot detect this change.
+    </p>
+</blockquote>
+
+<h4>3. cleared</h4>
+<blockquote>
+    <p>
+    The boot manager set's this entry to 0 in the MBR. An operating system cannot detect that there is/was 
+    a partition.
+    </p>
+    <p>
+    WARNING: if the boot manager has not stored the values of the partition in "Partitions" then you lose the 
+    partition values in the MBR and you cannot access the data on the partition. It's possible to restore 
+    those values, but it's better, easier and safe to store the values in <span class=cmd>Partitions</span>.
+    </p>
+    <p>
+ Partition programs will say this is unallocated space! Do not partition this
+    space! You can lose data if you do it wrong.    
+    
+    </p>
+</blockquote>
+
+</blockquote>
+
+<a name=b16></a>
+<h4>Linked partitions - hotkeys</h4>
+<blockquote>
+    <p>
+    <span class=cmd>b</span> set boot partition.
+    You select, what partition you want to boot with this profile. The boot manager set a bios drive 
+    number automatically. It's possible to change it with another key.
+    </p>
+    
+    <p>
+    <span class=cmd>c</span> clear partition.
+    You set this entry to "cleared" and the boot manager clears this entry in the 
+    MBR when you boot this profile.
+    </p>
+    
+    <p>
+    <span class=cmd>d</span> don't touch.
+    You set the entry to <span class=cmd>don't touch</span> and the boot manager 
+    does not change this entry  when you boot this profile.
+
+    </p>
+    
+    <p>
+    <span class=cmd>e</span> edit boot flag.
+    The boot flag has the bios drive number used by the boot sector routine. In some cases it's required to change 
+    this value.
+    </p>
+    
+    <p>
+    <span class=cmd>r</span> remove boot flag.
+    Here, you remove the boot flag from the profile.
+    </p>
+
+    <p>
+    <span class=cmd>l</span> set logical partition.
+    You can set to boot from a logical partition 1-4 of an extended partition. Change the logical number by pressing "l".
+    L1 = first logical, L2 = second, ...
+    </p>
+</blockquote>
+
+<a name=b17></a>
+<h4>Clear profile data</h4>
+<blockquote>
+    <p>
+    You can clear the profile data in the boot manager. The data in 
+    <span class=cmd>Partitions</span> are not changed.
+    </p>
+</blockquote>
+
+<a name=b18></a>
+<h4>Reset changes</h4>
+<blockquote>
+    <p>
+    Use it if you changed something and want to restore the whole values of the profile in the boot manager. 
+    This is possible until you close the profile edit window.
+
+    </p>
+</blockquote>
+
+<br>
+<a name=b19></a>
+<h3>3.3. Boot manager</h3>
+
+<a name=b20></a>
+<h4>Startmode</h4>
+<blockquote>
+    <p>
+	The boot manager has two modes to start. With the user interface <span class=cmd>menu</span>
+	and <span class=cmd>hidden</span>.
+    </p>
+    <p>
+	For the hidden mode, you have to set the <span class=cmd>boot countdown</span> and you have
+	to select a  <span class=cmd>default
+	profile</span>. The <span class=cmd>default profile</span> boots after the countdown.
+	The user cannot see that there is a boot manager in the background. If you want to
+	go into the boot manager, then press <span class=cmd>ESC</span>.
+</blockquote>
+
+<a name=b21></a>
+<h4>Boot countdown</h4>
+<blockquote>
+    <p>
+	You can enable and disable the countdown. 
+    </p>
+    <p>If the boot countdown is enabled, the boot manager waits the given time and starts
+	after the countdown the last used profile or the default profile, depending on your settings.
+    </p>
+</blockquote>
+
+<a name=b22></a>
+<h4>Edit boot countdown</h4>
+<blockquote>
+    <p>
+	Choose between 1 and 99 seconds.
+    </p>
+</blockquote>
+
+<a name=b23></a>
+<h4>Select at start</h4>
+<blockquote>
+    <p>
+    At start, the boot manager set the bar to the selected option. This works for the 
+    <span class=cmd>hidden start mode</span> too.
+    </p>
+    <p>
+    You have the following options
+    <h4>1. Last booted profile</h4>
+    <h4>2. Default profile</h4>
+    <h4>3. Floppy</h4>
+    <h4>4. CDROM</h4>
+    <h4>5. USB</h4>
+    </p>
+</blockquote>
+
+<a name=b24></a>
+<h4>Default profile</h4>
+<blockquote>
+    <p>
+    You can select the <span class=cdm>default profile</span> from a list of all visible profiles.
+    </p>
+</blockquote>
+
+<a name=b25></a>
+<h4>Show floppy boot</h4>
+<blockquote>
+    <p>
+    Show the floppy boot option in the main menu.
+    </p>
+</blockquote>
+
+<a name=b26></a>
+<h4>Show cdrom boot</h4>
+<blockquote>
+    <p>
+    Show the cdrom boot option in the main menu.
+    </p>
+</blockquote>
+
+<a name=b27></a>
+<h4>Show usb boot</h4>
+<blockquote>
+    <p>
+    Show the USB boot option in the main menu.
+    </p>
+</blockquote>
+
+<a name=b28></a>
+<h4>Force USB 1.1</h4>
+<blockquote>
+    <p>
+    Use USB 1.1 controller even if there is a USB 2.0 controller. </p>
+    <p>
+    Mode 1: Ignore the EHCI Controller<br>
+    Mode 2: Setup EHCI Controller and set all ports to the companion host. Some controllers
+    need this option to force usb 1.1.
+    </p>
+</blockquote>
+
+<a name=b29></a>
+<h4>Use Mass Stor Dev</h4>
+<blockquote>
+    <p>
+    Use Mass Storage Device. Boot the X mass storage device that was found. Other devices are ignored.
+    </p>
+</blockquote>
+
+<a name=b30></a>
+<h4>Text mode after boot</h4>
+<blockquote>
+    <p>
+    You can select the text mode during the startup of an operating system.
+    Choose between "don't change" and 80x50.
+    </p>
+</blockquote>
+
+<a name=b31></a>
+<h4>Graphicmode</h4>
+<blockquote>
+    <p>
+    Select the screen resolution in the boot manager. Choose between text mode 80x50 and
+    graphic mode 640x480, 800x600, 1024x768, 1280x1024.
+    </p>
+</blockquote>
+
+<a name=b32></a>
+<h4>Zoom animation</h4>
+<blockquote>
+    <p>
+    Enable and disable the window animation. 
+    </p>
+</blockquote>
+
+<a name=b33></a>
+<h4>Font</h4>
+<blockquote>
+    <p>
+    Select the boot manager font or the bios font.
+    </p>
+</blockquote>
+
+<a name=b34></a>
+<h4>Starfield</h4>
+<blockquote>
+    <p>Enable and disable the starfield animation.
+    </p>
+</blockquote>
+
+<a name=b35></a>
+<h4>Master password</h4>
+<blockquote>
+    <p>Setup the master password. Disable the boot manager password protection with an empty password.
+    </p>
+</blockquote>
+
+
+<a name=b36></a>
+<h4>Setup password</h4>
+<blockquote>
+    <p>Setup the setup password. Disable the boot manager setup password protection with an empty password.
+    </p>
+</blockquote>
+
+
+
+
+<a name=l_mbrinstall></a><br><h1>Install to the hard disk MBR (Master Boot Record)</h1><hr>    <a name=full></a>
+
+<p>
+You can install the boot manager to the MBR of your hard disk. When you do that, then the
+boot manager is the first program that is started when you boot from the
+hard disk. That means 
+the boot manager is started before any operating system
+has been started. This installation has many benefits. Some features are only
+available when the boot manager is installed to the MBR. When you don't
+want to install the boot manager to the MBR, then you can start the boot manager
+in many different ways. See <a href=plpbt.bin.html>plpbt.bin - LiveCD and ...</a>
+</p>
+<p><span class=red><b>Warning Linux users:</b></span> Install LILO or GRUB to the boot sector of your Linux instead 
+of the Master Boot Record (MBR). The Plop Boot Manager is not a Linux loader and cannot start
+Linux without LILO, GRUB, Syslinux and similar!  See <a href=linuxloaders.html>Linux Boot Managers</a>.
+</p>
+
+<br>
+
+
+
+<table class=contents cellspacing=0 cellpadding=2>
+<tr><td><a href=#installer>1. The install program</a></td></tr>
+<tr><td><a href=#instop>1.1 Program functions</a></td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td><a href=#uninstall>2. Uninstall</a></td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td><a href=#instmeth>3. Methods to start the install program</a></td></tr>
+<tr><td><a href=#flpinst>3.1. Floppy</a></td></tr>
+<tr><td><a href=#cdinst>3.2. CD</a></td></tr>
+<tr><td><a href=#dosinst>3.3. DOS</a></td></tr>
+<tr><td><a href=#wininst>3.4. Windows boot menu (NT, 2K, XP, VISTA, Win7)</a></td></tr>
+<tr><td><a href=#syslinuxinst>3.5. Syslinux, Isolinux, Pxelinux (Network)</a></td></tr>
+<tr><td><a href=#liloinst>3.6. LILO</a></td></tr>
+<tr><td><a href=#grubinst>3.7. GRUB / grub4dos</a></td></tr>
+<tr><td><a href=#grub2inst>3.8. GRUB2</a></td></tr>
+<tr><td><a href=#netinst>3.9. From Network</a></td></tr>
+<tr><td><a href=#fatinst>3.10. Native from a FAT file system</a></td></tr>
+</table>
+
+<a name=installer></a>
+<br>
+<h3>1. The install program</h3>
+<hr>
+
+<p>
+    There are 2 versions of the install program. Basically both versions do the same.
+    The only difference is that <span class=cmd>plpinst.com</span> creates a backup file
+    <span class=cmd>plpback.bin</span> to restore hard disk sectors for a complete 
+    boot manager uninstall. 
+    The second version <span class=cmd>plpinstc.com</span> skips the backup part. You have
+    to use the second version for installation from write protected media like CD's or
+    when you install from network or any other boot manager.
+</p>
+
+<a name=instop></a>
+<br>
+<h3>1.1 Program functions</h3>
+<hr>
+
+    <h4>1. Full boot manager install</h4>
+    <blockquote>
+    <p>
+	With this option you install the boot manager to your hard disk. 
+	If you have an installed operating system, then the install program creates a
+	profile for you to boot this operating system.
+    </p>
+    <p>
+	With the installation from floppy, the install program makes a backup of the sectors
+	where the boot manager will be installed. The install program writes the backup to
+	the floppy disk. With this backup it's possible to remove the boot manager completely
+	from your hard disk. If you use the CD installation, then it's not possible to
+	restore the sectors. In this case the uninstall routine creates a new MBR to boot
+	the current operating system. The partition table data won't be changed.
+    </p>
+    </blockquote>
+
+    <h4>2. Rewrite loader</h4>
+    <blockquote>
+    <p>
+	A small program (the loader) is required in the MBR to start the boot manager.
+	Operating systems like Windows XP are writing during the installation their own
+	small program into the MBR. If you install Windows XP after the boot manager, then
+	Windows XP will start instead of the boot manager, because the loader is overwritten
+	with the program from Windows XP. To setup that the boot manager starts before Windows
+	XP you have to use <span class=cmd>Rewrite loader</span>.
+    </p>
+    </blockquote>
+    
+    <h4>3. Boot Manager update</h4>
+    <blockquote>
+    <p>
+	With this, you can update the boot manager. But only updates with boot manager v5 are working.
+    </p>
+    </blockquote>
+    
+    <h4>4. Complete uninstall</h4>
+    <blockquote>
+    <p>
+	<b>Warning</b>, this option is only available with the installation from floppy.
+    </p>
+    <p>
+	The install program takes the backup that was saved on the floppy disk and writes it back
+	to the hard disk.
+    </p>
+    <p>
+	<b>Warning</b>, if you changed anything with the partition table, then don't use this option!
+    </p>
+    </blockquote>
+
+    <h4>5. Short uninstall</h4>
+    <blockquote>
+    <p>
+	With this option, the program writes a new MBR to start the current operating
+	system. The partition table will be unchanged.
+    </p>
+    </blockquote>
+    
+    <h4>6. Set Boot Manager screen to text mode</h4>
+    <blockquote>
+    <p>
+	Configures the Boot Manager to start in text mode.
+    </p>
+    </blockquote>
+    
+    <h4>7. Change destination hard disk</h4>
+    <blockquote>
+    <p>
+	Set destination hard disk to install the boot manager.
+    </p>
+    </blockquote>
+    
+    <h4>8. Boot Manager hotkeys</h4>
+    <blockquote>
+    <p>
+	See <a href=thebootmanager.html#hotkeys>Hotkeys</a>.
+    </p>
+    </blockquote>
+    
+    <h4>9. Reboot</h4>
+    <blockquote>
+    <p>
+	The computer will be restarted.
+    </p>
+    </blockquote>
+
+<br>
+<a name=uninstall></a>
+<h3>2. Uninstall</h3>
+<hr>
+<p>When you installed the boot manager to the MBR, then you can remove the
+boot manager in the same way that you used to install the boot manager, but
+you have to use the option 4 or 5 in the install program.
+</p>
+<p>When you don't want to use the install program to remove the boot manager,
+then you can use any other program that writes a new program to the MBR.
+Example FIXMBR, or "fdisk /mbr" and so on. Or you install another boot manager to the MBR.
+</p>
+
+<br>
+<a name=instmeth></a>
+<h3>3. Methods to start the install program</h3>
+<hr>
+
+<a name=flpinst></a>
+<h3>3.1. Floppy</h3>
+<hr>
+
+<p>
+    You create the install floppy with a floppy disk image.
+    A floppy disk image is a file that contains every sector of the floppy disk. You cannot copy
+    the image file on a floppy disk like a common file. It's required to use a special program that
+    writes sector per sector of the image file to the floppy disk sectors. There are many programs available to 
+    do this.
+</p>
+<p>
+    Download the current boot manager  <a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a>.
+    Extract it to get the floppy disk image. You find the disk image in the <span class=cmd>install</span> directory.
+    The name of the file is <span class=cmd>plpbtin.img</span>
+</p>
+<p><b>How to create the floppy:</b></p>
+<p>
+    <b>DOS:</b> You can use <a href=http://download.plop.at/files/DISKIMG.COM>diskimg.com</a>
+    with <span class=cmd>diskimg -d a -w plpbtin.img</span>
+</p>
+
+<p>
+    <b>Windows:</b> Write the disk image with the program <a href=http://download.plop.at/files/rawwritewin.exe>rawwritewin</a> to the 
+    floppy disk
+</p>
+
+<p>
+    <b>Linux:</b> <span class=cmd>dd if=plpbtin.img of=/dev/fd0</span>
+</p>
+
+
+<a name=cdinst></a>
+<br>
+<h3>3.2. CD</h3>
+<hr>
+
+<p>
+    Download the current boot manager  <a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a>.
+    Extract it to get the iso file. You find the iso file in the <span class=cmd>install</span> directory.
+    The name of the file is <span class=cmd>plpbtin.iso</span>
+</p>
+<p>
+    Notice: The CD installer makes no backup for a complete uninstall. 
+    See <a href=#installer>The install program</a>.
+</p>
+
+<p><b>Windows:</b> 
+    <blockquote>
+    <p>
+    You can use <a href=http://www.nero.com/ target=_blank>Nero</a>, or the free program
+    <a href=http://www.cdburnerxp.se/ target=_blank>CDBurnerXP</a>, or any other program
+    that can burn ISO images.
+    </p>
+    <p>
+    
+    Use the option like <span class=cmd>burn ISO on CD</span> or
+    <span class=cmd>burn ISO Image</span>. Then choose the boot manager ISO and burn it.
+    </p>
+    </blockquote>
+</p>
+
+
+<p><b>Linux:</b>
+    <blockquote>
+    <p>
+    <a href=http://cdrecord.berlios.de/old/private/cdrecord.html target=_blank>cdrecord</a> 
+    is the linux program to burn ISO images to a CD.
+    </p>
+    <p>
+    Burn the ISO with cdrecord: 
+    <span class=cmd>cdrecord -v dev=&lt;devicename&gt; &lt;iso image&gt;</span>
+    </p>
+    <p>
+    Example: <br>
+    If you access your CD burner with <span class=cmd>/dev/hdd</span><br>
+    <span class=cmd>cdrecord -v dev=/dev/hdd plpbtin.iso</span>
+    </p>
+    </blockquote>
+</p>
+
+
+
+
+<a name=dosinst></a>
+<br>
+<h3>3.3. DOS</h3>
+<hr>
+
+<p>
+    Download the current boot manager  <a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a>.
+    Extract it to get the install program. In the <span class=cmd>install</span> directory there are 2 install programs
+    (<span class=cmd>plpinst.com</span> and <span class=cmd>plpinstc.com</span>)
+    for using under DOS.
+</p>
+<p>
+    <span class=cmd>plpinst.com</span> creates a backup file <span class=cmd>plpback.bin</span>
+    for a complete boot manager uninstall. <span class=cmd>plpinstc.bin</span> makes no backup. Use
+    <span class=cmd>plpinstc.com</span> for write protected media like CD's.
+</p>
+
+
+
+<a name=wininst></a>
+<br>
+<h3>3.4. Windows boot menu (NT, 2K, XP, VISTA, Win7)</h3>
+<hr>
+
+<p>
+Hint: When you don't want to install the boot manager to the MBR then see <a href=plpbt.bin.html#runwin>plpbt.bin - LiveCD and ...</a>.
+</p>
+<p>
+    Download the current boot manager  <a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a>.
+    Extract the zip file. Open the folder <span class=cmd>Windows</span>. You will find the batch program
+    <span class=cmd>InstallToMBR</span>. Run it as administrator in VISTA/WIN7 (right mouse click
+    on the file and choose  "Run as administrator"). The batch creates an entry in your windows boot menu
+    called <span class=cmd>"Install the Plop Boot Manager to the MBR"</span>. When you reboot, then use
+    the entry to install the Plop Boot Manager to the mbr.
+</p>
+</p>
+    To remove the entry from the windows boot menu run the program
+    <span class=cmd>c:\plop\plpbt4win</span>. Use <span class=cmd>"l"</span> to list all entries.
+    Remove the entry with  <span class=cmd>"r ID"</span>. ID is the number you have
+    seen with <span class=cmd>"l"</span>. See <a href=#plpbt4win>here</a> for more info's to <span class=cmd>plpbt4win</span>.
+</p>    
+<p>Note: plpgenbtldr and contig are no longer required.</p>
+    
+    
+<a name=syslinuxinst></a>
+<br>
+<h3>3.5 Syslinux, Isolinux, Extlinux</h3>
+<hr>
+
+<p>
+    Download the current boot manager  <a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a>.
+    Extract it to get the boot manager install program. You find the 
+    install program <span class=cmd>plpinstc</span>
+    in the <span class=cmd>install</span> directory.
+</p>
+<p>Add <span class=cmd>plpinstc.com</span> to the config file
+    <ul>
+	<li>for Syslinux it's <span class=cmd>syslinux.cfg</span></li>
+	<li>for Isolinux it's <span class=cmd>isolinux.cfg</span></li>
+	<li>for Extlinux it's <span class=cmd>extlinux.conf</span></li>
+    </ul>
+</p>
+<p>Add the following lines to the config file
+<pre class=file>
+label plpinst
+linux plpinstc.com
+</pre>
+</p>
+<p>Copy <span class=cmd>plpinstc</span> to the same directory where the config file is.</p>
+<p>
+    You start the install program when you select it from the menu
+    or you enter <span class=cmd>plpinst</span> at the Syslinux command prompt.
+</p>
+
+<a name=liloinst></a>
+<br>
+<h3>3.6. LILO</h3>
+<hr>
+
+<p>
+    Download the current boot manager  <a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a>.
+    Extract it to get the boot manager install program. You find the 
+    install program <span class=cmd>plpinstc.com</span>
+    in the <span class=cmd>install</span> directory.
+</p>
+
+<p>Copy <span class=cmd>plpinstc.com</span> to <span class=cmd>/boot</span>.
+</p>
+<p>Add to your <span class=cmd>/etc/lilo.conf</span> the following
+<pre class=file>
+image=/boot/plpinstc.com
+label=plop-install
+</pre>
+</p>
+<p>
+    Run <span class=cmd>lilo</span> to update lilo.
+</p>
+
+
+<a name=grubinst></a>
+<br>
+<h3>3.7. GRUB / grub4dos</h3>
+<hr>
+
+<p>
+    Download the current boot manager  <a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a>.
+    Extract it to get the boot manager install program. You find the 
+    install program <span class=cmd>plpinstc.com</span>
+    in the <span class=cmd>install</span> directory.
+</p>
+
+<p>Copy <span class=cmd>plpinstc.com</span> to <span class=cmd>/boot</span>.
+</p>
+
+<p>
+Add to your <span class=cmd>/boot/grub/menu.lst</span> the following
+<pre class=file>
+title Install Plop Boot Manager
+root (hd0,0)
+kernel /boot/plpinstc.com
+</pre>
+</p>
+<p>When you reboot, you should be able to choose the install program from your grub menu.</p>
+<p>Info: You have to choose the correct root settings in your configuration or you get a "Error: file not found". See also this 
+<a href=http://forum.plop.at/index.php/topic,1456.0.html>Forum entry</a>.</p>
+
+
+<a name=grub2inst></a>
+<br>
+<h3>3.8. GRUB2</h3>
+<hr>
+
+<p>
+    Download the current boot manager  <a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a>.
+    Extract it to get the boot manager install program. You find the 
+    install program <span class=cmd>plpinstc.com</span>
+    in the <span class=cmd>install</span> directory.
+</p>
+
+<p>Copy <span class=cmd>plpinstc.com</span> to <span class=cmd>/boot</span>.
+</p>
+
+<p>
+Example file <span class=cmd>/etc/grub.d/40_custom</span>
+<pre class=file>
+#!/bin/sh
+exec tail -n +3 $0
+
+menuentry "Install Plop Boot Manager" {
+    set root='(hd0,1)'
+    linux16 /boot/plpinstc.com
+}
+</pre>
+Then run <span class=cmd>update-grub2</span> or <span class=cmd>update-grub</span>.
+</p>
+<p>When you reboot, you should be able to choose the install program from your grub menu.</p>
+
+<p>Info: You have to choose the correct root settings in your configuration or you get a "Error: file not found". See also this 
+<a href=http://forum.plop.at/index.php/topic,1456.0.html>Forum entry</a>.</p>
+
+<a name=netinst></a>
+<br>
+<h3>3.9. From network</h3>
+<hr>
+
+<p>A better documentation comes when I have more time. Meanwhile
+use the documentation of Plop Linux.</p>
+<p>You need for booting over network a DHCP, TFTP server and the 
+    program pxelinux.
+</p>
+<p>For
+	<a href=/en/ploplinux.html#pxel>Linux click here</a>,
+	for 
+	<a href=/en/ploplinux.html#pxew>Windows click here</a>
+	
+</p>
+
+
+<a name=fatinst></a>
+<br>
+<h3>3.10. Native from a FAT file system</h3>
+<hr>
+
+<p>
+    Download the current boot manager  <a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a>.
+    Extract it to get the boot manager install program. You find the 
+    install program <span class=cmd>plpinstc.com</span>
+    in the <span class=cmd>install</span> directory.
+</p>
+<p>
+    Copy <span class=cmd>plpinstc.com</span> to the FAT formatted drive and
+    rename it to <span class=cmd>plpbt.bin</span>. 
+</p>
+<p>Then use the program <span class=cmd>plpmkboot</span> to make the drive
+   bootable to start plpbt.bin.
+</p>
+<ul>
+    <li><p>Linux example: <span class=cmd>plpmkboot /dev/sdb1</span></p></li>
+    <li><p>Windows example: <span class=cmd>plpmkboot F:</span></p></li>
+</ul>
+<p>
+    Hint: Do not use the other install program
+    <span class=cmd>plpinst.com</span> except on FAT12 formatted drives.
+</p>
+
+<a name=l_plpbt.bin></a><br><h1>plpbt.bin - LiveCD and other ways to start the Boot Manager</h1><hr>    <a name=full></a>
+
+
+<p>
+    When you don't want to install the boot manager to the MBR, then you have
+    to use <span class=cmd>plpbt.bin</span>. You can start <span class=cmd>plpbt.bin</span>
+    in many different ways.
+    
+    You cannot save
+    boot manager settings when you use <span class=cmd>plpbt.bin</span>. But
+    you can use <a href=plpcfgbt.html>plpcfgbt</a> to configure <span class=cmd>plpbt.bin</span>.
+</p>
+
+<br>
+<table class=contents cellspacing=0 cellpadding=2>
+<tr><td><a href=#runflp>1. Floppy</a></td></tr>
+<tr><td><a href=#runcd>2. CD (LiveCD)</a></td></tr>
+<tr><td><a href=#runwin>3. Windows boot menu (NT, 2K, XP, VISTA and Win7)</a></td></tr>
+<tr><td><a href=#runsyslinux>4. Syslinux, Isolinux, Extlinux</a></td></tr>
+<tr><td><a href=#runlilo>5. LILO</a></td></tr>
+<tr><td><a href=#rungrub>6. GRUB / grub4dos</a></td></tr>
+<tr><td><a href=#rungrub2>7. GRUB2</a></td></tr>
+<tr><td><a href=#runnet>8. From network</a></td></tr>
+<tr><td><a href=#runfat>9. Native from a FAT file system</a></td></tr>
+</table>
+
+<br>
+<a name=runflp></a>
+<h3>1. Floppy</h3>
+<hr>
+<p>
+    A floppy disk image is a file that contains every sector of the floppy disk. You cannot copy
+    the image file on a floppy disk like a common file. It's required to use a special program that
+    writes sector per sector of the image file to the floppy disk sectors. There are many programs available to 
+    do this.
+</p>
+<p>
+    Download the current boot manager  <a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a>.
+    Extract it to get the floppy disk image <span class=cmd>plpbt.img</span>.
+</p>
+
+<p><b>How to create the floppy:</b></p>
+
+<p>
+    <b>DOS:</b> You can use <a href=http://download.plop.at/files/DISKIMG.COM>diskimg.com</a>
+    with <span class=cmd>diskimg -d a -w plpbt.img</span>
+</p>
+
+<p>
+    <b>Windows:</b> Write the disk image with the program <a href=http://download.plop.at/files/rawwritewin.exe>rawwritewin</a> to the 
+    floppy disk
+</p>
+
+<p>
+    <b>Linux:</b> <span class=cmd>dd if=plpbt.img of=/dev/fd0</span>
+</p>
+<p>You can configure the plpbt.bin on the floppy with <a href=plpcfgbt.html>plpcfgbt</a>.</p>
+
+
+<a name=runcd></a>
+<br>
+<h3>2. CD (LiveCD)</h3>
+<hr>
+
+<p>
+    Download the current boot manager  <a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a>.
+    Extract it to get the iso file <span class=cmd>plpbt.iso</span>.
+</p>
+
+<p>Customize ISO: See <a href=iso.html>Create your own ISO ...</a>
+</p>
+
+
+<p><b>Windows:</b> 
+    <blockquote>
+    <p>
+    You can use <a href=http://www.nero.com/ target=_blank>Nero</a>, or the free program
+    <a href=http://www.cdburnerxp.se/ target=_blank>CDBurnerXP</a>, or any other program
+    that can burn ISO images.
+    </p>
+    <p>
+    
+    Use the option like <span class=cmd>burn ISO on CD</span> or
+    <span class=cmd>burn ISO Image</span>. Then choose the boot manager ISO and burn it.
+    </p>
+    </blockquote>
+</p>
+
+<p><b>Linux:</b>
+    <blockquote>
+    <p>
+    <a href=http://cdrecord.berlios.de/old/private/cdrecord.html target=_blank>cdrecord</a> 
+    is the linux program to burn ISO images to a CD.
+    </p>
+    <p>
+    Burn the ISO with cdrecord: 
+    <span class=cmd>cdrecord -v dev=&lt;devicename&gt; &lt;iso image&gt;</span>
+    </p>
+    <p>
+    Example: <br>
+    If you access your CD burner with <span class=cmd>/dev/hdd</span><br>
+    <span class=cmd>cdrecord -v dev=/dev/hdd plpbt.iso</span>
+    </p>
+    </blockquote>
+</p>
+
+
+<a name=runwin></a>
+<br>
+<h3>3. Windows boot menu (NT, 2K, XP, VISTA and Win7)</h3>
+<hr>
+
+<p>
+    Download the current boot manager  <a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a>.
+    Extract the zip file. Open the folder <span class=cmd>Windows</span>. You will find the batch program
+    <span class=cmd>InstallToBootMenu</span>. Run it as administrator in VISTA/WIN7 (right mouse click
+    on the file and choose  "Run as administrator"). The batch creates an entry in your windows boot menu
+    called <span class=cmd>"Plop Boot Manager"</span>. When you reboot, then use
+    the entry to start the Plop Boot Manager.
+</p>
+</p>
+    To remove the entry from the windows boot menu run the program
+    <span class=cmd>c:\plop\plpbt4win</span>. Use <span class=cmd>"l"</span> to list all entries.
+    Remove the entry with  <span class=cmd>"r ID"</span>. ID is the number you have
+    seen with <span class=cmd>"l"</span>. See <a href=#plpbt4win>here</a> for more info's to <span class=cmd>plpbt4win</span>.
+</p>    
+<p>Note: plpgenbtldr and contig are no longer required.</p>
+
+
+<a name=runsyslinux></a>
+<br>
+<h3>4. Syslinux, Isolinux, Extlinux</h3>
+<hr>
+
+<p>
+    Download the current boot manager <a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a>.
+    Extract it to get the boot manager binary program <span class=cmd>plpbt.bin</span>. 
+</p>
+
+<p>Add <span class=cmd>plpbt</span> to the config file
+    <ul>
+	<li>for Syslinux it's <span class=cmd>syslinux.cfg</span></li>
+	<li>for Isolinux it's <span class=cmd>isolinux.cfg</span></li>
+	<li>for Extlinux it's <span class=cmd>extlinux.conf</span></li>
+    </ul>
+</p>
+<p>Add the following lines to your config file
+<pre class=file>
+label plp
+linux plpbt.bin
+</pre>
+</p>
+<p>Copy <span class=cmd>plpbt.bin</span> to the same directory where the config file is.</p>
+<p>
+    You start the boot manager when you enter <span class=cmd>plp</span> at the Syslinux command prompt.
+</p>
+<p>You can configure the file plpbt.bin with <a href=plpcfgbt.html>plpcfgbt</a>.</p>
+
+
+<a name=runlilo></a>
+<br>
+<h3>5. LILO</h3>
+<hr>
+
+<p>
+    Download the current boot manager  <a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a>.
+    Extract it to get the boot manager binary program <span class=cmd>plpbt.bin</span>. 
+</p>
+<p>Copy the <span class=cmd>plpbt.bin</span> file to <span class=cmd>/boot</span>.
+</p>
+<p>Add to your <span class=cmd>/etc/lilo.conf</span> the following
+<pre class=file>
+image=/boot/plpbt.bin
+label=Plop
+</pre>
+</p>
+<p>
+    Run <span class=cmd>lilo</span> to update lilo.
+</p>
+<p>You can configure the file plpbt.bin with <a href=plpcfgbt.html>plpcfgbt</a>.</p>
+
+
+<a name=rungrub></a>
+<br>
+<h3>6. GRUB / grub4dos</h3>
+<hr>
+
+<p>
+    Download the current boot manager  <a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a>.
+    Extract it to get the boot manager binary program <span class=cmd>plpbt.bin</span>. 
+</p>
+<p>Copy the <span class=cmd>plpbt.bin</span> file to <span class=cmd>/boot</span>.
+</p>
+<p>Add to your <span class=cmd>menu.lst</span><br>
+<pre class=file>
+title Plop Boot Manager
+root (hd0,0)
+kernel /boot/plpbt.bin
+</pre>
+</p>
+<p>Info: You have to choose the correct root settings in your configuration or you get a "Error: file not found". See also this 
+<a href=http://forum.plop.at/index.php/topic,1456.0.html>Forum entry</a>.</p>
+<p>You can configure the file plpbt.bin with <a href=plpcfgbt.html>plpcfgbt</a>.</p>
+
+<a name=rungrub2></a>
+<br>
+<h3>7. GRUB2</h3>
+<hr>
+
+<p>
+    Download the current boot manager  <a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a>.
+    Extract it to get the boot manager binary program <span class=cmd>plpbt.bin</span>. 
+</p>
+<p>Copy the <span class=cmd>plpbt.bin</span> file to <span class=cmd>/boot</span>.
+</p>
+<p>Example file <span class=cmd>/etc/grub.d/40_custom</span><br>
+<pre class=file>
+#!/bin/sh
+exec tail -n +3 $0
+
+menuentry "Plop Boot Manager" {
+    set root=(hd0,1)
+    linux16 /boot/plpbt.bin
+}
+</pre>
+</p>
+
+<p>Then run <span class=cmd>update-grub2</span> or <span class=cmd>update-grub</span>.
+<p>When you reboot, you should be able to start the boot manager from your grub menu.</p>
+<p>Info: You have to choose the correct root settings in your configuration or you get a "Error: file not found". See also this 
+<a href=http://forum.plop.at/index.php/topic,1456.0.html>Forum entry</a>.</p>
+
+<p>You can configure the file plpbt.bin with <a href=plpcfgbt.html>plpcfgbt</a>.</p>
+
+<a name=runnet></a>
+<br>
+<h3>8. From network</h3>
+<hr>
+
+<p>A better documentation comes when I have more time. Meanwhile
+use the documentation of Plop Linux.</p>
+<p>You need for booting over network a DHCP, TFTP server and the 
+    program pxelinux.
+</p>
+<p>For
+	<a href=/en/ploplinux.html#pxel>Linux click here</a>,
+	for 
+	<a href=/en/ploplinux.html#pxew>Windows click here</a>
+	
+</p>
+
+
+<a name=runfat></a>
+<br>
+<h3>9. Native from a FAT file system</h3>
+<hr>
+
+<p>
+    Download the current boot manager  <a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a>.
+    Extract it to get the boot manager binary program <span class=cmd>plpbt.bin</span>. 
+</p>
+<p>
+    Copy <span class=cmd>plpbt.bin</span> to the FAT formatted drive.
+</p>
+<p>Then use the program <span class=cmd>plpmkboot</span> to make the drive
+   bootable to start plpbt.bin.
+</p>
+<ul>
+    <li><p>Linux example: <span class=cmd>plpmkboot /dev/sdb1</span></p></li>
+    <li><p>Windows example: <span class=cmd>plpmkboot F:</span></p></li>
+</ul>
+
+<a name=l_iso></a><br><h1>Create your own ISO file with your modified plpbt.bin</h1><hr>    <a name=full></a>
+
+
+<p>
+<a href=http://download.plop.at/files/bootmngr/plpbt-createiso.zip>plpbt-createiso.zip</a>
+ is a simple script to create a custom plop boot manager iso by 
+Elmar Hanlhofer. There is one script for Windows and one script for Linux in the 
+zip file.
+The scripts are using <span class=cmd>mkisofs</span> from <span class=cmd>cdrtools</span>.</p>
+
+<br>
+<h3>How to use with Windows</h3>
+<ul>
+<p>
+The windows binaries of cdrtools are from 
+<a href=http://smithii.com/cdrtools target=_blank>http://smithii.com/cdrtools</a>
+and included in the zip file.
+<span class=cmd>plpbt.bin</span> and <span class=cmd>create-iso.bat</span>
+ must be in the same directory. 
+You have to run <span class=cmd>create-iso.bat</span> to create the iso file.
+You get a file called <span class=cmd>plpbtmycd.iso</span>. That's your new 
+boot manager iso file.
+</p>
+</ul>
+
+<br>
+<h3>How to use with Linux</h3>
+<ul>
+<p>You must have installed <span class=cmd>mkisofs</span>.
+<span class=cmd>plpbt.bin</span> and <span class=cmd>create-iso.sh</span>
+ must be in the same directory. 
+You have to run <span class=cmd>sh create-iso.sh</span> to create the iso file.
+You get a file called <span class=cmd>plpbtmycd.iso</span>. That's your new 
+boot manager iso file.
+</p>
+</ul>
+
+
+
+<a name=l_plpcfgbt></a><br><h1>plpcfgbt - configure plpbt.bin</h1><hr>    <a name=full></a>
+
+<p>
+<a href=http://download.plop.at/files/bootmngr/plpcfgbt-0.11.zip>plpcfgbt-0.11.zip</a> is a tool to configure
+plpbt.bin. This program is available as source code for Linux and Windows. You start the program from
+a command shell. If you run the program without parameters then you will see the help information.
+</p>
+
+<br>
+
+<pre class=file>
+Usage: plpcfgbt [OPTIONS] file
+
+Options:
+========
+
+ parameter    meaning
+ -----------------------------------------------------------------------------
+ vm           setup video mode
+              values: text, 640x480, 800x600, 1024x768, 1280x1024
+
+ stm          start mode of the boot manager
+              values: menu or hidden, hidden requires cnt=on and dbt not off
+
+ cnt          activate countdown, values: on or off
+
+ cntval       countdown in seconds between 1 and 99
+
+ dbt          default boot, values: off, profile, floppy, cdrom, usb
+
+ dprf         use default profile value between 1 and 16
+
+ stf          starfield, values: on or off
+
+ zan          windows zoom animation, values: on or off
+
+ fnt          set font, values: bt or bios
+
+ usb1         force usb 1.1
+              values:   off
+                        1 = Mode 1 = skip ehci
+                        2 = Mode 2 = force ehci to companion
+
+ usbmdev      use usb massdev 1-99 (obsolete)
+
+ int19h       do not boot the os and use int19h, values: on or off
+
+ hotkey       startup hotkey, values: yes or no
+
+ prf          set profile, value: 1-16
+
+ prfname      set profilename 16 chars, 'prf' must be set
+
+ btdrv        boot drive, 80h-89h, 'prf' must be set
+
+ btprt        boot partition 1-4, 'prf' must be set
+
+ btlog        boot log partition, 1-4, 'prf' must be set
+
+ skippcmcia   skip pcmcia check, values: yes or no
+
+ fastpcmcia   skip pcmcia check after usb card was found, values: yes or no
+
+ ignoreusbdev ignore number of usb devices 0-99
+
+ showextended show extended partitions in the main menu, values: yes or no
+ 
+ 
+ hiddenusb    automatic usb boot without showing the boot manager
+ hiddencdrom  automatic cdrom boot without showing the boot manager
+
+</pre>
+</p>
+<p>Infos about <span class=cmd>int19h</span> see <a href=usbdos.html#usbhddrv>here</a>.<br>
+The hotkey option is useful with CD's or ROM's. You get the info to press CTRL-A
+to start the boot manager. If you don't press it, the booting continues 
+without the boot manager.
+</p>
+
+<br>
+<h3>Examples</h3>
+<hr>
+    <p>Print current settings:
+	<blockquote>
+	 <span class=cmd>plpcfgbt plpbt.bin</span>
+	</blockquote>
+    </p>
+    <p>Configure hidden boot and boot the usb drive:
+	<blockquote>
+	<span class=cmd>plpcfgbt stm=hidden cnt=on cntval=1 dbt=usb plpbt.bin</span><br>
+	or <br>
+	<span class=cmd>plpcfgbt hiddenusb plpbt.bin</span>
+	</blockquote>
+    </p>
+
+
+
+<a name=l_plpbt-parameter></a><br><h1>plpbt.bin parameters</h1><hr>    <a name=full></a>
+
+<p>
+    When you use a Linux boot manager, then you can pass some parameters
+    with "append"
+    to <span class=cmd>plpbt.bin</span>.
+</p>
+
+<h3 align=center>List of supported parameters</h3>
+<p>
+    <table border=0 class=box align=center>
+    <tr>
+	<td class=boxtdr>Parameter</td><td>Meaning</td>
+    </tr>
+    <tr>
+	<td class=boxtd>hiddenusb</td><td class=boxtd2>is the short version of "stm=hidden cnt=on cntval=1 dbt=usb"</td>
+    </tr>
+    <tr>
+	<td class=boxtd>hiddencdrom</td><td class=boxtd2>is the short version of "stm=hidden cnt=on cntval=1 dbt=cdrom"</td>
+    </tr>
+    <tr>
+	<td class=boxtd>usb1=1</td><td class=boxtd2>Force USB 1.1 Mode 1 (ignore the EHCI controller)</td>
+    </tr>
+    <tr>
+	<td class=boxtd>usb1=2</td><td class=boxtd2>Force USB 1.1 Mode 2 (force EHCI ports to usb 1.1)</td>
+    </tr>
+    <tr>
+	<td class=boxtd>vm=text</td><td class=boxtd2>Switch to text mode</td>
+    </tr>
+    <tr>
+	<td class=boxtd>fnt=bios</td><td class=boxtd2>Switch font to bios font</td>
+    </tr>
+    <tr>
+	<td class=boxtd>int19h=on</td><td class=boxtd2>Use INT19h instead of booting usb</td>
+    </tr>
+    <tr>
+	<td class=boxtd>showextended=yes</td><td class=boxtd2>Show extended partitions in the main menu</td>
+    </tr>
+    </table>
+</p>
+
+<br>
+<p>
+    Example syslinux.cfg:
+<pre class=file>
+# configure the boot manager to start in text mode
+
+label plp
+    linux plpbt.bin
+    append vm=text
+
+# configure the boot manager to start in hidden mode and 
+# boot usb with forcing usb 1.1 mode 1
+
+label plp2
+    linux plpbt.bin
+    append "hiddenusb usb1=1"
+
+</pre>
+
+
+
+
+<a name=l_rom></a><br><h1>Create a PCI boot manager option ROM (save in bios)</h1><hr>    <a name=full></a>
+
+
+<p>
+You can create a pci option rom file with
+<a href=http://download.plop.at/files/bootmngr/plpbtrom-0.6.zip>plpbtrom-0.6.zip</a>.
+You can store the option rom in your bios or to the rom of a network card and run
+it from there.
+</p>
+
+<br>
+<pre class=file>
+Usage: plpbtrom [OPTIONS] input-file output-file
+
+Options:
+========
+ -h               this help
+ -vendorid        id hex value of the card vendor
+ -deviceid        id hex value of device
+ -grabid          grab vendor/device id from PCI ROM file
+ -hidden          disable option rom text output
+ -nodisable       do not allow option rom disable
+ -forceINT        force hook interrupt
+ -INT18           hook int 18h
+ -compress        compress option rom
+ -size <val[k|m]> set rom to a size. examples: 64k, 128k, 1m, ...
+
+ input-file   boot manager file (ex. plpbtrom.bin)
+ output-file  ROM file name  
+</pre>
+
+<br>
+<h3>Examples</h3>
+<ul>
+    <li><span class=cmd>plpbtrom plpbtrom.bin plpbt.rom</span></li>
+    <li><span class=cmd>plpbtrom -vendorid 0x10ec -deviceid 0x8139 plpbtrom.bin plpbt.rom</span></li>
+    <li><span class=cmd>plpbtrom -grabid netcard.rom plpbtrom.bin plpbt.rom</span></li>
+    <li><span class=cmd>plpbtrom -grabid netcard.rom -size 64k plpbtrom.bin plpbt.rom</span></li>
+</ul>
+
+
+<br>
+<h3>Special parameters</h3>
+<ul>
+    <li><p>-forceINT: This forces the boot manager to hook the INT 19h/INT 18h. If you have a PNP bios, then the 
+boot manager does not use the PNP bios feature of the boot device sequence. The boot manager will be started before any
+boot device is tried (when INT 19h mode is used) or the boot manager is the last program that is started when all boot devices 
+failed to boot (when INT 18h mode is used).
+    </p></li>
+
+    <li><p>-INT18: Hook INT18h instead of INT19h. INT19h is the default mode.
+    </p></li>
+    
+
+</ul>
+
+<br>
+<h3>Files</h3>
+<blockquote>
+    plpbtrom     - Linux executable<br>
+    plpbtrom.exe - Windows executable<br>
+    plpbtrom.bin - Boot Manager<br>
+</blockquote>	    
+
+<br>
+<h3>Difference plpbtrom.bin and plpbt.bin</h3>
+<ul>
+    <p>
+    plpbtrom.bin gives the control of the boot
+    process back to the bios with a far return if you press esc. plpbt.bin 
+    makes a reboot with int 19h.
+    </p>
+    <p>Passing parameters to the boot manager with the linux kernel command line is not supported
+    by plpbtrom.bin
+    </p>
+    <p>You can configure plpbtrom.bin like plpbt.bin with <a href=#plpcfgbt>plpcfgbt</a>.
+    You can enable/disable a hotkey to start the boot manager.</p>
+</ul>
+	    
+<br>
+<h3>How to test a ROM</h3>
+<ul>
+    <p>
+    You can test your rom file with the free virtual machine <a href=http://www.qemu.org target=_blank>qemu</a>.
+    </p>
+    <p><span class=cmd>qemu -hda harddisk.img -option-rom plpbt.rom</span></p>
+    <p>If you have no hard disk image file then take one from the qemu download page
+       or use a floppy image.</p>
+
+    <p><span class=cmd>qemu -fda floppy.img -option-rom plpbt.rom</span></p>
+</ul>
+
+<br>
+<h3>How to flash an AMI bios</h3>
+    <p><b><span class=red>Do this at your own risk! This can damage your pc.</span></b>
+    </p>
+    
+<ul>
+    <li><p>Download the Ami bios flash utility and save your current bios. 
+    <a href=http://www.ami.com/ target=_blank>AMI Homepage</a></p>
+    <p>It's a DOS program, run the following command from a DOS floppy to save your bios<br>
+    <div class=cmd>afudos /obios.rom</div>
+    </p>
+    </li>
+    <li>
+    <p>Use the Windows tool <a href=http://www.softpedia.com/get/System/System-Info/MMTool.shtml target=_blank>MMTools</a>
+    to replace the network rom with the <span class=cmd>plpbt.rom</span>.
+    </p></li>
+    <li><p>Load the file <span class=cmd>bios.rom</span></p></li>
+    <li><p>Find the network option rom. It has the id <span class=cmd>20</span>, the name <span class=cmd>PCI Option ROM</span>
+    and the RunLoc number <span class=cmd>VendorID:DeviceID</span> of your network card. Maybe there are other option roms
+    in your bios. Take care that you choose the network option rom.
+    </p></li>
+    <li><p>Click on it that it's marked.</p></li>
+    <li><p>Click at the <span class=cmd>Replace Tab</span></p></li>
+    <li><p>Load as <span class=cmd>Module file</span> the <span class=cmd>plpbt.rom</span> file.</p></li>
+    <li><p>Press the <span class=cmd>Replace</span> button</p></li>
+    <li><p>Press the <span class=cmd>Save ROM as</span> and give it the name <span class=cmd>mybios.rom</span></p></li>
+    <li><p>Now comes the dangerous part. Flashing the bios.<br>
+    I suggest setting the bios to the default settings and save it. Then boot from a dos floppy and run</p>
+    
+    <div class=cmd>afudos /imybios.rom</div>
+    
+    <p>
+    Do not turn off the pc during flash. After the flash has completed, go to the bios and do again a reset to the
+    default settings.
+    </p></li>
+    <li><p>If all is ok, you should be able to configure the bios and start the boot manager during the boot process.</p></li>
+</ul>
+
+
+<br>
+<h3>How to flash an AWARD bios</h3>
+    <p><b><span class=red>Do this at your own risk! This can damage your pc.</span></b>
+    </p>
+    
+<ul>
+    <li><p>Download the Award bios flash utility <span class=cmd>aflash</span>. You should find it at
+    your Motherboard homepage in the bios section.
+    </p></li>
+    <li><p>Run it from a DOS floppy and save your current bios to a file. Give it the name <span class=cmd>bios.rom</span>.
+    </p></li>
+    <li><p>Search the file <span class=cmd>cbrom</span> in the web. There are different versions, not all will work
+    with your bios file, so you have to test it with different versions.
+    </p></li>
+    <li><p>
+	Run <span class=cmd>cbrom bios.rom /d</span>
+    </p></li>
+    <li><p>This should list all parts of the bios rom. I cannot give you the command to replace the rom. None of the
+    cbrom programs where able to display the content of my bios rom file. 
+    You have to test it by yourself.
+
+    </p></li>
+    <li><p>
+     When you updated the bios rom file, then flash it.
+      I suggest setting the bios to the default settings and save it. Then boot from a dos floppy and run
+       with <span class=cmd>awdflash</span>.
+    </p></li>
+    <li><p>If all is ok, you should be able to configure the bios and start the boot manager during the boot process.</p></li>    
+</ul>
+
+
+<a name=l_plpbt4win></a><br><h1>plpbt4win</h1><hr>    <a name=full></a>
+
+
+<p>
+<span class=cmd>plpbt4win</span> makes it easy to add/remove the boot manager from the windows boot menu. The program can work with the boot.ini and with bcdedit. It automatically detects the required method.
+You can use it as batch file or run it with an built-in command line. You find plpbt4win
+in the <span class=cmd>Windows</span> directory of  <a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a>.
+</p>
+
+<br>
+<h3>Feature list</h3>
+
+<ul>
+<li><p>
+Command line interface, ideal for batch programs and a gui frontend.
+</p></li>
+<li><p>
+Built-in command line.
+</p></li>
+<li><p>
+Works with boot.ini and bcdedit.
+</p></li>
+<li><p>
+Can list, add and remove windows boot menu entries.
+</p></li>
+<li><p>
+You can easy use different boot manager binary files. For example, one windows boot menu entry is the default boot manager file and another entry is configured to auto boot usb.
+</p></li>
+
+<li><p>
+2 batch files are included. InstallToBootMenu.bat and InstallToMBR.bat.
+ The windows user must only start the batch file and everything is done by the batch file. The user must only reboot to see the new boot menu entries. Those batch files can also be used as example how to use plpbt4win. 
+</p></li>
+</ul> 
+
+<br>
+<h3>Help for batch mode</h3>
+
+<pre class=file>
+plpbt4win [/?] [/B] [/C [FILE]] [/L] [/A [NAME]] [/R &lt;ID&gt;] [/BIN &lt;FILE&gt;] [/D]
+
+ /?          Help
+ /B          Batch mode
+ /BIN &lt;FILE&gt; Set the program filename. Default is "c:\plop\plpbt.bin"
+ /C [FILE]   Create the plop boot manager loader program. Set the output
+             filename. The default filename is "c:\plop\plpbt4win.ldr"
+ /L          List windows boot menu entries
+ /A [NAME]   Add to the windows boot menu a new entry. The default name is
+             "Plop Boot Manager"
+ /R &lt;ID&gt;     Remove the menu entry from the windows boot menu. ID is the
+             number of the menu entry
+ /D          Debug mode
+</pre>
+
+<br>
+<h3>Batch mode examples</h3>
+<p> 
+ <ul>
+ <li><p>
+ List boot menu entries: plpbt4win /B /L
+</p></li>
+ 
+ <li><p>
+ Create loader: plpbt4win /B /C
+</p></li>
+ 
+ <li><p>
+ Create custom named loader: plpbt4win /B /C c:\plop\plp.ldr
+</p></li>
+ 
+ <li><p>
+ Add an entry: plpbt4win /B /A "The Plop Boot Manager is here"
+</p></li>
+ 
+ <li><p>
+ Remove an entry, first use /L to get the ID and then: plpbt4win /B /R 3
+</p></li>
+ 
+ <li><p>
+ Create loader and add entry at once: plpbt4win /B /C /A
+</p></li>
+</ul>
+</p>
+
+<br>
+<h3>Help for built in command line</h3>
+<p>Start plpbt4win without parameter.</p>
+<pre class=file>
+Command (? for help):  
+ ?          Help
+ bin &lt;FILE&gt; Set the program filename. Default is "c:\plop\plpbt.bin"
+ c [FILE]   Create the plop boot manager loader program. Set the output
+            filename. The default filename is "c:\plop\plpbt4win.ldr"
+ l          List windows boot menu entries
+ a [NAME]   Add to the windows boot menu a new entry. The default name is
+            "Plop Boot Manager"
+ r &lt;ID&gt;     Remove the menu entry from the windows boot menu. ID is the
+            number of the menu entry
+ d          Activate/disable debug mode 
+ v          Show current values
+ q          Quit
+</pre>
+
+
+
+<a name=l_plpgenbtldr></a><br><h1>plpgenbtldr</h1><hr>    <a name=full></a>
+
+
+<p>
+<span class=cmd>plpgenbtldr</span> is outdated and no longer supported. 
+Use <a href=plpbt4win.html>plpbt4win</a>.
+</p>
+<br>
+<p>
+To remove entries from the windows boot menu use either <a href=plpbt4win.html>plpbt4win</a> or
+</p>
+<p>
+Open a command prompt as administrator.<br>
+Run "<span class=cmd>bcdedit /v</span>" to list all entries.<br>
+Run "<span class=cmd>bcdedit /delete {id}</span>" to remove the entry. {id} is the number with { } beside the listed entry.
+</p>
+
+
+<a name=l_pcmcia></a><br><h1>PCMCIA CardBus driver - USB PC-Card</h1><hr>    <a name=full></a>
+
+<p>
+    Many old laptops are having one or two CardBus slots. The boot manager can act as
+    USB PC-Card enabler and the boot manager makes it possible to boot from the USB
+    PC-Card. When your laptop has only USB 1.1, then you can speed up the boot process 
+    with an USB 2.0 PC-Card. When your laptop has only one USB port, then you are able
+    to get more USB ports with an USB PC-Card.
+</p>
+<p>
+    You find the boot manager with the CardBus driver in the pcmcia directory of
+    <a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a>.
+</p>
+<p>
+    The boot manager initializes the CardBus during the boot manager startup. 
+    This means, the PC-Card must be plugged in during the boot manager start!
+    I do this during the program start, because then you have an initialized and ready
+    to use PC-Card regardless if you boot from usb or not. When you have
+    a DOS USB driver (for OHCI and EHCI) then you are able to use it with the PC-Card and
+    you don't need a extra CardBus driver.
+</p>
+<p>
+    During the boot manager startup you will see some infos about the CardBus init process.   
+    When you want to read it, then press the CTRL key during the boot manager start.
+</p>
+<p>
+    Notes: <br>
+    <ul>
+    <li>
+	<p>My CardBus driver works on many machines, but it does not work on all.</p>
+    </li>
+    <li>
+	<p>Because of the additional CardBus driver size, I had to remove the IDE Cdrom driver 
+	(only) from
+        the pcmcia hard disk boot manager version. <br>
+	plpbt.bin has all drivers included.
+	</p>
+    </li>
+    </ul>
+</p>
+
+
+
+<a name=l_usbinfo></a><br><h1>USB info</h1><hr>    <a name=full></a>
+
+
+<ul>
+    <li>
+    Only USB mass storage devices are supported. The USB support
+    allows booting from
+    USB hard disk, USB thumb drives and USB card readers. USB floppies and CD/DVD drives are not working.
+    </li>
+    <li>
+    There is no USB HUB implementation. It's required to connect your USB drive directly
+    to the USB port of your computer.
+    </li>
+    <li>
+    Current status see <a href=/en/bootmngrusblog.html>Boot Manager News</a>.
+
+    </li>
+
+</ul>
+
+<a name=l_usbdos></a><br><h1>DOS and the USB driver</h1><hr>    <a name=full></a>
+
+<table class=contents cellspacing=0 cellpadding=2>
+<tr><td><a href=#usbhddrv>1. The Boot Manager as USB hard disk driver for DOS</a></td></tr>
+<tr><td><a href=#usbdisable>2. Disable the USB driver</a></td></tr>
+<tr><td><a href=#usbdoschk>3. Detect the USB driver under DOS</a></td></tr>
+</table>
+
+<br>
+
+<a name=usbhddrv></a>
+<h3>1. The Boot Manager as USB hard disk driver for DOS</h3>
+<hr>
+
+<p>I know this is very special. Maybe it's useful for some people. You have to configure
+the <span class=cmd>plpbt.bin</span> with <a href=plpcfgbt.html>plpcfgbt</a> to use int19h
+instead of booting the operating system.
+</p>
+<p>
+    <span class=cmd>plpcfgbt int19h=on plpbt.bin</span>
+</p>
+<p>Now you have to start <span class=cmd>plpbt.bin</span> with a boot manager
+like <span class=cmd>grub</span>, 
+<span class=cmd>syslinux</span> or whatever during boot time
+(supported boot managers see <a href=plpbt.bin.html>here</a>). Choose USB and the boot manager
+will install the usb driver and go back to your boot manager. If you start DOS you will
+have access to your usb drive as last hard disk. But remember, the usb drive is only as "read only" device available.
+</p>
+<p>
+    If it works for you then use <span class=cmd>plpcfgbt int19h=on stm=hidden cnt=on cntval=1 dbt=usb plpbt.bin</span>
+</p>
+
+
+<br>
+<a name=usbdisable></a>
+<h3>2. Disable the USB driver</h3>
+<hr>
+
+<p>If you run DOS and the Plop USB driver is loaded, then you can disable the USB driver
+with
+<a href=http://download.plop.at/files/bootmngr/plpdisd-0.2.zip>plpdisd-0.2.zip</a>. When you
+disable the driver, then you are able to load other DOS usb drivers.
+</p>
+<p>
+    You can run <span class=cmd>plpdisd</span> from <span class=cmd>config.sys</span>
+    
+<pre class=file>
+DEVICE=c:\tools\plpdisd.exe
+</pre>
+</p>
+<p>
+    It's also possible to run it from the <span class=cmd>autoexec.bat</span> or command line.
+</p>
+
+<br>
+
+<a name=usbdoschk></a>
+<h3>3. Detect the USB driver under DOS</h3>
+<hr>
+
+<p>See <a href=usbdriverdetect.html#dos>here</a></p>
+
+<a name=l_usbdriverdetect></a><br><h1>Detect the USB driver</h1><hr>    <a name=full></a>
+
+<table class=contents cellspacing=0 cellpadding=2>
+<tr><td><a href=#ifplop>1. Detect the USB driver with Syslinux</td></tr>
+<tr><td><a href=#usbdetectdos>2. Detect the USB driver under DOS</td></tr>
+</table>
+
+<br>
+<a name=ifplop></a>
+<h3>1. Detect the USB driver with Syslinux</h3>
+<hr>
+
+<p>Icecube wrote the module ifplop.c32 for syslinux to detect the plop usb driver</p>
+<p>Example syslinux.cfg:<br>
+<pre class=file>
+default plopcheck
+
+# Check for the presence of plop (run by default)
+#   When plop INT13 hook is found, run the first label
+#   When plop INT13 hook isn't found, run the second label
+
+label plopcheck
+    com32 ifplop.c32
+    append plop_detected -- plop_not_detected
+	
+# When plop INT13 hook was found, boot the menu system.
+# plop can have added USB2.0 speed, so the entries we want to boot
+# will be read from disk much faster (supposing that we have a BIOS
+# that only supports USB1.1 speed).
+
+label plop_detected
+    com32 menu.c32
+    append syslinux.cfg
+		
+# plop INT13 hook wasn't found, so we boot plop
+
+label plop_not_detected
+    linux plpbt.bin
+</pre>
+</p>
+<p>ifplop.c32 is part of syslinux since version 4.01.<br>
+ifplop.c32 module page: 
+<a href=http://syslinux.zytor.com/wiki/index.php/Ifplop.c32 target=_blank>http://syslinux.zytor.com/wiki/index.php/Ifplop.c32</a>
+</p>
+<p>
+You find some driver detection info's
+<a href=http://forum.plop.at/index.php/topic,165.msg2099.html target=_blank>here</a>.
+</p>
+
+
+<br>
+<a name=usbdetectdos></a>
+<h3>2. Detect the USB driver under DOS</h3>
+<hr>
+
+<p>
+With the program
+<a href=http://download.plop.at/files/bootmngr/plpchk-0.1.zip>plpchk-0.1.zip</a>
+you are able to detect the plop usb driver. You can use it in the config.sys,
+in a batch program or from the command line. The program is able to create a file when the
+driver is installed, or delete a file when the driver was not detected. According to
+the existence of the file you can do some actions.
+For batch files you can use the return value of the error level.
+The program makes no screen output when you use the /h parameter.
+</p>
+<pre class=file>
+plpchk [/?] [/h] [file]
+
+  /?      help
+  /h      hide text output
+  file    create this file when the driver was detected or remove it when the
+          driver was not detected
+		
+config.sys example: DEVICE=c:\tools\plpchk.exe c:\tmp\plpusb
+		
+For batch processing: ERRORLEVEL 0 = no driver detected
+                                 1 = driver detected
+</pre>
+</p>
+<p>You find some driver detection info's
+<a href=http://forum.plop.at/index.php/topic,165.msg2099.html target=_blank>here</a>.
+</p>
+
+<a name=l_hiddenpartitions></a><br><h1>Hidden partition / Cleared partition</h1><hr>    <a name=full></a>
+
+<a name=hid></a>
+<h3>Hidden partition / Cleared partition</h3>
+<hr>
+
+<p>
+    There is a important difference between "hidden" and "cleared" partitions.
+</p>
+    <ul>
+    <li><p>Hidden Partition: Operating systems, backup solutions and so on
+	 can see them but they ignore them. I would say, this is a pseudo hidden partition.</p>
+    </li>
+    <li><p>Cleared Partition: No program (except the boot manager) knows that 
+    there is/was a partition defined in the MBR. 
+    This is really hidden.
+    It looks
+    like unallocated space for every program. That means no other program can
+    access the data on that partition (with some work and searching the hard disk
+    there are still ways to 
+    access the data). There is a risk, if you repartition
+    the hard disk, you will overwrite your invisible partition and all data
+    on it if you do it wrong.
+	</p>
+    </li>
+    </ul>
+
+
+<br>
+<a name=hide></a>
+<h3>Example: Hide a partition</h3>
+<hr>
+<p>This is an example: A partition should be visible in one profile and hidden (and not cleared) in another profile</p>
+<p>
+    Let's say you want to have the second partition on HDA (HDA2) on one profile visible
+    and on another hidden (and not cleared).
+</p>    
+<ul>
+<li>
+<p>
+     Use an empty entry in partitions. Give it
+    the label "hidden hda2". 
+</p>
+</li>
+<li>
+<p>
+    Select the device HDA. 
+</p>
+</li>
+<li>
+<p>
+    Go to "Edit MBR/Import data".
+</p>
+</li>
+<li>
+<p>
+    Move the cursor to P2 and press "s". Now move up to "BP" and press "p".
+</p>
+</li>
+<li>
+<p>    
+    Press ESC and go to "Partition ID". Choose "Select from list". Choose the hidden version
+    of your partition.
+</p>
+</li>
+<li>
+<p>
+ Press ESC and save your changes. 
+</p>
+</li>
+<li>
+<p>
+Go to "profiles".<br>
+Now you can assign the 
+    "visible" version of your partition to one profile and the "hidden" to another profile.
+</p>    
+    </li>
+    </ul>
+
+
+
+
+<a name=l_linuxloaders></a><br><h1>Linux Boot Managers to the boot sector</h1><hr>    <a name=full></a>
+    LILO, GRUB / grub4dos, GRUB2: I had no time to write some short descriptions how to install them to the boot sector.
+<a name=l_examples></a><br><h1>Examples</h1><hr>    <a name=full></a>
+
+<table class=contents cellspacing=0 cellpadding=2>
+<tr><td><a href=#ex0>1. Video dual boot install Windows XP and Windows XP</a></td></tr>
+<tr><td><a href=#ex1>2. Windows XP and Windows Vista dual boot with hidden (cleared) partitions</a></td></tr>
+<tr><td><a href=#ex2>3. Dualboot Windows XP and Windows 7</a></td></tr>
+</table>
+
+
+<br>
+<a name=ex0></a>
+<h3>1. Video dual boot install Windows XP and Windows XP</h3>
+<hr>
+<p>
+Download <a href=http://download.plop.at/files/bootmngr/video/demoinstall.wmv>demoinstall.wmv</a>
+(<a href=http://download.plop.at/files/bootmngr/video/demoinstall.zip>demoinstall.zip</a>). The quality is not the best but you see all required steps.
+I hope it's useful.
+</p>
+
+
+<br>
+<a name=ex1></a>
+<h3>2. Windows XP and Windows Vista dual boot with hidden (cleared) partitions</h3>
+<hr>
+
+<p>
+    The goal is to install Windows XP on the first partition
+    and Windows Vista on the second partition. I want that no windows has
+    access to the partition of the other Windows. There should be a third partition
+    that will be used as shared partition. Both Windows have access to this partition.
+</p>
+<p>    
+    There are many ways to do this. I will describe one way.
+</p>
+<p>It works only with the <a href=mbrinstall.html>MBR installation</a>!</p>
+
+<h3>What should be the result</h3>
+<p>
+    <ul>
+	<li>Windows XP on partition 1</li>
+	<li>Windows Vista on partition 2</li>
+	<li>A shared partition for both Windows as partition 3</li>
+	<li>No Windows has access to the other Windows partition</li>
+	<li>Realized with the Plop Boot Manager (hard disk installation)</li>
+    </ul>
+</p>
+
+
+<h3>Basic conditions</h3>
+<p>
+    <ul>
+	<li>The hard disk is not partitioned</li>
+	<li>No boot manager is installed</li>
+    </ul>
+</p>
+
+<h3 align=center>The description</h3>
+<p>
+
+    <h4>Install Windows XP</h4>
+    <blockquote>
+	<p>
+	At first install Windows XP. Create with the Windows installer
+	a partition with the size you want. I use a 10GB partition. Install
+	Windows XP on this partition.
+	</p>
+    </blockquote>
+
+    <h4>Setup Partitions</h4>
+    <blockquote>
+	<p>
+	When you installed your Windows, go to the <span class=cmd>Disk Management</span>
+	and create a second <span class=cmd>primary</span> partition for Vista  and
+	a third <span class=cmd>primary</span> partition for the shared data.
+	</p>
+    </blockquote>
+
+    <h4>Install the boot manager</h4>
+    <blockquote>
+	<p>
+	Now comes the boot manager part. Boot from the boot manager install floppy or CD.
+	Install the boot manager to the hard disk and then reboot.
+	</p>
+    </blockquote>
+	
+    <h4>Configure the Windows XP profile</h4>
+    <blockquote>
+	<p>
+	The boot manager created a profile called "os harddisk 1" to boot Windows XP.
+	It also imported the 3 primary partitions. The names are HDA1, HDA2 and HDA3.
+	</p>
+	<p>
+	Now go to <span class=cmd>setup</span> and <span class=cmd>profiles</span>. Select <span class=cmd>os harddisk 1</span>.
+	Give it the new label <span class=cmd>windows xp</span>.
+	</p>
+	<p>
+	Select <span class=cmd>linked partitions</span>. Press enter at the first slot
+	of <span class=cmd>HDA</span> and select <span class=cmd>HDA1</span>.
+	At the second slot press <span class=cmd>c</span> to set it to <span class=cmd>cleared</span>.
+	You can leave the third slot as <span class=cmd>don't touch</span> or select
+	<span class=cmd>HDA3</span>. See the difference at <a href=#partentries>configure partition entries</a>.
+	</p>
+    </blockquote>
+	
+    <h4>Configure the Windows Vista profile</h4>
+    <blockquote>
+	<p>
+	Now leave the configuration of Windows XP  and go to an empty profile in Profiles.
+	Give it the label <span class=cmd>windows vista</span>. Set <span class=cmd>show
+	in main menu</span> to <span class=cmd>yes</span>.
+	Now select <span class=cmd>linked partitions</span>. Press at the first slot
+	<span class=cmd>c</span> to set it to <span class=cmd>cleared</span>.
+	At the second slot press <span class=cmd>b</span> to set the <span class=cmd>boot flag</span>.
+	Press <span class=cmd>enter</span> and select <span class=cmd>HDA2</span>. On the third slot choose the same 
+	as for  windows xp (don't touch or HDA3). 
+	</p>
+    </blockquote>
+	
+    <h4>Install Window Vista</h4>
+    <blockquote>
+	<p>
+	Go back to the main menu. Now you see windows xp and windows vista. Move to windows vista
+	and press <span class=cmd>Enter</span>. 	
+	This writes the profile settings to the hard disk. The booting will fail, because Vista
+	is not installed. Now boot the Windows Vista install DVD. In the installer you should see
+	at the partitions screen at first an unallocated space (there is xp installed) and 2
+	primary partitions. Select the first primary partition to install Windows Vista. when the
+	Windows Vista installation has been finished, it's possible, that Vista 
+	is booting immediately and the Plop Boot Manager does not come. In this case use
+	<span class=cmd>Rewrite loader</span> from the Plop Boot Manager install floppy or CD.
+	</p>
+    </blockquote>
+	
+	<p>
+	Now you should have two bootable Windows on your hard disk and they don't know from each other.
+	You can share data between both with the shared partition.
+	</p>
+
+
+    <a name=vista2></a>
+    <h3>Windows Vista on the second hard disk</h3>
+    <p>
+    It's similar to the previous description, if you want to install Windows XP on the first hard disk and 
+    Windows Vista on the second hard disk. The second hard disk is <span class=cmd>HDB</span> in the boot manager.
+    So install Windows Vista to the first partition of the second hard disk. Set in
+    the vista profile/linked partitions the first slot of HDB to 
+    <span class=cmd>HDB1</span> and press <span class=cmd>b</span>. 
+    The boot manager will set the boot flag to 81h. This should be
+    ok for your installation.
+    
+    
+    
+    </p>
+
+
+<br>
+<a name=ex3></a>
+<h3>3. Dualboot Windows XP and Windows 7</h3>
+<hr>
+
+<p>Here are short instructions for a complete new installation of
+your pc with dualbooting WinXP and Win7. It doesn't matter if you use 32 or 64 
+bit versions.
+Take care, all data on your pc will be deleted!
+</p>
+<p>Boot the Win7 install DVD. Remove all partitions from the hard disk. Create a partition for Win7. 
+The install program will create 2 partitions. One with about 80MB for the Win7 boot files and a
+second partition with the Win7 files. Create an additional partition for WinXP. Now you see
+3 partitions. Install Win7 to the second partition. After the Win7 installation is complete, install the Plop
+Boot Manager. After the Boot Manager installation go to the Boot Manager Setup, then Profiles, then
+"OS HARDDISK 1". Change the name to "Win7". Go to linked partitions and press enter on the first position of HDA
+and select HDA1, on the second select HDA2 and on the third press "c" for cleared. Now leave the profile settings 
+for Win7. Use now an empty profile to create the WinXP profile. Give it the name WinXP, visible in main menu "yes".
+In linked partitions select for HDA on the first position HDA3, press "b" to set the boot flag on the first position.
+On the second press "c" to set it cleared. On the third press "c" to set it to cleared too. Go to the main menu
+and press enter on WinXP. You will be not able to boot this partition because XP is not installed currently.
+If you get the message about invalid boot signature, then press "n" to abort. Now boot the WinXP
+install CD. You should see now only one partition. Install WinXP there. After the installation 
+completed then start the Plop Boot Manager install CD and use "Rewrite loader". Reboot, the boot manager
+will tell you about partition changes. Press "y" to import the new values. Now you should be able to boot
+both systems.
+</p>
+
+<a name=l_nod32></a><br><h1>NOD32 Virus report</h1><hr>    <a name=full></a>
+
+
+
+<p>NOD32 reports a MBR virus after the Boot Manager MBR installation. It's a false report.
+This problem was fixed but with the new NOD32 versions it's back. 
+
+</p>
+
+
+
+<a name=l_faq></a><br><h1>FAQ's - Frequently asked questions</h1><hr>    <a name=full></a>
+	<ol>
+		    <li><p><a href=#faq0>I booted DOS from USB and I cannot write on the drive</a></p></li>
+	    	    <li><p><a href=#faq1>Are there plans to add write support in the future</a></p></li>
+	    	    <li><p><a href=#faq2>The boot manager detect's my usb cdrom, but booting hangs</a></p></li>
+	    	    <li><p><a href=#faq3>My USB keyboard does not work when I booted from USB</a></p></li>
+	    	    <li><p><a href=#faq4>Can I use my USB PC-Card (PCMCIA CardBus) to boot from USB</a></p></li>
+	    	    <li><p><a href=#faq5>I want to install the boot manager from my USB device, but I cannot choose my internal hard disk</a></p></li>
+	    	    <li><p><a href=#faq6>I use plpbt.bin and it forgets my settings</a></p></li>
+	    	    <li><p><a href=#faq7>I cannot boot from my SATA CD/DVD drive</a></p></li>
+	    	    <li><p><a href=#faq8>I was reading VIEW/EDIT/COPY data in the forum, where is this menu</a></p></li>
+	    	    <li><p><a href=#faq9>Main menu network boot: !PXE structure was not found in UNDI</a></p></li>
+	    	    <li><p><a href=#faq10>My USB DVD drive is detected, but I cannot boot</a></p></li>
+	    	</ol>
+    <p>&nbsp;</p>
+	<ol>
+		    <a name=faq0></a>
+	    <li>
+		<p>
+		    <b>I booted DOS from USB and I cannot write on the drive</b>
+		</p>
+		<p>
+		    My drivers have no write routines implemented. You want to
+	know why? My intention was to have USB drivers for UHCI, OHCI
+	and EHCI controllers in my tiny boot manager. The space to install
+	the boot manager without the need of a partition is very limited.
+	So there was no space left for write routines.		</p>
+	    </li>
+	    	    <a name=faq1></a>
+	    <li>
+		<p>
+		    <b>Are there plans to add write support in the future</b>
+		</p>
+		<p>
+		    It's in my mind, but there are no fix plans.		</p>
+	    </li>
+	    	    <a name=faq2></a>
+	    <li>
+		<p>
+		    <b>The boot manager detect's my usb cdrom, but booting hangs</b>
+		</p>
+		<p>
+		    USB CD/DVD drives are not supported.		</p>
+	    </li>
+	    	    <a name=faq3></a>
+	    <li>
+		<p>
+		    <b>My USB keyboard does not work when I booted from USB</b>
+		</p>
+		<p>
+		    USB keyboards are not supported by my drivers. When you boot Linux or Windows,
+	 then your keyboard will work again when those operating systems are taking 
+	 control over the USB hardware.		</p>
+	    </li>
+	    	    <a name=faq4></a>
+	    <li>
+		<p>
+		    <b>Can I use my USB PC-Card (PCMCIA CardBus) to boot from USB</b>
+		</p>
+		<p>
+		    Yes, with the pcmcai version of the boot manager		</p>
+	    </li>
+	    	    <a name=faq5></a>
+	    <li>
+		<p>
+		    <b>I want to install the boot manager from my USB device, but I cannot choose my internal hard disk</b>
+		</p>
+		<p>
+		    The problem with installing on the internal (in this case the second) hard disk 
+	with the installer
+	is, that the installer imports the partitions from the usb device and
+	thinks this are the partitions of the first hard disk. When the boot
+	manager boot's later from the real hard disk then the imported partitions are
+	not correct. You see the problem? Sure it would be possible to add an option to
+	handle this situation, but there are so many other ways to install the boot manager, that
+	there are no plans to add this feature to the installer (except, many people request this feature).		</p>
+	    </li>
+	    	    <a name=faq6></a>
+	    <li>
+		<p>
+		    <b>I use plpbt.bin and it forgets my settings</b>
+		</p>
+		<p>
+		    You have to configure plpbt.bin with plpcfgbt. All changes you make within
+	 the boot manager menu are only valid until you reboot. The changes are not saved.		</p>
+	    </li>
+	    	    <a name=faq7></a>
+	    <li>
+		<p>
+		    <b>I cannot boot from my SATA CD/DVD drive</b>
+		</p>
+		<p>
+		    SATA CD/DVD drives are not supported. Only IDE CD/DVD drives are working.		</p>
+	    </li>
+	    	    <a name=faq8></a>
+	    <li>
+		<p>
+		    <b>I was reading VIEW/EDIT/COPY data in the forum, where is this menu</b>
+		</p>
+		<p>
+		    'VIEW/EDIT/COPY' data has been renamed to 'Edit MBR/Import data' (setup/partitions/partition edit).		</p>
+	    </li>
+	    	    <a name=faq9></a>
+	    <li>
+		<p>
+		    <b>Main menu network boot: !PXE structure was not found in UNDI</b>
+		</p>
+		<p>
+		    Your network rom is a 'PXE Split ROM'. Currently only 'Monolithic' roms are supported		</p>
+	    </li>
+	    	    <a name=faq10></a>
+	    <li>
+		<p>
+		    <b>My USB DVD drive is detected, but I cannot boot</b>
+		</p>
+		<p>
+		    Booting from USB CD/DVD drives is not supported by the current usb driver		</p>
+	    </li>
+	    	</ol>
+    
+    <hr>
+    <p align=center>&copy; by Elmar Hanlhofer</p>
+</body>
+</html>

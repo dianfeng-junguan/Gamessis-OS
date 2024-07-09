@@ -1,4 +1,4 @@
-.PHONY: boot mount umount run knl cpknl com
+.PHONY: boot mount umount run knl cpknl com grub
 CUARGS = -w -g -m32 -no-pie -fno-pic -fno-stack-protector -I include
 BOOT = boot.efi
 KNL_OFILES = bin/setupa.o bin/int.o bin/main.o bin/log.o \
@@ -30,13 +30,50 @@ cpknl:
 	@make mount
 	@sudo cp bin/gmsknl.elf /mnt/gmsknl
 	@make umount
+cpknln:
+	@make imgcon
+	@make imgmnt
+	@sudo cp bin/gmsknl.elf /mnt/gmsknl
+	@make imgdismnt
+	@make imgdiscon
 mount:
 	@sudo mount hd.img /mnt
 umount:
 	@sudo umount /mnt
 run:
-	@sudo qemu-system-x86_64 -hda hd.img -m 1G
+	@sudo qemu-system-x86_64 -hda hda.img -m 1G -bios OVMF.fd
 debug:
-	@qemu-system-i386 -hda hd.img -m 2G -s -S
+	@qemu-system-x86_64 -hda hda.img -m 2G -s -S -bios OVMF.fd
+debugdev:
+	@sudo qemu-system-i386 /dev/nbd0 -m 2G -s -S
+debugnew:
+	@sudo qemu-system-i386 plpbt/plpbt.img -m 2G
 bochs:
 	@bochsdbg -q -f bochsrc.bxrc
+qcow2:
+	@qemu-img create -f qcow2 hda.img 512M
+	@sudo modprobe nbd
+	@sudo qemu-nbd --connect=/dev/nbd0 hda.img
+	@sudo fdisk /dev/nbd0
+imgdismnt:
+	@sudo umount /mnt/boot
+	@sudo umount /mnt
+imgdiscon:
+	@sudo qemu-nbd --disconnect /dev/nbd0
+imgcon:
+	@sudo modprobe nbd
+	@sudo qemu-nbd --connect=/dev/nbd0 hda.img
+imgmkfs:
+	@sudo mkfs.fat -F 32 /dev/nbd0p1
+	@sudo mkfs.fat -F 32 /dev/nbd0p2
+imgmnt:
+	@sudo mount /dev/nbd0p2 /mnt   
+	@sudo mount /dev/nbd0p1 /mnt/boot
+imgmntf:
+	@sudo mount /dev/nbd0p2 /mnt
+	@sudo mkdir /mnt/boot   
+	@sudo mount /dev/nbd0p1 /mnt/boot
+grub:
+	@sudo mkdir /mnt/boot/EFI
+	@sudo grub-install --target=x86_64-efi --efi-directory=/mnt/boot/EFI --bootloader-id=GRUB --recheck --boot-directory=/mnt/boot /dev/nbd0
+	@sudo cp -r well-confugured-grub/* /mnt/boot/grub/

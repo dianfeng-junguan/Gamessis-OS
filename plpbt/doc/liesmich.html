@@ -1,0 +1,2720 @@
+<html>
+<head> 
+    <title>Plop
+    </title>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/printlayout.css"> 		
+</head>
+
+<body>
+URL: <a href=http://www.plop.at/de/bootmanager/full.html>http://www.plop.at/de/bootmanager/full.html</a><br><a name=l_index></a><br><h1>Inhaltsverzeichnis</h1><hr>    <a name=full></a>
+<div align=right>Aktualisiert am 07/Feb/2012</div><table class=contentsNoBorders border=0 cellspacing=0 cellpadding=2><tr><td align=right>1.</td><td><a href=#l_intro>Einleitung</a></td></tr>
+<tr><td align=right>2.</td><td><a href=#l_startmodes>Übersicht der Installations-/Startmöglichkeiten</a></td></tr>
+<tr><td align=right>3.</td><td><a href=#l_features>Features</a></td></tr>
+<tr><td align=right>4.</td><td><a href=#l_screenshots>Screenshots</a></td></tr>
+<tr><td align=right>5.</td><td><a href=#l_licence>Lizenz</a></td></tr>
+<tr><td align=right>6.</td><td><a href=#l_download>Download</a></td></tr>
+<tr><td align=right>7.</td><td><a href=#l_thebootmanager>Der Bootmanager</a></td></tr>
+<tr><td align=right>8.</td><td><a href=#l_mbrinstall>Installation zum MBR (Master Boot Record) der Festplatte</a></td></tr>
+<tr><td align=right>9.</td><td><a href=#l_plpbt.bin>plpbt.bin - LiveCD und andere Möglichkeiten um den Bootmanager zu starten</a></td></tr>
+<tr><td align=right>10.</td><td><a href=#l_iso>Eigenes ISO mit modifizierter plpbt.bin Datei erstellen</a></td></tr>
+<tr><td align=right>11.</td><td><a href=#l_plpcfgbt>plpcfgbt - plpbt.bin konfigurieren</a></td></tr>
+<tr><td align=right>12.</td><td><a href=#l_plpbt-parameter>plpbt.bin Parameter</a></td></tr>
+<tr><td align=right>13.</td><td><a href=#l_rom>Erstellen eines PCI Bootmanager option ROM (ins Bios einbauen)</a></td></tr>
+<tr><td align=right>14.</td><td><a href=#l_plpbt4win>plpbt4win</a></td></tr>
+<tr><td align=right>15.</td><td><a href=#l_plpgenbtldr>plpgenbtldr</a></td></tr>
+<tr><td align=right>16.</td><td><a href=#l_pcmcia>PCMCIA CardBus Treiber - USB PC-Karte</a></td></tr>
+<tr><td align=right>17.</td><td><a href=#l_usbinfo>USB Info</a></td></tr>
+<tr><td align=right>18.</td><td><a href=#l_usbdos>DOS und der USB Treiber</a></td></tr>
+<tr><td align=right>19.</td><td><a href=#l_usbdriverdetect>Feststellen ob der USB Treiber geladen ist</a></td></tr>
+<tr><td align=right>20.</td><td><a href=#l_hiddenpartitions>Hidden Partition / Cleared Partition</a></td></tr>
+<tr><td align=right>21.</td><td><a href=#l_linuxloaders>Linux Bootmanager in den Bootsektor</a></td></tr>
+<tr><td align=right>22.</td><td><a href=#l_examples>Beispiele</a></td></tr>
+<tr><td align=right>23.</td><td><a href=#l_nod32>NOD32 Virusmeldung</a></td></tr>
+<tr><td align=right>24.</td><td><a href=#l_faq>FAQ's - Häufig gestellte Fragen</a></td></tr>
+</table><a name=l_intro></a><br><h1>Einleitung</h1><hr>    <a name=full></a>
+<p>
+Der Plop Boot Manager ist ein kleines Programm um mehrere Betriebssysteme 
+zu starten. 
+Das Programm beinhaltet einen IDE CDROM Treiber und USB Treiber um auf diese Hardware
+ohne Hilfe vom Bios zugreifen zu können.
+
+Man kann Betriebssysteme wahlweise von der <b>Festplatte</b>, von 
+<b>Diskette</b> von <b>CD/DVD</b> oder auch von <b>USB</b> starten. 
+
+Man kann den Bootmanager direkt von einer Diskette, CD, Netzwerk, usw.
+starten.
+
+Der Bootmanager kann auch auf der Festplatte Ihres Systems installiert werden. Es
+wird keine Zusatzpartition für den Bootmanager benötigt.
+</p>
+<p>
+Programmiersprache: Assembler<br>
+Programmierer: Elmar Hanlhofer
+</p>
+<p>
+Die aktuelle Version ist <a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a>.<br>
+</p>
+
+
+
+<a name=l_startmodes></a><br><h1>Übersicht der Installations-/Startmöglichkeiten</h1><hr>    <a name=full></a>
+
+
+<table border=0 cellspacing=0 cellpadding=0 class=box>
+<tr>
+ <td class=boxtdr>Festplatteninstallation</td>
+ <td>Der Plop Bootmanager wird der primäre Bootmanager auf Ihrem System. 
+ Es wird keine extra Partition für den Bootmanager benötigt.
+ Er wird auf den ersten Sektoren der Festplatte gespeichert und
+ befindet sich vor dem Beginn der ersten Partition. Der Bootmanager startet auch wenn kein
+ Betriebssystem installiert ist. 
+ </td>
+</tr>
+<tr>
+ <td class=boxtd>Starten&nbsp;von&nbsp;einem&nbsp;externen&nbsp;Datenträger<br>
+ Diskette<br>
+ CDROM/DVD<br>
+ USB Laufwerk
+ </td>
+ <td class=boxtd2>
+ Der Bootmanager kann von diesen Datenträgern gestartet werden. Jedoch sind ein paar
+ Funktionen nicht verfügbar.
+ </td>
+</tr>
+<tr>
+ <td class=boxtd>Starten&nbsp;von&nbsp;einem&nbsp;anderen&nbsp;Bootmanager<br>
+ LiLo<br>
+ Syslinux<br>
+ Grub<br>
+ Grub4Dos<br>
+ Grub2<br>
+ Windows boot.ini<br>
+ Windows BCD<br>
+ </td>
+ <td class=boxtd2>
+ Sie können Ihren bevorzugten Bootmanager weiter verwenden und trotzdem 
+ Funktionen des Plop Bootmanagers nutzen (z.B. USB booten, ...).
+ <br>
+ <br>
+ Der Bootmanager kann auch im "hidden" (unsichtbaren) Modus gestartet werden. 
+ Das bedeutet dass Sie in Ihrem Bootmanager einen Menüeintrag erstellen und
+ dadurch den Plop Bootmanager starten ohne dass dieser sichtbar wird. Dies
+ kann praktisch für die USB Bootfunktion sein.
+ </td>
+</tr>
+<tr>
+ <td class=boxtd>Starten vom Netzwerk</td>
+ <td class=boxtd2>Mit Hilfe von pxelinux kann der Bootmanager vom Netzwerk gestartet werden.
+ </td>
+</tr>
+<tr>
+ <td class=boxtd>Starten vom Bios als Option ROM im BIOS</td>
+ <td class=boxtd2>Sie können den Bootmanager als Option ROM in Ihrem Bios speichern.
+ Dann wird keine Festplatte oder ein anderer Datenträger benötigt um den Bootmanager zu
+ starten. Der Bootmanager kann als PNP Option ROM verwendet werden oder
+ die Kontrolle des INT19 übernehmen und dadurch als erste Bootoption fixiert werden.
+ </td>
+</tr>
+</table>
+ 
+
+<a name=l_features></a><br><h1>Features</h1><hr>    <a name=full></a>
+
+
+<ul>
+    <li>USB booten ohne BIOS Unterstützung (UHCI, OHCI und EHCI)</li>
+    <li>CD/DVD booten ohne BIOS Unterstützung (IDE)</li>
+    <li>PCMCIA CardBus Unterstützung damit USB PC-Karten aktiviert werden und davon gebootet werden kann</li>
+    <li>Floppy booten</li>
+    <li>Unterschiedliche Profile für die Betriebssysteme</li>
+    <li>Bis zu 16 Partitionen definieren</li>
+    <li>Keine extra Partition für den Bootmanager</li>
+    <li>Verstecktes booten, z.B. haben Sie ein Betriebssystem zum reparieren installiert und der 
+	normale Anwender soll nichts davon wissen.</li>
+    <li>Boot Countdown</li>
+    <li>Partitionen komplett verstecken</li>
+    <li>Passwortschutz für den Computer und Bootmanagersetup</li>
+    <li>Backup der Partitionstabellendaten</li>
+    <li>Textmodus Oberfläche 80x50</li>
+    <li>Grafische Oberfläche 640x480, 800x600, 1024x786, 1280x1024</li>
+    <li>Editieren der Partitionstabelle im MBR</li>
+    <li>Starten des Bootmanagers von Festplatte, Diskette, USB, CD, DVD</li>
+    <li>Starten des Bootmanagers vom Windows Bootmenü</li>
+    <li>Starten des Bootmanagers von LILO, GRUB, Syslinux, Isolinux, Pxelinux (Netzwerk)</li>
+    <li>Kann als PCI option ROM verwendet werden</li>
+    <li>Zugriff auf die komplette USB Festplatte (bis zu 2TB) auch wenn das Bios ein 128 GiB Limit hat</li>
+    <li>Der Bootmanager kann über das Netzwerk gestartet werden</li>
+    <li>Sie können das Boot ROM der Netzwerkkarte mit dem Bootmanager starten um vom
+    Netzwerk zu booten</li>
+</ul>
+
+
+
+<a name=l_screenshots></a><br><h1>Screenshots</h1><hr>    <a name=full></a>
+
+<table border=0 cellpadding=5 cellspacing=5 align=center>
+<tr>
+    <td align=center>
+    <p>Hauptmenü</p>
+    <a href=/slide16de01.html>
+    <img src=/images/bootmanagerv5/bootmngr5_1_small.jpg title=mainmenu class=mimg><br>
+    vergrössern</a>
+    </td>
+
+    <td align=center>
+    <p>Hauptmenü (Textmodus)</p>
+    <a href=/slide16de02.html>
+    <img src=/images/bootmanagerv5/bootmngr5_2_small.jpg title=mainmenu class=mimg><br>
+    vergrössern</a>
+    </td>
+</tr>
+<tr><td colspan=2>&nbsp;</td></tr>
+<tr>
+    <td align=center>
+    <p>Profile partitions</p>
+    <a href=/slide16de03.html>
+    <img src=/images/bootmanagerv5/bootmngr5_3_small.jpg title=mainmenu class=mimg><br>
+    vergrössern</a>
+    </td>
+
+    <td align=center>
+    <p>MBR partition edit</p>
+    <a href=/slide16de04.html>
+    <img src=/images/bootmanagerv5/bootmngr5_4_small.jpg title=mainmenu class=mimg><br>
+    vergrössern</a>
+    </td>
+</tr>
+
+</table>
+
+
+
+
+<a name=l_licence></a><br><h1>Lizenz</h1><hr>    <a name=full></a>
+<br>
+<p>
+    <b>Die Plop Bootmanager Lizenzbedingungen:</b>
+</p>
+<p>
+   Die Lizenzbedingungen gelten auch für die Bootmanagertools die von 
+   Elmar Hanlhofer programmiert wurden und nicht der GPL unterliegen.
+
+</p>
+<p>
+    <ul>
+	<li>Die Programme dürfen kostenlos für private und kommerzielle 
+       Zwecke genutzt werden.</li>
+	<li>Die Programme dürfen nicht verkauft werden&sup1;.</li>
+	<li>Die Herkunft dieser Software darf nicht falsch dargestellt werden; 
+	    Sie dürfen nicht angeben, dass Sie die ursprüngliche Software geschrieben haben. 
+	    Wenn Sie diese Software in einem Produkt benutzten, würde eine Erwähnung geschätzt 
+	    werden, sie ist aber nicht erforderlich.
+	</li>
+	<li>
+	Diese Software wird ohne ausdrückliche oder implizierte Garantie
+       bereitgestellt. In keinem Fall können die Autoren für irgendwelche
+       Schäden, die durch die Benutzung dieser Software entstanden sind,
+       haftbar gemacht werden.	
+	</li>
+    </ul>
+</p>
+<br>
+<p>
+&sup1;Die Programme können zu "auf nicht Gewinn ausgerichtete" Produkte hinzugefügt werden.<br>
+Beispiel: Sie verkaufen eine CD und verlangen nur den Preis des CD Rohlings, alles andere wie z.B. Arbeitszeit zum
+erstellen der CD wird nicht verrechnet.
+
+</p>
+
+
+<a name=l_download></a><br><h1>Download</h1><hr>    <a name=full></a>
+
+    
+<p>
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+    <table border=0 cellspacing=3 cellpadding=3 align=center class=box>
+    <tr>
+	<td>
+	    <input type="image" src="http://www.plop.at/images/btn_donate_SM.gif" border="0" name="submit" alt="Jetzt einfach, schnell und sicher online bezahlen - mit PayPal.">
+	</td>
+	
+	<td>
+	    Bitte unterstützen Sie diese Software mit ein paar Euros damit die Software auch weiterhin gratis ist und weiterentwickelt wird.	</td>
+	
+	<td>
+	    <input type="image" src="http://www.plop.at/images/btn_donate_SM.gif" border="0" name="submit" alt="Jetzt einfach, schnell und sicher online bezahlen - mit PayPal.">
+	    <input type="hidden" name="cmd" value="_s-xclick">
+	    <input type="hidden" name="hosted_button_id" value="FJ4BBXYT3ELQ4">
+	</td>
+    </tr>
+    </table>
+</form>
+
+</p>
+
+<br>
+<br>                                                                                             
+<center>                                                                                                                 
+<table border=0 cellspacing=0 cellpadding=0 class=box align=center>
+<tr>
+    <td class=boxtdr><a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip target=_blank>plpbt-5.0.14.zip</a></td>
+    <td class=boxtdr>2012-02-11</td>
+    <td >Plop Bootmanager 5.0.14    
+    </td>
+</tr>
+	<tr>
+    <td class=boxtd><a href=http://download.plop.at/files/bootmngr/plpbt-5.0.13.zip target=_blank>plpbt-5.0.13.zip</a></td>
+    <td class=boxtd>2011-08-14</td>
+    <td class=boxtd2>Plop Bootmanager 5.0.13    
+    </td>
+</tr>
+	</table>
+<br><br>
+<h3>Tools</h3>                                                                                                           
+                                                                                                                         
+<table border=0 cellspacing=0 cellpadding=0 class=box align=center>
+<tr>
+    <td class=boxtdr><a href=http://download.plop.at/files/bootmngr/plpbtrom-0.6.zip target=_blank>plpbtrom-0.6.zip</a></td>
+    <td class=boxtdr>2011-08-14</td>
+    <td >PCI Option ROM erstellen    
+    </td>
+</tr>
+	<tr>
+    <td class=boxtd><a href=http://download.plop.at/files/bootmngr/plpbt-createiso.zip target=_blank>plpbt-createiso.zip</a></td>
+    <td class=boxtd>2010-06-08</td>
+    <td class=boxtd2>Erstellen eigener Bootmanager CD's    
+    </td>
+</tr>
+	<tr>
+    <td class=boxtd><a href=http://download.plop.at/files/bootmngr/plpcfgbt-0.11.zip target=_blank>plpcfgbt-0.11.zip</a></td>
+    <td class=boxtd>2012-02-03</td>
+    <td class=boxtd2>Tool zum Konfigurieren der Bootmanager Datei plpbt.bin (Windows/Linux)    
+    </td>
+</tr>
+	<tr>
+    <td class=boxtd><a href=http://download.plop.at/files/bootmngr/plpdisd-0.2.zip target=_blank>plpdisd-0.2.zip</a></td>
+    <td class=boxtd>2010-10-16</td>
+    <td class=boxtd2>Deaktivieren des USB Treibers unter DOS    
+    </td>
+</tr>
+	<tr>
+    <td class=boxtd><a href=http://download.plop.at/files/bootmngr/plpchk-0.1.zip target=_blank>plpchk-0.1.zip</a></td>
+    <td class=boxtd>2010-10-14</td>
+    <td class=boxtd2>Prüfen ob der USB Treiber installiert ist mit DOS    
+    </td>
+</tr>
+	<tr>
+    <td class=boxtd><a href=http://download.plop.at/files/bootmngr/plpmkboot-0.1.zip target=_blank>plpmkboot-0.1.zip</a></td>
+    <td class=boxtd>2012-02-03</td>
+    <td class=boxtd2>plpbt.bin direkt von FAT booten    
+    </td>
+</tr>
+	</table>
+                                                                                                                         
+</center> 
+<br>
+
+<a name=l_thebootmanager></a><br><h1>Der Bootmanager</h1><hr>    <a name=full></a>
+<table class=contents cellspacing=0 cellpadding=2>
+<tr><td><a href=#b0>1. Hotkeys - Allgemeine Tastaturfunktionen</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<tr><td><a href=#b1>2. Hauptmenü</a></td></tr>
+<tr><td><a href=#b2>2.1. Hauptmenü Hotkeys</a></td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td><a href=#b3>3. Setup</a></td></tr>
+<tr><td><a href=#b4>3.1. Partitions (Partitionen)</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b5>Edit label (Partitionsbezeichnung bearbeiten)</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b6>Select Device (Festplatte auswählen)</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b7>Partition ID (Partitions ID)</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b8>Edit MBR/Import data (Partitionsdaten bearbeiten)</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b9>Clear partition data (Daten löschen)</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b10>Reset changes (Änderungen verwerfen)</a></td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td><a href=#b11>3.2. Profiles (Profile)</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b12>Edit label (Profilnamen bearbeiten)</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b13>Show in main menu (im Hauptmenü anzeigen)</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b14>Linked partitions (verlinkte Partitionen)</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b15>Konfigurieren der Partitionseinträge</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b16>Linked partitions - spezial Tasten</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b17>Clear profile data (Profildaten löschen)</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b18>Reset changes (Änderungen verwerfen)</a></td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td><a href=#b19>3.3. Bootmanager</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b20>Startmode</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b21>Bootcountdown</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b22>Edit bootcountdown</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b23>Select at start</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b24>Default profile (standard Profil)</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b25>Show floppy boot</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b26>Show cdrom boot</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b27>Show usb boot</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b28>Force USB 1.1</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b29>Use Mass Stor Dev</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b30>Textmode after boot</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b31>Graphicmode</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b32>Zoom animation</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b33>Font</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b34>Starfield</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b35>Master password</a></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=#b36>Setup password</a></td></tr>
+</table>
+<br>
+
+<a name=hotkeys></a>
+<a name=b0></a>
+<h3>1. Hotkeys - Allgemeine Tastaturfunktionen</h3>
+
+<blockquote>
+    <table border=0 cellspacing=0 cellpadding=0>
+    <tr>
+	<td>Cursor hinauf/hinunter &nbsp;</td><td>Menübalken bewegen</td>
+    </tr>
+    <tr>
+	<td>Enter &nbsp;</td><td>Auswahl betätigen</td>
+    </tr>
+    <tr>
+	<td>ESC	&nbsp;</td><td>Fenster schliessen</td>
+    </tr>
+    <tr>
+	<td>STRG - ESC &nbsp;</td><td>in den Textmodus umschalten</td>
+    </tr>
+    <tr>
+	<td>STRG - BILD HINAUF	&nbsp;</td><td>Bildschirmauflösung erhöhen</td>
+    </tr>
+    <tr>
+	<td>STRG - BILD HINUNTER &nbsp;</td><td>Bildschirmauflösung reduzieren</td>
+    </tr>
+    <tr>
+	<td>z</td>
+	<td>Ein/Ausschalten der Fenster Zoomanimation</td>
+    </tr>
+    </table>
+</blockquote>
+
+
+<br>
+<hr>
+
+<a name=b1></a>
+<h3>2. Hauptmenü</h3>
+<blockquote>
+    <p>
+    Im Hauptmenü werden alle "sichtbaren Profile" angezeigt, sowie optional booten von 
+    Diskette, CD/DVD, USB und Netzwerk. Weiters gelangen Sie zum Setup des Bootmanagers.
+    </p>
+</blockquote>
+
+<a name=b2></a>
+<h3>2.1. Hauptmenü Hotkeys</h3>
+<blockquote>
+    <table border=0 cellspacing=0 cellpadding=5>
+    <tr>
+	<td>1-9&nbsp;</td><td>Profil starten</td>
+    </tr>
+    <tr>
+	<td>q&nbsp;</td><td>Partition zum Booten auswählen</td>
+    </tr>
+    <tr>
+	<td>w&nbsp;</td><td>MBR laut Profil ändern, aber nicht booten</td>
+    </tr>
+    <tr>
+	<td>f&nbsp;</td><td>Betriebssystem von Diskette starten</td>
+    </tr>
+    <tr>
+	<td>c&nbsp;</td><td>Betriebssystem von CD/DVD starten</td>
+    </tr>
+    <tr valign=top>
+	<td>u&nbsp;</td><td>Betriebssystem von USB starten
+	</td>
+    </tr>
+    <tr>
+	<td>n&nbsp;</td><td>Netzwerkboot</td>
+    </tr>
+    </table>
+    <p><b>Erweiterte USB Bootoptionen:</b>
+    <ul>
+	<li><p>SHIFT-u drücken um USB 1.1 zu verwenden.</p></li>
+	<li><p>STRG-u drücken um vor dem Starten des Betriebssystems auf einen Tastendruck zu warten.
+	Sie haben hier auch die Möglichkeit "s" (skip) zu drücken um die Suche fortzusetzen damit
+	von einem anderen USB Laufwerk gebootet werden kann.</p></li>
+	<li><p>ALT-u drücken um das Identifizieren eines USB Gerätes zu
+	überspringen.
+	Sie haben hier auch die Möglichkeit "s" (skip) zu drücken um die Suche fortzusetzen damit
+	von einem anderen USB Gerät gebootet werden kann.</p></li>
+	
+    </ul>
+	<p><b>Unterschied STRG-u und ALT-u:</b>
+	<ul>
+	Bei STRG-u wird ein gefundenes USB Gerät Identifiziert. Aufgrund der nicht vollständigen
+	USB Implementierung kann der Bootmanager bei manchen Geräten "hängen" bleiben.
+	Mit ALT-u wird der Vorgang übersprungen und der Bootmanager sollte nicht 
+	"hängen" bleiben.
+	</ul>
+	</p>
+</blockquote>
+
+<br>
+<hr>
+<a name=b3></a>
+<h3>3. Setup</h3>
+
+<a name=b4></a>
+<h3>3.1. Partitions (Partitionen)</h3>
+<blockquote>
+    <p>
+    Hier befindet sich die Verwaltung der Partitionen. Das Installationsprogramm richtet alle 
+    gefundenen primären Partitionen automatisch ein. Die Namensvergebung des Installationsprogrammes
+    geht von <span class=cmd>HDA1</span> bis <span class=cmd>HDD4</span>. 
+    <span class=cmd>HD</span> steht für Harddisk. 
+    <span class=cmd>HDA</span> steht für Harddisk <span class=cmd>A</span> und ist die erste Festplatte. 
+    Die Zahlen <span class=cmd>1-4</span> stehen für die primären Partitionen.
+    </p>
+    <p>
+    Hinweis für Linux: <span class=cmd>HDA</span> hat nichts mit der im Linux verwendeten Bezeichnung 
+    <span class=cmd>/dev/hda</span> zu tun. 
+    </p>
+</blockquote>
+
+<a name=b5></a>
+<h4>Edit label (Partitionsbezeichnung bearbeiten)</h4>
+<blockquote>
+    <p>
+    Hier kann man die vom Installationsprogramm automatisch vergebene Bezeichnung ändern 
+    bzw. bei einer neuen Partition eine Bezeichnung eintragen. Die Bezeichnungslänge ist 
+    auf 16 Zeichen beschränkt.
+    </p>
+</blockquote>
+
+<a name=b6></a>
+<h4>Select Device (Festplatte auswählen)</h4>
+<blockquote>
+    <p>
+    Hier wählen Sie die Festplatte aus, auf der sich die Partition befindet. 
+    </p>
+	
+    <p>
+	HDA = Festplatte 1<br>
+	HDB = Festplatte 2<br>
+	HDC = Festplatte 3<br>
+	HDD = Festplatte 4<br>
+    </p>
+</blockquote>
+
+<a name=b7></a>
+<h4>Partition ID (Partitions ID)</h4>
+<blockquote>
+    <p>
+    Sie können die Partition ID der Partition auf 2 Arten einstellen/ändern.
+    </p>
+</blockquote>
+
+<h4>1. Enter partition ID (ID Nummer eingeben)</h4>
+<blockquote>
+    <p>
+    Hier kann man den hexadezimalen Wert der Partitions ID eingeben. Diese Methode ist 
+    für erfahrene Computeranwender.
+    </p>
+</blockquote>
+
+<h4>2. Select ID from list (Aus einer Liste auswählen)</h4>
+<blockquote>
+    <p>
+    Hier kann man aus einer Liste der gängigsten Partitions IDs auswählen. Sollte die
+    gewünschte ID nicht vorhanden sein, dann benützen Sie <span class=cmd>Enter partition ID</span>.
+    </p>
+</blockquote>
+
+<a name=b8></a>
+<h4>Edit MBR/Import data (Partitionsdaten bearbeiten)</h4>
+<blockquote>
+    <p>
+    Diese Funktion wird verwendet um die Daten der Partitionen im Bootmanager
+    oder im MBR zu verändern. 
+    </p>
+
+    <p>
+	<span class=cmd>BP</span> steht für Bootmanager Partition. Diese Werte sind für die Partition
+	im Bootmanager gespeichert.
+    </p>
+    <p>
+	<span class=cmd>P1-P4</span> sind die aktuellen Werte der primären Partitionen im MBR.
+    </p>
+    
+    <p>
+	 Sie können hier die Daten im hexadezimalen Code ändern. Mit der Taste 
+	 <span class=cmd>s (select)</span> kann man eine Zeile <span class=cmd>markieren</span> und 
+	 mit <span class=cmd>p (paste)</span> schreiben Sie die Werte 
+	 der vorher gewählten Zeile über die Zeile in der sich der Cursor befindet. Mit 
+	 dieser Funktion können Sie schnell bestehende Partitionen aus dem MBR in den 
+	 Bootmanager importieren. Sie können aber auch die Daten MBR ändern. 
+	 Dieser Menüpunkt kann vor allem in Notfällen recht hilfreich sein.
+    </p>
+</blockquote>
+
+<a name=b9></a>
+<h4>Clear partition data (Daten löschen)</h4>
+<blockquote>
+    <p>
+    Das Löschen der Daten bezieht sich nur auf der im Bootmanager gespeicherten Daten der Partition. 
+    Die Daten auf der Partition selbst bleiben unverändert.
+    </p>
+</blockquote>
+
+<a name=b10></a>
+<h4>Reset changes (Änderungen verwerfen)</h4>
+<blockquote>
+    <p>
+    Sollten Sie Änderungen bei der Partition gemacht haben, so können Sie diese zurücksetzen. 
+    Das Zurücksetzen ist nur möglich, solange das Partitionsbearbeitungsfenster nicht 
+    geschlossen wurde.
+    </p>
+</blockquote>
+
+<br>
+<a name=b11></a>
+<h3>3.2. Profiles (Profile)</h3>
+<blockquote>
+    <p>
+    Profile werden verwendet damit man für verschiedene Betriebssysteme unterschiedliche Partitionen 
+    bzw. unterschiedliche Bootfestplatten festlegen kann. Weiter ist es möglich Änderungen 
+    der Partitionen im MBR durch Fremdsoftware zu erkennen und falls nötig die Änderungen 
+    rückgängig zu machen bzw. in den Bootmanager zu importieren.
+    </p>
+    
+    <p>
+    Falls Sie bereits ein Betriebssystem installiert haben und dann den Bootmanager installieren, 
+    dann erstellt das Installationsprogramm automatisch ein Profil um das bestehende System zu booten.
+    </p>
+</blockquote>
+
+<a name=b12></a>
+<h4>Edit label (Profilnamen bearbeiten)</h4>
+<blockquote>
+    <p>
+    Hier können Sie den Namen des Profiles bearbeiten. Dieser Name wird im Hauptmenü angezeigt. 
+    Daher ist es sinnvoll einen Namen zu wählen, der dem zu bootenden Betriebssystem entspricht. 
+    Der Name kann maximal 16 Zeichen lang sein.
+    </p>
+</blockquote>
+
+<a name=b13></a>
+<h4>Show in main menu (im Hauptmenü anzeigen)</h4>
+<blockquote>
+    <p>
+    Hier wird festgelegt ob das Profil im Hauptmenü angezeigt wird. Es können nur 
+    <span class=cmd>sichtbare Profile</span> gebootet werden. Die Anzeige des Profiles hat auch Auswirkungen 
+    auf das <span class=cmd>default profile</span> im Bootmanager Setup.
+    </p>
+</blockquote>
+
+<a name=b14></a>
+<h4>Linked partitions (verlinkte Partitionen)</h4>
+<blockquote>
+    <p>
+    Hier wird eingestellt, von welcher Festplatte, Partition und der Biosfestplattennummer 
+    gebootet werden soll. Weiters werden hier die zu verwendenden Partitionen bzw. das 
+    Löschen von Einträgen im MBR eingestellt.
+    </p>
+</blockquote>
+
+<a name=partentries></a>
+<a name=b15></a>
+<h4>Konfigurieren der Partitionseinträge</h4>
+<blockquote>
+    <p>
+	Es gibt 3 Stati für einen Partitionseintrag
+    </p>
+    
+<h4>1. eine gewählte Partition</h4>
+<blockquote>
+    <p>
+    Drücken Sie Enter um eine Partition aus einer Liste aller Partitionen, die für 
+    diese Festplatte angelegt wurden, auszuwählen. Der Bootmanager schreibt die Daten 
+    der Partition beim Booten in den MBR.
+    </p>
+    <p>
+    Sollte ein Programm die Daten der Partition im MBR ändern, dann macht Sie 
+    der Bootmanager beim nächsten Start darauf aufmerksam und Sie können die 
+    neuen Daten importieren oder verwerfen.
+    </p>
+</blockquote>
+
+<h4>2. don't touch</h4>
+<blockquote>
+    <p>
+    Der Partitionseintrag im MBR wird nicht vom Bootmanager verändert. Dies ist 
+    die standard Einstellung. 
+    </p>
+    <p>Sollte ein Programm diesen MBR Eintrag ändern, dann 
+    kann der Bootmanager diese Änderung nicht erkennen.
+    </p>
+</blockquote>
+
+<h4>3. cleared</h4>
+<blockquote>
+    <p>
+    Der Bootmanager setzt diesen Eintrag im MBR auf 0. Somit kann ein Betriebssystem 
+    nicht erkennen, dass es eine Partition gibt. 
+    </p>
+    <p>
+    ACHTUNG: wenn der Bootmanager die Partition nicht unter <span class=cmd>Partitions</span>
+     gespeichert hat, dann ist der Eintrag verloren und Sie können auf die Daten der Partition 
+     nicht mehr zugreifen. Mit entsprechendem know how kann man die Partitionsdaten wieder 
+     herstellen. Man spart sich diesen Nervenkitzel wenn man die Partition unter 
+     <span class=cmd>Partitions</span> gespeichert hat.
+    </p>
+    <p>
+    Partitionsprogramme stellen die Partition als
+    unpartitioniert dar! Partitionieren Sie diesen Bereich nicht wenn Sie nicht genau wissen 
+    was Sie tun. Sie könnten Daten verlieren.    
+    </p>
+</blockquote>
+
+</blockquote>
+
+<a name=b16></a>
+<h4>Linked partitions - spezial Tasten</h4>
+<blockquote>
+    <p>
+    <span class=cmd>b</span> set bootpartition (Bootpartition auswählen).
+    Hiermit wählen Sie aus, welche Partition zum booten verwendet werden soll. 
+    Der Bootmanager stellt die Biosfestplattennummer automatisch ein. Sie können diese jedoch ändern.
+    </p>
+    
+    <p>
+    <span class=cmd>c</span> clear partition (Eintrag löschen).
+    Hiermit wird der Eintrag auf <span class=cmd>cleared</span> gesetzt und beim Booten setzt 
+    der Bootmanager diesen Eintrag im MBR auf 0.
+    </p>
+    
+    <p>
+    <span class=cmd>d</span> don't touch (nicht verändern).
+    Hiermit wird der Eintrag auf <span class=cmd>don't touch</span> gesetzt und beim Booten werden 
+    die Daten der Partition nicht geändert.
+    </p>
+    
+    <p>
+    <span class=cmd>e</span> edit bootflag (Bootflag bearbeiten).
+    Das Bootflag enthält die Bioslaufwerksnummer, die dem Bootsektorprogramm mitteilt, auf 
+    welchem Gerät sich die Partition befindet. In manchen Fällen ist es notwendig, diese 
+    Nummer zu ändern.
+    </p>
+    
+    <p>
+    <span class=cmd>r</span> remove bootflag (Bootflag entfernen).
+    Hiermit wird das Bootflag aus dem Profil entfernt.
+    </p>
+
+    <p>
+    <span class=cmd>l</span> change logical partition (Logische Partition einstellen).
+    Sie können das booten von einer logischen Partition bei extendet Partitionen einstellen. Drücken Sie mehrmals "l" um
+    die logische Partition 1-4 einzustellen. L1 = erste logische, L2 = zweite, ...
+    </p>
+
+</blockquote>
+
+<a name=b17></a>
+<h4>Clear profile data (Profildaten löschen)</h4>
+<blockquote>
+    <p>
+    Hier können Sie die Profildaten aus dem Bootmanager löschen. Die Daten 
+    unter <span class=cmd>Partitions</span> werden nicht geändert.
+    </p>
+</blockquote>
+
+<a name=b18></a>
+<h4>Reset changes (Änderungen verwerfen)</h4>
+<blockquote>
+    <p>
+    Sollten Sie Änderungen beim Profil gemacht haben, so können Sie diese zurücksetzen. 
+    Das Zurücksetzen ist nur möglich, solange das Profilbearbeitungsfenster nicht geschlossen wurde.
+    </p>
+</blockquote>
+
+<br>
+<a name=b19></a>
+<h3>3.3. Bootmanager</h3>
+
+<a name=b20></a>
+<h4>Startmode</h4>
+<blockquote>
+    <p>
+	Der Bootmanager kann auf 2 Arten starten. Mit dem Menü <span class=cmd>menu</span>
+	und versteckt <span class=cmd>hidden</span>.
+    </p>
+    <p>
+	Im versteckten Modus muss der <span class=cmd>Bootcountdown</span> aktiv sein und es muss ein <span class=cmd>default
+	profile</span> gewählt sein. Das <span class=cmd>default profile</span> wird nach Ablauf des 
+	<span class=cmd>Bootcountdowns</span> gestartet. Der Bootmanager wird nicht sichtbar bei diesem Vorgang. Wenn
+	Sie in das Bootmanagermenü wollen, dann drücken Sie <span class=cmd>ESC</span>.
+</blockquote>
+
+<a name=b21></a>
+<h4>Bootcountdown</h4>
+<blockquote>
+    <p>
+	Hier können Sie den Countdown ein- und ausschalten. 
+    </p>
+    <p>Wenn der Bootcountdown eingeschaltet ist,
+	wartet der Bootmanager die angegebene Zeit und startet nach Ablauf je nach Einstellung das
+	zuletzt gewählte Profil oder das default profile.
+    </p>
+</blockquote>
+
+<a name=b22></a>
+<h4>Edit bootcountdown</h4>
+<blockquote>
+    <p>
+	Sie können einen Countdown zwischen 1 und 99 Sekunden wählen.
+    </p>
+</blockquote>
+
+<a name=b23></a>
+<h4>Select at start</h4>
+<blockquote>
+    <p>
+    Beim Starten des Bootmanagers wird der Balken auf die entsprechende Position gesetzt.
+    Das funktioniert auch im <span class=cmd>verstecktem Startmodus</span>.
+    </p>
+    <p>
+    Sie können zwischen folgenden Optionen wählen:
+
+    <h4>1. Last booted profile (das letzte gebootete Profil)</h4>
+    <h4>2. Default profile (ein zuvor ausgewähltes standard Profil)</h4>
+    <h4>3. Floppy (Diskette)</h4>
+    <h4>4. CDROM</h4>
+    <h4>5. USB</h4>
+
+    </p>
+</blockquote>
+
+<a name=b24></a>
+<h4>Default profile (standard Profil)</h4>
+<blockquote>
+    <p>
+    Sie können das <span class=cmd>default profile</span> aus einer Liste aller sichtbaren Profile
+    auswählen.
+    </p>
+</blockquote>
+
+<a name=b25></a>
+<h4>Show floppy boot</h4>
+<blockquote>
+    <p>
+    Diskette booten im Hauptmenü anzeigen.
+    </p>
+</blockquote>
+
+<a name=b26></a>
+<h4>Show cdrom boot</h4>
+<blockquote>
+    <p>
+    CDROM booten im Hauptmenü anzeigen.
+    </p>
+</blockquote>
+
+<a name=b27></a>
+<h4>Show usb boot</h4>
+<blockquote>
+    <p>
+    USB booten im Hauptmenü anzeigen.
+    </p>
+</blockquote>
+
+<a name=b28></a>
+<h4>Force USB 1.1</h4>
+<blockquote>
+    <p>
+    USB 1.1 Controller verwenden, selbst wenn ein USB 2.0 Kontroller vorhanden ist.
+    </p>
+    <p>
+    Mode 1: EHCI Controller ignorieren.<br>
+    Mode 2: EHCI Controller konfigurieren und alle Ports auf den Companion Host umleiten. Manche
+	Controller brauchen diese Einstellung damit auf jeden fall USB 1.1 verwendet wird.
+    </p>
+</blockquote>
+
+<a name=b29></a>
+<h4>Use Mass Stor Dev</h4>
+<blockquote>
+    <p>
+    Boote die Xte USB-Festplatte die gefunden wird. Es gibt keinen Unterschied zw. Festplatte und Stick.
+    </p>
+</blockquote>
+
+<a name=b30></a>
+<h4>Textmode after boot</h4>
+<blockquote>
+    <p>
+    Sie können die Auflösung des Textmodus beim Starten des Betriebssystems wählen. 
+    zur Auswahl steht "nicht ändern (don't change)" oder 80x50.
+    </p>
+</blockquote>
+
+<a name=b31></a>
+<h4>Graphicmode</h4>
+<blockquote>
+    <p>
+    Einstellen der Bildschirmauflösung vom Bootmanager. Sie können zwischen Textmodus 80x50 und
+    Grafikmodus 640x480, 800x600, 1024x768, 1280x1024 wählen.
+    </p>
+</blockquote>
+
+<a name=b32></a>
+<h4>Zoom animation</h4>
+<blockquote>
+    <p>
+    Die Animation des Fensterverkleinerns ein- und ausschalten. 
+    </p>
+</blockquote>
+
+
+<a name=b33></a>
+<h4>Font</h4>
+<blockquote>
+    <p>
+    Auswahl des Zeichensatzes. Sie können zwischen dem Bootmanager Zeichensatz und dem BIOS Zeichensatz
+    wählen.
+    </p>
+</blockquote>
+
+<a name=b34></a>
+<h4>Starfield</h4>
+<blockquote>
+    <p>Ein- und Ausschalten der Sternenfeldanimation
+    </p>
+</blockquote>
+
+
+<a name=b35></a>
+<h4>Master password</h4>
+<blockquote>
+    <p>Master Passwort setzen. Ein leeres Passwort deaktiviert die Passwortabfrage.
+    </p>
+</blockquote>
+
+<a name=b36></a>
+<h4>Setup password</h4>
+<blockquote>
+    <p>Setup Passwort setzen. Ein leeres Passwort deaktiviert die Passwortabfrage.
+    </p>
+</blockquote>
+
+
+
+<a name=l_mbrinstall></a><br><h1>Installation zum MBR (Master Boot Record) der Festplatte</h1><hr>    <a name=full></a>
+
+
+<p>
+    Durch die MBR Installation ist der Bootmanager das erste Programm das 
+    beim booten von der Festplatte gestartet wird. Diese Installationsmethode
+    bietet diverse Vorteile. Manche Bootmanagerfunktionen stehen 
+    nur bei der MBR Installation zur Verfügung. Als Alternative
+    zur MBR Installation kann der Bootmanager auch auf andere Arten
+    gestartet. Siehe <a href=plpbt.bin.html>plpbt.bin - LiveCD und ...</a>
+</p>
+
+<p><span class=red><b>Achtung Linux Users:</b></span> 
+Installieren Sie LILO oder GRUB nicht in den Master Boot Record (MBR) sondern in den Bootsektor Ihrer Bootpartition.
+Der Plop Bootmanager ist kein Linux Loader und benötigt daher LILO oder GRUB im Bootsektor um Linux zu starten!
+Siehe <a href=linuxloaders.html>Linux Bootmanager</a>.
+</p>
+
+<br>
+<table class=contents cellspacing=0 cellpadding=2>
+<tr><td><a href=#installer>1. Das Installationsprogramm</a></td></tr>
+<tr><td><a href=#instop>1.1. Programmfunktionen</a></td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td><a href=#uninstall>2. Deinstallation</a></td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td><a href=#instmeth>3. Diverse Methoden um das Installationsprogramm zu starten</a></td></tr>
+<tr><td><a href=#flpinst>3.1. Diskette</a></td></tr>
+<tr><td><a href=#cdinst>3.2. CD</a></td></tr>
+<tr><td><a href=#dosinst>3.3. DOS</a></td></tr>
+<tr><td><a href=#wininst>3.4. Windows Bootmenü (NT, 2K, XP, VISTA und Win7)</a></td></tr>
+<tr><td><a href=#syslinuxinst>3.5. Syslinux, Isolinux, Extlinux</a></td></tr>
+<tr><td><a href=#liloinst>3.6. LILO</a></td></tr>
+<tr><td><a href=#grubinst>3.7. GRUB / grub4dos</a></td></tr>
+<tr><td><a href=#grub2inst>3.8. GRUB2</a></td></tr>
+<tr><td><a href=#netinst>3.9. Vom Netzwerk</a></td></tr>
+<tr><td><a href=#fatinst>3.10. Direkt von einem FAT Dateisystem</a></td></tr>
+</table>
+
+<br>
+<a name=installer></a>
+<h3>1. Das Installationsprogramm</h3>
+<hr>
+
+<p>Es gibt 2 Versionen vom Installationsprogramm. Im Prinzip machen beide das gleiche. Der Unterschied
+ist, <span class=cmd>plpinst.com</span> erstellt ein Backup (<span class=cmd>plpback.bin</span>)
+der Sektoren die bei der Installation beschrieben werden. Mit dem Backup kann eine vollständige
+Entfernung des Bootmanagers vorgenommen werden. Die zweite Version
+<span class=cmd>plpinstc.com</span> überspringt das Sichern der Sektoren. Sie müssen 
+<span class=cmd>plpinstc.com</span> verwenden wenn Sie den Bootmanager von einem
+schreibgeschützten Medium wie einer CD installieren, oder wenn Sie die Installation
+mittels Netzwerk durchführen.
+</p>
+
+
+<a name=instop></a>
+<br>
+<h3>1.1 Programmfunktionen</h3>
+<hr>
+
+    <h4>1. Full bootmanager install</h4>
+    <blockquote>
+    <p>
+	Mit dieser Option wird der Bootmanager auf der Festplatte installiert.
+	Sollte bereits ein Betriebssystem installiert sein,
+	dann legt das Installationsprogramm ein Profil an um das aktuelle Betriebssystem starten zu können.    
+    </p>
+    <p>
+	Bei der Installation von Diskette wird ein Backup der Sektoren der Festplatte gemacht.
+	Das Backup wird auf der Diskette abgespeichert.
+	Mit dem Backup kann die Installation vollständig rückgängig gemacht werden. 
+	Bei der CD Installation ist vollständige Wiederherstellung des Zustandes bevor der 
+	Bootmanager installiert wurde nicht möglich. Es besteht die Möglichkeit einen
+	neuen MBR zu schreiben, bei dem die aktuelle Partitionstabelle erhalten bleibt
+	und das aktuelle Betriebssystem gestartet werden kann.
+    </p>
+    </blockquote>
+
+    <h4>2. Rewrite loader</h4>
+    <blockquote>
+    <p>
+	Damit der Bootmanager gestartet werden kann, wird ein kleines Programm (der Loader)
+	im MBR installiert. Betriebssysteme wie z.B. Windows XP schreiben bei der Installation 
+	ein eigenes Programm in den MBR. Wird z.B. Windows XP nach dem Bootmanager installiert,
+	dann startet beim Booten sofort Windows XP und nicht der Bootmanager, weil der Loader 
+	überschrieben wurde. Damit wieder der Bootmanager beim booten gestartet wird, muss man
+	diese Option auswählen.
+    </p>
+    </blockquote>
+    
+    <h4>3. Boot Manager update</h4>
+    <blockquote>
+    <p>
+	Hiermit können Sie ein Update auf die aktuelle Bootmanagerversion machen. Jedoch
+	funktioniert dies nur für den Bootmanager Version 5.x.
+    </p>
+    </blockquote>
+    
+    <h4>4. Complete uninstall</h4>
+    <blockquote>
+    <p>
+	<b>Achtung</b>, diese Funktion gibt es nur bei der Disketten Installation.
+    </p>
+    <p>
+	Mit der kompletten Deinstallation des Bootmanagers wird das Backup, das während der
+	Installation erstellt wurde und auf der Diskette gespeichert ist, zurück auf die
+	Festplatte geschrieben.
+    </p>
+    <p>
+	<b>Achtung</b>, wenn Sie etwas an der Partitionstabelle geändert haben, dann benutzen
+	Sie diese Option nicht.
+    </p>
+    </blockquote>
+
+    <h4>5. Short uninstall</h4>
+    <blockquote>
+    <p>
+	Bei dieser Option wird ein neuer MBR geschrieben um das aktuelle Betriebssystem zu starten.
+	Beim booten wird direkt zum Betriebssystem gesprungen und der Bootmanager wird nicht mehr
+	verwendet. Die Partitionstabelle wird nicht verändert.
+    </p>
+    </blockquote>
+    
+    <h4>6. Set Boot Manager screen to textmode</h4>
+    <blockquote>
+    <p>
+	Konfigurieren des Bootmanagers damit er im Textmodus startet.
+    </p>
+    </blockquote>
+    
+    <h4>7. Change destination harddisk</h4>
+    <blockquote>
+    <p>
+	Zielfestplatte zur Installation des boot managers einstellen.
+    </p>
+    </blockquote>
+    
+    <h4>8. Boot Manager hotkeys</h4>
+    <blockquote>
+    <p>
+	Siehe <a href=thebootmanager.html#hotkeys>Hotkeys</a>.
+    </p>
+    </blockquote>
+    
+    <h4>9. Reboot</h4>
+    <blockquote>
+    <p>
+	Der Computer wird neu gestartet.
+    </p>
+    </blockquote>
+
+
+<a name=uninstall></a>
+<br>
+<h3>2. Deinstallation</h3>
+<hr>
+
+<p>Um den Bootmanager aus dem MBR zu entfernen müssen Sie erneut das
+Installationsprogramm starten und den Menüpunkt 4 bzw. 5 wählen.
+</p>
+<p>Wenn Sie nicht das Installationsprogramm zum entfernen verwenden wollen,
+dann können Sie auch andere Programme verwenden. Z.B. FIXMBR,
+oder "fdisk /mbr" usw. Oder Sie installieren einen anderen
+Bootmanager in den MBR.
+</p>
+
+
+
+<a name=instmeth></a>
+<br>
+<h3>3. Diverse Methoden um das Installationsprogramm zu starten</h3>
+<hr>
+
+
+<a name=flpinst></a>
+<h3>3.1 Diskette</h3>
+<hr>
+
+<p>
+    Sie erstellen die Installationdiskette mit einem Diskettenimage.
+    Ein Diskettenimage ist ein Abbild einer Diskette und hat jeden Sektor der Diskette abgespeichert. Eine
+    solche Datei kann nicht wie eine herkömmliche Datei auf einer Diskette abgespeichert werden.
+    Es wird ein spezielles Programm dafür benötigt. 
+</p>
+<p>Laden Sie die aktuelle Bootmanager Version 
+<a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a> herunter.
+Entpacken Sie die Datei um das Diskettenimage zu erhalten. Das Diskettenimage befindet sich
+im <span class=cmd>install</span> Verzeichnis und die Datei trägt den Namen <span class=cmd>plpbtin.img</span>.
+</p>
+
+<p><b>DOS:</b> Sie können <a href=http://download.plop.at/files/DISKIMG.COM>diskimg.com</a> verwenden. 
+<span class=cmd>diskimg -d a -w plpbtin.img</span>
+</p>
+
+<p><b>Windows:</b> 
+    Schreiben Sie das Image mit dem Programm <a href=http://download.plop.at/files/rawwritewin.exe>rawwritewin</a> auf die 
+    Diskette.
+</p>
+
+
+<p><b>Linux:</b>
+    <span class=cmd>dd if=plpbtin.img of=/dev/fd0</span>
+</p>
+
+
+<a name=cdinst></a>
+<br>
+<h3>3.2. CD</h3>
+<hr>
+
+<p>Laden Sie die aktuelle Bootmanager Version 
+<a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a> herunter.
+Entpacken Sie die Datei um die ISO Datei zu erhalten. Die ISO Datei befindet sich
+im <span class=cmd>install</span> Verzeichnis und die Datei trägt den Namen <span class=cmd>plpbtin.iso</span>.
+</p>
+<p>
+    Hinweis: Bei der CD Installation gibt es eine Einschränkung bei der Deinstallation. Siehe 
+    <a href=#instop>Das Menü vom Installationsprogramm</a>.
+</p>
+
+<h4>Windows:</h4>
+<blockquote>
+<p>
+    Sie können <a href=http://www.nero.com/ target=_blank>Nero</a>, das freie Programm 
+    <a href=http://www.cdburnerxp.se/ target=_blank>CDBurnerXP</a> oder jedes andere Programm 
+    das ISO Images brennen kann verwenden. 
+</p>
+<p>
+    Verwenden Sie die Option <span class=cmd>ISO auf CD brennen</span> oder 
+    <span class=cmd>ISO Image brennen</span>. Dann wählen Sie 
+    die Bootmanager ISO Datei aus und brennen es.
+</p>
+</blockquote>
+
+
+<h4>Linux:</h4>
+<blockquote>
+<p>
+    <a href=http://cdrecord.berlios.de/old/private/cdrecord.html target=_blank>cdrecord</a> 
+    ist das Linuxprogramm um ISO Images auf eine CD zu brennen. 
+</p>
+<p>
+    Brennen Sie das ISO mit cdrecord: 
+    <span class=cmd>cdrecord -v dev=&lt;devicename&gt; &lt;iso image&gt;</span>
+</p>
+<p>
+    Beispiel: <br>
+    Falls Ihr CD Brenner mit <span class=cmd>/dev/hdd</span> angesprochen wird.<br>
+    <span class=cmd>cdrecord -v dev=/dev/hdd plpbtin.iso</span>
+</p>
+</blockquote>
+
+<a name=dosinst></a>
+<br>
+<h3>3.3. DOS</h3>
+<hr>
+
+<p>Laden Sie die aktuelle Bootmanager Version 
+<a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a> herunter.
+Entpacken Sie die Datei um das Installationsprogramm zu erhalten. Es gibt 2
+Installationsprogramme (<span class=cmd>plpinst.com</span> und <span class=cmd>plpinstc.com</span>) die unter
+DOS gestartet werden können.
+</p>
+<p>
+<span class=cmd>plpinst.com</span> erstellt bei der Installation ein Backup (<span class=cmd>plpback.bin</span>)
+ aller Sektoren die beschrieben werden. <span class=cmd>plpinstc.com</span> überspringt diesen Schritt.
+ Verwenden Sie <span class=cmd>plpinstc.com</span> wenn Sie von schreibgeschützten Medien wie CD installieren.
+</p>
+
+
+<a name=wininst></a>
+<br>
+<h3>3.4. Windows Bootmenü (NT, 2K, XP, VISTA und Win7)</h3>
+<hr>
+<p>
+Info: Eine Alternative zur MBR Installation ist <a href=plpbt.ib.html#runwin>hier</a>.
+</p>
+
+<p>
+    Laden Sie die Datei <a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a>
+    herunter und entpacken Sie die Datei. Öffnen Sie den Ordner <span class=cmd>Windows</span>. Dort finden Sie
+    das Batch Programm <span class=cmd>InstallToMBR</span>. In VISTA und Win7 starten Sie
+    es als Administrator (klicken Sie mit der rechten Maustaste auf die Batch Datei und wählen
+    Sie "als Administrator starten"). Das Batch Programm erstellt den Windows Boot Menü
+    Eintrag <span class=cmd>"Install the Plop Boot Manager to the MBR"</span>. 
+    Wenn Sie den PC neu starten dann verwenden Sie den Eintrag um den Bootmanager
+    in den MBR zu installieren.
+</p>
+
+<p>
+    Um den Eintrag wieder zu entfernen starten Sie
+    <span class=cmd>c:\plop\plpbt4win</span>. 
+    Verwenden Sie <span class=cmd>"l"</span> um alle Einträge 
+    aufzulisten. Entfernen Sie den Eintrag mit 
+    <span class=cmd>"r ID"</span>. ID ist die Nummer die Sie
+    mit dem Kommando <span class=cmd>"l"</span> gesehen haben. 
+    Mehr Infos zu <span class=cmd>plpbt4win</span>
+    finden Sie 
+     <a href=#plpbt4win>hier</a>.
+</p>    
+<p>Info: plpgenbtldr und contig werden nicht länger benötigt.</p>
+    
+    
+
+	
+<a name=syslinuxinst></a>
+<br>
+<h3>3.5. Syslinux, Isolinux, Extlinux</h3>
+<hr>
+
+<p>Laden Sie die aktuelle Bootmanager Version 
+<a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a> herunter.
+Entpacken Sie die Datei um das Installationsprogramm zu erhalten. 
+Das Installationsprogramm befindet sich im <span class=cmd>install</span> Verzeichnis und trägt den Namen
+<span class=cmd>plpinstc</span>.
+</p>
+<p>Wählen Sie Ihre config Datei
+    <ul>
+	<li>für Syslinux <span class=cmd>syslinux.cfg</span></li>
+	<li>für Isolinux <span class=cmd>isolinux.cfg</span></li>
+	<li>für Extlinux <span class=cmd>extlinux.conf</span></li>
+    </ul>
+</p>
+<p>Fügen Sie folgende Zeilen hinzu
+<pre class=file>
+label plpinst
+linux plpinstc.com
+</pre>
+</p>
+<p>Kopieren Sie <span class=cmd>plpinstc</span> in das gleiche Verzeichnis indem sich die
+config Datei befindet.</p>
+<p>Sie starten das Installationsprogramm indem Sie beim Syslinux Prompt <span class=cmd>plpinst</span> eingeben.</p>
+
+<a name=liloinst></a>
+<br>
+<h3>3.6. LILO</h3>
+<hr>
+
+<p>Laden Sie die aktuelle Bootmanager Version 
+<a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a> herunter.
+Entpacken Sie die Datei um das Installationsprogramm zu erhalten. 
+Das Installationsprogramm befindet sich im <span class=cmd>install</span> Verzeichnis und trägt den Namen
+<span class=cmd>plpinstc.com</span>.
+</p>
+<p>Kopieren Sie <span class=cmd>plpinstc.com</span> in das <span class=cmd>/boot</span> Verzeichnis.
+</p>
+<p>Fügen Sie folgende Zeilen zu Ihrer <span class=cmd>/etc/lilo.conf</span> hinzu
+<pre class=file>
+image=/boot/plpinstc.com
+label=plop-install
+</pre>
+</p>
+<p>Starten Sie <span class=cmd>lilo</span> um die lilo Einträge zu aktualisieren.</p>
+
+
+<a name=grubinst></a>
+<br>
+<h3>3.7. GRUB / grub4dos</h3>
+<hr>
+
+<p>Laden Sie die aktuelle Bootmanager Version 
+<a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a> herunter.
+Entpacken Sie die Datei um das Installationsprogramm zu erhalten. 
+Das Installationsprogramm befindet sich im <span class=cmd>install</span> Verzeichnis und trägt den Namen
+<span class=cmd>plpinstc.com</span>.
+</p>
+<p>Kopieren Sie <span class=cmd>plpinstc.com</span> in das <span class=cmd>/boot</span> Verzeichnis.
+</p>
+<p>Sie müssen Ihre eigenen root Einstellungen für <span class=cmd>menu.lst</span> verwenden.<br>
+Hier ist ein Beispiel.<br>
+Fügen Sie folgende Zeilen zu Ihrer <span class=cmd>/boot/grub/menu.lst</span> hinzu
+
+<pre class=file>
+title Install Plop Boot Manager
+root (hd0,0)
+kernel /boot/plpinstc.com
+</pre>
+</p>
+<p>Wenn Sie neu starten, dann sollten Sie das Installationsprogramm von Ihrem GRUB Menü
+starten können.</p>
+<p>Info: Beim Fehler "Error: file not found" siehe <a href=http://forum.plop.at/index.php/topic,1456.0.html>Forumeintrag</a>.
+
+
+<a name=grub2inst></a>
+<br>
+<h3>3.8. GRUB2</h3>
+<hr>
+
+<p>Laden Sie die aktuelle Bootmanager Version 
+<a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a> herunter.
+Entpacken Sie die Datei um das Installationsprogramm zu erhalten. 
+Das Installationsprogramm befindet sich im <span class=cmd>install</span> Verzeichnis und trägt den Namen
+<span class=cmd>plpinstc.com</span>.
+</p>
+<p>Kopieren Sie <span class=cmd>plpinstc.com</span> in das <span class=cmd>/boot</span> Verzeichnis.
+</p>
+<p>Sie müssen Ihre eigenen root Einstellungen in <span class=cmd>/etc/grub.d/40_custom</span> verwenden.<br>
+Beispieldatei <span class=cmd>/etc/grub.d/40_custom</span>
+
+<pre class=file>
+#!/bin/sh
+exec tail -n +3 $0
+
+menuentry "Install Plop Boot Manager" {
+    set root='(hd0,1)'
+    linux16 /boot/plpinstc.com
+}
+</pre>
+</p>
+<p>Danach starten Sie <span class=cmd>update-grub2</span> or <span class=cmd>update-grub</span>. </p>
+<p>Wenn Sie neu starten, dann sollten Sie das Installationsprogramm von Ihrem GRUB Menü
+starten können.</p>
+
+<p>Info: Beim Fehler "Error: file not found" siehe <a href=http://forum.plop.at/index.php/topic,1456.0.html>Forumeintrag</a>.
+
+<a name=netinst></a>
+<br>
+<h3>3.9. Vom Netzwerk</h3>
+<hr>
+
+<p>Eine bessere Dokumentation kommt wenn ich Zeit dafür habe.
+Verwenden Sie bis dahin die Dokumentation von Plop Linux.
+</p>
+<p>Für das Booten vom Netzwerk wird ein DHCP Server, TFTP Server und das Programm pxelinux gebraucht.
+</p>
+<p>Für 	<a href=/de/ploplinux.html#pxel>Linux hier klicken</a>,
+für
+ 	<a href=/de/ploplinux.html#pxew>Windows hier klicken</a>.
+</p>
+ 
+<a name=fatinst></a>
+<br>
+<h3>3.10. Direkt von einem FAT Dateisystem</h3>
+<hr>
+
+<p>Laden Sie die aktuelle Bootmanager Version 
+<a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a> herunter.
+Entpacken Sie die Datei um das Installationsprogramm zu erhalten. 
+Das Installationsprogramm befindet sich im <span class=cmd>install</span> Verzeichnis und trägt den Namen
+<span class=cmd>plpinstc.com</span>.
+</p>
+<p>
+    Kopieren Sie <span class=cmd>plpinstc.com</span> auf das FAT formatierte
+    Laufwerk und ändern Sie den Dateinamen auf <span class=cmd>plpbt.bin</span>.
+</p>
+<p>Dann verwenden Sie das Programm <span class=cmd>plpmkboot</span> um
+das Laufwerk für <span class=cmd>plpbt.bin</span> bootfähig zu machen.
+</p>
+<ul>
+    <li><p>Linux Beispiel: <span class=cmd>plpmkboot /dev/sdb1</span></p></li>
+    <li><p>Windows Beispiel: <span class=cmd>plpmkboot F:</span></p></li>
+</ul>
+<p>Hinweis: Verwenden Sie nicht das zweite Installationsprogramm 
+<span class=cmd>plpinst.com</span>, ausser wenn der Datenträger FAT12
+formatiert ist.
+</p>
+
+<a name=l_plpbt.bin></a><br><h1>plpbt.bin - LiveCD und andere Möglichkeiten um den Bootmanager zu starten</h1><hr>    <a name=full></a>
+<p>Wenn Sie keine MBR Installation wollen, dann verwenden Sie <span class=cmd>plpbt.bin</span>. 
+<span class=cmd>plpbt.bin</span> kann auf viele verschiedene Arten gestartet werden. Jedoch kann <span class=cmd>plpbt.bin</span>
+keine Einstellungen im Setup speichern. Aber Sie können <span class=cmd>plpbt.bin</span>
+mit <a href=plpcfgbt.html>plpcfgbt</a> konfigurieren.
+</p>
+
+<br>
+
+<table class=contents cellspacing=0 cellpadding=2>
+<tr><td><a href=#runflp>1. Diskette</a></td></tr>
+<tr><td><a href=#runcd>2. CD (LiveCD)</a></td></tr>
+<tr><td><a href=#runwin>3. Windows Bootmenü (NT, 2K, XP, VISTA und Win7)</a></td></tr>
+<tr><td><a href=#runsyslinux>4. Syslinux, Isolinux, Extlinux</a></td></tr>
+<tr><td><a href=#runlilo>5. LILO</a></td></tr>
+<tr><td><a href=#rungrub>6. GRUB / grub4dos</a></td></tr>
+<tr><td><a href=#rungrub2>7. GRUB2</a></td></tr>
+<tr><td><a href=#rungrub2>8. Vom Netzwerk</a></td></tr>
+<tr><td><a href=#rungrub2>7. Direkt von einem FAT Dateisystem</a></td></tr>
+</table>
+
+<br>
+
+<a name=runflp></a>
+<h3>1. Diskette</h3>
+<hr>
+<p>
+    Ein Diskettenimage ist ein Abbild einer Diskette und hat jeden Sektor der Diskette abgespeichert. Eine
+    solche Datei kann nicht wie eine herkömmliche Datei auf einer Diskette abgespeichert werden.
+    Es wird ein spezielles Programm dafür benötigt.
+</p>
+<p>Laden Sie die aktuelle Bootmanager Version 
+<a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a> herunter.
+Entpacken Sie die Datei um das Diskettenimage <span class=cmd>plpbt.img</span> zu erhalten.
+</p>
+
+<p><b>DOS:</b> Sie können <a href=http://download.plop.at/files/DISKIMG.COM>diskimg.com</a> verwenden. 
+<span class=cmd>diskimg -d a -w plpbt.img</span>
+</p>
+
+<p><b>Windows:</b> 
+    Schreiben Sie das Image mit dem Programm <a href=http://download.plop.at/files/rawwritewin.exe>rawwritewin</a> auf die 
+    Diskette.
+</p>
+
+
+<p><b>Linux:</b>
+    <span class=cmd>dd if=plpbt.img of=/dev/fd0</span>
+</p>
+<p>Sie können die plpbt.bin Datei auf der Diskette mit <a href=plpcfgbt.html>plpcfgbt</a> konfigurieren.</p>
+
+<a name=runcd></a>
+<br>
+<h3>2. CD (LiveCD)</h3>
+<hr>
+
+<p>Laden Sie die aktuelle Bootmanager Version 
+<a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a> herunter.
+Entpacken Sie die Datei um die ISO Datei <span class=cmd>plpbt.iso</span> zu erhalten.
+</p>
+
+<p>ISO Datei anpassen: Siehe <a href=iso.html>Eigenes ISO mit ...</a>
+</p>
+
+<h4>Windows:</h4>
+<blockquote>
+<p>
+    Sie können <a href=http://www.nero.com/ target=_blank>Nero</a>, das freie Programm 
+    <a href=http://www.cdburnerxp.se/ target=_blank>CDBurnerXP</a> oder jedes andere Programm 
+    das ISO Images brennen kann verwenden. 
+</p>
+<p>
+    Verwenden Sie die Option <span class=cmd>ISO auf CD brennen</span> oder 
+    <span class=cmd>ISO Image brennen</span>. Dann wählen Sie 
+    die Bootmanager ISO Datei aus und brennen es.
+</p>
+</blockquote>
+
+
+<h4>Linux:</h4>
+<blockquote>
+<p>
+    <a href=http://cdrecord.berlios.de/old/private/cdrecord.html target=_blank>cdrecord</a> 
+    ist das Linuxprogramm um ISO Images auf eine CD zu brennen. 
+</p>
+<p>
+    Brennen Sie das ISO mit cdrecord: 
+    <span class=cmd>cdrecord -v dev=&lt;devicename&gt; &lt;iso image&gt;</span>
+</p>
+<p>
+    Beispiel: <br>
+    Falls Ihr CD Brenner mit <span class=cmd>/dev/hdd</span> angesprochen wird.<br>
+    <span class=cmd>cdrecord -v dev=/dev/hdd plpbt.iso</span>
+</p>
+</blockquote>
+
+<a name=runwin></a>
+<br>
+<h3>3. Windows Bootmenü (NT, 2K, XP, VISTA und Win7)</h3>
+<hr>
+
+<p>
+    Laden Sie die Datei <a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a>
+    herunter und entpacken Sie die Datei. Öffnen Sie den Ordner <span class=cmd>Windows</span>. Dort finden Sie
+    das Batch Programm <span class=cmd>InstallToBootMenu</span>. In VISTA und Win7 starten Sie
+    es als Administrator (klicken Sie mit der rechten Maustaste auf die Batch Datei und wählen
+    Sie "als Administrator starten"). Das Batch Programm erstellt den Windows Boot Menü
+    Eintrag <span class=cmd>"Plop Boot Manager"</span>. 
+    Wenn Sie den PC neu starten dann verwenden Sie den Eintrag um den Bootmanager
+    zu starten.
+</p>
+
+<p>
+    Um den Eintrag wieder zu entfernen starten Sie
+    <span class=cmd>c:\plop\plpbt4win</span>. 
+    Verwenden Sie <span class=cmd>"l"</span> um alle Einträge 
+    aufzulisten. Entfernen Sie den Eintrag mit 
+    <span class=cmd>"r ID"</span>. ID ist die Nummer die Sie
+    mit dem Kommando <span class=cmd>"l"</span> gesehen haben. 
+    Mehr Infos zu <span class=cmd>plpbt4win</span>
+    finden Sie 
+     <a href=#plpbt4win>hier</a>.
+</p>    
+<p>Info: plpgenbtldr und contig werden nicht länger benötigt.</p>
+
+	
+<a name=runsyslinux></a>
+<br>
+<h3>4. Syslinux, Isolinux, Extlinux</h3>
+<hr>
+
+<p>Laden Sie die aktuelle Bootmanager Version 
+<a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a> herunter.
+Entpacken Sie die Datei um die Datei <span class=cmd>plpbt.bin</span> zu erhalten. 
+</p>
+<p>Wählen Sie Ihre config Datei
+    <ul>
+	<li>für Syslinux <span class=cmd>syslinux.cfg</span></li>
+	<li>für Isolinux <span class=cmd>isolinux.cfg</span></li>
+	<li>für Extlinux <span class=cmd>extlinux.conf</span></li>
+    </ul>
+</p>
+<p>Fügen Sie folgende Zeilen hinzu
+<pre class=file>
+label plp
+linux plpbt.bin
+</pre>
+</p>
+<p>Kopieren Sie <span class=cmd>plpbt.bin</span> in das gleiche Verzeichnis indem sich die
+konfig Datei befindet.</p>
+<p>Sie starten den Plop Bootmanager indem Sie beim Syslinux Prompt <span class=cmd>plp</span> eingeben.</p>
+<p>Sie können die plpbt.bin Datei mit <a href=plpcfgbt.html>plpcfgbt</a> konfigurieren.</p>
+
+<a name=runlilo></a>
+<br>
+<h3>5. LILO</h3>
+<hr>
+
+<p>Laden Sie die aktuelle Bootmanager Version 
+<a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a> herunter.
+Entpacken Sie die Datei um die Datei <span class=cmd>plpbt.bin</span> zu erhalten. 
+</p>
+<p>Kopieren Sie <span class=cmd>plpbt.bin</span> in das <span class=cmd>/boot</span> Verzeichnis.
+</p>
+<p>Fügen Sie folgende Zeilen zu Ihrer <span class=cmd>/etc/lilo.conf</span> hinzu
+<pre class=file>
+image=/boot/plpbt.bin
+label=Plop
+</pre>
+</p>
+<p>Starten Sie <span class=cmd>lilo</span> um die lilo Einträge zu aktualisieren.</p>
+<p>Sie können die plpbt.bin Datei mit <a href=plpcfgbt.html>plpcfgbt</a> konfigurieren.</p>
+
+<a name=rungrub></a>
+<br>
+<h3>6. GRUB / grub4dos</h3>
+<hr>
+
+<p>Laden Sie die aktuelle Bootmanager Version 
+<a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a> herunter.
+Entpacken Sie die Datei um die Datei <span class=cmd>plpbt.bin</span> zu erhalten. 
+</p>
+<p>Kopieren Sie <span class=cmd>plpbt.bin</span> in das <span class=cmd>/boot</span> Verzeichnis.
+</p>
+<p>Sie müssen Ihre eigenen root Einstellungen für <span class=cmd>menu.lst</span> verwenden.<br>
+Hier ist ein Beispiel
+<pre class=file>
+title Plop Boot Manager
+root (hd0,0)
+kernel /boot/plpbt.bin
+</pre>
+</p>
+<p>Info: Beim Fehler "Error: file not found" siehe <a href=http://forum.plop.at/index.php/topic,1456.0.html>Forumeintrag</a>.</p>
+<p>Sie können die plpbt.bin Datei mit <a href=plpcfgbt.html>plpcfgbt</a> konfigurieren.</p>
+
+<a name=rungrub2></a>
+<br>
+<h3>7. GRUB2</h3>
+<hr>
+
+<p>Laden Sie die aktuelle Bootmanager Version 
+<a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a> herunter.
+Entpacken Sie die Datei um die Datei <span class=cmd>plpbt.bin</span> zu erhalten. 
+</p>
+<p>Kopieren Sie <span class=cmd>plpbt.bin</span> in das <span class=cmd>/boot</span> Verzeichnis.
+</p>
+<p>Sie müssen Ihre eigenen root Einstellungen in <span class=cmd>/etc/grub.d/40_custom</span> verwenden.<br>
+Beispieldatei <span class=cmd>/etc/grub.d/40_custom</span>
+<pre class=file>
+#!/bin/sh
+exec tail -n +3 $0
+
+menuentry "Plop Boot Manager" {
+    set root=(hd0,1)
+    linux16 /boot/plpbt.bin
+}
+</pre>
+</p>
+<p>Danach starten Sie <span class=cmd>update-grub2</span> or <span class=cmd>update-grub</span>.
+
+<p>Wenn Sie neu starten, dann sollten Sie den Plop Bootmanager von Ihrem GRUB Menü
+starten können.</p>
+
+<p>Info: Beim Fehler "Error: file not found" siehe <a href=http://forum.plop.at/index.php/topic,1456.0.html>Forumeintrag</a>.</p>
+<p>Sie können die plpbt.bin Datei mit <a href=plpcfgbt.html>plpcfgbt</a> konfigurieren.</p>
+
+
+
+<a name=runnet></a>
+<br>
+<h3>8. Vom Netzwerk</h3>
+<hr>
+
+<p>Eine bessere Dokumentation kommt wenn ich Zeit dafür habe.
+Verwenden Sie bis dahin die Dokumentation von Plop Linux.
+</p>
+<p>Für das Booten vom Netzwerk wird ein DHCP Server, TFTP Server und das Programm pxelinux gebraucht.
+</p>
+<p>Für 	<a href=/de/ploplinux.html#pxel>Linux hier klicken</a>,
+für
+ 	<a href=/de/ploplinux.html#pxew>Windows hier klicken</a>.
+</p>
+ 
+<a name=runfat></a>
+<br>
+<h3>9. Direkt von einem FAT Dateisystem</h3>
+<hr>
+
+<p>Laden Sie die aktuelle Bootmanager Version 
+<a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a> herunter.
+Entpacken Sie die Datei um die Datei <span class=cmd>plpbt.bin</span> zu erhalten. 
+</p>
+<p>
+    Kopieren Sie <span class=cmd>plpbt.bin</span> auf das FAT formatierte
+    Laufwerk.
+</p>
+<p>Dann verwenden Sie das Programm <span class=cmd>plpmkboot</span> um
+das Laufwerk für <span class=cmd>plpbt.bin</span> bootfähig zu machen.
+</p>
+<ul>
+    <li><p>Linux Beispiel: <span class=cmd>plpmkboot /dev/sdb1</span></p></li>
+    <li><p>Windows Beispiel: <span class=cmd>plpmkboot F:</span></p></li>
+</ul>
+
+<a name=l_iso></a><br><h1>Eigenes ISO mit modifizierter plpbt.bin Datei erstellen</h1><hr>    <a name=full></a>
+
+
+<p>
+Mit <a href=http://download.plop.at/files/bootmngr/plpbt-createiso.zip>plpbt-createiso.zip</a>
+erhalten Sie ein Skript für Windows und eines für Linux um eine eigene ISO Datei
+mit einer geänderten plpbt.bin Datei erstellen.
+ Die Skripts verwenden <span class=cmd>mkisofs</span> von <span class=cmd>cdrtools</span>.</p>
+ 
+ <br>
+ <h3>Verwendung unter Windows</h3>
+ <ul>
+ <p>
+ Die Windows cdrtools Programme sind von
+ <a href=http://smithii.com/cdrtools target=_blank>http://smithii.com/cdrtools</a>
+ und befinden sich bereits in der ZIP Datei.
+ <span class=cmd>plpbt.bin</span> und <span class=cmd>create-iso.bat</span>
+  müssen sich im selben Verzeichnis befinden. 
+ Starten Sie <span class=cmd>create-iso.bat</span> um die ISO Datei zu erstellen.
+ Es wird die Datei <span class=cmd>plpbtmycd.iso</span> erstellt. Dies ist Ihre neue
+ Bootmanager ISO Datei.
+ </p>
+ </ul>
+
+ <br> 
+ <h3>Verwendung unter Linux</h3>
+ <ul>
+ <p>Sie müssen <span class=cmd>mkisofs</span> installiert haben.
+ <span class=cmd>plpbt.bin</span> und <span class=cmd>create-iso.sh</span>
+  müssen im selben Verzeichnis sein. 
+ Starten Sie <span class=cmd>sh create-iso.sh</span> um die ISO Datei zu erstellen.
+ Es wird die Datei <span class=cmd>plpbtmycd.iso</span> erstellt. Dies ist Ihre neue
+ Bootmanager ISO Datei.
+ </p>
+</ul>
+</p>
+
+
+<a name=l_plpcfgbt></a><br><h1>plpcfgbt - plpbt.bin konfigurieren</h1><hr>    <a name=full></a>
+
+
+<p><a href=http://download.plop.at/files/bootmngr/plpcfgbt-0.11.zip>plpcfgbt-0.11.zip</a> ist ein
+Tool zum konfigurieren von plpbt.bin. Das Programm gibt es 
+als Source Code, für Linux und Windows.
+Das Programm wird in der Eingabeaufforderung gestartet. Wenn plpcfgbt ohne Parameter gestartet wird, dann
+erhält man die Hilfe.
+</p> 
+
+<br>
+
+<pre class=file>
+Usage: plpcfgbt [OPTIONS] file
+
+Options:
+========
+
+ parameter    meaning
+ -----------------------------------------------------------------------------
+ vm           setup video mode
+              values: text, 640x480, 800x600, 1024x768, 1280x1024
+
+ stm          start mode of the boot manager
+              values: menu or hidden, hidden requires cnt=on and dbt not off
+
+ cnt          activate countdown, values: on or off
+
+ cntval       countdown in seconds between 1 and 99
+
+ dbt          default boot, values: off, profile, floppy, cdrom, usb
+
+ dprf         use default profile value between 1 and 16
+
+ stf          starfield, values: on or off
+
+ zan          windows zoom animation, values: on or off
+
+ fnt          set font, values: bt or bios
+
+ usb1         force usb 1.1
+              values:   off
+                        1 = Mode 1 = skip ehci
+                        2 = Mode 2 = force ehci to companion
+
+ usbmdev      use usb massdev 1-99 (obsolete)
+
+ int19h       do not boot the os and use int19h, values: on or off
+
+ hotkey       startup hotkey, values: yes or no
+
+ prf          set profile, value: 1-16
+
+ prfname      set profilename 16 chars, 'prf' must be set
+
+ btdrv        boot drive, 80h-89h, 'prf' must be set
+
+ btprt        boot partition 1-4, 'prf' must be set
+
+ btlog        boot log partition, 1-4, 'prf' must be set
+
+ skippcmcia   skip pcmcia check, values: yes or no
+
+ fastpcmcia   skip pcmcia check after usb card was found, values: yes or no
+
+ ignoreusbdev ignore number of usb devices 0-99
+ 
+ showextended show extended partitions in the main menu, values: yes or no
+
+ 
+ hiddenusb    automatic usb boot without showing the boot manager
+ hiddencdrom  automatic cdrom boot without showing the boot manager
+ 
+</pre>
+</p>
+<p>
+    Infos zu <span class=cmd>int19h</span> siehe <a href=usbdos.html#usbhddrv>hier</a>.<br>
+    Die Hotkeyaktivierung ist sinnvoll bei CDs und ROMs. Sie bekommen
+    die Aufforderung STRG-A zu drücken um den Bootmanager zu starten, andernfalls
+    wird der Bootvorgang fortgesetzt.
+</p>
+
+<br>
+<h3>Beispiele</h3>
+<hr>    
+    <p>Aktuelle Konfiguration zeigen:
+	<blockquote>
+	 <span class=cmd>plpcfgbt plpbt.bin</span>
+	</blockquote>	 
+    </p>
+    
+    <p>Versteckt starten und USB Laufwerk booten:<br>
+	<blockquote>
+	<span class=cmd>plpcfgbt stm=hidden cnt=on cntval=1 dbt=usb plpbt.bin</span><br>
+	oder <span class=cmd>plpcfgbt hiddenusb plpbt.bin</span>
+	</blockquote>
+	</p>
+        
+
+
+<a name=l_plpbt-parameter></a><br><h1>plpbt.bin Parameter</h1><hr>    <a name=full></a>
+
+
+
+<p>
+     Wenn Sie
+    einen Linux Boot Manager verwenden (lilo, syslinux,...) dann können Sie mittels "append" 
+    Option einige Parameter an <span class=cmd>plpbt.bin</span> übergeben.
+</p>
+
+<h3 align=center>Liste der unterstützten Parameter</h3>
+<p>
+    <table border=0 class=box align=center>
+    <tr>
+	<td class=boxtdr>Parameter</td><td>Bedeutung</td>
+    </tr>
+    <tr>
+	<td class=boxtd>hiddenusb</td><td class=boxtd2>Kurzversion von "stm=hidden cnt=on cntval=1 dbt=usb"</td>
+    </tr>
+    <tr>
+	<td class=boxtd>hiddencdrom</td><td class=boxtd2>Kurzversion von "stm=hidden cnt=on cntval=1 dbt=cdrom"</td>
+    </tr>
+    <tr>
+	<td class=boxtd>usb1=1</td><td class=boxtd2>USB 1.1 erzwingen Mode 1 (EHCI Kontroller ignorieren)</td>
+    </tr>
+    <tr>
+	<td class=boxtd>usb1=2</td><td class=boxtd2>USB 1.1 erzwingen Mode 2 (EHCI Ports auf USB 1.1 umstellen)</td>
+    </tr>
+    <tr>
+	<td class=boxtd>vm=text</td><td class=boxtd2>In den Textmodus umschalten</td>
+    </tr>
+    <tr>
+	<td class=boxtd>fnt=bios</td><td class=boxtd2>Bios Zeichensatz verwenden</td>
+    </tr>
+    <tr>
+	<td class=boxtd>int19h=on</td><td class=boxtd2>INT19h statt USB Boot verwenden</td>
+    </tr>
+    <tr>
+	<td class=boxtd>showextended=yes</td><td class=boxtd2>Extended Partitionen im Main Menü anzeigen</td>
+    </tr>
+    </table>
+</p>
+
+<br>
+<p>
+    Beispiel syslinux.cfg:
+<pre class=file>
+# configure the boot manager to start in text mode
+
+label plp
+    linux plpbt.bin
+    append vm=text
+
+# configure the boot manager to start in hidden mode and 
+# boot usb with forcing usb 1.1 mode 1
+
+label plp2
+    linux plpbt.bin
+    append "hiddenusb usb1=1"
+
+</pre>
+
+
+
+<a name=l_rom></a><br><h1>Erstellen eines PCI Bootmanager option ROM (ins Bios einbauen)</h1><hr>    <a name=full></a>
+
+
+<p>
+Sie können ein PCI Option ROM mit
+<a href=http://download.plop.at/files/bootmngr/plpbtrom-0.6.zip>plpbtrom-0.6.zip</a>
+erstellen. Dieses Option ROM kann dann direkt in Ihr Bios oder im
+ROM einer Netzwerkkarte gespeichert und gestartet werden.
+</p>
+
+<br>
+<pre class=file>
+Usage: plpbtrom [OPTIONS] input-file output-file
+
+Options:
+========
+ -h           this help
+ -vendorid    id hex value of the card vendor
+ -deviceid    id hex value of device
+ -grabid      grab vendor/device id from PCI ROM file
+ -hidden      disable option rom text output
+ -nodisable   do not allow option rom disable
+ -forceINT    force hook interrupt
+ -INT18       hook int 18h (see www.plop.at for details)
+	
+ input-file   boot manager file (ex. plpbtrom.bin)
+ output-file  ROM file name
+	  	     	
+</pre>
+
+<br>
+<p><h3>Beispiele</h3>
+<ul>
+    <li><span class=cmd>plpbtrom plpbtrom.bin plpbt.rom</span></li>
+    <li><span class=cmd>plpbtrom -vendorid 0x10ec -deviceid 0x8139 plpbtrom.bin plpbt.rom</span></li>
+    <li><span class=cmd>plpbtrom -grabid netcard.rom plpbtrom.bin plpbt.rom</span></li>
+</ul>
+</p>
+
+<br>
+<h3>Dateien</h3>
+<blockquote>
+<p>
+plpbtrom     - Linux Programm<br>
+plpbtrom.exe - Windows Programm<br>
+plpbtrom.bin - Bootmanager<br>
+</p>
+</blockquote>
+	    
+<br>
+<h3>Unterschied zwischen plpbtrom.bin und plpbt.bin</h3>
+<blockquote>
+<p>
+Der Unterschied ist nur, dass plpbtrom.bin die Kontrolle des Bootprozesses an
+das Bios zurück gibt mittels far return wenn man ESC drückt. plpbt.bin 
+startet den PC neu mittels 19h.
+</p>
+<p>Sie können plpbtrom.bin genauso wie plpbt.bin mit <a href=#plpcfgbt>plpcfgbt</a>
+konfigurieren. s kann auch ein Hotkey zum Starten des Bootmaagers aktiviert werden.</p>
+</blockquote>
+	    
+<br>
+<h3>Wie Testet man das ROM</h3>
+<blockquote>
+<p>
+Sie können Ihre ROM Datei mit der freien Virtuellen Maschine <a href=http://www.qemu.org target=_blank>qemu</a>
+testen.
+</p>
+<p><span class=cmd>qemu -hda harddisk.img -option-rom plpbt.rom</span></p>
+<p>Sollten Sie kein Festplattenimage haben, verwenden Sie eines von
+der qemu Downloadseite oder verwenden Sie ein Diskettenimage.</p>
+
+<p><span class=cmd>qemu -fda floppy.img -option-rom plpbt.rom</span></p>
+</blockquote>
+
+
+
+<br>
+<h3>Wie flasht man ein AMI bios</h3>
+    <p><b><span class=red>Das Flashen erfolgt auf eigene Gefahr!</span></b>
+    </p>
+    
+<ul>
+    <li><p>Laden Sie das Ami BIOS flash Utility herunter und sichern Sie Ihr aktuelles Bios. 
+    <a href=http://www.ami.com/ target=_blank>AMI Homepage</a></p>
+    <p>Es ist ein DOS Programm. Starten sie den folgenden Befehl von einer DOS Diskette um Ihr Bios zu sichern<br>
+    <div class=cmd>afudos /obios.rom</div>
+    </p>
+    </li>
+    <li>
+    <p>Verwenden Sie das Windowsprogramm <a href=http://www.softpedia.com/get/System/System-Info/MMTool.shtml target=_blank>MMTools</a>
+    um das Netzwerk ROM mit <span class=cmd>plpbt.rom</span> zu ersetzen.
+    </p></li>
+    <li><p>Laden Sie die Datei <span class=cmd>bios.rom</span></p></li>
+    <li><p>Suchen Sie das Netzwerk Option ROM. Es hat die ID <span class=cmd>20</span>, den Namen <span class=cmd>PCI Option ROM</span>
+    und die RunLoc Nummer <span class=cmd>VendorID:DeviceID</span> von Ihrer Netzwerkkarte. Möglicherweise gibt es mehrere Option ROMSs in
+    Ihrem Bios, daher wählen Sie das erste das Sie finden.
+    </p></li>
+    <li><p>Klicken Sie auf das Option ROM um es zu markieren.</p></li>
+    <li><p>Klicken Sie auf den <span class=cmd>Replace Tab</span></p></li>
+    <li><p>Laden Sie <span class=cmd>plpbt.rom</span> als <span class=cmd>Module file</span>.</p></li>
+    <li><p>Drücken Sie den <span class=cmd>Replace</span> Button</p></li>
+    <li><p>Klicken Sie <span class=cmd>Save ROM as</span> und geben der Datei den Namen <span class=cmd>mybios.rom</span></p></li>
+    <li><p>Nun kommt der gefährliche Teil. Das Flashen des Bios.<br>
+    Ich empfehle vor dem Flashen im Bios die "standard Einstellungen" (default settings) zu laden und zu speichern. Dann booten Sie von der DOS Diskette und starten Sie</p>
+    
+    <div class=cmd>afudos /imybios.rom</div>
+    
+    <p>
+    Schalten Sie den Computer während dem Flashen keinesfalls aus. Wenn der Flashvorgang beendet ist, laden Sie erneut die "standard Einstellungen".
+    </p></li>
+    <li><p>Wenn alles richtig funktioniert hat, dann können Sie im Bios einstellen das der Bootmanager während des Bootvorganges gestartet wird.</p></li>
+</ul>
+
+
+<br>
+<h3>Wie flasht man ein AWARD bios</h3>
+    <p><b><span class=red>Das Flashen erfolgt auf eigene Gefahr!</span></b>
+    </p>
+    
+<ul>
+    <li><p>Laden Sie das Award Bios Flash Utility <span class=cmd>aflash</span> herunter. Siesollten es auf der
+    Homepage Ihres Motherboardherstellers im Bereich der Bios Tools finden.
+    </p></li>
+    <li><p>Starten Sie das Programm von einer DOS Diskette und sichern Sie Ihr aktuelles Bios unter dem Namen <span class=cmd>bios.rom</span>.
+    </p></li>
+    <li><p>Suchen Sie im Internet das Programm <span class=cmd>cbrom</span>. Es gibt unterschiedliche Versionen und nicht jede wird
+    mit Ihrer Biosdatei funktionieren. Daher müssen Sie ausprobieren welche Version bei Ihnen funktioniert.
+    </p></li>
+    <li><p>
+	Starten Sie <span class=cmd>cbrom bios.rom /d</span>
+    </p></li>
+    <li><p>Nun sollten alle Teile des Bios aufgelistet werden. Ich kann Ihnen nicht den Befehl zum Ersetzen des ROMs geben, weil
+    bei mir keine cbrom Version funktioniert hat. Sie müssen es selbst herausfinden.
+
+    </p></li>
+    <li><p>
+     Wenn das Bios ROM geändert wurde, dann flashen Sie das Bios.
+         Ich empfehle vor dem Flashen im Bios die "standard Einstellungen" (default settings) zu laden und zu speichern. Dann booten Sie von der DOS Diskette und starten Sie
+        <span class=cmd>awdflash</span> um das Bios zu flashen.
+    </p></li>
+    <li><p>Wenn alles richtig funktioniert hat, dann können Sie im Bios einstellen das der Bootmanager während des Bootvorganges gestartet wird.</p></li>
+</ul>
+
+
+<a name=l_plpbt4win></a><br><h1>plpbt4win</h1><hr>    <a name=full></a>
+
+
+<p>
+Mit <span class=cmd>plpbt4win</span> kann man den Bootmanger leicht zum Windows Bootmenü
+hinzufügen und auch wieder entfernen. Das Programm funktioniert mit boot.ini und bcdedit
+und erkennt automatisch welche Methode verwendet werden muss um das Windows Bootmenü zu
+bearbeiten. Man kann plpbt4win als Batchprogramm verwenden oder mittels eingebauter
+Kommandozeile. Sie finden plpbt4win im
+<span class=cmd>Windows</span> Verzeichnis von  <a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a>.
+</p>
+
+<br>
+<h3>Funktionen</h3>
+
+<ul>
+<li><p>
+Parametereingabe, ideal für Batchprogramme und GUI Frontends.
+</p></li>
+<li><p>
+Eingebaute Kommandozeile.
+</p></li>
+<li><p>
+Arbeitet mit boot.ini und bcdedit.
+</p></li>
+<li><p>
+Kann Windows Bootmenüeinträge auflisten, hinzufügen und entfernen.
+</p></li>
+<li><p>
+Man kann leicht unterschiedliche Bootmanagerdateien hinzufügen. Z.B. verwendet man einen Eintrag mit der 
+standard Bootmanagerdatei und einen Eintrag mit einer USB Autoboot Konfiguration.
+</p></li>
+
+<li><p>
+2 Batchdateien werden mitgeliefert. InstallToBootMenu.bat und InstallToMBR.bat.
+ Der Windowsuser muss nur die Batchdateistarten und dann geht alles fast automatisch. Nachdem das Batchprogramm die Arbeit beendet hat, muss der User nur
+ den Computer neu starten um den neuen Menüeintrag im Windows Bootmenü zu sehen. Die 2 Batchdateien dienen auch als Beispiel für die Verwendung von
+ plpbt4win. 
+</p></li>
+</ul> 
+
+<br>
+<h3>Batch Modus</h3>
+
+<pre class=file>
+plpbt4win [/?] [/B] [/C [FILE]] [/L] [/A [NAME]] [/R &lt;ID&gt;] [/BIN &lt;FILE&gt;] [/D]
+
+ /?          Help
+ /B          Batch mode
+ /BIN &lt;FILE&gt; Set the program filename. Default is "c:\plop\plpbt.bin"
+ /C [FILE]   Create the plop boot manager loader program. Set the output
+             filename. The default filename is "c:\plop\plpbt4win.ldr"
+ /L          List windows boot menu entries
+ /A [NAME]   Add to the windows boot menu a new entry. The default name is
+             "Plop Boot Manager"
+ /R &lt;ID&gt;     Remove the menu entry from the windows boot menu. ID is the
+             number of the menu entry
+ /D          Debug mode
+</pre>
+
+<br>
+<h3>Batch Modus Beispiele</h3>
+<p> 
+ <ul>
+ <li><p>
+ Bootmenüeinträge auflisten: plpbt4win /B /L
+</p></li>
+ 
+ <li><p>
+ Bootmanager Loader erstellen: plpbt4win /B /C
+</p></li>
+ 
+ <li><p>
+ Bootmanager Loader mit eigenem Namen erstellen: plpbt4win /B /C c:\plop\plp.ldr
+</p></li>
+ 
+ <li><p>
+ Menüeintrag hinzufügen: plpbt4win /B /A "The Plop Boot Manager is here"
+</p></li>
+ 
+ <li><p>
+ Menüeintrag entfernen, zuerst muss man den Parameter /L verwenden um die ID des Eintrages zu erhalten, dann verwendet man z.B.: plpbt4win /B /R 3
+</p></li>
+ 
+ <li><p>
+ Loader und Menüeintrag in einem Schritt: plpbt4win /B /C /A
+</p></li>
+</ul>
+</p>
+
+<br>
+<h3>Eingebaute Kommandozeile</h3>
+<p>Man startet plpbt4win ohne Parameter.</p>
+<pre class=file>
+Command (? for help):  
+ ?          Help
+ bin &lt;FILE&gt; Set the program filename. Default is "c:\plop\plpbt.bin"
+ c [FILE]   Create the plop boot manager loader program. Set the output
+            filename. The default filename is "c:\plop\plpbt4win.ldr"
+ l          List windows boot menu entries
+ a [NAME]   Add to the windows boot menu a new entry. The default name is
+            "Plop Boot Manager"
+ r &lt;ID&gt;     Remove the menu entry from the windows boot menu. ID is the
+            number of the menu entry
+ d          Activate/disable debug mode 
+ v          Show current values
+ q          Quit
+</pre>
+
+
+
+<a name=l_plpgenbtldr></a><br><h1>plpgenbtldr</h1><hr>    <a name=full></a>
+
+
+<p>
+<span class=cmd>plpgenbtldr</span> ist veraltet und wird nicht mehr supported. 
+Verwenden Sie stattdessen <a href=plpbt4win.html>plpbt4win</a>.
+</p>
+<br>
+<p>
+Um Einträge vom Windows Bootmenü zu entfernen verwenden Sie entweder <a href=plpbt4win.html>plpbt4win</a> oder<br>
+<p>
+Öffnen Sie eine Eingabezeile als Administrator.<br>
+Starten Sie "<span class=cmd>bcdedit /v</span>" um alle Einträge aufzulisten.<br>
+Starten Sie "<span class=cmd>bcdedit /delete {id}</span>" um einen Eintrag zu entfernen. {id} ist die Nummer mit { } neben dem Eintrag.
+</p>
+
+
+<a name=l_pcmcia></a><br><h1>PCMCIA CardBus Treiber - USB PC-Karte</h1><hr>    <a name=full></a>
+
+
+<p>
+    Viele alte Laptops haben eine oder zwei CardBus Schnittstellen. Der Bootmanager kann als
+    USB PC-Card Enabler verwendet werden und der Bootmanager ermöglicht es von der
+    USB PC-Karte zu booten. Wenn der Laptop nur USB 1.1 Schnittstellen hat, dann kann
+    der Bootvorgang mit einer USB 2.0 PC-Karte erheblich beschleunigt werden. Sollte
+    der Laptop nur eine USB Schnittstelle besitzen, dann erhalten Sie mit der PC-Karte 
+    zusätzliche USB Schnittstellen.
+</p>
+<p>
+    Sie finden den Bootmanager mit dem CardBus Treiber im pcmcia Verzeichnis von
+    <a href=http://download.plop.at/files/bootmngr/plpbt-5.0.14.zip>plpbt-5.0.14.zip</a>.
+</p>
+<p>
+    Der Bootmanager initialisiert den CardBus Kontroller während des Programmstartes. Das
+    bedeutet, dass die USB PC-Karte bereits bevor der Bootmanager startet eingeschoben
+    sein muss! Der Vorteil ist das die PC-Karte initialisiert ist, egal ob Sie dann weiter
+    mit USB booten oder nicht. Sollten Sie einen DOS USB Treiber (OHCI und EHCI) haben, dann
+    können Sie diesen für die USB PC-Karte verwenden und Sie brauchen keinen zusätzlichen
+    CardBus Treiber.
+</p>
+<p>
+    Während der Bootmanager startet sehen Sie ein paar Infos bzgl. CardBus Initialisierung.
+    Wenn Sie diese Infos lesen möchten, dann halten Sie die STRG-Taste gedrückt während
+    der Bootmanager startet.
+</p>
+<p>
+    Hinweise:
+    <ul>
+	<li>
+	    <p>Mein CardBus Treiber funktioniert nicht auf allen Laptops, aber auf den meisten.
+	    </p>
+	</li>
+	<li>
+	    <p>
+		Aufgrund der Grösse des zusätzlichen CardBus Treibers, habe ich (nur) bei der 
+		pcmcia Festplattenversion des Bootmanagers den IDE Cdrom Treiber entfernt. <br>
+		plpbt.bin enthält alle Treiber.
+	    </p>
+	</li>
+    </ul>
+</p>
+
+
+<a name=l_usbinfo></a><br><h1>USB Info</h1><hr>    <a name=full></a>
+
+
+<ul>
+    <li>
+    Es werden nur USB Mass Storage Geräte unterstützt. Davon werden Festplatten, Sticks und CardReader unterstützt. 
+    USB CD/DVD Laufwerke und USB Diskettenlaufwerke sind nicht implementiert.
+    </li>
+    <li>
+    Es gibt keine USB HUB Implementierung. Es muss daher das USB Laufwerk direkt am USB Port des Computers
+    gehängt werden.
+    </li>
+    <li>
+    Aktueller Stand siehe <a href=/de/bootmngrusblog.html>Bootmanager News</a>
+    
+    </li>
+
+</ul>
+
+
+<a name=l_usbdos></a><br><h1>DOS und der USB Treiber</h1><hr>    <a name=full></a>
+
+<table class=contents cellspacing=0 cellpadding=2>
+<tr><td><a href=#usbhddrv>1. Den Bootmanager als USB Festplatten Treiber für DOS verwenden</a></td></tr>
+<tr><td><a href=#usbdisable>2. Den USB Treiber unter DOS deaktivieren</a></td></tr>
+<tr><td><a href=#usbdoschk>3. Unter DOS feststellen ob der USB Treiber geladen ist</a></td></tr>
+</table>
+    
+<br>
+<a name=usbhddrv></a>
+<h3>1. Den Bootmanager als USB Festplatten Treiber für DOS verwenden</h3>
+<hr>
+ 
+<p>Es ist eine spezielle Art den Bootmanager zu verwenden, aber vielleicht brauchen
+es ein paar Leute. Man muss <span class=cmd>plpbt.bin</span> mit <a href=plpcfgbt.html>plpcfgbt</a> 
+konfigurieren damit int19h anstelle des Betriebssystem bootens verwendet wird.
+</p>
+<p>
+ <span class=cmd>plpcfgbt int19h=on plpbt.bin</span>
+</p>
+<p>Wenn Sie <span class=cmd>plpbt.bin</span> konfiguriert haben, dann starten Sie <span class=cmd>plpbt.bin</span>
+mit einem Bootmanager wie <span class=cmd>grub</span>, 
+<span class=cmd>syslinux</span> oder einem ähnlichen Bootmanager
+(Unterstützte Bootmanager siehe <a href=plpbt.bin.html>hier</a>). Wenn Sie jetzt die Option USB im Plop Bootmanager
+verwenden, dann lädt der Bootmanager die USB Treiber und es wird der vorherige Bootmanager wieder gestartet.
+Wenn jetzt DOS gebootet wird, dann steht Ihr USB Gerät als letzte Festplatte zur Verfügung. 
+Die Festplatte ist jedoch schreibgeschützt.
+</p>
+<p>
+ Mit folgender Konfiguration kann man das USB Treiber laden automatisieren <span class=cmd>plpcfgbt int19h=on stm=hidden cnt=on cntval=1 dbt=usb plpbt.bin</span>
+</p>
+
+<br>
+<a name=usbdisable></a>
+<h3>2. Den USB Treiber unter DOS deaktivieren</h3>
+<hr>
+ 
+<p>Wenn Sie DOS gebootet haben und der Plop USB Treiber ist geladen, dann
+können Sie den Treiber mit
+<a href=http://download.plop.at/files/bootmngr/plpdisd-0.2.zip>plpdisd-0.2.zip</a> deaktivieren. 
+Wenn Sie den Treiber deaktiviert haben, dann ist es auch möglich andere USB Treiber unter DOS zu laden.
+</p>
+</p>
+ Sie können <span class=cmd>plpdisd</span> in der <span class=cmd>config.sys</span> starten
+ 
+<pre class=file>
+DEVICE=c:\tools\plpdisd.exe
+</pre>
+</p>
+<p>
+ Sie können das Programm auch mit der <span class=cmd>autoexec.bat</span> oder von der Befehlszeile starten.
+</p>
+
+
+<br>
+<a name=usbdoschk></a>
+<h3>3. Unter DOS feststellen ob der USB Treiber geladen ist</h3>
+
+<hr>
+<p>
+Siehe <a href=usbdriverdetect.html>hier</a>.
+</p>
+
+<a name=l_usbdriverdetect></a><br><h1>Feststellen ob der USB Treiber geladen ist</h1><hr>    <a name=full></a>
+
+<table class=contents cellspacing=0 cellpadding=2>
+<tr><td><a href=#ifplop>1. Mit Syslinux festellen ob der USB Treiber geladen ist</a></td></tr>
+<tr><td><a href=#usbdetectdos>2. Unter DOS feststellen ob der USB Treiber geladen ist</a></td></tr>
+</table>
+
+<br>
+<a name=ifplop></a>
+<h3>1. Mit Syslinux festellen ob der USB Treiber geladen ist</h3>
+<hr>
+ <p>Icecube hat das Syslinux Modul ifplop.c32 geschrieben. Damit kann man in Syslinux festellen
+ ob der USB Treiber geladen ist oder nicht.</p>
+<p>Beispiel syslinux.cfg:<br>
+<pre class=file>
+default plopcheck
+
+# Check for the presence of plop (run by default)
+#   When plop INT13 hook is found, run the first label
+#   When plop INT13 hook isn't found, run the second label
+
+label plopcheck
+    com32 ifplop.c32
+    append plop_detected -- plop_not_detected
+
+# When plop INT13 hook was found, boot the menu system.
+# plop can have added USB2.0 speed, so the entries we want to boot
+# will be read from disk much faster (supposing that we have a BIOS
+# that only supports USB1.1 speed).
+
+label plop_detected
+    com32 menu.c32
+    append syslinux.cfg
+
+# plop INT13 hook wasn't found, so we boot plop
+
+label plop_not_detected
+    linux plpbt.bin
+</pre>
+</p>
+<p>ifplop.c32 ist Teil von Syslinux seit der Version 4.01.<br>
+ifplop.c32 Moduleseite: 
+<a href=http://syslinux.zytor.com/wiki/index.php/Ifplop.c32 target=_blank>http://syslinux.zytor.com/wiki/index.php/Ifplop.c32</a>
+</p>
+<p>
+ Ein paar Infos zur Treibererkennung gibts
+ <a href=http://forum.plop.at/index.php/topic,165.msg2099.html target=_blank>hier</a>.
+</p>
+
+
+
+<br>
+<a name=usbdetectdos></a>
+<h3>2. Unter DOS feststellen ob der USB Treiber geladen ist</h3>
+
+<hr>
+<p>
+Mit dem Programm
+<a href=http://download.plop.at/files/bootmngr/plpchk-0.1.zip>plpchk-0.1.zip</a>
+kann man festellen ob der plop usb Treiber geladen ist oder nicht.
+Man kann das Programm in der config.sys,
+in einer Batchdatei oder in der Komandozeile verwenden. Das Programm kann eine Datei erstellen
+wenn der Treiber gefunden wurde bzw. eine Datei löschen wenn der Treiber nicht gefunden wurde.
+Aufgrund der Existenz dieser Datei kann man dann Aktionen durchführen oder auch nicht.
+In Batchdateien kann man dafür den Rückgabewert des Errorlevels verwenden.
+Mit dem Parameter /h wird die Bildschirmausgabe unterdrückt.
+</p>
+
+<pre class=file>
+plpchk [/?] [/h] [file]
+
+  /?      help
+  /h      hide text output
+  file    create this file when the driver was detected or remove it when the
+          driver was not detected
+		
+config.sys example: DEVICE=c:\tools\plpchk.exe c:\tmp\plpusb
+
+For batch processing: ERRORLEVEL 0 = no driver detected
+                                 1 = driver detected
+</pre>
+</p>
+<p>Ein paar Infos zur Treibererkennung gibts
+ <a href=http://forum.plop.at/index.php/topic,165.msg2099.html target=_blank>hier</a>.
+</p>
+
+
+
+
+<a name=l_hiddenpartitions></a><br><h1>Hidden Partition / Cleared Partition</h1><hr>    <a name=full></a>
+
+
+<a name=hid></a>
+<h3>Hidden Partition / Cleared Partition</h3>
+<hr>
+
+<p>
+    Es gibt einen grundlegenden Unterschied zwischen "hidden" und "cleared" Partitionen.
+</p>
+    <ul>
+    <li><p>Hidden Partitionen: Betriebssysteme, Backuplösungen, usw.
+    erkennen diese Partitionen, aber ignorieren sie. Ich würde sagen das ist nicht wirklich
+    versteckt. Dieser Status hat aber auch seine Vorteile.</p>
+    </li>
+    <li><p>Cleared Partitionen: Kein Programm (ausser dem Bootmanager) weiß das 
+    eine Partition definiert ist/war bei diesem Partitioneintrag im MBR. 
+    Dadurch kann
+    kein Programm auf die Daten zugreifen (mit entsprechendem Aufwand und der Durchsuchung 
+    der Festplatte
+    besteht die Möglichkeit auf die Daten zuzugreifen). 
+    Betriebssysteme usw. erkennen diesen Bereich als "nicht zugeordneter Speicherplatz".
+        So eine Partition ist wirklich "hidden".
+
+    Daher besteht aber die Gefahr, dass man die versteckte Partition und ihre Daten
+    überschreibt wenn man die Festplatte nun partitioniert und keine genaue Kenntniss
+    der Festplattenaufteilung hat.
+	</p>
+    </li>
+    </ul>
+
+
+<br>
+<a name=hidden></a>
+<h3>Beispiel: Partition "hidden" und nicht "cleared"</h3>
+<hr>
+<p>
+    Nehmen wir an Sie wollen die zweite Partition von HDA (HDA2) in einem Profil sichtbar haben
+    und ein einem anderen Profil "hidden" und nicht "cleared" haben.
+</p>
+<ul>
+    <li><p>    
+    Wählen Sie einen leeren Eintrag in "partitions". Geben Sie dem Eintrag den Namen
+    "hidden hda2". 
+    </p></li>
+    <li><p>    
+    Wählen Sie das Device HDA. Gehen Sie zu "Edit MBR/Import data".
+    Bewegen sie den Cursor zu P2 und drücken Sie "s". Bewegen Sie nun den
+    Cursor zu "BP" und drücken "p".
+    </p></li>
+    <li><p>        
+    Drücken Sie ESC und gehen zu "Partition ID". Wählen Sie "Select from list".
+    Wählen Sie die "hidden" Version Ihrer Partition. 
+    </p></li>
+    <li><p>    
+    
+    Drücken Sie ESC und
+    speichern die Änderungen. 
+    </p></li>
+    <li><p>    
+    Gehen Sie zu "Profiles".<br>
+    Nun können Sie einem Profil die "sichtbare" Version zuordnen und
+    einem anderen Profil die "hidden" Version zuordnen.
+    </p></li>
+    </ul>
+
+
+<a name=l_linuxloaders></a><br><h1>Linux Bootmanager in den Bootsektor</h1><hr>    <a name=full></a>
+    LILO, GRUB / grub4dos, GRUB2: Ich hatte noch keine Zeit eine kurze Beschreibung zur Installation in den Bootsektor zu schreiben.
+<a name=l_examples></a><br><h1>Beispiele</h1><hr>    <a name=full></a>
+
+<table class=contents cellspacing=0 cellpadding=2>
+<tr><td><a href=#ex0>1. Video Dualboot Installation Windows XP und Windows XP</a></td></tr>
+<tr><td><a href=#ex1>2. Windows XP und Windows Vista Dualboot mit versteckten (cleared) Partitionen</a></td></tr>
+<tr><td><a href=#ex2>3. Dualboot Windows XP und Windows 7</a></td></tr>
+</table>
+
+<br>
+<a name=ex0></a>
+<h3>1. Video Dualboot Installation Windows XP und Windows XP</h3>
+<hr>
+
+<p>
+    Download <a href=http://download.plop.at/files/bootmngr/video/demoinstall.wmv>demoinstall.wmv</a>    
+    (<a href=http://download.plop.at/files/bootmngr/video/demoinstall.zip>demoinstall.zip</a>). Die
+    Qualität ist nicht die beste, aber man sieht alle Schritte.
+</p>
+
+<br>
+<a name=ex1></a>
+<h3>2. Windows XP und Windows Vista Dualboot mit versteckten (cleared) Partitionen</h3>
+<hr>
+
+<p>
+    Das Ziel ist die Installation von Windows XP auf der ersten
+    Partition und Windows Vista auf der zweiten Partition. Kein
+    Windows soll Zugriff auf die Partition der anderen Windowsinstallation
+    haben. Ausserdem soll es eine dritte Partition geben.
+    Beide Windowsinstallationen haben Zugriff auf diese Partition.
+</p>
+<p>    
+    Es gibt viele Möglichkeiten um dieses Ziel zu erreichen. Hier wird eine
+    Variante beschrieben.
+</p>
+<p>
+Es funktioniert nur mit der <a href=mbrinstall.html>MBR Installation</a> des Bootmanagers.
+</p>
+
+<h3>Zusammenfassung</h3>
+<p>
+    <ul>
+	<li>Windows XP auf der ersten Partition</li>
+	<li>Windows Vista auf der zweiten Partition</li>
+	<li>Eine dritte Partition auf die jedes Windows Zugriff hat</li>
+	<li>Kein Windows darf auf die Partition des anderen zugreifen dürfen</li>
+    </ul>
+</p>
+
+
+<h3>Grundvoraussetzungen</h3>
+<p>
+    <ul>
+	<li>Die Festplatte ist nicht partitioniert</li>
+	<li>Es ist kein Bootmanager installiert</li>
+    </ul>
+</p>
+
+<h3 align=center>Die Beschreibung des Ablaufes</h3>
+<p>
+
+    <h4>Windows XP Installation</h4>
+    <blockquote>
+	<p>
+	Zuerst installieren Sie Windows XP. Erstellen Sie mit dem 
+	Windows XP Installationsprogramm eine primäre Partition (z.B. 10GB).
+	Installieren Sie Windows XP auf diese Partition.
+	</p>
+    </blockquote>
+
+    <h4>Partitionen anlegen</h4>
+    <blockquote>
+	<p>
+	Wenn Windows XP fertig installiert wurde, starten Sie die <span class=cmd>Datenträgerverwaltung</span>
+	im Windows XP. Erstellen Sie eine zweite <span class=cmd>primäre</span> Partition. 
+	Auf diese Partition wird Windows Vista installiert, daher wählen Sie ausreichend Platz.
+	Erstellen Sie auch eine dritte <span class=cmd>primäre</span> Partition. Auf diese
+	Partition können dann beide Betriebssysteme zugreifen.
+	</p>
+    </blockquote>
+
+    <h4>Bootmanager Installation</h4>
+    <blockquote>
+	<p>
+	Installieren Sie den Bootmanager von Diskette oder CD auf die Festplatte.
+	</p>
+    </blockquote>
+	
+    <h4>Windows XP Profil konfigurieren</h4>
+    <blockquote>
+	<p>
+	Der Bootmanager hat ein Profil mit dem Namen "os harddisk 1" erstellt. Dieses Profil
+	bootet Windows XP. Weiters wurden die 3 primären Partitionen in den Bootmanager
+	importiert. Die Partitionen heissen  HDA1, HDA2 und HDA3.
+	</p>
+	<p>
+	Gehen Sie zu <span class=cmd>setup</span> und dann <span class=cmd>profiles</span>. 
+	Wählen Sie <span class=cmd>os harddisk 1</span>.
+	Geben Sie dem Profil den Namen <span class=cmd>windows xp</span> mit edit label.
+	</p>
+	<p>
+	Wählen Sie <span class=cmd>linked partitions</span>. Drücken Sie
+	in der ersten Zeile von <span class=cmd>HDA enter</span> und wählen
+	Sie <span class=cmd>HDA1</span>.
+	In der zweiten Zeile drücken Sie <span class=cmd>c</span> um die Partition
+	auf <span class=cmd>cleared</span> zu setzen.
+	Sie können die dritte Zeile auf <span class=cmd>don't touch</span> setzen
+	oder wählen Sie	<span class=cmd>HDA3</span>. Siehe <a href=#partentries>konfigurieren der Partitionseinträge</a>.
+	</p>
+    </blockquote>
+	
+    <h4>Windows Vista Profil konfigurieren</h4>
+    <blockquote>
+	<p>
+	Verlassen Sie die Windows XP Profilkonfiguration und wählen Sie ein leeres Profil.
+	Setzen Sie den Namen auf <span class=cmd>windows vista</span>. Setzen Sie <span class=cmd>show
+	in main menu</span> auf <span class=cmd>yes</span>.
+	Wählen Sie <span class=cmd>linked partitions</span>. Drücken Sie in der ersten
+	Zeile <span class=cmd>c</span> um die Partition auf <span class=cmd>cleared</span> zu setzen.
+	In der zweiten Zeile drücken Sie <span class=cmd>b</span> um das <span class=cmd>boot flag</span>
+	zu setzen.
+	Drücken Sie <span class=cmd>enter</span> und wählen Sie <span class=cmd>HDA2</span>. 
+	In der dritten Zeile wählen Sie die gleiche Einstellung wie im Windows XP 
+	Profil (don't touch oder HDA3). 
+	</p>
+    </blockquote>
+	
+    <h4>Window Vista Installation</h4>
+    <blockquote>
+	<p>
+	Gehen Sie zurück ins Hauptmenü. Sie sehen nun windows xp und windows vista. Bewegen Sie
+	den Balken auf windows vista und drücken Sie <span class=cmd>Enter</span> um
+	die Partitionseinstellungen des Profils auf die Festplatte zu schreiben. 
+	Der Bootvorgang wird klarerweise fehlschlagen, da das Vista ja noch nicht installiert wurde.
+	
+	Booten Sie nun die Windows Vista Installations
+	DVD. Im Partitionsfenster des Windows Installationsprogrammes sehen
+	Sie nun am Anfang einen unpartitionieren Bereich (dort ist XP installiert) und 2
+	primäre Partitionen. Wählen Sie die erste primäre Partition für die Vista Installation.
+	Wenn die Installation beendet ist, kann es sein, das Vista sofort bootet und der Plop
+	Bootmanager übersprungen wird. In diesem Fall verwenden Sie
+	<span class=cmd>Rewrite loader</span> von der Plop Boot Manager Installations
+	Diskette oder CD. 
+	</p>
+    </blockquote>
+	
+	<p>
+	Nun sollten Sie zwei bootfähige Windowsinstallationen haben, die nichts voneinander wissen.
+	Sie können Daten zwischen beiden Betriebssystemen mit Hilfe der dritten Partition
+	austauschen.
+	</p>
+	
+    <a name=vista></a>
+    <h3>Windows Vista auf der zweiten Festplatte</h3>
+    <p>Im Prinzip ist es sehr ähnlich wie vorher beschrieben. Die zweite
+    Festplatte heisst im Bootmanager <span class=cmd>HDB</span>. Installieren
+    Sie Vista auf die erste Partition der zweiten Festplatte. Setzen Sie im
+    Vista Profil/Linked Partitions  die erste Zeile von HDB auf <span class=cmd>HDB1</span>
+    und drücken Sie <span class=cmd>b</span>. Der Bootmanager setzt das Boot Flag
+    auf 81h. Das sollte für Ihre Installation passen.
+    </p>
+
+<br>
+<a name=ex3></a>
+<h3>3. Dualboot Windows XP und Windows 7</h3>
+<hr>
+
+<p>
+Das ist eine Kurzanleitung für eine komplette Neuinstallation des PCs
+mit
+Dualboot von WinXP und Win7. Es spielt keine Rolle ob es 32 oder 64 Bit Versionen sind.
+Alle Daten auf dem PC werden gelöscht!
+</p>
+<p>
+Booten Sie die Win7 DVD. Löschen Sie alle Partitionen von der Festplatte. Erstellen Sie eine Partition
+für Win7. Das Installationsprogramm erstellt 2 Partitionen. Eine ca. 80MB grosse für die Win7 Bootdateien
+und eine Partition für die Win7 Dateien. Erstellen Sie eine weitere Partition für WinXP. Sie sehen nun
+3 Partitionen. Installieren Sie Win7 auf die zweite Partition. Nachdem Win7 fertig installiert wurde, 
+installieren Sie den Plop Boot Manager. Nachdem der Bootmanager installiert und gestartet wurde gehen Sie
+ins Setup, Profiles und "OS HARDDISK 1". Ändern Sie den Namen auf "Win7". Gehen Sie zu linked partitions
+und drücken Sie an der ersten Position von HDA Enter und wählen Sie HDA1, bei der Zweiten HDA2 und an
+der Dritten drücken Sie "c" für cleared. Verlassen Sie das Profil von Win7. Wählen Sie ein leeres Profil
+um das WinXP Profil zu erstellen. Geben Sie dem Profil den Namen "WinXP", visible in main menu auf "yes" setzen.
+In linked partitions bei HDA wählen Sie an der ersten Stelle HDA3 aus und drücken Sie "b" um das Bootflag
+zu setzen. An der zweiten Stelle drücken Sie "c" für cleared. An er dritten Stelle ebenfalls "c" für
+cleared drücken. Gehen Sie ins Hauptmenü und drücken Sie Enter bei WinXP. WinXP wird natürlich nicht starten 
+weil es noch nicht installiert wurde. Bei der Meldung Invalid Boot Signature drücken Sie "n" um den Bootvorgang
+abzubrechen. Nun booten Sie die WinXP CD. Sie sollten jetzt nur eine Partition für die Installation sehen.
+Installieren Sie WinXP dort. Wenn WinXP fertig installiert wurde, starten Sie die Plop Bootmanager
+Installations CD und verwenden Sie "Rewrite loader". Booten Sie neu und der Bootmanager wird Sie 
+darauf aufmerksam machen das sich HDA3 geändert hat. Importieren Sie die neuen Werte indem Sie "y" 
+(bei deutscher Tastatur "z") drücken. Nun sollten Sie beide Systeme starten können.
+</p>
+
+
+<a name=l_nod32></a><br><h1>NOD32 Virusmeldung</h1><hr>    <a name=full></a>
+
+
+</p>NOD32 meldet nach der Bootmanager MBR Installation einen MBR Virus. Das ist eine Falschmeldung.
+Dieses Problem war behoben, ist jedoch bei aktuellen NOD32 Versionen wieder da.
+</p>
+
+
+<a name=l_faq></a><br><h1>FAQ's - Häufig gestellte Fragen</h1><hr>    <a name=full></a>
+
+	<ol>
+		    <li><p><a href=#faq0>Ich boote DOS von USB und kann nicht auf den Stick schreiben</a></p></li>
+	    	    <li><p><a href=#faq1>Gibt es Pläne um den Schreibzugriff einzubauen</a></p></li>
+	    	    <li><p><a href=#faq2>Der Bootmanager erkennt mein USB CD Laufwerk, aber beim booten bleibt der Bootmanager hängen</a></p></li>
+	    	    <li><p><a href=#faq3>Meine USB Tastatur funktioniert nicht wenn ich von USB gebootet habe</a></p></li>
+	    	    <li><p><a href=#faq4>Kann ich meine USB PC-Karte (PCMCIA CardBus) zum booten von USB verwenden</a></p></li>
+	    	    <li><p><a href=#faq5>Ich möchte den Bootmanager von meinem USB Stick installieren, aber ich kann nicht meine
+	 interne Festplatte auswählen</a></p></li>
+	    	    <li><p><a href=#faq6>Ich verwende plpbt.bin und meine Einstellungen gehen verloren</a></p></li>
+	    	    <li><p><a href=#faq7>Ich kann nicht von meinem SATA CD/DVD Laufwerk booten</a></p></li>
+	    	    <li><p><a href=#faq8>Ich habe im Forum VIEW/EDIT/COPY data gelesen, wo finde ich diesen Menüpunkt</a></p></li>
+	    	    <li><p><a href=#faq9>Hauptmenü Netzwerkboot: !PXE structure was not found in UNDI</a></p></li>
+	    	    <li><p><a href=#faq10>Mein USB DVD Laufwerk wird erkannt, aber ich kann nicht booten</a></p></li>
+	    	</ol>
+    <p>&nbsp;</p>
+	<ol>
+		    <a name=faq0></a>
+	    <li>
+		<p>
+		    <b>Ich boote DOS von USB und kann nicht auf den Stick schreiben</b>
+		</p>
+		<p>
+		    Meine Treiber haben keine Routinen zum schreiben auf USB Geräte eingebaut.
+	Warum? Mein Ziel war es USB Treiber für UHCI, OHCI
+	und EHCI Kontroller in meinen Bootmanager einzubauen. Der Platz, um den
+	Bootmanager ohne Partition auf der Festplatte zu installieren, ist sehr klein. 
+	Daher war kein Platz mehr um Routinen
+	für Schreibzugriffe einzubauen.		</p>
+	    </li>
+	    	    <a name=faq1></a>
+	    <li>
+		<p>
+		    <b>Gibt es Pläne um den Schreibzugriff einzubauen</b>
+		</p>
+		<p>
+		    Ich denke darüber nach, aber es gibt keine konkreten Pläne.		</p>
+	    </li>
+	    	    <a name=faq2></a>
+	    <li>
+		<p>
+		    <b>Der Bootmanager erkennt mein USB CD Laufwerk, aber beim booten bleibt der Bootmanager hängen</b>
+		</p>
+		<p>
+		    USB CD/DVD Laufwerke werden nicht unterstützt.		</p>
+	    </li>
+	    	    <a name=faq3></a>
+	    <li>
+		<p>
+		    <b>Meine USB Tastatur funktioniert nicht wenn ich von USB gebootet habe</b>
+		</p>
+		<p>
+		    USB Tastaturen werden von meinen Treibern nicht unterstützt. Wenn Linux oder Windows
+	 gebootet wird, dann funktioniert die Tastatur wieder, sobald das Betriebssystem die Kontrolle
+	 vom USB übernommen hat.		</p>
+	    </li>
+	    	    <a name=faq4></a>
+	    <li>
+		<p>
+		    <b>Kann ich meine USB PC-Karte (PCMCIA CardBus) zum booten von USB verwenden</b>
+		</p>
+		<p>
+		    Ja, mit der pcmcia Version des Bootmanagers.		</p>
+	    </li>
+	    	    <a name=faq5></a>
+	    <li>
+		<p>
+		    <b>Ich möchte den Bootmanager von meinem USB Stick installieren, aber ich kann nicht meine
+	 interne Festplatte auswählen</b>
+		</p>
+		<p>
+		    Das Problem ist, dass der USB Stick zur ersten Festplatte und die interne Festplatte zur 
+	 zweiten Festplatte wird. Das Installationsprogramm würde die Profile nun falsch anlegen und beim 
+	 Booten von der internen Festplatte würde alles durcheinander kommen. Natürlich
+	 wäre es möglich eine Option für diesen speziellen Fall einzubauen, aber es gibt so viele 
+	 alternativen um den Bootmanager zu installieren, dass es derzeit keine Pläne gibt um
+	 eine Option für diesen Fall einzubauen.		</p>
+	    </li>
+	    	    <a name=faq6></a>
+	    <li>
+		<p>
+		    <b>Ich verwende plpbt.bin und meine Einstellungen gehen verloren</b>
+		</p>
+		<p>
+		    Man muss plpbt.bin mit plpcfgbt konfigurieren. Alle Änderungen die mit dem 
+	 Bootmanager Menü vorgenommen werden, werden nicht gespeichert und sind beim
+	 nächsten Neustart verloren.		</p>
+	    </li>
+	    	    <a name=faq7></a>
+	    <li>
+		<p>
+		    <b>Ich kann nicht von meinem SATA CD/DVD Laufwerk booten</b>
+		</p>
+		<p>
+		    SATA CD/DVD Laufwerke werden nicht unterstützt. Es funktionieren nur IDE CD/DVD Laufwerke.		</p>
+	    </li>
+	    	    <a name=faq8></a>
+	    <li>
+		<p>
+		    <b>Ich habe im Forum VIEW/EDIT/COPY data gelesen, wo finde ich diesen Menüpunkt</b>
+		</p>
+		<p>
+		    'VIEW/EDIT/COPY data' wurde durch 'Edit MBR/Import data' ersetzt (setup/partitions/partition edit)		</p>
+	    </li>
+	    	    <a name=faq9></a>
+	    <li>
+		<p>
+		    <b>Hauptmenü Netzwerkboot: !PXE structure was not found in UNDI</b>
+		</p>
+		<p>
+		    Ihr Netzwerk Boot ROM ist ein 'PXE Split ROM'. Derzeit werden nur 'Monolithic' ROMS unterstützt.		</p>
+	    </li>
+	    	    <a name=faq10></a>
+	    <li>
+		<p>
+		    <b>Mein USB DVD Laufwerk wird erkannt, aber ich kann nicht booten</b>
+		</p>
+		<p>
+		    USB CD/DVD Laufwerke werden vom aktuellen USB Treiber nicht unterstützt.		</p>
+	    </li>
+	    	</ol>
+    
+
+
+    
+    <hr>
+    <p align=center>&copy; by Elmar Hanlhofer</p>
+</body>
+</html>
