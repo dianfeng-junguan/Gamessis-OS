@@ -27,10 +27,10 @@ int init_paging()
         
     }
     //开启分页模式
-    asm volatile("mov %0,%%eax\r\n mov %%eax,%%cr3\r\n"\
-                    "mov %%cr0,%%eax\r\n"
+    asm volatile("mov %0,%%eax\r\n mov %%rax,%%cr3\r\n"\
+                    "mov %%cr0,%%rax\r\n"
                     "or $0x80000000,%%eax\r\n"
-                    "mov %%eax,%%cr0":"=m"(page_index));
+                    "mov %%rax,%%cr0":"=m"(page_index));
 }
 void set_high_mem_base(int base)
 {
@@ -67,7 +67,7 @@ int vmfree(int ptr)
 void page_err(){
     asm("cli");
     //puts("page err");
-    unsigned int err_code=0,l_addr=0;
+    unsigned long err_code=0,l_addr=0;
     asm volatile("mov 4(%%ebp),%0":"=r"(err_code));
     asm volatile("mov %%cr2,%0":"=r"(l_addr));//试图访问的地址
     int p=err_code&1;

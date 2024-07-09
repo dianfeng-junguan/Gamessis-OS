@@ -1,5 +1,5 @@
 .PHONY: boot mount umount run knl cpknl com grub
-CUARGS = -w -g -m32 -no-pie -fno-pic -fno-stack-protector -I include
+CUARGS = -w -g -no-pie -fno-pic -fno-stack-protector -I include
 BOOT = boot.efi
 KNL_OFILES = bin/setupa.o bin/int.o bin/main.o bin/log.o \
 			bin/memory.o bin/virfs.o bin/devman.o bin/proc.o bin/inta.o \

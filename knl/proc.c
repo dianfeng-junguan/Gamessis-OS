@@ -392,7 +392,7 @@ void proc_end()
     asm volatile("mov %%eax,%0":"=m"(ret));
     //printf("proc #%d ended with retv %d.\n",cur_proc,ret);
     //切换堆栈
-    asm volatile("mov %0,%%esp"::"r"(task[0].tss.esp));
+    asm volatile("mov %0,%%rsp"::"r"(task[0].tss.esp));
     del_proc(cur_proc);
     if(task[cur_proc].parent_pid!=-1){
         task[task[cur_proc].parent_pid].stat=READY;
