@@ -46,7 +46,8 @@ int get_phyaddr(int num);
 void set_page_item(page_item *item_addr,int phy_addr,int attr);
 void set_2mb_pde(page_item* pde,int pa);
 void set_1gb_pdpt(page_item* ppdpt,int pa,unsigned int extra_attr);
-
+//映射一页4KB内存
+int mmap(u64 pa,u64 la,u32 attr);
 
 void page_err();
 //vmalloc区部分

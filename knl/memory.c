@@ -15,6 +15,10 @@ mem_t mmap_struct[MAX_MEM_STRUCT];
 int high_mem_base=1024;
 int mmap_t_i=0;
 
+int mmap(u64 pa,u64 la,u32 attr)
+{
+    
+}
 int init_paging()
 {
     #ifdef IA32

@@ -19,6 +19,14 @@ mem_info_req:
     dd 16
     dd 0
     dd 0
+framebuffer_tag:
+    dd 5
+    dd 20
+    dd 1920 ; width
+    dd 1080 ; height
+    dd 32   ; depth
+framebuffer_tag_end:
+dd  0
 end_tag:
     dd 0
     dd 8
@@ -83,6 +91,7 @@ switch_cs:
 STACK_AREA_END equ 0x9fc00-1
 
 global gdtptr
+;之后就不会动了，也不会用TSS了
 gdt64:
     dq  0
     dq  0x0020980000000000   ; 内核态代码段

@@ -5,12 +5,12 @@
 #include <devman.h>
 #include <proc.h>
 #include <gdt.h>
+#include <framebuffer.h>
 
 #include <tty.h>
 #include <disk.h>
 #include <fat16.h>
 #include <kb.h>
-void to64();
 int manage_proc_lock=1;
 void main(unsigned long magic,unsigned long addr)
 {
@@ -109,7 +109,7 @@ void main(unsigned long magic,unsigned long addr)
 			unsigned i;
 			struct multiboot_tag_framebuffer *tagfb = (struct multiboot_tag_framebuffer *)tag;
 			void *fb = (void *)(unsigned long)tagfb->common.framebuffer_addr;
-
+			set_framebuffer(fb);
 			switch (tagfb->common.framebuffer_type)
 			{
 			case MULTIBOOT_FRAMEBUFFER_TYPE_INDEXED:
@@ -182,6 +182,7 @@ void main(unsigned long magic,unsigned long addr)
 		}
 		}
 	}
+	init_framebuffer();
 	tag = (struct multiboot_tag *)((multiboot_uint8_t *)tag + ((tag->size + 7) & ~7));
 	printf("Total mbi size 0x%x\n", (unsigned)tag - addr);
 	char disk_count=*(char*)0x475;

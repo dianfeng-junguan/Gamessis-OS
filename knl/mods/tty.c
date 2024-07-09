@@ -66,6 +66,12 @@ int vpage_size;
 14H：640×480 256色
 */
 
+//页帧缓冲
+void set_framebuffer(unsigned long addr)
+{
+    video_base=addr;
+    m_ptr=addr;
+}
 void scrdown(void)
 {
     vpage_base+=SCREEN_W*2;

@@ -2,6 +2,7 @@
 typedef unsigned char u8,byte,__u8;
 typedef unsigned short u16,word,__le16,__u16;
 typedef unsigned int u32,dword,__le32,__u32;
+typedef unsigned long u64;
 #define TRUE 1
 #define FALSE 0
 #define NULL (void*)0

@@ -23,6 +23,7 @@
         "pe.h": "c",
         "gdt.h": "c",
         "disk.h": "c",
-        "tty.h": "c"
+        "tty.h": "c",
+        "log.h": "c"
     }
 }
