@@ -10,7 +10,7 @@
 #include <disk.h>
 #include <fat16.h>
 #include <kb.h>
-
+void to64();
 int manage_proc_lock=1;
 void main(unsigned long magic,unsigned long addr)
 {

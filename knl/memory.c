@@ -5,6 +5,10 @@
 unsigned int page_map[PAGE_BITMAP_NR]={0};
 page_item *page_index=PAGE_INDEX_ADDR;
 page_item *page_table=PAGE_TABLE_ADDR;
+//64位用
+page_item* pml4=PML4_ADDR;
+page_item* pdpt=PDPT_ADDR;
+page_item* pd=PD_ADDR;
 unsigned int vmalloc_map[VMALLOC_PGN/32]={0};
 mem_t mmap_struct[MAX_MEM_STRUCT];
 //以kb为单位
@@ -13,6 +17,7 @@ int mmap_t_i=0;
 
 int init_paging()
 {
+    #ifdef IA32
     //设置页目录
     unsigned int pt=PAGE_TABLE_ADDR;
     page_item *pde=page_index;
@@ -31,6 +36,20 @@ int init_paging()
                     "mov %%cr0,%%rax\r\n"
                     "or $0x80000000,%%eax\r\n"
                     "mov %%rax,%%cr0":"=m"(page_index));
+    #else
+    //设置PML4
+    set_page_item(pml4,PDPT_ADDR,PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX);
+    set_1gb_pdpt(pdpt,0x40000000ul,PAGE_RWX);//设置PDPT
+    set_page_item(pdpt+1,PD_ADDR,PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX);
+    //打开PAE(physical address extension)
+    asm volatile("mov %cr4,%rax\r\n or $5,%rax\r\n mov %rax,%cr4");
+    //加载PML4
+    asm volatile("mov %0,%%rax\r\n mov %%rax,%%cr4":"=m"(pml4));
+    //打开分页机制
+    asm volatile("mov %cr0,%rax\r\n"
+                    "or $0x80000000,%eax\r\n"
+                    "mov %rax,%cr0");
+    #endif
 }
 void set_high_mem_base(int base)
 {
@@ -179,8 +198,14 @@ void set_page_item(page_item *item_addr,int phy_addr,int attr)
     *item_addr|=phy_addr&0xfffff000;
     *item_addr|=attr;
 }
-
-void set_4mb_pde(page_item* pde,int pa)
+void set_1gb_pdpt(page_item* ppdpt,int pa,unsigned int extra_attr)
+{
+    *ppdpt=0;
+    *ppdpt|=PAGE_PRESENT|PDPTE_1GB|extra_attr;
+    unsigned int hipa=pa&0xffffc0000000ul;
+    *ppdpt|=hipa;
+}
+void set_2mb_pde(page_item* pde,int pa)
 {
     *pde=0;
     *pde|=PAGE_PRESENT|PAGE_4MB_PAGE|PDE_4MB_PAT;

@@ -1,0 +1,84 @@
+
+bin/setupa.o:     file format elf64-x86-64
+
+
+Disassembly of section .multiboot2:
+
+0000000000000000 <multiboot2_header>:
+   0:	d6                   	(bad)  
+   1:	50                   	push   %rax
+   2:	52                   	push   %rdx
+   3:	e8 00 00 00 00       	call   8 <multiboot2_header+0x8>
+   8:	38 00                	cmp    %al,(%rax)
+   a:	00 00                	add    %al,(%rax)
+   c:	f2 ae                	repnz scas %es:(%rdi),%al
+   e:	ad                   	lods   %ds:(%rsi),%eax
+   f:	17                   	(bad)  
+
+0000000000000010 <tag_info_req>:
+  10:	01 00                	add    %eax,(%rax)
+  12:	00 00                	add    %al,(%rax)
+  14:	10 00                	adc    %al,(%rax)
+	...
+
+0000000000000020 <mem_info_req>:
+  20:	04 00                	add    $0x0,%al
+  22:	00 00                	add    %al,(%rax)
+  24:	10 00                	adc    %al,(%rax)
+	...
+
+0000000000000030 <end_tag>:
+  30:	00 00                	add    %al,(%rax)
+  32:	00 00                	add    %al,(%rax)
+  34:	08 00                	or     %al,(%rax)
+	...
+
+Disassembly of section .entry:
+
+0000000000000000 <init32>:
+   0:	fa                   	cli    
+   1:	b8 76 30 10 00       	mov    $0x103076,%eax
+   6:	83 c0 02             	add    $0x2,%eax
+   9:	c7 00 4e 30 10 00    	movl   $0x10304e,(%rax)
+   f:	66 0f 01 15 76 30 10 	data16 lgdt 0x103076(%rip)        # 10308d <STACK_AREA_END+0x6348e>
+  16:	00 
+
+0000000000000017 <switch_cs>:
+  17:	66 b8 10 00          	mov    $0x10,%ax
+  1b:	8e d8                	mov    %eax,%ds
+  1d:	8e d0                	mov    %eax,%ss
+  1f:	8e c0                	mov    %eax,%es
+  21:	8e e8                	mov    %eax,%gs
+  23:	8e e0                	mov    %eax,%fs
+  25:	bc 00 7e 00 00       	mov    $0x7e00,%esp
+  2a:	b9 80 00 00 c0       	mov    $0xc0000080,%ecx
+  2f:	0f 32                	rdmsr  
+  31:	0f ba e8 08          	bts    $0x8,%eax
+  35:	0f 30                	wrmsr  
+  37:	0f 20 c0             	mov    %cr0,%rax
+  3a:	0f ba e8 00          	bts    $0x0,%eax
+  3e:	0f 22 c0             	mov    %rax,%cr0
+  41:	53                   	push   %rbx
+  42:	68 d6 50 52 e8       	push   $0xffffffffe85250d6
+  47:	b8 00 00 00 00       	mov    $0x0,%eax
+  4c:	ff e0                	jmp    *%rax
+
+000000000000004e <gdt64>:
+	...
+  5a:	00 98 20 00 00 00    	add    %bl,0x20(%rax)
+  60:	00 00                	add    %al,(%rax)
+  62:	00 92 00 00 00 00    	add    %dl,0x0(%rdx)
+  68:	00 00                	add    %al,(%rax)
+  6a:	00 f8                	add    %bh,%al
+  6c:	20 00                	and    %al,(%rax)
+  6e:	00 00                	add    %al,(%rax)
+  70:	00 00                	add    %al,(%rax)
+  72:	00 f2                	add    %dh,%dl
+	...
+
+0000000000000076 <gdtptr>:
+  76:	27                   	(bad)  
+  77:	00 4e 00             	add    %cl,0x0(%rsi)
+  7a:	00 00                	add    %al,(%rax)
+  7c:	00 00                	add    %al,(%rax)
+	...

@@ -2,6 +2,7 @@ section .multiboot2 align=8
 MULTIBOOT2_HEADER_MAGIC    equ 0xe85250d6
 MULTIBOOT2_HEADER_LENGTH   equ multiboot2_header_end - multiboot2_header
 MULTIBOOT2_HEADER_FLAGS    equ 0x00000000
+
 multiboot2_header:
     dd MULTIBOOT2_HEADER_MAGIC
     dd MULTIBOOT2_HEADER_FLAGS ;要求有meminfo和bios dev info
@@ -25,6 +26,8 @@ multiboot2_header_end:
 
 section .entry
 global loader_start
+global gdt64
+global gdtptr
 extern loadermain
 extern main
     
@@ -37,79 +40,57 @@ PAGE_INDEX EQU 0x1000        ;必须是0x1000对齐不然会出问题
 PAGES EQU 0x2000
 STACK_AREA EQU 0x9d00        ;以节为单位
 STACK_AREA_OFFSET equ 0x2c00-1
-
+[bits 32]
 init32:
-    
-    ; ;填充页目录和页表
-    ; ;fill_page_index
-    ; mov esi,PAGE_INDEX
-    ; shr esi,4
-    ; mov es,si
-    
-    ; mov eax,PAGES
-    ; mov ecx,1024
-    ; mov edi,0
-    ; add eax,7;+7=该页存在，用户可读写
-    ; rep_PAGE_INDEX:
-    ; stosd;mov es:[edi],eax
-    ; add eax,4096
-    ; loop rep_PAGE_INDEX
-    
-
-    ; mov ecx,8*1024;max: 1024*1024 PAGE_TABLE
-    ; mov edi,PAGES
-    ; shr edi,4
-    ; mov es,di
-    ; mov di,0
-
-    ; mov eax,0x0+7
-    ; rep_paging:
-    ; ;mov dword es:[edi],eax
-    ; stosd
-    ; add eax,0x1000
-    ; loop rep_paging
-    
-
-    ; mov esp,STACK_AREA_END;堆栈区0x29600-0x30000
-    
-    ; mov eax,PAGE_INDEX
-    ; mov cr3,eax
-    ; mov eax,cr0
-    ; or eax,0x80000000
-    ; mov cr0,eax
+    ;开始准备64位
+    ; 设置gdt_ptr
     cli
-    ;设置一下gdt
-    lgdt [temp_gdtptr]
-    jmp dword 0x8:.switch_cs
-.switch_cs:
+    ;这里写绝对地址是因为，objcopy转成64位代码之后，写标签就会地址错误
+    mov eax, 0x103076
+    add eax,2
+    mov dword [eax], 0x10304e
+    ; 加载GDTR和段寄存器
+    db 0x66
+    lgdt [0x103076]     ; gdt_ptr
+    ; jmp dword 0x8:.switch_cs
+
+
+switch_cs:
     mov ax,0x10
     mov ds,ax
     mov ss,ax
     mov es,ax
     mov gs,ax
     mov fs,ax
+
+    mov esp,0x7e00
+    
+    ; 切换ia32e模式
+    mov ecx, 0xc0000080 ; ia32_efer在msr中的地址
+    rdmsr
+    bts eax, 8
+    wrmsr
+    ;打开保护模式
+    mov eax, cr0
+    bts eax, 0
+    mov cr0, eax
+
     ;进入内核
     push ebx
     push MULTIBOOT2_HEADER_MAGIC
-    call main
-
+    mov eax,main
+    jmp eax
 STACK_AREA_END equ 0x9fc00-1
+
 global gdtptr
+gdt64:
+    dq  0
+    dq  0x0020980000000000   ; 内核态代码段
+    dq  0x0000920000000000   ; 内核态数据段
+    dq  0x0020f80000000000   ; 用户态代码段
+    dq  0x0000f20000000000   ; 用户态数据段
+gdt_end:
+
 gdtptr:
-    dw 256*8
-    dd 0x800
-temp_gdtptr:
-    dw 3*8
-    dd gdt_temp
-gdt_temp:
-    dq 0
-    .code:
-        dw 0xffff
-        db 0,0,0
-        dw 0xcf9e
-        db 0
-    .data:
-        dw 0xffff
-        db 0,0,0
-        dw 0xcf92
-        db 0
+    dw  gdt_end - gdt64 - 1
+    dq  gdt64

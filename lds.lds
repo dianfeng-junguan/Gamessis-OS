@@ -1,8 +1,9 @@
 OUTPUT_FORMAT("elf64-x86-64", "elf64-x86-64", "elf64-x86-64")
+OUTPUT_ARCH(i386:x86-64)
 ENTRY(init32)
 
 SECTIONS {
-    . = 0x201000;
+    . = 0x103000;
     .entry :
     {
         init32 = .;

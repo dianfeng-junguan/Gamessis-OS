@@ -15,10 +15,17 @@ typedef struct
 #define MEM_TYPE_DEFECTED 5
 #define MEM_TYPE_ACPI 3
 #define MEM_TYPE_HIBER_PRESERVE 4
-
+//不定义IA32，默认是64位
+#ifdef IA32
 #define PAGE_INDEX_ADDR 0x100000
 #define PAGE_TABLE_ADDR 0x101000
 typedef unsigned int page_item;
+#else
+#define PML4_ADDR 0x100000
+#define PDPT_ADDR 0x101000
+#define PD_ADDR 0x102000
+typedef unsigned long page_item;
+#endif
 //内存页的分配-不是指页表
 void init_memory();
 void set_mem_area(int base,int len,int type);
@@ -37,7 +44,9 @@ int check_page(int num);
 int get_phyaddr(int num);
 //页表页目录部分
 void set_page_item(page_item *item_addr,int phy_addr,int attr);
-void set_4mb_pde(page_item* pde,int pa);
+void set_2mb_pde(page_item* pde,int pa);
+void set_1gb_pdpt(page_item* ppdpt,int pa,unsigned int extra_attr);
+
 
 void page_err();
 //vmalloc区部分

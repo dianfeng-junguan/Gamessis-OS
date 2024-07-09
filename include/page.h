@@ -10,6 +10,10 @@
 #define PDE_4MB_PAT 0x1000
 #define PAGE_INDEX_SIZE 0x400000
 #define PAGE_SIZE 0x1000
+//64位独有
+#define PDE_4MB 0X80
+#define PDPTE_1GB 0x80
+
 
 #define PAGE_INDEX_ADDR 0x1000
 #define PAGE_TABLE_ADDR 0x2000

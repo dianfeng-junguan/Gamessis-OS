@@ -1,5 +1,5 @@
 .PHONY: boot mount umount run knl cpknl com grub
-CUARGS = -w -g -no-pie -fno-pic -fno-stack-protector -I include
+CUARGS = -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64
 BOOT = boot.efi
 KNL_OFILES = bin/setupa.o bin/int.o bin/main.o bin/log.o \
 			bin/memory.o bin/virfs.o bin/devman.o bin/proc.o bin/inta.o \
@@ -13,12 +13,10 @@ boot:
         -fno-builtin -Wl,--subsystem,10 -o bin/boot.efi boot/boot.c \
 		-I lib/efi/em64t -I lib/efi $(CUARGS)
 knl:
-	# @nasm knl/setup.s -o bin/setup.o -f elf32 -l setup.lst
-	# @gcc -c knl/main.c -o bin/main.o $(CUARGS)
-	# @gcc -c knl/log.c -o bin/log.o $(CUARGS)
-	@./knl.sh
+	@bash knl.sh
 	@ld -T lds.lds -o bin/gmsknl.elf $(KNL_OFILES) $(MODS_OFILES) $(COM_OFILES)
-	@objdump -d bin/gmsknl.elf -M intel > knl.s
+	@objdump -d bin/gmsknl.elf -j .entry -M intel > knl.s
+	@objdump -d bin/gmsknl.elf -M intel >> knl.s
 cpboot:
 	@sudo cp bin/$(BOOT) /mnt/boot/$(BOOT)
 com:
@@ -33,7 +31,7 @@ cpknl:
 cpknln:
 	@make imgcon
 	@make imgmnt
-	@sudo cp bin/gmsknl.elf /mnt/gmsknl
+	@sudo cp bin/gmsknl.elf /mnt/boot/gmsknl
 	@make imgdismnt
 	@make imgdiscon
 mount:
