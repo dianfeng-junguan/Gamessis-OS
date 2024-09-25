@@ -11,29 +11,29 @@ gate *idt=IDT_ADDR;
 extern int disk_int_handler();
 void init_int(){
     //asm volatile("sidt %0"::"m"(idt));
-    set_gate(0,divide_err,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(1,debug,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(2,default_int_proc,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(3,breakpoint,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(4,overflow,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(5,bounds,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(6,undefined_operator,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(7,coprocessor_notexist,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(8,double_ints,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);//double_ints
-    set_gate(9,coprocessor_seg_overbound,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(10,invalid_tss,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(11,segment_notexist,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(12,stackseg_overbound,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);//
-    set_gate(13,general_protect,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(14,page_err,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(15,default_int_proc,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(16,coprocessor_err,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
+    set_gate(0,(addr_t)divide_err,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
+    set_gate(1,(addr_t)debug,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
+    set_gate(2,(addr_t)default_int_proc,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
+    set_gate(3,(addr_t)breakpoint,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
+    set_gate(4,(addr_t)overflow,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
+    set_gate(5,(addr_t)bounds,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
+    set_gate(6,(addr_t)undefined_operator,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
+    set_gate(7,(addr_t)coprocessor_notexist,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
+    set_gate(8,(addr_t)double_ints,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);//double_ints
+    set_gate(9,(addr_t)coprocessor_seg_overbound,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
+    set_gate(10,(addr_t)invalid_tss,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
+    set_gate(11,(addr_t)segment_notexist,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
+    set_gate(12,(addr_t)stackseg_overbound,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);//
+    set_gate(13,(addr_t)general_protect,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
+    set_gate(14,(addr_t)page_err,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
+    set_gate(15,(addr_t)default_int_proc,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
+    set_gate(16,(addr_t)coprocessor_err,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
     for (int i=17;i<48;i++)
-        set_gate(i,default_int_proc,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-	set_gate(0x21,key_proc,GDT_SEL_CODE,GATE_PRESENT|TRAP_GATE);
-	set_gate(0x20,clock,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-	set_gate(0x2e,disk_int_handler,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(0x80,_syscall,GDT_SEL_CODE,GATE_PRESENT|TRAP_GATE);//
+        set_gate(i,(addr_t)default_int_proc,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
+	set_gate(0x21,(addr_t)key_proc,GDT_SEL_CODE,GATE_PRESENT|TRAP_GATE);
+	set_gate(0x20,(addr_t)clock,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
+	set_gate(0x2e,(addr_t)disk_int_handler,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
+    set_gate(0x80,(addr_t)_syscall,GDT_SEL_CODE,GATE_PRESENT|TRAP_GATE);//
     //set_gate(0x2c,mouse_proc,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
     //启动8259A
     
@@ -53,7 +53,7 @@ void init_int(){
     turn_on_int();
 
 }
-void set_gate(u8 index,u32 offset,u16 selector,u16 attr)
+void set_gate(u8 index,addr_t offset,u16 selector,u16 attr)
 {
     idt[index].offset_low=offset&0xffffu;
     idt[index].offset_high=(offset>>16)&0xffffu;

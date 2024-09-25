@@ -14,10 +14,7 @@
 #define SYSCALL_FETCH_KBBUF 12
 #define SYSCALL_REG_DEVICE 24
 #define SYSCALL_REG_DRIVER 25
-typedef unsigned char u8;
-typedef unsigned short u16;
-typedef unsigned int u32;
-
+#include "typename.h"
 typedef struct{
     u16 offset_low;
     u16 selector;
@@ -38,7 +35,7 @@ void turn_on_int();
 #define TASK_GATE 0xc00
 #define INT_GATE 0xe00
 //注：这里的index指的是idt作为数组，每一项的index，不是0x8,0x10那些
-void set_gate(u8 index,u32 offset,u16 selector,u16 attr);
+void set_gate(u8 index,addr_t offset,u16 selector,u16 attr);
 
 void eoi();
 /*
