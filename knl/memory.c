@@ -15,9 +15,32 @@ mem_t mmap_struct[MAX_MEM_STRUCT];
 int high_mem_base=1024;
 int mmap_t_i=0;
 
-int mmap(u64 pa,u64 la,u32 attr)
+stat_t mmap(addr_t pa,addr_t la,u32 attr)
 {
-    
+    //内核空间映射不能更改
+    if(la/PML4E_SIZE==0)return ERR;
+    page_item *pdptp=pml4[la/PML4E_SIZE];//指向的pdpt表
+    //因为一个pml指向512gb内存，目前电脑还没有内存能达到这个大小，就不进行检查是否越界的判断
+    int pdpti=la%PML4E_SIZE/PDPTE_SIZE;
+    page_item* pdp=pdptp[pdpti];//指向的pd
+    if(*pdp&PAGE_PRESENT)return ALREADY_USED;//已分配pd
+    //分配pd
+    addr_t pdaddr=vmalloc();
+    *pdp=pdaddr&PAGE_MASK|attr;
+    page_item* ptp=pdp[la%PDPTE_SIZE/PDE_SIZE];
+    //新分配的pd里面肯定没有已经被占用的项
+    //if(*ptp&PAGE_PRESENT)return -1;//已分配pt
+    //分配pt
+    addr_t ptaddr=vmalloc();
+    *ptp=ptaddr&PAGE_MASK|attr;
+    page_item* pte=ptp[la%PDE_SIZE/PAGE_SIZE];
+    *pte=pa&PAGE_MASK|attr;//映射
+    return NORMAL;
+}
+
+stat_t mdemap(addr_t la)
+{
+    return mmap(0l,la,0);
 }
 int init_paging()
 {
@@ -65,7 +88,7 @@ void set_mem_area(int base,int len,int type)
     mmap_struct[mmap_t_i].len=len;
     mmap_struct[mmap_t_i++].type=type;
 }
-int vmalloc()
+addr_t vmalloc()
 {
     for(int i=0;i<VMALLOC_PGN/32;i++)
     {
@@ -80,7 +103,7 @@ int vmalloc()
     }
 }
 
-int vmfree(int ptr)
+int vmfree(addr_t ptr)
 {
     int num=ptr/PAGE_SIZE;
     int n=num/32;
@@ -163,7 +186,7 @@ page_map存储方式:
 0x00000000
 little end
 */
-int req_a_page(){
+addr_t req_a_page(){
     for(int i=0;i<PAGE_BITMAP_NR;i++){
         for(int j=0;j<32;j++){
             unsigned int bit=page_map[i]&(1<<j);
@@ -235,7 +258,7 @@ int req_page_at(int addr,int pgn)
     return ret;
 } */
 //在bitmap申请指定的页面,base默认0x1000对齐
-int req_page_at(int base,int pgn)
+addr_t req_page_at(addr_t base,int pgn)
 {
     if(base==0)//不指定地址
     {

@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.1)
+project(gms)
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c90 -pedantic")
+include_directories(include)
+aux_source_directory(knl KNL)
+aux_source_directory(knl/mods KNL_MODS)
+add_executable(gms ${KNL} ${KNL_MODS})

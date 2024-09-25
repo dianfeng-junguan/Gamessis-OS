@@ -8,15 +8,15 @@ KNL_OFILES = bin/setupa.o bin/int.o bin/main.o bin/log.o \
 MODS_OFILES = bin/mods/kb.o bin/mods/disk.o bin/mods/diska.o bin/mods/fat16.o \
 				bin/mods/tty.o
 COM_OFILES = bin/mem.o bin/str.o bin/types.o bin/proca.o
-boot:
-	@gcc -w -e main -nostdlib \
-        -fno-builtin -Wl,--subsystem,10 -o bin/boot.efi boot/boot.c \
-		-I lib/efi/em64t -I lib/efi $(CUARGS)
 knl:
 	@bash knl.sh
 	@ld -T lds.lds -o bin/gmsknl.elf $(KNL_OFILES) $(MODS_OFILES) $(COM_OFILES)
 	@objdump -d bin/gmsknl.elf -j .entry -M intel > knl.s
 	@objdump -d bin/gmsknl.elf -M intel >> knl.s
+boot:
+	@gcc -w -e main -nostdlib \
+        -fno-builtin -Wl,--subsystem,10 -o bin/boot.efi boot/boot.c \
+		-I lib/efi/em64t -I lib/efi $(CUARGS)
 cpboot:
 	@sudo cp bin/$(BOOT) /mnt/boot/$(BOOT)
 com:
@@ -75,3 +75,5 @@ grub:
 	@sudo mkdir /mnt/boot/EFI
 	@sudo grub-install --target=x86_64-efi --efi-directory=/mnt/boot/EFI --bootloader-id=GRUB --recheck --boot-directory=/mnt/boot /dev/nbd0
 	@sudo cp -r well-confugured-grub/* /mnt/boot/grub/
+clean:
+	@rm bin/*.o

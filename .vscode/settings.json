@@ -24,6 +24,7 @@
         "gdt.h": "c",
         "disk.h": "c",
         "tty.h": "c",
-        "log.h": "c"
+        "log.h": "c",
+        "framebuffer.h": "c"
     }
 }

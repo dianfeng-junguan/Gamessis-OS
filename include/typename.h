@@ -1,8 +1,17 @@
 #pragma once
 typedef unsigned char u8,byte,__u8;
 typedef unsigned short u16,word,__le16,__u16;
-typedef unsigned int u32,dword,__le32,__u32;
-typedef unsigned long u64;
+typedef unsigned int u32,dword,__le32,__u32,stat_t;
+#define NORMAL 0
+#define ERR -1
+#define NONEXISTENT -2
+#define ALREADY_USED -3
+typedef unsigned long long u64;
+#ifndef IA32
+typedef unsigned long long addr_t,size_t;
+#else
+typedef unsigned int addr_t,size_t;
+#endif
 #define TRUE 1
 #define FALSE 0
 #define NULL (void*)0
