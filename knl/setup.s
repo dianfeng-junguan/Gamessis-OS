@@ -48,49 +48,9 @@ PAGE_INDEX EQU 0x1000        ;必须是0x1000对齐不然会出问题
 PAGES EQU 0x2000
 STACK_AREA EQU 0x9d00        ;以节为单位
 STACK_AREA_OFFSET equ 0x2c00-1
-[bits 32]
-init32:
-    ;开始准备64位
-    ; 设置gdt_ptr
-    cli
-    ;这里写绝对地址是因为，objcopy转成64位代码之后，写标签就会地址错误
-    mov eax, 0x103076
-    add eax,2
-    mov dword [eax], 0x10304e
-    ; 加载GDTR和段寄存器
-    db 0x66
-    lgdt [0x103076]     ; gdt_ptr
-    ; jmp dword 0x8:.switch_cs
-
-
-switch_cs:
-    mov ax,0x10
-    mov ds,ax
-    mov ss,ax
-    mov es,ax
-    mov gs,ax
-    mov fs,ax
-
-    mov esp,0x7e00
-    
-    ; 切换ia32e模式
-    mov ecx, 0xc0000080 ; ia32_efer在msr中的地址
-    rdmsr
-    bts eax, 8
-    wrmsr
-    ;打开保护模式
-    mov eax, cr0
-    bts eax, 0
-    mov cr0, eax
-
-    ;进入内核
-    push ebx
-    push MULTIBOOT2_HEADER_MAGIC
-    mov eax,main
-    jmp eax
-STACK_AREA_END equ 0x9fc00-1
 
 global gdtptr
+jmp init32
 ;之后就不会动了，也不会用TSS了
 gdt64:
     dq  0
@@ -103,3 +63,75 @@ gdt_end:
 gdtptr:
     dw  gdt_end - gdt64 - 1
     dq  gdt64
+
+[bits 32]
+init32:
+    ;开始准备64位
+    ; 设置gdt_ptr
+    cli
+
+    mov esi,ebx
+    mov edi,eax
+    ;这里写绝对地址是因为，objcopy转成64位代码之后，写标签就会地址错误
+    mov eax, 0x10302a
+    add eax,2
+    mov dword [eax], 0x103002
+
+    mov eax,0x10302a
+    ; 加载GDTR和段寄存器
+    db 0x66
+    lgdt [eax]     ; gdt_ptr
+    ; jmp dword 0x8:.switch_cs
+set_paging:
+    mov ax,0x10
+    mov ds,ax
+    mov ss,ax
+    mov es,ax
+    mov gs,ax
+    mov fs,ax
+
+    ; 打开PAE
+    mov eax, cr4
+    bts eax, 5
+    mov cr4, eax
+
+    ;设置页面
+    ;先关闭分页
+    mov eax,cr0
+    mov ebx,0x80000000
+    not ebx
+    and eax,ebx
+    mov cr0,eax
+
+    mov eax,0x100000
+    mov dword [eax],0x101007
+    mov dword [eax+0x1000],0x83
+    ;加载
+    mov eax,0x100000
+    mov cr3,eax
+
+switch_cs:
+
+    mov esp,0x400000;4M位置
+    
+    ; 切换ia32e模式
+    mov ecx, 0xc0000080 ; ia32_efer在msr中的地址
+    rdmsr
+    bts eax, 8
+    wrmsr
+    ;打开保护模式
+    mov eax, cr0
+    bts eax, 0
+    bts eax,31
+    mov cr0, eax
+
+    ;进入内核
+    ;push ebx
+    ;push MULTIBOOT2_HEADER_MAGIC
+    ;mov esi,ebx
+    ;mov edi,MULTIBOOT2_HEADER_MAGIC
+    mov eax,main
+    jmp dword 0x8:main
+    ;jmp dword 0x8:main
+STACK_AREA_END equ 0x9fc00-1
+

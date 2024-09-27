@@ -3,6 +3,7 @@
 这部分负责内存的按页分配，内存上下界的检测，和页表页目录的管理。
  */
 #include "page.h"
+#include "typename.h"
 typedef struct
 {
     int base;

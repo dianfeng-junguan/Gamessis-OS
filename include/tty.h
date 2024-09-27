@@ -39,7 +39,7 @@ void set_cur();
 
 int tty_do_req(driver_args *args);
 //页帧缓冲
-void set_framebuffer(unsigned long addr);
+//void set_framebuffer(unsigned long addr);
 //以下是VBE使用的函数
 /*
 #define RGB_BLACK 0

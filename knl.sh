@@ -1,5 +1,5 @@
 cargs="-w -g -fno-pie -fno-pic -nostdlib -nostdinc -fno-stack-protector -nostartfiles \
--I include"
+-I include -O0 -m64"
 for f in $(find knl|grep -E *[.]c$)
 do
     final=${f#*/}
@@ -13,6 +13,6 @@ do
     final=${f#*/}
     final=${final%%.*}
     #echo "$f $final"
-	nasm $f -o bin/${final}a.o -f elf
+	nasm $f -o bin/${final}a.o -f elf32
     objcopy -I elf32-i386 -O elf64-x86-64 bin/${final}a.o bin/${final}a.o
 done

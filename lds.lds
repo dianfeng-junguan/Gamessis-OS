@@ -13,11 +13,13 @@ SECTIONS {
     {
         *(.multiboot2)
     }
+    . = 4M;
     .bss :
     {
         kstack = .;
         *(.bss)
     }
+    . = 8M;
     .text :
     {
         kmain = .;

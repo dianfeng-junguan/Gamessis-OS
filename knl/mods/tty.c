@@ -67,11 +67,11 @@ int vpage_size;
 */
 
 //页帧缓冲
-void set_framebuffer(unsigned long addr)
-{
-    video_base=addr;
-    m_ptr=addr;
-}
+//void set_framebuffer(unsigned long addr)
+//{
+//    video_base=addr;
+//    m_ptr=addr;
+//}
 void scrdown(void)
 {
     vpage_base+=SCREEN_W*2;

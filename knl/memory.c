@@ -18,7 +18,7 @@ int mmap_t_i=0;
 stat_t mmap(addr_t pa,addr_t la,u32 attr)
 {
     //内核空间映射不能更改
-    if(la/PML4E_SIZE==0)return ERR;
+//    if(la/PML4E_SIZE==0)return ERR;
     page_item *pdptp=pml4[la/PML4E_SIZE];//指向的pdpt表
     //因为一个pml指向512gb内存，目前电脑还没有内存能达到这个大小，就不进行检查是否越界的判断
     int pdpti=la%PML4E_SIZE/PDPTE_SIZE;
