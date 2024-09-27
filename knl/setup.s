@@ -8,6 +8,14 @@ multiboot2_header:
     dd MULTIBOOT2_HEADER_FLAGS ;要求有meminfo和bios dev info
     dd MULTIBOOT2_HEADER_LENGTH
     dd - (MULTIBOOT2_HEADER_MAGIC + MULTIBOOT2_HEADER_LENGTH)
+bootinfo_request_tag:
+    dd 1
+    dd bootinfo_request_tag_end - bootinfo_request_tag
+    dd 4    ; basic mamory info
+    dd 1    ; boot command line
+    dd 8    ; framebuffer info
+    dd 12   ; efi64 system table pointer
+bootinfo_request_tag_end:
 tag_info_req:
     dw 1
     dw 0

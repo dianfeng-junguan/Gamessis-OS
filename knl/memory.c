@@ -17,24 +17,32 @@ int mmap_t_i=0;
 
 stat_t mmap(addr_t pa,addr_t la,u32 attr)
 {
-    //内核空间映射不能更改
-//    if(la/PML4E_SIZE==0)return ERR;
-    page_item *pdptp=pml4[la/PML4E_SIZE];//指向的pdpt表
+    //从pml4中找到la所属的pml4项目，即属于第几个512GB
+    page_item *pdptp= (page_item *) (pml4[la / PML4E_SIZE] & (~0xff));//指向的pdpt表
     //因为一个pml指向512gb内存，目前电脑还没有内存能达到这个大小，就不进行检查是否越界的判断
+
+    //在这个512GB（一张pdpt表）中找到la所属的pdpt项目，找到指向的pd
     int pdpti=la%PML4E_SIZE/PDPTE_SIZE;
-    page_item* pdp=pdptp[pdpti];//指向的pd
-    if(*pdp&PAGE_PRESENT)return ALREADY_USED;//已分配pd
-    //分配pd
-    addr_t pdaddr=vmalloc();
-    *pdp=pdaddr&PAGE_MASK|attr;
-    page_item* ptp=pdp[la%PDPTE_SIZE/PDE_SIZE];
-    //新分配的pd里面肯定没有已经被占用的项
-    //if(*ptp&PAGE_PRESENT)return -1;//已分配pt
-    //分配pt
-    addr_t ptaddr=vmalloc();
-    *ptp=ptaddr&PAGE_MASK|attr;
-    page_item* pte=ptp[la%PDE_SIZE/PAGE_SIZE];
-    *pte=pa&PAGE_MASK|attr;//映射
+    page_item* pdp= (page_item *) pdptp[pdpti];//指向的pd
+    //检查pdptp是否被占用
+    if(!((unsigned long long)pdp&PAGE_PRESENT))
+    {
+        pdp=(page_item*)vmalloc();
+        pdptp[pdpti]=(addr_t)pdp|attr;
+    }
+    pdp=(page_item*)((addr_t)pdp&~0xff);
+
+    //在pd中找到la指向的pt
+    page_item* pt=(page_item*)pdp[la % PDPTE_SIZE / PDE_SIZE];
+    if(!((unsigned long long)pt & PAGE_PRESENT))
+    {
+        pt=(page_item*)vmalloc();
+        pdp[la%PDPTE_SIZE/PDE_SIZE]= (addr_t)pt | attr;
+    }
+    pt=(page_item*)((addr_t)pt & ~0xff);
+
+    //在pt中找到la指向的page
+    pt[la % PDE_SIZE / PAGE_SIZE]=pa|attr;//映射
     return NORMAL;
 }
 
@@ -44,6 +52,12 @@ stat_t mdemap(addr_t la)
 }
 int init_paging()
 {
+    /*
+     * 目前的情况是：
+     * 0x4000000000(1G)开始的2BF200内存分给了显示缓存
+     * pml4的第一项，pdpt的第二项已经分配了
+     *
+     * */
     #ifdef IA32
     //设置页目录
     unsigned int pt=PAGE_TABLE_ADDR;
@@ -65,17 +79,11 @@ int init_paging()
                     "mov %%rax,%%cr0":"=m"(page_index));
     #else
     //设置PML4
-    set_page_item(pml4,PDPT_ADDR,PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX);
-    set_1gb_pdpt(pdpt,0x40000000ul,PAGE_RWX);//设置PDPT
-    set_page_item(pdpt+1,PD_ADDR,PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX);
-    //打开PAE(physical address extension)
-    asm volatile("mov %cr4,%rax\r\n or $5,%rax\r\n mov %rax,%cr4");
-    //加载PML4
-    asm volatile("mov %0,%%rax\r\n mov %%rax,%%cr4":"=m"(pml4));
-    //打开分页机制
-    asm volatile("mov %cr0,%rax\r\n"
-                    "or $0x80000000,%eax\r\n"
-                    "mov %rax,%cr0");
+//    set_page_item(pml4,PDPT_ADDR,PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX);
+    //设置第一项pdpte，也就是内核空间
+    set_1gb_pdpt(pdpt,0,PAGE_RWX);//设置PDPT0x40000000ul
+//    set_page_item(pdpt+1,PD_ADDR,PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX);
+
     #endif
 }
 void set_high_mem_base(int base)

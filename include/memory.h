@@ -29,7 +29,7 @@ typedef unsigned int page_item;
 #define PDPTE_SIZE 0x40000000ul
 #define PDE_SIZE 0x200000
 #define PAGE_MASK 0xfffffffff000ul
-typedef unsigned long page_item;
+typedef unsigned long long page_item;
 #endif
 //内存页的分配-不是指页表
 void init_memory();

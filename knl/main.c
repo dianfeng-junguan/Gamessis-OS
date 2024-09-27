@@ -12,6 +12,7 @@
 #include <disk.h>
 #include <fat16.h>
 #include <kb.h>
+#include "com.h"
 
 int manage_proc_lock=1;
 void main(unsigned int magic,void* addr)
@@ -111,7 +112,7 @@ void main(unsigned int magic,void* addr)
 			multiboot_uint32_t color;
 			unsigned i;
 			struct multiboot_tag_framebuffer *tagfb = (struct multiboot_tag_framebuffer *)tag;
-			void *fb = (void *)(unsigned long)tagfb->common.framebuffer_addr;
+			void *fb = (void *) FRAMEBUFFER_ADDR;
 			set_framebuffer(*tagfb);
 
             init_framebuffer();
@@ -152,37 +153,6 @@ void main(unsigned int magic,void* addr)
 				break;
 			}
 
-			for (i = 0; i < tagfb->common.framebuffer_width && i < tagfb->common.framebuffer_height; i++)
-			{
-				switch (tagfb->common.framebuffer_bpp)
-				{
-				case 8:
-				{
-					multiboot_uint8_t *pixel = fb + tagfb->common.framebuffer_pitch * i + i;
-					*pixel = color;
-				}
-				break;
-				case 15:
-				case 16:
-				{
-					multiboot_uint16_t *pixel = fb + tagfb->common.framebuffer_pitch * i + 2 * i;
-					*pixel = color;
-				}
-				break;
-				case 24:
-				{
-					multiboot_uint32_t *pixel = fb + tagfb->common.framebuffer_pitch * i + 3 * i;
-					*pixel = (color & 0xffffff) | (*pixel & 0xff000000);
-				}
-				break;
-				case 32:
-				{
-					multiboot_uint32_t *pixel = fb + tagfb->common.framebuffer_pitch * i + 4 * i;
-					*pixel = color;
-				}
-				break;
-				}
-			}
 			break;
 		}
 		}
@@ -191,9 +161,14 @@ void main(unsigned int magic,void* addr)
 	//printf("Total mbi size 0x%x\n", (unsigned)tag - addr);
 	char disk_count=*(char*)0x475;
 	//printf("disk count:%d\n",disk_count);
+    init_font();
     //初始化区域
+    //fill_rect(0,0,100,100,255);
+    print("gamessis os loaded.\nkernel:>");
+//    init_com(PORT_COM1);
+//    com_puts("gamessis os loaded.",PORT_COM1);
 	init_paging();
- 	init_gdt();
+// 	init_gdt();
 	init_int();
 	init_memory();
 	init_drvdev_man();
