@@ -15,12 +15,23 @@
 #define SYSCALL_REG_DEVICE 24
 #define SYSCALL_REG_DRIVER 25
 #include "typename.h"
+#ifdef IA32
 typedef struct{
     u16 offset_low;
     u16 selector;
     u16 attr;
     u16 offset_high;
 }__attribute__((packed)) gate;
+#else
+typedef struct {
+    u16 offset_low;
+    u16 selector;
+    u16 attr;
+    u16 offset_mid;
+    u32 offset_high;
+    u32 rsvd;
+}__attribute__((packed)) gate;
+#endif
 void outb(u16 device,u8 value);
 void outw(u16 dev,u16 v);
 void io_delay();

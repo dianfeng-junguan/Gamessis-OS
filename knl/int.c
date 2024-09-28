@@ -55,10 +55,19 @@ void init_int(){
 }
 void set_gate(u8 index,addr_t offset,u16 selector,u16 attr)
 {
+#ifdef IA32
     idt[index].offset_low=offset&0xffffu;
     idt[index].offset_high=(offset>>16)&0xffffu;
     idt[index].attr=attr;
     idt[index].selector=selector;
+#else
+    idt[index].offset_low=offset&0xffff;
+    idt[index].offset_mid=(offset>>16)&0xffff;
+    idt[index].offset_high=(offset>>32)&0xffffffff;
+    idt[index].attr=attr;
+    idt[index].selector=selector;
+    idt[index].rsvd=0;
+#endif
 }
 
 void divide_err(){

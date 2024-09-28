@@ -13,6 +13,11 @@ do
     final=${f#*/}
     final=${final%%.*}
     #echo "$f $final"
-	nasm $f -o bin/${final}a.o -f elf32
-    objcopy -I elf32-i386 -O elf64-x86-64 bin/${final}a.o bin/${final}a.o
+    if [ ${final} == "setup" ]
+    then
+	    nasm $f -o bin/${final}a.o -f elf32
+      objcopy -I elf32-i386 -O elf64-x86-64 bin/${final}a.o bin/${final}a.o
+    else
+      nasm $f -o bin/${final}a.o -f elf64
+    fi
 done
