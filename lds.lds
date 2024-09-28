@@ -13,6 +13,22 @@ SECTIONS {
     {
         *(.multiboot2)
     }
+    .gdt ALIGN(4096) :
+    {
+        *(.gdt)
+    }
+    .gdtptr ALIGN(4096) :
+    {
+        *(.gdtptr)
+    }
+    .idt ALIGN(4096) :
+    {
+        *(.idt)
+    }
+    .idtptr ALIGN(4096) :
+    {
+        *(.idtptr)
+    }
     . = 4M;
     .bss :
     {

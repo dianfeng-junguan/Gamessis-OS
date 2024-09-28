@@ -1,6 +1,8 @@
 #include "memory.h"
 #include "typename.h"
 #include "int.h"
+#include "framebuffer.h"
+
 //page bitmap. refers to pages of mem.
 unsigned int page_map[PAGE_BITMAP_NR]={0};
 page_item *page_index=PAGE_INDEX_ADDR;
@@ -120,7 +122,8 @@ int vmfree(addr_t ptr)
 }
 void page_err(){
     asm("cli");
-    //puts("page err");
+    print("page err");
+    while(1);
     unsigned long err_code=0,l_addr=0;
     asm volatile("mov 4(%%ebp),%0":"=r"(err_code));
     asm volatile("mov %%cr2,%0":"=r"(l_addr));//试图访问的地址

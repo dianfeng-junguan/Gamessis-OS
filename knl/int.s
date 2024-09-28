@@ -54,11 +54,11 @@ io_delay:
 turn_on_int:
 	;set_mute
 	;clock and keyboard
-	mov al, 11111000b 
-	out 021h, al 
+	mov al, 11111000b
+	out 021h, al
 	call io_delay
 	mov al, 10101111b ;disk int 10111111
-	out 0A1h, al 
+	out 0A1h, al
 	call io_delay
 
 	;mov si,idtptr
@@ -81,7 +81,7 @@ report_back_trace_of_err:
 	;cs
 	;eflags
 	mov eax,[esp+4]
-	push eax
+	push rax
 	push bt_msg
 	;call printf
 	add esp,8
@@ -89,6 +89,11 @@ report_back_trace_of_err:
 	ret
 bt_msg:
 	db "error occurs at:%x",'\n',0
+section .idt align=4096
+idt:
+    resq 512
+idt_end:
+section .idtptr
 idtptr:
-	dw 255*8
-	dd 0
+	dw idt_end-idt
+	dq 0x106000

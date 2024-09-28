@@ -170,6 +170,7 @@ void main(unsigned int magic,void* addr)
 	init_paging();
 // 	init_gdt();
 	init_int();
+    print("int loaded.\n");
 	init_memory();
 	init_drvdev_man();
 	init_proc();
@@ -178,7 +179,7 @@ void main(unsigned int magic,void* addr)
     init_kb();
     init_disk();
 
-	init_vfs();
+	//init_vfs();
     //init_fat16();
 	manage_proc_lock=0;
     while (1);

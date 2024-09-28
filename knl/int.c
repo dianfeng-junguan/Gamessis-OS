@@ -7,7 +7,9 @@
 #include "exe.h"
 #include "syscall.h"
 #include "kb.h"
-gate *idt=IDT_ADDR;
+#include "framebuffer.h"
+
+gate *idt= (gate *) IDT_ADDR;
 extern int disk_int_handler();
 void init_int(){
     //asm volatile("sidt %0"::"m"(idt));
@@ -74,83 +76,83 @@ void divide_err(){
     asm("cli");
     //puts("divide err");
     eoi();
-    __asm__ volatile ("sti \r\n leave \r\n iret");
+    __asm__ volatile ("sti \r\n leave \r\n iretq");
 }
 
 void debug(){
     asm("cli");
     //puts("debug");
     eoi();
-    __asm__ volatile ("sti \r\n leave \r\n iret");
+    __asm__ volatile ("sti \r\n leave \r\n iretq");
 }
 void default_int_proc(){
     asm("cli");
     //puts("default_int_proc");
     eoi();
-    __asm__ volatile ("sti \r\n leave \r\n iret");
+    __asm__ volatile ("sti \r\n leave \r\n iretq");
 }
 void breakpoint(){
     asm("cli");
     //puts("breakpoint");
     eoi();
-    __asm__ volatile ("sti \r\n leave \r\n iret");
+    __asm__ volatile ("sti \r\n leave \r\n iretq");
 }
 void overflow(){
     asm("cli");
     //puts("overflow");
     eoi();
-    __asm__ volatile ("sti \r\n leave \r\n iret");
+    __asm__ volatile ("sti \r\n leave \r\n iretq");
 }
 void bounds(){
     asm("cli");
     //puts("bounds");
     eoi();
-    __asm__ volatile ("sti \r\n leave \r\n iret");
+    __asm__ volatile ("sti \r\n leave \r\n iretq");
 }
 void undefined_operator(){
     //puts("undef operator");
     eoi();
     report_back_trace_of_err();
-    __asm__ volatile ("jmp .\r\n leave \r\n iret");
+    __asm__ volatile ("jmp .\r\n leave \r\n iretq");
 }
 void coprocessor_notexist(){
     asm("cli");
     //puts("coprocessor doesnt exist");
     eoi();
-    __asm__ volatile ("sti \r\n leave \r\n iret");
+    __asm__ volatile ("sti \r\n leave \r\n iretq");
 }
 void double_ints(){
     asm("cli");
     //puts("double interrupts");
     eoi();
-    __asm__ volatile ("sti \r\n leave \r\n iret");
+    __asm__ volatile ("sti \r\n leave \r\n iretq");
 }
 void coprocessor_seg_overbound(){
     //puts("coprocessfor seg overdound");
     eoi();
-    __asm__ volatile ("leave \r\n iret");
+    __asm__ volatile ("leave \r\n iretq");
 }
 void invalid_tss(){
     asm("cli");
     //puts("invalid tss");
     eoi();
-    __asm__ volatile ("sti \r\n leave \r\n iret");
+    __asm__ volatile ("sti \r\n leave \r\n iretq");
 }
 void segment_notexist(){
     asm("cli");
     //puts("seg nonexistent");
     eoi();
-    __asm__ volatile ("sti \r\n leave \r\n iret");
+    __asm__ volatile ("sti \r\n leave \r\n iretq");
 }
 void stackseg_overbound(){
     asm("cli");
     //puts("stack seg overbound");
     eoi();
-    __asm__ volatile ("sti \r\n leave \r\n iret");
+    __asm__ volatile ("sti \r\n leave \r\n iretq");
 }
 void general_protect(){
     asm("cli");
-    //puts("general protect.");
+    print("general protect.");
     int err_code=0;
     /* asm volatile("mov 4(%%ebp),%0":"=r"(err_code));
     printf("err code:%x\n",err_code);
@@ -170,14 +172,14 @@ void general_protect(){
 	printf("shell:>");
     switch_proc_tss(0); */
     eoi();
-    __asm__ volatile ("jmp .\r\n leave \r\n iret");
+    __asm__ volatile ("jmp .\r\n leave \r\n iretq");
 }
 
 void coprocessor_err(){
     asm("cli");
     //puts("coprocessor err");
     eoi();
-    __asm__ volatile ("sti \r\n leave \r\n iret");
+    __asm__ volatile ("sti \r\n leave \r\n iretq");
 }
 int syscall(int func,int b,int c,int d,int e,int f)
 {

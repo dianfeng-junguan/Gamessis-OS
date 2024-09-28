@@ -58,19 +58,7 @@ STACK_AREA EQU 0x9d00        ;以节为单位
 STACK_AREA_OFFSET equ 0x2c00-1
 
 global gdtptr
-jmp init32
-;之后就不会动了，也不会用TSS了
-gdt64:
-    dq  0
-    dq  0x0020980000000000   ; 内核态代码段
-    dq  0x0000920000000000   ; 内核态数据段
-    dq  0x0020f80000000000   ; 用户态代码段
-    dq  0x0000f20000000000   ; 用户态数据段
-gdt_end:
 
-gdtptr:
-    dw  gdt_end - gdt64 - 1
-    dq  gdt64
 
 [bits 32]
 init32:
@@ -81,11 +69,11 @@ init32:
     mov esi,ebx
     mov edi,eax
     ;这里写绝对地址是因为，objcopy转成64位代码之后，写标签就会地址错误
-    mov eax, 0x10302a
+    mov eax, 0x105000
     add eax,2
-    mov dword [eax], 0x103002
+    mov dword [eax], 0x104000
 
-    mov eax,0x10302a
+    mov eax,0x105000
     ; 加载GDTR和段寄存器
     db 0x66
     lgdt [eax]     ; gdt_ptr
@@ -113,7 +101,10 @@ set_paging:
 
     mov eax,0x100000
     mov dword [eax],0x101007
+    mov dword [eax+4],0
     mov dword [eax+0x1000],0x83
+    mov dword [eax+0x1004],0
+
     ;加载
     mov eax,0x100000
     mov cr3,eax
@@ -142,4 +133,16 @@ switch_cs:
     jmp dword 0x8:main
     ;jmp dword 0x8:main
 STACK_AREA_END equ 0x9fc00-1
-
+section .gdt align=4096
+;之后就不会动了，也不会用TSS了
+gdt64:
+    dq  0
+    dq  0x0020980000000000   ; 内核态代码段
+    dq  0x0000920000000000   ; 内核态数据段
+    dq  0x0020f80000000000   ; 用户态代码段
+    dq  0x0000f20000000000   ; 用户态数据段
+gdt_end:
+section .gdtptr
+gdtptr:
+    dw  gdt_end - gdt64 - 1
+    dq  gdt64
