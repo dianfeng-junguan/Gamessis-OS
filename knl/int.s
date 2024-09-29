@@ -10,15 +10,15 @@ extern printn
 extern print_hex
 extern new_line
 outb:
-	mov dx,[esp+4]
-	mov al,[esp+8]
+	mov dx,di
+	mov ax,si
 	out dx,al
 	call io_delay
 	ret
 global outw
 outw:
-	mov dx,[esp+4]
-	mov ax,[esp+8]
+	mov dx,di
+	mov ax,si
 	out dx,ax
 	nop
 	nop
@@ -26,7 +26,7 @@ outw:
 	ret
 inb:
 	xor eax,eax
-	mov dx,[esp+4]
+	mov dx,di
 	in al,dx
 	nop
 	nop
@@ -34,7 +34,7 @@ inb:
 	ret
 inw:
 	xor eax,eax
-	mov dx,[esp+4]
+	mov dx,di
 	in ax,dx
 	nop
 	nop

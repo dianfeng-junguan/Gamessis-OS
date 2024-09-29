@@ -129,9 +129,19 @@ void scr_up(){
 
     }
 }
+void scr_down(){
+    for(int dy=1;dy<max_ch_nr_y;dy++){
+        for(int dx=0;dx<max_ch_nr_x;dx++){
+            char *p=(char*)(FRAMEBUFFER_ADDR+dy*framebuffer.common.framebuffer_pitch
+                            +dx*framebuffer.common.framebuffer_bpp/8);
+            *p=*(p-framebuffer.common.framebuffer_pitch);
+        }
+
+    }
+}
 void print(char* s){
     for(;*s;s++){
-        if(fb_cursor_x>max_ch_nr_x)
+        if(fb_cursor_x>max_ch_nr_x||*s=='\n')
         {
             fb_cursor_y+=1;
             fb_cursor_x=0;

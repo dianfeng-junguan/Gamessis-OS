@@ -6,7 +6,7 @@ extern eoi
 disk_int_handler:
     call eoi
     call disk_int_handler_c
-    iret
+    iretq
 read_disk_asm:
     push rbp
     mov ebp,esp

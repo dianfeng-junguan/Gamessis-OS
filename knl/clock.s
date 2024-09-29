@@ -11,5 +11,5 @@ clock:
 	mov al,0x20
 	out 0xa0,al
 	out 0x20,al
-    ;call clock_c
+    call clock_c
     iretq

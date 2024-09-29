@@ -35,6 +35,7 @@ typedef struct{
     int time;   //请求使用的时间（用来检查是否超时）
     driver_args *args; //参数
 }disk_req;
+int init_disk();
 int read_disk_asm(int lba,int sec_n,char* mem_addr);
 int write_disk_asm(int lba, int sec_n, char* mem_ptr);
 int read_disk(driver_args* args);

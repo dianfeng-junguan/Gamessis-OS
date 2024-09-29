@@ -2,7 +2,8 @@
 #include "typename.h"
 #include "int.h"
 #include "framebuffer.h"
-
+#include "log.h"
+#include "proc.h"
 //page bitmap. refers to pages of mem.
 unsigned int page_map[PAGE_BITMAP_NR]={0};
 page_item *page_index=PAGE_INDEX_ADDR;
@@ -83,7 +84,7 @@ int init_paging()
     //设置PML4
 //    set_page_item(pml4,PDPT_ADDR,PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX);
     //设置第一项pdpte，也就是内核空间
-    set_1gb_pdpt(pdpt,0,PAGE_RWX);//设置PDPT0x40000000ul
+//    set_1gb_pdpt(pdpt,0,PAGE_RWX);//设置PDPT0x40000000ul
 //    set_page_item(pdpt+1,PD_ADDR,PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX);
 
     #endif
@@ -122,10 +123,9 @@ int vmfree(addr_t ptr)
 }
 void page_err(){
     asm("cli");
-    print("page err");
-    while(1);
+    print("page err\n");
     unsigned long err_code=0,l_addr=0;
-    asm volatile("mov 4(%%ebp),%0":"=r"(err_code));
+    asm volatile("mov 0(%%rbp),%0":"=r"(err_code));
     asm volatile("mov %%cr2,%0":"=r"(l_addr));//试图访问的地址
     int p=err_code&1;
 
@@ -136,29 +136,30 @@ void page_err(){
         if(l_addr>=MEM_END)
             ;
         //在进程的页表中申请新页
-        int *pdet=0,*pt=0;
-        asm volatile("mov %%cr3,%0":"=r"(pdet));
-        if(!(pdet[l_addr/PAGE_INDEX_SIZE]&PAGE_PRESENT))
-        {
-            //PDE没分配
-            pt=(int *)vmalloc();
-            pdet[l_addr/PAGE_INDEX_SIZE]=(int)pt|PAGE_PRESENT|PAGE_FOR_ALL;
-        }else
-            pt=pdet[l_addr/PAGE_INDEX_SIZE]&0xfffff000;
-        //分配PTE
-        int ptei=l_addr%PAGE_INDEX_SIZE/PAGE_SIZE;
-        pt[ptei]|=get_phyaddr(req_a_page())|PAGE_PRESENT|PAGE_FOR_ALL;
+        mmap(vmalloc(),l_addr&~0xfff,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL);
+//        int *pdet=0,*pt=0;
+//        asm volatile("mov %%cr3,%0":"=r"(pdet));
+//        if(!(pdet[l_addr/PAGE_INDEX_SIZE]&PAGE_PRESENT))
+//        {
+//            //PDE没分配
+//            pt=(int *)vmalloc();
+//            pdet[l_addr/PAGE_INDEX_SIZE]=(int)pt|PAGE_PRESENT|PAGE_FOR_ALL;
+//        }else
+//            pt=pdet[l_addr/PAGE_INDEX_SIZE]&0xfffff000;
+//        //分配PTE
+//        int ptei=l_addr%PAGE_INDEX_SIZE/PAGE_SIZE;
+//        pt[ptei]|=get_phyaddr(req_a_page())|PAGE_PRESENT|PAGE_FOR_ALL;
     }
     else
     {
         //page level protection
     }
-    /*p=err_code&2;
-    if(p)//puts("when writing");else //puts("when reading");
+    p=err_code&2;
+    if(p)print("when writing\n");else //puts("when reading");
     p=err_code&4;
-    if(!p)//puts("supervisor mode");else //puts("user mode");
+    if(!p)print("supervisor mode\n");else //puts("user mode");
     p=err_code&16;
-    if(p)//puts("an instruction tries to fetch");
+    if(p)print("an instruction tries to fetch\n");
     unsigned int addr=0;
     asm volatile("mov 8(%%ebp),%0":"=r"(addr));
     printf("occurred at %x(paddr), %x(laddr)\n",addr,l_addr);
@@ -170,7 +171,7 @@ void page_err(){
         asm volatile("jmp .");
     }
     //杀死问题进程
-    del_proc(cur_proc);*/
+//    del_proc(cur_proc);
     // printf("killed the problem process.\n");
     // printf("shell:>");
     eoi();

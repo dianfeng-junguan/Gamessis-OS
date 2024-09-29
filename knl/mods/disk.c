@@ -309,6 +309,7 @@ int hd_iterate()
         }
         if(chk_result(r[i]))//&&!disk_existent(disk)
         {
+            printf("disk %d checked.\n",i);
             //新硬盘
             device hd={
                 .type=DEV_TYPE_BLKDEV,

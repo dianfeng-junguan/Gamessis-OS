@@ -7,6 +7,7 @@
 #include "int.h"
 #include "devdrv.h"
 #include "devman.h"
+#include "framebuffer.h"
 key_code key_buf[MAX_KEYBUF];
 queue_t key_bufq={
         .data=key_buf,
@@ -174,11 +175,11 @@ int key_proc()
         ENQUEUE(key_bufq,tmpc)
     }
 
-    /*else if(scan1==0x48)
-        scrup();
+    else if(scan1==0x48)
+        scr_up();
     else if(scan1==0x50)
-        scrdown();*/
-    /*switch (scan1)
+        scr_down();
+    switch (scan1)
     {
         case 0x36:
         case 0x2a:
@@ -198,6 +199,7 @@ int key_proc()
     }
     if(scan1<=0x80&&ch!=0)
     {
+        print(&ch);
         /*extern io_buf stdin;
         extern int stdinc;
         char tmpc[]={ch,'\0'};
@@ -210,10 +212,10 @@ int key_proc()
         //logf("%x\n",stdin.w_ptr);
         //print_stdin();
         //printchar(ch);
-        //flush_screen(0);
-    }*/
+        //flush_screen(0);*/
+    }
     eoi();
-    asm volatile("leave \r\n iret");
+    asm volatile("leave \r\n iretq");
 }
 
 char sys_getkbc()

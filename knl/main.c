@@ -165,15 +165,15 @@ void main(unsigned int magic,void* addr)
     //初始化区域
     //fill_rect(0,0,100,100,255);
     print("gamessis os loaded.\nkernel:>");
-//    init_com(PORT_COM1);
-//    com_puts("gamessis os loaded.",PORT_COM1);
+    init_int();
+    print("int loaded.\n");
+    init_com(PORT_COM1);
+    com_puts("gamessis os loaded.",PORT_COM1);
 	init_paging();
 // 	init_gdt();
     init_memory();
     init_drvdev_man();
     init_proc();
-	init_int();
-    print("int loaded.\n");
     //自带驱动
     //init_tty();
     init_kb();

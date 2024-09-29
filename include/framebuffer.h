@@ -31,3 +31,6 @@ void fill_rect(int x,int y,int w,int h,unsigned int color);
 void draw_text(int x, int y, int size, char *str);
 void draw_letter(int x, int y, int size, char c);
 void print(char* s);
+
+void scr_up();
+void scr_down();
