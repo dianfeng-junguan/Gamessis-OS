@@ -1,7 +1,7 @@
 #pragma once
 //专门处理页帧（显存缓冲区）的功能。
 #include <multiboot2.h>
-#define FRAMEBUFFER_ADDR 0x4000000000ul
+#define FRAMEBUFFER_ADDR 0x40000000ul
 
 #define PSF1_FONT_MAGIC 0x0436
 struct psf1_header {

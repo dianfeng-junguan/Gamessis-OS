@@ -64,7 +64,8 @@ turn_on_int:
 	;mov si,idtptr
 	;mov eax,[IDT_ADDR]
 	;mov dword [si+4],eax
-	lidt [idtptr]
+	mov rax,0x107000
+	lidt [rax]
 	nop
 	nop
 	nop

@@ -169,13 +169,13 @@ void main(unsigned int magic,void* addr)
 //    com_puts("gamessis os loaded.",PORT_COM1);
 	init_paging();
 // 	init_gdt();
+    init_memory();
+    init_drvdev_man();
+    init_proc();
 	init_int();
     print("int loaded.\n");
-	init_memory();
-	init_drvdev_man();
-	init_proc();
     //自带驱动
-    init_tty();
+    //init_tty();
     init_kb();
     init_disk();
 

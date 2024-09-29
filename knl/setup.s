@@ -99,14 +99,29 @@ set_paging:
     and eax,ebx
     mov cr0,eax
 
-    mov eax,0x100000
-    mov dword [eax],0x101007
+    ;PML4
+    mov eax,0x101000
+    mov dword [eax],0x102007
     mov dword [eax+4],0
-    mov dword [eax+0x1000],0x83
-    mov dword [eax+0x1004],0
+    ;PDPT
+    mov eax,0x102000
+    mov dword [eax],0x183;0x103007
+    mov dword [eax+4],0
+
+;    mov ecx,32
+;    mov eax,0x103000
+;    mov edx,0x183
+;.set_pd0:
+;    ;PD0
+;    mov dword [eax],edx
+;    add eax,4
+;    mov dword [eax],0
+;    add eax,4
+;    add edx,0x200000;2MB
+;    loop .set_pd0
 
     ;加载
-    mov eax,0x100000
+    mov eax,0x101000
     mov cr3,eax
 
 switch_cs:
@@ -133,6 +148,15 @@ switch_cs:
     jmp dword 0x8:main
     ;jmp dword 0x8:main
 STACK_AREA_END equ 0x9fc00-1
+section .pgtbl align=4096
+PML4:
+    dq 0x7+PDPT
+    resq 511
+PDPT:
+    dq 0x7+PD0
+    resq 511
+PD0:
+    resq 512
 section .gdt align=4096
 ;之后就不会动了，也不会用TSS了
 gdt64:

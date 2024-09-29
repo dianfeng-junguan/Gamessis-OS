@@ -3,7 +3,7 @@ OUTPUT_ARCH(i386:x86-64)
 ENTRY(init32)
 
 SECTIONS {
-    . = 0x103000;
+    . = 1M;
     .entry :
     {
         init32 = .;
@@ -12,6 +12,10 @@ SECTIONS {
     .multiboot2 :
     {
         *(.multiboot2)
+    }
+    .pgtbl ALIGN(4096) :
+    {
+        *(.pgtbl)
     }
     .gdt ALIGN(4096) :
     {

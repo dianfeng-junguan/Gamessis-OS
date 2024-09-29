@@ -67,8 +67,9 @@ void fill_rect(int x,int y,int w,int h,unsigned int color){
     //目前只写32bpp
     for(int py=x;py<h+x;py++){
         for(int px=y;px<w+y;px++){
-            fb=(unsigned int*)(FRAMEBUFFER_ADDR+py*framebuffer.common.framebuffer_pitch
-                    +px*framebuffer.common.framebuffer_bpp/8);
+            addr_t ptr=FRAMEBUFFER_ADDR+py*framebuffer.common.framebuffer_pitch
+                       +px*framebuffer.common.framebuffer_bpp/8;
+            fb=(unsigned int*)ptr;
             *fb=color;
         }
     }

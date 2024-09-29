@@ -22,9 +22,9 @@ typedef struct
 #define PAGE_TABLE_ADDR 0x101000
 typedef unsigned int page_item;
 #else
-#define PML4_ADDR 0x100000
-#define PDPT_ADDR 0x101000
-#define PD_ADDR 0x102000
+#define PML4_ADDR 0x101000
+#define PDPT_ADDR 0x102000
+#define PD_ADDR 0x103000
 #define PML4E_SIZE 0x8000000000ul
 #define PDPTE_SIZE 0x40000000ul
 #define PDE_SIZE 0x200000

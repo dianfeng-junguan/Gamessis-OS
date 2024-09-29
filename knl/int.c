@@ -13,23 +13,23 @@ gate *idt= (gate *) IDT_ADDR;
 extern int disk_int_handler();
 void init_int(){
     //asm volatile("sidt %0"::"m"(idt));
-    set_gate(0,(addr_t)divide_err,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(1,(addr_t)debug,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(2,(addr_t)default_int_proc,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(3,(addr_t)breakpoint,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(4,(addr_t)overflow,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(5,(addr_t)bounds,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(6,(addr_t)undefined_operator,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(7,(addr_t)coprocessor_notexist,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(8,(addr_t)double_ints,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);//double_ints
-    set_gate(9,(addr_t)coprocessor_seg_overbound,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(10,(addr_t)invalid_tss,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(11,(addr_t)segment_notexist,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(12,(addr_t)stackseg_overbound,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);//
-    set_gate(13,(addr_t)general_protect,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(14,(addr_t)page_err,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(15,(addr_t)default_int_proc,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-    set_gate(16,(addr_t)coprocessor_err,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
+    set_gate(0,(addr_t)divide_err,GDT_SEL_CODE,GATE_PRESENT|TRAP_GATE);
+    set_gate(1,(addr_t)debug,GDT_SEL_CODE,GATE_PRESENT|TRAP_GATE);
+    set_gate(2,(addr_t)default_int_proc,GDT_SEL_CODE,GATE_PRESENT|TRAP_GATE);
+    set_gate(3,(addr_t)breakpoint,GDT_SEL_CODE,GATE_PRESENT|TRAP_GATE);
+    set_gate(4,(addr_t)overflow,GDT_SEL_CODE,GATE_PRESENT|TRAP_GATE);
+    set_gate(5,(addr_t)bounds,GDT_SEL_CODE,GATE_PRESENT|TRAP_GATE);
+    set_gate(6,(addr_t)undefined_operator,GDT_SEL_CODE,GATE_PRESENT|TRAP_GATE);
+    set_gate(7,(addr_t)coprocessor_notexist,GDT_SEL_CODE,GATE_PRESENT|TRAP_GATE);
+    set_gate(8,(addr_t)double_ints,GDT_SEL_CODE,GATE_PRESENT|TRAP_GATE);//double_ints
+    set_gate(9,(addr_t)coprocessor_seg_overbound,GDT_SEL_CODE,GATE_PRESENT|TRAP_GATE);
+    set_gate(10,(addr_t)invalid_tss,GDT_SEL_CODE,GATE_PRESENT|TRAP_GATE);
+    set_gate(11,(addr_t)segment_notexist,GDT_SEL_CODE,GATE_PRESENT|TRAP_GATE);
+    set_gate(12,(addr_t)stackseg_overbound,GDT_SEL_CODE,GATE_PRESENT|TRAP_GATE);//
+    set_gate(13,(addr_t)general_protect,GDT_SEL_CODE,GATE_PRESENT|TRAP_GATE);
+    set_gate(14,(addr_t)page_err,GDT_SEL_CODE,GATE_PRESENT|TRAP_GATE);
+    set_gate(15,(addr_t)default_int_proc,GDT_SEL_CODE,GATE_PRESENT|TRAP_GATE);
+    set_gate(16,(addr_t)coprocessor_err,GDT_SEL_CODE,GATE_PRESENT|TRAP_GATE);
     for (int i=17;i<48;i++)
         set_gate(i,(addr_t)default_int_proc,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
 	set_gate(0x21,(addr_t)key_proc,GDT_SEL_CODE,GATE_PRESENT|TRAP_GATE);
@@ -65,7 +65,7 @@ void set_gate(u8 index,addr_t offset,u16 selector,u16 attr)
 #else
     idt[index].offset_low=offset&0xffff;
     idt[index].offset_mid=(offset>>16)&0xffff;
-    idt[index].offset_high=(offset>>32)&0xffffffff;
+    idt[index].offset_high=(offset>>32)&0x0000ffff;
     idt[index].attr=attr;
     idt[index].selector=selector;
     idt[index].rsvd=0;
@@ -151,8 +151,7 @@ void stackseg_overbound(){
     __asm__ volatile ("sti \r\n leave \r\n iretq");
 }
 void general_protect(){
-    asm("cli");
-    print("general protect.");
+    //print("general protect.");
     int err_code=0;
     /* asm volatile("mov 4(%%ebp),%0":"=r"(err_code));
     printf("err code:%x\n",err_code);
@@ -172,7 +171,7 @@ void general_protect(){
 	printf("shell:>");
     switch_proc_tss(0); */
     eoi();
-    __asm__ volatile ("jmp .\r\n leave \r\n iretq");
+    __asm__ volatile ("leave\r\n add $8,%rsp \r\n iretq");
 }
 
 void coprocessor_err(){
