@@ -34,6 +34,10 @@ SECTIONS {
     {
         *(.idtptr)
     }
+    .tss ALIGN(4096) :
+    {
+        *(.tss)
+    }
     . = 4M;
     .bss :
     {

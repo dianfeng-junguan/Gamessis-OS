@@ -173,7 +173,7 @@ int load_pe(struct process *proc)
         ;
         int pdei=nbase/PAGE_INDEX_SIZE;
         int ptei=nbase%PAGE_INDEX_SIZE/PAGE_SIZE;
-        int *pt=(proc->pdet[pdei]&0xfffff000);
+        int *pt=(proc->pml4[pdei]&0xfffff000);
         for(int i=0;i<pgn;i++)
         {
             if(pt[ptei+i%1024]&PAGE_PRESENT&&pt!=NULL)

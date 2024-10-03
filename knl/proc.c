@@ -37,7 +37,7 @@ int create_proc()
     //默认DPL=3
     //set_proc(0,0,0,0,0x23,0x1b,0x23,0x23,0x23,0x23,curesp,0,0,0,0,index);
     set_proc(0,0,0,0,0x17,0xf,0x17,0x17,0x17,0x17,curesp,0,0,0,0,index);
-    task[index].tss.eip=(long)proc_zero;
+//    task[index].tss.eip=(long)proc_zero;
 
     return index;
 }
@@ -58,40 +58,40 @@ int req_proc(){
 void set_proc(long eax,long ebx,long ecx,long edx,long es,long cs,long ss,long ds,long fs,long gs\
 ,long esp,long ebp,long esi,long edi,long eflags,int proc_nr){
     struct process* proc=&task[proc_nr];
-    proc->tss.eax=eax;
-    proc->tss.ebx=ebx;
-    proc->tss.ecx=ecx;
-    proc->tss.edx=edx;
-    proc->tss.es=es;
-    proc->tss.cs=cs;
-    proc->tss.ss=ss;
-    proc->tss.ss0=ss;
-    proc->tss.ss1=ss;
-    proc->tss.ss2=ss;
-    proc->tss.ds=ds;
-    proc->tss.fs=fs;
-    proc->tss.gs=gs;
-    proc->tss.esp=esp;
-    proc->tss.esp0=esp;
-    proc->tss.esp1=esp;
-    proc->tss.esp2=esp;
-    proc->tss.ebp=ebp;
-    proc->tss.esi=esi;
-    proc->tss.edi=edi;
-    proc->tss.eflags=0x202;//设置为默认值:0b 0010 0000 0010
-    //能接受中断
-    proc->tss.eip=(long)proc_zero;
-
-    proc->tss.cs=cs;
-    proc->tss.ds=ds;
-    proc->tss.es=es;
-    proc->tss.cr3=PAGE_INDEX_ADDR;//get_phyaddr(n1);//暂时先搞成全局
-
-    proc->tss.ldt= _LDT_IND(proc_nr)*8;
+//    proc->tss.eax=eax;
+//    proc->tss.ebx=ebx;
+//    proc->tss.ecx=ecx;
+//    proc->tss.edx=edx;
+//    proc->tss.es=es;
+//    proc->tss.cs=cs;
+//    proc->tss.ss=ss;
+//    proc->tss.ss0=ss;
+//    proc->tss.ss1=ss;
+//    proc->tss.ss2=ss;
+//    proc->tss.ds=ds;
+//    proc->tss.fs=fs;
+//    proc->tss.gs=gs;
+//    proc->tss.esp=esp;
+//    proc->tss.esp0=esp;
+//    proc->tss.esp1=esp;
+//    proc->tss.esp2=esp;
+//    proc->tss.ebp=ebp;
+//    proc->tss.esi=esi;
+//    proc->tss.edi=edi;
+//    proc->tss.eflags=0x202;//设置为默认值:0b 0010 0000 0010
+//    //能接受中断
+//    proc->tss.eip=(long)proc_zero;
+//
+//    proc->tss.cs=cs;
+//    proc->tss.ds=ds;
+//    proc->tss.es=es;
+//    proc->tss.cr3=PAGE_INDEX_ADDR;//get_phyaddr(n1);//暂时先搞成全局
+//
+//    proc->tss.ldt= _LDT_IND(proc_nr)*8;
     //在gdt中添加tss
-    fill_desc(&proc->tss,0xffff,SEG_SYS_TSS|SEG_PRESENT,_TSS_IND(proc_nr));
-    //添加ldt
-    fill_desc(proc->ldt, sizeof(proc->ldt),SEG_SYS_LDT|SEG_PRESENT, _LDT_IND(proc_nr));
+//    fill_desc(&proc->tss,0xffff,SEG_SYS_TSS|SEG_PRESENT,_TSS_IND(proc_nr));
+//    //添加ldt
+//    fill_desc(proc->ldt, sizeof(proc->ldt),SEG_SYS_LDT|SEG_PRESENT, _LDT_IND(proc_nr));
     //设置ldt
     fill_ldt_desc(0,0xffffffff,\
     SEG_CONFORMING_RW_CODE|SEG_DPL_3,&proc->ldt[0]);
@@ -139,10 +139,10 @@ void switch_proc(int pnr){
     //printf("eip:%x\n",task[pnr].tss.eip);
     struct process p=task[pnr];
     save_context(&task[cur_proc].tss);
-    //重新设置0号进程
-    task[0].tss.eip=proc_zero;
-    task[0].tss.cr3=PAGE_INDEX_ADDR;
-    task[0].tss.eflags=0x202;
+//    //重新设置0号进程
+//    task[0].tss.eip=proc_zero;
+//    task[0].tss.cr3=PAGE_INDEX_ADDR;
+//    task[0].tss.eflags=0x202;
     cur_proc=pnr;
     int sel=_TSS_IND(pnr)*8;
     switch_to(&task[pnr].tss);
@@ -151,16 +151,16 @@ void switch_proc(int pnr){
 }
 void save_context(TSS *tss)
 {
-    tss->eip=scene_saver.eip;
-    tss->eax=scene_saver.eax;
-    tss->ebx=scene_saver.ebx;
-    tss->ecx=scene_saver.ecx;
-    tss->edx=scene_saver.edx;
-    tss->esi=scene_saver.esi;
-    tss->edi=scene_saver.edi;
-    tss->eflags=scene_saver.eflags;
-    tss->esp=scene_saver.esp;
-    tss->ebp=scene_saver.ebp;
+//    tss->eip=scene_saver.eip;
+//    tss->eax=scene_saver.eax;
+//    tss->ebx=scene_saver.ebx;
+//    tss->ecx=scene_saver.ecx;
+//    tss->edx=scene_saver.edx;
+//    tss->esi=scene_saver.esi;
+//    tss->edi=scene_saver.edi;
+//    tss->eflags=scene_saver.eflags;
+//    tss->esp=scene_saver.esp;
+//    tss->ebp=scene_saver.ebp;
 }
 
 /* int exec(char *path,int priority)
@@ -326,7 +326,7 @@ void* palloc(int proc_index,int size)
     int page_c=size/4096+size%4096?1:0;
     int c=0;
     void *ptr=NULL;
-    page_item *pgind=task[proc_index].tss.cr3;
+    page_item *pgind=NULL;//task[proc_index].tss.cr3;
     pgind++;
     for(int i=1;i<1024;i++)
     {
@@ -356,7 +356,7 @@ void* palloc(int proc_index,int size)
                 int laddr=i*0x400000+j*0x1000;//线性地址
                 if(ptr==NULL)
                 {
-                    ptr=laddr;
+                   // ptr=laddr;
                     palloc_paddr=addr;
                 }
                 page_c--;
@@ -392,7 +392,7 @@ void proc_end()
     asm volatile("mov %%eax,%0":"=m"(ret));
     //printf("proc #%d ended with retv %d.\n",cur_proc,ret);
     //切换堆栈
-    asm volatile("mov %0,%%rsp"::"r"(task[0].tss.esp));
+    //asm volatile("mov %0,%%rsp"::"r"(task[0].tss.esp));
     del_proc(cur_proc);
     if(task[cur_proc].parent_pid!=-1){
         task[task[cur_proc].parent_pid].stat=READY;
@@ -407,7 +407,7 @@ void del_proc(int pnr)
     task[pnr].stat=ENDED;
     task[pnr].pid=-1;
     //释放申请的页面
-    page_item *p=task[pnr].tss.cr3;
+    page_item *p;//task[pnr].tss.cr3;
     p++;
     for(;(*p&PAGE_PRESENT)!=0;p++)
     {
@@ -538,17 +538,17 @@ int reg_proc(int entry, vfs_dir_entry *cwd, vfs_dir_entry *exef)
     ,SEL_LDT_DATA,SEL_LDT_DATA,0x1c00000-4,0,0,0,0,i);*/
     set_proc(0,0,0,0,0x10,0x8,0x10,0x10\
     ,0x10,0x10,0x1c00000-4,0,0,0,0,i);
-    task[i].pdet=vmalloc();
+    task[i].pml4=vmalloc();
     int *pt=vmalloc();
-    task[i].pdet[0]=PAGE_TABLE_ADDR|PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL;
+    task[i].pml4[0]=PAGE_TABLE_ADDR|PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL;
     /*for(int j=0;j<32;j++)
         pt[j]=(PAGE_TABLE_ADDR+j*0x1000)|PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL;//复制内核页表*/
     //PAGE_TABLE_ADDR|PAGE_PRESENT;//复制内核页表
-    //task[i].pdet[7]=PAGE_TABLE_ADDR+7*0x1000|PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX;//sys.dll
+    //task[i].pml4[7]=PAGE_TABLE_ADDR+7*0x1000|PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX;//sys.dll
     int *stackb=vmalloc();
-    task[i].pdet[6]=(int)stackb|PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX;
+    task[i].pml4[6]=(int)stackb|PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX;
     stackb[1023]=get_phyaddr(req_a_page())|PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX;
-    task[i].tss.cr3=task[i].pdet;
+//    task[i].tss.cr3=task[i].pml4;
 
     task[i].stat=READY;
     task[i].cwd=cwd;
@@ -559,7 +559,7 @@ int reg_proc(int entry, vfs_dir_entry *cwd, vfs_dir_entry *exef)
     task[i].tss.gs=0x10;
     task[i].tss.fs=0x10;
     task[i].tss.cs=0x8;*/
-    task[i].tss.eip=entry;
+//    task[i].tss.eip=entry;
     return i;
 
 /*
@@ -683,4 +683,19 @@ int sys_free(int ptr)
     }
     //合并完成
     return 0;
+}
+
+void switch_to(struct process* to){
+//    asm volatile("pushq %%rax\r\n"
+//                 "mov %%rsp,%0\r\n"
+//                 "lea 1done(%%rip),%%rax\r\n"
+//                 "mov %%rax,%1\r\n"
+//                 "mov %2,%%rsp\r\n"
+//                 "jmp __switch_to\r\n"
+//                 "1done:\r\n"
+//                 "popq %%rax\r\n":"=m"(task[cur_proc].tss.rsp0),"=m"(task[cur_proc].tss.rip):
+//                 "m"(to->tss.rsp0),"D"(to));
+}
+void __switch_to(struct process *to){
+
 }

@@ -142,7 +142,7 @@ void main(unsigned int magic,void* addr)
     init_com(PORT_COM1);
     com_puts("gamessis os loaded.",PORT_COM1);
 	init_paging();
-// 	init_gdt();
+ 	init_gdt();
     init_drvdev_man();
     init_proc();
     //自带驱动

@@ -224,7 +224,7 @@ int key_proc()
 char sys_getkbc()
 {
     if(key_bufq.tail==key_bufq.head)return -1;
-    key_code c=key_buf[key_bufq.tail];
+    char c=key_buf[key_bufq.tail];
     QTAIL(key_bufq)=(QTAIL(key_bufq)+1)%QSIZE(key_bufq);
-    return c.ascii;
+    return c;
 }

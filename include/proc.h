@@ -104,30 +104,15 @@ struct process{
 #else
 typedef struct REGISTERS
 {
-    unsigned long back_link;
-    unsigned long rsp0;
-    unsigned long ss0;
-    unsigned long rsp1;
-    unsigned long ss1;
-    unsigned long rsp2;
-    unsigned long ss2;
-    unsigned long cr3;
-    unsigned long rip;
-    unsigned long eflags;
-    unsigned long rax, rcx, rdx, rbx;
-    unsigned long rsp;
-    unsigned long rbp;
-    unsigned long rsi;
-    unsigned long rdi;
-    unsigned long es;
-    unsigned long cs;
-    unsigned long ss;
-    unsigned long ds;
-    unsigned long fs;
-    unsigned long gs;
-    unsigned long ldt;
-    unsigned long trace_bitmap;		/* bits: trace 0, bitmap 16-31 */
-    //struct i387_struct i387;
+    u32 rsvd;
+    u64 rsp0;
+    u64 rsp1;
+    u64 rsp2;
+    u64 rsvd2;
+    u64 ists[7];
+    u64 rsvd3;
+    u32 rsvd4;
+    u32 io_map_base;
 }TSS;
 struct process{
     unsigned int pid;
@@ -184,7 +169,9 @@ int create_zero();
 int create_proc();
 //void fill_desc(u32 addr,u32 limit,u32 attr,unsigned long long* des);
 void switch_proc(int pnr);
-void switch_to(TSS *tss);
+void switch_to_ia32(TSS *tss);
+void switch_to(struct process* to);
+void __switch_to(struct process *to);
 
 void save_context(TSS *tss);
 void proc_zero();

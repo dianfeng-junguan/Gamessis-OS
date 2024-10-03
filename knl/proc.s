@@ -73,7 +73,7 @@ switch_proc_asm:
     ; ;iret; jmp
     ; jmp eax
 extern print
-switch_to:
+switch_to_old:
     mov esi,[esp+4];tss addr
     mov ebx,[esi+0x20];eip
     mov edi,.leap

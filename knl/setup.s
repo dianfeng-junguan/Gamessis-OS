@@ -58,7 +58,7 @@ STACK_AREA EQU 0x9d00        ;以节为单位
 STACK_AREA_OFFSET equ 0x2c00-1
 
 global gdtptr
-
+global init32
 
 [bits 32]
 init32:
@@ -165,8 +165,14 @@ gdt64:
     dq  0x0000920000000000   ; 内核态数据段
     dq  0x0020f80000000000   ; 用户态代码段
     dq  0x0000f20000000000   ; 用户态数据段
+    ;0x106000, 108 bytes
+    dq  0x009089108000006c  ;tss
+    dq 0
 gdt_end:
 section .gdtptr
 gdtptr:
     dw  gdt_end - gdt64 - 1
     dq  gdt64
+section .tss align=4096
+tss:
+    resd 27
