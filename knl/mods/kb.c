@@ -8,9 +8,8 @@
 #include "devdrv.h"
 #include "devman.h"
 #include "framebuffer.h"
-key_code key_buf[MAX_KEYBUF];
-//TODO:data改成u8*
-queue_t key_bufq={
+char key_buf[MAX_KEYBUF];
+kb_buf key_bufq={
         .data=key_buf,
         .head=0,
         .tail=0,
@@ -157,24 +156,27 @@ int init_kb()
 }
 int key_proc()
 {
-    //TODO:改成简单的插入键盘缓冲区，不需要翻译功能，翻译可以之后让别的模块调用
     //获取完整的扫描码
     u8 scan1=0,scan2=0,ch=0;
     key_code tmpc;
     scan1=inb(0x60);
-    ch= to_ascii(scan1);
-    if(scan1 == 0xe0 || scan1 == 0xe1)
+//    ch= to_ascii(scan1);
+//    if(scan1 == 0xe0 || scan1 == 0xe1)
+//    {
+//        ch= to_ascii(scan2);
+//        scan2=inb(0x60);
+//    }
+//    tmpc.scan_code=scan1;
+//    tmpc.scan_code2=scan2;
+//    tmpc.ascii= ch;
+
+
+//    ENQUEUE(key_bufq,tmpc)
+    if((key_bufq.tail+1)%key_bufq.size!=key_bufq.head)
     {
-        ch= to_ascii(scan2);
-        scan2=inb(0x60);
+        key_bufq.data[key_bufq.tail]=scan1;
+        key_bufq.tail=(key_bufq.tail+1)%key_bufq.size;
     }
-    tmpc.scan_code=scan1;
-    tmpc.scan_code2=scan2;
-    tmpc.ascii= ch;
-
-
-    ENQUEUE(key_bufq,tmpc)
-
 
     if(scan1==0x48)
         scr_up();
@@ -198,23 +200,23 @@ int key_proc()
         default:
             break;
     }
-    if(scan1<=0x80&&ch!=0)
-    {
-        print(&ch);
-        /*extern io_buf stdin;
-        extern int stdinc;
-        char tmpc[]={ch,'\0'};
-        //fwrite(&ch,1,&stdin);
-        insert_to_stdin(ch);
-        if(ch=='\b')
-            del_ch();
-        else
-            printf("%s",tmpc);
-        //logf("%x\n",stdin.w_ptr);
-        //print_stdin();
-        //printchar(ch);
-        //flush_screen(0);*/
-    }
+//    if(scan1<=0x80&&ch!=0)
+//    {
+//        print(&ch);
+//        /*extern io_buf stdin;
+//        extern int stdinc;
+//        char tmpc[]={ch,'\0'};
+//        //fwrite(&ch,1,&stdin);
+//        insert_to_stdin(ch);
+//        if(ch=='\b')
+//            del_ch();
+//        else
+//            printf("%s",tmpc);
+//        //logf("%x\n",stdin.w_ptr);
+//        //print_stdin();
+//        //printchar(ch);
+//        //flush_screen(0);*/
+//    }
     eoi();
     asm volatile("leave \r\n iretq");
 }

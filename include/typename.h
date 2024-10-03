@@ -25,6 +25,11 @@ typedef struct {
     int head,tail;
     int size;
 }queue_t;
+typedef struct{
+    char *data;
+    int head,tail;
+    int size;
+}kb_buf;
 #define QTAIL(QUEUE) (QUEUE.tail)
 #define QHEAD(QUEUE) (QUEUE.head)
 #define QSIZE(QUEUE) (QUEUE.size)

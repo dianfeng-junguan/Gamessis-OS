@@ -33,6 +33,28 @@ struct i387_struct
     long fos;
     long st_space[20];		/* 8*10 bytes for each FP-reg = 80 bytes */
 };
+
+#define HEAP_BASE 0x1000000
+#define HEAP_MAXTOP 0x1f00000
+#define CHUNK_SIZE 0x1000
+//堆空间
+typedef struct _chunk_header_{
+    int pgn;    //占用页面数量
+    int alloc;  //是否被分配了
+    struct _chunk_header_* next;   //下一个存储头地址
+    struct _chunk_header_* prev;   //上一个存储头地址
+}chunk_header;
+typedef struct _procm_{
+    int heap_base;
+    int heap_top;
+    int stack_bottom;
+    int stack_top;
+    int text_base;
+    int text_top;
+    int data_base;
+    int data_top;
+}proc_mem_arr;
+#ifdef IA32
 typedef struct REGISTERS
 {
     long back_link;		/* 16 high bits zero */
@@ -60,26 +82,6 @@ typedef struct REGISTERS
     long trace_bitmap;		/* bits: trace 0, bitmap 16-31 */
     //struct i387_struct i387;
 }TSS;
-#define HEAP_BASE 0x1000000
-#define HEAP_MAXTOP 0x1f00000
-#define CHUNK_SIZE 0x1000
-//堆空间
-typedef struct _chunk_header_{
-    int pgn;    //占用页面数量
-    int alloc;  //是否被分配了
-    struct _chunk_header_* next;   //下一个存储头地址
-    struct _chunk_header_* prev;   //上一个存储头地址
-}chunk_header;
-typedef struct _procm_{
-    int heap_base;
-    int heap_top;
-    int stack_bottom;
-    int stack_top;
-    int text_base;
-    int text_top;
-    int data_base;
-    int data_top;
-}proc_mem_arr;
 struct process{
     unsigned int pid;
     unsigned int stat;
@@ -99,6 +101,54 @@ struct process{
     vfs_dir_entry *openf[MAX_PROC_OPENF];
     TSS tss;
 }__attribute__((packed));//208 bytes
+#else
+typedef struct REGISTERS
+{
+    unsigned long back_link;
+    unsigned long rsp0;
+    unsigned long ss0;
+    unsigned long rsp1;
+    unsigned long ss1;
+    unsigned long rsp2;
+    unsigned long ss2;
+    unsigned long cr3;
+    unsigned long rip;
+    unsigned long eflags;
+    unsigned long rax, rcx, rdx, rbx;
+    unsigned long rsp;
+    unsigned long rbp;
+    unsigned long rsi;
+    unsigned long rdi;
+    unsigned long es;
+    unsigned long cs;
+    unsigned long ss;
+    unsigned long ds;
+    unsigned long fs;
+    unsigned long gs;
+    unsigned long ldt;
+    unsigned long trace_bitmap;		/* bits: trace 0, bitmap 16-31 */
+    //struct i387_struct i387;
+}TSS;
+struct process{
+    unsigned int pid;
+    unsigned int stat;
+    unsigned int utime; //used time
+    unsigned int priority;
+    unsigned int exit_code;//exit code
+
+    proc_mem_arr mem_struct;
+
+    descriptor ldt[5];
+    unsigned int has_console;
+    unsigned int parent_pid;
+    unsigned int page[8];
+    addr_t *pml4;//pml4
+    vfs_dir_entry *cwd;
+    vfs_dir_entry *exef;
+    vfs_dir_entry *openf[MAX_PROC_OPENF];
+    TSS tss;
+}__attribute__((packed));//208 bytes
+#endif
 typedef struct
 {
     unsigned int proc_end_addr;
@@ -135,6 +185,7 @@ int create_proc();
 //void fill_desc(u32 addr,u32 limit,u32 attr,unsigned long long* des);
 void switch_proc(int pnr);
 void switch_to(TSS *tss);
+
 void save_context(TSS *tss);
 void proc_zero();
 void proc_end();
