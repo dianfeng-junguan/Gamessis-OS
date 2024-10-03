@@ -4,12 +4,22 @@
  */
 #include "page.h"
 #include "typename.h"
+#include "multiboot2.h"
+#ifdef IA32
 typedef struct
 {
     int base;
     int len;
     int type;
 }mem_t;
+#else
+typedef struct
+{
+    unsigned long base;
+    unsigned long len;
+    unsigned long type;
+}mem_t;
+#endif
 #define MAX_MEM_STRUCT 20
 #define MEM_TYPE_RSVD 0
 #define MEM_TYPE_AVAILABLE 1
@@ -28,12 +38,19 @@ typedef unsigned int page_item;
 #define PML4E_SIZE 0x8000000000ul
 #define PDPTE_SIZE 0x40000000ul
 #define PDE_SIZE 0x200000
-#define PAGE_MASK 0xfffffffff000ul
+#define PAGE_4K_SIZE 0x1000
+#define PAGE_2M_SIZE 0x200000
+#define PAGE_4K_MASK 0xfffffffff000ul
+#define PAGE_2M_MASK 0xfffffff00000ul
+///向上对齐。
+#define PAGE_2M_ALIGN(addr) (((unsigned long) (addr) + PAGE_2M_SIZE - 1) &PAGE_2M_MASK)
+///向上对齐。
+#define PAGE_4K_ALIGN(addr) (((unsigned long) (addr) +PAGE_4K_SIZE - 1) &PAGE_4K_MASK)
 typedef unsigned long long page_item;
 #endif
 //内存页的分配-不是指页表
 void init_memory();
-void set_mem_area(int base,int len,int type);
+void set_mem_area(unsigned long base, unsigned long len, unsigned long type);
 void set_high_mem_base(int base);
 //申请一页内存，返回内存地址。
 addr_t req_a_page();

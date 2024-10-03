@@ -28,6 +28,7 @@ void main(unsigned int magic,void* addr)
     }
     //获取tags
     struct multiboot_tag *tag;
+
 	unsigned size;
     size = *(unsigned long*)addr;
 //    //printf("Announced mbi size 0x%x\n", size);
@@ -67,44 +68,14 @@ void main(unsigned int magic,void* addr)
 			break;
 		case MULTIBOOT_TAG_TYPE_MMAP:
 		{
-			multiboot_memory_map_t *mmap;
-
 			//printf("mmap\n");
+            for (multiboot_memory_map_t * mmap = ((struct multiboot_tag_mmap *)tag)->entries;
+                    (multiboot_uint8_t *)mmap < (multiboot_uint8_t *)tag + tag->size;
+                    mmap = (multiboot_memory_map_t *)((unsigned long)mmap + ((struct multiboot_tag_mmap *)tag)->entry_size))
+            {
+                set_mem_area(mmap->addr,mmap->len,mmap->type);
+            }
 
-			for (mmap = ((struct multiboot_tag_mmap *)tag)->entries;
-				 (multiboot_uint8_t *)mmap < (multiboot_uint8_t *)tag + tag->size;
-				 mmap = (multiboot_memory_map_t *)((unsigned long)mmap + ((struct multiboot_tag_mmap *)tag)->entry_size))
-				{
-
-					//printf(" base_addr = 0x%x%x,"
-					   " length = 0x%x%x, type = 0x%x,",
-//					   (unsigned)(mmap->addr >> 32),
-//					   (unsigned)(mmap->addr & 0xffffffff),
-//					   (unsigned)(mmap->len >> 32),
-//					   (unsigned)(mmap->len & 0xffffffff),
-//					   (unsigned)mmap->type);
-					set_mem_area(mmap->addr,mmap->len,mmap->type);
-					switch (mmap->type)
-					{
-					case 1:
-						//printf("available RAM\n");
-						break;
-					
-					case 3:
-						//printf("ACPI info\n");
-						break;
-					case 4:
-						//printf("reserved mem needed to preserve on hibernation\n");
-						break;
-					case 5:
-						//printf("defected mem\n");
-						break;
-					default:
-						//printf("reserved mem\n");
-						break;
-					}
-
-				}
 		}
 		break;
 		case MULTIBOOT_TAG_TYPE_FRAMEBUFFER:
@@ -167,11 +138,11 @@ void main(unsigned int magic,void* addr)
     print("gamessis os loaded.\nkernel:>");
     init_int();
     print("int loaded.\n");
+    init_memory();
     init_com(PORT_COM1);
     com_puts("gamessis os loaded.",PORT_COM1);
 	init_paging();
 // 	init_gdt();
-    init_memory();
     init_drvdev_man();
     init_proc();
     //自带驱动
@@ -179,7 +150,7 @@ void main(unsigned int magic,void* addr)
     init_kb();
     init_disk();
 
-	//init_vfs();
+//	init_vfs();
     //init_fat16();
 	manage_proc_lock=0;
     while (1);

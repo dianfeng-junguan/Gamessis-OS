@@ -4,6 +4,7 @@ ENTRY(init32)
 
 SECTIONS {
     . = 1M;
+    _knl_start = . ;
     .entry :
     {
         init32 = .;
@@ -79,4 +80,5 @@ SECTIONS {
     {
         *(.kend)
     }
+    _knl_end = . ;
 }

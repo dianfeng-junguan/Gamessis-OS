@@ -9,6 +9,7 @@
 #include "devman.h"
 #include "framebuffer.h"
 key_code key_buf[MAX_KEYBUF];
+//TODO:data改成u8*
 queue_t key_bufq={
         .data=key_buf,
         .head=0,
@@ -156,6 +157,7 @@ int init_kb()
 }
 int key_proc()
 {
+    //TODO:改成简单的插入键盘缓冲区，不需要翻译功能，翻译可以之后让别的模块调用
     //获取完整的扫描码
     u8 scan1=0,scan2=0,ch=0;
     key_code tmpc;
@@ -170,14 +172,13 @@ int key_proc()
     tmpc.scan_code2=scan2;
     tmpc.ascii= ch;
 
-    if(QTAIL(key_bufq)!=QHEAD(key_bufq))
-    {
-        ENQUEUE(key_bufq,tmpc)
-    }
 
-    else if(scan1==0x48)
+    ENQUEUE(key_bufq,tmpc)
+
+
+    if(scan1==0x48)
         scr_up();
-    else if(scan1==0x50)
+    if(scan1==0x50)
         scr_down();
     switch (scan1)
     {

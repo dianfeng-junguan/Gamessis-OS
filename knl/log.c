@@ -55,9 +55,10 @@ static void itoa (char *buf, int base, int d)
 }
  
 /* 在屏幕上输出字符 C 。 */
-static void putchar (int c)
+static void putchar (char c)
 {
-    print(&c);
+    char s[2]={c,'\0'};
+    print(s);
     return;
     if (c == '\n' || c == '\r')
     {
@@ -81,7 +82,7 @@ newline:
 void printf (const char *format, ...)
 {
     char **arg = (char **) &format;
-    int c;
+    char c;
     char buf[20];
  
     arg++;

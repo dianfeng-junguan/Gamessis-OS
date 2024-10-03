@@ -93,7 +93,7 @@ void set_high_mem_base(int base)
 {
     high_mem_base=base;
 }
-void set_mem_area(int base,int len,int type)
+void set_mem_area(unsigned long base, unsigned long len, unsigned long type)
 {
     mmap_struct[mmap_t_i].base=base;
     mmap_struct[mmap_t_i].len=len;
@@ -180,6 +180,25 @@ void page_err(){
 }
 void init_memory()
 {
+    extern addr_t _knl_end,_knl_start;//lds中声明的内核的结尾地址，放置位图
+    //获取内存大小
+    size_t mem_size=mmap_struct[mmap_t_i-1].base+mmap_struct[mmap_t_i-1].len;
+    //计算出所需内存页数量
+    int pgc=mem_size/PAGE_SIZE;
+    //计算出位图所需的字节数
+    int pg_bytes=pgc/32;
+    unsigned int *pg_map=(unsigned int*)PAGE_4K_ALIGN(_knl_end);
+    addr_t curp=0;
+    for(int i=0;i<mmap_t_i;i++){
+        int cont=0;
+        if(mmap_struct[i].type!=MULTIBOOT_MEMORY_AVAILABLE)
+            cont=-1;
+        for(int j=0;j<PAGE_2M_ALIGN(mmap_struct[i].len)/PAGE_4K_SIZE/32;j++){
+            *(pg_map++)=cont;
+        }
+    }
+
+
     for(int i=0;i<8;i++){
         page_map[i]=0xffffffff;
     }

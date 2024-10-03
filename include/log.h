@@ -8,6 +8,6 @@ int init_logging();
 
 static void itoa (char *buf, int base, int d);
 
-static void putchar (int c);
+static void putchar (char c);
 
 void printf (const char *format, ...);
