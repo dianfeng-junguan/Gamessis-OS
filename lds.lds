@@ -54,10 +54,6 @@ SECTIONS {
     {
         *(.rodata)
     }
-    .bss :
-    {
-        *(.bss)
-    }
     .eh_frame :
     {
         *(.eh_frame)
@@ -80,5 +76,5 @@ SECTIONS {
     {
         *(.kend)
     }
-    _knl_end = . ;
+    _knl_end = 12M ;
 }
