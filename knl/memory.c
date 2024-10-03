@@ -5,7 +5,7 @@
 #include "log.h"
 #include "proc.h"
 //page bitmap. refers to pages of mem.
-unsigned int page_map[PAGE_BITMAP_NR]={0};
+unsigned int *page_map=NULL;//[PAGE_BITMAP_NR]={0};
 page_item *page_index=PAGE_INDEX_ADDR;
 page_item *page_table=PAGE_TABLE_ADDR;
 //64位用
@@ -187,30 +187,22 @@ void init_memory()
     int pgc=mem_size/PAGE_SIZE;
     //计算出位图所需的字节数
     int pg_bytes=pgc/32;
-    unsigned int *pg_map=(unsigned int*)PAGE_4K_ALIGN(_knl_end);
+    page_map=(unsigned int*)PAGE_4K_ALIGN(0xc00000);
+    int* p=page_map;
     addr_t curp=0;
     for(int i=0;i<mmap_t_i;i++){
         int cont=0;
         if(mmap_struct[i].type!=MULTIBOOT_MEMORY_AVAILABLE)
             cont=-1;
-        for(int j=0;j<PAGE_2M_ALIGN(mmap_struct[i].len)/PAGE_4K_SIZE/32;j++){
-            *(pg_map++)=cont;
+        for(int j=0;j<PAGE_4K_ALIGN(mmap_struct[i].len)/PAGE_4K_SIZE/32;j++){
+            *(p++)=cont;
         }
     }
 
-
-    for(int i=0;i<8;i++){
+    //低16M空间直接被内核占用
+    for(int i=0;i<128;i++){
         page_map[i]=0xffffffff;
     }
-    //内核页表初始化
-    //目前32mb如下分配：
-    /* 
-    高4mb映射到高1g的起始4mb
-    剩下正常。
-    asm volatile("mov ")
-     */
-    //page_index[768]=page_index[7];
-    //page_index[7]=0;
 }
 /*
 page_map存储方式:
