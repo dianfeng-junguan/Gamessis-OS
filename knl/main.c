@@ -138,6 +138,7 @@ void main(unsigned int magic,void* addr)
     print("gamessis os loaded.\nkernel:>");
     init_int();
     print("int loaded.\n");
+    set_tss(0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000);
     init_memory();
     init_com(PORT_COM1);
     com_puts("gamessis os loaded.",PORT_COM1);
@@ -148,10 +149,13 @@ void main(unsigned int magic,void* addr)
     //自带驱动
     //init_tty();
     init_kb();
+    manage_proc_lock=0;
+    while (1);
     init_disk();
+
+
 
 //	init_vfs();
     //init_fat16();
-	manage_proc_lock=0;
     while (1);
 }

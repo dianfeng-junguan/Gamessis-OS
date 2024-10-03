@@ -7,6 +7,7 @@
 #include "pe.h"
 struct process task[MAX_PROC_COUNT];
 TSS scene_saver;
+TSS *tss=0x108000;
 int cur_proc=0;
 int pidd=0;
 int palloc_paddr=0;
@@ -26,17 +27,53 @@ void init_proc(){
     zi=_TSS_IND(zi)*8;
     //asm volatile("lldt %0"::"m"(xi));
     //asm volatile("ltr %0"::"m"(zi));
+    //创建一个测试进程
+    create_test_proc();
 }
+void create_test_proc(){
 
+    int index=req_proc();
+    task[index].stat=READY;
+    int currsp=0x9fc00-1;
+    asm volatile("mov %%rsp,%0":"=m"(currsp));
+    set_proc(0, 0, 0, 0, 0x10, 0x8, 0x10, 0x10, 0x10, 0x10,
+             0x7e00- sizeof(stack_store_regs), 0, 0, 0, (long)proc_zero, 0, index);
+    task[index].tss.rsp0=0x400000;
+    //把还原现场时用到的堆栈设置好
+    stack_store_regs *str= (stack_store_regs *) (0x7e00 - sizeof(stack_store_regs));
+    str->rax=0;
+    str->rbx=0;
+    str->rcx=0;
+    str->rdx=0;
+    str->rsi=0;
+    str->rdi=0;
+    str->r15=0;
+    str->r14=0;
+    str->r13=0;
+    str->r12=0;
+    str->r11=0;
+    str->r10=0;
+    str->r9=0;
+    str->r8=0;
+    str->rip=(unsigned long)proc_zero;
+    str->cs=0x8;
+    str->rflags=0;
+    str->rsp=0x7e00;
+    str->ss=0x10;
+    str->ds=0x10;
+    str->es=0x10;
+
+}
 int create_proc()
 {
     int index=req_proc();
     if(index==-1)return -1;
-    int curesp=0x9fc00-1;
-    asm volatile("mov %%esp,%0":"=m"(curesp));
+    int currsp=0x9fc00-1;
+    asm volatile("mov %%rsp,%0":"=m"(currsp));
     //默认DPL=3
     //set_proc(0,0,0,0,0x23,0x1b,0x23,0x23,0x23,0x23,curesp,0,0,0,0,index);
-    set_proc(0,0,0,0,0x17,0xf,0x17,0x17,0x17,0x17,curesp,0,0,0,0,index);
+    set_proc(0, 0, 0, 0, 0x10, 0x8, 0x10, 0x10, 0x10, 0x10,
+             currsp, 0, 0, 0, (long)proc_zero, 0, index);
 //    task[index].tss.eip=(long)proc_zero;
 
     return index;
@@ -55,55 +92,61 @@ int req_proc(){
     task[num].priority=0;
     return num;
 }
-void set_proc(long eax,long ebx,long ecx,long edx,long es,long cs,long ss,long ds,long fs,long gs\
-,long esp,long ebp,long esi,long edi,long eflags,int proc_nr){
+void set_proc(long eax, long ebx, long ecx, long edx, long es, long cs, long ss, long ds, long fs, long gs, long esp,
+              long ebp, long esi, long edi, long rip, long eflags, int proc_nr) {
     struct process* proc=&task[proc_nr];
-//    proc->tss.eax=eax;
-//    proc->tss.ebx=ebx;
-//    proc->tss.ecx=ecx;
-//    proc->tss.edx=edx;
-//    proc->tss.es=es;
-//    proc->tss.cs=cs;
-//    proc->tss.ss=ss;
-//    proc->tss.ss0=ss;
-//    proc->tss.ss1=ss;
-//    proc->tss.ss2=ss;
-//    proc->tss.ds=ds;
-//    proc->tss.fs=fs;
-//    proc->tss.gs=gs;
-//    proc->tss.esp=esp;
-//    proc->tss.esp0=esp;
-//    proc->tss.esp1=esp;
-//    proc->tss.esp2=esp;
-//    proc->tss.ebp=ebp;
-//    proc->tss.esi=esi;
-//    proc->tss.edi=edi;
-//    proc->tss.eflags=0x202;//设置为默认值:0b 0010 0000 0010
-//    //能接受中断
-//    proc->tss.eip=(long)proc_zero;
-//
-//    proc->tss.cs=cs;
-//    proc->tss.ds=ds;
-//    proc->tss.es=es;
-//    proc->tss.cr3=PAGE_INDEX_ADDR;//get_phyaddr(n1);//暂时先搞成全局
-//
-//    proc->tss.ldt= _LDT_IND(proc_nr)*8;
-    //在gdt中添加tss
-//    fill_desc(&proc->tss,0xffff,SEG_SYS_TSS|SEG_PRESENT,_TSS_IND(proc_nr));
-//    //添加ldt
-//    fill_desc(proc->ldt, sizeof(proc->ldt),SEG_SYS_LDT|SEG_PRESENT, _LDT_IND(proc_nr));
-    //设置ldt
-    fill_ldt_desc(0,0xffffffff,\
-    SEG_CONFORMING_RW_CODE|SEG_DPL_3,&proc->ldt[0]);
-    fill_ldt_desc(0,0xffffffff,\
-    SEG_RW_DATA|SEG_DPL_3,&proc->ldt[1]);
-    fill_ldt_desc(0x1c00000-0x1000,0x1000,\
-    SEG_STACK|SEG_DPL_3,&proc->ldt[2]);
+    proc->regs.rax=eax;
+    proc->regs.rbx=ebx;
+    proc->regs.rcx=ecx;
+    proc->regs.rdx=edx;
+    proc->regs.es=es;
+    proc->regs.cs=cs;
+    proc->regs.ss=ss;
+    proc->regs.ds=ds;
+    proc->regs.fs=fs;
+    proc->regs.gs=gs;
+    proc->regs.rsp=esp;
+    proc->regs.rbp=ebp;
+    proc->regs.rsi=esi;
+    proc->regs.rdi=edi;
+    proc->regs.rflags=0x202;//设置为默认值:0b 0010 0000 0010
+    //能接受中断
+    proc->regs.rip=rip;
+
+    proc->regs.cs=cs;
+    proc->regs.ds=ds;
+    proc->regs.es=es;
+    proc->regs.cr3=PML4_ADDR;//get_phyaddr(n1);//暂时先搞成全局
+
 
 }
 void proc_zero()
 {
-
+    asm volatile("leave\n"
+                 "popq %rax\n"
+                 "mov %ax,%ds\n"
+                 "popq %rax\n"
+                 "mov %ax,%es\n"
+                 "popq %r15\n"
+                 "popq %r14\n"
+                 "popq %r13\n"
+                 "popq %r12\n"
+                 "popq %r11\n"
+                 "popq %r10\n"
+                 "popq %r9\n"
+                 "popq %r8\n"
+                 "popq %rsi\n"
+                 "popq %rdi\n"
+                 "popq %rdx\n"
+                 "popq %rcx\n"
+                 "popq %rbx\n"
+                 "lea dd(%rip),%rax\n"
+                 "mov %rax,8(%rsp)\n"
+                 "popq %rax\n"
+                 "callq eoi\n"
+                 "iretq\n"
+                 "dd:\n"
+                 "nop\n");
     while(1);
 }
 void manage_proc(){
@@ -123,7 +166,9 @@ void manage_proc(){
         if(i>=MAX_PROC_COUNT)
             return;
         //switch
-        switch_proc_tss(i);
+        task[cur_proc].stat=READY;
+        task[i].stat=RUNNING;
+        switch_to(&task[cur_proc], &task[i]);
     }
     return;
 }
@@ -145,7 +190,7 @@ void switch_proc(int pnr){
 //    task[0].tss.eflags=0x202;
     cur_proc=pnr;
     int sel=_TSS_IND(pnr)*8;
-    switch_to(&task[pnr].tss);
+    switch_to(NULL, &task[pnr].tss);
     //asm volatile("push %0":"=r"(task[pnr].tss.eip));
     //switch_proc_asm(pnr*8+0x8*3);
 }
@@ -536,8 +581,8 @@ int reg_proc(int entry, vfs_dir_entry *cwd, vfs_dir_entry *exef)
     if(i==-1)return -1;
     /*set_proc(0,0,0,0,SEL_LDT_DATA,SEL_LDT_CODE,SEL_LDT_STACK,SEL_LDT_DATA\
     ,SEL_LDT_DATA,SEL_LDT_DATA,0x1c00000-4,0,0,0,0,i);*/
-    set_proc(0,0,0,0,0x10,0x8,0x10,0x10\
-    ,0x10,0x10,0x1c00000-4,0,0,0,0,i);
+    set_proc(0, 0, 0, 0, 0x10, 0x8, 0x10, 0x10\
+, 0x10, 0x10, 0x1c00000 - 4, 0, 0, 0, 0, 0, i);
     task[i].pml4=vmalloc();
     int *pt=vmalloc();
     task[i].pml4[0]=PAGE_TABLE_ADDR|PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL;
@@ -685,17 +730,42 @@ int sys_free(int ptr)
     return 0;
 }
 
-void switch_to(struct process* to){
-//    asm volatile("pushq %%rax\r\n"
-//                 "mov %%rsp,%0\r\n"
-//                 "lea 1done(%%rip),%%rax\r\n"
-//                 "mov %%rax,%1\r\n"
-//                 "mov %2,%%rsp\r\n"
-//                 "jmp __switch_to\r\n"
-//                 "1done:\r\n"
-//                 "popq %%rax\r\n":"=m"(task[cur_proc].tss.rsp0),"=m"(task[cur_proc].tss.rip):
-//                 "m"(to->tss.rsp0),"D"(to));
-}
-void __switch_to(struct process *to){
+void switch_to(struct process *from, struct process *to) {
+    cur_proc=to-task;
+    asm volatile("mov %%rsp,%0\r\n"
+                 "lea done(%%rip),%%rax\r\n"
+                 "mov %%rax,%1\r\n"
+                 "mov %%fs,%2\r\n"
+                 "mov %%gs,%3\r\n"
+                 "mov %6,%%rsp\r\n"
+                 "pushq %7\r\n"
+                 "jmp __switch_to\r\n"
+                 "done:\r\n"
+                 "nop":"=m"(from->regs.rsp),"=m"(from->regs.rip),
+                 "=m"(from->regs.fs),"=m"(from->regs.gs):
+                "m"(to->regs.fs),"m"(to->regs.gs),"m"(to->regs.rsp),"m"(to->regs.rip),
+                "D"(from),"S"(to));
 
+}
+void __switch_to(struct process *from, struct process *to) {
+    set_tss(to->tss.rsp0,tss->rsp1,tss->rsp2,tss->ists[0],tss->ists[1],
+            tss->ists[2],tss->ists[3],tss->ists[4],tss->ists[5],tss->ists[6]);
+    asm volatile("mov %%fs,%0\r\n"
+                 "mov %%gs,%1\r\n"
+                 "mov %2,%%fs\r\n"
+                 "mov %3,%%gs":"=m"(to->regs.fs),"=m"(to->regs.gs):
+                 "m"(from->regs.fs),"m"(from->regs.gs));
+}
+
+void set_tss(u64 rsp0,u64 rsp1,u64 rsp2,u64 ist0,u64 ist1,u64 ist2,u64 ist3,u64 ist4,u64 ist5,u64 ist6){
+    tss->rsp0=rsp0;
+    tss->rsp1=rsp1;
+    tss->rsp2=rsp2;
+    tss->ists[0]=ist0;
+    tss->ists[1]=ist1;
+    tss->ists[2]=ist2;
+    tss->ists[3]=ist3;
+    tss->ists[4]=ist4;
+    tss->ists[5]=ist5;
+    tss->ists[6]=ist6;
 }

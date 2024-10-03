@@ -54,6 +54,34 @@ typedef struct _procm_{
     int data_base;
     int data_top;
 }proc_mem_arr;
+typedef struct
+{
+    long cr3;
+    long rip;
+    long rflags;
+    long rax, rcx, rdx, rbx;
+    long rsp;
+    long rbp;
+    long rsi;
+    long rdi;
+    long es;
+    long cs;
+    long ss;
+    long ds;
+    long fs;
+    long gs;
+    long r8,r9,r10,r11,r12,r13,r14,r15;
+    long errcode;
+}regs_t;
+//在始终中断发生的时候，对栈里面保存现场用的入栈数据。此结构体用于创建进程时方便构建一个这样的现场。
+typedef struct {
+    unsigned long ds,es,r15,r14,r13,r12,r11,r10,r9,r8;
+    unsigned long rsi,rdi,rdx,rcx,rbx,rax;
+    //iret使用
+    unsigned long rip,cs,rflags,rsp,ss;
+
+}stack_store_regs;
+
 #ifdef IA32
 typedef struct REGISTERS
 {
@@ -102,7 +130,8 @@ struct process{
     TSS tss;
 }__attribute__((packed));//208 bytes
 #else
-typedef struct REGISTERS
+
+typedef struct
 {
     u32 rsvd;
     u64 rsp0;
@@ -132,6 +161,7 @@ struct process{
     vfs_dir_entry *exef;
     vfs_dir_entry *openf[MAX_PROC_OPENF];
     TSS tss;
+    regs_t regs;
 }__attribute__((packed));//208 bytes
 #endif
 typedef struct
@@ -144,8 +174,8 @@ typedef struct
 void init_proc();
 int req_proc();
 int reg_proc(int entry, vfs_dir_entry *cwd, vfs_dir_entry *exef);
-void set_proc(long eax,long ebx,long ecx,long edx,long es,long cs,long ss,long ds,long fs,long gs\
-,long esp,long ebp,long esi,long edi,long eflags,int proc_nr);
+void set_proc(long eax, long ebx, long ecx, long edx, long es, long cs, long ss, long ds, long fs, long gs, long esp,
+              long ebp, long esi, long edi, long rip, long eflags, int proc_nr);
 void manage_proc();
 void switch_proc_tss(int pnr);
 //tss_ind:tss在gdt中的索引
@@ -170,8 +200,8 @@ int create_proc();
 //void fill_desc(u32 addr,u32 limit,u32 attr,unsigned long long* des);
 void switch_proc(int pnr);
 void switch_to_ia32(TSS *tss);
-void switch_to(struct process* to);
-void __switch_to(struct process *to);
+void switch_to(struct process *from, struct process *to);
+void __switch_to(struct process *from, struct process *to);
 
 void save_context(TSS *tss);
 void proc_zero();
@@ -179,4 +209,8 @@ void proc_end();
 void* malloc(int size);
 void* palloc(int proc_index,int size);
 
+//设置TSS中的值。
+void set_tss(u64 rsp0,u64 rsp1,u64 rsp2,u64 ist0,u64 ist1,u64 ist2,u64 ist3,u64 ist4,u64 ist5,u64 ist6);
+
+void create_test_proc();
 #endif //SRC_PROC_H
