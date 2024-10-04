@@ -29,8 +29,10 @@ void init_proc(){
     zi=_TSS_IND(zi)*8;
     //asm volatile("lldt %0"::"m"(xi));
     //asm volatile("ltr %0"::"m"(zi));
-    //把内核代码段选择子写到MSR寄存器中准备用于特权级转换
+    //把内核代码段选择子写到MSR寄存器中准备用于特权级转换(sysexit，现在没用)
     wrmsr(0x174,0x8);
+    //准备用于特权级转换(sysret，正在使用)
+    wrmsr(0xc0000081,0x0020000000000000ul);
     //创建一个测试进程
     create_test_proc();
 }
@@ -47,8 +49,8 @@ void create_test_proc(){
     stack_store_regs *str= (stack_store_regs *) (0x7e00 - sizeof(stack_store_regs));
     str->rax=0;
     str->rbx=0;
-    str->rcx=0x1400000;//sysexit采用的栈顶
-    str->rdx=0x1400000;//sysexit采用的返回地址
+    str->rcx=0;
+    str->rdx=0x1400000;//sysret采用的返回地址
     str->rsi=0;
     str->rdi=0;
     str->r15=0;
@@ -63,9 +65,9 @@ void create_test_proc(){
     str->cs=0x8;
     str->rflags=0x00200006;
     str->rsp=0x7e00;
-    str->ss=0x10;
-    str->ds=0x10;
-    str->es=0x10;
+    str->ss=0x2b;
+    str->ds=0x2b;
+    str->es=0x2b;
     memcpy(0x1400000,proc_zero,1024);
 
 }

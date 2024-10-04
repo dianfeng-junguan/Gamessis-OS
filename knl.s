@@ -207,28 +207,28 @@ void init_int(){
   800211:	83 7d fc 2f          	cmp    DWORD PTR [rbp-0x4],0x2f
   800215:	7e da                	jle    8001f1 <init_int+0x1f1>
 	set_gate(0x21,(addr_t)key_proc,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-  800217:	b8 97 63 80 00       	mov    eax,0x806397
+  800217:	b8 b7 63 80 00       	mov    eax,0x8063b7
   80021c:	b9 00 8e 00 00       	mov    ecx,0x8e00
   800221:	ba 08 00 00 00       	mov    edx,0x8
   800226:	48 89 c6             	mov    rsi,rax
   800229:	bf 21 00 00 00       	mov    edi,0x21
   80022e:	e8 d9 00 00 00       	call   80030c <set_gate>
 	set_gate(0x20,(addr_t)clock,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-  800233:	b8 60 51 80 00       	mov    eax,0x805160
+  800233:	b8 80 51 80 00       	mov    eax,0x805180
   800238:	b9 00 8e 00 00       	mov    ecx,0x8e00
   80023d:	ba 08 00 00 00       	mov    edx,0x8
   800242:	48 89 c6             	mov    rsi,rax
   800245:	bf 20 00 00 00       	mov    edi,0x20
   80024a:	e8 bd 00 00 00       	call   80030c <set_gate>
 	set_gate(0x2e,(addr_t)disk_int_handler,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-  80024f:	b8 a0 72 80 00       	mov    eax,0x8072a0
+  80024f:	b8 c0 72 80 00       	mov    eax,0x8072c0
   800254:	b9 00 8e 00 00       	mov    ecx,0x8e00
   800259:	ba 08 00 00 00       	mov    edx,0x8
   80025e:	48 89 c6             	mov    rsi,rax
   800261:	bf 2e 00 00 00       	mov    edi,0x2e
   800266:	e8 a1 00 00 00       	call   80030c <set_gate>
     set_gate(0x80,(addr_t)_syscall,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);//
-  80026b:	b8 90 5b 80 00       	mov    eax,0x805b90
+  80026b:	b8 b0 5b 80 00       	mov    eax,0x805bb0
   800270:	b9 00 8e 00 00       	mov    ecx,0x8e00
   800275:	ba 08 00 00 00       	mov    edx,0x8
   80027a:	48 89 c6             	mov    rsi,rax
@@ -241,42 +241,42 @@ void init_int(){
 	outb(0x20,0x11);
   800287:	be 11 00 00 00       	mov    esi,0x11
   80028c:	bf 20 00 00 00       	mov    edi,0x20
-  800291:	e8 3a 4c 00 00       	call   804ed0 <outb>
+  800291:	e8 5a 4c 00 00       	call   804ef0 <outb>
 	outb(0xA0,0x11);
   800296:	be 11 00 00 00       	mov    esi,0x11
   80029b:	bf a0 00 00 00       	mov    edi,0xa0
-  8002a0:	e8 2b 4c 00 00       	call   804ed0 <outb>
+  8002a0:	e8 4b 4c 00 00       	call   804ef0 <outb>
 	//ICW2
 	outb(0x21,0x20);//former 0x20,0x20
   8002a5:	be 20 00 00 00       	mov    esi,0x20
   8002aa:	bf 21 00 00 00       	mov    edi,0x21
-  8002af:	e8 1c 4c 00 00       	call   804ed0 <outb>
+  8002af:	e8 3c 4c 00 00       	call   804ef0 <outb>
 	outb(0xA1,0x28);
   8002b4:	be 28 00 00 00       	mov    esi,0x28
   8002b9:	bf a1 00 00 00       	mov    edi,0xa1
-  8002be:	e8 0d 4c 00 00       	call   804ed0 <outb>
+  8002be:	e8 2d 4c 00 00       	call   804ef0 <outb>
 	//ICW3
 	outb(0x21,0x04);
   8002c3:	be 04 00 00 00       	mov    esi,0x4
   8002c8:	bf 21 00 00 00       	mov    edi,0x21
-  8002cd:	e8 fe 4b 00 00       	call   804ed0 <outb>
+  8002cd:	e8 1e 4c 00 00       	call   804ef0 <outb>
 	outb(0xA1,0x02);
   8002d2:	be 02 00 00 00       	mov    esi,0x2
   8002d7:	bf a1 00 00 00       	mov    edi,0xa1
-  8002dc:	e8 ef 4b 00 00       	call   804ed0 <outb>
+  8002dc:	e8 0f 4c 00 00       	call   804ef0 <outb>
 	//ICW4
 	outb(0x21,0x01);
   8002e1:	be 01 00 00 00       	mov    esi,0x1
   8002e6:	bf 21 00 00 00       	mov    edi,0x21
-  8002eb:	e8 e0 4b 00 00       	call   804ed0 <outb>
+  8002eb:	e8 00 4c 00 00       	call   804ef0 <outb>
 	outb(0xA1,0x01);
   8002f0:	be 01 00 00 00       	mov    esi,0x1
   8002f5:	bf a1 00 00 00       	mov    edi,0xa1
-  8002fa:	e8 d1 4b 00 00       	call   804ed0 <outb>
+  8002fa:	e8 f1 4b 00 00       	call   804ef0 <outb>
 
     turn_on_int();
   8002ff:	b8 00 00 00 00       	mov    eax,0x0
-  800304:	e8 01 4c 00 00       	call   804f0a <turn_on_int>
+  800304:	e8 21 4c 00 00       	call   804f2a <turn_on_int>
 
 }
   800309:	90                   	nop
@@ -363,7 +363,7 @@ void divide_err(){
     //puts("divide err");
     eoi();
   8003dc:	b8 00 00 00 00       	mov    eax,0x0
-  8003e1:	e8 18 4b 00 00       	call   804efe <eoi>
+  8003e1:	e8 38 4b 00 00       	call   804f1e <eoi>
     __asm__ volatile ("sti \r\n leave \r\n iretq");
   8003e6:	fb                   	sti    
   8003e7:	c9                   	leave  
@@ -384,7 +384,7 @@ void debug(){
     //puts("debug");
     eoi();
   8003f6:	b8 00 00 00 00       	mov    eax,0x0
-  8003fb:	e8 fe 4a 00 00       	call   804efe <eoi>
+  8003fb:	e8 1e 4b 00 00       	call   804f1e <eoi>
     __asm__ volatile ("sti \r\n leave \r\n iretq");
   800400:	fb                   	sti    
   800401:	c9                   	leave  
@@ -404,7 +404,7 @@ void default_int_proc(){
     //puts("default_int_proc");
     eoi();
   800410:	b8 00 00 00 00       	mov    eax,0x0
-  800415:	e8 e4 4a 00 00       	call   804efe <eoi>
+  800415:	e8 04 4b 00 00       	call   804f1e <eoi>
     __asm__ volatile ("sti \r\n leave \r\n iretq");
   80041a:	fb                   	sti    
   80041b:	c9                   	leave  
@@ -424,7 +424,7 @@ void breakpoint(){
     //puts("breakpoint");
     eoi();
   80042a:	b8 00 00 00 00       	mov    eax,0x0
-  80042f:	e8 ca 4a 00 00       	call   804efe <eoi>
+  80042f:	e8 ea 4a 00 00       	call   804f1e <eoi>
     __asm__ volatile ("sti \r\n leave \r\n iretq");
   800434:	fb                   	sti    
   800435:	c9                   	leave  
@@ -444,7 +444,7 @@ void overflow(){
     //puts("overflow");
     eoi();
   800444:	b8 00 00 00 00       	mov    eax,0x0
-  800449:	e8 b0 4a 00 00       	call   804efe <eoi>
+  800449:	e8 d0 4a 00 00       	call   804f1e <eoi>
     __asm__ volatile ("sti \r\n leave \r\n iretq");
   80044e:	fb                   	sti    
   80044f:	c9                   	leave  
@@ -464,7 +464,7 @@ void bounds(){
     //puts("bounds");
     eoi();
   80045e:	b8 00 00 00 00       	mov    eax,0x0
-  800463:	e8 96 4a 00 00       	call   804efe <eoi>
+  800463:	e8 b6 4a 00 00       	call   804f1e <eoi>
     __asm__ volatile ("sti \r\n leave \r\n iretq");
   800468:	fb                   	sti    
   800469:	c9                   	leave  
@@ -482,10 +482,10 @@ void undefined_operator(){
     //puts("undef operator");
     eoi();
   800477:	b8 00 00 00 00       	mov    eax,0x0
-  80047c:	e8 7d 4a 00 00       	call   804efe <eoi>
+  80047c:	e8 9d 4a 00 00       	call   804f1e <eoi>
     report_back_trace_of_err();
   800481:	b8 00 00 00 00       	mov    eax,0x0
-  800486:	e8 9f 4a 00 00       	call   804f2a <report_back_trace_of_err>
+  800486:	e8 bf 4a 00 00       	call   804f4a <report_back_trace_of_err>
     __asm__ volatile ("jmp .\r\n leave \r\n iretq");
   80048b:	eb fe                	jmp    80048b <undefined_operator+0x1c>
   80048d:	c9                   	leave  
@@ -505,7 +505,7 @@ void coprocessor_notexist(){
     //puts("coprocessor doesnt exist");
     eoi();
   80049c:	b8 00 00 00 00       	mov    eax,0x0
-  8004a1:	e8 58 4a 00 00       	call   804efe <eoi>
+  8004a1:	e8 78 4a 00 00       	call   804f1e <eoi>
     __asm__ volatile ("sti \r\n leave \r\n iretq");
   8004a6:	fb                   	sti    
   8004a7:	c9                   	leave  
@@ -525,7 +525,7 @@ void double_ints(){
     //puts("double interrupts");
     eoi();
   8004b6:	b8 00 00 00 00       	mov    eax,0x0
-  8004bb:	e8 3e 4a 00 00       	call   804efe <eoi>
+  8004bb:	e8 5e 4a 00 00       	call   804f1e <eoi>
     __asm__ volatile ("sti \r\n leave \r\n iretq");
   8004c0:	fb                   	sti    
   8004c1:	c9                   	leave  
@@ -543,7 +543,7 @@ void coprocessor_seg_overbound(){
     //puts("coprocessfor seg overdound");
     eoi();
   8004cf:	b8 00 00 00 00       	mov    eax,0x0
-  8004d4:	e8 25 4a 00 00       	call   804efe <eoi>
+  8004d4:	e8 45 4a 00 00       	call   804f1e <eoi>
     __asm__ volatile ("leave \r\n iretq");
   8004d9:	c9                   	leave  
   8004da:	48 cf                	iretq  
@@ -562,7 +562,7 @@ void invalid_tss(){
     //puts("invalid tss");
     eoi();
   8004e8:	b8 00 00 00 00       	mov    eax,0x0
-  8004ed:	e8 0c 4a 00 00       	call   804efe <eoi>
+  8004ed:	e8 2c 4a 00 00       	call   804f1e <eoi>
     __asm__ volatile ("sti \r\n leave \r\n iretq");
   8004f2:	fb                   	sti    
   8004f3:	c9                   	leave  
@@ -582,7 +582,7 @@ void segment_notexist(){
     //puts("seg nonexistent");
     eoi();
   800502:	b8 00 00 00 00       	mov    eax,0x0
-  800507:	e8 f2 49 00 00       	call   804efe <eoi>
+  800507:	e8 12 4a 00 00       	call   804f1e <eoi>
     __asm__ volatile ("sti \r\n leave \r\n iretq");
   80050c:	fb                   	sti    
   80050d:	c9                   	leave  
@@ -602,7 +602,7 @@ void stackseg_overbound(){
     //puts("stack seg overbound");
     eoi();
   80051c:	b8 00 00 00 00       	mov    eax,0x0
-  800521:	e8 d8 49 00 00       	call   804efe <eoi>
+  800521:	e8 f8 49 00 00       	call   804f1e <eoi>
     __asm__ volatile ("sti \r\n leave \r\n iretq");
   800526:	fb                   	sti    
   800527:	c9                   	leave  
@@ -628,7 +628,7 @@ void general_protect(){
     switch_proc_tss(0); */
     eoi();
   800540:	b8 00 00 00 00       	mov    eax,0x0
-  800545:	e8 b4 49 00 00       	call   804efe <eoi>
+  800545:	e8 d4 49 00 00       	call   804f1e <eoi>
     __asm__ volatile ("leave\r\n add $8,%rsp \r\n iretq");
   80054a:	c9                   	leave  
   80054b:	48 83 c4 08          	add    rsp,0x8
@@ -649,7 +649,7 @@ void coprocessor_err(){
     //puts("coprocessor err");
     eoi();
   80055d:	b8 00 00 00 00       	mov    eax,0x0
-  800562:	e8 97 49 00 00       	call   804efe <eoi>
+  800562:	e8 b7 49 00 00       	call   804f1e <eoi>
     __asm__ volatile ("sti \r\n leave \r\n iretq");
   800567:	fb                   	sti    
   800568:	c9                   	leave  
@@ -737,12 +737,12 @@ int syscall(int func,int b,int c,int d,int e,int f)
   800640:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
   800643:	48 89 ce             	mov    rsi,rcx
   800646:	89 c7                	mov    edi,eax
-  800648:	e8 6e 42 00 00       	call   8048bb <reg_proc>
+  800648:	e8 88 42 00 00       	call   8048d5 <reg_proc>
   80064d:	e9 5d 01 00 00       	jmp    8007af <syscall+0x241>
         case 8:del_proc(b);
   800652:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
   800655:	89 c7                	mov    edi,eax
-  800657:	e8 31 40 00 00       	call   80468d <del_proc>
+  800657:	e8 4b 40 00 00       	call   8046a7 <del_proc>
         case 10:chk_vm(b,c);
   80065c:	8b 55 f4             	mov    edx,DWORD PTR [rbp-0xc]
   80065f:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
@@ -815,18 +815,18 @@ int syscall(int func,int b,int c,int d,int e,int f)
   800724:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
   800727:	48 98                	cdqe   
   800729:	48 89 c7             	mov    rdi,rax
-  80072c:	e8 82 4a 00 00       	call   8051b3 <execute>
+  80072c:	e8 a2 4a 00 00       	call   8051d3 <execute>
   800731:	eb 7c                	jmp    8007af <syscall+0x241>
         case SYSCALL_EXIT:return sys_exit(b);
   800733:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
   800736:	89 c7                	mov    edi,eax
-  800738:	e8 5d 41 00 00       	call   80489a <sys_exit>
+  800738:	e8 77 41 00 00       	call   8048b4 <sys_exit>
   80073d:	eb 70                	jmp    8007af <syscall+0x241>
         case SYSCALL_CALL:return exec_call(b);
   80073f:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
   800742:	48 98                	cdqe   
   800744:	48 89 c7             	mov    rdi,rax
-  800747:	e8 62 4b 00 00       	call   8052ae <exec_call>
+  800747:	e8 82 4b 00 00       	call   8052ce <exec_call>
   80074c:	eb 61                	jmp    8007af <syscall+0x241>
         case SYSCALL_MKFIFO:return sys_mkfifo(b);
   80074e:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
@@ -836,16 +836,16 @@ int syscall(int func,int b,int c,int d,int e,int f)
         case SYSCALL_MALLOC:return sys_malloc(b);
   80075a:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
   80075d:	89 c7                	mov    edi,eax
-  80075f:	e8 f2 42 00 00       	call   804a56 <sys_malloc>
+  80075f:	e8 0c 43 00 00       	call   804a70 <sys_malloc>
   800764:	eb 49                	jmp    8007af <syscall+0x241>
         case SYSCALL_FREE:return sys_free(b);
   800766:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
   800769:	89 c7                	mov    edi,eax
-  80076b:	e8 8d 44 00 00       	call   804bfd <sys_free>
+  80076b:	e8 a7 44 00 00       	call   804c17 <sys_free>
   800770:	eb 3d                	jmp    8007af <syscall+0x241>
         case SYSCALL_KB_READC:return sys_getkbc();
   800772:	b8 00 00 00 00       	mov    eax,0x0
-  800777:	e8 2f 5d 00 00       	call   8064ab <sys_getkbc>
+  800777:	e8 4f 5d 00 00       	call   8064cb <sys_getkbc>
   80077c:	0f be c0             	movsx  eax,al
   80077f:	eb 2e                	jmp    8007af <syscall+0x241>
         case SYSCALL_FIND_DEV:return sys_find_dev(b);
@@ -1019,12 +1019,12 @@ void main(unsigned int magic,void* addr)
   8008d0:	ff 70 10             	push   QWORD PTR [rax+0x10]
   8008d3:	ff 70 08             	push   QWORD PTR [rax+0x8]
   8008d6:	ff 30                	push   QWORD PTR [rax]
-  8008d8:	e8 78 54 00 00       	call   805d55 <set_framebuffer>
+  8008d8:	e8 98 54 00 00       	call   805d75 <set_framebuffer>
   8008dd:	48 83 c4 30          	add    rsp,0x30
 
             init_framebuffer();
   8008e1:	b8 00 00 00 00       	mov    eax,0x0
-  8008e6:	e8 b5 52 00 00       	call   805ba0 <init_framebuffer>
+  8008e6:	e8 d5 52 00 00       	call   805bc0 <init_framebuffer>
 			switch (tagfb->common.framebuffer_type)
   8008eb:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
   8008ef:	0f b6 40 1d          	movzx  eax,BYTE PTR [rax+0x1d]
@@ -1207,18 +1207,18 @@ void main(unsigned int magic,void* addr)
 	//printf("disk count:%d\n",disk_count);
     init_font();
   800aaa:	b8 00 00 00 00       	mov    eax,0x0
-  800aaf:	e8 ab 51 00 00       	call   805c5f <init_font>
+  800aaf:	e8 cb 51 00 00       	call   805c7f <init_font>
     //初始化区域
     //fill_rect(0,0,100,100,255);
     print("gamessis os loaded.\nkernel:>");
   800ab4:	bf c8 1d 81 00       	mov    edi,0x811dc8
-  800ab9:	e8 53 56 00 00       	call   806111 <print>
+  800ab9:	e8 73 56 00 00       	call   806131 <print>
     init_int();
   800abe:	b8 00 00 00 00       	mov    eax,0x0
   800ac3:	e8 38 f5 ff ff       	call   800000 <init_int>
     print("int loaded.\n");
   800ac8:	bf e5 1d 81 00       	mov    edi,0x811de5
-  800acd:	e8 3f 56 00 00       	call   806111 <print>
+  800acd:	e8 5f 56 00 00       	call   806131 <print>
     set_tss(0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000);
   800ad2:	68 00 00 40 00       	push   0x400000
   800ad7:	68 00 00 40 00       	push   0x400000
@@ -1230,24 +1230,24 @@ void main(unsigned int magic,void* addr)
   800af7:	ba 00 00 40 00       	mov    edx,0x400000
   800afc:	be 00 00 40 00       	mov    esi,0x400000
   800b01:	bf 00 00 40 00       	mov    edi,0x400000
-  800b06:	e8 0c 43 00 00       	call   804e17 <set_tss>
+  800b06:	e8 26 43 00 00       	call   804e31 <set_tss>
   800b0b:	48 83 c4 20          	add    rsp,0x20
     init_memory();
   800b0f:	b8 00 00 00 00       	mov    eax,0x0
   800b14:	e8 d7 07 00 00       	call   8012f0 <init_memory>
     init_com(PORT_COM1);
   800b19:	bf f8 03 00 00       	mov    edi,0x3f8
-  800b1e:	e8 b6 8d 00 00       	call   8098d9 <init_com>
+  800b1e:	e8 d6 8d 00 00       	call   8098f9 <init_com>
     com_puts("gamessis os loaded.",PORT_COM1);
   800b23:	be f8 03 00 00       	mov    esi,0x3f8
   800b28:	bf f2 1d 81 00       	mov    edi,0x811df2
-  800b2d:	e8 f3 8e 00 00       	call   809a25 <com_puts>
+  800b2d:	e8 13 8f 00 00       	call   809a45 <com_puts>
 	init_paging();
   800b32:	b8 00 00 00 00       	mov    eax,0x0
   800b37:	e8 db 04 00 00       	call   801017 <init_paging>
  	init_gdt();
   800b3c:	b8 00 00 00 00       	mov    eax,0x0
-  800b41:	e8 08 44 00 00       	call   804f4e <init_gdt>
+  800b41:	e8 28 44 00 00       	call   804f6e <init_gdt>
     init_drvdev_man();
   800b46:	b8 00 00 00 00       	mov    eax,0x0
   800b4b:	e8 d5 1f 00 00       	call   802b25 <init_drvdev_man>
@@ -1258,7 +1258,7 @@ void main(unsigned int magic,void* addr)
     //init_tty();
     init_kb();
   800b5a:	b8 00 00 00 00       	mov    eax,0x0
-  800b5f:	e8 14 58 00 00       	call   806378 <init_kb>
+  800b5f:	e8 34 58 00 00       	call   806398 <init_kb>
     manage_proc_lock=0;
   800b64:	c7 05 da 98 00 00 00 	mov    DWORD PTR [rip+0x98da],0x0        # 80a448 <manage_proc_lock>
   800b6b:	00 00 00 
@@ -1436,7 +1436,7 @@ static void putchar (char c)
     print(s);
   800ccb:	48 8d 45 fe          	lea    rax,[rbp-0x2]
   800ccf:	48 89 c7             	mov    rdi,rax
-  800cd2:	e8 3a 54 00 00       	call   806111 <print>
+  800cd2:	e8 5a 54 00 00       	call   806131 <print>
     *(video + (xpos + ypos * COLUMNS) * 2 + 1) = ATTRIBUTE;
  
     xpos++;
@@ -1947,7 +1947,7 @@ void page_err(){
   8011c7:	fa                   	cli    
     print("page err\n");
   8011c8:	bf 58 1e 81 00       	mov    edi,0x811e58
-  8011cd:	e8 3f 4f 00 00       	call   806111 <print>
+  8011cd:	e8 5f 4f 00 00       	call   806131 <print>
     unsigned long err_code=0,l_addr=0;
   8011d2:	48 c7 45 e0 00 00 00 	mov    QWORD PTR [rbp-0x20],0x0
   8011d9:	00 
@@ -1995,7 +1995,7 @@ void page_err(){
   801232:	83 7d ec 00          	cmp    DWORD PTR [rbp-0x14],0x0
   801236:	74 0c                	je     801244 <page_err+0x8a>
   801238:	bf 62 1e 81 00       	mov    edi,0x811e62
-  80123d:	e8 cf 4e 00 00       	call   806111 <print>
+  80123d:	e8 ef 4e 00 00       	call   806131 <print>
   801242:	eb 0a                	jmp    80124e <page_err+0x94>
     p=err_code&4;
   801244:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
@@ -2005,7 +2005,7 @@ void page_err(){
   80124e:	83 7d ec 00          	cmp    DWORD PTR [rbp-0x14],0x0
   801252:	75 0c                	jne    801260 <page_err+0xa6>
   801254:	bf 70 1e 81 00       	mov    edi,0x811e70
-  801259:	e8 b3 4e 00 00       	call   806111 <print>
+  801259:	e8 d3 4e 00 00       	call   806131 <print>
   80125e:	eb 0a                	jmp    80126a <page_err+0xb0>
     p=err_code&16;
   801260:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
@@ -2015,7 +2015,7 @@ void page_err(){
   80126a:	83 7d ec 00          	cmp    DWORD PTR [rbp-0x14],0x0
   80126e:	74 0a                	je     80127a <page_err+0xc0>
   801270:	bf 88 1e 81 00       	mov    edi,0x811e88
-  801275:	e8 97 4e 00 00       	call   806111 <print>
+  801275:	e8 b7 4e 00 00       	call   806131 <print>
     unsigned int addr=0;
   80127a:	c7 45 d4 00 00 00 00 	mov    DWORD PTR [rbp-0x2c],0x0
     asm volatile("mov 8(%%ebp),%0":"=r"(addr));
@@ -2056,7 +2056,7 @@ void page_err(){
     // printf("shell:>");
     eoi();
   8012d8:	b8 00 00 00 00       	mov    eax,0x0
-  8012dd:	e8 1c 3c 00 00       	call   804efe <eoi>
+  8012dd:	e8 3c 3c 00 00       	call   804f1e <eoi>
     //这里对esp的加法是必要的，因为page fault多push了一个错误码，但是iret识别不了
     __asm__ volatile ("sti \r\n leave\r\n add $8,%esp \r\n iretq");
   8012e2:	fb                   	sti    
@@ -2979,7 +2979,7 @@ int reg_vol(int disk_drvi, int fs_drvi, char *name)
   801ba9:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
   801bad:	48 89 c6             	mov    rsi,rax
   801bb0:	48 89 d7             	mov    rdi,rdx
-  801bb3:	e8 ac 7f 00 00       	call   809b64 <strcpy>
+  801bb3:	e8 cc 7f 00 00       	call   809b84 <strcpy>
             return i;
   801bb8:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
   801bbb:	eb 13                	jmp    801bd0 <reg_vol+0x109>
@@ -3079,7 +3079,7 @@ int sys_open(char *path, int mode)
   801cb4:	48 8d 45 c0          	lea    rax,[rbp-0x40]
   801cb8:	48 89 c6             	mov    rsi,rax
   801cbb:	48 89 d7             	mov    rdi,rdx
-  801cbe:	e8 41 80 00 00       	call   809d04 <strcmp>
+  801cbe:	e8 61 80 00 00       	call   809d24 <strcmp>
         if(vols[i].stat!=VOLUME_STAT_EMPTY&& \
   801cc3:	85 c0                	test   eax,eax
   801cc5:	74 0c                	je     801cd3 <sys_open+0x101>
@@ -3345,7 +3345,7 @@ int sys_open(char *path, int mode)
   802068:	48 c1 e0 05          	shl    rax,0x5
   80206c:	48 05 60 06 40 00    	add    rax,0x400660
   802072:	48 89 c7             	mov    rdi,rax
-  802075:	e8 94 27 00 00       	call   80480e <add_proc_openf>
+  802075:	e8 ae 27 00 00       	call   804828 <add_proc_openf>
     return opened[j].fno;
   80207a:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
   80207d:	48 63 d0             	movsxd rdx,eax
@@ -3804,7 +3804,7 @@ int vfs_read_file(vfs_dir_entry *f,char *buf,int len)
   802498:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
   80249c:	48 89 ce             	mov    rsi,rcx
   80249f:	48 89 c7             	mov    rdi,rax
-  8024a2:	e8 bf 75 00 00       	call   809a66 <memcpy>
+  8024a2:	e8 df 75 00 00       	call   809a86 <memcpy>
         len-=BLOCK_SIZE;
   8024a7:	81 6d cc 00 02 00 00 	sub    DWORD PTR [rbp-0x34],0x200
         //读写指针后移
@@ -3868,7 +3868,7 @@ int vfs_write_file(vfs_dir_entry *f,char *buf,int len)
   802537:	48 8b 4d d0          	mov    rcx,QWORD PTR [rbp-0x30]
   80253b:	48 89 ce             	mov    rsi,rcx
   80253e:	48 89 c7             	mov    rdi,rax
-  802541:	e8 20 75 00 00       	call   809a66 <memcpy>
+  802541:	e8 40 75 00 00       	call   809a86 <memcpy>
         len-=BLOCK_SIZE;
   802546:	81 6d cc 00 02 00 00 	sub    DWORD PTR [rbp-0x34],0x200
         //读写指针后移
@@ -4381,7 +4381,7 @@ int write_block(int dev,int block,char *buf,int len)
   802a12:	48 8b 4d e0          	mov    rcx,QWORD PTR [rbp-0x20]
   802a16:	48 89 ce             	mov    rsi,rcx
   802a19:	48 89 c7             	mov    rdi,rax
-  802a1c:	e8 45 70 00 00       	call   809a66 <memcpy>
+  802a1c:	e8 65 70 00 00       	call   809a86 <memcpy>
         len-=BLOCK_SIZE;
   802a21:	81 6d dc 00 02 00 00 	sub    DWORD PTR [rbp-0x24],0x200
         bh->b_dirt=1;//修改置位
@@ -4432,7 +4432,7 @@ int read_block(int dev,int block,char* buf,int len)
   802a8f:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
   802a93:	48 89 ce             	mov    rsi,rcx
   802a96:	48 89 c7             	mov    rdi,rax
-  802a99:	e8 c8 6f 00 00       	call   809a66 <memcpy>
+  802a99:	e8 e8 6f 00 00       	call   809a86 <memcpy>
         len-=BLOCK_SIZE;
   802a9e:	81 6d dc 00 02 00 00 	sub    DWORD PTR [rbp-0x24],0x200
         brelse(bh);
@@ -4917,7 +4917,7 @@ int sys_find_dev(char *name)
   802fe0:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
   802fe4:	48 89 d6             	mov    rsi,rdx
   802fe7:	48 89 c7             	mov    rdi,rax
-  802fea:	e8 15 6d 00 00       	call   809d04 <strcmp>
+  802fea:	e8 35 6d 00 00       	call   809d24 <strcmp>
   802fef:	85 c0                	test   eax,eax
   802ff1:	75 05                	jne    802ff8 <sys_find_dev+0x81>
             return i;
@@ -4977,7 +4977,7 @@ int sys_operate_dev(char *name,int func,driver_args* args)
   803079:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
   80307d:	48 89 d6             	mov    rsi,rdx
   803080:	48 89 c7             	mov    rdi,rax
-  803083:	e8 7c 6c 00 00       	call   809d04 <strcmp>
+  803083:	e8 9c 6c 00 00       	call   809d24 <strcmp>
   803088:	85 c0                	test   eax,eax
   80308a:	74 0c                	je     803098 <sys_operate_dev+0x8f>
     for(;i<MAX_DEVICES;i++)
@@ -5846,7 +5846,7 @@ void init_proc(){
      //创建0号进程
     int zi=create_proc();
   803aa0:	b8 00 00 00 00       	mov    eax,0x0
-  803aa5:	e8 30 02 00 00       	call   803cda <create_proc>
+  803aa5:	e8 4a 02 00 00       	call   803cf4 <create_proc>
   803aaa:	89 45 f8             	mov    DWORD PTR [rbp-0x8],eax
     task[zi].stat=READY;
   803aad:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
@@ -5870,10322 +5870,10319 @@ void init_proc(){
   803ae3:	89 45 f8             	mov    DWORD PTR [rbp-0x8],eax
     //asm volatile("lldt %0"::"m"(xi));
     //asm volatile("ltr %0"::"m"(zi));
-    //把内核代码段选择子写到MSR寄存器中准备用于特权级转换
+    //把内核代码段选择子写到MSR寄存器中准备用于特权级转换(sysexit，现在没用)
     wrmsr(0x174,0x8);
   803ae6:	be 08 00 00 00       	mov    esi,0x8
   803aeb:	bf 74 01 00 00       	mov    edi,0x174
   803af0:	e8 bc cc ff ff       	call   8007b1 <wrmsr>
+    //准备用于特权级转换(sysret，正在使用)
+    wrmsr(0xc0000081,0x0020000000000000ul);
+  803af5:	48 b8 00 00 00 00 00 	movabs rax,0x20000000000000
+  803afc:	00 20 00 
+  803aff:	48 89 c6             	mov    rsi,rax
+  803b02:	b8 81 00 00 c0       	mov    eax,0xc0000081
+  803b07:	48 89 c7             	mov    rdi,rax
+  803b0a:	e8 a2 cc ff ff       	call   8007b1 <wrmsr>
     //创建一个测试进程
     create_test_proc();
-  803af5:	b8 00 00 00 00       	mov    eax,0x0
-  803afa:	e8 03 00 00 00       	call   803b02 <create_test_proc>
+  803b0f:	b8 00 00 00 00       	mov    eax,0x0
+  803b14:	e8 03 00 00 00       	call   803b1c <create_test_proc>
 }
-  803aff:	90                   	nop
-  803b00:	c9                   	leave  
-  803b01:	c3                   	ret    
+  803b19:	90                   	nop
+  803b1a:	c9                   	leave  
+  803b1b:	c3                   	ret    
 
-0000000000803b02 <create_test_proc>:
+0000000000803b1c <create_test_proc>:
 void create_test_proc(){
-  803b02:	f3 0f 1e fa          	endbr64 
-  803b06:	55                   	push   rbp
-  803b07:	48 89 e5             	mov    rbp,rsp
-  803b0a:	48 83 ec 20          	sub    rsp,0x20
+  803b1c:	f3 0f 1e fa          	endbr64 
+  803b20:	55                   	push   rbp
+  803b21:	48 89 e5             	mov    rbp,rsp
+  803b24:	48 83 ec 20          	sub    rsp,0x20
 
     int index=req_proc();
-  803b0e:	b8 00 00 00 00       	mov    eax,0x0
-  803b13:	e8 45 02 00 00       	call   803d5d <req_proc>
-  803b18:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  803b28:	b8 00 00 00 00       	mov    eax,0x0
+  803b2d:	e8 45 02 00 00       	call   803d77 <req_proc>
+  803b32:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
     task[index].stat=READY;
-  803b1b:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  803b1e:	48 63 d0             	movsxd rdx,eax
-  803b21:	48 89 d0             	mov    rax,rdx
-  803b24:	48 01 c0             	add    rax,rax
-  803b27:	48 01 d0             	add    rax,rdx
-  803b2a:	48 c1 e0 08          	shl    rax,0x8
-  803b2e:	48 05 a4 84 40 00    	add    rax,0x4084a4
-  803b34:	c7 00 01 00 00 00    	mov    DWORD PTR [rax],0x1
+  803b35:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  803b38:	48 63 d0             	movsxd rdx,eax
+  803b3b:	48 89 d0             	mov    rax,rdx
+  803b3e:	48 01 c0             	add    rax,rax
+  803b41:	48 01 d0             	add    rax,rdx
+  803b44:	48 c1 e0 08          	shl    rax,0x8
+  803b48:	48 05 a4 84 40 00    	add    rax,0x4084a4
+  803b4e:	c7 00 01 00 00 00    	mov    DWORD PTR [rax],0x1
     int currsp=0x9fc00-1;
-  803b3a:	c7 45 ec ff fb 09 00 	mov    DWORD PTR [rbp-0x14],0x9fbff
+  803b54:	c7 45 ec ff fb 09 00 	mov    DWORD PTR [rbp-0x14],0x9fbff
     asm volatile("mov %%rsp,%0":"=m"(currsp));
-  803b41:	48 89 65 ec          	mov    QWORD PTR [rbp-0x14],rsp
+  803b5b:	48 89 65 ec          	mov    QWORD PTR [rbp-0x14],rsp
     set_proc(0, 0, 0, 0, 0x10, 0x8, 0x10, 0x10, 0x10, 0x10,
-  803b45:	ba e2 a3 80 00       	mov    edx,0x80a3e2
-  803b4a:	48 83 ec 08          	sub    rsp,0x8
-  803b4e:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  803b51:	50                   	push   rax
-  803b52:	6a 00                	push   0x0
-  803b54:	52                   	push   rdx
-  803b55:	6a 00                	push   0x0
-  803b57:	6a 00                	push   0x0
-  803b59:	6a 00                	push   0x0
-  803b5b:	68 58 7d 00 00       	push   0x7d58
-  803b60:	6a 10                	push   0x10
-  803b62:	6a 10                	push   0x10
-  803b64:	6a 10                	push   0x10
-  803b66:	6a 10                	push   0x10
-  803b68:	41 b9 08 00 00 00    	mov    r9d,0x8
-  803b6e:	41 b8 10 00 00 00    	mov    r8d,0x10
-  803b74:	b9 00 00 00 00       	mov    ecx,0x0
-  803b79:	ba 00 00 00 00       	mov    edx,0x0
-  803b7e:	be 00 00 00 00       	mov    esi,0x0
-  803b83:	bf 00 00 00 00       	mov    edi,0x0
-  803b88:	e8 c9 02 00 00       	call   803e56 <set_proc>
-  803b8d:	48 83 c4 60          	add    rsp,0x60
+  803b5f:	ba 02 a4 80 00       	mov    edx,0x80a402
+  803b64:	48 83 ec 08          	sub    rsp,0x8
+  803b68:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  803b6b:	50                   	push   rax
+  803b6c:	6a 00                	push   0x0
+  803b6e:	52                   	push   rdx
+  803b6f:	6a 00                	push   0x0
+  803b71:	6a 00                	push   0x0
+  803b73:	6a 00                	push   0x0
+  803b75:	68 58 7d 00 00       	push   0x7d58
+  803b7a:	6a 10                	push   0x10
+  803b7c:	6a 10                	push   0x10
+  803b7e:	6a 10                	push   0x10
+  803b80:	6a 10                	push   0x10
+  803b82:	41 b9 08 00 00 00    	mov    r9d,0x8
+  803b88:	41 b8 10 00 00 00    	mov    r8d,0x10
+  803b8e:	b9 00 00 00 00       	mov    ecx,0x0
+  803b93:	ba 00 00 00 00       	mov    edx,0x0
+  803b98:	be 00 00 00 00       	mov    esi,0x0
+  803b9d:	bf 00 00 00 00       	mov    edi,0x0
+  803ba2:	e8 c9 02 00 00       	call   803e70 <set_proc>
+  803ba7:	48 83 c4 60          	add    rsp,0x60
              0x7e00- sizeof(stack_store_regs), 0, 0, 0, (long)ret_sys_call, 0, index);
     task[index].tss.rsp0=0x400000;
-  803b91:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  803b94:	48 63 d0             	movsxd rdx,eax
-  803b97:	48 89 d0             	mov    rax,rdx
-  803b9a:	48 01 c0             	add    rax,rax
-  803b9d:	48 01 d0             	add    rax,rdx
-  803ba0:	48 c1 e0 08          	shl    rax,0x8
-  803ba4:	48 05 68 86 40 00    	add    rax,0x408668
-  803baa:	48 c7 00 00 00 40 00 	mov    QWORD PTR [rax],0x400000
+  803bab:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  803bae:	48 63 d0             	movsxd rdx,eax
+  803bb1:	48 89 d0             	mov    rax,rdx
+  803bb4:	48 01 c0             	add    rax,rax
+  803bb7:	48 01 d0             	add    rax,rdx
+  803bba:	48 c1 e0 08          	shl    rax,0x8
+  803bbe:	48 05 68 86 40 00    	add    rax,0x408668
+  803bc4:	48 c7 00 00 00 40 00 	mov    QWORD PTR [rax],0x400000
     //把还原现场时用到的堆栈设置好
     stack_store_regs *str= (stack_store_regs *) (0x7e00 - sizeof(stack_store_regs));
-  803bb1:	48 c7 45 f0 58 7d 00 	mov    QWORD PTR [rbp-0x10],0x7d58
-  803bb8:	00 
+  803bcb:	48 c7 45 f0 58 7d 00 	mov    QWORD PTR [rbp-0x10],0x7d58
+  803bd2:	00 
     str->rax=0;
-  803bb9:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  803bbd:	48 c7 40 78 00 00 00 	mov    QWORD PTR [rax+0x78],0x0
-  803bc4:	00 
+  803bd3:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  803bd7:	48 c7 40 78 00 00 00 	mov    QWORD PTR [rax+0x78],0x0
+  803bde:	00 
     str->rbx=0;
-  803bc5:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  803bc9:	48 c7 40 70 00 00 00 	mov    QWORD PTR [rax+0x70],0x0
-  803bd0:	00 
-    str->rcx=0x1400000;//sysexit采用的栈顶
-  803bd1:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  803bd5:	48 c7 40 68 00 00 40 	mov    QWORD PTR [rax+0x68],0x1400000
-  803bdc:	01 
-    str->rdx=0x1400000;//sysexit采用的返回地址
-  803bdd:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  803be1:	48 c7 40 60 00 00 40 	mov    QWORD PTR [rax+0x60],0x1400000
-  803be8:	01 
+  803bdf:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  803be3:	48 c7 40 70 00 00 00 	mov    QWORD PTR [rax+0x70],0x0
+  803bea:	00 
+    str->rcx=0;
+  803beb:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  803bef:	48 c7 40 68 00 00 00 	mov    QWORD PTR [rax+0x68],0x0
+  803bf6:	00 
+    str->rdx=0x1400000;//sysret采用的返回地址
+  803bf7:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  803bfb:	48 c7 40 60 00 00 40 	mov    QWORD PTR [rax+0x60],0x1400000
+  803c02:	01 
     str->rsi=0;
-  803be9:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  803bed:	48 c7 40 50 00 00 00 	mov    QWORD PTR [rax+0x50],0x0
-  803bf4:	00 
+  803c03:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  803c07:	48 c7 40 50 00 00 00 	mov    QWORD PTR [rax+0x50],0x0
+  803c0e:	00 
     str->rdi=0;
-  803bf5:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  803bf9:	48 c7 40 58 00 00 00 	mov    QWORD PTR [rax+0x58],0x0
-  803c00:	00 
+  803c0f:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  803c13:	48 c7 40 58 00 00 00 	mov    QWORD PTR [rax+0x58],0x0
+  803c1a:	00 
     str->r15=0;
-  803c01:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  803c05:	48 c7 40 10 00 00 00 	mov    QWORD PTR [rax+0x10],0x0
-  803c0c:	00 
+  803c1b:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  803c1f:	48 c7 40 10 00 00 00 	mov    QWORD PTR [rax+0x10],0x0
+  803c26:	00 
     str->r14=0;
-  803c0d:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  803c11:	48 c7 40 18 00 00 00 	mov    QWORD PTR [rax+0x18],0x0
-  803c18:	00 
+  803c27:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  803c2b:	48 c7 40 18 00 00 00 	mov    QWORD PTR [rax+0x18],0x0
+  803c32:	00 
     str->r13=0;
-  803c19:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  803c1d:	48 c7 40 20 00 00 00 	mov    QWORD PTR [rax+0x20],0x0
-  803c24:	00 
+  803c33:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  803c37:	48 c7 40 20 00 00 00 	mov    QWORD PTR [rax+0x20],0x0
+  803c3e:	00 
     str->r12=0;
-  803c25:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  803c29:	48 c7 40 28 00 00 00 	mov    QWORD PTR [rax+0x28],0x0
-  803c30:	00 
+  803c3f:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  803c43:	48 c7 40 28 00 00 00 	mov    QWORD PTR [rax+0x28],0x0
+  803c4a:	00 
     str->r11=0;
-  803c31:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  803c35:	48 c7 40 30 00 00 00 	mov    QWORD PTR [rax+0x30],0x0
-  803c3c:	00 
+  803c4b:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  803c4f:	48 c7 40 30 00 00 00 	mov    QWORD PTR [rax+0x30],0x0
+  803c56:	00 
     str->r10=0;
-  803c3d:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  803c41:	48 c7 40 38 00 00 00 	mov    QWORD PTR [rax+0x38],0x0
-  803c48:	00 
+  803c57:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  803c5b:	48 c7 40 38 00 00 00 	mov    QWORD PTR [rax+0x38],0x0
+  803c62:	00 
     str->r9=0;
-  803c49:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  803c4d:	48 c7 40 40 00 00 00 	mov    QWORD PTR [rax+0x40],0x0
-  803c54:	00 
+  803c63:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  803c67:	48 c7 40 40 00 00 00 	mov    QWORD PTR [rax+0x40],0x0
+  803c6e:	00 
     str->r8=0;
-  803c55:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  803c59:	48 c7 40 48 00 00 00 	mov    QWORD PTR [rax+0x48],0x0
-  803c60:	00 
+  803c6f:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  803c73:	48 c7 40 48 00 00 00 	mov    QWORD PTR [rax+0x48],0x0
+  803c7a:	00 
     str->rip=0x1400000;
-  803c61:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  803c65:	48 c7 80 80 00 00 00 	mov    QWORD PTR [rax+0x80],0x1400000
-  803c6c:	00 00 40 01 
+  803c7b:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  803c7f:	48 c7 80 80 00 00 00 	mov    QWORD PTR [rax+0x80],0x1400000
+  803c86:	00 00 40 01 
     str->cs=0x8;
-  803c70:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  803c74:	48 c7 80 88 00 00 00 	mov    QWORD PTR [rax+0x88],0x8
-  803c7b:	08 00 00 00 
+  803c8a:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  803c8e:	48 c7 80 88 00 00 00 	mov    QWORD PTR [rax+0x88],0x8
+  803c95:	08 00 00 00 
     str->rflags=0x00200006;
-  803c7f:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  803c83:	48 c7 80 90 00 00 00 	mov    QWORD PTR [rax+0x90],0x200006
-  803c8a:	06 00 20 00 
+  803c99:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  803c9d:	48 c7 80 90 00 00 00 	mov    QWORD PTR [rax+0x90],0x200006
+  803ca4:	06 00 20 00 
     str->rsp=0x7e00;
-  803c8e:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  803c92:	48 c7 80 98 00 00 00 	mov    QWORD PTR [rax+0x98],0x7e00
-  803c99:	00 7e 00 00 
-    str->ss=0x10;
-  803c9d:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  803ca1:	48 c7 80 a0 00 00 00 	mov    QWORD PTR [rax+0xa0],0x10
-  803ca8:	10 00 00 00 
-    str->ds=0x10;
-  803cac:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  803cb0:	48 c7 00 10 00 00 00 	mov    QWORD PTR [rax],0x10
-    str->es=0x10;
+  803ca8:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  803cac:	48 c7 80 98 00 00 00 	mov    QWORD PTR [rax+0x98],0x7e00
+  803cb3:	00 7e 00 00 
+    str->ss=0x2b;
   803cb7:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  803cbb:	48 c7 40 08 10 00 00 	mov    QWORD PTR [rax+0x8],0x10
-  803cc2:	00 
+  803cbb:	48 c7 80 a0 00 00 00 	mov    QWORD PTR [rax+0xa0],0x2b
+  803cc2:	2b 00 00 00 
+    str->ds=0x2b;
+  803cc6:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  803cca:	48 c7 00 2b 00 00 00 	mov    QWORD PTR [rax],0x2b
+    str->es=0x2b;
+  803cd1:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  803cd5:	48 c7 40 08 2b 00 00 	mov    QWORD PTR [rax+0x8],0x2b
+  803cdc:	00 
     memcpy(0x1400000,proc_zero,1024);
-  803cc3:	ba 00 04 00 00       	mov    edx,0x400
-  803cc8:	be c2 3f 80 00       	mov    esi,0x803fc2
-  803ccd:	bf 00 00 40 01       	mov    edi,0x1400000
-  803cd2:	e8 8f 5d 00 00       	call   809a66 <memcpy>
+  803cdd:	ba 00 04 00 00       	mov    edx,0x400
+  803ce2:	be dc 3f 80 00       	mov    esi,0x803fdc
+  803ce7:	bf 00 00 40 01       	mov    edi,0x1400000
+  803cec:	e8 95 5d 00 00       	call   809a86 <memcpy>
 
 }
-  803cd7:	90                   	nop
-  803cd8:	c9                   	leave  
-  803cd9:	c3                   	ret    
+  803cf1:	90                   	nop
+  803cf2:	c9                   	leave  
+  803cf3:	c3                   	ret    
 
-0000000000803cda <create_proc>:
+0000000000803cf4 <create_proc>:
 int create_proc()
 {
-  803cda:	f3 0f 1e fa          	endbr64 
-  803cde:	55                   	push   rbp
-  803cdf:	48 89 e5             	mov    rbp,rsp
-  803ce2:	48 83 ec 10          	sub    rsp,0x10
+  803cf4:	f3 0f 1e fa          	endbr64 
+  803cf8:	55                   	push   rbp
+  803cf9:	48 89 e5             	mov    rbp,rsp
+  803cfc:	48 83 ec 10          	sub    rsp,0x10
     int index=req_proc();
-  803ce6:	b8 00 00 00 00       	mov    eax,0x0
-  803ceb:	e8 6d 00 00 00       	call   803d5d <req_proc>
-  803cf0:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  803d00:	b8 00 00 00 00       	mov    eax,0x0
+  803d05:	e8 6d 00 00 00       	call   803d77 <req_proc>
+  803d0a:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
     if(index==-1)return -1;
-  803cf3:	83 7d fc ff          	cmp    DWORD PTR [rbp-0x4],0xffffffff
-  803cf7:	75 07                	jne    803d00 <create_proc+0x26>
-  803cf9:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  803cfe:	eb 5b                	jmp    803d5b <create_proc+0x81>
+  803d0d:	83 7d fc ff          	cmp    DWORD PTR [rbp-0x4],0xffffffff
+  803d11:	75 07                	jne    803d1a <create_proc+0x26>
+  803d13:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  803d18:	eb 5b                	jmp    803d75 <create_proc+0x81>
     int currsp=0x9fc00-1;
-  803d00:	c7 45 f8 ff fb 09 00 	mov    DWORD PTR [rbp-0x8],0x9fbff
+  803d1a:	c7 45 f8 ff fb 09 00 	mov    DWORD PTR [rbp-0x8],0x9fbff
     asm volatile("mov %%rsp,%0":"=m"(currsp));
-  803d07:	48 89 65 f8          	mov    QWORD PTR [rbp-0x8],rsp
+  803d21:	48 89 65 f8          	mov    QWORD PTR [rbp-0x8],rsp
     //默认DPL=3
     //set_proc(0,0,0,0,0x23,0x1b,0x23,0x23,0x23,0x23,curesp,0,0,0,0,index);
     set_proc(0, 0, 0, 0, 0x10, 0x8, 0x10, 0x10, 0x10, 0x10,
-  803d0b:	b9 c2 3f 80 00       	mov    ecx,0x803fc2
-  803d10:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  803d13:	48 98                	cdqe   
-  803d15:	48 83 ec 08          	sub    rsp,0x8
-  803d19:	8b 55 fc             	mov    edx,DWORD PTR [rbp-0x4]
-  803d1c:	52                   	push   rdx
-  803d1d:	6a 00                	push   0x0
-  803d1f:	51                   	push   rcx
-  803d20:	6a 00                	push   0x0
-  803d22:	6a 00                	push   0x0
-  803d24:	6a 00                	push   0x0
-  803d26:	50                   	push   rax
-  803d27:	6a 10                	push   0x10
-  803d29:	6a 10                	push   0x10
-  803d2b:	6a 10                	push   0x10
-  803d2d:	6a 10                	push   0x10
-  803d2f:	41 b9 08 00 00 00    	mov    r9d,0x8
-  803d35:	41 b8 10 00 00 00    	mov    r8d,0x10
-  803d3b:	b9 00 00 00 00       	mov    ecx,0x0
-  803d40:	ba 00 00 00 00       	mov    edx,0x0
-  803d45:	be 00 00 00 00       	mov    esi,0x0
-  803d4a:	bf 00 00 00 00       	mov    edi,0x0
-  803d4f:	e8 02 01 00 00       	call   803e56 <set_proc>
-  803d54:	48 83 c4 60          	add    rsp,0x60
+  803d25:	b9 dc 3f 80 00       	mov    ecx,0x803fdc
+  803d2a:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  803d2d:	48 98                	cdqe   
+  803d2f:	48 83 ec 08          	sub    rsp,0x8
+  803d33:	8b 55 fc             	mov    edx,DWORD PTR [rbp-0x4]
+  803d36:	52                   	push   rdx
+  803d37:	6a 00                	push   0x0
+  803d39:	51                   	push   rcx
+  803d3a:	6a 00                	push   0x0
+  803d3c:	6a 00                	push   0x0
+  803d3e:	6a 00                	push   0x0
+  803d40:	50                   	push   rax
+  803d41:	6a 10                	push   0x10
+  803d43:	6a 10                	push   0x10
+  803d45:	6a 10                	push   0x10
+  803d47:	6a 10                	push   0x10
+  803d49:	41 b9 08 00 00 00    	mov    r9d,0x8
+  803d4f:	41 b8 10 00 00 00    	mov    r8d,0x10
+  803d55:	b9 00 00 00 00       	mov    ecx,0x0
+  803d5a:	ba 00 00 00 00       	mov    edx,0x0
+  803d5f:	be 00 00 00 00       	mov    esi,0x0
+  803d64:	bf 00 00 00 00       	mov    edi,0x0
+  803d69:	e8 02 01 00 00       	call   803e70 <set_proc>
+  803d6e:	48 83 c4 60          	add    rsp,0x60
              currsp, 0, 0, 0, (long)proc_zero, 0, index);
 //    task[index].tss.eip=(long)proc_zero;
 
     return index;
-  803d58:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  803d72:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
 }
-  803d5b:	c9                   	leave  
-  803d5c:	c3                   	ret    
+  803d75:	c9                   	leave  
+  803d76:	c3                   	ret    
 
-0000000000803d5d <req_proc>:
+0000000000803d77 <req_proc>:
 int req_proc(){
-  803d5d:	f3 0f 1e fa          	endbr64 
-  803d61:	55                   	push   rbp
-  803d62:	48 89 e5             	mov    rbp,rsp
+  803d77:	f3 0f 1e fa          	endbr64 
+  803d7b:	55                   	push   rbp
+  803d7c:	48 89 e5             	mov    rbp,rsp
     int num=0;
-  803d65:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
+  803d7f:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
     while(task[num].pid!=-1&&task[num].stat!=ENDED&&\
-  803d6c:	eb 04                	jmp    803d72 <req_proc+0x15>
+  803d86:	eb 04                	jmp    803d8c <req_proc+0x15>
     num<=MAX_PROC_COUNT){
         num++;
-  803d6e:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
+  803d88:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
     while(task[num].pid!=-1&&task[num].stat!=ENDED&&\
-  803d72:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  803d75:	48 63 d0             	movsxd rdx,eax
-  803d78:	48 89 d0             	mov    rax,rdx
-  803d7b:	48 01 c0             	add    rax,rax
-  803d7e:	48 01 d0             	add    rax,rdx
-  803d81:	48 c1 e0 08          	shl    rax,0x8
-  803d85:	48 05 a0 84 40 00    	add    rax,0x4084a0
-  803d8b:	8b 00                	mov    eax,DWORD PTR [rax]
-  803d8d:	83 f8 ff             	cmp    eax,0xffffffff
-  803d90:	74 26                	je     803db8 <req_proc+0x5b>
-  803d92:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  803d95:	48 63 d0             	movsxd rdx,eax
-  803d98:	48 89 d0             	mov    rax,rdx
-  803d9b:	48 01 c0             	add    rax,rax
-  803d9e:	48 01 d0             	add    rax,rdx
-  803da1:	48 c1 e0 08          	shl    rax,0x8
-  803da5:	48 05 a4 84 40 00    	add    rax,0x4084a4
-  803dab:	8b 00                	mov    eax,DWORD PTR [rax]
-  803dad:	83 f8 03             	cmp    eax,0x3
-  803db0:	74 06                	je     803db8 <req_proc+0x5b>
-  803db2:	83 7d fc 40          	cmp    DWORD PTR [rbp-0x4],0x40
-  803db6:	7e b6                	jle    803d6e <req_proc+0x11>
+  803d8c:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  803d8f:	48 63 d0             	movsxd rdx,eax
+  803d92:	48 89 d0             	mov    rax,rdx
+  803d95:	48 01 c0             	add    rax,rax
+  803d98:	48 01 d0             	add    rax,rdx
+  803d9b:	48 c1 e0 08          	shl    rax,0x8
+  803d9f:	48 05 a0 84 40 00    	add    rax,0x4084a0
+  803da5:	8b 00                	mov    eax,DWORD PTR [rax]
+  803da7:	83 f8 ff             	cmp    eax,0xffffffff
+  803daa:	74 26                	je     803dd2 <req_proc+0x5b>
+  803dac:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  803daf:	48 63 d0             	movsxd rdx,eax
+  803db2:	48 89 d0             	mov    rax,rdx
+  803db5:	48 01 c0             	add    rax,rax
+  803db8:	48 01 d0             	add    rax,rdx
+  803dbb:	48 c1 e0 08          	shl    rax,0x8
+  803dbf:	48 05 a4 84 40 00    	add    rax,0x4084a4
+  803dc5:	8b 00                	mov    eax,DWORD PTR [rax]
+  803dc7:	83 f8 03             	cmp    eax,0x3
+  803dca:	74 06                	je     803dd2 <req_proc+0x5b>
+  803dcc:	83 7d fc 40          	cmp    DWORD PTR [rbp-0x4],0x40
+  803dd0:	7e b6                	jle    803d88 <req_proc+0x11>
     }
     if(num>=MAX_PROC_COUNT)
-  803db8:	83 7d fc 3f          	cmp    DWORD PTR [rbp-0x4],0x3f
-  803dbc:	7e 0a                	jle    803dc8 <req_proc+0x6b>
+  803dd2:	83 7d fc 3f          	cmp    DWORD PTR [rbp-0x4],0x3f
+  803dd6:	7e 0a                	jle    803de2 <req_proc+0x6b>
         return -1;
-  803dbe:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  803dc3:	e9 8c 00 00 00       	jmp    803e54 <req_proc+0xf7>
+  803dd8:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  803ddd:	e9 8c 00 00 00       	jmp    803e6e <req_proc+0xf7>
     task[num].pid=pidd++;
-  803dc8:	8b 05 42 07 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc10742]        # 414510 <pidd>
-  803dce:	8d 50 01             	lea    edx,[rax+0x1]
-  803dd1:	89 15 39 07 c1 ff    	mov    DWORD PTR [rip+0xffffffffffc10739],edx        # 414510 <pidd>
-  803dd7:	89 c1                	mov    ecx,eax
-  803dd9:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  803ddc:	48 63 d0             	movsxd rdx,eax
-  803ddf:	48 89 d0             	mov    rax,rdx
-  803de2:	48 01 c0             	add    rax,rax
-  803de5:	48 01 d0             	add    rax,rdx
-  803de8:	48 c1 e0 08          	shl    rax,0x8
-  803dec:	48 05 a0 84 40 00    	add    rax,0x4084a0
-  803df2:	89 08                	mov    DWORD PTR [rax],ecx
+  803de2:	8b 05 28 07 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc10728]        # 414510 <pidd>
+  803de8:	8d 50 01             	lea    edx,[rax+0x1]
+  803deb:	89 15 1f 07 c1 ff    	mov    DWORD PTR [rip+0xffffffffffc1071f],edx        # 414510 <pidd>
+  803df1:	89 c1                	mov    ecx,eax
+  803df3:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  803df6:	48 63 d0             	movsxd rdx,eax
+  803df9:	48 89 d0             	mov    rax,rdx
+  803dfc:	48 01 c0             	add    rax,rax
+  803dff:	48 01 d0             	add    rax,rdx
+  803e02:	48 c1 e0 08          	shl    rax,0x8
+  803e06:	48 05 a0 84 40 00    	add    rax,0x4084a0
+  803e0c:	89 08                	mov    DWORD PTR [rax],ecx
     task[num].stat=ENDED;
-  803df4:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  803df7:	48 63 d0             	movsxd rdx,eax
-  803dfa:	48 89 d0             	mov    rax,rdx
-  803dfd:	48 01 c0             	add    rax,rax
-  803e00:	48 01 d0             	add    rax,rdx
-  803e03:	48 c1 e0 08          	shl    rax,0x8
-  803e07:	48 05 a4 84 40 00    	add    rax,0x4084a4
-  803e0d:	c7 00 03 00 00 00    	mov    DWORD PTR [rax],0x3
+  803e0e:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  803e11:	48 63 d0             	movsxd rdx,eax
+  803e14:	48 89 d0             	mov    rax,rdx
+  803e17:	48 01 c0             	add    rax,rax
+  803e1a:	48 01 d0             	add    rax,rdx
+  803e1d:	48 c1 e0 08          	shl    rax,0x8
+  803e21:	48 05 a4 84 40 00    	add    rax,0x4084a4
+  803e27:	c7 00 03 00 00 00    	mov    DWORD PTR [rax],0x3
     task[num].utime=0;
-  803e13:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  803e16:	48 63 d0             	movsxd rdx,eax
-  803e19:	48 89 d0             	mov    rax,rdx
-  803e1c:	48 01 c0             	add    rax,rax
-  803e1f:	48 01 d0             	add    rax,rdx
-  803e22:	48 c1 e0 08          	shl    rax,0x8
-  803e26:	48 05 a8 84 40 00    	add    rax,0x4084a8
-  803e2c:	c7 00 00 00 00 00    	mov    DWORD PTR [rax],0x0
+  803e2d:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  803e30:	48 63 d0             	movsxd rdx,eax
+  803e33:	48 89 d0             	mov    rax,rdx
+  803e36:	48 01 c0             	add    rax,rax
+  803e39:	48 01 d0             	add    rax,rdx
+  803e3c:	48 c1 e0 08          	shl    rax,0x8
+  803e40:	48 05 a8 84 40 00    	add    rax,0x4084a8
+  803e46:	c7 00 00 00 00 00    	mov    DWORD PTR [rax],0x0
     task[num].priority=0;
-  803e32:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  803e35:	48 63 d0             	movsxd rdx,eax
-  803e38:	48 89 d0             	mov    rax,rdx
-  803e3b:	48 01 c0             	add    rax,rax
-  803e3e:	48 01 d0             	add    rax,rdx
-  803e41:	48 c1 e0 08          	shl    rax,0x8
-  803e45:	48 05 ac 84 40 00    	add    rax,0x4084ac
-  803e4b:	c7 00 00 00 00 00    	mov    DWORD PTR [rax],0x0
+  803e4c:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  803e4f:	48 63 d0             	movsxd rdx,eax
+  803e52:	48 89 d0             	mov    rax,rdx
+  803e55:	48 01 c0             	add    rax,rax
+  803e58:	48 01 d0             	add    rax,rdx
+  803e5b:	48 c1 e0 08          	shl    rax,0x8
+  803e5f:	48 05 ac 84 40 00    	add    rax,0x4084ac
+  803e65:	c7 00 00 00 00 00    	mov    DWORD PTR [rax],0x0
     return num;
-  803e51:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  803e6b:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
 }
-  803e54:	5d                   	pop    rbp
-  803e55:	c3                   	ret    
+  803e6e:	5d                   	pop    rbp
+  803e6f:	c3                   	ret    
 
-0000000000803e56 <set_proc>:
+0000000000803e70 <set_proc>:
 void set_proc(long eax, long ebx, long ecx, long edx, long es, long cs, long ss, long ds, long fs, long gs, long esp,
               long ebp, long esi, long edi, long rip, long eflags, int proc_nr) {
-  803e56:	f3 0f 1e fa          	endbr64 
-  803e5a:	55                   	push   rbp
-  803e5b:	48 89 e5             	mov    rbp,rsp
-  803e5e:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
-  803e62:	48 89 75 e0          	mov    QWORD PTR [rbp-0x20],rsi
-  803e66:	48 89 55 d8          	mov    QWORD PTR [rbp-0x28],rdx
-  803e6a:	48 89 4d d0          	mov    QWORD PTR [rbp-0x30],rcx
-  803e6e:	4c 89 45 c8          	mov    QWORD PTR [rbp-0x38],r8
-  803e72:	4c 89 4d c0          	mov    QWORD PTR [rbp-0x40],r9
+  803e70:	f3 0f 1e fa          	endbr64 
+  803e74:	55                   	push   rbp
+  803e75:	48 89 e5             	mov    rbp,rsp
+  803e78:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
+  803e7c:	48 89 75 e0          	mov    QWORD PTR [rbp-0x20],rsi
+  803e80:	48 89 55 d8          	mov    QWORD PTR [rbp-0x28],rdx
+  803e84:	48 89 4d d0          	mov    QWORD PTR [rbp-0x30],rcx
+  803e88:	4c 89 45 c8          	mov    QWORD PTR [rbp-0x38],r8
+  803e8c:	4c 89 4d c0          	mov    QWORD PTR [rbp-0x40],r9
     struct process* proc=&task[proc_nr];
-  803e76:	8b 45 60             	mov    eax,DWORD PTR [rbp+0x60]
-  803e79:	48 63 d0             	movsxd rdx,eax
-  803e7c:	48 89 d0             	mov    rax,rdx
-  803e7f:	48 01 c0             	add    rax,rax
-  803e82:	48 01 d0             	add    rax,rdx
-  803e85:	48 c1 e0 08          	shl    rax,0x8
-  803e89:	48 05 a0 84 40 00    	add    rax,0x4084a0
-  803e8f:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
+  803e90:	8b 45 60             	mov    eax,DWORD PTR [rbp+0x60]
+  803e93:	48 63 d0             	movsxd rdx,eax
+  803e96:	48 89 d0             	mov    rax,rdx
+  803e99:	48 01 c0             	add    rax,rax
+  803e9c:	48 01 d0             	add    rax,rdx
+  803e9f:	48 c1 e0 08          	shl    rax,0x8
+  803ea3:	48 05 a0 84 40 00    	add    rax,0x4084a0
+  803ea9:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
     proc->regs.rax=eax;
-  803e93:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  803e97:	48 8b 55 e8          	mov    rdx,QWORD PTR [rbp-0x18]
-  803e9b:	48 89 90 48 02 00 00 	mov    QWORD PTR [rax+0x248],rdx
+  803ead:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  803eb1:	48 8b 55 e8          	mov    rdx,QWORD PTR [rbp-0x18]
+  803eb5:	48 89 90 48 02 00 00 	mov    QWORD PTR [rax+0x248],rdx
     proc->regs.rbx=ebx;
-  803ea2:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  803ea6:	48 8b 55 e0          	mov    rdx,QWORD PTR [rbp-0x20]
-  803eaa:	48 89 90 60 02 00 00 	mov    QWORD PTR [rax+0x260],rdx
+  803ebc:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  803ec0:	48 8b 55 e0          	mov    rdx,QWORD PTR [rbp-0x20]
+  803ec4:	48 89 90 60 02 00 00 	mov    QWORD PTR [rax+0x260],rdx
     proc->regs.rcx=ecx;
-  803eb1:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  803eb5:	48 8b 55 d8          	mov    rdx,QWORD PTR [rbp-0x28]
-  803eb9:	48 89 90 50 02 00 00 	mov    QWORD PTR [rax+0x250],rdx
+  803ecb:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  803ecf:	48 8b 55 d8          	mov    rdx,QWORD PTR [rbp-0x28]
+  803ed3:	48 89 90 50 02 00 00 	mov    QWORD PTR [rax+0x250],rdx
     proc->regs.rdx=edx;
-  803ec0:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  803ec4:	48 8b 55 d0          	mov    rdx,QWORD PTR [rbp-0x30]
-  803ec8:	48 89 90 58 02 00 00 	mov    QWORD PTR [rax+0x258],rdx
+  803eda:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  803ede:	48 8b 55 d0          	mov    rdx,QWORD PTR [rbp-0x30]
+  803ee2:	48 89 90 58 02 00 00 	mov    QWORD PTR [rax+0x258],rdx
     proc->regs.es=es;
-  803ecf:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  803ed3:	48 8b 55 c8          	mov    rdx,QWORD PTR [rbp-0x38]
-  803ed7:	48 89 90 88 02 00 00 	mov    QWORD PTR [rax+0x288],rdx
+  803ee9:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  803eed:	48 8b 55 c8          	mov    rdx,QWORD PTR [rbp-0x38]
+  803ef1:	48 89 90 88 02 00 00 	mov    QWORD PTR [rax+0x288],rdx
     proc->regs.cs=cs;
-  803ede:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  803ee2:	48 8b 55 c0          	mov    rdx,QWORD PTR [rbp-0x40]
-  803ee6:	48 89 90 90 02 00 00 	mov    QWORD PTR [rax+0x290],rdx
+  803ef8:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  803efc:	48 8b 55 c0          	mov    rdx,QWORD PTR [rbp-0x40]
+  803f00:	48 89 90 90 02 00 00 	mov    QWORD PTR [rax+0x290],rdx
     proc->regs.ss=ss;
-  803eed:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  803ef1:	48 8b 55 10          	mov    rdx,QWORD PTR [rbp+0x10]
-  803ef5:	48 89 90 98 02 00 00 	mov    QWORD PTR [rax+0x298],rdx
+  803f07:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  803f0b:	48 8b 55 10          	mov    rdx,QWORD PTR [rbp+0x10]
+  803f0f:	48 89 90 98 02 00 00 	mov    QWORD PTR [rax+0x298],rdx
     proc->regs.ds=ds;
-  803efc:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  803f00:	48 8b 55 18          	mov    rdx,QWORD PTR [rbp+0x18]
-  803f04:	48 89 90 a0 02 00 00 	mov    QWORD PTR [rax+0x2a0],rdx
+  803f16:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  803f1a:	48 8b 55 18          	mov    rdx,QWORD PTR [rbp+0x18]
+  803f1e:	48 89 90 a0 02 00 00 	mov    QWORD PTR [rax+0x2a0],rdx
     proc->regs.fs=fs;
-  803f0b:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  803f0f:	48 8b 55 20          	mov    rdx,QWORD PTR [rbp+0x20]
-  803f13:	48 89 90 a8 02 00 00 	mov    QWORD PTR [rax+0x2a8],rdx
+  803f25:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  803f29:	48 8b 55 20          	mov    rdx,QWORD PTR [rbp+0x20]
+  803f2d:	48 89 90 a8 02 00 00 	mov    QWORD PTR [rax+0x2a8],rdx
     proc->regs.gs=gs;
-  803f1a:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  803f1e:	48 8b 55 28          	mov    rdx,QWORD PTR [rbp+0x28]
-  803f22:	48 89 90 b0 02 00 00 	mov    QWORD PTR [rax+0x2b0],rdx
+  803f34:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  803f38:	48 8b 55 28          	mov    rdx,QWORD PTR [rbp+0x28]
+  803f3c:	48 89 90 b0 02 00 00 	mov    QWORD PTR [rax+0x2b0],rdx
     proc->regs.rsp=esp;
-  803f29:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  803f2d:	48 8b 55 30          	mov    rdx,QWORD PTR [rbp+0x30]
-  803f31:	48 89 90 68 02 00 00 	mov    QWORD PTR [rax+0x268],rdx
+  803f43:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  803f47:	48 8b 55 30          	mov    rdx,QWORD PTR [rbp+0x30]
+  803f4b:	48 89 90 68 02 00 00 	mov    QWORD PTR [rax+0x268],rdx
     proc->regs.rbp=ebp;
-  803f38:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  803f3c:	48 8b 55 38          	mov    rdx,QWORD PTR [rbp+0x38]
-  803f40:	48 89 90 70 02 00 00 	mov    QWORD PTR [rax+0x270],rdx
+  803f52:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  803f56:	48 8b 55 38          	mov    rdx,QWORD PTR [rbp+0x38]
+  803f5a:	48 89 90 70 02 00 00 	mov    QWORD PTR [rax+0x270],rdx
     proc->regs.rsi=esi;
-  803f47:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  803f4b:	48 8b 55 40          	mov    rdx,QWORD PTR [rbp+0x40]
-  803f4f:	48 89 90 78 02 00 00 	mov    QWORD PTR [rax+0x278],rdx
+  803f61:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  803f65:	48 8b 55 40          	mov    rdx,QWORD PTR [rbp+0x40]
+  803f69:	48 89 90 78 02 00 00 	mov    QWORD PTR [rax+0x278],rdx
     proc->regs.rdi=edi;
-  803f56:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  803f5a:	48 8b 55 48          	mov    rdx,QWORD PTR [rbp+0x48]
-  803f5e:	48 89 90 80 02 00 00 	mov    QWORD PTR [rax+0x280],rdx
+  803f70:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  803f74:	48 8b 55 48          	mov    rdx,QWORD PTR [rbp+0x48]
+  803f78:	48 89 90 80 02 00 00 	mov    QWORD PTR [rax+0x280],rdx
     proc->regs.rflags=0x202;//设置为默认值:0b 0010 0000 0010
-  803f65:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  803f69:	48 c7 80 40 02 00 00 	mov    QWORD PTR [rax+0x240],0x202
-  803f70:	02 02 00 00 
+  803f7f:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  803f83:	48 c7 80 40 02 00 00 	mov    QWORD PTR [rax+0x240],0x202
+  803f8a:	02 02 00 00 
     //能接受中断
     proc->regs.rip=rip;
-  803f74:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  803f78:	48 8b 55 50          	mov    rdx,QWORD PTR [rbp+0x50]
-  803f7c:	48 89 90 38 02 00 00 	mov    QWORD PTR [rax+0x238],rdx
+  803f8e:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  803f92:	48 8b 55 50          	mov    rdx,QWORD PTR [rbp+0x50]
+  803f96:	48 89 90 38 02 00 00 	mov    QWORD PTR [rax+0x238],rdx
 
     proc->regs.cs=cs;
-  803f83:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  803f87:	48 8b 55 c0          	mov    rdx,QWORD PTR [rbp-0x40]
-  803f8b:	48 89 90 90 02 00 00 	mov    QWORD PTR [rax+0x290],rdx
+  803f9d:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  803fa1:	48 8b 55 c0          	mov    rdx,QWORD PTR [rbp-0x40]
+  803fa5:	48 89 90 90 02 00 00 	mov    QWORD PTR [rax+0x290],rdx
     proc->regs.ds=ds;
-  803f92:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  803f96:	48 8b 55 18          	mov    rdx,QWORD PTR [rbp+0x18]
-  803f9a:	48 89 90 a0 02 00 00 	mov    QWORD PTR [rax+0x2a0],rdx
+  803fac:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  803fb0:	48 8b 55 18          	mov    rdx,QWORD PTR [rbp+0x18]
+  803fb4:	48 89 90 a0 02 00 00 	mov    QWORD PTR [rax+0x2a0],rdx
     proc->regs.es=es;
-  803fa1:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  803fa5:	48 8b 55 c8          	mov    rdx,QWORD PTR [rbp-0x38]
-  803fa9:	48 89 90 88 02 00 00 	mov    QWORD PTR [rax+0x288],rdx
+  803fbb:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  803fbf:	48 8b 55 c8          	mov    rdx,QWORD PTR [rbp-0x38]
+  803fc3:	48 89 90 88 02 00 00 	mov    QWORD PTR [rax+0x288],rdx
     proc->regs.cr3=PML4_ADDR;//get_phyaddr(n1);//暂时先搞成全局
-  803fb0:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  803fb4:	48 c7 80 30 02 00 00 	mov    QWORD PTR [rax+0x230],0x101000
-  803fbb:	00 10 10 00 
+  803fca:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  803fce:	48 c7 80 30 02 00 00 	mov    QWORD PTR [rax+0x230],0x101000
+  803fd5:	00 10 10 00 
 
 
 }
-  803fbf:	90                   	nop
-  803fc0:	5d                   	pop    rbp
-  803fc1:	c3                   	ret    
+  803fd9:	90                   	nop
+  803fda:	5d                   	pop    rbp
+  803fdb:	c3                   	ret    
 
-0000000000803fc2 <proc_zero>:
+0000000000803fdc <proc_zero>:
 void proc_zero()
 {
-  803fc2:	f3 0f 1e fa          	endbr64 
-  803fc6:	55                   	push   rbp
-  803fc7:	48 89 e5             	mov    rbp,rsp
+  803fdc:	f3 0f 1e fa          	endbr64 
+  803fe0:	55                   	push   rbp
+  803fe1:	48 89 e5             	mov    rbp,rsp
     asm volatile("leave\n"
-  803fca:	c9                   	leave  
-  803fcb:	58                   	pop    rax
-  803fcc:	8e d8                	mov    ds,eax
-  803fce:	58                   	pop    rax
-  803fcf:	8e c0                	mov    es,eax
-  803fd1:	41 5f                	pop    r15
-  803fd3:	41 5e                	pop    r14
-  803fd5:	41 5d                	pop    r13
-  803fd7:	41 5c                	pop    r12
-  803fd9:	41 5b                	pop    r11
-  803fdb:	41 5a                	pop    r10
-  803fdd:	41 59                	pop    r9
-  803fdf:	41 58                	pop    r8
-  803fe1:	5e                   	pop    rsi
-  803fe2:	5f                   	pop    rdi
-  803fe3:	5a                   	pop    rdx
-  803fe4:	59                   	pop    rcx
-  803fe5:	5b                   	pop    rbx
-  803fe6:	58                   	pop    rax
-  803fe7:	e8 12 0f 00 00       	call   804efe <eoi>
-  803fec:	48 cf                	iretq  
+  803fe4:	c9                   	leave  
+  803fe5:	58                   	pop    rax
+  803fe6:	8e d8                	mov    ds,eax
+  803fe8:	58                   	pop    rax
+  803fe9:	8e c0                	mov    es,eax
+  803feb:	41 5f                	pop    r15
+  803fed:	41 5e                	pop    r14
+  803fef:	41 5d                	pop    r13
+  803ff1:	41 5c                	pop    r12
+  803ff3:	41 5b                	pop    r11
+  803ff5:	41 5a                	pop    r10
+  803ff7:	41 59                	pop    r9
+  803ff9:	41 58                	pop    r8
+  803ffb:	5e                   	pop    rsi
+  803ffc:	5f                   	pop    rdi
+  803ffd:	5a                   	pop    rdx
+  803ffe:	59                   	pop    rcx
+  803fff:	5b                   	pop    rbx
+  804000:	58                   	pop    rax
+  804001:	e8 18 0f 00 00       	call   804f1e <eoi>
+  804006:	48 cf                	iretq  
 
-0000000000803fee <dd>:
-  803fee:	90                   	nop
+0000000000804008 <dd>:
+  804008:	90                   	nop
                  "popq %rax\n"
                  "callq eoi\n"
                  "iretq\n"
                  "dd:\n"
                  "nop\n");
     while(1);
-  803fef:	eb fe                	jmp    803fef <dd+0x1>
+  804009:	eb fe                	jmp    804009 <dd+0x1>
 
-0000000000803ff1 <manage_proc>:
+000000000080400b <manage_proc>:
 }
 void manage_proc(){
-  803ff1:	f3 0f 1e fa          	endbr64 
-  803ff5:	55                   	push   rbp
-  803ff6:	48 89 e5             	mov    rbp,rsp
-  803ff9:	48 83 ec 10          	sub    rsp,0x10
+  80400b:	f3 0f 1e fa          	endbr64 
+  80400f:	55                   	push   rbp
+  804010:	48 89 e5             	mov    rbp,rsp
+  804013:	48 83 ec 10          	sub    rsp,0x10
     if(cur_proc!=-1)
-  803ffd:	8b 05 09 05 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc10509]        # 41450c <cur_proc>
-  804003:	83 f8 ff             	cmp    eax,0xffffffff
-  804006:	74 39                	je     804041 <manage_proc+0x50>
+  804017:	8b 05 ef 04 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc104ef]        # 41450c <cur_proc>
+  80401d:	83 f8 ff             	cmp    eax,0xffffffff
+  804020:	74 39                	je     80405b <manage_proc+0x50>
         task[cur_proc].utime++;
-  804008:	8b 15 fe 04 c1 ff    	mov    edx,DWORD PTR [rip+0xffffffffffc104fe]        # 41450c <cur_proc>
-  80400e:	48 63 ca             	movsxd rcx,edx
-  804011:	48 89 c8             	mov    rax,rcx
-  804014:	48 01 c0             	add    rax,rax
-  804017:	48 01 c8             	add    rax,rcx
-  80401a:	48 c1 e0 08          	shl    rax,0x8
-  80401e:	48 05 a8 84 40 00    	add    rax,0x4084a8
-  804024:	8b 00                	mov    eax,DWORD PTR [rax]
-  804026:	8d 48 01             	lea    ecx,[rax+0x1]
-  804029:	48 63 d2             	movsxd rdx,edx
-  80402c:	48 89 d0             	mov    rax,rdx
-  80402f:	48 01 c0             	add    rax,rax
-  804032:	48 01 d0             	add    rax,rdx
-  804035:	48 c1 e0 08          	shl    rax,0x8
-  804039:	48 05 a8 84 40 00    	add    rax,0x4084a8
-  80403f:	89 08                	mov    DWORD PTR [rax],ecx
+  804022:	8b 15 e4 04 c1 ff    	mov    edx,DWORD PTR [rip+0xffffffffffc104e4]        # 41450c <cur_proc>
+  804028:	48 63 ca             	movsxd rcx,edx
+  80402b:	48 89 c8             	mov    rax,rcx
+  80402e:	48 01 c0             	add    rax,rax
+  804031:	48 01 c8             	add    rax,rcx
+  804034:	48 c1 e0 08          	shl    rax,0x8
+  804038:	48 05 a8 84 40 00    	add    rax,0x4084a8
+  80403e:	8b 00                	mov    eax,DWORD PTR [rax]
+  804040:	8d 48 01             	lea    ecx,[rax+0x1]
+  804043:	48 63 d2             	movsxd rdx,edx
+  804046:	48 89 d0             	mov    rax,rdx
+  804049:	48 01 c0             	add    rax,rax
+  80404c:	48 01 d0             	add    rax,rdx
+  80404f:	48 c1 e0 08          	shl    rax,0x8
+  804053:	48 05 a8 84 40 00    	add    rax,0x4084a8
+  804059:	89 08                	mov    DWORD PTR [rax],ecx
     if(cur_proc==-1||task[cur_proc].utime>MAX_UTIME||\
-  804041:	8b 05 c5 04 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc104c5]        # 41450c <cur_proc>
-  804047:	83 f8 ff             	cmp    eax,0xffffffff
-  80404a:	74 4a                	je     804096 <manage_proc+0xa5>
-  80404c:	8b 05 ba 04 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc104ba]        # 41450c <cur_proc>
-  804052:	48 63 d0             	movsxd rdx,eax
-  804055:	48 89 d0             	mov    rax,rdx
-  804058:	48 01 c0             	add    rax,rax
-  80405b:	48 01 d0             	add    rax,rdx
-  80405e:	48 c1 e0 08          	shl    rax,0x8
-  804062:	48 05 a8 84 40 00    	add    rax,0x4084a8
-  804068:	8b 00                	mov    eax,DWORD PTR [rax]
-  80406a:	83 f8 01             	cmp    eax,0x1
-  80406d:	77 27                	ja     804096 <manage_proc+0xa5>
+  80405b:	8b 05 ab 04 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc104ab]        # 41450c <cur_proc>
+  804061:	83 f8 ff             	cmp    eax,0xffffffff
+  804064:	74 4a                	je     8040b0 <manage_proc+0xa5>
+  804066:	8b 05 a0 04 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc104a0]        # 41450c <cur_proc>
+  80406c:	48 63 d0             	movsxd rdx,eax
+  80406f:	48 89 d0             	mov    rax,rdx
+  804072:	48 01 c0             	add    rax,rax
+  804075:	48 01 d0             	add    rax,rdx
+  804078:	48 c1 e0 08          	shl    rax,0x8
+  80407c:	48 05 a8 84 40 00    	add    rax,0x4084a8
+  804082:	8b 00                	mov    eax,DWORD PTR [rax]
+  804084:	83 f8 01             	cmp    eax,0x1
+  804087:	77 27                	ja     8040b0 <manage_proc+0xa5>
     task[cur_proc].stat!=READY){
-  80406f:	8b 05 97 04 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc10497]        # 41450c <cur_proc>
-  804075:	48 63 d0             	movsxd rdx,eax
-  804078:	48 89 d0             	mov    rax,rdx
-  80407b:	48 01 c0             	add    rax,rax
-  80407e:	48 01 d0             	add    rax,rdx
-  804081:	48 c1 e0 08          	shl    rax,0x8
-  804085:	48 05 a4 84 40 00    	add    rax,0x4084a4
-  80408b:	8b 00                	mov    eax,DWORD PTR [rax]
+  804089:	8b 05 7d 04 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc1047d]        # 41450c <cur_proc>
+  80408f:	48 63 d0             	movsxd rdx,eax
+  804092:	48 89 d0             	mov    rax,rdx
+  804095:	48 01 c0             	add    rax,rax
+  804098:	48 01 d0             	add    rax,rdx
+  80409b:	48 c1 e0 08          	shl    rax,0x8
+  80409f:	48 05 a4 84 40 00    	add    rax,0x4084a4
+  8040a5:	8b 00                	mov    eax,DWORD PTR [rax]
     if(cur_proc==-1||task[cur_proc].utime>MAX_UTIME||\
-  80408d:	83 f8 01             	cmp    eax,0x1
-  804090:	0f 84 21 01 00 00    	je     8041b7 <manage_proc+0x1c6>
+  8040a7:	83 f8 01             	cmp    eax,0x1
+  8040aa:	0f 84 21 01 00 00    	je     8041d1 <manage_proc+0x1c6>
         if(cur_proc!=-1)
-  804096:	8b 05 70 04 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc10470]        # 41450c <cur_proc>
-  80409c:	83 f8 ff             	cmp    eax,0xffffffff
-  80409f:	74 22                	je     8040c3 <manage_proc+0xd2>
+  8040b0:	8b 05 56 04 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc10456]        # 41450c <cur_proc>
+  8040b6:	83 f8 ff             	cmp    eax,0xffffffff
+  8040b9:	74 22                	je     8040dd <manage_proc+0xd2>
             task[cur_proc].utime=0;
-  8040a1:	8b 05 65 04 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc10465]        # 41450c <cur_proc>
-  8040a7:	48 63 d0             	movsxd rdx,eax
-  8040aa:	48 89 d0             	mov    rax,rdx
-  8040ad:	48 01 c0             	add    rax,rax
-  8040b0:	48 01 d0             	add    rax,rdx
-  8040b3:	48 c1 e0 08          	shl    rax,0x8
-  8040b7:	48 05 a8 84 40 00    	add    rax,0x4084a8
-  8040bd:	c7 00 00 00 00 00    	mov    DWORD PTR [rax],0x0
+  8040bb:	8b 05 4b 04 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc1044b]        # 41450c <cur_proc>
+  8040c1:	48 63 d0             	movsxd rdx,eax
+  8040c4:	48 89 d0             	mov    rax,rdx
+  8040c7:	48 01 c0             	add    rax,rax
+  8040ca:	48 01 d0             	add    rax,rdx
+  8040cd:	48 c1 e0 08          	shl    rax,0x8
+  8040d1:	48 05 a8 84 40 00    	add    rax,0x4084a8
+  8040d7:	c7 00 00 00 00 00    	mov    DWORD PTR [rax],0x0
         //find
         int i=0;
-  8040c3:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
+  8040dd:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
         for(i=0;i<MAX_PROC_COUNT;i++){
-  8040ca:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
-  8040d1:	eb 4f                	jmp    804122 <manage_proc+0x131>
+  8040e4:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
+  8040eb:	eb 4f                	jmp    80413c <manage_proc+0x131>
             if(task[i].pid!=-1&&task[i].stat==READY&&i!=cur_proc){
-  8040d3:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8040d6:	48 63 d0             	movsxd rdx,eax
-  8040d9:	48 89 d0             	mov    rax,rdx
-  8040dc:	48 01 c0             	add    rax,rax
-  8040df:	48 01 d0             	add    rax,rdx
-  8040e2:	48 c1 e0 08          	shl    rax,0x8
-  8040e6:	48 05 a0 84 40 00    	add    rax,0x4084a0
-  8040ec:	8b 00                	mov    eax,DWORD PTR [rax]
-  8040ee:	83 f8 ff             	cmp    eax,0xffffffff
-  8040f1:	74 2b                	je     80411e <manage_proc+0x12d>
-  8040f3:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8040f6:	48 63 d0             	movsxd rdx,eax
-  8040f9:	48 89 d0             	mov    rax,rdx
-  8040fc:	48 01 c0             	add    rax,rax
-  8040ff:	48 01 d0             	add    rax,rdx
-  804102:	48 c1 e0 08          	shl    rax,0x8
-  804106:	48 05 a4 84 40 00    	add    rax,0x4084a4
-  80410c:	8b 00                	mov    eax,DWORD PTR [rax]
-  80410e:	83 f8 01             	cmp    eax,0x1
-  804111:	75 0b                	jne    80411e <manage_proc+0x12d>
-  804113:	8b 05 f3 03 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc103f3]        # 41450c <cur_proc>
-  804119:	39 45 fc             	cmp    DWORD PTR [rbp-0x4],eax
-  80411c:	75 0c                	jne    80412a <manage_proc+0x139>
+  8040ed:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  8040f0:	48 63 d0             	movsxd rdx,eax
+  8040f3:	48 89 d0             	mov    rax,rdx
+  8040f6:	48 01 c0             	add    rax,rax
+  8040f9:	48 01 d0             	add    rax,rdx
+  8040fc:	48 c1 e0 08          	shl    rax,0x8
+  804100:	48 05 a0 84 40 00    	add    rax,0x4084a0
+  804106:	8b 00                	mov    eax,DWORD PTR [rax]
+  804108:	83 f8 ff             	cmp    eax,0xffffffff
+  80410b:	74 2b                	je     804138 <manage_proc+0x12d>
+  80410d:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  804110:	48 63 d0             	movsxd rdx,eax
+  804113:	48 89 d0             	mov    rax,rdx
+  804116:	48 01 c0             	add    rax,rax
+  804119:	48 01 d0             	add    rax,rdx
+  80411c:	48 c1 e0 08          	shl    rax,0x8
+  804120:	48 05 a4 84 40 00    	add    rax,0x4084a4
+  804126:	8b 00                	mov    eax,DWORD PTR [rax]
+  804128:	83 f8 01             	cmp    eax,0x1
+  80412b:	75 0b                	jne    804138 <manage_proc+0x12d>
+  80412d:	8b 05 d9 03 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc103d9]        # 41450c <cur_proc>
+  804133:	39 45 fc             	cmp    DWORD PTR [rbp-0x4],eax
+  804136:	75 0c                	jne    804144 <manage_proc+0x139>
         for(i=0;i<MAX_PROC_COUNT;i++){
-  80411e:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
-  804122:	83 7d fc 3f          	cmp    DWORD PTR [rbp-0x4],0x3f
-  804126:	7e ab                	jle    8040d3 <manage_proc+0xe2>
-  804128:	eb 01                	jmp    80412b <manage_proc+0x13a>
+  804138:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
+  80413c:	83 7d fc 3f          	cmp    DWORD PTR [rbp-0x4],0x3f
+  804140:	7e ab                	jle    8040ed <manage_proc+0xe2>
+  804142:	eb 01                	jmp    804145 <manage_proc+0x13a>
                 break;
-  80412a:	90                   	nop
+  804144:	90                   	nop
             }
         }
         if(i>=MAX_PROC_COUNT)
-  80412b:	83 7d fc 3f          	cmp    DWORD PTR [rbp-0x4],0x3f
-  80412f:	0f 8f 85 00 00 00    	jg     8041ba <manage_proc+0x1c9>
+  804145:	83 7d fc 3f          	cmp    DWORD PTR [rbp-0x4],0x3f
+  804149:	0f 8f 85 00 00 00    	jg     8041d4 <manage_proc+0x1c9>
             return;
         //switch
         task[cur_proc].stat=READY;
-  804135:	8b 05 d1 03 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc103d1]        # 41450c <cur_proc>
-  80413b:	48 63 d0             	movsxd rdx,eax
-  80413e:	48 89 d0             	mov    rax,rdx
-  804141:	48 01 c0             	add    rax,rax
-  804144:	48 01 d0             	add    rax,rdx
-  804147:	48 c1 e0 08          	shl    rax,0x8
-  80414b:	48 05 a4 84 40 00    	add    rax,0x4084a4
-  804151:	c7 00 01 00 00 00    	mov    DWORD PTR [rax],0x1
+  80414f:	8b 05 b7 03 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc103b7]        # 41450c <cur_proc>
+  804155:	48 63 d0             	movsxd rdx,eax
+  804158:	48 89 d0             	mov    rax,rdx
+  80415b:	48 01 c0             	add    rax,rax
+  80415e:	48 01 d0             	add    rax,rdx
+  804161:	48 c1 e0 08          	shl    rax,0x8
+  804165:	48 05 a4 84 40 00    	add    rax,0x4084a4
+  80416b:	c7 00 01 00 00 00    	mov    DWORD PTR [rax],0x1
         task[i].stat=RUNNING;
-  804157:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  80415a:	48 63 d0             	movsxd rdx,eax
-  80415d:	48 89 d0             	mov    rax,rdx
-  804160:	48 01 c0             	add    rax,rax
-  804163:	48 01 d0             	add    rax,rdx
-  804166:	48 c1 e0 08          	shl    rax,0x8
-  80416a:	48 05 a4 84 40 00    	add    rax,0x4084a4
-  804170:	c7 00 00 00 00 00    	mov    DWORD PTR [rax],0x0
+  804171:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  804174:	48 63 d0             	movsxd rdx,eax
+  804177:	48 89 d0             	mov    rax,rdx
+  80417a:	48 01 c0             	add    rax,rax
+  80417d:	48 01 d0             	add    rax,rdx
+  804180:	48 c1 e0 08          	shl    rax,0x8
+  804184:	48 05 a4 84 40 00    	add    rax,0x4084a4
+  80418a:	c7 00 00 00 00 00    	mov    DWORD PTR [rax],0x0
         switch_to(&task[cur_proc], &task[i]);
-  804176:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  804179:	48 63 d0             	movsxd rdx,eax
-  80417c:	48 89 d0             	mov    rax,rdx
-  80417f:	48 01 c0             	add    rax,rax
-  804182:	48 01 d0             	add    rax,rdx
-  804185:	48 c1 e0 08          	shl    rax,0x8
-  804189:	48 8d 90 a0 84 40 00 	lea    rdx,[rax+0x4084a0]
-  804190:	8b 05 76 03 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc10376]        # 41450c <cur_proc>
-  804196:	48 63 c8             	movsxd rcx,eax
-  804199:	48 89 c8             	mov    rax,rcx
-  80419c:	48 01 c0             	add    rax,rax
-  80419f:	48 01 c8             	add    rax,rcx
-  8041a2:	48 c1 e0 08          	shl    rax,0x8
-  8041a6:	48 05 a0 84 40 00    	add    rax,0x4084a0
-  8041ac:	48 89 d6             	mov    rsi,rdx
-  8041af:	48 89 c7             	mov    rdi,rax
-  8041b2:	e8 fd 0a 00 00       	call   804cb4 <switch_to>
+  804190:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  804193:	48 63 d0             	movsxd rdx,eax
+  804196:	48 89 d0             	mov    rax,rdx
+  804199:	48 01 c0             	add    rax,rax
+  80419c:	48 01 d0             	add    rax,rdx
+  80419f:	48 c1 e0 08          	shl    rax,0x8
+  8041a3:	48 8d 90 a0 84 40 00 	lea    rdx,[rax+0x4084a0]
+  8041aa:	8b 05 5c 03 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc1035c]        # 41450c <cur_proc>
+  8041b0:	48 63 c8             	movsxd rcx,eax
+  8041b3:	48 89 c8             	mov    rax,rcx
+  8041b6:	48 01 c0             	add    rax,rax
+  8041b9:	48 01 c8             	add    rax,rcx
+  8041bc:	48 c1 e0 08          	shl    rax,0x8
+  8041c0:	48 05 a0 84 40 00    	add    rax,0x4084a0
+  8041c6:	48 89 d6             	mov    rsi,rdx
+  8041c9:	48 89 c7             	mov    rdi,rax
+  8041cc:	e8 fd 0a 00 00       	call   804cce <switch_to>
     }
     return;
-  8041b7:	90                   	nop
-  8041b8:	eb 01                	jmp    8041bb <manage_proc+0x1ca>
+  8041d1:	90                   	nop
+  8041d2:	eb 01                	jmp    8041d5 <manage_proc+0x1ca>
             return;
-  8041ba:	90                   	nop
+  8041d4:	90                   	nop
 }
-  8041bb:	c9                   	leave  
-  8041bc:	c3                   	ret    
+  8041d5:	c9                   	leave  
+  8041d6:	c3                   	ret    
 
-00000000008041bd <switch_proc_tss>:
+00000000008041d7 <switch_proc_tss>:
 
 void switch_proc_tss(int pnr)
 {
-  8041bd:	f3 0f 1e fa          	endbr64 
-  8041c1:	55                   	push   rbp
-  8041c2:	48 89 e5             	mov    rbp,rsp
-  8041c5:	48 83 ec 20          	sub    rsp,0x20
-  8041c9:	89 7d ec             	mov    DWORD PTR [rbp-0x14],edi
+  8041d7:	f3 0f 1e fa          	endbr64 
+  8041db:	55                   	push   rbp
+  8041dc:	48 89 e5             	mov    rbp,rsp
+  8041df:	48 83 ec 20          	sub    rsp,0x20
+  8041e3:	89 7d ec             	mov    DWORD PTR [rbp-0x14],edi
     int sel=_TSS_IND(pnr)*8;
-  8041cc:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
-  8041cf:	01 c0                	add    eax,eax
-  8041d1:	83 c0 05             	add    eax,0x5
-  8041d4:	c1 e0 03             	shl    eax,0x3
-  8041d7:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  8041e6:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+  8041e9:	01 c0                	add    eax,eax
+  8041eb:	83 c0 05             	add    eax,0x5
+  8041ee:	c1 e0 03             	shl    eax,0x3
+  8041f1:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
     cur_proc=pnr;
-  8041da:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
-  8041dd:	89 05 29 03 c1 ff    	mov    DWORD PTR [rip+0xffffffffffc10329],eax        # 41450c <cur_proc>
+  8041f4:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+  8041f7:	89 05 0f 03 c1 ff    	mov    DWORD PTR [rip+0xffffffffffc1030f],eax        # 41450c <cur_proc>
     switch_proc_asm(sel);
-  8041e3:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8041e6:	89 c7                	mov    edi,eax
-  8041e8:	e8 0d 61 00 00       	call   80a2fa <switch_proc_asm>
+  8041fd:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  804200:	89 c7                	mov    edi,eax
+  804202:	e8 13 61 00 00       	call   80a31a <switch_proc_asm>
 }
-  8041ed:	90                   	nop
-  8041ee:	c9                   	leave  
-  8041ef:	c3                   	ret    
+  804207:	90                   	nop
+  804208:	c9                   	leave  
+  804209:	c3                   	ret    
 
-00000000008041f0 <switch_proc>:
+000000000080420a <switch_proc>:
 void switch_proc(int pnr){
-  8041f0:	f3 0f 1e fa          	endbr64 
-  8041f4:	55                   	push   rbp
-  8041f5:	48 89 e5             	mov    rbp,rsp
-  8041f8:	48 81 ec 20 03 00 00 	sub    rsp,0x320
-  8041ff:	89 bd ec fc ff ff    	mov    DWORD PTR [rbp-0x314],edi
+  80420a:	f3 0f 1e fa          	endbr64 
+  80420e:	55                   	push   rbp
+  80420f:	48 89 e5             	mov    rbp,rsp
+  804212:	48 81 ec 20 03 00 00 	sub    rsp,0x320
+  804219:	89 bd ec fc ff ff    	mov    DWORD PTR [rbp-0x314],edi
     //printf("switching proc to %d\n",pnr);
     //printf("eip:%x\n",task[pnr].tss.eip);
     struct process p=task[pnr];
-  804205:	8b 85 ec fc ff ff    	mov    eax,DWORD PTR [rbp-0x314]
-  80420b:	48 63 d0             	movsxd rdx,eax
-  80420e:	48 89 d0             	mov    rax,rdx
-  804211:	48 01 c0             	add    rax,rax
-  804214:	48 01 d0             	add    rax,rdx
-  804217:	48 c1 e0 08          	shl    rax,0x8
-  80421b:	48 8d 90 a0 84 40 00 	lea    rdx,[rax+0x4084a0]
-  804222:	48 8d 85 f0 fc ff ff 	lea    rax,[rbp-0x310]
-  804229:	48 89 d6             	mov    rsi,rdx
-  80422c:	ba 60 00 00 00       	mov    edx,0x60
-  804231:	48 89 c7             	mov    rdi,rax
-  804234:	48 89 d1             	mov    rcx,rdx
-  804237:	f3 48 a5             	rep movs QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+  80421f:	8b 85 ec fc ff ff    	mov    eax,DWORD PTR [rbp-0x314]
+  804225:	48 63 d0             	movsxd rdx,eax
+  804228:	48 89 d0             	mov    rax,rdx
+  80422b:	48 01 c0             	add    rax,rax
+  80422e:	48 01 d0             	add    rax,rdx
+  804231:	48 c1 e0 08          	shl    rax,0x8
+  804235:	48 8d 90 a0 84 40 00 	lea    rdx,[rax+0x4084a0]
+  80423c:	48 8d 85 f0 fc ff ff 	lea    rax,[rbp-0x310]
+  804243:	48 89 d6             	mov    rsi,rdx
+  804246:	ba 60 00 00 00       	mov    edx,0x60
+  80424b:	48 89 c7             	mov    rdi,rax
+  80424e:	48 89 d1             	mov    rcx,rdx
+  804251:	f3 48 a5             	rep movs QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
     save_context(&task[cur_proc].tss);
-  80423a:	8b 05 cc 02 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc102cc]        # 41450c <cur_proc>
-  804240:	48 63 d0             	movsxd rdx,eax
-  804243:	48 89 d0             	mov    rax,rdx
-  804246:	48 01 c0             	add    rax,rax
-  804249:	48 01 d0             	add    rax,rdx
-  80424c:	48 c1 e0 08          	shl    rax,0x8
-  804250:	48 05 c0 01 00 00    	add    rax,0x1c0
-  804256:	48 05 a0 84 40 00    	add    rax,0x4084a0
-  80425c:	48 83 c0 04          	add    rax,0x4
-  804260:	48 89 c7             	mov    rdi,rax
-  804263:	e8 53 00 00 00       	call   8042bb <save_context>
+  804254:	8b 05 b2 02 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc102b2]        # 41450c <cur_proc>
+  80425a:	48 63 d0             	movsxd rdx,eax
+  80425d:	48 89 d0             	mov    rax,rdx
+  804260:	48 01 c0             	add    rax,rax
+  804263:	48 01 d0             	add    rax,rdx
+  804266:	48 c1 e0 08          	shl    rax,0x8
+  80426a:	48 05 c0 01 00 00    	add    rax,0x1c0
+  804270:	48 05 a0 84 40 00    	add    rax,0x4084a0
+  804276:	48 83 c0 04          	add    rax,0x4
+  80427a:	48 89 c7             	mov    rdi,rax
+  80427d:	e8 53 00 00 00       	call   8042d5 <save_context>
 //    //重新设置0号进程
 //    task[0].tss.eip=proc_zero;
 //    task[0].tss.cr3=PAGE_INDEX_ADDR;
 //    task[0].tss.eflags=0x202;
     cur_proc=pnr;
-  804268:	8b 85 ec fc ff ff    	mov    eax,DWORD PTR [rbp-0x314]
-  80426e:	89 05 98 02 c1 ff    	mov    DWORD PTR [rip+0xffffffffffc10298],eax        # 41450c <cur_proc>
+  804282:	8b 85 ec fc ff ff    	mov    eax,DWORD PTR [rbp-0x314]
+  804288:	89 05 7e 02 c1 ff    	mov    DWORD PTR [rip+0xffffffffffc1027e],eax        # 41450c <cur_proc>
     int sel=_TSS_IND(pnr)*8;
-  804274:	8b 85 ec fc ff ff    	mov    eax,DWORD PTR [rbp-0x314]
-  80427a:	01 c0                	add    eax,eax
-  80427c:	83 c0 05             	add    eax,0x5
-  80427f:	c1 e0 03             	shl    eax,0x3
-  804282:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  80428e:	8b 85 ec fc ff ff    	mov    eax,DWORD PTR [rbp-0x314]
+  804294:	01 c0                	add    eax,eax
+  804296:	83 c0 05             	add    eax,0x5
+  804299:	c1 e0 03             	shl    eax,0x3
+  80429c:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
     switch_to(NULL, &task[pnr].tss);
-  804285:	8b 85 ec fc ff ff    	mov    eax,DWORD PTR [rbp-0x314]
-  80428b:	48 63 d0             	movsxd rdx,eax
-  80428e:	48 89 d0             	mov    rax,rdx
-  804291:	48 01 c0             	add    rax,rax
-  804294:	48 01 d0             	add    rax,rdx
-  804297:	48 c1 e0 08          	shl    rax,0x8
-  80429b:	48 05 c0 01 00 00    	add    rax,0x1c0
-  8042a1:	48 05 a0 84 40 00    	add    rax,0x4084a0
-  8042a7:	48 83 c0 04          	add    rax,0x4
-  8042ab:	48 89 c6             	mov    rsi,rax
-  8042ae:	bf 00 00 00 00       	mov    edi,0x0
-  8042b3:	e8 fc 09 00 00       	call   804cb4 <switch_to>
+  80429f:	8b 85 ec fc ff ff    	mov    eax,DWORD PTR [rbp-0x314]
+  8042a5:	48 63 d0             	movsxd rdx,eax
+  8042a8:	48 89 d0             	mov    rax,rdx
+  8042ab:	48 01 c0             	add    rax,rax
+  8042ae:	48 01 d0             	add    rax,rdx
+  8042b1:	48 c1 e0 08          	shl    rax,0x8
+  8042b5:	48 05 c0 01 00 00    	add    rax,0x1c0
+  8042bb:	48 05 a0 84 40 00    	add    rax,0x4084a0
+  8042c1:	48 83 c0 04          	add    rax,0x4
+  8042c5:	48 89 c6             	mov    rsi,rax
+  8042c8:	bf 00 00 00 00       	mov    edi,0x0
+  8042cd:	e8 fc 09 00 00       	call   804cce <switch_to>
     //asm volatile("push %0":"=r"(task[pnr].tss.eip));
     //switch_proc_asm(pnr*8+0x8*3);
 }
-  8042b8:	90                   	nop
-  8042b9:	c9                   	leave  
-  8042ba:	c3                   	ret    
+  8042d2:	90                   	nop
+  8042d3:	c9                   	leave  
+  8042d4:	c3                   	ret    
 
-00000000008042bb <save_context>:
+00000000008042d5 <save_context>:
 void save_context(TSS *tss)
 {
-  8042bb:	f3 0f 1e fa          	endbr64 
-  8042bf:	55                   	push   rbp
-  8042c0:	48 89 e5             	mov    rbp,rsp
-  8042c3:	48 89 7d f8          	mov    QWORD PTR [rbp-0x8],rdi
+  8042d5:	f3 0f 1e fa          	endbr64 
+  8042d9:	55                   	push   rbp
+  8042da:	48 89 e5             	mov    rbp,rsp
+  8042dd:	48 89 7d f8          	mov    QWORD PTR [rbp-0x8],rdi
 //    tss->esi=scene_saver.esi;
 //    tss->edi=scene_saver.edi;
 //    tss->eflags=scene_saver.eflags;
 //    tss->esp=scene_saver.esp;
 //    tss->ebp=scene_saver.ebp;
 }
-  8042c7:	90                   	nop
-  8042c8:	5d                   	pop    rbp
-  8042c9:	c3                   	ret    
+  8042e1:	90                   	nop
+  8042e2:	5d                   	pop    rbp
+  8042e3:	c3                   	ret    
 
-00000000008042ca <palloc>:
+00000000008042e4 <palloc>:
     task[index].stat=READY;
     return index;
 } */
 //为指定进程申请新的内存，并返回这块内存的线性地址。
 void* palloc(int proc_index,int size)
 {
-  8042ca:	f3 0f 1e fa          	endbr64 
-  8042ce:	55                   	push   rbp
-  8042cf:	48 89 e5             	mov    rbp,rsp
-  8042d2:	48 83 ec 60          	sub    rsp,0x60
-  8042d6:	89 7d ac             	mov    DWORD PTR [rbp-0x54],edi
-  8042d9:	89 75 a8             	mov    DWORD PTR [rbp-0x58],esi
+  8042e4:	f3 0f 1e fa          	endbr64 
+  8042e8:	55                   	push   rbp
+  8042e9:	48 89 e5             	mov    rbp,rsp
+  8042ec:	48 83 ec 60          	sub    rsp,0x60
+  8042f0:	89 7d ac             	mov    DWORD PTR [rbp-0x54],edi
+  8042f3:	89 75 a8             	mov    DWORD PTR [rbp-0x58],esi
     int page_c=size/4096+size%4096?1:0;
-  8042dc:	8b 45 a8             	mov    eax,DWORD PTR [rbp-0x58]
-  8042df:	8d 90 ff 0f 00 00    	lea    edx,[rax+0xfff]
-  8042e5:	85 c0                	test   eax,eax
-  8042e7:	0f 48 c2             	cmovs  eax,edx
-  8042ea:	c1 f8 0c             	sar    eax,0xc
-  8042ed:	89 c1                	mov    ecx,eax
-  8042ef:	8b 45 a8             	mov    eax,DWORD PTR [rbp-0x58]
-  8042f2:	99                   	cdq    
-  8042f3:	c1 ea 14             	shr    edx,0x14
-  8042f6:	01 d0                	add    eax,edx
-  8042f8:	25 ff 0f 00 00       	and    eax,0xfff
-  8042fd:	29 d0                	sub    eax,edx
-  8042ff:	01 c8                	add    eax,ecx
-  804301:	85 c0                	test   eax,eax
-  804303:	0f 95 c0             	setne  al
-  804306:	0f b6 c0             	movzx  eax,al
-  804309:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  8042f6:	8b 45 a8             	mov    eax,DWORD PTR [rbp-0x58]
+  8042f9:	8d 90 ff 0f 00 00    	lea    edx,[rax+0xfff]
+  8042ff:	85 c0                	test   eax,eax
+  804301:	0f 48 c2             	cmovs  eax,edx
+  804304:	c1 f8 0c             	sar    eax,0xc
+  804307:	89 c1                	mov    ecx,eax
+  804309:	8b 45 a8             	mov    eax,DWORD PTR [rbp-0x58]
+  80430c:	99                   	cdq    
+  80430d:	c1 ea 14             	shr    edx,0x14
+  804310:	01 d0                	add    eax,edx
+  804312:	25 ff 0f 00 00       	and    eax,0xfff
+  804317:	29 d0                	sub    eax,edx
+  804319:	01 c8                	add    eax,ecx
+  80431b:	85 c0                	test   eax,eax
+  80431d:	0f 95 c0             	setne  al
+  804320:	0f b6 c0             	movzx  eax,al
+  804323:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
     int c=0;
-  80430c:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0
+  804326:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0
     void *ptr=NULL;
-  804313:	48 c7 45 d0 00 00 00 	mov    QWORD PTR [rbp-0x30],0x0
-  80431a:	00 
+  80432d:	48 c7 45 d0 00 00 00 	mov    QWORD PTR [rbp-0x30],0x0
+  804334:	00 
     page_item *pgind=NULL;//task[proc_index].tss.cr3;
-  80431b:	48 c7 45 f0 00 00 00 	mov    QWORD PTR [rbp-0x10],0x0
-  804322:	00 
+  804335:	48 c7 45 f0 00 00 00 	mov    QWORD PTR [rbp-0x10],0x0
+  80433c:	00 
     pgind++;
-  804323:	48 83 45 f0 08       	add    QWORD PTR [rbp-0x10],0x8
+  80433d:	48 83 45 f0 08       	add    QWORD PTR [rbp-0x10],0x8
     for(int i=1;i<1024;i++)
-  804328:	c7 45 ec 01 00 00 00 	mov    DWORD PTR [rbp-0x14],0x1
-  80432f:	e9 76 02 00 00       	jmp    8045aa <palloc+0x2e0>
+  804342:	c7 45 ec 01 00 00 00 	mov    DWORD PTR [rbp-0x14],0x1
+  804349:	e9 76 02 00 00       	jmp    8045c4 <palloc+0x2e0>
     {
         page_item* tblp=*pgind&0xfffff000;
-  804334:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  804338:	48 8b 00             	mov    rax,QWORD PTR [rax]
-  80433b:	25 00 f0 ff ff       	and    eax,0xfffff000
-  804340:	48 89 45 e0          	mov    QWORD PTR [rbp-0x20],rax
+  80434e:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  804352:	48 8b 00             	mov    rax,QWORD PTR [rax]
+  804355:	25 00 f0 ff ff       	and    eax,0xfffff000
+  80435a:	48 89 45 e0          	mov    QWORD PTR [rbp-0x20],rax
         for(int j=0;j<1024;j++)
-  804344:	c7 45 dc 00 00 00 00 	mov    DWORD PTR [rbp-0x24],0x0
-  80434b:	e9 44 02 00 00       	jmp    804594 <palloc+0x2ca>
+  80435e:	c7 45 dc 00 00 00 00 	mov    DWORD PTR [rbp-0x24],0x0
+  804365:	e9 44 02 00 00       	jmp    8045ae <palloc+0x2ca>
         {
             int v=*tblp&PAGE_PRESENT;
-  804350:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  804354:	48 8b 00             	mov    rax,QWORD PTR [rax]
-  804357:	83 e0 01             	and    eax,0x1
-  80435a:	89 45 cc             	mov    DWORD PTR [rbp-0x34],eax
+  80436a:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  80436e:	48 8b 00             	mov    rax,QWORD PTR [rax]
+  804371:	83 e0 01             	and    eax,0x1
+  804374:	89 45 cc             	mov    DWORD PTR [rbp-0x34],eax
             if(!v)
-  80435d:	83 7d cc 00          	cmp    DWORD PTR [rbp-0x34],0x0
-  804361:	0f 85 24 02 00 00    	jne    80458b <palloc+0x2c1>
+  804377:	83 7d cc 00          	cmp    DWORD PTR [rbp-0x34],0x0
+  80437b:	0f 85 24 02 00 00    	jne    8045a5 <palloc+0x2c1>
             {
                 int new_pg=req_a_page();
-  804367:	b8 00 00 00 00       	mov    eax,0x0
-  80436c:	e8 e8 d0 ff ff       	call   801459 <req_a_page>
-  804371:	89 45 c8             	mov    DWORD PTR [rbp-0x38],eax
+  804381:	b8 00 00 00 00       	mov    eax,0x0
+  804386:	e8 ce d0 ff ff       	call   801459 <req_a_page>
+  80438b:	89 45 c8             	mov    DWORD PTR [rbp-0x38],eax
                 if(new_pg==-1)
-  804374:	83 7d c8 ff          	cmp    DWORD PTR [rbp-0x38],0xffffffff
-  804378:	0f 85 dc 00 00 00    	jne    80445a <palloc+0x190>
+  80438e:	83 7d c8 ff          	cmp    DWORD PTR [rbp-0x38],0xffffffff
+  804392:	0f 85 dc 00 00 00    	jne    804474 <palloc+0x190>
                 {
                     //修改ldt,增加数据空间
                     unsigned int size=task[proc_index].ldt[2].limit_lo16;
-  80437e:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
-  804381:	48 63 d0             	movsxd rdx,eax
-  804384:	48 89 d0             	mov    rax,rdx
-  804387:	48 01 c0             	add    rax,rax
-  80438a:	48 01 d0             	add    rax,rdx
-  80438d:	48 c1 e0 08          	shl    rax,0x8
-  804391:	48 05 f4 84 40 00    	add    rax,0x4084f4
-  804397:	0f b7 00             	movzx  eax,WORD PTR [rax]
-  80439a:	0f b7 c0             	movzx  eax,ax
-  80439d:	89 45 b4             	mov    DWORD PTR [rbp-0x4c],eax
+  804398:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
+  80439b:	48 63 d0             	movsxd rdx,eax
+  80439e:	48 89 d0             	mov    rax,rdx
+  8043a1:	48 01 c0             	add    rax,rax
+  8043a4:	48 01 d0             	add    rax,rdx
+  8043a7:	48 c1 e0 08          	shl    rax,0x8
+  8043ab:	48 05 f4 84 40 00    	add    rax,0x4084f4
+  8043b1:	0f b7 00             	movzx  eax,WORD PTR [rax]
+  8043b4:	0f b7 c0             	movzx  eax,ax
+  8043b7:	89 45 b4             	mov    DWORD PTR [rbp-0x4c],eax
                     size+=(task[proc_index].ldt[2].attr&0xf)<<16;
-  8043a0:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
-  8043a3:	48 63 d0             	movsxd rdx,eax
-  8043a6:	48 89 d0             	mov    rax,rdx
-  8043a9:	48 01 c0             	add    rax,rax
-  8043ac:	48 01 d0             	add    rax,rdx
-  8043af:	48 c1 e0 08          	shl    rax,0x8
-  8043b3:	48 05 f0 84 40 00    	add    rax,0x4084f0
-  8043b9:	0f b7 40 09          	movzx  eax,WORD PTR [rax+0x9]
-  8043bd:	0f b7 c0             	movzx  eax,ax
-  8043c0:	c1 e0 10             	shl    eax,0x10
-  8043c3:	25 00 00 0f 00       	and    eax,0xf0000
-  8043c8:	01 45 b4             	add    DWORD PTR [rbp-0x4c],eax
+  8043ba:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
+  8043bd:	48 63 d0             	movsxd rdx,eax
+  8043c0:	48 89 d0             	mov    rax,rdx
+  8043c3:	48 01 c0             	add    rax,rax
+  8043c6:	48 01 d0             	add    rax,rdx
+  8043c9:	48 c1 e0 08          	shl    rax,0x8
+  8043cd:	48 05 f0 84 40 00    	add    rax,0x4084f0
+  8043d3:	0f b7 40 09          	movzx  eax,WORD PTR [rax+0x9]
+  8043d7:	0f b7 c0             	movzx  eax,ax
+  8043da:	c1 e0 10             	shl    eax,0x10
+  8043dd:	25 00 00 0f 00       	and    eax,0xf0000
+  8043e2:	01 45 b4             	add    DWORD PTR [rbp-0x4c],eax
                     size+=c;
-  8043cb:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  8043ce:	01 45 b4             	add    DWORD PTR [rbp-0x4c],eax
+  8043e5:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  8043e8:	01 45 b4             	add    DWORD PTR [rbp-0x4c],eax
                     task[proc_index].ldt[2].limit_lo16=size&0xffff;
-  8043d1:	8b 45 b4             	mov    eax,DWORD PTR [rbp-0x4c]
-  8043d4:	89 c1                	mov    ecx,eax
-  8043d6:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
-  8043d9:	48 63 d0             	movsxd rdx,eax
-  8043dc:	48 89 d0             	mov    rax,rdx
-  8043df:	48 01 c0             	add    rax,rax
-  8043e2:	48 01 d0             	add    rax,rdx
-  8043e5:	48 c1 e0 08          	shl    rax,0x8
-  8043e9:	48 05 f4 84 40 00    	add    rax,0x4084f4
-  8043ef:	66 89 08             	mov    WORD PTR [rax],cx
+  8043eb:	8b 45 b4             	mov    eax,DWORD PTR [rbp-0x4c]
+  8043ee:	89 c1                	mov    ecx,eax
+  8043f0:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
+  8043f3:	48 63 d0             	movsxd rdx,eax
+  8043f6:	48 89 d0             	mov    rax,rdx
+  8043f9:	48 01 c0             	add    rax,rax
+  8043fc:	48 01 d0             	add    rax,rdx
+  8043ff:	48 c1 e0 08          	shl    rax,0x8
+  804403:	48 05 f4 84 40 00    	add    rax,0x4084f4
+  804409:	66 89 08             	mov    WORD PTR [rax],cx
                     int tmp_attr=task[proc_index].ldt[2].attr;
-  8043f2:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
-  8043f5:	48 63 d0             	movsxd rdx,eax
-  8043f8:	48 89 d0             	mov    rax,rdx
-  8043fb:	48 01 c0             	add    rax,rax
-  8043fe:	48 01 d0             	add    rax,rdx
-  804401:	48 c1 e0 08          	shl    rax,0x8
-  804405:	48 05 f0 84 40 00    	add    rax,0x4084f0
-  80440b:	0f b7 40 09          	movzx  eax,WORD PTR [rax+0x9]
-  80440f:	0f b7 c0             	movzx  eax,ax
-  804412:	89 45 b0             	mov    DWORD PTR [rbp-0x50],eax
-                    tmp_attr&=0xfff0;
-  804415:	81 65 b0 f0 ff 00 00 	and    DWORD PTR [rbp-0x50],0xfff0
-                    tmp_attr+=(size>>16)&0xf;
-  80441c:	8b 45 b4             	mov    eax,DWORD PTR [rbp-0x4c]
-  80441f:	c1 e8 10             	shr    eax,0x10
-  804422:	83 e0 0f             	and    eax,0xf
-  804425:	89 c2                	mov    edx,eax
-  804427:	8b 45 b0             	mov    eax,DWORD PTR [rbp-0x50]
-  80442a:	01 d0                	add    eax,edx
+  80440c:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
+  80440f:	48 63 d0             	movsxd rdx,eax
+  804412:	48 89 d0             	mov    rax,rdx
+  804415:	48 01 c0             	add    rax,rax
+  804418:	48 01 d0             	add    rax,rdx
+  80441b:	48 c1 e0 08          	shl    rax,0x8
+  80441f:	48 05 f0 84 40 00    	add    rax,0x4084f0
+  804425:	0f b7 40 09          	movzx  eax,WORD PTR [rax+0x9]
+  804429:	0f b7 c0             	movzx  eax,ax
   80442c:	89 45 b0             	mov    DWORD PTR [rbp-0x50],eax
+                    tmp_attr&=0xfff0;
+  80442f:	81 65 b0 f0 ff 00 00 	and    DWORD PTR [rbp-0x50],0xfff0
+                    tmp_attr+=(size>>16)&0xf;
+  804436:	8b 45 b4             	mov    eax,DWORD PTR [rbp-0x4c]
+  804439:	c1 e8 10             	shr    eax,0x10
+  80443c:	83 e0 0f             	and    eax,0xf
+  80443f:	89 c2                	mov    edx,eax
+  804441:	8b 45 b0             	mov    eax,DWORD PTR [rbp-0x50]
+  804444:	01 d0                	add    eax,edx
+  804446:	89 45 b0             	mov    DWORD PTR [rbp-0x50],eax
                     task[proc_index].ldt[2].attr=tmp_attr;
-  80442f:	8b 45 b0             	mov    eax,DWORD PTR [rbp-0x50]
-  804432:	89 c1                	mov    ecx,eax
-  804434:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
-  804437:	48 63 d0             	movsxd rdx,eax
-  80443a:	48 89 d0             	mov    rax,rdx
-  80443d:	48 01 c0             	add    rax,rax
-  804440:	48 01 d0             	add    rax,rdx
-  804443:	48 c1 e0 08          	shl    rax,0x8
-  804447:	48 05 f0 84 40 00    	add    rax,0x4084f0
-  80444d:	66 89 48 09          	mov    WORD PTR [rax+0x9],cx
+  804449:	8b 45 b0             	mov    eax,DWORD PTR [rbp-0x50]
+  80444c:	89 c1                	mov    ecx,eax
+  80444e:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
+  804451:	48 63 d0             	movsxd rdx,eax
+  804454:	48 89 d0             	mov    rax,rdx
+  804457:	48 01 c0             	add    rax,rax
+  80445a:	48 01 d0             	add    rax,rdx
+  80445d:	48 c1 e0 08          	shl    rax,0x8
+  804461:	48 05 f0 84 40 00    	add    rax,0x4084f0
+  804467:	66 89 48 09          	mov    WORD PTR [rax+0x9],cx
                     return ptr;//失败了，只能申请一部分的内存或者返回NULL
-  804451:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
-  804455:	e9 62 01 00 00       	jmp    8045bc <palloc+0x2f2>
+  80446b:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
+  80446f:	e9 62 01 00 00       	jmp    8045d6 <palloc+0x2f2>
                 }
                 int addr=get_phyaddr(new_pg);
-  80445a:	8b 45 c8             	mov    eax,DWORD PTR [rbp-0x38]
-  80445d:	89 c7                	mov    edi,eax
-  80445f:	e8 a3 d1 ff ff       	call   801607 <get_phyaddr>
-  804464:	89 45 c4             	mov    DWORD PTR [rbp-0x3c],eax
+  804474:	8b 45 c8             	mov    eax,DWORD PTR [rbp-0x38]
+  804477:	89 c7                	mov    edi,eax
+  804479:	e8 89 d1 ff ff       	call   801607 <get_phyaddr>
+  80447e:	89 45 c4             	mov    DWORD PTR [rbp-0x3c],eax
                 set_page_item(tblp,addr,PAGE_PRESENT|\
-  804467:	8b 4d c4             	mov    ecx,DWORD PTR [rbp-0x3c]
-  80446a:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  80446e:	ba 07 00 00 00       	mov    edx,0x7
-  804473:	89 ce                	mov    esi,ecx
-  804475:	48 89 c7             	mov    rdi,rax
-  804478:	e8 9d d1 ff ff       	call   80161a <set_page_item>
+  804481:	8b 4d c4             	mov    ecx,DWORD PTR [rbp-0x3c]
+  804484:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  804488:	ba 07 00 00 00       	mov    edx,0x7
+  80448d:	89 ce                	mov    esi,ecx
+  80448f:	48 89 c7             	mov    rdi,rax
+  804492:	e8 83 d1 ff ff       	call   80161a <set_page_item>
                 PAGE_RWX|PAGE_FOR_ALL);
                 int laddr=i*0x400000+j*0x1000;//线性地址
-  80447d:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
-  804480:	c1 e0 0a             	shl    eax,0xa
-  804483:	89 c2                	mov    edx,eax
-  804485:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
-  804488:	01 d0                	add    eax,edx
-  80448a:	c1 e0 0c             	shl    eax,0xc
-  80448d:	89 45 c0             	mov    DWORD PTR [rbp-0x40],eax
+  804497:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+  80449a:	c1 e0 0a             	shl    eax,0xa
+  80449d:	89 c2                	mov    edx,eax
+  80449f:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
+  8044a2:	01 d0                	add    eax,edx
+  8044a4:	c1 e0 0c             	shl    eax,0xc
+  8044a7:	89 45 c0             	mov    DWORD PTR [rbp-0x40],eax
                 if(ptr==NULL)
-  804490:	48 83 7d d0 00       	cmp    QWORD PTR [rbp-0x30],0x0
-  804495:	75 09                	jne    8044a0 <palloc+0x1d6>
+  8044aa:	48 83 7d d0 00       	cmp    QWORD PTR [rbp-0x30],0x0
+  8044af:	75 09                	jne    8044ba <palloc+0x1d6>
                 {
                    // ptr=laddr;
                     palloc_paddr=addr;
-  804497:	8b 45 c4             	mov    eax,DWORD PTR [rbp-0x3c]
-  80449a:	89 05 74 00 c1 ff    	mov    DWORD PTR [rip+0xffffffffffc10074],eax        # 414514 <palloc_paddr>
+  8044b1:	8b 45 c4             	mov    eax,DWORD PTR [rbp-0x3c]
+  8044b4:	89 05 5a 00 c1 ff    	mov    DWORD PTR [rip+0xffffffffffc1005a],eax        # 414514 <palloc_paddr>
                 }
                 page_c--;
-  8044a0:	83 6d fc 01          	sub    DWORD PTR [rbp-0x4],0x1
+  8044ba:	83 6d fc 01          	sub    DWORD PTR [rbp-0x4],0x1
                 c++;
-  8044a4:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1
+  8044be:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1
                 if(page_c==0)
-  8044a8:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
-  8044ac:	0f 85 d9 00 00 00    	jne    80458b <palloc+0x2c1>
+  8044c2:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
+  8044c6:	0f 85 d9 00 00 00    	jne    8045a5 <palloc+0x2c1>
                 {
                     //修改ldt,增加数据空间
                     unsigned int size=task[proc_index].ldt[2].limit_lo16;
-  8044b2:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
-  8044b5:	48 63 d0             	movsxd rdx,eax
-  8044b8:	48 89 d0             	mov    rax,rdx
-  8044bb:	48 01 c0             	add    rax,rax
-  8044be:	48 01 d0             	add    rax,rdx
-  8044c1:	48 c1 e0 08          	shl    rax,0x8
-  8044c5:	48 05 f4 84 40 00    	add    rax,0x4084f4
-  8044cb:	0f b7 00             	movzx  eax,WORD PTR [rax]
-  8044ce:	0f b7 c0             	movzx  eax,ax
-  8044d1:	89 45 bc             	mov    DWORD PTR [rbp-0x44],eax
+  8044cc:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
+  8044cf:	48 63 d0             	movsxd rdx,eax
+  8044d2:	48 89 d0             	mov    rax,rdx
+  8044d5:	48 01 c0             	add    rax,rax
+  8044d8:	48 01 d0             	add    rax,rdx
+  8044db:	48 c1 e0 08          	shl    rax,0x8
+  8044df:	48 05 f4 84 40 00    	add    rax,0x4084f4
+  8044e5:	0f b7 00             	movzx  eax,WORD PTR [rax]
+  8044e8:	0f b7 c0             	movzx  eax,ax
+  8044eb:	89 45 bc             	mov    DWORD PTR [rbp-0x44],eax
                     size+=(task[proc_index].ldt[2].attr&0xf)<<16;
-  8044d4:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
-  8044d7:	48 63 d0             	movsxd rdx,eax
-  8044da:	48 89 d0             	mov    rax,rdx
-  8044dd:	48 01 c0             	add    rax,rax
-  8044e0:	48 01 d0             	add    rax,rdx
-  8044e3:	48 c1 e0 08          	shl    rax,0x8
-  8044e7:	48 05 f0 84 40 00    	add    rax,0x4084f0
-  8044ed:	0f b7 40 09          	movzx  eax,WORD PTR [rax+0x9]
-  8044f1:	0f b7 c0             	movzx  eax,ax
-  8044f4:	c1 e0 10             	shl    eax,0x10
-  8044f7:	25 00 00 0f 00       	and    eax,0xf0000
-  8044fc:	01 45 bc             	add    DWORD PTR [rbp-0x44],eax
+  8044ee:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
+  8044f1:	48 63 d0             	movsxd rdx,eax
+  8044f4:	48 89 d0             	mov    rax,rdx
+  8044f7:	48 01 c0             	add    rax,rax
+  8044fa:	48 01 d0             	add    rax,rdx
+  8044fd:	48 c1 e0 08          	shl    rax,0x8
+  804501:	48 05 f0 84 40 00    	add    rax,0x4084f0
+  804507:	0f b7 40 09          	movzx  eax,WORD PTR [rax+0x9]
+  80450b:	0f b7 c0             	movzx  eax,ax
+  80450e:	c1 e0 10             	shl    eax,0x10
+  804511:	25 00 00 0f 00       	and    eax,0xf0000
+  804516:	01 45 bc             	add    DWORD PTR [rbp-0x44],eax
                     size+=c;
-  8044ff:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  804502:	01 45 bc             	add    DWORD PTR [rbp-0x44],eax
+  804519:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  80451c:	01 45 bc             	add    DWORD PTR [rbp-0x44],eax
                     task[proc_index].ldt[2].limit_lo16=size&0xffff;
-  804505:	8b 45 bc             	mov    eax,DWORD PTR [rbp-0x44]
-  804508:	89 c1                	mov    ecx,eax
-  80450a:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
-  80450d:	48 63 d0             	movsxd rdx,eax
-  804510:	48 89 d0             	mov    rax,rdx
-  804513:	48 01 c0             	add    rax,rax
-  804516:	48 01 d0             	add    rax,rdx
-  804519:	48 c1 e0 08          	shl    rax,0x8
-  80451d:	48 05 f4 84 40 00    	add    rax,0x4084f4
-  804523:	66 89 08             	mov    WORD PTR [rax],cx
+  80451f:	8b 45 bc             	mov    eax,DWORD PTR [rbp-0x44]
+  804522:	89 c1                	mov    ecx,eax
+  804524:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
+  804527:	48 63 d0             	movsxd rdx,eax
+  80452a:	48 89 d0             	mov    rax,rdx
+  80452d:	48 01 c0             	add    rax,rax
+  804530:	48 01 d0             	add    rax,rdx
+  804533:	48 c1 e0 08          	shl    rax,0x8
+  804537:	48 05 f4 84 40 00    	add    rax,0x4084f4
+  80453d:	66 89 08             	mov    WORD PTR [rax],cx
                     int tmp_attr=task[proc_index].ldt[2].attr;
-  804526:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
-  804529:	48 63 d0             	movsxd rdx,eax
-  80452c:	48 89 d0             	mov    rax,rdx
-  80452f:	48 01 c0             	add    rax,rax
-  804532:	48 01 d0             	add    rax,rdx
-  804535:	48 c1 e0 08          	shl    rax,0x8
-  804539:	48 05 f0 84 40 00    	add    rax,0x4084f0
-  80453f:	0f b7 40 09          	movzx  eax,WORD PTR [rax+0x9]
-  804543:	0f b7 c0             	movzx  eax,ax
-  804546:	89 45 b8             	mov    DWORD PTR [rbp-0x48],eax
-                    tmp_attr&=0xfff0;
-  804549:	81 65 b8 f0 ff 00 00 	and    DWORD PTR [rbp-0x48],0xfff0
-                    tmp_attr+=(size>>16)&0xf;
-  804550:	8b 45 bc             	mov    eax,DWORD PTR [rbp-0x44]
-  804553:	c1 e8 10             	shr    eax,0x10
-  804556:	83 e0 0f             	and    eax,0xf
-  804559:	89 c2                	mov    edx,eax
-  80455b:	8b 45 b8             	mov    eax,DWORD PTR [rbp-0x48]
-  80455e:	01 d0                	add    eax,edx
+  804540:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
+  804543:	48 63 d0             	movsxd rdx,eax
+  804546:	48 89 d0             	mov    rax,rdx
+  804549:	48 01 c0             	add    rax,rax
+  80454c:	48 01 d0             	add    rax,rdx
+  80454f:	48 c1 e0 08          	shl    rax,0x8
+  804553:	48 05 f0 84 40 00    	add    rax,0x4084f0
+  804559:	0f b7 40 09          	movzx  eax,WORD PTR [rax+0x9]
+  80455d:	0f b7 c0             	movzx  eax,ax
   804560:	89 45 b8             	mov    DWORD PTR [rbp-0x48],eax
+                    tmp_attr&=0xfff0;
+  804563:	81 65 b8 f0 ff 00 00 	and    DWORD PTR [rbp-0x48],0xfff0
+                    tmp_attr+=(size>>16)&0xf;
+  80456a:	8b 45 bc             	mov    eax,DWORD PTR [rbp-0x44]
+  80456d:	c1 e8 10             	shr    eax,0x10
+  804570:	83 e0 0f             	and    eax,0xf
+  804573:	89 c2                	mov    edx,eax
+  804575:	8b 45 b8             	mov    eax,DWORD PTR [rbp-0x48]
+  804578:	01 d0                	add    eax,edx
+  80457a:	89 45 b8             	mov    DWORD PTR [rbp-0x48],eax
                     task[proc_index].ldt[2].attr=tmp_attr;
-  804563:	8b 45 b8             	mov    eax,DWORD PTR [rbp-0x48]
-  804566:	89 c1                	mov    ecx,eax
-  804568:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
-  80456b:	48 63 d0             	movsxd rdx,eax
-  80456e:	48 89 d0             	mov    rax,rdx
-  804571:	48 01 c0             	add    rax,rax
-  804574:	48 01 d0             	add    rax,rdx
-  804577:	48 c1 e0 08          	shl    rax,0x8
-  80457b:	48 05 f0 84 40 00    	add    rax,0x4084f0
-  804581:	66 89 48 09          	mov    WORD PTR [rax+0x9],cx
+  80457d:	8b 45 b8             	mov    eax,DWORD PTR [rbp-0x48]
+  804580:	89 c1                	mov    ecx,eax
+  804582:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
+  804585:	48 63 d0             	movsxd rdx,eax
+  804588:	48 89 d0             	mov    rax,rdx
+  80458b:	48 01 c0             	add    rax,rax
+  80458e:	48 01 d0             	add    rax,rdx
+  804591:	48 c1 e0 08          	shl    rax,0x8
+  804595:	48 05 f0 84 40 00    	add    rax,0x4084f0
+  80459b:	66 89 48 09          	mov    WORD PTR [rax+0x9],cx
                     return ptr;
-  804585:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
-  804589:	eb 31                	jmp    8045bc <palloc+0x2f2>
+  80459f:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
+  8045a3:	eb 31                	jmp    8045d6 <palloc+0x2f2>
                 }
             }
             tblp++;
-  80458b:	48 83 45 e0 08       	add    QWORD PTR [rbp-0x20],0x8
+  8045a5:	48 83 45 e0 08       	add    QWORD PTR [rbp-0x20],0x8
         for(int j=0;j<1024;j++)
-  804590:	83 45 dc 01          	add    DWORD PTR [rbp-0x24],0x1
-  804594:	81 7d dc ff 03 00 00 	cmp    DWORD PTR [rbp-0x24],0x3ff
-  80459b:	0f 8e af fd ff ff    	jle    804350 <palloc+0x86>
+  8045aa:	83 45 dc 01          	add    DWORD PTR [rbp-0x24],0x1
+  8045ae:	81 7d dc ff 03 00 00 	cmp    DWORD PTR [rbp-0x24],0x3ff
+  8045b5:	0f 8e af fd ff ff    	jle    80436a <palloc+0x86>
         }
         pgind++;
-  8045a1:	48 83 45 f0 08       	add    QWORD PTR [rbp-0x10],0x8
+  8045bb:	48 83 45 f0 08       	add    QWORD PTR [rbp-0x10],0x8
     for(int i=1;i<1024;i++)
-  8045a6:	83 45 ec 01          	add    DWORD PTR [rbp-0x14],0x1
-  8045aa:	81 7d ec ff 03 00 00 	cmp    DWORD PTR [rbp-0x14],0x3ff
-  8045b1:	0f 8e 7d fd ff ff    	jle    804334 <palloc+0x6a>
+  8045c0:	83 45 ec 01          	add    DWORD PTR [rbp-0x14],0x1
+  8045c4:	81 7d ec ff 03 00 00 	cmp    DWORD PTR [rbp-0x14],0x3ff
+  8045cb:	0f 8e 7d fd ff ff    	jle    80434e <palloc+0x6a>
     }
     return NULL;
-  8045b7:	b8 00 00 00 00       	mov    eax,0x0
+  8045d1:	b8 00 00 00 00       	mov    eax,0x0
 }
-  8045bc:	c9                   	leave  
-  8045bd:	c3                   	ret    
+  8045d6:	c9                   	leave  
+  8045d7:	c3                   	ret    
 
-00000000008045be <malloc>:
+00000000008045d8 <malloc>:
 //为当前进程申请新的内存，并返回这块内存的线性地址。
 void* malloc(int size)
 {
-  8045be:	f3 0f 1e fa          	endbr64 
-  8045c2:	55                   	push   rbp
-  8045c3:	48 89 e5             	mov    rbp,rsp
-  8045c6:	48 83 ec 10          	sub    rsp,0x10
-  8045ca:	89 7d fc             	mov    DWORD PTR [rbp-0x4],edi
+  8045d8:	f3 0f 1e fa          	endbr64 
+  8045dc:	55                   	push   rbp
+  8045dd:	48 89 e5             	mov    rbp,rsp
+  8045e0:	48 83 ec 10          	sub    rsp,0x10
+  8045e4:	89 7d fc             	mov    DWORD PTR [rbp-0x4],edi
     return palloc(cur_proc,size);
-  8045cd:	8b 05 39 ff c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0ff39]        # 41450c <cur_proc>
-  8045d3:	8b 55 fc             	mov    edx,DWORD PTR [rbp-0x4]
-  8045d6:	89 d6                	mov    esi,edx
-  8045d8:	89 c7                	mov    edi,eax
-  8045da:	e8 eb fc ff ff       	call   8042ca <palloc>
+  8045e7:	8b 05 1f ff c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0ff1f]        # 41450c <cur_proc>
+  8045ed:	8b 55 fc             	mov    edx,DWORD PTR [rbp-0x4]
+  8045f0:	89 d6                	mov    esi,edx
+  8045f2:	89 c7                	mov    edi,eax
+  8045f4:	e8 eb fc ff ff       	call   8042e4 <palloc>
 }
-  8045df:	c9                   	leave  
-  8045e0:	c3                   	ret    
+  8045f9:	c9                   	leave  
+  8045fa:	c3                   	ret    
 
-00000000008045e1 <proc_end>:
+00000000008045fb <proc_end>:
 void proc_end()
 {
-  8045e1:	f3 0f 1e fa          	endbr64 
-  8045e5:	55                   	push   rbp
-  8045e6:	48 89 e5             	mov    rbp,rsp
-  8045e9:	48 83 ec 10          	sub    rsp,0x10
+  8045fb:	f3 0f 1e fa          	endbr64 
+  8045ff:	55                   	push   rbp
+  804600:	48 89 e5             	mov    rbp,rsp
+  804603:	48 83 ec 10          	sub    rsp,0x10
     int ret;
     asm volatile("mov %%eax,%0":"=m"(ret));
-  8045ed:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  804607:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
     //printf("proc #%d ended with retv %d.\n",cur_proc,ret);
     //切换堆栈
     //asm volatile("mov %0,%%rsp"::"r"(task[0].tss.esp));
     del_proc(cur_proc);
-  8045f0:	8b 05 16 ff c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0ff16]        # 41450c <cur_proc>
-  8045f6:	89 c7                	mov    edi,eax
-  8045f8:	e8 90 00 00 00       	call   80468d <del_proc>
+  80460a:	8b 05 fc fe c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0fefc]        # 41450c <cur_proc>
+  804610:	89 c7                	mov    edi,eax
+  804612:	e8 90 00 00 00       	call   8046a7 <del_proc>
     if(task[cur_proc].parent_pid!=-1){
-  8045fd:	8b 05 09 ff c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0ff09]        # 41450c <cur_proc>
-  804603:	48 63 d0             	movsxd rdx,eax
-  804606:	48 89 d0             	mov    rax,rdx
-  804609:	48 01 c0             	add    rax,rax
-  80460c:	48 01 d0             	add    rax,rdx
-  80460f:	48 c1 e0 08          	shl    rax,0x8
-  804613:	48 05 28 85 40 00    	add    rax,0x408528
-  804619:	8b 00                	mov    eax,DWORD PTR [rax]
-  80461b:	83 f8 ff             	cmp    eax,0xffffffff
-  80461e:	74 60                	je     804680 <proc_end+0x9f>
+  804617:	8b 05 ef fe c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0feef]        # 41450c <cur_proc>
+  80461d:	48 63 d0             	movsxd rdx,eax
+  804620:	48 89 d0             	mov    rax,rdx
+  804623:	48 01 c0             	add    rax,rax
+  804626:	48 01 d0             	add    rax,rdx
+  804629:	48 c1 e0 08          	shl    rax,0x8
+  80462d:	48 05 28 85 40 00    	add    rax,0x408528
+  804633:	8b 00                	mov    eax,DWORD PTR [rax]
+  804635:	83 f8 ff             	cmp    eax,0xffffffff
+  804638:	74 60                	je     80469a <proc_end+0x9f>
         task[task[cur_proc].parent_pid].stat=READY;
-  804620:	8b 05 e6 fe c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0fee6]        # 41450c <cur_proc>
-  804626:	48 63 d0             	movsxd rdx,eax
-  804629:	48 89 d0             	mov    rax,rdx
-  80462c:	48 01 c0             	add    rax,rax
-  80462f:	48 01 d0             	add    rax,rdx
-  804632:	48 c1 e0 08          	shl    rax,0x8
-  804636:	48 05 28 85 40 00    	add    rax,0x408528
-  80463c:	8b 00                	mov    eax,DWORD PTR [rax]
-  80463e:	89 c2                	mov    edx,eax
-  804640:	48 89 d0             	mov    rax,rdx
-  804643:	48 01 c0             	add    rax,rax
-  804646:	48 01 d0             	add    rax,rdx
-  804649:	48 c1 e0 08          	shl    rax,0x8
-  80464d:	48 05 a4 84 40 00    	add    rax,0x4084a4
-  804653:	c7 00 01 00 00 00    	mov    DWORD PTR [rax],0x1
+  80463a:	8b 05 cc fe c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0fecc]        # 41450c <cur_proc>
+  804640:	48 63 d0             	movsxd rdx,eax
+  804643:	48 89 d0             	mov    rax,rdx
+  804646:	48 01 c0             	add    rax,rax
+  804649:	48 01 d0             	add    rax,rdx
+  80464c:	48 c1 e0 08          	shl    rax,0x8
+  804650:	48 05 28 85 40 00    	add    rax,0x408528
+  804656:	8b 00                	mov    eax,DWORD PTR [rax]
+  804658:	89 c2                	mov    edx,eax
+  80465a:	48 89 d0             	mov    rax,rdx
+  80465d:	48 01 c0             	add    rax,rax
+  804660:	48 01 d0             	add    rax,rdx
+  804663:	48 c1 e0 08          	shl    rax,0x8
+  804667:	48 05 a4 84 40 00    	add    rax,0x4084a4
+  80466d:	c7 00 01 00 00 00    	mov    DWORD PTR [rax],0x1
         switch_proc_tss(task[cur_proc].parent_pid);
-  804659:	8b 05 ad fe c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0fead]        # 41450c <cur_proc>
-  80465f:	48 63 d0             	movsxd rdx,eax
-  804662:	48 89 d0             	mov    rax,rdx
-  804665:	48 01 c0             	add    rax,rax
-  804668:	48 01 d0             	add    rax,rdx
-  80466b:	48 c1 e0 08          	shl    rax,0x8
-  80466f:	48 05 28 85 40 00    	add    rax,0x408528
-  804675:	8b 00                	mov    eax,DWORD PTR [rax]
-  804677:	89 c7                	mov    edi,eax
-  804679:	e8 3f fb ff ff       	call   8041bd <switch_proc_tss>
+  804673:	8b 05 93 fe c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0fe93]        # 41450c <cur_proc>
+  804679:	48 63 d0             	movsxd rdx,eax
+  80467c:	48 89 d0             	mov    rax,rdx
+  80467f:	48 01 c0             	add    rax,rax
+  804682:	48 01 d0             	add    rax,rdx
+  804685:	48 c1 e0 08          	shl    rax,0x8
+  804689:	48 05 28 85 40 00    	add    rax,0x408528
+  80468f:	8b 00                	mov    eax,DWORD PTR [rax]
+  804691:	89 c7                	mov    edi,eax
+  804693:	e8 3f fb ff ff       	call   8041d7 <switch_proc_tss>
     }
     else
         switch_proc_tss(0);
     //syscall(SYSCALL_DEL_PROC,cur_proc,0,0,0,0);
 }
-  80467e:	eb 0a                	jmp    80468a <proc_end+0xa9>
+  804698:	eb 0a                	jmp    8046a4 <proc_end+0xa9>
         switch_proc_tss(0);
-  804680:	bf 00 00 00 00       	mov    edi,0x0
-  804685:	e8 33 fb ff ff       	call   8041bd <switch_proc_tss>
+  80469a:	bf 00 00 00 00       	mov    edi,0x0
+  80469f:	e8 33 fb ff ff       	call   8041d7 <switch_proc_tss>
 }
-  80468a:	90                   	nop
-  80468b:	c9                   	leave  
-  80468c:	c3                   	ret    
+  8046a4:	90                   	nop
+  8046a5:	c9                   	leave  
+  8046a6:	c3                   	ret    
 
-000000000080468d <del_proc>:
+00000000008046a7 <del_proc>:
 void del_proc(int pnr)
 {
-  80468d:	f3 0f 1e fa          	endbr64 
-  804691:	55                   	push   rbp
-  804692:	48 89 e5             	mov    rbp,rsp
-  804695:	48 83 ec 30          	sub    rsp,0x30
-  804699:	89 7d dc             	mov    DWORD PTR [rbp-0x24],edi
+  8046a7:	f3 0f 1e fa          	endbr64 
+  8046ab:	55                   	push   rbp
+  8046ac:	48 89 e5             	mov    rbp,rsp
+  8046af:	48 83 ec 30          	sub    rsp,0x30
+  8046b3:	89 7d dc             	mov    DWORD PTR [rbp-0x24],edi
     task[pnr].stat=ENDED;
-  80469c:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
-  80469f:	48 63 d0             	movsxd rdx,eax
-  8046a2:	48 89 d0             	mov    rax,rdx
-  8046a5:	48 01 c0             	add    rax,rax
-  8046a8:	48 01 d0             	add    rax,rdx
-  8046ab:	48 c1 e0 08          	shl    rax,0x8
-  8046af:	48 05 a4 84 40 00    	add    rax,0x4084a4
-  8046b5:	c7 00 03 00 00 00    	mov    DWORD PTR [rax],0x3
+  8046b6:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
+  8046b9:	48 63 d0             	movsxd rdx,eax
+  8046bc:	48 89 d0             	mov    rax,rdx
+  8046bf:	48 01 c0             	add    rax,rax
+  8046c2:	48 01 d0             	add    rax,rdx
+  8046c5:	48 c1 e0 08          	shl    rax,0x8
+  8046c9:	48 05 a4 84 40 00    	add    rax,0x4084a4
+  8046cf:	c7 00 03 00 00 00    	mov    DWORD PTR [rax],0x3
     task[pnr].pid=-1;
-  8046bb:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
-  8046be:	48 63 d0             	movsxd rdx,eax
-  8046c1:	48 89 d0             	mov    rax,rdx
-  8046c4:	48 01 c0             	add    rax,rax
-  8046c7:	48 01 d0             	add    rax,rdx
-  8046ca:	48 c1 e0 08          	shl    rax,0x8
-  8046ce:	48 05 a0 84 40 00    	add    rax,0x4084a0
-  8046d4:	c7 00 ff ff ff ff    	mov    DWORD PTR [rax],0xffffffff
+  8046d5:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
+  8046d8:	48 63 d0             	movsxd rdx,eax
+  8046db:	48 89 d0             	mov    rax,rdx
+  8046de:	48 01 c0             	add    rax,rax
+  8046e1:	48 01 d0             	add    rax,rdx
+  8046e4:	48 c1 e0 08          	shl    rax,0x8
+  8046e8:	48 05 a0 84 40 00    	add    rax,0x4084a0
+  8046ee:	c7 00 ff ff ff ff    	mov    DWORD PTR [rax],0xffffffff
     //释放申请的页面
     page_item *p;//task[pnr].tss.cr3;
     p++;
-  8046da:	48 83 45 f8 08       	add    QWORD PTR [rbp-0x8],0x8
+  8046f4:	48 83 45 f8 08       	add    QWORD PTR [rbp-0x8],0x8
     for(;(*p&PAGE_PRESENT)!=0;p++)
-  8046df:	eb 63                	jmp    804744 <del_proc+0xb7>
+  8046f9:	eb 63                	jmp    80475e <del_proc+0xb7>
     {
         page_item *tp=*p&0xfffff000;
-  8046e1:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  8046e5:	48 8b 00             	mov    rax,QWORD PTR [rax]
-  8046e8:	25 00 f0 ff ff       	and    eax,0xfffff000
-  8046ed:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
+  8046fb:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  8046ff:	48 8b 00             	mov    rax,QWORD PTR [rax]
+  804702:	25 00 f0 ff ff       	and    eax,0xfffff000
+  804707:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
         for(int i=0;i<1024;i++)
-  8046f1:	c7 45 ec 00 00 00 00 	mov    DWORD PTR [rbp-0x14],0x0
-  8046f8:	eb 30                	jmp    80472a <del_proc+0x9d>
+  80470b:	c7 45 ec 00 00 00 00 	mov    DWORD PTR [rbp-0x14],0x0
+  804712:	eb 30                	jmp    804744 <del_proc+0x9d>
         {
             unsigned int present=*tp&PAGE_PRESENT;
-  8046fa:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  8046fe:	48 8b 00             	mov    rax,QWORD PTR [rax]
-  804701:	83 e0 01             	and    eax,0x1
-  804704:	89 45 e8             	mov    DWORD PTR [rbp-0x18],eax
+  804714:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  804718:	48 8b 00             	mov    rax,QWORD PTR [rax]
+  80471b:	83 e0 01             	and    eax,0x1
+  80471e:	89 45 e8             	mov    DWORD PTR [rbp-0x18],eax
             if(present)
-  804707:	83 7d e8 00          	cmp    DWORD PTR [rbp-0x18],0x0
-  80470b:	74 14                	je     804721 <del_proc+0x94>
+  804721:	83 7d e8 00          	cmp    DWORD PTR [rbp-0x18],0x0
+  804725:	74 14                	je     80473b <del_proc+0x94>
             {
                 free_page(*tp&0xfffff000);
-  80470d:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  804711:	48 8b 00             	mov    rax,QWORD PTR [rax]
-  804714:	25 00 f0 ff ff       	and    eax,0xfffff000
-  804719:	48 89 c7             	mov    rdi,rax
-  80471c:	e8 08 ce ff ff       	call   801529 <free_page>
+  804727:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  80472b:	48 8b 00             	mov    rax,QWORD PTR [rax]
+  80472e:	25 00 f0 ff ff       	and    eax,0xfffff000
+  804733:	48 89 c7             	mov    rdi,rax
+  804736:	e8 ee cd ff ff       	call   801529 <free_page>
                 //printf("freed page at %x.\n",*tp&0xfffff000);
             }
             tp++;
-  804721:	48 83 45 f0 08       	add    QWORD PTR [rbp-0x10],0x8
+  80473b:	48 83 45 f0 08       	add    QWORD PTR [rbp-0x10],0x8
         for(int i=0;i<1024;i++)
-  804726:	83 45 ec 01          	add    DWORD PTR [rbp-0x14],0x1
-  80472a:	81 7d ec ff 03 00 00 	cmp    DWORD PTR [rbp-0x14],0x3ff
-  804731:	7e c7                	jle    8046fa <del_proc+0x6d>
+  804740:	83 45 ec 01          	add    DWORD PTR [rbp-0x14],0x1
+  804744:	81 7d ec ff 03 00 00 	cmp    DWORD PTR [rbp-0x14],0x3ff
+  80474b:	7e c7                	jle    804714 <del_proc+0x6d>
         }
         vmfree(tp);
-  804733:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  804737:	48 89 c7             	mov    rdi,rax
-  80473a:	e8 15 ca ff ff       	call   801154 <vmfree>
+  80474d:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  804751:	48 89 c7             	mov    rdi,rax
+  804754:	e8 fb c9 ff ff       	call   801154 <vmfree>
     for(;(*p&PAGE_PRESENT)!=0;p++)
-  80473f:	48 83 45 f8 08       	add    QWORD PTR [rbp-0x8],0x8
-  804744:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  804748:	48 8b 00             	mov    rax,QWORD PTR [rax]
-  80474b:	83 e0 01             	and    eax,0x1
-  80474e:	48 85 c0             	test   rax,rax
-  804751:	75 8e                	jne    8046e1 <del_proc+0x54>
+  804759:	48 83 45 f8 08       	add    QWORD PTR [rbp-0x8],0x8
+  80475e:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  804762:	48 8b 00             	mov    rax,QWORD PTR [rax]
+  804765:	83 e0 01             	and    eax,0x1
+  804768:	48 85 c0             	test   rax,rax
+  80476b:	75 8e                	jne    8046fb <del_proc+0x54>
     }
     //释放存放页目录的页面
     vmfree(p);
-  804753:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  804757:	48 89 c7             	mov    rdi,rax
-  80475a:	e8 f5 c9 ff ff       	call   801154 <vmfree>
+  80476d:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  804771:	48 89 c7             	mov    rdi,rax
+  804774:	e8 db c9 ff ff       	call   801154 <vmfree>
     //从进程中解除cr3,tss和ldt
     //switch_proc_tss(task[pnr]);
 }
-  80475f:	90                   	nop
-  804760:	c9                   	leave  
-  804761:	c3                   	ret    
+  804779:	90                   	nop
+  80477a:	c9                   	leave  
+  80477b:	c3                   	ret    
 
-0000000000804762 <set_proc_stat>:
+000000000080477c <set_proc_stat>:
 
 int set_proc_stat(int pid,int stat)
 {
-  804762:	f3 0f 1e fa          	endbr64 
-  804766:	55                   	push   rbp
-  804767:	48 89 e5             	mov    rbp,rsp
-  80476a:	89 7d ec             	mov    DWORD PTR [rbp-0x14],edi
-  80476d:	89 75 e8             	mov    DWORD PTR [rbp-0x18],esi
+  80477c:	f3 0f 1e fa          	endbr64 
+  804780:	55                   	push   rbp
+  804781:	48 89 e5             	mov    rbp,rsp
+  804784:	89 7d ec             	mov    DWORD PTR [rbp-0x14],edi
+  804787:	89 75 e8             	mov    DWORD PTR [rbp-0x18],esi
     if(pid==-1)return -1;
-  804770:	83 7d ec ff          	cmp    DWORD PTR [rbp-0x14],0xffffffff
-  804774:	75 0a                	jne    804780 <set_proc_stat+0x1e>
-  804776:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  80477b:	e9 8c 00 00 00       	jmp    80480c <set_proc_stat+0xaa>
+  80478a:	83 7d ec ff          	cmp    DWORD PTR [rbp-0x14],0xffffffff
+  80478e:	75 0a                	jne    80479a <set_proc_stat+0x1e>
+  804790:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  804795:	e9 8c 00 00 00       	jmp    804826 <set_proc_stat+0xaa>
     int i=0;
-  804780:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
+  80479a:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
     for(;task[i].pid!=pid;i++);
-  804787:	eb 04                	jmp    80478d <set_proc_stat+0x2b>
-  804789:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
-  80478d:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  804790:	48 63 d0             	movsxd rdx,eax
-  804793:	48 89 d0             	mov    rax,rdx
-  804796:	48 01 c0             	add    rax,rax
-  804799:	48 01 d0             	add    rax,rdx
-  80479c:	48 c1 e0 08          	shl    rax,0x8
-  8047a0:	48 05 a0 84 40 00    	add    rax,0x4084a0
-  8047a6:	8b 10                	mov    edx,DWORD PTR [rax]
-  8047a8:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
-  8047ab:	39 c2                	cmp    edx,eax
-  8047ad:	75 da                	jne    804789 <set_proc_stat+0x27>
+  8047a1:	eb 04                	jmp    8047a7 <set_proc_stat+0x2b>
+  8047a3:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
+  8047a7:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  8047aa:	48 63 d0             	movsxd rdx,eax
+  8047ad:	48 89 d0             	mov    rax,rdx
+  8047b0:	48 01 c0             	add    rax,rax
+  8047b3:	48 01 d0             	add    rax,rdx
+  8047b6:	48 c1 e0 08          	shl    rax,0x8
+  8047ba:	48 05 a0 84 40 00    	add    rax,0x4084a0
+  8047c0:	8b 10                	mov    edx,DWORD PTR [rax]
+  8047c2:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+  8047c5:	39 c2                	cmp    edx,eax
+  8047c7:	75 da                	jne    8047a3 <set_proc_stat+0x27>
     if(i==MAX_PROC_COUNT)return -1;
-  8047af:	83 7d fc 40          	cmp    DWORD PTR [rbp-0x4],0x40
-  8047b3:	75 07                	jne    8047bc <set_proc_stat+0x5a>
-  8047b5:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  8047ba:	eb 50                	jmp    80480c <set_proc_stat+0xaa>
+  8047c9:	83 7d fc 40          	cmp    DWORD PTR [rbp-0x4],0x40
+  8047cd:	75 07                	jne    8047d6 <set_proc_stat+0x5a>
+  8047cf:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  8047d4:	eb 50                	jmp    804826 <set_proc_stat+0xaa>
     task[i].stat=stat;
-  8047bc:	8b 55 e8             	mov    edx,DWORD PTR [rbp-0x18]
-  8047bf:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8047c2:	48 63 c8             	movsxd rcx,eax
-  8047c5:	48 89 c8             	mov    rax,rcx
-  8047c8:	48 01 c0             	add    rax,rax
-  8047cb:	48 01 c8             	add    rax,rcx
-  8047ce:	48 c1 e0 08          	shl    rax,0x8
-  8047d2:	48 05 a4 84 40 00    	add    rax,0x4084a4
-  8047d8:	89 10                	mov    DWORD PTR [rax],edx
+  8047d6:	8b 55 e8             	mov    edx,DWORD PTR [rbp-0x18]
+  8047d9:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  8047dc:	48 63 c8             	movsxd rcx,eax
+  8047df:	48 89 c8             	mov    rax,rcx
+  8047e2:	48 01 c0             	add    rax,rax
+  8047e5:	48 01 c8             	add    rax,rcx
+  8047e8:	48 c1 e0 08          	shl    rax,0x8
+  8047ec:	48 05 a4 84 40 00    	add    rax,0x4084a4
+  8047f2:	89 10                	mov    DWORD PTR [rax],edx
     //如果这就是正在运行的进程，那么马上停止
     if(cur_proc==i)
-  8047da:	8b 05 2c fd c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0fd2c]        # 41450c <cur_proc>
-  8047e0:	39 45 fc             	cmp    DWORD PTR [rbp-0x4],eax
-  8047e3:	75 22                	jne    804807 <set_proc_stat+0xa5>
+  8047f4:	8b 05 12 fd c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0fd12]        # 41450c <cur_proc>
+  8047fa:	39 45 fc             	cmp    DWORD PTR [rbp-0x4],eax
+  8047fd:	75 22                	jne    804821 <set_proc_stat+0xa5>
         task[cur_proc].utime=MAX_UTIME;
-  8047e5:	8b 05 21 fd c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0fd21]        # 41450c <cur_proc>
-  8047eb:	48 63 d0             	movsxd rdx,eax
-  8047ee:	48 89 d0             	mov    rax,rdx
-  8047f1:	48 01 c0             	add    rax,rax
-  8047f4:	48 01 d0             	add    rax,rdx
-  8047f7:	48 c1 e0 08          	shl    rax,0x8
-  8047fb:	48 05 a8 84 40 00    	add    rax,0x4084a8
-  804801:	c7 00 01 00 00 00    	mov    DWORD PTR [rax],0x1
+  8047ff:	8b 05 07 fd c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0fd07]        # 41450c <cur_proc>
+  804805:	48 63 d0             	movsxd rdx,eax
+  804808:	48 89 d0             	mov    rax,rdx
+  80480b:	48 01 c0             	add    rax,rax
+  80480e:	48 01 d0             	add    rax,rdx
+  804811:	48 c1 e0 08          	shl    rax,0x8
+  804815:	48 05 a8 84 40 00    	add    rax,0x4084a8
+  80481b:	c7 00 01 00 00 00    	mov    DWORD PTR [rax],0x1
     return 0;
-  804807:	b8 00 00 00 00       	mov    eax,0x0
+  804821:	b8 00 00 00 00       	mov    eax,0x0
 }
-  80480c:	5d                   	pop    rbp
-  80480d:	c3                   	ret    
+  804826:	5d                   	pop    rbp
+  804827:	c3                   	ret    
 
-000000000080480e <add_proc_openf>:
+0000000000804828 <add_proc_openf>:
 
     return 0;
 } */
 
 int add_proc_openf(vfs_dir_entry *entry)
 {
-  80480e:	f3 0f 1e fa          	endbr64 
-  804812:	55                   	push   rbp
-  804813:	48 89 e5             	mov    rbp,rsp
-  804816:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
+  804828:	f3 0f 1e fa          	endbr64 
+  80482c:	55                   	push   rbp
+  80482d:	48 89 e5             	mov    rbp,rsp
+  804830:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
     for(int i=0;i<MAX_PROC_OPENF;i++){
-  80481a:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
-  804821:	eb 6a                	jmp    80488d <add_proc_openf+0x7f>
+  804834:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
+  80483b:	eb 6a                	jmp    8048a7 <add_proc_openf+0x7f>
         if(task[cur_proc].openf[i]==NULL)
-  804823:	8b 05 e3 fc c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0fce3]        # 41450c <cur_proc>
-  804829:	8b 55 fc             	mov    edx,DWORD PTR [rbp-0x4]
-  80482c:	48 63 ca             	movsxd rcx,edx
-  80482f:	48 63 d0             	movsxd rdx,eax
-  804832:	48 89 d0             	mov    rax,rdx
-  804835:	48 01 c0             	add    rax,rax
-  804838:	48 01 d0             	add    rax,rdx
-  80483b:	48 c1 e0 05          	shl    rax,0x5
-  80483f:	48 01 c8             	add    rax,rcx
-  804842:	48 83 c0 18          	add    rax,0x18
-  804846:	48 8b 04 c5 a4 84 40 	mov    rax,QWORD PTR [rax*8+0x4084a4]
-  80484d:	00 
-  80484e:	48 85 c0             	test   rax,rax
-  804851:	75 36                	jne    804889 <add_proc_openf+0x7b>
+  80483d:	8b 05 c9 fc c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0fcc9]        # 41450c <cur_proc>
+  804843:	8b 55 fc             	mov    edx,DWORD PTR [rbp-0x4]
+  804846:	48 63 ca             	movsxd rcx,edx
+  804849:	48 63 d0             	movsxd rdx,eax
+  80484c:	48 89 d0             	mov    rax,rdx
+  80484f:	48 01 c0             	add    rax,rax
+  804852:	48 01 d0             	add    rax,rdx
+  804855:	48 c1 e0 05          	shl    rax,0x5
+  804859:	48 01 c8             	add    rax,rcx
+  80485c:	48 83 c0 18          	add    rax,0x18
+  804860:	48 8b 04 c5 a4 84 40 	mov    rax,QWORD PTR [rax*8+0x4084a4]
+  804867:	00 
+  804868:	48 85 c0             	test   rax,rax
+  80486b:	75 36                	jne    8048a3 <add_proc_openf+0x7b>
         {
             task[cur_proc].openf[i]=entry;
-  804853:	8b 05 b3 fc c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0fcb3]        # 41450c <cur_proc>
-  804859:	8b 55 fc             	mov    edx,DWORD PTR [rbp-0x4]
-  80485c:	48 63 ca             	movsxd rcx,edx
-  80485f:	48 63 d0             	movsxd rdx,eax
-  804862:	48 89 d0             	mov    rax,rdx
-  804865:	48 01 c0             	add    rax,rax
-  804868:	48 01 d0             	add    rax,rdx
-  80486b:	48 c1 e0 05          	shl    rax,0x5
-  80486f:	48 01 c8             	add    rax,rcx
-  804872:	48 8d 50 18          	lea    rdx,[rax+0x18]
-  804876:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  80487a:	48 89 04 d5 a4 84 40 	mov    QWORD PTR [rdx*8+0x4084a4],rax
-  804881:	00 
+  80486d:	8b 05 99 fc c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0fc99]        # 41450c <cur_proc>
+  804873:	8b 55 fc             	mov    edx,DWORD PTR [rbp-0x4]
+  804876:	48 63 ca             	movsxd rcx,edx
+  804879:	48 63 d0             	movsxd rdx,eax
+  80487c:	48 89 d0             	mov    rax,rdx
+  80487f:	48 01 c0             	add    rax,rax
+  804882:	48 01 d0             	add    rax,rdx
+  804885:	48 c1 e0 05          	shl    rax,0x5
+  804889:	48 01 c8             	add    rax,rcx
+  80488c:	48 8d 50 18          	lea    rdx,[rax+0x18]
+  804890:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  804894:	48 89 04 d5 a4 84 40 	mov    QWORD PTR [rdx*8+0x4084a4],rax
+  80489b:	00 
             return 0;
-  804882:	b8 00 00 00 00       	mov    eax,0x0
-  804887:	eb 0f                	jmp    804898 <add_proc_openf+0x8a>
+  80489c:	b8 00 00 00 00       	mov    eax,0x0
+  8048a1:	eb 0f                	jmp    8048b2 <add_proc_openf+0x8a>
     for(int i=0;i<MAX_PROC_OPENF;i++){
-  804889:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
-  80488d:	83 7d fc 1f          	cmp    DWORD PTR [rbp-0x4],0x1f
-  804891:	7e 90                	jle    804823 <add_proc_openf+0x15>
+  8048a3:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
+  8048a7:	83 7d fc 1f          	cmp    DWORD PTR [rbp-0x4],0x1f
+  8048ab:	7e 90                	jle    80483d <add_proc_openf+0x15>
         }
     }
     return -1;//full
-  804893:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  8048ad:	b8 ff ff ff ff       	mov    eax,0xffffffff
 }
-  804898:	5d                   	pop    rbp
-  804899:	c3                   	ret    
+  8048b2:	5d                   	pop    rbp
+  8048b3:	c3                   	ret    
 
-000000000080489a <sys_exit>:
+00000000008048b4 <sys_exit>:
 /*
  * 进程结束。
  * */
 int sys_exit(int code)
 {
-  80489a:	f3 0f 1e fa          	endbr64 
-  80489e:	55                   	push   rbp
-  80489f:	48 89 e5             	mov    rbp,rsp
-  8048a2:	48 83 ec 10          	sub    rsp,0x10
-  8048a6:	89 7d fc             	mov    DWORD PTR [rbp-0x4],edi
+  8048b4:	f3 0f 1e fa          	endbr64 
+  8048b8:	55                   	push   rbp
+  8048b9:	48 89 e5             	mov    rbp,rsp
+  8048bc:	48 83 ec 10          	sub    rsp,0x10
+  8048c0:	89 7d fc             	mov    DWORD PTR [rbp-0x4],edi
     del_proc(cur_proc);
-  8048a9:	8b 05 5d fc c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0fc5d]        # 41450c <cur_proc>
-  8048af:	89 c7                	mov    edi,eax
-  8048b1:	e8 d7 fd ff ff       	call   80468d <del_proc>
+  8048c3:	8b 05 43 fc c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0fc43]        # 41450c <cur_proc>
+  8048c9:	89 c7                	mov    edi,eax
+  8048cb:	e8 d7 fd ff ff       	call   8046a7 <del_proc>
     return code;
-  8048b6:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  8048d0:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
 }
-  8048b9:	c9                   	leave  
-  8048ba:	c3                   	ret    
+  8048d3:	c9                   	leave  
+  8048d4:	c3                   	ret    
 
-00000000008048bb <reg_proc>:
+00000000008048d5 <reg_proc>:
     dllmain(NULL,0,NULL);
     
 }*/
 
 int reg_proc(int entry, vfs_dir_entry *cwd, vfs_dir_entry *exef)
 {
-  8048bb:	f3 0f 1e fa          	endbr64 
-  8048bf:	55                   	push   rbp
-  8048c0:	48 89 e5             	mov    rbp,rsp
-  8048c3:	48 83 ec 40          	sub    rsp,0x40
-  8048c7:	89 7d dc             	mov    DWORD PTR [rbp-0x24],edi
-  8048ca:	48 89 75 d0          	mov    QWORD PTR [rbp-0x30],rsi
-  8048ce:	48 89 55 c8          	mov    QWORD PTR [rbp-0x38],rdx
+  8048d5:	f3 0f 1e fa          	endbr64 
+  8048d9:	55                   	push   rbp
+  8048da:	48 89 e5             	mov    rbp,rsp
+  8048dd:	48 83 ec 40          	sub    rsp,0x40
+  8048e1:	89 7d dc             	mov    DWORD PTR [rbp-0x24],edi
+  8048e4:	48 89 75 d0          	mov    QWORD PTR [rbp-0x30],rsi
+  8048e8:	48 89 55 c8          	mov    QWORD PTR [rbp-0x38],rdx
     
     int i=req_proc();
-  8048d2:	b8 00 00 00 00       	mov    eax,0x0
-  8048d7:	e8 81 f4 ff ff       	call   803d5d <req_proc>
-  8048dc:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  8048ec:	b8 00 00 00 00       	mov    eax,0x0
+  8048f1:	e8 81 f4 ff ff       	call   803d77 <req_proc>
+  8048f6:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
     if(i==-1)return -1;
-  8048df:	83 7d fc ff          	cmp    DWORD PTR [rbp-0x4],0xffffffff
-  8048e3:	75 0a                	jne    8048ef <reg_proc+0x34>
-  8048e5:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  8048ea:	e9 65 01 00 00       	jmp    804a54 <reg_proc+0x199>
+  8048f9:	83 7d fc ff          	cmp    DWORD PTR [rbp-0x4],0xffffffff
+  8048fd:	75 0a                	jne    804909 <reg_proc+0x34>
+  8048ff:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  804904:	e9 65 01 00 00       	jmp    804a6e <reg_proc+0x199>
     /*set_proc(0,0,0,0,SEL_LDT_DATA,SEL_LDT_CODE,SEL_LDT_STACK,SEL_LDT_DATA\
     ,SEL_LDT_DATA,SEL_LDT_DATA,0x1c00000-4,0,0,0,0,i);*/
     set_proc(0, 0, 0, 0, 0x10, 0x8, 0x10, 0x10\
-  8048ef:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8048f2:	50                   	push   rax
-  8048f3:	6a 00                	push   0x0
-  8048f5:	6a 00                	push   0x0
-  8048f7:	6a 00                	push   0x0
-  8048f9:	6a 00                	push   0x0
-  8048fb:	6a 00                	push   0x0
-  8048fd:	68 fc ff bf 01       	push   0x1bffffc
-  804902:	6a 10                	push   0x10
-  804904:	6a 10                	push   0x10
-  804906:	6a 10                	push   0x10
-  804908:	6a 10                	push   0x10
-  80490a:	41 b9 08 00 00 00    	mov    r9d,0x8
-  804910:	41 b8 10 00 00 00    	mov    r8d,0x10
-  804916:	b9 00 00 00 00       	mov    ecx,0x0
-  80491b:	ba 00 00 00 00       	mov    edx,0x0
-  804920:	be 00 00 00 00       	mov    esi,0x0
-  804925:	bf 00 00 00 00       	mov    edi,0x0
-  80492a:	e8 27 f5 ff ff       	call   803e56 <set_proc>
-  80492f:	48 83 c4 58          	add    rsp,0x58
+  804909:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  80490c:	50                   	push   rax
+  80490d:	6a 00                	push   0x0
+  80490f:	6a 00                	push   0x0
+  804911:	6a 00                	push   0x0
+  804913:	6a 00                	push   0x0
+  804915:	6a 00                	push   0x0
+  804917:	68 fc ff bf 01       	push   0x1bffffc
+  80491c:	6a 10                	push   0x10
+  80491e:	6a 10                	push   0x10
+  804920:	6a 10                	push   0x10
+  804922:	6a 10                	push   0x10
+  804924:	41 b9 08 00 00 00    	mov    r9d,0x8
+  80492a:	41 b8 10 00 00 00    	mov    r8d,0x10
+  804930:	b9 00 00 00 00       	mov    ecx,0x0
+  804935:	ba 00 00 00 00       	mov    edx,0x0
+  80493a:	be 00 00 00 00       	mov    esi,0x0
+  80493f:	bf 00 00 00 00       	mov    edi,0x0
+  804944:	e8 27 f5 ff ff       	call   803e70 <set_proc>
+  804949:	48 83 c4 58          	add    rsp,0x58
 , 0x10, 0x10, 0x1c00000 - 4, 0, 0, 0, 0, 0, i);
     task[i].pml4=vmalloc();
-  804933:	b8 00 00 00 00       	mov    eax,0x0
-  804938:	e8 88 c7 ff ff       	call   8010c5 <vmalloc>
-  80493d:	48 89 c1             	mov    rcx,rax
-  804940:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  804943:	48 63 d0             	movsxd rdx,eax
-  804946:	48 89 d0             	mov    rax,rdx
-  804949:	48 01 c0             	add    rax,rax
-  80494c:	48 01 d0             	add    rax,rdx
-  80494f:	48 c1 e0 08          	shl    rax,0x8
-  804953:	48 05 40 85 40 00    	add    rax,0x408540
-  804959:	48 89 48 0c          	mov    QWORD PTR [rax+0xc],rcx
+  80494d:	b8 00 00 00 00       	mov    eax,0x0
+  804952:	e8 6e c7 ff ff       	call   8010c5 <vmalloc>
+  804957:	48 89 c1             	mov    rcx,rax
+  80495a:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  80495d:	48 63 d0             	movsxd rdx,eax
+  804960:	48 89 d0             	mov    rax,rdx
+  804963:	48 01 c0             	add    rax,rax
+  804966:	48 01 d0             	add    rax,rdx
+  804969:	48 c1 e0 08          	shl    rax,0x8
+  80496d:	48 05 40 85 40 00    	add    rax,0x408540
+  804973:	48 89 48 0c          	mov    QWORD PTR [rax+0xc],rcx
     int *pt=vmalloc();
-  80495d:	b8 00 00 00 00       	mov    eax,0x0
-  804962:	e8 5e c7 ff ff       	call   8010c5 <vmalloc>
-  804967:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
+  804977:	b8 00 00 00 00       	mov    eax,0x0
+  80497c:	e8 44 c7 ff ff       	call   8010c5 <vmalloc>
+  804981:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
     task[i].pml4[0]=PAGE_TABLE_ADDR|PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL;
-  80496b:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  80496e:	48 63 d0             	movsxd rdx,eax
-  804971:	48 89 d0             	mov    rax,rdx
-  804974:	48 01 c0             	add    rax,rax
-  804977:	48 01 d0             	add    rax,rdx
-  80497a:	48 c1 e0 08          	shl    rax,0x8
-  80497e:	48 05 40 85 40 00    	add    rax,0x408540
-  804984:	48 8b 40 0c          	mov    rax,QWORD PTR [rax+0xc]
-  804988:	48 c7 00 07 20 00 00 	mov    QWORD PTR [rax],0x2007
+  804985:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  804988:	48 63 d0             	movsxd rdx,eax
+  80498b:	48 89 d0             	mov    rax,rdx
+  80498e:	48 01 c0             	add    rax,rax
+  804991:	48 01 d0             	add    rax,rdx
+  804994:	48 c1 e0 08          	shl    rax,0x8
+  804998:	48 05 40 85 40 00    	add    rax,0x408540
+  80499e:	48 8b 40 0c          	mov    rax,QWORD PTR [rax+0xc]
+  8049a2:	48 c7 00 07 20 00 00 	mov    QWORD PTR [rax],0x2007
     /*for(int j=0;j<32;j++)
         pt[j]=(PAGE_TABLE_ADDR+j*0x1000)|PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL;//复制内核页表*/
     //PAGE_TABLE_ADDR|PAGE_PRESENT;//复制内核页表
     //task[i].pml4[7]=PAGE_TABLE_ADDR+7*0x1000|PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX;//sys.dll
     int *stackb=vmalloc();
-  80498f:	b8 00 00 00 00       	mov    eax,0x0
-  804994:	e8 2c c7 ff ff       	call   8010c5 <vmalloc>
-  804999:	48 89 45 e8          	mov    QWORD PTR [rbp-0x18],rax
+  8049a9:	b8 00 00 00 00       	mov    eax,0x0
+  8049ae:	e8 12 c7 ff ff       	call   8010c5 <vmalloc>
+  8049b3:	48 89 45 e8          	mov    QWORD PTR [rbp-0x18],rax
     task[i].pml4[6]=(int)stackb|PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX;
-  80499d:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  8049a1:	83 c8 07             	or     eax,0x7
-  8049a4:	89 c1                	mov    ecx,eax
-  8049a6:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8049a9:	48 63 d0             	movsxd rdx,eax
-  8049ac:	48 89 d0             	mov    rax,rdx
-  8049af:	48 01 c0             	add    rax,rax
-  8049b2:	48 01 d0             	add    rax,rdx
-  8049b5:	48 c1 e0 08          	shl    rax,0x8
-  8049b9:	48 05 40 85 40 00    	add    rax,0x408540
-  8049bf:	48 8b 40 0c          	mov    rax,QWORD PTR [rax+0xc]
-  8049c3:	48 8d 50 30          	lea    rdx,[rax+0x30]
-  8049c7:	48 63 c1             	movsxd rax,ecx
-  8049ca:	48 89 02             	mov    QWORD PTR [rdx],rax
+  8049b7:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  8049bb:	83 c8 07             	or     eax,0x7
+  8049be:	89 c1                	mov    ecx,eax
+  8049c0:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  8049c3:	48 63 d0             	movsxd rdx,eax
+  8049c6:	48 89 d0             	mov    rax,rdx
+  8049c9:	48 01 c0             	add    rax,rax
+  8049cc:	48 01 d0             	add    rax,rdx
+  8049cf:	48 c1 e0 08          	shl    rax,0x8
+  8049d3:	48 05 40 85 40 00    	add    rax,0x408540
+  8049d9:	48 8b 40 0c          	mov    rax,QWORD PTR [rax+0xc]
+  8049dd:	48 8d 50 30          	lea    rdx,[rax+0x30]
+  8049e1:	48 63 c1             	movsxd rax,ecx
+  8049e4:	48 89 02             	mov    QWORD PTR [rdx],rax
     stackb[1023]=get_phyaddr(req_a_page())|PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX;
-  8049cd:	b8 00 00 00 00       	mov    eax,0x0
-  8049d2:	e8 82 ca ff ff       	call   801459 <req_a_page>
-  8049d7:	89 c7                	mov    edi,eax
-  8049d9:	e8 29 cc ff ff       	call   801607 <get_phyaddr>
-  8049de:	48 8b 55 e8          	mov    rdx,QWORD PTR [rbp-0x18]
-  8049e2:	48 81 c2 fc 0f 00 00 	add    rdx,0xffc
-  8049e9:	83 c8 07             	or     eax,0x7
-  8049ec:	89 02                	mov    DWORD PTR [rdx],eax
+  8049e7:	b8 00 00 00 00       	mov    eax,0x0
+  8049ec:	e8 68 ca ff ff       	call   801459 <req_a_page>
+  8049f1:	89 c7                	mov    edi,eax
+  8049f3:	e8 0f cc ff ff       	call   801607 <get_phyaddr>
+  8049f8:	48 8b 55 e8          	mov    rdx,QWORD PTR [rbp-0x18]
+  8049fc:	48 81 c2 fc 0f 00 00 	add    rdx,0xffc
+  804a03:	83 c8 07             	or     eax,0x7
+  804a06:	89 02                	mov    DWORD PTR [rdx],eax
 //    task[i].tss.cr3=task[i].pml4;
 
     task[i].stat=READY;
-  8049ee:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8049f1:	48 63 d0             	movsxd rdx,eax
-  8049f4:	48 89 d0             	mov    rax,rdx
-  8049f7:	48 01 c0             	add    rax,rax
-  8049fa:	48 01 d0             	add    rax,rdx
-  8049fd:	48 c1 e0 08          	shl    rax,0x8
-  804a01:	48 05 a4 84 40 00    	add    rax,0x4084a4
-  804a07:	c7 00 01 00 00 00    	mov    DWORD PTR [rax],0x1
+  804a08:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  804a0b:	48 63 d0             	movsxd rdx,eax
+  804a0e:	48 89 d0             	mov    rax,rdx
+  804a11:	48 01 c0             	add    rax,rax
+  804a14:	48 01 d0             	add    rax,rdx
+  804a17:	48 c1 e0 08          	shl    rax,0x8
+  804a1b:	48 05 a4 84 40 00    	add    rax,0x4084a4
+  804a21:	c7 00 01 00 00 00    	mov    DWORD PTR [rax],0x1
     task[i].cwd=cwd;
-  804a0d:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  804a10:	48 63 d0             	movsxd rdx,eax
-  804a13:	48 89 d0             	mov    rax,rdx
-  804a16:	48 01 c0             	add    rax,rax
-  804a19:	48 01 d0             	add    rax,rdx
-  804a1c:	48 c1 e0 08          	shl    rax,0x8
-  804a20:	48 8d 90 50 85 40 00 	lea    rdx,[rax+0x408550]
-  804a27:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
-  804a2b:	48 89 42 04          	mov    QWORD PTR [rdx+0x4],rax
+  804a27:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  804a2a:	48 63 d0             	movsxd rdx,eax
+  804a2d:	48 89 d0             	mov    rax,rdx
+  804a30:	48 01 c0             	add    rax,rax
+  804a33:	48 01 d0             	add    rax,rdx
+  804a36:	48 c1 e0 08          	shl    rax,0x8
+  804a3a:	48 8d 90 50 85 40 00 	lea    rdx,[rax+0x408550]
+  804a41:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
+  804a45:	48 89 42 04          	mov    QWORD PTR [rdx+0x4],rax
     task[i].exef=exef;
-  804a2f:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  804a32:	48 63 d0             	movsxd rdx,eax
-  804a35:	48 89 d0             	mov    rax,rdx
-  804a38:	48 01 c0             	add    rax,rax
-  804a3b:	48 01 d0             	add    rax,rdx
-  804a3e:	48 c1 e0 08          	shl    rax,0x8
-  804a42:	48 8d 90 50 85 40 00 	lea    rdx,[rax+0x408550]
-  804a49:	48 8b 45 c8          	mov    rax,QWORD PTR [rbp-0x38]
-  804a4d:	48 89 42 0c          	mov    QWORD PTR [rdx+0xc],rax
+  804a49:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  804a4c:	48 63 d0             	movsxd rdx,eax
+  804a4f:	48 89 d0             	mov    rax,rdx
+  804a52:	48 01 c0             	add    rax,rax
+  804a55:	48 01 d0             	add    rax,rdx
+  804a58:	48 c1 e0 08          	shl    rax,0x8
+  804a5c:	48 8d 90 50 85 40 00 	lea    rdx,[rax+0x408550]
+  804a63:	48 8b 45 c8          	mov    rax,QWORD PTR [rbp-0x38]
+  804a67:	48 89 42 0c          	mov    QWORD PTR [rdx+0xc],rax
     task[i].tss.ss=0x10;
     task[i].tss.gs=0x10;
     task[i].tss.fs=0x10;
     task[i].tss.cs=0x8;*/
 //    task[i].tss.eip=entry;
     return i;
-  804a51:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  804a6b:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
     proc_ret_stack *pstack=stack_paddr+stack_size-12;
     pstack->argc=0;
     pstack->argv=0;
     pstack->proc_end_addr=proc_end;
     int *pptr=pstack;*/
 }
-  804a54:	c9                   	leave  
-  804a55:	c3                   	ret    
+  804a6e:	c9                   	leave  
+  804a6f:	c3                   	ret    
 
-0000000000804a56 <sys_malloc>:
+0000000000804a70 <sys_malloc>:
 
 void * sys_malloc(int size)
 {
-  804a56:	f3 0f 1e fa          	endbr64 
-  804a5a:	55                   	push   rbp
-  804a5b:	48 89 e5             	mov    rbp,rsp
-  804a5e:	89 7d cc             	mov    DWORD PTR [rbp-0x34],edi
+  804a70:	f3 0f 1e fa          	endbr64 
+  804a74:	55                   	push   rbp
+  804a75:	48 89 e5             	mov    rbp,rsp
+  804a78:	89 7d cc             	mov    DWORD PTR [rbp-0x34],edi
     //
     int n=size/CHUNK_SIZE+size%CHUNK_SIZE?1:0;
-  804a61:	8b 45 cc             	mov    eax,DWORD PTR [rbp-0x34]
-  804a64:	8d 90 ff 0f 00 00    	lea    edx,[rax+0xfff]
-  804a6a:	85 c0                	test   eax,eax
-  804a6c:	0f 48 c2             	cmovs  eax,edx
-  804a6f:	c1 f8 0c             	sar    eax,0xc
-  804a72:	89 c1                	mov    ecx,eax
-  804a74:	8b 45 cc             	mov    eax,DWORD PTR [rbp-0x34]
-  804a77:	99                   	cdq    
-  804a78:	c1 ea 14             	shr    edx,0x14
-  804a7b:	01 d0                	add    eax,edx
-  804a7d:	25 ff 0f 00 00       	and    eax,0xfff
-  804a82:	29 d0                	sub    eax,edx
-  804a84:	01 c8                	add    eax,ecx
-  804a86:	85 c0                	test   eax,eax
-  804a88:	0f 95 c0             	setne  al
-  804a8b:	0f b6 c0             	movzx  eax,al
-  804a8e:	89 45 e8             	mov    DWORD PTR [rbp-0x18],eax
+  804a7b:	8b 45 cc             	mov    eax,DWORD PTR [rbp-0x34]
+  804a7e:	8d 90 ff 0f 00 00    	lea    edx,[rax+0xfff]
+  804a84:	85 c0                	test   eax,eax
+  804a86:	0f 48 c2             	cmovs  eax,edx
+  804a89:	c1 f8 0c             	sar    eax,0xc
+  804a8c:	89 c1                	mov    ecx,eax
+  804a8e:	8b 45 cc             	mov    eax,DWORD PTR [rbp-0x34]
+  804a91:	99                   	cdq    
+  804a92:	c1 ea 14             	shr    edx,0x14
+  804a95:	01 d0                	add    eax,edx
+  804a97:	25 ff 0f 00 00       	and    eax,0xfff
+  804a9c:	29 d0                	sub    eax,edx
+  804a9e:	01 c8                	add    eax,ecx
+  804aa0:	85 c0                	test   eax,eax
+  804aa2:	0f 95 c0             	setne  al
+  804aa5:	0f b6 c0             	movzx  eax,al
+  804aa8:	89 45 e8             	mov    DWORD PTR [rbp-0x18],eax
     chunk_header *hp=(chunk_header*)task[cur_proc].mem_struct.heap_base;
-  804a91:	8b 05 75 fa c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0fa75]        # 41450c <cur_proc>
-  804a97:	48 63 d0             	movsxd rdx,eax
-  804a9a:	48 89 d0             	mov    rax,rdx
-  804a9d:	48 01 c0             	add    rax,rax
-  804aa0:	48 01 d0             	add    rax,rdx
-  804aa3:	48 c1 e0 08          	shl    rax,0x8
-  804aa7:	48 05 b4 84 40 00    	add    rax,0x4084b4
-  804aad:	8b 00                	mov    eax,DWORD PTR [rax]
-  804aaf:	48 98                	cdqe   
-  804ab1:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
+  804aab:	8b 05 5b fa c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0fa5b]        # 41450c <cur_proc>
+  804ab1:	48 63 d0             	movsxd rdx,eax
+  804ab4:	48 89 d0             	mov    rax,rdx
+  804ab7:	48 01 c0             	add    rax,rax
+  804aba:	48 01 d0             	add    rax,rdx
+  804abd:	48 c1 e0 08          	shl    rax,0x8
+  804ac1:	48 05 b4 84 40 00    	add    rax,0x4084b4
+  804ac7:	8b 00                	mov    eax,DWORD PTR [rax]
+  804ac9:	48 98                	cdqe   
+  804acb:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
     while (hp->next!=NULL&&hp->alloc==0&&hp->pgn>=n)
-  804ab5:	eb 0c                	jmp    804ac3 <sys_malloc+0x6d>
+  804acf:	eb 0c                	jmp    804add <sys_malloc+0x6d>
         hp=hp->next;
-  804ab7:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  804abb:	48 8b 40 08          	mov    rax,QWORD PTR [rax+0x8]
-  804abf:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
+  804ad1:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  804ad5:	48 8b 40 08          	mov    rax,QWORD PTR [rax+0x8]
+  804ad9:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
     while (hp->next!=NULL&&hp->alloc==0&&hp->pgn>=n)
-  804ac3:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  804ac7:	48 8b 40 08          	mov    rax,QWORD PTR [rax+0x8]
-  804acb:	48 85 c0             	test   rax,rax
-  804ace:	74 16                	je     804ae6 <sys_malloc+0x90>
-  804ad0:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  804ad4:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
-  804ad7:	85 c0                	test   eax,eax
-  804ad9:	75 0b                	jne    804ae6 <sys_malloc+0x90>
-  804adb:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  804adf:	8b 00                	mov    eax,DWORD PTR [rax]
-  804ae1:	39 45 e8             	cmp    DWORD PTR [rbp-0x18],eax
-  804ae4:	7e d1                	jle    804ab7 <sys_malloc+0x61>
+  804add:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  804ae1:	48 8b 40 08          	mov    rax,QWORD PTR [rax+0x8]
+  804ae5:	48 85 c0             	test   rax,rax
+  804ae8:	74 16                	je     804b00 <sys_malloc+0x90>
+  804aea:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  804aee:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
+  804af1:	85 c0                	test   eax,eax
+  804af3:	75 0b                	jne    804b00 <sys_malloc+0x90>
+  804af5:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  804af9:	8b 00                	mov    eax,DWORD PTR [rax]
+  804afb:	39 45 e8             	cmp    DWORD PTR [rbp-0x18],eax
+  804afe:	7e d1                	jle    804ad1 <sys_malloc+0x61>
     if(hp->pgn<n)
-  804ae6:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  804aea:	8b 00                	mov    eax,DWORD PTR [rax]
-  804aec:	39 45 e8             	cmp    DWORD PTR [rbp-0x18],eax
-  804aef:	0f 8e 8d 00 00 00    	jle    804b82 <sys_malloc+0x12c>
+  804b00:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  804b04:	8b 00                	mov    eax,DWORD PTR [rax]
+  804b06:	39 45 e8             	cmp    DWORD PTR [rbp-0x18],eax
+  804b09:	0f 8e 8d 00 00 00    	jle    804b9c <sys_malloc+0x12c>
     {
         //上抬heap top
         if(task[cur_proc].mem_struct.heap_top+CHUNK_SIZE*n>=HEAP_MAXTOP)
-  804af5:	8b 05 11 fa c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0fa11]        # 41450c <cur_proc>
-  804afb:	48 63 d0             	movsxd rdx,eax
-  804afe:	48 89 d0             	mov    rax,rdx
-  804b01:	48 01 c0             	add    rax,rax
-  804b04:	48 01 d0             	add    rax,rdx
-  804b07:	48 c1 e0 08          	shl    rax,0x8
-  804b0b:	48 05 b8 84 40 00    	add    rax,0x4084b8
-  804b11:	8b 10                	mov    edx,DWORD PTR [rax]
-  804b13:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
-  804b16:	c1 e0 0c             	shl    eax,0xc
-  804b19:	01 d0                	add    eax,edx
-  804b1b:	3d ff ff ef 01       	cmp    eax,0x1efffff
-  804b20:	7e 0a                	jle    804b2c <sys_malloc+0xd6>
+  804b0f:	8b 05 f7 f9 c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0f9f7]        # 41450c <cur_proc>
+  804b15:	48 63 d0             	movsxd rdx,eax
+  804b18:	48 89 d0             	mov    rax,rdx
+  804b1b:	48 01 c0             	add    rax,rax
+  804b1e:	48 01 d0             	add    rax,rdx
+  804b21:	48 c1 e0 08          	shl    rax,0x8
+  804b25:	48 05 b8 84 40 00    	add    rax,0x4084b8
+  804b2b:	8b 10                	mov    edx,DWORD PTR [rax]
+  804b2d:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  804b30:	c1 e0 0c             	shl    eax,0xc
+  804b33:	01 d0                	add    eax,edx
+  804b35:	3d ff ff ef 01       	cmp    eax,0x1efffff
+  804b3a:	7e 0a                	jle    804b46 <sys_malloc+0xd6>
         {
             //超过顶部
             return NULL;
-  804b22:	b8 00 00 00 00       	mov    eax,0x0
-  804b27:	e9 cf 00 00 00       	jmp    804bfb <sys_malloc+0x1a5>
+  804b3c:	b8 00 00 00 00       	mov    eax,0x0
+  804b41:	e9 cf 00 00 00       	jmp    804c15 <sys_malloc+0x1a5>
         }
         int needed=n-hp->pgn;
-  804b2c:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  804b30:	8b 10                	mov    edx,DWORD PTR [rax]
-  804b32:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
-  804b35:	29 d0                	sub    eax,edx
-  804b37:	89 45 e4             	mov    DWORD PTR [rbp-0x1c],eax
+  804b46:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  804b4a:	8b 10                	mov    edx,DWORD PTR [rax]
+  804b4c:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  804b4f:	29 d0                	sub    eax,edx
+  804b51:	89 45 e4             	mov    DWORD PTR [rbp-0x1c],eax
         char* p=task[cur_proc].mem_struct.heap_top;
-  804b3a:	8b 05 cc f9 c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0f9cc]        # 41450c <cur_proc>
-  804b40:	48 63 d0             	movsxd rdx,eax
-  804b43:	48 89 d0             	mov    rax,rdx
-  804b46:	48 01 c0             	add    rax,rax
-  804b49:	48 01 d0             	add    rax,rdx
-  804b4c:	48 c1 e0 08          	shl    rax,0x8
-  804b50:	48 05 b8 84 40 00    	add    rax,0x4084b8
-  804b56:	8b 00                	mov    eax,DWORD PTR [rax]
-  804b58:	48 98                	cdqe   
-  804b5a:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
+  804b54:	8b 05 b2 f9 c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0f9b2]        # 41450c <cur_proc>
+  804b5a:	48 63 d0             	movsxd rdx,eax
+  804b5d:	48 89 d0             	mov    rax,rdx
+  804b60:	48 01 c0             	add    rax,rax
+  804b63:	48 01 d0             	add    rax,rdx
+  804b66:	48 c1 e0 08          	shl    rax,0x8
+  804b6a:	48 05 b8 84 40 00    	add    rax,0x4084b8
+  804b70:	8b 00                	mov    eax,DWORD PTR [rax]
+  804b72:	48 98                	cdqe   
+  804b74:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
         for(int i=0;i<needed*CHUNK_SIZE/PAGE_SIZE;i++)
-  804b5e:	c7 45 ec 00 00 00 00 	mov    DWORD PTR [rbp-0x14],0x0
-  804b65:	eb 13                	jmp    804b7a <sys_malloc+0x124>
+  804b78:	c7 45 ec 00 00 00 00 	mov    DWORD PTR [rbp-0x14],0x0
+  804b7f:	eb 13                	jmp    804b94 <sys_malloc+0x124>
         {
             *p=0;//触发缺页中断
-  804b67:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  804b6b:	c6 00 00             	mov    BYTE PTR [rax],0x0
+  804b81:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  804b85:	c6 00 00             	mov    BYTE PTR [rax],0x0
             p+=PAGE_SIZE;
-  804b6e:	48 81 45 f0 00 10 00 	add    QWORD PTR [rbp-0x10],0x1000
-  804b75:	00 
+  804b88:	48 81 45 f0 00 10 00 	add    QWORD PTR [rbp-0x10],0x1000
+  804b8f:	00 
         for(int i=0;i<needed*CHUNK_SIZE/PAGE_SIZE;i++)
-  804b76:	83 45 ec 01          	add    DWORD PTR [rbp-0x14],0x1
-  804b7a:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
-  804b7d:	3b 45 e4             	cmp    eax,DWORD PTR [rbp-0x1c]
-  804b80:	7c e5                	jl     804b67 <sys_malloc+0x111>
+  804b90:	83 45 ec 01          	add    DWORD PTR [rbp-0x14],0x1
+  804b94:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+  804b97:	3b 45 e4             	cmp    eax,DWORD PTR [rbp-0x1c]
+  804b9a:	7c e5                	jl     804b81 <sys_malloc+0x111>
         }
     }
     if(hp->pgn>n)
-  804b82:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  804b86:	8b 00                	mov    eax,DWORD PTR [rax]
-  804b88:	39 45 e8             	cmp    DWORD PTR [rbp-0x18],eax
-  804b8b:	7d 59                	jge    804be6 <sys_malloc+0x190>
+  804b9c:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  804ba0:	8b 00                	mov    eax,DWORD PTR [rax]
+  804ba2:	39 45 e8             	cmp    DWORD PTR [rbp-0x18],eax
+  804ba5:	7d 59                	jge    804c00 <sys_malloc+0x190>
     {
         //在后面新建一个头
         char *p=hp;
-  804b8d:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  804b91:	48 89 45 d8          	mov    QWORD PTR [rbp-0x28],rax
+  804ba7:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  804bab:	48 89 45 d8          	mov    QWORD PTR [rbp-0x28],rax
         p+=(n+1)*CHUNK_SIZE;//算上存储头一个
-  804b95:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
-  804b98:	83 c0 01             	add    eax,0x1
-  804b9b:	c1 e0 0c             	shl    eax,0xc
-  804b9e:	48 98                	cdqe   
-  804ba0:	48 01 45 d8          	add    QWORD PTR [rbp-0x28],rax
+  804baf:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  804bb2:	83 c0 01             	add    eax,0x1
+  804bb5:	c1 e0 0c             	shl    eax,0xc
+  804bb8:	48 98                	cdqe   
+  804bba:	48 01 45 d8          	add    QWORD PTR [rbp-0x28],rax
         chunk_header *np=p;
-  804ba4:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
-  804ba8:	48 89 45 d0          	mov    QWORD PTR [rbp-0x30],rax
+  804bbe:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
+  804bc2:	48 89 45 d0          	mov    QWORD PTR [rbp-0x30],rax
         np->pgn=hp->pgn-n-1;
-  804bac:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  804bb0:	8b 00                	mov    eax,DWORD PTR [rax]
-  804bb2:	2b 45 e8             	sub    eax,DWORD PTR [rbp-0x18]
-  804bb5:	8d 50 ff             	lea    edx,[rax-0x1]
-  804bb8:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
-  804bbc:	89 10                	mov    DWORD PTR [rax],edx
+  804bc6:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  804bca:	8b 00                	mov    eax,DWORD PTR [rax]
+  804bcc:	2b 45 e8             	sub    eax,DWORD PTR [rbp-0x18]
+  804bcf:	8d 50 ff             	lea    edx,[rax-0x1]
+  804bd2:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
+  804bd6:	89 10                	mov    DWORD PTR [rax],edx
         np->next=hp->next;
-  804bbe:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  804bc2:	48 8b 50 08          	mov    rdx,QWORD PTR [rax+0x8]
-  804bc6:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
-  804bca:	48 89 50 08          	mov    QWORD PTR [rax+0x8],rdx
+  804bd8:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  804bdc:	48 8b 50 08          	mov    rdx,QWORD PTR [rax+0x8]
+  804be0:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
+  804be4:	48 89 50 08          	mov    QWORD PTR [rax+0x8],rdx
         np->prev=hp;
-  804bce:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
-  804bd2:	48 8b 55 f8          	mov    rdx,QWORD PTR [rbp-0x8]
-  804bd6:	48 89 50 10          	mov    QWORD PTR [rax+0x10],rdx
+  804be8:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
+  804bec:	48 8b 55 f8          	mov    rdx,QWORD PTR [rbp-0x8]
+  804bf0:	48 89 50 10          	mov    QWORD PTR [rax+0x10],rdx
         hp->next=np;
-  804bda:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  804bde:	48 8b 55 d0          	mov    rdx,QWORD PTR [rbp-0x30]
-  804be2:	48 89 50 08          	mov    QWORD PTR [rax+0x8],rdx
+  804bf4:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  804bf8:	48 8b 55 d0          	mov    rdx,QWORD PTR [rbp-0x30]
+  804bfc:	48 89 50 08          	mov    QWORD PTR [rax+0x8],rdx
     }
     hp->alloc=1;//分配完毕
-  804be6:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  804bea:	c7 40 04 01 00 00 00 	mov    DWORD PTR [rax+0x4],0x1
+  804c00:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  804c04:	c7 40 04 01 00 00 00 	mov    DWORD PTR [rax+0x4],0x1
     return (char*)hp+CHUNK_SIZE;//返回后边的第一个数据块地址
-  804bf1:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  804bf5:	48 05 00 10 00 00    	add    rax,0x1000
+  804c0b:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  804c0f:	48 05 00 10 00 00    	add    rax,0x1000
 }
-  804bfb:	5d                   	pop    rbp
-  804bfc:	c3                   	ret    
+  804c15:	5d                   	pop    rbp
+  804c16:	c3                   	ret    
 
-0000000000804bfd <sys_free>:
+0000000000804c17 <sys_free>:
 int sys_free(int ptr)
 {
-  804bfd:	f3 0f 1e fa          	endbr64 
-  804c01:	55                   	push   rbp
-  804c02:	48 89 e5             	mov    rbp,rsp
-  804c05:	89 7d ec             	mov    DWORD PTR [rbp-0x14],edi
+  804c17:	f3 0f 1e fa          	endbr64 
+  804c1b:	55                   	push   rbp
+  804c1c:	48 89 e5             	mov    rbp,rsp
+  804c1f:	89 7d ec             	mov    DWORD PTR [rbp-0x14],edi
     chunk_header *hp=ptr-CHUNK_SIZE;//回退到头
-  804c08:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
-  804c0b:	2d 00 10 00 00       	sub    eax,0x1000
-  804c10:	48 98                	cdqe   
-  804c12:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
+  804c22:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+  804c25:	2d 00 10 00 00       	sub    eax,0x1000
+  804c2a:	48 98                	cdqe   
+  804c2c:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
     hp->alloc=0;
-  804c16:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  804c1a:	c7 40 04 00 00 00 00 	mov    DWORD PTR [rax+0x4],0x0
+  804c30:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  804c34:	c7 40 04 00 00 00 00 	mov    DWORD PTR [rax+0x4],0x0
     //合并
     //向后合并
     chunk_header *p=hp->next;
-  804c21:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  804c25:	48 8b 40 08          	mov    rax,QWORD PTR [rax+0x8]
-  804c29:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
+  804c3b:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  804c3f:	48 8b 40 08          	mov    rax,QWORD PTR [rax+0x8]
+  804c43:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
     while(p!=NULL)
-  804c2d:	eb 2e                	jmp    804c5d <sys_free+0x60>
+  804c47:	eb 2e                	jmp    804c77 <sys_free+0x60>
     {
         if(p->alloc==0)
-  804c2f:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  804c33:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
-  804c36:	85 c0                	test   eax,eax
-  804c38:	75 2c                	jne    804c66 <sys_free+0x69>
+  804c49:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  804c4d:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
+  804c50:	85 c0                	test   eax,eax
+  804c52:	75 2c                	jne    804c80 <sys_free+0x69>
         {
             hp->pgn+=p->pgn+1;//把区域合并
-  804c3a:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  804c3e:	8b 10                	mov    edx,DWORD PTR [rax]
-  804c40:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  804c44:	8b 00                	mov    eax,DWORD PTR [rax]
-  804c46:	83 c0 01             	add    eax,0x1
-  804c49:	01 c2                	add    edx,eax
-  804c4b:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  804c4f:	89 10                	mov    DWORD PTR [rax],edx
+  804c54:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  804c58:	8b 10                	mov    edx,DWORD PTR [rax]
+  804c5a:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  804c5e:	8b 00                	mov    eax,DWORD PTR [rax]
+  804c60:	83 c0 01             	add    eax,0x1
+  804c63:	01 c2                	add    edx,eax
+  804c65:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  804c69:	89 10                	mov    DWORD PTR [rax],edx
         }else
             break;
         p=p->next;
-  804c51:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  804c55:	48 8b 40 08          	mov    rax,QWORD PTR [rax+0x8]
-  804c59:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
+  804c6b:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  804c6f:	48 8b 40 08          	mov    rax,QWORD PTR [rax+0x8]
+  804c73:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
     while(p!=NULL)
-  804c5d:	48 83 7d f8 00       	cmp    QWORD PTR [rbp-0x8],0x0
-  804c62:	75 cb                	jne    804c2f <sys_free+0x32>
-  804c64:	eb 01                	jmp    804c67 <sys_free+0x6a>
+  804c77:	48 83 7d f8 00       	cmp    QWORD PTR [rbp-0x8],0x0
+  804c7c:	75 cb                	jne    804c49 <sys_free+0x32>
+  804c7e:	eb 01                	jmp    804c81 <sys_free+0x6a>
             break;
-  804c66:	90                   	nop
+  804c80:	90                   	nop
     }
     //向前合并
     p=hp->prev;
-  804c67:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  804c6b:	48 8b 40 10          	mov    rax,QWORD PTR [rax+0x10]
-  804c6f:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
+  804c81:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  804c85:	48 8b 40 10          	mov    rax,QWORD PTR [rax+0x10]
+  804c89:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
     while(p!=NULL)
-  804c73:	eb 2e                	jmp    804ca3 <sys_free+0xa6>
+  804c8d:	eb 2e                	jmp    804cbd <sys_free+0xa6>
     {
         if(p->alloc==0)
-  804c75:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  804c79:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
-  804c7c:	85 c0                	test   eax,eax
-  804c7e:	75 2c                	jne    804cac <sys_free+0xaf>
+  804c8f:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  804c93:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
+  804c96:	85 c0                	test   eax,eax
+  804c98:	75 2c                	jne    804cc6 <sys_free+0xaf>
         {
             p->pgn+=hp->pgn+1;//把区域合并
-  804c80:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  804c84:	8b 10                	mov    edx,DWORD PTR [rax]
-  804c86:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  804c8a:	8b 00                	mov    eax,DWORD PTR [rax]
-  804c8c:	83 c0 01             	add    eax,0x1
-  804c8f:	01 c2                	add    edx,eax
-  804c91:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  804c95:	89 10                	mov    DWORD PTR [rax],edx
+  804c9a:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  804c9e:	8b 10                	mov    edx,DWORD PTR [rax]
+  804ca0:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  804ca4:	8b 00                	mov    eax,DWORD PTR [rax]
+  804ca6:	83 c0 01             	add    eax,0x1
+  804ca9:	01 c2                	add    edx,eax
+  804cab:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  804caf:	89 10                	mov    DWORD PTR [rax],edx
         }else
             break;
         p=p->prev;
-  804c97:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  804c9b:	48 8b 40 10          	mov    rax,QWORD PTR [rax+0x10]
-  804c9f:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
+  804cb1:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  804cb5:	48 8b 40 10          	mov    rax,QWORD PTR [rax+0x10]
+  804cb9:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
     while(p!=NULL)
-  804ca3:	48 83 7d f8 00       	cmp    QWORD PTR [rbp-0x8],0x0
-  804ca8:	75 cb                	jne    804c75 <sys_free+0x78>
-  804caa:	eb 01                	jmp    804cad <sys_free+0xb0>
+  804cbd:	48 83 7d f8 00       	cmp    QWORD PTR [rbp-0x8],0x0
+  804cc2:	75 cb                	jne    804c8f <sys_free+0x78>
+  804cc4:	eb 01                	jmp    804cc7 <sys_free+0xb0>
             break;
-  804cac:	90                   	nop
+  804cc6:	90                   	nop
     }
     //合并完成
     return 0;
-  804cad:	b8 00 00 00 00       	mov    eax,0x0
+  804cc7:	b8 00 00 00 00       	mov    eax,0x0
 }
-  804cb2:	5d                   	pop    rbp
-  804cb3:	c3                   	ret    
+  804ccc:	5d                   	pop    rbp
+  804ccd:	c3                   	ret    
 
-0000000000804cb4 <switch_to>:
+0000000000804cce <switch_to>:
 
 void switch_to(struct process *from, struct process *to) {
-  804cb4:	f3 0f 1e fa          	endbr64 
-  804cb8:	55                   	push   rbp
-  804cb9:	48 89 e5             	mov    rbp,rsp
-  804cbc:	53                   	push   rbx
-  804cbd:	48 89 7d f0          	mov    QWORD PTR [rbp-0x10],rdi
-  804cc1:	48 89 75 e8          	mov    QWORD PTR [rbp-0x18],rsi
+  804cce:	f3 0f 1e fa          	endbr64 
+  804cd2:	55                   	push   rbp
+  804cd3:	48 89 e5             	mov    rbp,rsp
+  804cd6:	53                   	push   rbx
+  804cd7:	48 89 7d f0          	mov    QWORD PTR [rbp-0x10],rdi
+  804cdb:	48 89 75 e8          	mov    QWORD PTR [rbp-0x18],rsi
     cur_proc=to-task;
-  804cc5:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  804cc9:	48 2d a0 84 40 00    	sub    rax,0x4084a0
-  804ccf:	48 c1 f8 08          	sar    rax,0x8
-  804cd3:	48 89 c2             	mov    rdx,rax
-  804cd6:	48 b8 ab aa aa aa aa 	movabs rax,0xaaaaaaaaaaaaaaab
-  804cdd:	aa aa aa 
-  804ce0:	48 0f af c2          	imul   rax,rdx
-  804ce4:	89 05 22 f8 c0 ff    	mov    DWORD PTR [rip+0xffffffffffc0f822],eax        # 41450c <cur_proc>
+  804cdf:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  804ce3:	48 2d a0 84 40 00    	sub    rax,0x4084a0
+  804ce9:	48 c1 f8 08          	sar    rax,0x8
+  804ced:	48 89 c2             	mov    rdx,rax
+  804cf0:	48 b8 ab aa aa aa aa 	movabs rax,0xaaaaaaaaaaaaaaab
+  804cf7:	aa aa aa 
+  804cfa:	48 0f af c2          	imul   rax,rdx
+  804cfe:	89 05 08 f8 c0 ff    	mov    DWORD PTR [rip+0xffffffffffc0f808],eax        # 41450c <cur_proc>
     asm volatile("mov %%rsp,%0\r\n"
-  804cea:	4c 8b 4d f0          	mov    r9,QWORD PTR [rbp-0x10]
-  804cee:	4c 8b 55 f0          	mov    r10,QWORD PTR [rbp-0x10]
-  804cf2:	4c 8b 5d f0          	mov    r11,QWORD PTR [rbp-0x10]
-  804cf6:	48 8b 5d f0          	mov    rbx,QWORD PTR [rbp-0x10]
-  804cfa:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  804cfe:	48 8b 55 e8          	mov    rdx,QWORD PTR [rbp-0x18]
-  804d02:	48 8b 4d e8          	mov    rcx,QWORD PTR [rbp-0x18]
-  804d06:	4c 8b 45 e8          	mov    r8,QWORD PTR [rbp-0x18]
-  804d0a:	48 8b 7d f0          	mov    rdi,QWORD PTR [rbp-0x10]
-  804d0e:	48 8b 75 e8          	mov    rsi,QWORD PTR [rbp-0x18]
-  804d12:	49 89 a1 68 02 00 00 	mov    QWORD PTR [r9+0x268],rsp
-  804d19:	48 8d 05 24 00 00 00 	lea    rax,[rip+0x24]        # 804d44 <done>
-  804d20:	49 89 82 38 02 00 00 	mov    QWORD PTR [r10+0x238],rax
-  804d27:	41 8c a3 a8 02 00 00 	mov    WORD PTR [r11+0x2a8],fs
-  804d2e:	8c ab b0 02 00 00    	mov    WORD PTR [rbx+0x2b0],gs
-  804d34:	48 8b a1 68 02 00 00 	mov    rsp,QWORD PTR [rcx+0x268]
-  804d3b:	41 ff b0 38 02 00 00 	push   QWORD PTR [r8+0x238]
-  804d42:	eb 08                	jmp    804d4c <__switch_to>
+  804d04:	4c 8b 4d f0          	mov    r9,QWORD PTR [rbp-0x10]
+  804d08:	4c 8b 55 f0          	mov    r10,QWORD PTR [rbp-0x10]
+  804d0c:	4c 8b 5d f0          	mov    r11,QWORD PTR [rbp-0x10]
+  804d10:	48 8b 5d f0          	mov    rbx,QWORD PTR [rbp-0x10]
+  804d14:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  804d18:	48 8b 55 e8          	mov    rdx,QWORD PTR [rbp-0x18]
+  804d1c:	48 8b 4d e8          	mov    rcx,QWORD PTR [rbp-0x18]
+  804d20:	4c 8b 45 e8          	mov    r8,QWORD PTR [rbp-0x18]
+  804d24:	48 8b 7d f0          	mov    rdi,QWORD PTR [rbp-0x10]
+  804d28:	48 8b 75 e8          	mov    rsi,QWORD PTR [rbp-0x18]
+  804d2c:	49 89 a1 68 02 00 00 	mov    QWORD PTR [r9+0x268],rsp
+  804d33:	48 8d 05 24 00 00 00 	lea    rax,[rip+0x24]        # 804d5e <done>
+  804d3a:	49 89 82 38 02 00 00 	mov    QWORD PTR [r10+0x238],rax
+  804d41:	41 8c a3 a8 02 00 00 	mov    WORD PTR [r11+0x2a8],fs
+  804d48:	8c ab b0 02 00 00    	mov    WORD PTR [rbx+0x2b0],gs
+  804d4e:	48 8b a1 68 02 00 00 	mov    rsp,QWORD PTR [rcx+0x268]
+  804d55:	41 ff b0 38 02 00 00 	push   QWORD PTR [r8+0x238]
+  804d5c:	eb 08                	jmp    804d66 <__switch_to>
 
-0000000000804d44 <done>:
-  804d44:	90                   	nop
+0000000000804d5e <done>:
+  804d5e:	90                   	nop
                  "nop":"=m"(from->regs.rsp),"=m"(from->regs.rip),
                  "=m"(from->regs.fs),"=m"(from->regs.gs):
                 "m"(to->regs.fs),"m"(to->regs.gs),"m"(to->regs.rsp),"m"(to->regs.rip),
                 "D"(from),"S"(to));
 
 }
-  804d45:	90                   	nop
-  804d46:	48 8b 5d f8          	mov    rbx,QWORD PTR [rbp-0x8]
-  804d4a:	c9                   	leave  
-  804d4b:	c3                   	ret    
+  804d5f:	90                   	nop
+  804d60:	48 8b 5d f8          	mov    rbx,QWORD PTR [rbp-0x8]
+  804d64:	c9                   	leave  
+  804d65:	c3                   	ret    
 
-0000000000804d4c <__switch_to>:
+0000000000804d66 <__switch_to>:
 void __switch_to(struct process *from, struct process *to) {
-  804d4c:	f3 0f 1e fa          	endbr64 
-  804d50:	55                   	push   rbp
-  804d51:	48 89 e5             	mov    rbp,rsp
-  804d54:	53                   	push   rbx
-  804d55:	48 83 ec 18          	sub    rsp,0x18
-  804d59:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
-  804d5d:	48 89 75 e0          	mov    QWORD PTR [rbp-0x20],rsi
+  804d66:	f3 0f 1e fa          	endbr64 
+  804d6a:	55                   	push   rbp
+  804d6b:	48 89 e5             	mov    rbp,rsp
+  804d6e:	53                   	push   rbx
+  804d6f:	48 83 ec 18          	sub    rsp,0x18
+  804d73:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
+  804d77:	48 89 75 e0          	mov    QWORD PTR [rbp-0x20],rsi
     set_tss(to->tss.rsp0,tss->rsp1,tss->rsp2,tss->ists[0],tss->ists[1],
             tss->ists[2],tss->ists[3],tss->ists[4],tss->ists[5],tss->ists[6]);
-  804d61:	48 8b 05 38 57 00 00 	mov    rax,QWORD PTR [rip+0x5738]        # 80a4a0 <tss>
+  804d7b:	48 8b 05 1e 57 00 00 	mov    rax,QWORD PTR [rip+0x571e]        # 80a4a0 <tss>
     set_tss(to->tss.rsp0,tss->rsp1,tss->rsp2,tss->ists[0],tss->ists[1],
-  804d68:	4c 8b 50 54          	mov    r10,QWORD PTR [rax+0x54]
+  804d82:	4c 8b 50 54          	mov    r10,QWORD PTR [rax+0x54]
             tss->ists[2],tss->ists[3],tss->ists[4],tss->ists[5],tss->ists[6]);
-  804d6c:	48 8b 05 2d 57 00 00 	mov    rax,QWORD PTR [rip+0x572d]        # 80a4a0 <tss>
+  804d86:	48 8b 05 13 57 00 00 	mov    rax,QWORD PTR [rip+0x5713]        # 80a4a0 <tss>
     set_tss(to->tss.rsp0,tss->rsp1,tss->rsp2,tss->ists[0],tss->ists[1],
-  804d73:	4c 8b 48 4c          	mov    r9,QWORD PTR [rax+0x4c]
+  804d8d:	4c 8b 48 4c          	mov    r9,QWORD PTR [rax+0x4c]
             tss->ists[2],tss->ists[3],tss->ists[4],tss->ists[5],tss->ists[6]);
-  804d77:	48 8b 05 22 57 00 00 	mov    rax,QWORD PTR [rip+0x5722]        # 80a4a0 <tss>
+  804d91:	48 8b 05 08 57 00 00 	mov    rax,QWORD PTR [rip+0x5708]        # 80a4a0 <tss>
     set_tss(to->tss.rsp0,tss->rsp1,tss->rsp2,tss->ists[0],tss->ists[1],
-  804d7e:	4c 8b 40 44          	mov    r8,QWORD PTR [rax+0x44]
+  804d98:	4c 8b 40 44          	mov    r8,QWORD PTR [rax+0x44]
             tss->ists[2],tss->ists[3],tss->ists[4],tss->ists[5],tss->ists[6]);
-  804d82:	48 8b 05 17 57 00 00 	mov    rax,QWORD PTR [rip+0x5717]        # 80a4a0 <tss>
+  804d9c:	48 8b 05 fd 56 00 00 	mov    rax,QWORD PTR [rip+0x56fd]        # 80a4a0 <tss>
     set_tss(to->tss.rsp0,tss->rsp1,tss->rsp2,tss->ists[0],tss->ists[1],
-  804d89:	48 8b 78 3c          	mov    rdi,QWORD PTR [rax+0x3c]
+  804da3:	48 8b 78 3c          	mov    rdi,QWORD PTR [rax+0x3c]
             tss->ists[2],tss->ists[3],tss->ists[4],tss->ists[5],tss->ists[6]);
-  804d8d:	48 8b 05 0c 57 00 00 	mov    rax,QWORD PTR [rip+0x570c]        # 80a4a0 <tss>
+  804da7:	48 8b 05 f2 56 00 00 	mov    rax,QWORD PTR [rip+0x56f2]        # 80a4a0 <tss>
     set_tss(to->tss.rsp0,tss->rsp1,tss->rsp2,tss->ists[0],tss->ists[1],
-  804d94:	48 8b 58 34          	mov    rbx,QWORD PTR [rax+0x34]
-  804d98:	48 8b 05 01 57 00 00 	mov    rax,QWORD PTR [rip+0x5701]        # 80a4a0 <tss>
-  804d9f:	4c 8b 58 2c          	mov    r11,QWORD PTR [rax+0x2c]
-  804da3:	48 8b 05 f6 56 00 00 	mov    rax,QWORD PTR [rip+0x56f6]        # 80a4a0 <tss>
-  804daa:	48 8b 48 24          	mov    rcx,QWORD PTR [rax+0x24]
-  804dae:	48 8b 05 eb 56 00 00 	mov    rax,QWORD PTR [rip+0x56eb]        # 80a4a0 <tss>
-  804db5:	48 8b 50 14          	mov    rdx,QWORD PTR [rax+0x14]
-  804db9:	48 8b 05 e0 56 00 00 	mov    rax,QWORD PTR [rip+0x56e0]        # 80a4a0 <tss>
-  804dc0:	48 8b 70 0c          	mov    rsi,QWORD PTR [rax+0xc]
-  804dc4:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  804dc8:	48 8b 80 c8 01 00 00 	mov    rax,QWORD PTR [rax+0x1c8]
-  804dcf:	41 52                	push   r10
-  804dd1:	41 51                	push   r9
-  804dd3:	41 50                	push   r8
-  804dd5:	57                   	push   rdi
-  804dd6:	49 89 d9             	mov    r9,rbx
-  804dd9:	4d 89 d8             	mov    r8,r11
-  804ddc:	48 89 c7             	mov    rdi,rax
-  804ddf:	e8 33 00 00 00       	call   804e17 <set_tss>
-  804de4:	48 83 c4 20          	add    rsp,0x20
+  804dae:	48 8b 58 34          	mov    rbx,QWORD PTR [rax+0x34]
+  804db2:	48 8b 05 e7 56 00 00 	mov    rax,QWORD PTR [rip+0x56e7]        # 80a4a0 <tss>
+  804db9:	4c 8b 58 2c          	mov    r11,QWORD PTR [rax+0x2c]
+  804dbd:	48 8b 05 dc 56 00 00 	mov    rax,QWORD PTR [rip+0x56dc]        # 80a4a0 <tss>
+  804dc4:	48 8b 48 24          	mov    rcx,QWORD PTR [rax+0x24]
+  804dc8:	48 8b 05 d1 56 00 00 	mov    rax,QWORD PTR [rip+0x56d1]        # 80a4a0 <tss>
+  804dcf:	48 8b 50 14          	mov    rdx,QWORD PTR [rax+0x14]
+  804dd3:	48 8b 05 c6 56 00 00 	mov    rax,QWORD PTR [rip+0x56c6]        # 80a4a0 <tss>
+  804dda:	48 8b 70 0c          	mov    rsi,QWORD PTR [rax+0xc]
+  804dde:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  804de2:	48 8b 80 c8 01 00 00 	mov    rax,QWORD PTR [rax+0x1c8]
+  804de9:	41 52                	push   r10
+  804deb:	41 51                	push   r9
+  804ded:	41 50                	push   r8
+  804def:	57                   	push   rdi
+  804df0:	49 89 d9             	mov    r9,rbx
+  804df3:	4d 89 d8             	mov    r8,r11
+  804df6:	48 89 c7             	mov    rdi,rax
+  804df9:	e8 33 00 00 00       	call   804e31 <set_tss>
+  804dfe:	48 83 c4 20          	add    rsp,0x20
     asm volatile("mov %%fs,%0\r\n"
-  804de8:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  804dec:	48 8b 75 e0          	mov    rsi,QWORD PTR [rbp-0x20]
-  804df0:	48 8b 55 e8          	mov    rdx,QWORD PTR [rbp-0x18]
-  804df4:	48 8b 4d e8          	mov    rcx,QWORD PTR [rbp-0x18]
-  804df8:	8c a0 a8 02 00 00    	mov    WORD PTR [rax+0x2a8],fs
-  804dfe:	8c ae b0 02 00 00    	mov    WORD PTR [rsi+0x2b0],gs
-  804e04:	8e a2 a8 02 00 00    	mov    fs,WORD PTR [rdx+0x2a8]
-  804e0a:	8e a9 b0 02 00 00    	mov    gs,WORD PTR [rcx+0x2b0]
+  804e02:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  804e06:	48 8b 75 e0          	mov    rsi,QWORD PTR [rbp-0x20]
+  804e0a:	48 8b 55 e8          	mov    rdx,QWORD PTR [rbp-0x18]
+  804e0e:	48 8b 4d e8          	mov    rcx,QWORD PTR [rbp-0x18]
+  804e12:	8c a0 a8 02 00 00    	mov    WORD PTR [rax+0x2a8],fs
+  804e18:	8c ae b0 02 00 00    	mov    WORD PTR [rsi+0x2b0],gs
+  804e1e:	8e a2 a8 02 00 00    	mov    fs,WORD PTR [rdx+0x2a8]
+  804e24:	8e a9 b0 02 00 00    	mov    gs,WORD PTR [rcx+0x2b0]
                  "mov %%gs,%1\r\n"
                  "mov %2,%%fs\r\n"
                  "mov %3,%%gs":"=m"(to->regs.fs),"=m"(to->regs.gs):
                  "m"(from->regs.fs),"m"(from->regs.gs));
 }
-  804e10:	90                   	nop
-  804e11:	48 8b 5d f8          	mov    rbx,QWORD PTR [rbp-0x8]
-  804e15:	c9                   	leave  
-  804e16:	c3                   	ret    
+  804e2a:	90                   	nop
+  804e2b:	48 8b 5d f8          	mov    rbx,QWORD PTR [rbp-0x8]
+  804e2f:	c9                   	leave  
+  804e30:	c3                   	ret    
 
-0000000000804e17 <set_tss>:
+0000000000804e31 <set_tss>:
 
 void set_tss(u64 rsp0,u64 rsp1,u64 rsp2,u64 ist0,u64 ist1,u64 ist2,u64 ist3,u64 ist4,u64 ist5,u64 ist6){
-  804e17:	f3 0f 1e fa          	endbr64 
-  804e1b:	55                   	push   rbp
-  804e1c:	48 89 e5             	mov    rbp,rsp
-  804e1f:	48 89 7d f8          	mov    QWORD PTR [rbp-0x8],rdi
-  804e23:	48 89 75 f0          	mov    QWORD PTR [rbp-0x10],rsi
-  804e27:	48 89 55 e8          	mov    QWORD PTR [rbp-0x18],rdx
-  804e2b:	48 89 4d e0          	mov    QWORD PTR [rbp-0x20],rcx
-  804e2f:	4c 89 45 d8          	mov    QWORD PTR [rbp-0x28],r8
-  804e33:	4c 89 4d d0          	mov    QWORD PTR [rbp-0x30],r9
+  804e31:	f3 0f 1e fa          	endbr64 
+  804e35:	55                   	push   rbp
+  804e36:	48 89 e5             	mov    rbp,rsp
+  804e39:	48 89 7d f8          	mov    QWORD PTR [rbp-0x8],rdi
+  804e3d:	48 89 75 f0          	mov    QWORD PTR [rbp-0x10],rsi
+  804e41:	48 89 55 e8          	mov    QWORD PTR [rbp-0x18],rdx
+  804e45:	48 89 4d e0          	mov    QWORD PTR [rbp-0x20],rcx
+  804e49:	4c 89 45 d8          	mov    QWORD PTR [rbp-0x28],r8
+  804e4d:	4c 89 4d d0          	mov    QWORD PTR [rbp-0x30],r9
     tss->rsp0=rsp0;
-  804e37:	48 8b 05 62 56 00 00 	mov    rax,QWORD PTR [rip+0x5662]        # 80a4a0 <tss>
-  804e3e:	48 8b 55 f8          	mov    rdx,QWORD PTR [rbp-0x8]
-  804e42:	48 89 50 04          	mov    QWORD PTR [rax+0x4],rdx
+  804e51:	48 8b 05 48 56 00 00 	mov    rax,QWORD PTR [rip+0x5648]        # 80a4a0 <tss>
+  804e58:	48 8b 55 f8          	mov    rdx,QWORD PTR [rbp-0x8]
+  804e5c:	48 89 50 04          	mov    QWORD PTR [rax+0x4],rdx
     tss->rsp1=rsp1;
-  804e46:	48 8b 05 53 56 00 00 	mov    rax,QWORD PTR [rip+0x5653]        # 80a4a0 <tss>
-  804e4d:	48 8b 55 f0          	mov    rdx,QWORD PTR [rbp-0x10]
-  804e51:	48 89 50 0c          	mov    QWORD PTR [rax+0xc],rdx
+  804e60:	48 8b 05 39 56 00 00 	mov    rax,QWORD PTR [rip+0x5639]        # 80a4a0 <tss>
+  804e67:	48 8b 55 f0          	mov    rdx,QWORD PTR [rbp-0x10]
+  804e6b:	48 89 50 0c          	mov    QWORD PTR [rax+0xc],rdx
     tss->rsp2=rsp2;
-  804e55:	48 8b 05 44 56 00 00 	mov    rax,QWORD PTR [rip+0x5644]        # 80a4a0 <tss>
-  804e5c:	48 8b 55 e8          	mov    rdx,QWORD PTR [rbp-0x18]
-  804e60:	48 89 50 14          	mov    QWORD PTR [rax+0x14],rdx
+  804e6f:	48 8b 05 2a 56 00 00 	mov    rax,QWORD PTR [rip+0x562a]        # 80a4a0 <tss>
+  804e76:	48 8b 55 e8          	mov    rdx,QWORD PTR [rbp-0x18]
+  804e7a:	48 89 50 14          	mov    QWORD PTR [rax+0x14],rdx
     tss->ists[0]=ist0;
-  804e64:	48 8b 05 35 56 00 00 	mov    rax,QWORD PTR [rip+0x5635]        # 80a4a0 <tss>
-  804e6b:	48 8b 55 e0          	mov    rdx,QWORD PTR [rbp-0x20]
-  804e6f:	48 89 50 24          	mov    QWORD PTR [rax+0x24],rdx
+  804e7e:	48 8b 05 1b 56 00 00 	mov    rax,QWORD PTR [rip+0x561b]        # 80a4a0 <tss>
+  804e85:	48 8b 55 e0          	mov    rdx,QWORD PTR [rbp-0x20]
+  804e89:	48 89 50 24          	mov    QWORD PTR [rax+0x24],rdx
     tss->ists[1]=ist1;
-  804e73:	48 8b 05 26 56 00 00 	mov    rax,QWORD PTR [rip+0x5626]        # 80a4a0 <tss>
-  804e7a:	48 8b 55 d8          	mov    rdx,QWORD PTR [rbp-0x28]
-  804e7e:	48 89 50 2c          	mov    QWORD PTR [rax+0x2c],rdx
+  804e8d:	48 8b 05 0c 56 00 00 	mov    rax,QWORD PTR [rip+0x560c]        # 80a4a0 <tss>
+  804e94:	48 8b 55 d8          	mov    rdx,QWORD PTR [rbp-0x28]
+  804e98:	48 89 50 2c          	mov    QWORD PTR [rax+0x2c],rdx
     tss->ists[2]=ist2;
-  804e82:	48 8b 05 17 56 00 00 	mov    rax,QWORD PTR [rip+0x5617]        # 80a4a0 <tss>
-  804e89:	48 8b 55 d0          	mov    rdx,QWORD PTR [rbp-0x30]
-  804e8d:	48 89 50 34          	mov    QWORD PTR [rax+0x34],rdx
+  804e9c:	48 8b 05 fd 55 00 00 	mov    rax,QWORD PTR [rip+0x55fd]        # 80a4a0 <tss>
+  804ea3:	48 8b 55 d0          	mov    rdx,QWORD PTR [rbp-0x30]
+  804ea7:	48 89 50 34          	mov    QWORD PTR [rax+0x34],rdx
     tss->ists[3]=ist3;
-  804e91:	48 8b 05 08 56 00 00 	mov    rax,QWORD PTR [rip+0x5608]        # 80a4a0 <tss>
-  804e98:	48 8b 55 10          	mov    rdx,QWORD PTR [rbp+0x10]
-  804e9c:	48 89 50 3c          	mov    QWORD PTR [rax+0x3c],rdx
+  804eab:	48 8b 05 ee 55 00 00 	mov    rax,QWORD PTR [rip+0x55ee]        # 80a4a0 <tss>
+  804eb2:	48 8b 55 10          	mov    rdx,QWORD PTR [rbp+0x10]
+  804eb6:	48 89 50 3c          	mov    QWORD PTR [rax+0x3c],rdx
     tss->ists[4]=ist4;
-  804ea0:	48 8b 05 f9 55 00 00 	mov    rax,QWORD PTR [rip+0x55f9]        # 80a4a0 <tss>
-  804ea7:	48 8b 55 18          	mov    rdx,QWORD PTR [rbp+0x18]
-  804eab:	48 89 50 44          	mov    QWORD PTR [rax+0x44],rdx
+  804eba:	48 8b 05 df 55 00 00 	mov    rax,QWORD PTR [rip+0x55df]        # 80a4a0 <tss>
+  804ec1:	48 8b 55 18          	mov    rdx,QWORD PTR [rbp+0x18]
+  804ec5:	48 89 50 44          	mov    QWORD PTR [rax+0x44],rdx
     tss->ists[5]=ist5;
-  804eaf:	48 8b 05 ea 55 00 00 	mov    rax,QWORD PTR [rip+0x55ea]        # 80a4a0 <tss>
-  804eb6:	48 8b 55 20          	mov    rdx,QWORD PTR [rbp+0x20]
-  804eba:	48 89 50 4c          	mov    QWORD PTR [rax+0x4c],rdx
+  804ec9:	48 8b 05 d0 55 00 00 	mov    rax,QWORD PTR [rip+0x55d0]        # 80a4a0 <tss>
+  804ed0:	48 8b 55 20          	mov    rdx,QWORD PTR [rbp+0x20]
+  804ed4:	48 89 50 4c          	mov    QWORD PTR [rax+0x4c],rdx
     tss->ists[6]=ist6;
-  804ebe:	48 8b 05 db 55 00 00 	mov    rax,QWORD PTR [rip+0x55db]        # 80a4a0 <tss>
-  804ec5:	48 8b 55 28          	mov    rdx,QWORD PTR [rbp+0x28]
-  804ec9:	48 89 50 54          	mov    QWORD PTR [rax+0x54],rdx
+  804ed8:	48 8b 05 c1 55 00 00 	mov    rax,QWORD PTR [rip+0x55c1]        # 80a4a0 <tss>
+  804edf:	48 8b 55 28          	mov    rdx,QWORD PTR [rbp+0x28]
+  804ee3:	48 89 50 54          	mov    QWORD PTR [rax+0x54],rdx
 }
-  804ecd:	90                   	nop
-  804ece:	5d                   	pop    rbp
-  804ecf:	c3                   	ret    
-
-0000000000804ed0 <outb>:
-  804ed0:	66 89 fa             	mov    dx,di
-  804ed3:	66 89 f0             	mov    ax,si
-  804ed6:	ee                   	out    dx,al
-  804ed7:	e8 29 00 00 00       	call   804f05 <io_delay>
-  804edc:	c3                   	ret    
-
-0000000000804edd <outw>:
-  804edd:	66 89 fa             	mov    dx,di
-  804ee0:	66 89 f0             	mov    ax,si
-  804ee3:	66 ef                	out    dx,ax
-  804ee5:	90                   	nop
-  804ee6:	90                   	nop
   804ee7:	90                   	nop
-  804ee8:	c3                   	ret    
+  804ee8:	5d                   	pop    rbp
+  804ee9:	c3                   	ret    
+  804eea:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
 
-0000000000804ee9 <inb>:
-  804ee9:	31 c0                	xor    eax,eax
-  804eeb:	66 89 fa             	mov    dx,di
-  804eee:	ec                   	in     al,dx
-  804eef:	90                   	nop
-  804ef0:	90                   	nop
-  804ef1:	90                   	nop
-  804ef2:	c3                   	ret    
+0000000000804ef0 <outb>:
+  804ef0:	66 89 fa             	mov    dx,di
+  804ef3:	66 89 f0             	mov    ax,si
+  804ef6:	ee                   	out    dx,al
+  804ef7:	e8 29 00 00 00       	call   804f25 <io_delay>
+  804efc:	c3                   	ret    
 
-0000000000804ef3 <inw>:
-  804ef3:	31 c0                	xor    eax,eax
-  804ef5:	66 89 fa             	mov    dx,di
-  804ef8:	66 ed                	in     ax,dx
-  804efa:	90                   	nop
-  804efb:	90                   	nop
-  804efc:	90                   	nop
-  804efd:	c3                   	ret    
-
-0000000000804efe <eoi>:
-  804efe:	b0 20                	mov    al,0x20
-  804f00:	e6 a0                	out    0xa0,al
-  804f02:	e6 20                	out    0x20,al
-  804f04:	c3                   	ret    
-
-0000000000804f05 <io_delay>:
+0000000000804efd <outw>:
+  804efd:	66 89 fa             	mov    dx,di
+  804f00:	66 89 f0             	mov    ax,si
+  804f03:	66 ef                	out    dx,ax
   804f05:	90                   	nop
   804f06:	90                   	nop
   804f07:	90                   	nop
-  804f08:	90                   	nop
-  804f09:	c3                   	ret    
+  804f08:	c3                   	ret    
 
-0000000000804f0a <turn_on_int>:
-  804f0a:	b0 f8                	mov    al,0xf8
-  804f0c:	e6 21                	out    0x21,al
-  804f0e:	e8 f2 ff ff ff       	call   804f05 <io_delay>
-  804f13:	b0 af                	mov    al,0xaf
-  804f15:	e6 a1                	out    0xa1,al
-  804f17:	e8 e9 ff ff ff       	call   804f05 <io_delay>
-  804f1c:	b8 00 70 10 00       	mov    eax,0x107000
-  804f21:	0f 01 18             	lidt   [rax]
-  804f24:	90                   	nop
+0000000000804f09 <inb>:
+  804f09:	31 c0                	xor    eax,eax
+  804f0b:	66 89 fa             	mov    dx,di
+  804f0e:	ec                   	in     al,dx
+  804f0f:	90                   	nop
+  804f10:	90                   	nop
+  804f11:	90                   	nop
+  804f12:	c3                   	ret    
+
+0000000000804f13 <inw>:
+  804f13:	31 c0                	xor    eax,eax
+  804f15:	66 89 fa             	mov    dx,di
+  804f18:	66 ed                	in     ax,dx
+  804f1a:	90                   	nop
+  804f1b:	90                   	nop
+  804f1c:	90                   	nop
+  804f1d:	c3                   	ret    
+
+0000000000804f1e <eoi>:
+  804f1e:	b0 20                	mov    al,0x20
+  804f20:	e6 a0                	out    0xa0,al
+  804f22:	e6 20                	out    0x20,al
+  804f24:	c3                   	ret    
+
+0000000000804f25 <io_delay>:
   804f25:	90                   	nop
   804f26:	90                   	nop
   804f27:	90                   	nop
-  804f28:	fb                   	sti    
+  804f28:	90                   	nop
   804f29:	c3                   	ret    
 
-0000000000804f2a <report_back_trace_of_err>:
-  804f2a:	67 8b 44 24 04       	mov    eax,DWORD PTR [esp+0x4]
-  804f2f:	50                   	push   rax
-  804f30:	68 39 4f 80 00       	push   0x804f39
-  804f35:	83 c4 08             	add    esp,0x8
-  804f38:	c3                   	ret    
+0000000000804f2a <turn_on_int>:
+  804f2a:	b0 f8                	mov    al,0xf8
+  804f2c:	e6 21                	out    0x21,al
+  804f2e:	e8 f2 ff ff ff       	call   804f25 <io_delay>
+  804f33:	b0 af                	mov    al,0xaf
+  804f35:	e6 a1                	out    0xa1,al
+  804f37:	e8 e9 ff ff ff       	call   804f25 <io_delay>
+  804f3c:	b8 00 70 10 00       	mov    eax,0x107000
+  804f41:	0f 01 18             	lidt   [rax]
+  804f44:	90                   	nop
+  804f45:	90                   	nop
+  804f46:	90                   	nop
+  804f47:	90                   	nop
+  804f48:	fb                   	sti    
+  804f49:	c3                   	ret    
 
-0000000000804f39 <bt_msg>:
-  804f39:	65 72 72             	gs jb  804fae <fill_desc+0x4e>
-  804f3c:	6f                   	outs   dx,DWORD PTR ds:[rsi]
-  804f3d:	72 20                	jb     804f5f <init_gdt+0x11>
-  804f3f:	6f                   	outs   dx,DWORD PTR ds:[rsi]
-  804f40:	63 63 75             	movsxd esp,DWORD PTR [rbx+0x75]
-  804f43:	72 73                	jb     804fb8 <fill_desc+0x58>
-  804f45:	20 61 74             	and    BYTE PTR [rcx+0x74],ah
-  804f48:	3a 25 78 5c 6e 00    	cmp    ah,BYTE PTR [rip+0x6e5c78]        # eeabc6 <_knl_end+0x2eabc6>
+0000000000804f4a <report_back_trace_of_err>:
+  804f4a:	67 8b 44 24 04       	mov    eax,DWORD PTR [esp+0x4]
+  804f4f:	50                   	push   rax
+  804f50:	68 59 4f 80 00       	push   0x804f59
+  804f55:	83 c4 08             	add    esp,0x8
+  804f58:	c3                   	ret    
 
-0000000000804f4e <init_gdt>:
+0000000000804f59 <bt_msg>:
+  804f59:	65 72 72             	gs jb  804fce <fill_desc+0x4e>
+  804f5c:	6f                   	outs   dx,DWORD PTR ds:[rsi]
+  804f5d:	72 20                	jb     804f7f <init_gdt+0x11>
+  804f5f:	6f                   	outs   dx,DWORD PTR ds:[rsi]
+  804f60:	63 63 75             	movsxd esp,DWORD PTR [rbx+0x75]
+  804f63:	72 73                	jb     804fd8 <fill_desc+0x58>
+  804f65:	20 61 74             	and    BYTE PTR [rcx+0x74],ah
+  804f68:	3a 25 78 5c 6e 00    	cmp    ah,BYTE PTR [rip+0x6e5c78]        # eeabe6 <_knl_end+0x2eabe6>
+
+0000000000804f6e <init_gdt>:
 #include "gdt.h"
 #include "int.h"
 descriptor *gdt=GDT_ADDR;
 extern char *gdtptr;
 int init_gdt()
 {
-  804f4e:	f3 0f 1e fa          	endbr64 
-  804f52:	55                   	push   rbp
-  804f53:	48 89 e5             	mov    rbp,rsp
+  804f6e:	f3 0f 1e fa          	endbr64 
+  804f72:	55                   	push   rbp
+  804f73:	48 89 e5             	mov    rbp,rsp
 //    fill_desc(0x108000,108,SEG_SYS_TSS|SEG_PRESENT,4);
     asm volatile("mov $0x48,%ax\r\n"
-  804f56:	66 b8 48 00          	mov    ax,0x48
-  804f5a:	0f 00 d8             	ltr    ax
+  804f76:	66 b8 48 00          	mov    ax,0x48
+  804f7a:	0f 00 d8             	ltr    ax
                  "ltr %ax");  
 }
-  804f5d:	90                   	nop
-  804f5e:	5d                   	pop    rbp
-  804f5f:	c3                   	ret    
+  804f7d:	90                   	nop
+  804f7e:	5d                   	pop    rbp
+  804f7f:	c3                   	ret    
 
-0000000000804f60 <fill_desc>:
+0000000000804f80 <fill_desc>:
 void fill_desc(u64 base, u64 limit, u16 attr, u32 index)
 {
-  804f60:	f3 0f 1e fa          	endbr64 
-  804f64:	55                   	push   rbp
-  804f65:	48 89 e5             	mov    rbp,rsp
-  804f68:	48 89 7d f8          	mov    QWORD PTR [rbp-0x8],rdi
-  804f6c:	48 89 75 f0          	mov    QWORD PTR [rbp-0x10],rsi
-  804f70:	89 d0                	mov    eax,edx
-  804f72:	89 4d e8             	mov    DWORD PTR [rbp-0x18],ecx
-  804f75:	66 89 45 ec          	mov    WORD PTR [rbp-0x14],ax
+  804f80:	f3 0f 1e fa          	endbr64 
+  804f84:	55                   	push   rbp
+  804f85:	48 89 e5             	mov    rbp,rsp
+  804f88:	48 89 7d f8          	mov    QWORD PTR [rbp-0x8],rdi
+  804f8c:	48 89 75 f0          	mov    QWORD PTR [rbp-0x10],rsi
+  804f90:	89 d0                	mov    eax,edx
+  804f92:	89 4d e8             	mov    DWORD PTR [rbp-0x18],ecx
+  804f95:	66 89 45 ec          	mov    WORD PTR [rbp-0x14],ax
     gdt[index].base_12=base&0xffff;
-  804f79:	48 8b 15 28 55 00 00 	mov    rdx,QWORD PTR [rip+0x5528]        # 80a4a8 <gdt>
-  804f80:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
-  804f83:	48 c1 e0 04          	shl    rax,0x4
-  804f87:	48 01 d0             	add    rax,rdx
-  804f8a:	48 8b 55 f8          	mov    rdx,QWORD PTR [rbp-0x8]
-  804f8e:	66 89 50 02          	mov    WORD PTR [rax+0x2],dx
+  804f99:	48 8b 15 08 55 00 00 	mov    rdx,QWORD PTR [rip+0x5508]        # 80a4a8 <gdt>
+  804fa0:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  804fa3:	48 c1 e0 04          	shl    rax,0x4
+  804fa7:	48 01 d0             	add    rax,rdx
+  804faa:	48 8b 55 f8          	mov    rdx,QWORD PTR [rbp-0x8]
+  804fae:	66 89 50 02          	mov    WORD PTR [rax+0x2],dx
     gdt[index].base_3=(base>>16)&0xff;
-  804f92:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  804f96:	48 c1 e8 10          	shr    rax,0x10
-  804f9a:	48 89 c1             	mov    rcx,rax
-  804f9d:	48 8b 15 04 55 00 00 	mov    rdx,QWORD PTR [rip+0x5504]        # 80a4a8 <gdt>
-  804fa4:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
-  804fa7:	48 c1 e0 04          	shl    rax,0x4
-  804fab:	48 01 d0             	add    rax,rdx
-  804fae:	89 ca                	mov    edx,ecx
-  804fb0:	88 50 04             	mov    BYTE PTR [rax+0x4],dl
+  804fb2:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  804fb6:	48 c1 e8 10          	shr    rax,0x10
+  804fba:	48 89 c1             	mov    rcx,rax
+  804fbd:	48 8b 15 e4 54 00 00 	mov    rdx,QWORD PTR [rip+0x54e4]        # 80a4a8 <gdt>
+  804fc4:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  804fc7:	48 c1 e0 04          	shl    rax,0x4
+  804fcb:	48 01 d0             	add    rax,rdx
+  804fce:	89 ca                	mov    edx,ecx
+  804fd0:	88 50 04             	mov    BYTE PTR [rax+0x4],dl
     gdt[index].base_4=(base>>24)&0xff;
-  804fb3:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  804fb7:	48 c1 e8 18          	shr    rax,0x18
-  804fbb:	48 89 c1             	mov    rcx,rax
-  804fbe:	48 8b 15 e3 54 00 00 	mov    rdx,QWORD PTR [rip+0x54e3]        # 80a4a8 <gdt>
-  804fc5:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
-  804fc8:	48 c1 e0 04          	shl    rax,0x4
-  804fcc:	48 01 d0             	add    rax,rdx
-  804fcf:	89 ca                	mov    edx,ecx
-  804fd1:	88 50 07             	mov    BYTE PTR [rax+0x7],dl
+  804fd3:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  804fd7:	48 c1 e8 18          	shr    rax,0x18
+  804fdb:	48 89 c1             	mov    rcx,rax
+  804fde:	48 8b 15 c3 54 00 00 	mov    rdx,QWORD PTR [rip+0x54c3]        # 80a4a8 <gdt>
+  804fe5:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  804fe8:	48 c1 e0 04          	shl    rax,0x4
+  804fec:	48 01 d0             	add    rax,rdx
+  804fef:	89 ca                	mov    edx,ecx
+  804ff1:	88 50 07             	mov    BYTE PTR [rax+0x7],dl
     gdt[index].base_5678=(base>>32)&0xffffffff;
-  804fd4:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  804fd8:	48 c1 e8 20          	shr    rax,0x20
-  804fdc:	48 89 c2             	mov    rdx,rax
-  804fdf:	48 8b 0d c2 54 00 00 	mov    rcx,QWORD PTR [rip+0x54c2]        # 80a4a8 <gdt>
-  804fe6:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
-  804fe9:	48 c1 e0 04          	shl    rax,0x4
-  804fed:	48 01 c8             	add    rax,rcx
-  804ff0:	89 50 08             	mov    DWORD PTR [rax+0x8],edx
+  804ff4:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  804ff8:	48 c1 e8 20          	shr    rax,0x20
+  804ffc:	48 89 c2             	mov    rdx,rax
+  804fff:	48 8b 0d a2 54 00 00 	mov    rcx,QWORD PTR [rip+0x54a2]        # 80a4a8 <gdt>
+  805006:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  805009:	48 c1 e0 04          	shl    rax,0x4
+  80500d:	48 01 c8             	add    rax,rcx
+  805010:	89 50 08             	mov    DWORD PTR [rax+0x8],edx
     gdt[index].limit_lo16=limit&0xffff;
-  804ff3:	48 8b 15 ae 54 00 00 	mov    rdx,QWORD PTR [rip+0x54ae]        # 80a4a8 <gdt>
-  804ffa:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
-  804ffd:	48 c1 e0 04          	shl    rax,0x4
-  805001:	48 01 d0             	add    rax,rdx
-  805004:	48 8b 55 f0          	mov    rdx,QWORD PTR [rbp-0x10]
-  805008:	66 89 10             	mov    WORD PTR [rax],dx
+  805013:	48 8b 15 8e 54 00 00 	mov    rdx,QWORD PTR [rip+0x548e]        # 80a4a8 <gdt>
+  80501a:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  80501d:	48 c1 e0 04          	shl    rax,0x4
+  805021:	48 01 d0             	add    rax,rdx
+  805024:	48 8b 55 f0          	mov    rdx,QWORD PTR [rbp-0x10]
+  805028:	66 89 10             	mov    WORD PTR [rax],dx
     gdt[index].attr=attr|((limit>>8)&0xf0);
-  80500b:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  80500f:	48 c1 e8 08          	shr    rax,0x8
-  805013:	66 25 f0 00          	and    ax,0xf0
-  805017:	48 8b 0d 8a 54 00 00 	mov    rcx,QWORD PTR [rip+0x548a]        # 80a4a8 <gdt>
-  80501e:	8b 55 e8             	mov    edx,DWORD PTR [rbp-0x18]
-  805021:	48 c1 e2 04          	shl    rdx,0x4
-  805025:	48 01 ca             	add    rdx,rcx
-  805028:	66 0b 45 ec          	or     ax,WORD PTR [rbp-0x14]
-  80502c:	66 89 42 05          	mov    WORD PTR [rdx+0x5],ax
+  80502b:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  80502f:	48 c1 e8 08          	shr    rax,0x8
+  805033:	66 25 f0 00          	and    ax,0xf0
+  805037:	48 8b 0d 6a 54 00 00 	mov    rcx,QWORD PTR [rip+0x546a]        # 80a4a8 <gdt>
+  80503e:	8b 55 e8             	mov    edx,DWORD PTR [rbp-0x18]
+  805041:	48 c1 e2 04          	shl    rdx,0x4
+  805045:	48 01 ca             	add    rdx,rcx
+  805048:	66 0b 45 ec          	or     ax,WORD PTR [rbp-0x14]
+  80504c:	66 89 42 05          	mov    WORD PTR [rdx+0x5],ax
 
 }
-  805030:	90                   	nop
-  805031:	5d                   	pop    rbp
-  805032:	c3                   	ret    
+  805050:	90                   	nop
+  805051:	5d                   	pop    rbp
+  805052:	c3                   	ret    
 
-0000000000805033 <fill_gate>:
+0000000000805053 <fill_gate>:
 
 void fill_gate(u32 index,u32 offset,u16 selector,u16 attr)
 {
-  805033:	f3 0f 1e fa          	endbr64 
-  805037:	55                   	push   rbp
-  805038:	48 89 e5             	mov    rbp,rsp
-  80503b:	89 7d ec             	mov    DWORD PTR [rbp-0x14],edi
-  80503e:	89 75 e8             	mov    DWORD PTR [rbp-0x18],esi
-  805041:	89 c8                	mov    eax,ecx
-  805043:	66 89 55 e4          	mov    WORD PTR [rbp-0x1c],dx
-  805047:	66 89 45 e0          	mov    WORD PTR [rbp-0x20],ax
+  805053:	f3 0f 1e fa          	endbr64 
+  805057:	55                   	push   rbp
+  805058:	48 89 e5             	mov    rbp,rsp
+  80505b:	89 7d ec             	mov    DWORD PTR [rbp-0x14],edi
+  80505e:	89 75 e8             	mov    DWORD PTR [rbp-0x18],esi
+  805061:	89 c8                	mov    eax,ecx
+  805063:	66 89 55 e4          	mov    WORD PTR [rbp-0x1c],dx
+  805067:	66 89 45 e0          	mov    WORD PTR [rbp-0x20],ax
     gate* ptr=gdt;
-  80504b:	48 8b 05 56 54 00 00 	mov    rax,QWORD PTR [rip+0x5456]        # 80a4a8 <gdt>
-  805052:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
+  80506b:	48 8b 05 36 54 00 00 	mov    rax,QWORD PTR [rip+0x5436]        # 80a4a8 <gdt>
+  805072:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
     ptr[index].offset_low=offset&0xffff;
-  805056:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
-  805059:	48 c1 e0 04          	shl    rax,0x4
-  80505d:	48 89 c2             	mov    rdx,rax
-  805060:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  805064:	48 01 d0             	add    rax,rdx
-  805067:	8b 55 e8             	mov    edx,DWORD PTR [rbp-0x18]
-  80506a:	66 89 10             	mov    WORD PTR [rax],dx
+  805076:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+  805079:	48 c1 e0 04          	shl    rax,0x4
+  80507d:	48 89 c2             	mov    rdx,rax
+  805080:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  805084:	48 01 d0             	add    rax,rdx
+  805087:	8b 55 e8             	mov    edx,DWORD PTR [rbp-0x18]
+  80508a:	66 89 10             	mov    WORD PTR [rax],dx
     ptr[index].offset_high=(offset>>16)&0xffff;
-  80506d:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
-  805070:	48 c1 e0 04          	shl    rax,0x4
-  805074:	48 89 c2             	mov    rdx,rax
-  805077:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  80507b:	48 01 d0             	add    rax,rdx
-  80507e:	8b 55 e8             	mov    edx,DWORD PTR [rbp-0x18]
-  805081:	c1 ea 10             	shr    edx,0x10
-  805084:	89 50 08             	mov    DWORD PTR [rax+0x8],edx
+  80508d:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+  805090:	48 c1 e0 04          	shl    rax,0x4
+  805094:	48 89 c2             	mov    rdx,rax
+  805097:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  80509b:	48 01 d0             	add    rax,rdx
+  80509e:	8b 55 e8             	mov    edx,DWORD PTR [rbp-0x18]
+  8050a1:	c1 ea 10             	shr    edx,0x10
+  8050a4:	89 50 08             	mov    DWORD PTR [rax+0x8],edx
     ptr[index].selector=selector;
-  805087:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
-  80508a:	48 c1 e0 04          	shl    rax,0x4
-  80508e:	48 89 c2             	mov    rdx,rax
-  805091:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  805095:	48 01 c2             	add    rdx,rax
-  805098:	0f b7 45 e4          	movzx  eax,WORD PTR [rbp-0x1c]
-  80509c:	66 89 42 02          	mov    WORD PTR [rdx+0x2],ax
+  8050a7:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+  8050aa:	48 c1 e0 04          	shl    rax,0x4
+  8050ae:	48 89 c2             	mov    rdx,rax
+  8050b1:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  8050b5:	48 01 c2             	add    rdx,rax
+  8050b8:	0f b7 45 e4          	movzx  eax,WORD PTR [rbp-0x1c]
+  8050bc:	66 89 42 02          	mov    WORD PTR [rdx+0x2],ax
     ptr[index].attr=attr;
-  8050a0:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
-  8050a3:	48 c1 e0 04          	shl    rax,0x4
-  8050a7:	48 89 c2             	mov    rdx,rax
-  8050aa:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  8050ae:	48 01 c2             	add    rdx,rax
-  8050b1:	0f b7 45 e0          	movzx  eax,WORD PTR [rbp-0x20]
-  8050b5:	66 89 42 04          	mov    WORD PTR [rdx+0x4],ax
+  8050c0:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+  8050c3:	48 c1 e0 04          	shl    rax,0x4
+  8050c7:	48 89 c2             	mov    rdx,rax
+  8050ca:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  8050ce:	48 01 c2             	add    rdx,rax
+  8050d1:	0f b7 45 e0          	movzx  eax,WORD PTR [rbp-0x20]
+  8050d5:	66 89 42 04          	mov    WORD PTR [rdx+0x4],ax
 }
-  8050b9:	90                   	nop
-  8050ba:	5d                   	pop    rbp
-  8050bb:	c3                   	ret    
+  8050d9:	90                   	nop
+  8050da:	5d                   	pop    rbp
+  8050db:	c3                   	ret    
 
-00000000008050bc <fill_ldt_desc>:
+00000000008050dc <fill_ldt_desc>:
 
 void fill_ldt_desc(u32 base, u32 limit,u16 attr,descriptor *desc)
 {
-  8050bc:	f3 0f 1e fa          	endbr64 
-  8050c0:	55                   	push   rbp
-  8050c1:	48 89 e5             	mov    rbp,rsp
-  8050c4:	89 7d fc             	mov    DWORD PTR [rbp-0x4],edi
-  8050c7:	89 75 f8             	mov    DWORD PTR [rbp-0x8],esi
-  8050ca:	89 d0                	mov    eax,edx
-  8050cc:	48 89 4d e8          	mov    QWORD PTR [rbp-0x18],rcx
-  8050d0:	66 89 45 f4          	mov    WORD PTR [rbp-0xc],ax
+  8050dc:	f3 0f 1e fa          	endbr64 
+  8050e0:	55                   	push   rbp
+  8050e1:	48 89 e5             	mov    rbp,rsp
+  8050e4:	89 7d fc             	mov    DWORD PTR [rbp-0x4],edi
+  8050e7:	89 75 f8             	mov    DWORD PTR [rbp-0x8],esi
+  8050ea:	89 d0                	mov    eax,edx
+  8050ec:	48 89 4d e8          	mov    QWORD PTR [rbp-0x18],rcx
+  8050f0:	66 89 45 f4          	mov    WORD PTR [rbp-0xc],ax
 //    desc->base_lo16=base&0xffff;
 //    desc->base_mid8=(base>>16)&0xff;
 //    desc->base_hi8=(base>>24)&0xff;
 //    desc->limit_lo16=limit&0xffff;
 //    desc->attr=attr|(limit>>16&0xf)<<8;
-  8050d4:	90                   	nop
-  8050d5:	5d                   	pop    rbp
-  8050d6:	c3                   	ret    
-  8050d7:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
-  8050de:	00 00 
+  8050f4:	90                   	nop
+  8050f5:	5d                   	pop    rbp
+  8050f6:	c3                   	ret    
+  8050f7:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+  8050fe:	00 00 
 
-00000000008050e0 <fill_desc>:
-  8050e0:	67 8b 44 24 04       	mov    eax,DWORD PTR [esp+0x4]
-  8050e5:	67 8b 5c 24 08       	mov    ebx,DWORD PTR [esp+0x8]
-  8050ea:	67 8b 4c 24 0c       	mov    ecx,DWORD PTR [esp+0xc]
-  8050ef:	67 8b 54 24 10       	mov    edx,DWORD PTR [esp+0x10]
-  8050f4:	be 00 60 00 00       	mov    esi,0x6000
-  8050f9:	c1 e2 03             	shl    edx,0x3
-  8050fc:	01 d6                	add    esi,edx
-  8050fe:	66 67 89 1e          	mov    WORD PTR [esi],bx
-  805102:	66 67 89 46 02       	mov    WORD PTR [esi+0x2],ax
-  805107:	c1 e8 10             	shr    eax,0x10
-  80510a:	67 88 46 04          	mov    BYTE PTR [esi+0x4],al
-  80510e:	c1 eb 10             	shr    ebx,0x10
-  805111:	67 88 5e 06          	mov    BYTE PTR [esi+0x6],bl
-  805115:	67 88 66 07          	mov    BYTE PTR [esi+0x7],ah
-  805119:	67 09 4e 05          	or     DWORD PTR [esi+0x5],ecx
-  80511d:	c3                   	ret    
+0000000000805100 <fill_desc>:
+  805100:	67 8b 44 24 04       	mov    eax,DWORD PTR [esp+0x4]
+  805105:	67 8b 5c 24 08       	mov    ebx,DWORD PTR [esp+0x8]
+  80510a:	67 8b 4c 24 0c       	mov    ecx,DWORD PTR [esp+0xc]
+  80510f:	67 8b 54 24 10       	mov    edx,DWORD PTR [esp+0x10]
+  805114:	be 00 60 00 00       	mov    esi,0x6000
+  805119:	c1 e2 03             	shl    edx,0x3
+  80511c:	01 d6                	add    esi,edx
+  80511e:	66 67 89 1e          	mov    WORD PTR [esi],bx
+  805122:	66 67 89 46 02       	mov    WORD PTR [esi+0x2],ax
+  805127:	c1 e8 10             	shr    eax,0x10
+  80512a:	67 88 46 04          	mov    BYTE PTR [esi+0x4],al
+  80512e:	c1 eb 10             	shr    ebx,0x10
+  805131:	67 88 5e 06          	mov    BYTE PTR [esi+0x6],bl
+  805135:	67 88 66 07          	mov    BYTE PTR [esi+0x7],ah
+  805139:	67 09 4e 05          	or     DWORD PTR [esi+0x5],ecx
+  80513d:	c3                   	ret    
 
-000000000080511e <clock_c>:
+000000000080513e <clock_c>:
 #include <devman.h>
 #include <disk.h>
 extern int manage_proc_lock;
 extern int cur_proc;
 extern struct process *task;
 void clock_c(){
-  80511e:	f3 0f 1e fa          	endbr64 
-  805122:	55                   	push   rbp
-  805123:	48 89 e5             	mov    rbp,rsp
+  80513e:	f3 0f 1e fa          	endbr64 
+  805142:	55                   	push   rbp
+  805143:	48 89 e5             	mov    rbp,rsp
     //refresh_wnds();
     execute_request();
-  805126:	b8 00 00 00 00       	mov    eax,0x0
-  80512b:	e8 3c 17 00 00       	call   80686c <execute_request>
+  805146:	b8 00 00 00 00       	mov    eax,0x0
+  80514b:	e8 3c 17 00 00       	call   80688c <execute_request>
     do_req();
-  805130:	b8 00 00 00 00       	mov    eax,0x0
-  805135:	e8 a5 e7 ff ff       	call   8038df <do_req>
+  805150:	b8 00 00 00 00       	mov    eax,0x0
+  805155:	e8 85 e7 ff ff       	call   8038df <do_req>
     if(!manage_proc_lock)
-  80513a:	8b 05 08 53 00 00    	mov    eax,DWORD PTR [rip+0x5308]        # 80a448 <manage_proc_lock>
-  805140:	85 c0                	test   eax,eax
-  805142:	75 0a                	jne    80514e <clock_c+0x30>
+  80515a:	8b 05 e8 52 00 00    	mov    eax,DWORD PTR [rip+0x52e8]        # 80a448 <manage_proc_lock>
+  805160:	85 c0                	test   eax,eax
+  805162:	75 0a                	jne    80516e <clock_c+0x30>
     {
         manage_proc();
-  805144:	b8 00 00 00 00       	mov    eax,0x0
-  805149:	e8 a3 ee ff ff       	call   803ff1 <manage_proc>
+  805164:	b8 00 00 00 00       	mov    eax,0x0
+  805169:	e8 9d ee ff ff       	call   80400b <manage_proc>
     }
     //puts("1 disk req executed.");
-  80514e:	90                   	nop
-  80514f:	5d                   	pop    rbp
-  805150:	c3                   	ret    
-  805151:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
-  805158:	00 00 00 
-  80515b:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
+  80516e:	90                   	nop
+  80516f:	5d                   	pop    rbp
+  805170:	c3                   	ret    
+  805171:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
+  805178:	00 00 00 
+  80517b:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
 
-0000000000805160 <clock>:
-  805160:	50                   	push   rax
-  805161:	53                   	push   rbx
-  805162:	51                   	push   rcx
-  805163:	52                   	push   rdx
-  805164:	57                   	push   rdi
-  805165:	56                   	push   rsi
-  805166:	41 50                	push   r8
-  805168:	41 51                	push   r9
-  80516a:	41 52                	push   r10
-  80516c:	41 53                	push   r11
-  80516e:	41 54                	push   r12
-  805170:	41 55                	push   r13
-  805172:	41 56                	push   r14
-  805174:	41 57                	push   r15
-  805176:	66 8c c0             	mov    ax,es
-  805179:	66 50                	push   ax
-  80517b:	66 8c d8             	mov    ax,ds
-  80517e:	66 50                	push   ax
-  805180:	66 b8 10 00          	mov    ax,0x10
-  805184:	8e c0                	mov    es,eax
-  805186:	8e d8                	mov    ds,eax
+0000000000805180 <clock>:
+  805180:	50                   	push   rax
+  805181:	53                   	push   rbx
+  805182:	51                   	push   rcx
+  805183:	52                   	push   rdx
+  805184:	57                   	push   rdi
+  805185:	56                   	push   rsi
+  805186:	41 50                	push   r8
+  805188:	41 51                	push   r9
+  80518a:	41 52                	push   r10
+  80518c:	41 53                	push   r11
+  80518e:	41 54                	push   r12
+  805190:	41 55                	push   r13
+  805192:	41 56                	push   r14
+  805194:	41 57                	push   r15
+  805196:	66 8c c0             	mov    ax,es
+  805199:	66 50                	push   ax
+  80519b:	66 8c d8             	mov    ax,ds
+  80519e:	66 50                	push   ax
+  8051a0:	66 b8 10 00          	mov    ax,0x10
+  8051a4:	8e c0                	mov    es,eax
+  8051a6:	8e d8                	mov    ds,eax
 
-0000000000805188 <clock.normal_part>:
-  805188:	b0 20                	mov    al,0x20
-  80518a:	e6 a0                	out    0xa0,al
-  80518c:	e6 20                	out    0x20,al
-  80518e:	e8 8b ff ff ff       	call   80511e <clock_c>
-  805193:	66 58                	pop    ax
-  805195:	8e d8                	mov    ds,eax
-  805197:	66 58                	pop    ax
-  805199:	8e c0                	mov    es,eax
-  80519b:	41 5f                	pop    r15
-  80519d:	41 5e                	pop    r14
-  80519f:	41 5d                	pop    r13
-  8051a1:	41 5c                	pop    r12
-  8051a3:	41 5b                	pop    r11
-  8051a5:	41 5a                	pop    r10
-  8051a7:	41 59                	pop    r9
-  8051a9:	41 58                	pop    r8
-  8051ab:	5e                   	pop    rsi
-  8051ac:	5f                   	pop    rdi
-  8051ad:	5a                   	pop    rdx
-  8051ae:	59                   	pop    rcx
-  8051af:	5b                   	pop    rbx
-  8051b0:	58                   	pop    rax
-  8051b1:	48 cf                	iretq  
+00000000008051a8 <clock.normal_part>:
+  8051a8:	b0 20                	mov    al,0x20
+  8051aa:	e6 a0                	out    0xa0,al
+  8051ac:	e6 20                	out    0x20,al
+  8051ae:	e8 8b ff ff ff       	call   80513e <clock_c>
+  8051b3:	66 58                	pop    ax
+  8051b5:	8e d8                	mov    ds,eax
+  8051b7:	66 58                	pop    ax
+  8051b9:	8e c0                	mov    es,eax
+  8051bb:	41 5f                	pop    r15
+  8051bd:	41 5e                	pop    r14
+  8051bf:	41 5d                	pop    r13
+  8051c1:	41 5c                	pop    r12
+  8051c3:	41 5b                	pop    r11
+  8051c5:	41 5a                	pop    r10
+  8051c7:	41 59                	pop    r9
+  8051c9:	41 58                	pop    r8
+  8051cb:	5e                   	pop    rsi
+  8051cc:	5f                   	pop    rdi
+  8051cd:	5a                   	pop    rdx
+  8051ce:	59                   	pop    rcx
+  8051cf:	5b                   	pop    rbx
+  8051d0:	58                   	pop    rax
+  8051d1:	48 cf                	iretq  
 
-00000000008051b3 <execute>:
+00000000008051d3 <execute>:
     return ind;
 }
 */
 
 int execute(char *path)
 {
-  8051b3:	f3 0f 1e fa          	endbr64 
-  8051b7:	55                   	push   rbp
-  8051b8:	48 89 e5             	mov    rbp,rsp
-  8051bb:	48 83 ec 30          	sub    rsp,0x30
-  8051bf:	48 89 7d d8          	mov    QWORD PTR [rbp-0x28],rdi
+  8051d3:	f3 0f 1e fa          	endbr64 
+  8051d7:	55                   	push   rbp
+  8051d8:	48 89 e5             	mov    rbp,rsp
+  8051db:	48 83 ec 30          	sub    rsp,0x30
+  8051df:	48 89 7d d8          	mov    QWORD PTR [rbp-0x28],rdi
     //尚未切换到目标进程
     //syscall(SYSCALL_REG_PROC, load_pe,0,0,0,0);
     int fno=-1,cwd_fno=-1;
-  8051c3:	c7 45 ec ff ff ff ff 	mov    DWORD PTR [rbp-0x14],0xffffffff
-  8051ca:	c7 45 fc ff ff ff ff 	mov    DWORD PTR [rbp-0x4],0xffffffff
+  8051e3:	c7 45 ec ff ff ff ff 	mov    DWORD PTR [rbp-0x14],0xffffffff
+  8051ea:	c7 45 fc ff ff ff ff 	mov    DWORD PTR [rbp-0x4],0xffffffff
     if((fno=sys_open(path, 1)) == -1)return -1;
-  8051d1:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
-  8051d5:	be 01 00 00 00       	mov    esi,0x1
-  8051da:	48 89 c7             	mov    rdi,rax
-  8051dd:	e8 f0 c9 ff ff       	call   801bd2 <sys_open>
-  8051e2:	89 45 ec             	mov    DWORD PTR [rbp-0x14],eax
-  8051e5:	83 7d ec ff          	cmp    DWORD PTR [rbp-0x14],0xffffffff
-  8051e9:	75 0a                	jne    8051f5 <execute+0x42>
-  8051eb:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  8051f0:	e9 b7 00 00 00       	jmp    8052ac <execute+0xf9>
+  8051f1:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
+  8051f5:	be 01 00 00 00       	mov    esi,0x1
+  8051fa:	48 89 c7             	mov    rdi,rax
+  8051fd:	e8 d0 c9 ff ff       	call   801bd2 <sys_open>
+  805202:	89 45 ec             	mov    DWORD PTR [rbp-0x14],eax
+  805205:	83 7d ec ff          	cmp    DWORD PTR [rbp-0x14],0xffffffff
+  805209:	75 0a                	jne    805215 <execute+0x42>
+  80520b:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  805210:	e9 b7 00 00 00       	jmp    8052cc <execute+0xf9>
     //
     char *p=path;
-  8051f5:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
-  8051f9:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
+  805215:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
+  805219:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
     for(;*p!='\0';p++);
-  8051fd:	eb 05                	jmp    805204 <execute+0x51>
-  8051ff:	48 83 45 f0 01       	add    QWORD PTR [rbp-0x10],0x1
-  805204:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  805208:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  80520b:	84 c0                	test   al,al
-  80520d:	75 f0                	jne    8051ff <execute+0x4c>
+  80521d:	eb 05                	jmp    805224 <execute+0x51>
+  80521f:	48 83 45 f0 01       	add    QWORD PTR [rbp-0x10],0x1
+  805224:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  805228:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  80522b:	84 c0                	test   al,al
+  80522d:	75 f0                	jne    80521f <execute+0x4c>
     for(;*p!='/'&&p>path;p--);
-  80520f:	eb 05                	jmp    805216 <execute+0x63>
-  805211:	48 83 6d f0 01       	sub    QWORD PTR [rbp-0x10],0x1
-  805216:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  80521a:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  80521d:	3c 2f                	cmp    al,0x2f
-  80521f:	74 0a                	je     80522b <execute+0x78>
-  805221:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  805225:	48 3b 45 d8          	cmp    rax,QWORD PTR [rbp-0x28]
-  805229:	77 e6                	ja     805211 <execute+0x5e>
+  80522f:	eb 05                	jmp    805236 <execute+0x63>
+  805231:	48 83 6d f0 01       	sub    QWORD PTR [rbp-0x10],0x1
+  805236:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  80523a:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  80523d:	3c 2f                	cmp    al,0x2f
+  80523f:	74 0a                	je     80524b <execute+0x78>
+  805241:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  805245:	48 3b 45 d8          	cmp    rax,QWORD PTR [rbp-0x28]
+  805249:	77 e6                	ja     805231 <execute+0x5e>
     if(p>path)
-  80522b:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  80522f:	48 3b 45 d8          	cmp    rax,QWORD PTR [rbp-0x28]
-  805233:	76 2f                	jbe    805264 <execute+0xb1>
+  80524b:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  80524f:	48 3b 45 d8          	cmp    rax,QWORD PTR [rbp-0x28]
+  805253:	76 2f                	jbe    805284 <execute+0xb1>
     {
         *p='\0';
-  805235:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  805239:	c6 00 00             	mov    BYTE PTR [rax],0x0
+  805255:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  805259:	c6 00 00             	mov    BYTE PTR [rax],0x0
         if((cwd_fno=sys_open(path, 1)) == -1)return -1;
-  80523c:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
-  805240:	be 01 00 00 00       	mov    esi,0x1
-  805245:	48 89 c7             	mov    rdi,rax
-  805248:	e8 85 c9 ff ff       	call   801bd2 <sys_open>
-  80524d:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
-  805250:	83 7d fc ff          	cmp    DWORD PTR [rbp-0x4],0xffffffff
-  805254:	75 07                	jne    80525d <execute+0xaa>
-  805256:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  80525b:	eb 4f                	jmp    8052ac <execute+0xf9>
+  80525c:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
+  805260:	be 01 00 00 00       	mov    esi,0x1
+  805265:	48 89 c7             	mov    rdi,rax
+  805268:	e8 65 c9 ff ff       	call   801bd2 <sys_open>
+  80526d:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  805270:	83 7d fc ff          	cmp    DWORD PTR [rbp-0x4],0xffffffff
+  805274:	75 07                	jne    80527d <execute+0xaa>
+  805276:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  80527b:	eb 4f                	jmp    8052cc <execute+0xf9>
         *p='/';
-  80525d:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  805261:	c6 00 2f             	mov    BYTE PTR [rax],0x2f
+  80527d:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  805281:	c6 00 2f             	mov    BYTE PTR [rax],0x2f
     }
     extern vfs_dir_entry opened[];
     extern struct process task[];
     int pi= reg_proc(proc_start, &opened[cwd_fno], &opened[fno]);
-  805264:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
-  805267:	48 63 d0             	movsxd rdx,eax
-  80526a:	48 89 d0             	mov    rax,rdx
-  80526d:	48 01 c0             	add    rax,rax
-  805270:	48 01 d0             	add    rax,rdx
-  805273:	48 c1 e0 05          	shl    rax,0x5
-  805277:	48 8d 90 60 06 40 00 	lea    rdx,[rax+0x400660]
-  80527e:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  805281:	48 63 c8             	movsxd rcx,eax
-  805284:	48 89 c8             	mov    rax,rcx
-  805287:	48 01 c0             	add    rax,rax
-  80528a:	48 01 c8             	add    rax,rcx
-  80528d:	48 c1 e0 05          	shl    rax,0x5
-  805291:	48 05 60 06 40 00    	add    rax,0x400660
-  805297:	b9 24 53 80 00       	mov    ecx,0x805324
-  80529c:	48 89 c6             	mov    rsi,rax
-  80529f:	89 cf                	mov    edi,ecx
-  8052a1:	e8 15 f6 ff ff       	call   8048bb <reg_proc>
-  8052a6:	89 45 e8             	mov    DWORD PTR [rbp-0x18],eax
+  805284:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+  805287:	48 63 d0             	movsxd rdx,eax
+  80528a:	48 89 d0             	mov    rax,rdx
+  80528d:	48 01 c0             	add    rax,rax
+  805290:	48 01 d0             	add    rax,rdx
+  805293:	48 c1 e0 05          	shl    rax,0x5
+  805297:	48 8d 90 60 06 40 00 	lea    rdx,[rax+0x400660]
+  80529e:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  8052a1:	48 63 c8             	movsxd rcx,eax
+  8052a4:	48 89 c8             	mov    rax,rcx
+  8052a7:	48 01 c0             	add    rax,rax
+  8052aa:	48 01 c8             	add    rax,rcx
+  8052ad:	48 c1 e0 05          	shl    rax,0x5
+  8052b1:	48 05 60 06 40 00    	add    rax,0x400660
+  8052b7:	b9 44 53 80 00       	mov    ecx,0x805344
+  8052bc:	48 89 c6             	mov    rsi,rax
+  8052bf:	89 cf                	mov    edi,ecx
+  8052c1:	e8 0f f6 ff ff       	call   8048d5 <reg_proc>
+  8052c6:	89 45 e8             	mov    DWORD PTR [rbp-0x18],eax
     return pi;
-  8052a9:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  8052c9:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
 }
-  8052ac:	c9                   	leave  
-  8052ad:	c3                   	ret    
+  8052cc:	c9                   	leave  
+  8052cd:	c3                   	ret    
 
-00000000008052ae <exec_call>:
+00000000008052ce <exec_call>:
 
 int exec_call(char *path)
 {
-  8052ae:	f3 0f 1e fa          	endbr64 
-  8052b2:	55                   	push   rbp
-  8052b3:	48 89 e5             	mov    rbp,rsp
-  8052b6:	48 83 ec 20          	sub    rsp,0x20
-  8052ba:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
+  8052ce:	f3 0f 1e fa          	endbr64 
+  8052d2:	55                   	push   rbp
+  8052d3:	48 89 e5             	mov    rbp,rsp
+  8052d6:	48 83 ec 20          	sub    rsp,0x20
+  8052da:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
     int pi=execute(path);
-  8052be:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  8052c2:	48 89 c7             	mov    rdi,rax
-  8052c5:	e8 e9 fe ff ff       	call   8051b3 <execute>
-  8052ca:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  8052de:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  8052e2:	48 89 c7             	mov    rdi,rax
+  8052e5:	e8 e9 fe ff ff       	call   8051d3 <execute>
+  8052ea:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
     int tss= _TSS_IND(pi)*8;
-  8052cd:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8052d0:	01 c0                	add    eax,eax
-  8052d2:	83 c0 05             	add    eax,0x5
-  8052d5:	c1 e0 03             	shl    eax,0x3
-  8052d8:	89 45 f8             	mov    DWORD PTR [rbp-0x8],eax
+  8052ed:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  8052f0:	01 c0                	add    eax,eax
+  8052f2:	83 c0 05             	add    eax,0x5
+  8052f5:	c1 e0 03             	shl    eax,0x3
+  8052f8:	89 45 f8             	mov    DWORD PTR [rbp-0x8],eax
     extern struct process task[];
     extern int cur_proc;
     switch_proc_tss(pi);
-  8052db:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8052de:	89 c7                	mov    edi,eax
-  8052e0:	e8 d8 ee ff ff       	call   8041bd <switch_proc_tss>
+  8052fb:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  8052fe:	89 c7                	mov    edi,eax
+  805300:	e8 d2 ee ff ff       	call   8041d7 <switch_proc_tss>
     while(task[pi].stat!=ENDED);
-  8052e5:	90                   	nop
-  8052e6:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8052e9:	48 63 d0             	movsxd rdx,eax
-  8052ec:	48 89 d0             	mov    rax,rdx
-  8052ef:	48 01 c0             	add    rax,rax
-  8052f2:	48 01 d0             	add    rax,rdx
-  8052f5:	48 c1 e0 08          	shl    rax,0x8
-  8052f9:	48 05 a0 84 40 00    	add    rax,0x4084a0
-  8052ff:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
-  805302:	83 f8 03             	cmp    eax,0x3
-  805305:	75 df                	jne    8052e6 <exec_call+0x38>
+  805305:	90                   	nop
+  805306:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  805309:	48 63 d0             	movsxd rdx,eax
+  80530c:	48 89 d0             	mov    rax,rdx
+  80530f:	48 01 c0             	add    rax,rax
+  805312:	48 01 d0             	add    rax,rdx
+  805315:	48 c1 e0 08          	shl    rax,0x8
+  805319:	48 05 a0 84 40 00    	add    rax,0x4084a0
+  80531f:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
+  805322:	83 f8 03             	cmp    eax,0x3
+  805325:	75 df                	jne    805306 <exec_call+0x38>
     return task[pi].exit_code;
-  805307:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  80530a:	48 63 d0             	movsxd rdx,eax
-  80530d:	48 89 d0             	mov    rax,rdx
-  805310:	48 01 c0             	add    rax,rax
-  805313:	48 01 d0             	add    rax,rdx
-  805316:	48 c1 e0 08          	shl    rax,0x8
-  80531a:	48 05 b0 84 40 00    	add    rax,0x4084b0
-  805320:	8b 00                	mov    eax,DWORD PTR [rax]
+  805327:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  80532a:	48 63 d0             	movsxd rdx,eax
+  80532d:	48 89 d0             	mov    rax,rdx
+  805330:	48 01 c0             	add    rax,rax
+  805333:	48 01 d0             	add    rax,rdx
+  805336:	48 c1 e0 08          	shl    rax,0x8
+  80533a:	48 05 b0 84 40 00    	add    rax,0x4084b0
+  805340:	8b 00                	mov    eax,DWORD PTR [rax]
 }
-  805322:	c9                   	leave  
-  805323:	c3                   	ret    
+  805342:	c9                   	leave  
+  805343:	c3                   	ret    
 
-0000000000805324 <proc_start>:
+0000000000805344 <proc_start>:
 int proc_start()
 {
-  805324:	f3 0f 1e fa          	endbr64 
-  805328:	55                   	push   rbp
-  805329:	48 89 e5             	mov    rbp,rsp
+  805344:	f3 0f 1e fa          	endbr64 
+  805348:	55                   	push   rbp
+  805349:	48 89 e5             	mov    rbp,rsp
     extern struct process task[];
     extern int cur_proc;
     load_pe(&task[cur_proc]);
-  80532c:	8b 05 da f1 c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0f1da]        # 41450c <cur_proc>
-  805332:	48 63 d0             	movsxd rdx,eax
-  805335:	48 89 d0             	mov    rax,rdx
-  805338:	48 01 c0             	add    rax,rax
-  80533b:	48 01 d0             	add    rax,rdx
-  80533e:	48 c1 e0 08          	shl    rax,0x8
-  805342:	48 05 a0 84 40 00    	add    rax,0x4084a0
-  805348:	48 89 c7             	mov    rdi,rax
-  80534b:	e8 1a 00 00 00       	call   80536a <load_pe>
+  80534c:	8b 05 ba f1 c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0f1ba]        # 41450c <cur_proc>
+  805352:	48 63 d0             	movsxd rdx,eax
+  805355:	48 89 d0             	mov    rax,rdx
+  805358:	48 01 c0             	add    rax,rax
+  80535b:	48 01 d0             	add    rax,rdx
+  80535e:	48 c1 e0 08          	shl    rax,0x8
+  805362:	48 05 a0 84 40 00    	add    rax,0x4084a0
+  805368:	48 89 c7             	mov    rdi,rax
+  80536b:	e8 1a 00 00 00       	call   80538a <load_pe>
     //释放进程资源
     del_proc(cur_proc);
-  805350:	8b 05 b6 f1 c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0f1b6]        # 41450c <cur_proc>
-  805356:	89 c7                	mov    edi,eax
-  805358:	e8 30 f3 ff ff       	call   80468d <del_proc>
+  805370:	8b 05 96 f1 c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0f196]        # 41450c <cur_proc>
+  805376:	89 c7                	mov    edi,eax
+  805378:	e8 2a f3 ff ff       	call   8046a7 <del_proc>
     switch_proc_tss(0);
-  80535d:	bf 00 00 00 00       	mov    edi,0x0
-  805362:	e8 56 ee ff ff       	call   8041bd <switch_proc_tss>
+  80537d:	bf 00 00 00 00       	mov    edi,0x0
+  805382:	e8 50 ee ff ff       	call   8041d7 <switch_proc_tss>
 }
-  805367:	90                   	nop
-  805368:	5d                   	pop    rbp
-  805369:	c3                   	ret    
+  805387:	90                   	nop
+  805388:	5d                   	pop    rbp
+  805389:	c3                   	ret    
 
-000000000080536a <load_pe>:
+000000000080538a <load_pe>:
 //在cr3切换到目标进程下的加载程序(但进程还没调度到那里)。
 int load_pe(struct process *proc)
 {
-  80536a:	f3 0f 1e fa          	endbr64 
-  80536e:	55                   	push   rbp
-  80536f:	48 89 e5             	mov    rbp,rsp
-  805372:	48 81 ec c0 02 00 00 	sub    rsp,0x2c0
-  805379:	48 89 bd 48 fd ff ff 	mov    QWORD PTR [rbp-0x2b8],rdi
+  80538a:	f3 0f 1e fa          	endbr64 
+  80538e:	55                   	push   rbp
+  80538f:	48 89 e5             	mov    rbp,rsp
+  805392:	48 81 ec c0 02 00 00 	sub    rsp,0x2c0
+  805399:	48 89 bd 48 fd ff ff 	mov    QWORD PTR [rbp-0x2b8],rdi
     // 读取文件头
     vfs_dir_entry *f=proc->exef;
-  805380:	48 8b 85 48 fd ff ff 	mov    rax,QWORD PTR [rbp-0x2b8]
-  805387:	48 8b 80 bc 00 00 00 	mov    rax,QWORD PTR [rax+0xbc]
-  80538e:	48 89 45 98          	mov    QWORD PTR [rbp-0x68],rax
+  8053a0:	48 8b 85 48 fd ff ff 	mov    rax,QWORD PTR [rbp-0x2b8]
+  8053a7:	48 8b 80 bc 00 00 00 	mov    rax,QWORD PTR [rax+0xbc]
+  8053ae:	48 89 45 98          	mov    QWORD PTR [rbp-0x68],rax
     int exefno=f->fno;
-  805392:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
-  805396:	8b 00                	mov    eax,DWORD PTR [rax]
-  805398:	89 45 94             	mov    DWORD PTR [rbp-0x6c],eax
+  8053b2:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
+  8053b6:	8b 00                	mov    eax,DWORD PTR [rax]
+  8053b8:	89 45 94             	mov    DWORD PTR [rbp-0x6c],eax
 
     IMAGE_DOS_HEADER tdh;
     IMAGE_NT_HEADERS32 tnth;
     sys_read(exefno, &tdh, sizeof(tdh));
-  80539b:	48 8d 8d 70 fe ff ff 	lea    rcx,[rbp-0x190]
-  8053a2:	8b 45 94             	mov    eax,DWORD PTR [rbp-0x6c]
-  8053a5:	ba 44 00 00 00       	mov    edx,0x44
-  8053aa:	48 89 ce             	mov    rsi,rcx
-  8053ad:	89 c7                	mov    edi,eax
-  8053af:	e8 fd cd ff ff       	call   8021b1 <sys_read>
+  8053bb:	48 8d 8d 70 fe ff ff 	lea    rcx,[rbp-0x190]
+  8053c2:	8b 45 94             	mov    eax,DWORD PTR [rbp-0x6c]
+  8053c5:	ba 44 00 00 00       	mov    edx,0x44
+  8053ca:	48 89 ce             	mov    rsi,rcx
+  8053cd:	89 c7                	mov    edi,eax
+  8053cf:	e8 dd cd ff ff       	call   8021b1 <sys_read>
     sys_seek(exefno,tdh.e_lfanew,SEEK_SET);
-  8053b4:	48 8b 85 ac fe ff ff 	mov    rax,QWORD PTR [rbp-0x154]
-  8053bb:	89 c1                	mov    ecx,eax
-  8053bd:	8b 45 94             	mov    eax,DWORD PTR [rbp-0x6c]
-  8053c0:	ba 00 00 00 00       	mov    edx,0x0
-  8053c5:	89 ce                	mov    esi,ecx
-  8053c7:	89 c7                	mov    edi,eax
-  8053c9:	e8 74 ce ff ff       	call   802242 <sys_seek>
+  8053d4:	48 8b 85 ac fe ff ff 	mov    rax,QWORD PTR [rbp-0x154]
+  8053db:	89 c1                	mov    ecx,eax
+  8053dd:	8b 45 94             	mov    eax,DWORD PTR [rbp-0x6c]
+  8053e0:	ba 00 00 00 00       	mov    edx,0x0
+  8053e5:	89 ce                	mov    esi,ecx
+  8053e7:	89 c7                	mov    edi,eax
+  8053e9:	e8 54 ce ff ff       	call   802242 <sys_seek>
     sys_read(exefno, &tnth, sizeof(tnth));
-  8053ce:	48 8d 8d 70 fd ff ff 	lea    rcx,[rbp-0x290]
-  8053d5:	8b 45 94             	mov    eax,DWORD PTR [rbp-0x6c]
-  8053d8:	ba f8 00 00 00       	mov    edx,0xf8
-  8053dd:	48 89 ce             	mov    rsi,rcx
-  8053e0:	89 c7                	mov    edi,eax
-  8053e2:	e8 ca cd ff ff       	call   8021b1 <sys_read>
+  8053ee:	48 8d 8d 70 fd ff ff 	lea    rcx,[rbp-0x290]
+  8053f5:	8b 45 94             	mov    eax,DWORD PTR [rbp-0x6c]
+  8053f8:	ba f8 00 00 00       	mov    edx,0xf8
+  8053fd:	48 89 ce             	mov    rsi,rcx
+  805400:	89 c7                	mov    edi,eax
+  805402:	e8 aa cd ff ff       	call   8021b1 <sys_read>
 
     //是否需要移动base(先不检查)
     unsigned int nbase=tnth.OptionalHeader.ImageBase;
-  8053e7:	8b 85 a4 fd ff ff    	mov    eax,DWORD PTR [rbp-0x25c]
-  8053ed:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  805407:	8b 85 a4 fd ff ff    	mov    eax,DWORD PTR [rbp-0x25c]
+  80540d:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
     int pgn=tnth.OptionalHeader.SizeOfImage/PAGE_SIZE;
-  8053f0:	8b 85 c0 fd ff ff    	mov    eax,DWORD PTR [rbp-0x240]
-  8053f6:	c1 e8 0c             	shr    eax,0xc
-  8053f9:	89 45 90             	mov    DWORD PTR [rbp-0x70],eax
+  805410:	8b 85 c0 fd ff ff    	mov    eax,DWORD PTR [rbp-0x240]
+  805416:	c1 e8 0c             	shr    eax,0xc
+  805419:	89 45 90             	mov    DWORD PTR [rbp-0x70],eax
     //use_pgm_ava检查在页表中这个范围是否可用，可用就使用
     while(1)
     {
         cont:
         ;
         int pdei=nbase/PAGE_INDEX_SIZE;
-  8053fc:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8053ff:	c1 e8 16             	shr    eax,0x16
-  805402:	89 45 8c             	mov    DWORD PTR [rbp-0x74],eax
+  80541c:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  80541f:	c1 e8 16             	shr    eax,0x16
+  805422:	89 45 8c             	mov    DWORD PTR [rbp-0x74],eax
         int ptei=nbase%PAGE_INDEX_SIZE/PAGE_SIZE;
-  805405:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  805408:	25 ff ff 3f 00       	and    eax,0x3fffff
-  80540d:	c1 e8 0c             	shr    eax,0xc
-  805410:	89 45 88             	mov    DWORD PTR [rbp-0x78],eax
+  805425:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  805428:	25 ff ff 3f 00       	and    eax,0x3fffff
+  80542d:	c1 e8 0c             	shr    eax,0xc
+  805430:	89 45 88             	mov    DWORD PTR [rbp-0x78],eax
         int *pt=(proc->pml4[pdei]&0xfffff000);
-  805413:	48 8b 85 48 fd ff ff 	mov    rax,QWORD PTR [rbp-0x2b8]
-  80541a:	48 8b 90 ac 00 00 00 	mov    rdx,QWORD PTR [rax+0xac]
-  805421:	8b 45 8c             	mov    eax,DWORD PTR [rbp-0x74]
-  805424:	48 98                	cdqe   
-  805426:	48 c1 e0 03          	shl    rax,0x3
-  80542a:	48 01 d0             	add    rax,rdx
-  80542d:	48 8b 00             	mov    rax,QWORD PTR [rax]
-  805430:	25 00 f0 ff ff       	and    eax,0xfffff000
-  805435:	48 89 45 80          	mov    QWORD PTR [rbp-0x80],rax
+  805433:	48 8b 85 48 fd ff ff 	mov    rax,QWORD PTR [rbp-0x2b8]
+  80543a:	48 8b 90 ac 00 00 00 	mov    rdx,QWORD PTR [rax+0xac]
+  805441:	8b 45 8c             	mov    eax,DWORD PTR [rbp-0x74]
+  805444:	48 98                	cdqe   
+  805446:	48 c1 e0 03          	shl    rax,0x3
+  80544a:	48 01 d0             	add    rax,rdx
+  80544d:	48 8b 00             	mov    rax,QWORD PTR [rax]
+  805450:	25 00 f0 ff ff       	and    eax,0xfffff000
+  805455:	48 89 45 80          	mov    QWORD PTR [rbp-0x80],rax
         for(int i=0;i<pgn;i++)
-  805439:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0
-  805440:	eb 48                	jmp    80548a <load_pe+0x120>
+  805459:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0
+  805460:	eb 48                	jmp    8054aa <load_pe+0x120>
         {
             if(pt[ptei+i%1024]&PAGE_PRESENT&&pt!=NULL)
-  805442:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  805445:	99                   	cdq    
-  805446:	c1 ea 16             	shr    edx,0x16
-  805449:	01 d0                	add    eax,edx
-  80544b:	25 ff 03 00 00       	and    eax,0x3ff
-  805450:	29 d0                	sub    eax,edx
-  805452:	89 c2                	mov    edx,eax
-  805454:	8b 45 88             	mov    eax,DWORD PTR [rbp-0x78]
-  805457:	01 d0                	add    eax,edx
-  805459:	48 98                	cdqe   
-  80545b:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
-  805462:	00 
-  805463:	48 8b 45 80          	mov    rax,QWORD PTR [rbp-0x80]
-  805467:	48 01 d0             	add    rax,rdx
-  80546a:	8b 00                	mov    eax,DWORD PTR [rax]
-  80546c:	83 e0 01             	and    eax,0x1
-  80546f:	85 c0                	test   eax,eax
-  805471:	74 13                	je     805486 <load_pe+0x11c>
-  805473:	48 83 7d 80 00       	cmp    QWORD PTR [rbp-0x80],0x0
-  805478:	74 0c                	je     805486 <load_pe+0x11c>
+  805462:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  805465:	99                   	cdq    
+  805466:	c1 ea 16             	shr    edx,0x16
+  805469:	01 d0                	add    eax,edx
+  80546b:	25 ff 03 00 00       	and    eax,0x3ff
+  805470:	29 d0                	sub    eax,edx
+  805472:	89 c2                	mov    edx,eax
+  805474:	8b 45 88             	mov    eax,DWORD PTR [rbp-0x78]
+  805477:	01 d0                	add    eax,edx
+  805479:	48 98                	cdqe   
+  80547b:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
+  805482:	00 
+  805483:	48 8b 45 80          	mov    rax,QWORD PTR [rbp-0x80]
+  805487:	48 01 d0             	add    rax,rdx
+  80548a:	8b 00                	mov    eax,DWORD PTR [rax]
+  80548c:	83 e0 01             	and    eax,0x1
+  80548f:	85 c0                	test   eax,eax
+  805491:	74 13                	je     8054a6 <load_pe+0x11c>
+  805493:	48 83 7d 80 00       	cmp    QWORD PTR [rbp-0x80],0x0
+  805498:	74 0c                	je     8054a6 <load_pe+0x11c>
             {
                 //移动base
                 nbase+=0x1000;
-  80547a:	81 45 fc 00 10 00 00 	add    DWORD PTR [rbp-0x4],0x1000
+  80549a:	81 45 fc 00 10 00 00 	add    DWORD PTR [rbp-0x4],0x1000
                 goto cont;
-  805481:	e9 76 ff ff ff       	jmp    8053fc <load_pe+0x92>
+  8054a1:	e9 76 ff ff ff       	jmp    80541c <load_pe+0x92>
         for(int i=0;i<pgn;i++)
-  805486:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1
-  80548a:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  80548d:	3b 45 90             	cmp    eax,DWORD PTR [rbp-0x70]
-  805490:	7c b0                	jl     805442 <load_pe+0xd8>
+  8054a6:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1
+  8054aa:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  8054ad:	3b 45 90             	cmp    eax,DWORD PTR [rbp-0x70]
+  8054b0:	7c b0                	jl     805462 <load_pe+0xd8>
             }
         }
         break;
-  805492:	90                   	nop
+  8054b2:	90                   	nop
     }
 
     //proc->tss.eip=tnth.OptionalHeader.AddressOfEntryPoint+nbase;
     //存放文件头
     sys_seek(exefno,0,SEEK_SET);
-  805493:	8b 45 94             	mov    eax,DWORD PTR [rbp-0x6c]
-  805496:	ba 00 00 00 00       	mov    edx,0x0
-  80549b:	be 00 00 00 00       	mov    esi,0x0
-  8054a0:	89 c7                	mov    edi,eax
-  8054a2:	e8 9b cd ff ff       	call   802242 <sys_seek>
+  8054b3:	8b 45 94             	mov    eax,DWORD PTR [rbp-0x6c]
+  8054b6:	ba 00 00 00 00       	mov    edx,0x0
+  8054bb:	be 00 00 00 00       	mov    esi,0x0
+  8054c0:	89 c7                	mov    edi,eax
+  8054c2:	e8 7b cd ff ff       	call   802242 <sys_seek>
     sys_read(exefno, nbase, PAGE_SIZE);
-  8054a7:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8054aa:	48 89 c1             	mov    rcx,rax
-  8054ad:	8b 45 94             	mov    eax,DWORD PTR [rbp-0x6c]
-  8054b0:	ba 00 10 00 00       	mov    edx,0x1000
-  8054b5:	48 89 ce             	mov    rsi,rcx
-  8054b8:	89 c7                	mov    edi,eax
-  8054ba:	e8 f2 cc ff ff       	call   8021b1 <sys_read>
+  8054c7:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  8054ca:	48 89 c1             	mov    rcx,rax
+  8054cd:	8b 45 94             	mov    eax,DWORD PTR [rbp-0x6c]
+  8054d0:	ba 00 10 00 00       	mov    edx,0x1000
+  8054d5:	48 89 ce             	mov    rsi,rcx
+  8054d8:	89 c7                	mov    edi,eax
+  8054da:	e8 d2 cc ff ff       	call   8021b1 <sys_read>
     //dos头
     PIMAGE_DOS_HEADER dosh=nbase;
-  8054bf:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8054c2:	48 89 85 78 ff ff ff 	mov    QWORD PTR [rbp-0x88],rax
+  8054df:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  8054e2:	48 89 85 78 ff ff ff 	mov    QWORD PTR [rbp-0x88],rax
     PIMAGE_NT_HEADERS32 nth=nbase+dosh->e_lfanew;
-  8054c9:	8b 55 fc             	mov    edx,DWORD PTR [rbp-0x4]
-  8054cc:	48 8b 85 78 ff ff ff 	mov    rax,QWORD PTR [rbp-0x88]
-  8054d3:	48 8b 40 3c          	mov    rax,QWORD PTR [rax+0x3c]
-  8054d7:	48 01 d0             	add    rax,rdx
-  8054da:	48 89 85 70 ff ff ff 	mov    QWORD PTR [rbp-0x90],rax
+  8054e9:	8b 55 fc             	mov    edx,DWORD PTR [rbp-0x4]
+  8054ec:	48 8b 85 78 ff ff ff 	mov    rax,QWORD PTR [rbp-0x88]
+  8054f3:	48 8b 40 3c          	mov    rax,QWORD PTR [rax+0x3c]
+  8054f7:	48 01 d0             	add    rax,rdx
+  8054fa:	48 89 85 70 ff ff ff 	mov    QWORD PTR [rbp-0x90],rax
     PIMAGE_FILE_HEADER fh=&nth->FileHeader;
-  8054e1:	48 8b 85 70 ff ff ff 	mov    rax,QWORD PTR [rbp-0x90]
-  8054e8:	48 83 c0 04          	add    rax,0x4
-  8054ec:	48 89 85 68 ff ff ff 	mov    QWORD PTR [rbp-0x98],rax
+  805501:	48 8b 85 70 ff ff ff 	mov    rax,QWORD PTR [rbp-0x90]
+  805508:	48 83 c0 04          	add    rax,0x4
+  80550c:	48 89 85 68 ff ff ff 	mov    QWORD PTR [rbp-0x98],rax
     //为新进程分配内存页
     //计算所需的页
     int prog_size=nth->OptionalHeader.SizeOfImage;
-  8054f3:	48 8b 85 70 ff ff ff 	mov    rax,QWORD PTR [rbp-0x90]
-  8054fa:	8b 40 50             	mov    eax,DWORD PTR [rax+0x50]
-  8054fd:	89 85 64 ff ff ff    	mov    DWORD PTR [rbp-0x9c],eax
+  805513:	48 8b 85 70 ff ff ff 	mov    rax,QWORD PTR [rbp-0x90]
+  80551a:	8b 40 50             	mov    eax,DWORD PTR [rax+0x50]
+  80551d:	89 85 64 ff ff ff    	mov    DWORD PTR [rbp-0x9c],eax
     int page_count=prog_size/4096;
-  805503:	8b 85 64 ff ff ff    	mov    eax,DWORD PTR [rbp-0x9c]
-  805509:	8d 90 ff 0f 00 00    	lea    edx,[rax+0xfff]
-  80550f:	85 c0                	test   eax,eax
-  805511:	0f 48 c2             	cmovs  eax,edx
-  805514:	c1 f8 0c             	sar    eax,0xc
-  805517:	89 85 60 ff ff ff    	mov    DWORD PTR [rbp-0xa0],eax
+  805523:	8b 85 64 ff ff ff    	mov    eax,DWORD PTR [rbp-0x9c]
+  805529:	8d 90 ff 0f 00 00    	lea    edx,[rax+0xfff]
+  80552f:	85 c0                	test   eax,eax
+  805531:	0f 48 c2             	cmovs  eax,edx
+  805534:	c1 f8 0c             	sar    eax,0xc
+  805537:	89 85 60 ff ff ff    	mov    DWORD PTR [rbp-0xa0],eax
 
     int shell_addr=nth->OptionalHeader.AddressOfEntryPoint+nbase;
-  80551d:	48 8b 85 70 ff ff ff 	mov    rax,QWORD PTR [rbp-0x90]
-  805524:	8b 50 28             	mov    edx,DWORD PTR [rax+0x28]
-  805527:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  80552a:	01 d0                	add    eax,edx
-  80552c:	89 85 5c ff ff ff    	mov    DWORD PTR [rbp-0xa4],eax
+  80553d:	48 8b 85 70 ff ff ff 	mov    rax,QWORD PTR [rbp-0x90]
+  805544:	8b 50 28             	mov    edx,DWORD PTR [rax+0x28]
+  805547:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  80554a:	01 d0                	add    eax,edx
+  80554c:	89 85 5c ff ff ff    	mov    DWORD PTR [rbp-0xa4],eax
     int page_index_item_count=page_count/1024+page_count%1024==0?0:1;
-  805532:	8b 85 60 ff ff ff    	mov    eax,DWORD PTR [rbp-0xa0]
-  805538:	8d 90 ff 03 00 00    	lea    edx,[rax+0x3ff]
-  80553e:	85 c0                	test   eax,eax
-  805540:	0f 48 c2             	cmovs  eax,edx
-  805543:	c1 f8 0a             	sar    eax,0xa
-  805546:	89 c1                	mov    ecx,eax
-  805548:	8b 85 60 ff ff ff    	mov    eax,DWORD PTR [rbp-0xa0]
-  80554e:	99                   	cdq    
-  80554f:	c1 ea 16             	shr    edx,0x16
-  805552:	01 d0                	add    eax,edx
-  805554:	25 ff 03 00 00       	and    eax,0x3ff
-  805559:	29 d0                	sub    eax,edx
-  80555b:	01 c8                	add    eax,ecx
-  80555d:	85 c0                	test   eax,eax
-  80555f:	0f 95 c0             	setne  al
-  805562:	0f b6 c0             	movzx  eax,al
-  805565:	89 85 58 ff ff ff    	mov    DWORD PTR [rbp-0xa8],eax
+  805552:	8b 85 60 ff ff ff    	mov    eax,DWORD PTR [rbp-0xa0]
+  805558:	8d 90 ff 03 00 00    	lea    edx,[rax+0x3ff]
+  80555e:	85 c0                	test   eax,eax
+  805560:	0f 48 c2             	cmovs  eax,edx
+  805563:	c1 f8 0a             	sar    eax,0xa
+  805566:	89 c1                	mov    ecx,eax
+  805568:	8b 85 60 ff ff ff    	mov    eax,DWORD PTR [rbp-0xa0]
+  80556e:	99                   	cdq    
+  80556f:	c1 ea 16             	shr    edx,0x16
+  805572:	01 d0                	add    eax,edx
+  805574:	25 ff 03 00 00       	and    eax,0x3ff
+  805579:	29 d0                	sub    eax,edx
+  80557b:	01 c8                	add    eax,ecx
+  80557d:	85 c0                	test   eax,eax
+  80557f:	0f 95 c0             	setne  al
+  805582:	0f b6 c0             	movzx  eax,al
+  805585:	89 85 58 ff ff ff    	mov    DWORD PTR [rbp-0xa8],eax
     int start_pgind_item=shell_addr/PAGE_INDEX_SIZE;
-  80556b:	8b 85 5c ff ff ff    	mov    eax,DWORD PTR [rbp-0xa4]
-  805571:	8d 90 ff ff 3f 00    	lea    edx,[rax+0x3fffff]
-  805577:	85 c0                	test   eax,eax
-  805579:	0f 48 c2             	cmovs  eax,edx
-  80557c:	c1 f8 16             	sar    eax,0x16
-  80557f:	89 85 54 ff ff ff    	mov    DWORD PTR [rbp-0xac],eax
+  80558b:	8b 85 5c ff ff ff    	mov    eax,DWORD PTR [rbp-0xa4]
+  805591:	8d 90 ff ff 3f 00    	lea    edx,[rax+0x3fffff]
+  805597:	85 c0                	test   eax,eax
+  805599:	0f 48 c2             	cmovs  eax,edx
+  80559c:	c1 f8 16             	sar    eax,0x16
+  80559f:	89 85 54 ff ff ff    	mov    DWORD PTR [rbp-0xac],eax
 
     //sys_read sections
     PIMAGE_SECTION_HEADER psec=(u32)nth+sizeof(IMAGE_NT_HEADERS32);
-  805585:	48 8b 85 70 ff ff ff 	mov    rax,QWORD PTR [rbp-0x90]
-  80558c:	89 c0                	mov    eax,eax
-  80558e:	48 05 f8 00 00 00    	add    rax,0xf8
-  805594:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
+  8055a5:	48 8b 85 70 ff ff ff 	mov    rax,QWORD PTR [rbp-0x90]
+  8055ac:	89 c0                	mov    eax,eax
+  8055ae:	48 05 f8 00 00 00    	add    rax,0xf8
+  8055b4:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
     int data_start=sizeof(IMAGE_DOS_HEADER)+sizeof(IMAGE_NT_HEADERS32)+\
     nth->FileHeader.NumberOfSections*sizeof(IMAGE_SECTION_HEADER);
-  805598:	48 8b 85 70 ff ff ff 	mov    rax,QWORD PTR [rbp-0x90]
-  80559f:	0f b7 40 06          	movzx  eax,WORD PTR [rax+0x6]
-  8055a3:	0f b7 d0             	movzx  edx,ax
-  8055a6:	89 d0                	mov    eax,edx
-  8055a8:	c1 e0 02             	shl    eax,0x2
-  8055ab:	01 d0                	add    eax,edx
-  8055ad:	c1 e0 03             	shl    eax,0x3
+  8055b8:	48 8b 85 70 ff ff ff 	mov    rax,QWORD PTR [rbp-0x90]
+  8055bf:	0f b7 40 06          	movzx  eax,WORD PTR [rax+0x6]
+  8055c3:	0f b7 d0             	movzx  edx,ax
+  8055c6:	89 d0                	mov    eax,edx
+  8055c8:	c1 e0 02             	shl    eax,0x2
+  8055cb:	01 d0                	add    eax,edx
+  8055cd:	c1 e0 03             	shl    eax,0x3
     int data_start=sizeof(IMAGE_DOS_HEADER)+sizeof(IMAGE_NT_HEADERS32)+\
-  8055b0:	05 3c 01 00 00       	add    eax,0x13c
-  8055b5:	89 85 50 ff ff ff    	mov    DWORD PTR [rbp-0xb0],eax
+  8055d0:	05 3c 01 00 00       	add    eax,0x13c
+  8055d5:	89 85 50 ff ff ff    	mov    DWORD PTR [rbp-0xb0],eax
     int align=nth->OptionalHeader.FileAlignment;
-  8055bb:	48 8b 85 70 ff ff ff 	mov    rax,QWORD PTR [rbp-0x90]
-  8055c2:	8b 40 3c             	mov    eax,DWORD PTR [rax+0x3c]
-  8055c5:	89 85 4c ff ff ff    	mov    DWORD PTR [rbp-0xb4],eax
+  8055db:	48 8b 85 70 ff ff ff 	mov    rax,QWORD PTR [rbp-0x90]
+  8055e2:	8b 40 3c             	mov    eax,DWORD PTR [rax+0x3c]
+  8055e5:	89 85 4c ff ff ff    	mov    DWORD PTR [rbp-0xb4],eax
     data_start=data_start%align?data_start-data_start%align+align:data_start;
-  8055cb:	8b 85 50 ff ff ff    	mov    eax,DWORD PTR [rbp-0xb0]
-  8055d1:	99                   	cdq    
-  8055d2:	f7 bd 4c ff ff ff    	idiv   DWORD PTR [rbp-0xb4]
-  8055d8:	89 d0                	mov    eax,edx
-  8055da:	85 c0                	test   eax,eax
-  8055dc:	74 23                	je     805601 <load_pe+0x297>
-  8055de:	8b 85 50 ff ff ff    	mov    eax,DWORD PTR [rbp-0xb0]
-  8055e4:	99                   	cdq    
-  8055e5:	f7 bd 4c ff ff ff    	idiv   DWORD PTR [rbp-0xb4]
-  8055eb:	89 d1                	mov    ecx,edx
-  8055ed:	8b 85 50 ff ff ff    	mov    eax,DWORD PTR [rbp-0xb0]
-  8055f3:	29 c8                	sub    eax,ecx
-  8055f5:	89 c2                	mov    edx,eax
-  8055f7:	8b 85 4c ff ff ff    	mov    eax,DWORD PTR [rbp-0xb4]
-  8055fd:	01 d0                	add    eax,edx
-  8055ff:	eb 06                	jmp    805607 <load_pe+0x29d>
-  805601:	8b 85 50 ff ff ff    	mov    eax,DWORD PTR [rbp-0xb0]
-  805607:	89 85 50 ff ff ff    	mov    DWORD PTR [rbp-0xb0],eax
+  8055eb:	8b 85 50 ff ff ff    	mov    eax,DWORD PTR [rbp-0xb0]
+  8055f1:	99                   	cdq    
+  8055f2:	f7 bd 4c ff ff ff    	idiv   DWORD PTR [rbp-0xb4]
+  8055f8:	89 d0                	mov    eax,edx
+  8055fa:	85 c0                	test   eax,eax
+  8055fc:	74 23                	je     805621 <load_pe+0x297>
+  8055fe:	8b 85 50 ff ff ff    	mov    eax,DWORD PTR [rbp-0xb0]
+  805604:	99                   	cdq    
+  805605:	f7 bd 4c ff ff ff    	idiv   DWORD PTR [rbp-0xb4]
+  80560b:	89 d1                	mov    ecx,edx
+  80560d:	8b 85 50 ff ff ff    	mov    eax,DWORD PTR [rbp-0xb0]
+  805613:	29 c8                	sub    eax,ecx
+  805615:	89 c2                	mov    edx,eax
+  805617:	8b 85 4c ff ff ff    	mov    eax,DWORD PTR [rbp-0xb4]
+  80561d:	01 d0                	add    eax,edx
+  80561f:	eb 06                	jmp    805627 <load_pe+0x29d>
+  805621:	8b 85 50 ff ff ff    	mov    eax,DWORD PTR [rbp-0xb0]
+  805627:	89 85 50 ff ff ff    	mov    DWORD PTR [rbp-0xb0],eax
     for(int i=0;i<nth->FileHeader.NumberOfSections;i++,psec++)
-  80560d:	c7 45 ec 00 00 00 00 	mov    DWORD PTR [rbp-0x14],0x0
-  805614:	eb 68                	jmp    80567e <load_pe+0x314>
+  80562d:	c7 45 ec 00 00 00 00 	mov    DWORD PTR [rbp-0x14],0x0
+  805634:	eb 68                	jmp    80569e <load_pe+0x314>
     {
         int disca=psec->Characteristics&IMAGE_SCN_MEM_DISCARDABLE;
-  805616:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  80561a:	8b 40 24             	mov    eax,DWORD PTR [rax+0x24]
-  80561d:	25 00 00 00 02       	and    eax,0x2000000
-  805622:	89 85 bc fe ff ff    	mov    DWORD PTR [rbp-0x144],eax
+  805636:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  80563a:	8b 40 24             	mov    eax,DWORD PTR [rax+0x24]
+  80563d:	25 00 00 00 02       	and    eax,0x2000000
+  805642:	89 85 bc fe ff ff    	mov    DWORD PTR [rbp-0x144],eax
         if(disca)
-  805628:	83 bd bc fe ff ff 00 	cmp    DWORD PTR [rbp-0x144],0x0
-  80562f:	75 43                	jne    805674 <load_pe+0x30a>
+  805648:	83 bd bc fe ff ff 00 	cmp    DWORD PTR [rbp-0x144],0x0
+  80564f:	75 43                	jne    805694 <load_pe+0x30a>
             continue;
         //直接读，缺页内核解决
         sys_seek(exefno,psec->PointerToRawData,SEEK_SET);
-  805631:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  805635:	8b 40 14             	mov    eax,DWORD PTR [rax+0x14]
-  805638:	89 c1                	mov    ecx,eax
-  80563a:	8b 45 94             	mov    eax,DWORD PTR [rbp-0x6c]
-  80563d:	ba 00 00 00 00       	mov    edx,0x0
-  805642:	89 ce                	mov    esi,ecx
-  805644:	89 c7                	mov    edi,eax
-  805646:	e8 f7 cb ff ff       	call   802242 <sys_seek>
+  805651:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  805655:	8b 40 14             	mov    eax,DWORD PTR [rax+0x14]
+  805658:	89 c1                	mov    ecx,eax
+  80565a:	8b 45 94             	mov    eax,DWORD PTR [rbp-0x6c]
+  80565d:	ba 00 00 00 00       	mov    edx,0x0
+  805662:	89 ce                	mov    esi,ecx
+  805664:	89 c7                	mov    edi,eax
+  805666:	e8 d7 cb ff ff       	call   802242 <sys_seek>
         sys_read(exefno, psec->VirtualAddress + nbase,  psec->SizeOfRawData);
-  80564b:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  80564f:	8b 40 10             	mov    eax,DWORD PTR [rax+0x10]
-  805652:	89 c2                	mov    edx,eax
-  805654:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  805658:	8b 48 0c             	mov    ecx,DWORD PTR [rax+0xc]
-  80565b:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  80565e:	01 c8                	add    eax,ecx
-  805660:	89 c0                	mov    eax,eax
-  805662:	48 89 c1             	mov    rcx,rax
-  805665:	8b 45 94             	mov    eax,DWORD PTR [rbp-0x6c]
-  805668:	48 89 ce             	mov    rsi,rcx
-  80566b:	89 c7                	mov    edi,eax
-  80566d:	e8 3f cb ff ff       	call   8021b1 <sys_read>
-  805672:	eb 01                	jmp    805675 <load_pe+0x30b>
+  80566b:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  80566f:	8b 40 10             	mov    eax,DWORD PTR [rax+0x10]
+  805672:	89 c2                	mov    edx,eax
+  805674:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  805678:	8b 48 0c             	mov    ecx,DWORD PTR [rax+0xc]
+  80567b:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  80567e:	01 c8                	add    eax,ecx
+  805680:	89 c0                	mov    eax,eax
+  805682:	48 89 c1             	mov    rcx,rax
+  805685:	8b 45 94             	mov    eax,DWORD PTR [rbp-0x6c]
+  805688:	48 89 ce             	mov    rsi,rcx
+  80568b:	89 c7                	mov    edi,eax
+  80568d:	e8 1f cb ff ff       	call   8021b1 <sys_read>
+  805692:	eb 01                	jmp    805695 <load_pe+0x30b>
             continue;
-  805674:	90                   	nop
+  805694:	90                   	nop
     for(int i=0;i<nth->FileHeader.NumberOfSections;i++,psec++)
-  805675:	83 45 ec 01          	add    DWORD PTR [rbp-0x14],0x1
-  805679:	48 83 45 f0 28       	add    QWORD PTR [rbp-0x10],0x28
-  80567e:	48 8b 85 70 ff ff ff 	mov    rax,QWORD PTR [rbp-0x90]
-  805685:	0f b7 40 06          	movzx  eax,WORD PTR [rax+0x6]
-  805689:	0f b7 c0             	movzx  eax,ax
-  80568c:	39 45 ec             	cmp    DWORD PTR [rbp-0x14],eax
-  80568f:	7c 85                	jl     805616 <load_pe+0x2ac>
+  805695:	83 45 ec 01          	add    DWORD PTR [rbp-0x14],0x1
+  805699:	48 83 45 f0 28       	add    QWORD PTR [rbp-0x10],0x28
+  80569e:	48 8b 85 70 ff ff ff 	mov    rax,QWORD PTR [rbp-0x90]
+  8056a5:	0f b7 40 06          	movzx  eax,WORD PTR [rax+0x6]
+  8056a9:	0f b7 c0             	movzx  eax,ax
+  8056ac:	39 45 ec             	cmp    DWORD PTR [rbp-0x14],eax
+  8056af:	7c 85                	jl     805636 <load_pe+0x2ac>
 
     }
 
     //通过导入表加载需要的dll
     PIMAGE_DATA_DIRECTORY impd=&nth->OptionalHeader.DataDirectory[1];
-  805691:	48 8b 85 70 ff ff ff 	mov    rax,QWORD PTR [rbp-0x90]
-  805698:	48 83 e8 80          	sub    rax,0xffffffffffffff80
-  80569c:	48 89 85 40 ff ff ff 	mov    QWORD PTR [rbp-0xc0],rax
+  8056b1:	48 8b 85 70 ff ff ff 	mov    rax,QWORD PTR [rbp-0x90]
+  8056b8:	48 83 e8 80          	sub    rax,0xffffffffffffff80
+  8056bc:	48 89 85 40 ff ff ff 	mov    QWORD PTR [rbp-0xc0],rax
     if(impd->Size>0)
-  8056a3:	48 8b 85 40 ff ff ff 	mov    rax,QWORD PTR [rbp-0xc0]
-  8056aa:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
-  8056ad:	85 c0                	test   eax,eax
-  8056af:	0f 84 71 02 00 00    	je     805926 <load_pe+0x5bc>
+  8056c3:	48 8b 85 40 ff ff ff 	mov    rax,QWORD PTR [rbp-0xc0]
+  8056ca:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
+  8056cd:	85 c0                	test   eax,eax
+  8056cf:	0f 84 71 02 00 00    	je     805946 <load_pe+0x5bc>
     {
         int tmpi=impd->VirtualAddress+nbase;
-  8056b5:	48 8b 85 40 ff ff ff 	mov    rax,QWORD PTR [rbp-0xc0]
-  8056bc:	8b 10                	mov    edx,DWORD PTR [rax]
-  8056be:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8056c1:	01 d0                	add    eax,edx
-  8056c3:	89 85 3c ff ff ff    	mov    DWORD PTR [rbp-0xc4],eax
+  8056d5:	48 8b 85 40 ff ff ff 	mov    rax,QWORD PTR [rbp-0xc0]
+  8056dc:	8b 10                	mov    edx,DWORD PTR [rax]
+  8056de:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  8056e1:	01 d0                	add    eax,edx
+  8056e3:	89 85 3c ff ff ff    	mov    DWORD PTR [rbp-0xc4],eax
         PIMAGE_IMPORT_DESCRIPTOR impdes=tmpi;
-  8056c9:	8b 85 3c ff ff ff    	mov    eax,DWORD PTR [rbp-0xc4]
-  8056cf:	48 98                	cdqe   
-  8056d1:	48 89 45 e0          	mov    QWORD PTR [rbp-0x20],rax
+  8056e9:	8b 85 3c ff ff ff    	mov    eax,DWORD PTR [rbp-0xc4]
+  8056ef:	48 98                	cdqe   
+  8056f1:	48 89 45 e0          	mov    QWORD PTR [rbp-0x20],rax
         int dllp;
         while (impdes->Characteristics)
-  8056d5:	e9 3e 02 00 00       	jmp    805918 <load_pe+0x5ae>
+  8056f5:	e9 3e 02 00 00       	jmp    805938 <load_pe+0x5ae>
         {
             //加载dll
             char *dllname=impdes->Name+nbase;
-  8056da:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  8056de:	8b 50 0c             	mov    edx,DWORD PTR [rax+0xc]
-  8056e1:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8056e4:	01 d0                	add    eax,edx
-  8056e6:	89 c0                	mov    eax,eax
-  8056e8:	48 89 85 30 ff ff ff 	mov    QWORD PTR [rbp-0xd0],rax
+  8056fa:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  8056fe:	8b 50 0c             	mov    edx,DWORD PTR [rax+0xc]
+  805701:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  805704:	01 d0                	add    eax,edx
+  805706:	89 c0                	mov    eax,eax
+  805708:	48 89 85 30 ff ff ff 	mov    QWORD PTR [rbp-0xd0],rax
             //此处应有加载dll代码
             int dlli;
             if(strcmp(dllname,"sys.dll")==0)//加载系统dll的部分由内核已经完成
-  8056ef:	48 8b 85 30 ff ff ff 	mov    rax,QWORD PTR [rbp-0xd0]
-  8056f6:	be c8 1f 81 00       	mov    esi,0x811fc8
-  8056fb:	48 89 c7             	mov    rdi,rax
-  8056fe:	e8 01 46 00 00       	call   809d04 <strcmp>
-  805703:	85 c0                	test   eax,eax
-  805705:	75 09                	jne    805710 <load_pe+0x3a6>
+  80570f:	48 8b 85 30 ff ff ff 	mov    rax,QWORD PTR [rbp-0xd0]
+  805716:	be c8 1f 81 00       	mov    esi,0x811fc8
+  80571b:	48 89 c7             	mov    rdi,rax
+  80571e:	e8 01 46 00 00       	call   809d24 <strcmp>
+  805723:	85 c0                	test   eax,eax
+  805725:	75 09                	jne    805730 <load_pe+0x3a6>
             {
                 dllp=0x1c00000;
-  805707:	c7 45 dc 00 00 c0 01 	mov    DWORD PTR [rbp-0x24],0x1c00000
-  80570e:	eb 25                	jmp    805735 <load_pe+0x3cb>
+  805727:	c7 45 dc 00 00 c0 01 	mov    DWORD PTR [rbp-0x24],0x1c00000
+  80572e:	eb 25                	jmp    805755 <load_pe+0x3cb>
             }else{
                 //load_pe要记录module的加载
                 dlli= load_pe(proc);
-  805710:	48 8b 85 48 fd ff ff 	mov    rax,QWORD PTR [rbp-0x2b8]
-  805717:	48 89 c7             	mov    rdi,rax
-  80571a:	e8 4b fc ff ff       	call   80536a <load_pe>
-  80571f:	89 85 2c ff ff ff    	mov    DWORD PTR [rbp-0xd4],eax
+  805730:	48 8b 85 48 fd ff ff 	mov    rax,QWORD PTR [rbp-0x2b8]
+  805737:	48 89 c7             	mov    rdi,rax
+  80573a:	e8 4b fc ff ff       	call   80538a <load_pe>
+  80573f:	89 85 2c ff ff ff    	mov    DWORD PTR [rbp-0xd4],eax
                 //dlli=load_library(dllname);
                 //这个是线性地址
                 dllp=get_module_addr(dlli);
-  805725:	8b 85 2c ff ff ff    	mov    eax,DWORD PTR [rbp-0xd4]
-  80572b:	89 c7                	mov    edi,eax
-  80572d:	e8 e4 03 00 00       	call   805b16 <get_module_addr>
-  805732:	89 45 dc             	mov    DWORD PTR [rbp-0x24],eax
+  805745:	8b 85 2c ff ff ff    	mov    eax,DWORD PTR [rbp-0xd4]
+  80574b:	89 c7                	mov    edi,eax
+  80574d:	e8 e4 03 00 00       	call   805b36 <get_module_addr>
+  805752:	89 45 dc             	mov    DWORD PTR [rbp-0x24],eax
             }
             //从线性地址查页表找到物理地址
             PIMAGE_DOS_HEADER dlldos=dllp;
-  805735:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
-  805738:	48 98                	cdqe   
-  80573a:	48 89 85 20 ff ff ff 	mov    QWORD PTR [rbp-0xe0],rax
+  805755:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
+  805758:	48 98                	cdqe   
+  80575a:	48 89 85 20 ff ff ff 	mov    QWORD PTR [rbp-0xe0],rax
             PIMAGE_NT_HEADERS32 dllnth=dllp+dlldos->e_lfanew;
-  805741:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
-  805744:	48 63 d0             	movsxd rdx,eax
-  805747:	48 8b 85 20 ff ff ff 	mov    rax,QWORD PTR [rbp-0xe0]
-  80574e:	48 8b 40 3c          	mov    rax,QWORD PTR [rax+0x3c]
-  805752:	48 01 d0             	add    rax,rdx
-  805755:	48 89 85 18 ff ff ff 	mov    QWORD PTR [rbp-0xe8],rax
+  805761:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
+  805764:	48 63 d0             	movsxd rdx,eax
+  805767:	48 8b 85 20 ff ff ff 	mov    rax,QWORD PTR [rbp-0xe0]
+  80576e:	48 8b 40 3c          	mov    rax,QWORD PTR [rax+0x3c]
+  805772:	48 01 d0             	add    rax,rdx
+  805775:	48 89 85 18 ff ff ff 	mov    QWORD PTR [rbp-0xe8],rax
             PIMAGE_EXPORT_DIRECTORY dllexp=(dllnth->OptionalHeader.DataDirectory[0].VirtualAddress+dllp);
-  80575c:	48 8b 85 18 ff ff ff 	mov    rax,QWORD PTR [rbp-0xe8]
-  805763:	8b 50 78             	mov    edx,DWORD PTR [rax+0x78]
-  805766:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
-  805769:	01 d0                	add    eax,edx
-  80576b:	89 c0                	mov    eax,eax
-  80576d:	48 89 85 10 ff ff ff 	mov    QWORD PTR [rbp-0xf0],rax
+  80577c:	48 8b 85 18 ff ff ff 	mov    rax,QWORD PTR [rbp-0xe8]
+  805783:	8b 50 78             	mov    edx,DWORD PTR [rax+0x78]
+  805786:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
+  805789:	01 d0                	add    eax,edx
+  80578b:	89 c0                	mov    eax,eax
+  80578d:	48 89 85 10 ff ff ff 	mov    QWORD PTR [rbp-0xf0],rax
             int funcn=dllexp->NumberOfNames;
-  805774:	48 8b 85 10 ff ff ff 	mov    rax,QWORD PTR [rbp-0xf0]
-  80577b:	8b 40 18             	mov    eax,DWORD PTR [rax+0x18]
-  80577e:	89 85 0c ff ff ff    	mov    DWORD PTR [rbp-0xf4],eax
+  805794:	48 8b 85 10 ff ff ff 	mov    rax,QWORD PTR [rbp-0xf0]
+  80579b:	8b 40 18             	mov    eax,DWORD PTR [rax+0x18]
+  80579e:	89 85 0c ff ff ff    	mov    DWORD PTR [rbp-0xf4],eax
             char **fnames=dllexp->AddressOfNames+dllp;
-  805784:	48 8b 85 10 ff ff ff 	mov    rax,QWORD PTR [rbp-0xf0]
-  80578b:	8b 50 20             	mov    edx,DWORD PTR [rax+0x20]
-  80578e:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
-  805791:	01 d0                	add    eax,edx
-  805793:	89 c0                	mov    eax,eax
-  805795:	48 89 85 00 ff ff ff 	mov    QWORD PTR [rbp-0x100],rax
+  8057a4:	48 8b 85 10 ff ff ff 	mov    rax,QWORD PTR [rbp-0xf0]
+  8057ab:	8b 50 20             	mov    edx,DWORD PTR [rax+0x20]
+  8057ae:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
+  8057b1:	01 d0                	add    eax,edx
+  8057b3:	89 c0                	mov    eax,eax
+  8057b5:	48 89 85 00 ff ff ff 	mov    QWORD PTR [rbp-0x100],rax
             int *funcaddrs=dllexp->AddressOfFunctions+dllp;
-  80579c:	48 8b 85 10 ff ff ff 	mov    rax,QWORD PTR [rbp-0xf0]
-  8057a3:	8b 50 1c             	mov    edx,DWORD PTR [rax+0x1c]
-  8057a6:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
-  8057a9:	01 d0                	add    eax,edx
-  8057ab:	89 c0                	mov    eax,eax
-  8057ad:	48 89 85 f8 fe ff ff 	mov    QWORD PTR [rbp-0x108],rax
+  8057bc:	48 8b 85 10 ff ff ff 	mov    rax,QWORD PTR [rbp-0xf0]
+  8057c3:	8b 50 1c             	mov    edx,DWORD PTR [rax+0x1c]
+  8057c6:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
+  8057c9:	01 d0                	add    eax,edx
+  8057cb:	89 c0                	mov    eax,eax
+  8057cd:	48 89 85 f8 fe ff ff 	mov    QWORD PTR [rbp-0x108],rax
             short *funcords=dllexp->AddressOfNameOrdinals+dllp;
-  8057b4:	48 8b 85 10 ff ff ff 	mov    rax,QWORD PTR [rbp-0xf0]
-  8057bb:	8b 50 24             	mov    edx,DWORD PTR [rax+0x24]
-  8057be:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
-  8057c1:	01 d0                	add    eax,edx
-  8057c3:	89 c0                	mov    eax,eax
-  8057c5:	48 89 85 f0 fe ff ff 	mov    QWORD PTR [rbp-0x110],rax
+  8057d4:	48 8b 85 10 ff ff ff 	mov    rax,QWORD PTR [rbp-0xf0]
+  8057db:	8b 50 24             	mov    edx,DWORD PTR [rax+0x24]
+  8057de:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
+  8057e1:	01 d0                	add    eax,edx
+  8057e3:	89 c0                	mov    eax,eax
+  8057e5:	48 89 85 f0 fe ff ff 	mov    QWORD PTR [rbp-0x110],rax
             //寻找nameordinal的base（最小值），里面的数据加上base才是真正的序号
             unsigned int ord_base=dllexp->Base;
-  8057cc:	48 8b 85 10 ff ff ff 	mov    rax,QWORD PTR [rbp-0xf0]
-  8057d3:	8b 40 10             	mov    eax,DWORD PTR [rax+0x10]
-  8057d6:	89 85 ec fe ff ff    	mov    DWORD PTR [rbp-0x114],eax
+  8057ec:	48 8b 85 10 ff ff ff 	mov    rax,QWORD PTR [rbp-0xf0]
+  8057f3:	8b 40 10             	mov    eax,DWORD PTR [rax+0x10]
+  8057f6:	89 85 ec fe ff ff    	mov    DWORD PTR [rbp-0x114],eax
             //开始将导入表IAT的内容更新为函数地址
             unsigned int *iataddrs=impdes->FirstThunk+nbase;//IAT和INT内容一样，只用IAT
-  8057dc:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  8057e0:	8b 50 10             	mov    edx,DWORD PTR [rax+0x10]
-  8057e3:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8057e6:	01 d0                	add    eax,edx
-  8057e8:	89 c0                	mov    eax,eax
-  8057ea:	48 89 45 d0          	mov    QWORD PTR [rbp-0x30],rax
+  8057fc:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  805800:	8b 50 10             	mov    edx,DWORD PTR [rax+0x10]
+  805803:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  805806:	01 d0                	add    eax,edx
+  805808:	89 c0                	mov    eax,eax
+  80580a:	48 89 45 d0          	mov    QWORD PTR [rbp-0x30],rax
             char **siataddrs=impdes->FirstThunk+nbase;
-  8057ee:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  8057f2:	8b 50 10             	mov    edx,DWORD PTR [rax+0x10]
-  8057f5:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8057f8:	01 d0                	add    eax,edx
-  8057fa:	89 c0                	mov    eax,eax
-  8057fc:	48 89 45 c8          	mov    QWORD PTR [rbp-0x38],rax
+  80580e:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  805812:	8b 50 10             	mov    edx,DWORD PTR [rax+0x10]
+  805815:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  805818:	01 d0                	add    eax,edx
+  80581a:	89 c0                	mov    eax,eax
+  80581c:	48 89 45 c8          	mov    QWORD PTR [rbp-0x38],rax
             while (*iataddrs)
-  805800:	e9 00 01 00 00       	jmp    805905 <load_pe+0x59b>
+  805820:	e9 00 01 00 00       	jmp    805925 <load_pe+0x59b>
             {
                 //判断是序号导入还是名称导入
                 if(((unsigned)*iataddrs)&0x80000000)
-  805805:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
-  805809:	8b 00                	mov    eax,DWORD PTR [rax]
-  80580b:	85 c0                	test   eax,eax
-  80580d:	79 43                	jns    805852 <load_pe+0x4e8>
+  805825:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
+  805829:	8b 00                	mov    eax,DWORD PTR [rax]
+  80582b:	85 c0                	test   eax,eax
+  80582d:	79 43                	jns    805872 <load_pe+0x4e8>
                 {
                     //序号导入
                     unsigned int ord=((*iataddrs)&0x7fffffff)-ord_base;
-  80580f:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
-  805813:	8b 00                	mov    eax,DWORD PTR [rax]
-  805815:	25 ff ff ff 7f       	and    eax,0x7fffffff
-  80581a:	2b 85 ec fe ff ff    	sub    eax,DWORD PTR [rbp-0x114]
-  805820:	89 85 d8 fe ff ff    	mov    DWORD PTR [rbp-0x128],eax
+  80582f:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
+  805833:	8b 00                	mov    eax,DWORD PTR [rax]
+  805835:	25 ff ff ff 7f       	and    eax,0x7fffffff
+  80583a:	2b 85 ec fe ff ff    	sub    eax,DWORD PTR [rbp-0x114]
+  805840:	89 85 d8 fe ff ff    	mov    DWORD PTR [rbp-0x128],eax
                     *iataddrs=funcaddrs[ord]+dllp;
-  805826:	8b 85 d8 fe ff ff    	mov    eax,DWORD PTR [rbp-0x128]
-  80582c:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
-  805833:	00 
-  805834:	48 8b 85 f8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x108]
-  80583b:	48 01 d0             	add    rax,rdx
-  80583e:	8b 10                	mov    edx,DWORD PTR [rax]
-  805840:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
-  805843:	01 d0                	add    eax,edx
-  805845:	89 c2                	mov    edx,eax
-  805847:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
-  80584b:	89 10                	mov    DWORD PTR [rax],edx
-  80584d:	e9 a9 00 00 00       	jmp    8058fb <load_pe+0x591>
+  805846:	8b 85 d8 fe ff ff    	mov    eax,DWORD PTR [rbp-0x128]
+  80584c:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
+  805853:	00 
+  805854:	48 8b 85 f8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x108]
+  80585b:	48 01 d0             	add    rax,rdx
+  80585e:	8b 10                	mov    edx,DWORD PTR [rax]
+  805860:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
+  805863:	01 d0                	add    eax,edx
+  805865:	89 c2                	mov    edx,eax
+  805867:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
+  80586b:	89 10                	mov    DWORD PTR [rax],edx
+  80586d:	e9 a9 00 00 00       	jmp    80591b <load_pe+0x591>
                 }else
                 {
                     //名称导入
                     char *import_by_name_p=*iataddrs;//指向IMPORT_BY_NAME
-  805852:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
-  805856:	8b 00                	mov    eax,DWORD PTR [rax]
-  805858:	89 c0                	mov    eax,eax
-  80585a:	48 89 85 e0 fe ff ff 	mov    QWORD PTR [rbp-0x120],rax
+  805872:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
+  805876:	8b 00                	mov    eax,DWORD PTR [rax]
+  805878:	89 c0                	mov    eax,eax
+  80587a:	48 89 85 e0 fe ff ff 	mov    QWORD PTR [rbp-0x120],rax
                     import_by_name_p+=2;//跳过开头两字节序号
-  805861:	48 83 85 e0 fe ff ff 	add    QWORD PTR [rbp-0x120],0x2
-  805868:	02 
+  805881:	48 83 85 e0 fe ff ff 	add    QWORD PTR [rbp-0x120],0x2
+  805888:	02 
                     int i=0;
-  805869:	c7 45 c4 00 00 00 00 	mov    DWORD PTR [rbp-0x3c],0x0
+  805889:	c7 45 c4 00 00 00 00 	mov    DWORD PTR [rbp-0x3c],0x0
                     for(;i<funcn;i++)
-  805870:	eb 7a                	jmp    8058ec <load_pe+0x582>
+  805890:	eb 7a                	jmp    80590c <load_pe+0x582>
                     {
                         if(strcmp(import_by_name_p,fnames[i])==0)
-  805872:	8b 45 c4             	mov    eax,DWORD PTR [rbp-0x3c]
-  805875:	48 98                	cdqe   
-  805877:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
-  80587e:	00 
-  80587f:	48 8b 85 00 ff ff ff 	mov    rax,QWORD PTR [rbp-0x100]
-  805886:	48 01 d0             	add    rax,rdx
-  805889:	48 8b 10             	mov    rdx,QWORD PTR [rax]
-  80588c:	48 8b 85 e0 fe ff ff 	mov    rax,QWORD PTR [rbp-0x120]
-  805893:	48 89 d6             	mov    rsi,rdx
-  805896:	48 89 c7             	mov    rdi,rax
-  805899:	e8 66 44 00 00       	call   809d04 <strcmp>
-  80589e:	85 c0                	test   eax,eax
-  8058a0:	75 46                	jne    8058e8 <load_pe+0x57e>
+  805892:	8b 45 c4             	mov    eax,DWORD PTR [rbp-0x3c]
+  805895:	48 98                	cdqe   
+  805897:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
+  80589e:	00 
+  80589f:	48 8b 85 00 ff ff ff 	mov    rax,QWORD PTR [rbp-0x100]
+  8058a6:	48 01 d0             	add    rax,rdx
+  8058a9:	48 8b 10             	mov    rdx,QWORD PTR [rax]
+  8058ac:	48 8b 85 e0 fe ff ff 	mov    rax,QWORD PTR [rbp-0x120]
+  8058b3:	48 89 d6             	mov    rsi,rdx
+  8058b6:	48 89 c7             	mov    rdi,rax
+  8058b9:	e8 66 44 00 00       	call   809d24 <strcmp>
+  8058be:	85 c0                	test   eax,eax
+  8058c0:	75 46                	jne    805908 <load_pe+0x57e>
                         {
                             int ordi=funcords[i];
-  8058a2:	8b 45 c4             	mov    eax,DWORD PTR [rbp-0x3c]
-  8058a5:	48 98                	cdqe   
-  8058a7:	48 8d 14 00          	lea    rdx,[rax+rax*1]
-  8058ab:	48 8b 85 f0 fe ff ff 	mov    rax,QWORD PTR [rbp-0x110]
-  8058b2:	48 01 d0             	add    rax,rdx
-  8058b5:	0f b7 00             	movzx  eax,WORD PTR [rax]
-  8058b8:	98                   	cwde   
-  8058b9:	89 85 dc fe ff ff    	mov    DWORD PTR [rbp-0x124],eax
-                            *iataddrs=funcaddrs[ordi]+dllp;//导入表中的IAT内容修改成地址
-  8058bf:	8b 85 dc fe ff ff    	mov    eax,DWORD PTR [rbp-0x124]
+  8058c2:	8b 45 c4             	mov    eax,DWORD PTR [rbp-0x3c]
   8058c5:	48 98                	cdqe   
-  8058c7:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
-  8058ce:	00 
-  8058cf:	48 8b 85 f8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x108]
-  8058d6:	48 01 d0             	add    rax,rdx
-  8058d9:	8b 10                	mov    edx,DWORD PTR [rax]
-  8058db:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
-  8058de:	01 d0                	add    eax,edx
-  8058e0:	89 c2                	mov    edx,eax
-  8058e2:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
-  8058e6:	89 10                	mov    DWORD PTR [rax],edx
+  8058c7:	48 8d 14 00          	lea    rdx,[rax+rax*1]
+  8058cb:	48 8b 85 f0 fe ff ff 	mov    rax,QWORD PTR [rbp-0x110]
+  8058d2:	48 01 d0             	add    rax,rdx
+  8058d5:	0f b7 00             	movzx  eax,WORD PTR [rax]
+  8058d8:	98                   	cwde   
+  8058d9:	89 85 dc fe ff ff    	mov    DWORD PTR [rbp-0x124],eax
+                            *iataddrs=funcaddrs[ordi]+dllp;//导入表中的IAT内容修改成地址
+  8058df:	8b 85 dc fe ff ff    	mov    eax,DWORD PTR [rbp-0x124]
+  8058e5:	48 98                	cdqe   
+  8058e7:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
+  8058ee:	00 
+  8058ef:	48 8b 85 f8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x108]
+  8058f6:	48 01 d0             	add    rax,rdx
+  8058f9:	8b 10                	mov    edx,DWORD PTR [rax]
+  8058fb:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
+  8058fe:	01 d0                	add    eax,edx
+  805900:	89 c2                	mov    edx,eax
+  805902:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
+  805906:	89 10                	mov    DWORD PTR [rax],edx
                     for(;i<funcn;i++)
-  8058e8:	83 45 c4 01          	add    DWORD PTR [rbp-0x3c],0x1
-  8058ec:	8b 45 c4             	mov    eax,DWORD PTR [rbp-0x3c]
-  8058ef:	3b 85 0c ff ff ff    	cmp    eax,DWORD PTR [rbp-0xf4]
-  8058f5:	0f 8c 77 ff ff ff    	jl     805872 <load_pe+0x508>
+  805908:	83 45 c4 01          	add    DWORD PTR [rbp-0x3c],0x1
+  80590c:	8b 45 c4             	mov    eax,DWORD PTR [rbp-0x3c]
+  80590f:	3b 85 0c ff ff ff    	cmp    eax,DWORD PTR [rbp-0xf4]
+  805915:	0f 8c 77 ff ff ff    	jl     805892 <load_pe+0x508>
                         }
                     }
                 }
                 iataddrs++;
-  8058fb:	48 83 45 d0 04       	add    QWORD PTR [rbp-0x30],0x4
+  80591b:	48 83 45 d0 04       	add    QWORD PTR [rbp-0x30],0x4
                 siataddrs++;
-  805900:	48 83 45 c8 08       	add    QWORD PTR [rbp-0x38],0x8
+  805920:	48 83 45 c8 08       	add    QWORD PTR [rbp-0x38],0x8
             while (*iataddrs)
-  805905:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
-  805909:	8b 00                	mov    eax,DWORD PTR [rax]
-  80590b:	85 c0                	test   eax,eax
-  80590d:	0f 85 f2 fe ff ff    	jne    805805 <load_pe+0x49b>
+  805925:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
+  805929:	8b 00                	mov    eax,DWORD PTR [rax]
+  80592b:	85 c0                	test   eax,eax
+  80592d:	0f 85 f2 fe ff ff    	jne    805825 <load_pe+0x49b>
             }
             impdes++;
-  805913:	48 83 45 e0 14       	add    QWORD PTR [rbp-0x20],0x14
+  805933:	48 83 45 e0 14       	add    QWORD PTR [rbp-0x20],0x14
         while (impdes->Characteristics)
-  805918:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  80591c:	8b 00                	mov    eax,DWORD PTR [rax]
-  80591e:	85 c0                	test   eax,eax
-  805920:	0f 85 b4 fd ff ff    	jne    8056da <load_pe+0x370>
+  805938:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  80593c:	8b 00                	mov    eax,DWORD PTR [rax]
+  80593e:	85 c0                	test   eax,eax
+  805940:	0f 85 b4 fd ff ff    	jne    8056fa <load_pe+0x370>
         }
     }
 
 
     //开始重定位
     PIMAGE_BASE_RELOCATION relp=0;
-  805926:	48 c7 45 b8 00 00 00 	mov    QWORD PTR [rbp-0x48],0x0
-  80592d:	00 
+  805946:	48 c7 45 b8 00 00 00 	mov    QWORD PTR [rbp-0x48],0x0
+  80594d:	00 
     if(nth->OptionalHeader.DataDirectory[5].Size>0)
-  80592e:	48 8b 85 70 ff ff ff 	mov    rax,QWORD PTR [rbp-0x90]
-  805935:	8b 80 a4 00 00 00    	mov    eax,DWORD PTR [rax+0xa4]
-  80593b:	85 c0                	test   eax,eax
-  80593d:	0f 84 e8 00 00 00    	je     805a2b <load_pe+0x6c1>
+  80594e:	48 8b 85 70 ff ff ff 	mov    rax,QWORD PTR [rbp-0x90]
+  805955:	8b 80 a4 00 00 00    	mov    eax,DWORD PTR [rax+0xa4]
+  80595b:	85 c0                	test   eax,eax
+  80595d:	0f 84 e8 00 00 00    	je     805a4b <load_pe+0x6c1>
     {
         relp=(u32)(nth->OptionalHeader.DataDirectory[5].VirtualAddress\
-  805943:	48 8b 85 70 ff ff ff 	mov    rax,QWORD PTR [rbp-0x90]
-  80594a:	8b 90 a0 00 00 00    	mov    edx,DWORD PTR [rax+0xa0]
-  805950:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  805953:	01 d0                	add    eax,edx
-  805955:	89 c0                	mov    eax,eax
-  805957:	48 89 45 b8          	mov    QWORD PTR [rbp-0x48],rax
+  805963:	48 8b 85 70 ff ff ff 	mov    rax,QWORD PTR [rbp-0x90]
+  80596a:	8b 90 a0 00 00 00    	mov    edx,DWORD PTR [rax+0xa0]
+  805970:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  805973:	01 d0                	add    eax,edx
+  805975:	89 c0                	mov    eax,eax
+  805977:	48 89 45 b8          	mov    QWORD PTR [rbp-0x48],rax
                                 +(u32)nbase);
         u16 *reloc=relp+sizeof(IMAGE_BASE_RELOCATION);
-  80595b:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
-  80595f:	48 83 c0 40          	add    rax,0x40
-  805963:	48 89 45 b0          	mov    QWORD PTR [rbp-0x50],rax
+  80597b:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
+  80597f:	48 83 c0 40          	add    rax,0x40
+  805983:	48 89 45 b0          	mov    QWORD PTR [rbp-0x50],rax
         u16 *rtype=reloc+1;
-  805967:	48 8b 45 b0          	mov    rax,QWORD PTR [rbp-0x50]
-  80596b:	48 83 c0 02          	add    rax,0x2
-  80596f:	48 89 45 a8          	mov    QWORD PTR [rbp-0x58],rax
+  805987:	48 8b 45 b0          	mov    rax,QWORD PTR [rbp-0x50]
+  80598b:	48 83 c0 02          	add    rax,0x2
+  80598f:	48 89 45 a8          	mov    QWORD PTR [rbp-0x58],rax
         int old_base=nth->OptionalHeader.ImageBase;
-  805973:	48 8b 85 70 ff ff ff 	mov    rax,QWORD PTR [rbp-0x90]
-  80597a:	8b 40 34             	mov    eax,DWORD PTR [rax+0x34]
-  80597d:	89 85 d4 fe ff ff    	mov    DWORD PTR [rbp-0x12c],eax
+  805993:	48 8b 85 70 ff ff ff 	mov    rax,QWORD PTR [rbp-0x90]
+  80599a:	8b 40 34             	mov    eax,DWORD PTR [rax+0x34]
+  80599d:	89 85 d4 fe ff ff    	mov    DWORD PTR [rbp-0x12c],eax
         while(relp->VirtualAddress){
-  805983:	e9 95 00 00 00       	jmp    805a1d <load_pe+0x6b3>
+  8059a3:	e9 95 00 00 00       	jmp    805a3d <load_pe+0x6b3>
             int pgva=relp->VirtualAddress+nbase;
-  805988:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
-  80598c:	8b 10                	mov    edx,DWORD PTR [rax]
-  80598e:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  805991:	01 d0                	add    eax,edx
-  805993:	89 85 d0 fe ff ff    	mov    DWORD PTR [rbp-0x130],eax
+  8059a8:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
+  8059ac:	8b 10                	mov    edx,DWORD PTR [rax]
+  8059ae:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  8059b1:	01 d0                	add    eax,edx
+  8059b3:	89 85 d0 fe ff ff    	mov    DWORD PTR [rbp-0x130],eax
             for(int i=0;i<relp->SizeOfBlock/4;i++)
-  805999:	c7 45 a4 00 00 00 00 	mov    DWORD PTR [rbp-0x5c],0x0
-  8059a0:	eb 59                	jmp    8059fb <load_pe+0x691>
+  8059b9:	c7 45 a4 00 00 00 00 	mov    DWORD PTR [rbp-0x5c],0x0
+  8059c0:	eb 59                	jmp    805a1b <load_pe+0x691>
             {
                 if(*rtype==IMAGE_REL_BASED_ABSOLUTE)continue;//不用重定位
-  8059a2:	48 8b 45 a8          	mov    rax,QWORD PTR [rbp-0x58]
-  8059a6:	0f b7 00             	movzx  eax,WORD PTR [rax]
-  8059a9:	66 85 c0             	test   ax,ax
-  8059ac:	74 48                	je     8059f6 <load_pe+0x68c>
+  8059c2:	48 8b 45 a8          	mov    rax,QWORD PTR [rbp-0x58]
+  8059c6:	0f b7 00             	movzx  eax,WORD PTR [rax]
+  8059c9:	66 85 c0             	test   ax,ax
+  8059cc:	74 48                	je     805a16 <load_pe+0x68c>
                 int *at=*reloc+pgva;//要重定位的数据的地址
-  8059ae:	48 8b 45 b0          	mov    rax,QWORD PTR [rbp-0x50]
-  8059b2:	0f b7 00             	movzx  eax,WORD PTR [rax]
-  8059b5:	0f b7 d0             	movzx  edx,ax
-  8059b8:	8b 85 d0 fe ff ff    	mov    eax,DWORD PTR [rbp-0x130]
-  8059be:	01 d0                	add    eax,edx
-  8059c0:	48 98                	cdqe   
-  8059c2:	48 89 85 c8 fe ff ff 	mov    QWORD PTR [rbp-0x138],rax
+  8059ce:	48 8b 45 b0          	mov    rax,QWORD PTR [rbp-0x50]
+  8059d2:	0f b7 00             	movzx  eax,WORD PTR [rax]
+  8059d5:	0f b7 d0             	movzx  edx,ax
+  8059d8:	8b 85 d0 fe ff ff    	mov    eax,DWORD PTR [rbp-0x130]
+  8059de:	01 d0                	add    eax,edx
+  8059e0:	48 98                	cdqe   
+  8059e2:	48 89 85 c8 fe ff ff 	mov    QWORD PTR [rbp-0x138],rax
                 *at=*at-old_base+nbase;
-  8059c9:	48 8b 85 c8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x138]
-  8059d0:	8b 00                	mov    eax,DWORD PTR [rax]
-  8059d2:	2b 85 d4 fe ff ff    	sub    eax,DWORD PTR [rbp-0x12c]
-  8059d8:	89 c2                	mov    edx,eax
-  8059da:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8059dd:	01 d0                	add    eax,edx
-  8059df:	89 c2                	mov    edx,eax
-  8059e1:	48 8b 85 c8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x138]
-  8059e8:	89 10                	mov    DWORD PTR [rax],edx
+  8059e9:	48 8b 85 c8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x138]
+  8059f0:	8b 00                	mov    eax,DWORD PTR [rax]
+  8059f2:	2b 85 d4 fe ff ff    	sub    eax,DWORD PTR [rbp-0x12c]
+  8059f8:	89 c2                	mov    edx,eax
+  8059fa:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  8059fd:	01 d0                	add    eax,edx
+  8059ff:	89 c2                	mov    edx,eax
+  805a01:	48 8b 85 c8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x138]
+  805a08:	89 10                	mov    DWORD PTR [rax],edx
                 //下一个
                 reloc+=2;
-  8059ea:	48 83 45 b0 04       	add    QWORD PTR [rbp-0x50],0x4
+  805a0a:	48 83 45 b0 04       	add    QWORD PTR [rbp-0x50],0x4
                 rtype+=2;
-  8059ef:	48 83 45 a8 04       	add    QWORD PTR [rbp-0x58],0x4
-  8059f4:	eb 01                	jmp    8059f7 <load_pe+0x68d>
+  805a0f:	48 83 45 a8 04       	add    QWORD PTR [rbp-0x58],0x4
+  805a14:	eb 01                	jmp    805a17 <load_pe+0x68d>
                 if(*rtype==IMAGE_REL_BASED_ABSOLUTE)continue;//不用重定位
-  8059f6:	90                   	nop
+  805a16:	90                   	nop
             for(int i=0;i<relp->SizeOfBlock/4;i++)
-  8059f7:	83 45 a4 01          	add    DWORD PTR [rbp-0x5c],0x1
-  8059fb:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
-  8059ff:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
-  805a02:	c1 e8 02             	shr    eax,0x2
-  805a05:	89 c2                	mov    edx,eax
-  805a07:	8b 45 a4             	mov    eax,DWORD PTR [rbp-0x5c]
-  805a0a:	39 c2                	cmp    edx,eax
-  805a0c:	77 94                	ja     8059a2 <load_pe+0x638>
+  805a17:	83 45 a4 01          	add    DWORD PTR [rbp-0x5c],0x1
+  805a1b:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
+  805a1f:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
+  805a22:	c1 e8 02             	shr    eax,0x2
+  805a25:	89 c2                	mov    edx,eax
+  805a27:	8b 45 a4             	mov    eax,DWORD PTR [rbp-0x5c]
+  805a2a:	39 c2                	cmp    edx,eax
+  805a2c:	77 94                	ja     8059c2 <load_pe+0x638>
             }
             relp=(int)relp+0x1000;
-  805a0e:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
-  805a12:	05 00 10 00 00       	add    eax,0x1000
-  805a17:	48 98                	cdqe   
-  805a19:	48 89 45 b8          	mov    QWORD PTR [rbp-0x48],rax
+  805a2e:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
+  805a32:	05 00 10 00 00       	add    eax,0x1000
+  805a37:	48 98                	cdqe   
+  805a39:	48 89 45 b8          	mov    QWORD PTR [rbp-0x48],rax
         while(relp->VirtualAddress){
-  805a1d:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
-  805a21:	8b 00                	mov    eax,DWORD PTR [rax]
-  805a23:	85 c0                	test   eax,eax
-  805a25:	0f 85 5d ff ff ff    	jne    805988 <load_pe+0x61e>
+  805a3d:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
+  805a41:	8b 00                	mov    eax,DWORD PTR [rax]
+  805a43:	85 c0                	test   eax,eax
+  805a45:	0f 85 5d ff ff ff    	jne    8059a8 <load_pe+0x61e>
         }
     }
     extern struct process task[];
     extern int cur_proc;
     //初始化堆
     chunk_header hdrtmp={
-  805a2b:	c7 85 50 fd ff ff 00 	mov    DWORD PTR [rbp-0x2b0],0x0
-  805a32:	00 00 00 
-  805a35:	c7 85 54 fd ff ff 00 	mov    DWORD PTR [rbp-0x2ac],0x0
-  805a3c:	00 00 00 
-  805a3f:	48 c7 85 58 fd ff ff 	mov    QWORD PTR [rbp-0x2a8],0x0
-  805a46:	00 00 00 00 
-  805a4a:	48 c7 85 60 fd ff ff 	mov    QWORD PTR [rbp-0x2a0],0x0
-  805a51:	00 00 00 00 
+  805a4b:	c7 85 50 fd ff ff 00 	mov    DWORD PTR [rbp-0x2b0],0x0
+  805a52:	00 00 00 
+  805a55:	c7 85 54 fd ff ff 00 	mov    DWORD PTR [rbp-0x2ac],0x0
+  805a5c:	00 00 00 
+  805a5f:	48 c7 85 58 fd ff ff 	mov    QWORD PTR [rbp-0x2a8],0x0
+  805a66:	00 00 00 00 
+  805a6a:	48 c7 85 60 fd ff ff 	mov    QWORD PTR [rbp-0x2a0],0x0
+  805a71:	00 00 00 00 
             .next=NULL,
             .pgn=0,
             .prev=NULL
     };//空堆
     //拷贝触发页中断然后分配
     memcpy((chunk_header*)HEAP_BASE,&hdrtmp,sizeof(hdrtmp));
-  805a55:	48 8d 85 50 fd ff ff 	lea    rax,[rbp-0x2b0]
-  805a5c:	ba 18 00 00 00       	mov    edx,0x18
-  805a61:	48 89 c6             	mov    rsi,rax
-  805a64:	bf 00 00 00 01       	mov    edi,0x1000000
-  805a69:	e8 f8 3f 00 00       	call   809a66 <memcpy>
+  805a75:	48 8d 85 50 fd ff ff 	lea    rax,[rbp-0x2b0]
+  805a7c:	ba 18 00 00 00       	mov    edx,0x18
+  805a81:	48 89 c6             	mov    rsi,rax
+  805a84:	bf 00 00 00 01       	mov    edi,0x1000000
+  805a89:	e8 f8 3f 00 00       	call   809a86 <memcpy>
     task[cur_proc].mem_struct.heap_base=HEAP_BASE;
-  805a6e:	8b 05 98 ea c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0ea98]        # 41450c <cur_proc>
-  805a74:	48 63 d0             	movsxd rdx,eax
-  805a77:	48 89 d0             	mov    rax,rdx
-  805a7a:	48 01 c0             	add    rax,rax
-  805a7d:	48 01 d0             	add    rax,rdx
-  805a80:	48 c1 e0 08          	shl    rax,0x8
-  805a84:	48 05 b0 84 40 00    	add    rax,0x4084b0
-  805a8a:	c7 40 04 00 00 00 01 	mov    DWORD PTR [rax+0x4],0x1000000
+  805a8e:	8b 05 78 ea c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0ea78]        # 41450c <cur_proc>
+  805a94:	48 63 d0             	movsxd rdx,eax
+  805a97:	48 89 d0             	mov    rax,rdx
+  805a9a:	48 01 c0             	add    rax,rax
+  805a9d:	48 01 d0             	add    rax,rdx
+  805aa0:	48 c1 e0 08          	shl    rax,0x8
+  805aa4:	48 05 b0 84 40 00    	add    rax,0x4084b0
+  805aaa:	c7 40 04 00 00 00 01 	mov    DWORD PTR [rax+0x4],0x1000000
     task[cur_proc].mem_struct.heap_top=HEAP_BASE+CHUNK_SIZE;
-  805a91:	8b 05 75 ea c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0ea75]        # 41450c <cur_proc>
-  805a97:	48 63 d0             	movsxd rdx,eax
-  805a9a:	48 89 d0             	mov    rax,rdx
-  805a9d:	48 01 c0             	add    rax,rax
-  805aa0:	48 01 d0             	add    rax,rdx
-  805aa3:	48 c1 e0 08          	shl    rax,0x8
-  805aa7:	48 05 b0 84 40 00    	add    rax,0x4084b0
-  805aad:	c7 40 08 00 10 00 01 	mov    DWORD PTR [rax+0x8],0x1001000
+  805ab1:	8b 05 55 ea c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0ea55]        # 41450c <cur_proc>
+  805ab7:	48 63 d0             	movsxd rdx,eax
+  805aba:	48 89 d0             	mov    rax,rdx
+  805abd:	48 01 c0             	add    rax,rax
+  805ac0:	48 01 d0             	add    rax,rdx
+  805ac3:	48 c1 e0 08          	shl    rax,0x8
+  805ac7:	48 05 b0 84 40 00    	add    rax,0x4084b0
+  805acd:	c7 40 08 00 10 00 01 	mov    DWORD PTR [rax+0x8],0x1001000
 
 
     //完毕,调用入口函数
     //重定位完毕，准备调用DllMain
     typedef int (*Main)(int,void*);
     Main main=shell_addr;
-  805ab4:	8b 85 5c ff ff ff    	mov    eax,DWORD PTR [rbp-0xa4]
-  805aba:	48 98                	cdqe   
-  805abc:	48 89 85 c0 fe ff ff 	mov    QWORD PTR [rbp-0x140],rax
+  805ad4:	8b 85 5c ff ff ff    	mov    eax,DWORD PTR [rbp-0xa4]
+  805ada:	48 98                	cdqe   
+  805adc:	48 89 85 c0 fe ff ff 	mov    QWORD PTR [rbp-0x140],rax
     task[cur_proc].exit_code=main(0,NULL);
-  805ac3:	48 8b 85 c0 fe ff ff 	mov    rax,QWORD PTR [rbp-0x140]
-  805aca:	be 00 00 00 00       	mov    esi,0x0
-  805acf:	bf 00 00 00 00       	mov    edi,0x0
-  805ad4:	ff d0                	call   rax
-  805ad6:	8b 15 30 ea c0 ff    	mov    edx,DWORD PTR [rip+0xffffffffffc0ea30]        # 41450c <cur_proc>
-  805adc:	89 c1                	mov    ecx,eax
-  805ade:	48 63 d2             	movsxd rdx,edx
-  805ae1:	48 89 d0             	mov    rax,rdx
-  805ae4:	48 01 c0             	add    rax,rax
-  805ae7:	48 01 d0             	add    rax,rdx
-  805aea:	48 c1 e0 08          	shl    rax,0x8
-  805aee:	48 05 b0 84 40 00    	add    rax,0x4084b0
-  805af4:	89 08                	mov    DWORD PTR [rax],ecx
+  805ae3:	48 8b 85 c0 fe ff ff 	mov    rax,QWORD PTR [rbp-0x140]
+  805aea:	be 00 00 00 00       	mov    esi,0x0
+  805aef:	bf 00 00 00 00       	mov    edi,0x0
+  805af4:	ff d0                	call   rax
+  805af6:	8b 15 10 ea c0 ff    	mov    edx,DWORD PTR [rip+0xffffffffffc0ea10]        # 41450c <cur_proc>
+  805afc:	89 c1                	mov    ecx,eax
+  805afe:	48 63 d2             	movsxd rdx,edx
+  805b01:	48 89 d0             	mov    rax,rdx
+  805b04:	48 01 c0             	add    rax,rax
+  805b07:	48 01 d0             	add    rax,rdx
+  805b0a:	48 c1 e0 08          	shl    rax,0x8
+  805b0e:	48 05 b0 84 40 00    	add    rax,0x4084b0
+  805b14:	89 08                	mov    DWORD PTR [rax],ecx
     return task[cur_proc].exit_code;
-  805af6:	8b 05 10 ea c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0ea10]        # 41450c <cur_proc>
-  805afc:	48 63 d0             	movsxd rdx,eax
-  805aff:	48 89 d0             	mov    rax,rdx
-  805b02:	48 01 c0             	add    rax,rax
-  805b05:	48 01 d0             	add    rax,rdx
-  805b08:	48 c1 e0 08          	shl    rax,0x8
-  805b0c:	48 05 b0 84 40 00    	add    rax,0x4084b0
-  805b12:	8b 00                	mov    eax,DWORD PTR [rax]
+  805b16:	8b 05 f0 e9 c0 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc0e9f0]        # 41450c <cur_proc>
+  805b1c:	48 63 d0             	movsxd rdx,eax
+  805b1f:	48 89 d0             	mov    rax,rdx
+  805b22:	48 01 c0             	add    rax,rax
+  805b25:	48 01 d0             	add    rax,rdx
+  805b28:	48 c1 e0 08          	shl    rax,0x8
+  805b2c:	48 05 b0 84 40 00    	add    rax,0x4084b0
+  805b32:	8b 00                	mov    eax,DWORD PTR [rax]
 }
-  805b14:	c9                   	leave  
-  805b15:	c3                   	ret    
+  805b34:	c9                   	leave  
+  805b35:	c3                   	ret    
 
-0000000000805b16 <get_module_addr>:
+0000000000805b36 <get_module_addr>:
 
 int get_module_addr(int mi)
 {
-  805b16:	f3 0f 1e fa          	endbr64 
-  805b1a:	55                   	push   rbp
-  805b1b:	48 89 e5             	mov    rbp,rsp
-  805b1e:	89 7d fc             	mov    DWORD PTR [rbp-0x4],edi
+  805b36:	f3 0f 1e fa          	endbr64 
+  805b3a:	55                   	push   rbp
+  805b3b:	48 89 e5             	mov    rbp,rsp
+  805b3e:	89 7d fc             	mov    DWORD PTR [rbp-0x4],edi
     return modules[mi].base;
-  805b21:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  805b24:	48 98                	cdqe   
-  805b26:	8b 04 c5 20 71 42 00 	mov    eax,DWORD PTR [rax*8+0x427120]
+  805b41:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  805b44:	48 98                	cdqe   
+  805b46:	8b 04 c5 20 71 42 00 	mov    eax,DWORD PTR [rax*8+0x427120]
 }
-  805b2d:	5d                   	pop    rbp
-  805b2e:	c3                   	ret    
+  805b4d:	5d                   	pop    rbp
+  805b4e:	c3                   	ret    
 
-0000000000805b2f <dispose_library>:
+0000000000805b4f <dispose_library>:
 int dispose_library(int dlln)
 {
-  805b2f:	f3 0f 1e fa          	endbr64 
-  805b33:	55                   	push   rbp
-  805b34:	48 89 e5             	mov    rbp,rsp
-  805b37:	89 7d fc             	mov    DWORD PTR [rbp-0x4],edi
+  805b4f:	f3 0f 1e fa          	endbr64 
+  805b53:	55                   	push   rbp
+  805b54:	48 89 e5             	mov    rbp,rsp
+  805b57:	89 7d fc             	mov    DWORD PTR [rbp-0x4],edi
     if(dlln<0||dlln>=MAX_DLLS)return -1;
-  805b3a:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
-  805b3e:	78 09                	js     805b49 <dispose_library+0x1a>
-  805b40:	81 7d fc ff 00 00 00 	cmp    DWORD PTR [rbp-0x4],0xff
-  805b47:	7e 07                	jle    805b50 <dispose_library+0x21>
-  805b49:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  805b4e:	eb 1d                	jmp    805b6d <dispose_library+0x3e>
+  805b5a:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
+  805b5e:	78 09                	js     805b69 <dispose_library+0x1a>
+  805b60:	81 7d fc ff 00 00 00 	cmp    DWORD PTR [rbp-0x4],0xff
+  805b67:	7e 07                	jle    805b70 <dispose_library+0x21>
+  805b69:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  805b6e:	eb 1d                	jmp    805b8d <dispose_library+0x3e>
     //空间不够，释放之前申请的
     // for(int j=0;j<dlls[dlln].page_used;j++)
     //     dispose_page(get_phyaddr(dlls[dlln].page_num[j]));
     //释放dll
     dlls[dlln].flag=DLL_STAT_EMPTY;
-  805b50:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  805b53:	48 98                	cdqe   
-  805b55:	48 69 c0 2c 01 00 00 	imul   rax,rax,0x12c
-  805b5c:	48 05 28 45 41 00    	add    rax,0x414528
-  805b62:	c7 00 00 00 00 00    	mov    DWORD PTR [rax],0x0
+  805b70:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  805b73:	48 98                	cdqe   
+  805b75:	48 69 c0 2c 01 00 00 	imul   rax,rax,0x12c
+  805b7c:	48 05 28 45 41 00    	add    rax,0x414528
+  805b82:	c7 00 00 00 00 00    	mov    DWORD PTR [rax],0x0
     return 0;
-  805b68:	b8 00 00 00 00       	mov    eax,0x0
+  805b88:	b8 00 00 00 00       	mov    eax,0x0
 }
-  805b6d:	5d                   	pop    rbp
-  805b6e:	c3                   	ret    
+  805b8d:	5d                   	pop    rbp
+  805b8e:	c3                   	ret    
 
-0000000000805b6f <sys_insmod>:
+0000000000805b8f <sys_insmod>:
 
     return 0;
 } */
 
 int sys_insmod(char *path)
 {
-  805b6f:	f3 0f 1e fa          	endbr64 
-  805b73:	55                   	push   rbp
-  805b74:	48 89 e5             	mov    rbp,rsp
-  805b77:	48 89 7d f8          	mov    QWORD PTR [rbp-0x8],rdi
+  805b8f:	f3 0f 1e fa          	endbr64 
+  805b93:	55                   	push   rbp
+  805b94:	48 89 e5             	mov    rbp,rsp
+  805b97:	48 89 7d f8          	mov    QWORD PTR [rbp-0x8],rdi
 
 }
-  805b7b:	90                   	nop
-  805b7c:	5d                   	pop    rbp
-  805b7d:	c3                   	ret    
+  805b9b:	90                   	nop
+  805b9c:	5d                   	pop    rbp
+  805b9d:	c3                   	ret    
 
-0000000000805b7e <sys_rmmod>:
+0000000000805b9e <sys_rmmod>:
 int sys_rmmod(char *name)
 {
-  805b7e:	f3 0f 1e fa          	endbr64 
-  805b82:	55                   	push   rbp
-  805b83:	48 89 e5             	mov    rbp,rsp
-  805b86:	48 89 7d f8          	mov    QWORD PTR [rbp-0x8],rdi
+  805b9e:	f3 0f 1e fa          	endbr64 
+  805ba2:	55                   	push   rbp
+  805ba3:	48 89 e5             	mov    rbp,rsp
+  805ba6:	48 89 7d f8          	mov    QWORD PTR [rbp-0x8],rdi
 
-  805b8a:	90                   	nop
-  805b8b:	5d                   	pop    rbp
-  805b8c:	c3                   	ret    
-  805b8d:	0f 1f 00             	nop    DWORD PTR [rax]
+  805baa:	90                   	nop
+  805bab:	5d                   	pop    rbp
+  805bac:	c3                   	ret    
+  805bad:	0f 1f 00             	nop    DWORD PTR [rax]
 
-0000000000805b90 <_syscall>:
-  805b90:	57                   	push   rdi
-  805b91:	56                   	push   rsi
-  805b92:	52                   	push   rdx
-  805b93:	51                   	push   rcx
-  805b94:	53                   	push   rbx
-  805b95:	50                   	push   rax
-  805b96:	e8 d3 a9 ff ff       	call   80056e <syscall>
-  805b9b:	48 83 c4 18          	add    rsp,0x18
-  805b9f:	cf                   	iret   
+0000000000805bb0 <_syscall>:
+  805bb0:	57                   	push   rdi
+  805bb1:	56                   	push   rsi
+  805bb2:	52                   	push   rdx
+  805bb3:	51                   	push   rcx
+  805bb4:	53                   	push   rbx
+  805bb5:	50                   	push   rax
+  805bb6:	e8 b3 a9 ff ff       	call   80056e <syscall>
+  805bbb:	48 83 c4 18          	add    rsp,0x18
+  805bbf:	cf                   	iret   
 
-0000000000805ba0 <init_framebuffer>:
+0000000000805bc0 <init_framebuffer>:
 static u32 font_width_bytes;
 static u8 *glyph_table;
 static u32 bytes_per_glyph, glyph_nr;
 int font_size=1;
 void init_framebuffer()
 {
-  805ba0:	f3 0f 1e fa          	endbr64 
-  805ba4:	55                   	push   rbp
-  805ba5:	48 89 e5             	mov    rbp,rsp
-  805ba8:	48 83 ec 50          	sub    rsp,0x50
+  805bc0:	f3 0f 1e fa          	endbr64 
+  805bc4:	55                   	push   rbp
+  805bc5:	48 89 e5             	mov    rbp,rsp
+  805bc8:	48 83 ec 50          	sub    rsp,0x50
     //映射页帧内存
     size_t w=framebuffer.common.framebuffer_width;
-  805bac:	8b 05 82 19 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc21982]        # 427534 <framebuffer+0x14>
-  805bb2:	89 c0                	mov    eax,eax
-  805bb4:	48 89 45 e0          	mov    QWORD PTR [rbp-0x20],rax
+  805bcc:	8b 05 62 19 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc21962]        # 427534 <framebuffer+0x14>
+  805bd2:	89 c0                	mov    eax,eax
+  805bd4:	48 89 45 e0          	mov    QWORD PTR [rbp-0x20],rax
     size_t h=framebuffer.common.framebuffer_height;
-  805bb8:	8b 05 7a 19 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc2197a]        # 427538 <framebuffer+0x18>
-  805bbe:	89 c0                	mov    eax,eax
-  805bc0:	48 89 45 d8          	mov    QWORD PTR [rbp-0x28],rax
+  805bd8:	8b 05 5a 19 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc2195a]        # 427538 <framebuffer+0x18>
+  805bde:	89 c0                	mov    eax,eax
+  805be0:	48 89 45 d8          	mov    QWORD PTR [rbp-0x28],rax
     size_t bypp=framebuffer.common.framebuffer_bpp/8;
-  805bc4:	0f b6 05 71 19 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21971]        # 42753c <framebuffer+0x1c>
-  805bcb:	c0 e8 03             	shr    al,0x3
-  805bce:	0f b6 c0             	movzx  eax,al
-  805bd1:	48 89 45 d0          	mov    QWORD PTR [rbp-0x30],rax
+  805be4:	0f b6 05 51 19 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21951]        # 42753c <framebuffer+0x1c>
+  805beb:	c0 e8 03             	shr    al,0x3
+  805bee:	0f b6 c0             	movzx  eax,al
+  805bf1:	48 89 45 d0          	mov    QWORD PTR [rbp-0x30],rax
     size_t inter=framebuffer.common.framebuffer_pitch;
-  805bd5:	8b 05 55 19 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc21955]        # 427530 <framebuffer+0x10>
-  805bdb:	89 c0                	mov    eax,eax
-  805bdd:	48 89 45 c8          	mov    QWORD PTR [rbp-0x38],rax
+  805bf5:	8b 05 35 19 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc21935]        # 427530 <framebuffer+0x10>
+  805bfb:	89 c0                	mov    eax,eax
+  805bfd:	48 89 45 c8          	mov    QWORD PTR [rbp-0x38],rax
     size_t pc=w*h;
-  805be1:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  805be5:	48 0f af 45 d8       	imul   rax,QWORD PTR [rbp-0x28]
-  805bea:	48 89 45 c0          	mov    QWORD PTR [rbp-0x40],rax
+  805c01:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  805c05:	48 0f af 45 d8       	imul   rax,QWORD PTR [rbp-0x28]
+  805c0a:	48 89 45 c0          	mov    QWORD PTR [rbp-0x40],rax
     size_t size=h*inter;
-  805bee:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
-  805bf2:	48 0f af 45 c8       	imul   rax,QWORD PTR [rbp-0x38]
-  805bf7:	48 89 45 b8          	mov    QWORD PTR [rbp-0x48],rax
+  805c0e:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
+  805c12:	48 0f af 45 c8       	imul   rax,QWORD PTR [rbp-0x38]
+  805c17:	48 89 45 b8          	mov    QWORD PTR [rbp-0x48],rax
     int pgc=size/PAGE_SIZE;
-  805bfb:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
-  805bff:	48 c1 e8 0c          	shr    rax,0xc
-  805c03:	89 45 b4             	mov    DWORD PTR [rbp-0x4c],eax
+  805c1b:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
+  805c1f:	48 c1 e8 0c          	shr    rax,0xc
+  805c23:	89 45 b4             	mov    DWORD PTR [rbp-0x4c],eax
     addr_t p=FRAMEBUFFER_ADDR;
-  805c06:	48 c7 45 f8 00 00 00 	mov    QWORD PTR [rbp-0x8],0x40000000
-  805c0d:	40 
+  805c26:	48 c7 45 f8 00 00 00 	mov    QWORD PTR [rbp-0x8],0x40000000
+  805c2d:	40 
     addr_t pp=framebuffer.common.framebuffer_addr;
-  805c0e:	48 8b 05 13 19 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc21913]        # 427528 <framebuffer+0x8>
-  805c15:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
+  805c2e:	48 8b 05 f3 18 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc218f3]        # 427528 <framebuffer+0x8>
+  805c35:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
     for (size_t i = 0; i < pgc; i++)
-  805c19:	48 c7 45 e8 00 00 00 	mov    QWORD PTR [rbp-0x18],0x0
-  805c20:	00 
-  805c21:	eb 2d                	jmp    805c50 <init_framebuffer+0xb0>
+  805c39:	48 c7 45 e8 00 00 00 	mov    QWORD PTR [rbp-0x18],0x0
+  805c40:	00 
+  805c41:	eb 2d                	jmp    805c70 <init_framebuffer+0xb0>
     {
         mmap(pp,p,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL);
-  805c23:	48 8b 4d f8          	mov    rcx,QWORD PTR [rbp-0x8]
-  805c27:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  805c2b:	ba 07 00 00 00       	mov    edx,0x7
-  805c30:	48 89 ce             	mov    rsi,rcx
-  805c33:	48 89 c7             	mov    rdi,rax
-  805c36:	e8 6b b2 ff ff       	call   800ea6 <mmap>
+  805c43:	48 8b 4d f8          	mov    rcx,QWORD PTR [rbp-0x8]
+  805c47:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  805c4b:	ba 07 00 00 00       	mov    edx,0x7
+  805c50:	48 89 ce             	mov    rsi,rcx
+  805c53:	48 89 c7             	mov    rdi,rax
+  805c56:	e8 4b b2 ff ff       	call   800ea6 <mmap>
         pp+=PAGE_SIZE;
-  805c3b:	48 81 45 f0 00 10 00 	add    QWORD PTR [rbp-0x10],0x1000
-  805c42:	00 
+  805c5b:	48 81 45 f0 00 10 00 	add    QWORD PTR [rbp-0x10],0x1000
+  805c62:	00 
         p+=PAGE_SIZE;
-  805c43:	48 81 45 f8 00 10 00 	add    QWORD PTR [rbp-0x8],0x1000
-  805c4a:	00 
+  805c63:	48 81 45 f8 00 10 00 	add    QWORD PTR [rbp-0x8],0x1000
+  805c6a:	00 
     for (size_t i = 0; i < pgc; i++)
-  805c4b:	48 83 45 e8 01       	add    QWORD PTR [rbp-0x18],0x1
-  805c50:	8b 45 b4             	mov    eax,DWORD PTR [rbp-0x4c]
-  805c53:	48 98                	cdqe   
-  805c55:	48 39 45 e8          	cmp    QWORD PTR [rbp-0x18],rax
-  805c59:	72 c8                	jb     805c23 <init_framebuffer+0x83>
+  805c6b:	48 83 45 e8 01       	add    QWORD PTR [rbp-0x18],0x1
+  805c70:	8b 45 b4             	mov    eax,DWORD PTR [rbp-0x4c]
+  805c73:	48 98                	cdqe   
+  805c75:	48 39 45 e8          	cmp    QWORD PTR [rbp-0x18],rax
+  805c79:	72 c8                	jb     805c43 <init_framebuffer+0x83>
     }
     
     
 }
-  805c5b:	90                   	nop
-  805c5c:	90                   	nop
-  805c5d:	c9                   	leave  
-  805c5e:	c3                   	ret    
+  805c7b:	90                   	nop
+  805c7c:	90                   	nop
+  805c7d:	c9                   	leave  
+  805c7e:	c3                   	ret    
 
-0000000000805c5f <init_font>:
+0000000000805c7f <init_font>:
 void init_font(){
-  805c5f:	f3 0f 1e fa          	endbr64 
-  805c63:	55                   	push   rbp
-  805c64:	48 89 e5             	mov    rbp,rsp
+  805c7f:	f3 0f 1e fa          	endbr64 
+  805c83:	55                   	push   rbp
+  805c84:	48 89 e5             	mov    rbp,rsp
     boot_font = (struct psf2_header*) _binary_res_font_psf_start;
-  805c67:	48 c7 05 ee 18 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc218ee],0x80a668        # 427560 <boot_font>
-  805c6e:	68 a6 80 00 
+  805c87:	48 c7 05 ce 18 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc218ce],0x80a668        # 427560 <boot_font>
+  805c8e:	68 a6 80 00 
 
     font_width_bytes = (boot_font->width + 7) / 8;
-  805c72:	48 8b 05 e7 18 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc218e7]        # 427560 <boot_font>
-  805c79:	8b 40 1c             	mov    eax,DWORD PTR [rax+0x1c]
-  805c7c:	83 c0 07             	add    eax,0x7
-  805c7f:	c1 e8 03             	shr    eax,0x3
-  805c82:	89 05 e8 18 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc218e8],eax        # 427570 <font_width_bytes>
+  805c92:	48 8b 05 c7 18 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc218c7]        # 427560 <boot_font>
+  805c99:	8b 40 1c             	mov    eax,DWORD PTR [rax+0x1c]
+  805c9c:	83 c0 07             	add    eax,0x7
+  805c9f:	c1 e8 03             	shr    eax,0x3
+  805ca2:	89 05 c8 18 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc218c8],eax        # 427570 <font_width_bytes>
     font_width = font_width_bytes * 8;
-  805c88:	8b 05 e2 18 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc218e2]        # 427570 <font_width_bytes>
-  805c8e:	c1 e0 03             	shl    eax,0x3
-  805c91:	89 05 d1 18 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc218d1],eax        # 427568 <font_width>
+  805ca8:	8b 05 c2 18 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc218c2]        # 427570 <font_width_bytes>
+  805cae:	c1 e0 03             	shl    eax,0x3
+  805cb1:	89 05 b1 18 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc218b1],eax        # 427568 <font_width>
     font_height = boot_font->height;
-  805c97:	48 8b 05 c2 18 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc218c2]        # 427560 <boot_font>
-  805c9e:	8b 40 18             	mov    eax,DWORD PTR [rax+0x18]
-  805ca1:	89 05 c5 18 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc218c5],eax        # 42756c <font_height>
+  805cb7:	48 8b 05 a2 18 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc218a2]        # 427560 <boot_font>
+  805cbe:	8b 40 18             	mov    eax,DWORD PTR [rax+0x18]
+  805cc1:	89 05 a5 18 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc218a5],eax        # 42756c <font_height>
 
     glyph_table = (u8*)_binary_res_font_psf_start+boot_font->header_size;
-  805ca7:	48 8b 05 b2 18 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc218b2]        # 427560 <boot_font>
-  805cae:	8b 40 08             	mov    eax,DWORD PTR [rax+0x8]
-  805cb1:	89 c0                	mov    eax,eax
-  805cb3:	48 05 68 a6 80 00    	add    rax,0x80a668
-  805cb9:	48 89 05 b8 18 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc218b8],rax        # 427578 <glyph_table>
+  805cc7:	48 8b 05 92 18 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc21892]        # 427560 <boot_font>
+  805cce:	8b 40 08             	mov    eax,DWORD PTR [rax+0x8]
+  805cd1:	89 c0                	mov    eax,eax
+  805cd3:	48 05 68 a6 80 00    	add    rax,0x80a668
+  805cd9:	48 89 05 98 18 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc21898],rax        # 427578 <glyph_table>
     glyph_nr = boot_font->glyph_nr;
-  805cc0:	48 8b 05 99 18 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc21899]        # 427560 <boot_font>
-  805cc7:	8b 40 10             	mov    eax,DWORD PTR [rax+0x10]
-  805cca:	89 05 b4 18 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc218b4],eax        # 427584 <glyph_nr>
+  805ce0:	48 8b 05 79 18 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc21879]        # 427560 <boot_font>
+  805ce7:	8b 40 10             	mov    eax,DWORD PTR [rax+0x10]
+  805cea:	89 05 94 18 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc21894],eax        # 427584 <glyph_nr>
     bytes_per_glyph = boot_font->bytes_per_glyph;
-  805cd0:	48 8b 05 89 18 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc21889]        # 427560 <boot_font>
-  805cd7:	8b 40 14             	mov    eax,DWORD PTR [rax+0x14]
-  805cda:	89 05 a0 18 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc218a0],eax        # 427580 <bytes_per_glyph>
+  805cf0:	48 8b 05 69 18 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc21869]        # 427560 <boot_font>
+  805cf7:	8b 40 14             	mov    eax,DWORD PTR [rax+0x14]
+  805cfa:	89 05 80 18 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc21880],eax        # 427580 <bytes_per_glyph>
 
     fb_cursor_x = fb_cursor_y = 0;
-  805ce0:	c7 05 66 18 c2 ff 00 	mov    DWORD PTR [rip+0xffffffffffc21866],0x0        # 427550 <fb_cursor_y>
-  805ce7:	00 00 00 
-  805cea:	8b 05 60 18 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc21860]        # 427550 <fb_cursor_y>
-  805cf0:	89 05 56 18 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc21856],eax        # 42754c <fb_cursor_x>
+  805d00:	c7 05 46 18 c2 ff 00 	mov    DWORD PTR [rip+0xffffffffffc21846],0x0        # 427550 <fb_cursor_y>
+  805d07:	00 00 00 
+  805d0a:	8b 05 40 18 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc21840]        # 427550 <fb_cursor_y>
+  805d10:	89 05 36 18 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc21836],eax        # 42754c <fb_cursor_x>
     max_ch_nr_x = framebuffer.common.framebuffer_width *framebuffer.common.framebuffer_bpp/8 / font_width;
-  805cf6:	8b 15 38 18 c2 ff    	mov    edx,DWORD PTR [rip+0xffffffffffc21838]        # 427534 <framebuffer+0x14>
-  805cfc:	0f b6 05 39 18 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21839]        # 42753c <framebuffer+0x1c>
-  805d03:	0f b6 c0             	movzx  eax,al
-  805d06:	0f af c2             	imul   eax,edx
-  805d09:	c1 e8 03             	shr    eax,0x3
-  805d0c:	8b 0d 56 18 c2 ff    	mov    ecx,DWORD PTR [rip+0xffffffffffc21856]        # 427568 <font_width>
-  805d12:	ba 00 00 00 00       	mov    edx,0x0
-  805d17:	f7 f1                	div    ecx
-  805d19:	89 05 35 18 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc21835],eax        # 427554 <max_ch_nr_x>
+  805d16:	8b 15 18 18 c2 ff    	mov    edx,DWORD PTR [rip+0xffffffffffc21818]        # 427534 <framebuffer+0x14>
+  805d1c:	0f b6 05 19 18 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21819]        # 42753c <framebuffer+0x1c>
+  805d23:	0f b6 c0             	movzx  eax,al
+  805d26:	0f af c2             	imul   eax,edx
+  805d29:	c1 e8 03             	shr    eax,0x3
+  805d2c:	8b 0d 36 18 c2 ff    	mov    ecx,DWORD PTR [rip+0xffffffffffc21836]        # 427568 <font_width>
+  805d32:	ba 00 00 00 00       	mov    edx,0x0
+  805d37:	f7 f1                	div    ecx
+  805d39:	89 05 15 18 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc21815],eax        # 427554 <max_ch_nr_x>
     max_ch_nr_y = framebuffer.common.framebuffer_height *framebuffer.common.framebuffer_bpp/8 / font_height;
-  805d1f:	8b 15 13 18 c2 ff    	mov    edx,DWORD PTR [rip+0xffffffffffc21813]        # 427538 <framebuffer+0x18>
-  805d25:	0f b6 05 10 18 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21810]        # 42753c <framebuffer+0x1c>
-  805d2c:	0f b6 c0             	movzx  eax,al
-  805d2f:	0f af c2             	imul   eax,edx
-  805d32:	c1 e8 03             	shr    eax,0x3
-  805d35:	8b 35 31 18 c2 ff    	mov    esi,DWORD PTR [rip+0xffffffffffc21831]        # 42756c <font_height>
-  805d3b:	ba 00 00 00 00       	mov    edx,0x0
-  805d40:	f7 f6                	div    esi
-  805d42:	89 05 10 18 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc21810],eax        # 427558 <max_ch_nr_y>
+  805d3f:	8b 15 f3 17 c2 ff    	mov    edx,DWORD PTR [rip+0xffffffffffc217f3]        # 427538 <framebuffer+0x18>
+  805d45:	0f b6 05 f0 17 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc217f0]        # 42753c <framebuffer+0x1c>
+  805d4c:	0f b6 c0             	movzx  eax,al
+  805d4f:	0f af c2             	imul   eax,edx
+  805d52:	c1 e8 03             	shr    eax,0x3
+  805d55:	8b 35 11 18 c2 ff    	mov    esi,DWORD PTR [rip+0xffffffffffc21811]        # 42756c <font_height>
+  805d5b:	ba 00 00 00 00       	mov    edx,0x0
+  805d60:	f7 f6                	div    esi
+  805d62:	89 05 f0 17 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc217f0],eax        # 427558 <max_ch_nr_y>
     font_size=1;
-  805d48:	c7 05 5e 47 00 00 01 	mov    DWORD PTR [rip+0x475e],0x1        # 80a4b0 <font_size>
-  805d4f:	00 00 00 
+  805d68:	c7 05 3e 47 00 00 01 	mov    DWORD PTR [rip+0x473e],0x1        # 80a4b0 <font_size>
+  805d6f:	00 00 00 
 }
-  805d52:	90                   	nop
-  805d53:	5d                   	pop    rbp
-  805d54:	c3                   	ret    
+  805d72:	90                   	nop
+  805d73:	5d                   	pop    rbp
+  805d74:	c3                   	ret    
 
-0000000000805d55 <set_framebuffer>:
+0000000000805d75 <set_framebuffer>:
 void set_framebuffer(struct multiboot_tag_framebuffer tag)
 {
-  805d55:	f3 0f 1e fa          	endbr64 
-  805d59:	55                   	push   rbp
-  805d5a:	48 89 e5             	mov    rbp,rsp
+  805d75:	f3 0f 1e fa          	endbr64 
+  805d79:	55                   	push   rbp
+  805d7a:	48 89 e5             	mov    rbp,rsp
     framebuffer=tag;
-  805d5d:	48 8b 45 10          	mov    rax,QWORD PTR [rbp+0x10]
-  805d61:	48 8b 55 18          	mov    rdx,QWORD PTR [rbp+0x18]
-  805d65:	48 89 05 b4 17 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc217b4],rax        # 427520 <framebuffer>
-  805d6c:	48 89 15 b5 17 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc217b5],rdx        # 427528 <framebuffer+0x8>
-  805d73:	48 8b 45 20          	mov    rax,QWORD PTR [rbp+0x20]
-  805d77:	48 8b 55 28          	mov    rdx,QWORD PTR [rbp+0x28]
-  805d7b:	48 89 05 ae 17 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc217ae],rax        # 427530 <framebuffer+0x10>
-  805d82:	48 89 15 af 17 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc217af],rdx        # 427538 <framebuffer+0x18>
-  805d89:	48 8b 45 30          	mov    rax,QWORD PTR [rbp+0x30]
-  805d8d:	48 89 05 ac 17 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc217ac],rax        # 427540 <framebuffer+0x20>
+  805d7d:	48 8b 45 10          	mov    rax,QWORD PTR [rbp+0x10]
+  805d81:	48 8b 55 18          	mov    rdx,QWORD PTR [rbp+0x18]
+  805d85:	48 89 05 94 17 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc21794],rax        # 427520 <framebuffer>
+  805d8c:	48 89 15 95 17 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc21795],rdx        # 427528 <framebuffer+0x8>
+  805d93:	48 8b 45 20          	mov    rax,QWORD PTR [rbp+0x20]
+  805d97:	48 8b 55 28          	mov    rdx,QWORD PTR [rbp+0x28]
+  805d9b:	48 89 05 8e 17 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc2178e],rax        # 427530 <framebuffer+0x10>
+  805da2:	48 89 15 8f 17 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc2178f],rdx        # 427538 <framebuffer+0x18>
+  805da9:	48 8b 45 30          	mov    rax,QWORD PTR [rbp+0x30]
+  805dad:	48 89 05 8c 17 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc2178c],rax        # 427540 <framebuffer+0x20>
 }
-  805d94:	90                   	nop
-  805d95:	5d                   	pop    rbp
-  805d96:	c3                   	ret    
+  805db4:	90                   	nop
+  805db5:	5d                   	pop    rbp
+  805db6:	c3                   	ret    
 
-0000000000805d97 <fill_rect>:
+0000000000805db7 <fill_rect>:
 
 void fill_rect(int x,int y,int w,int h,unsigned int color){
-  805d97:	f3 0f 1e fa          	endbr64 
-  805d9b:	55                   	push   rbp
-  805d9c:	48 89 e5             	mov    rbp,rsp
-  805d9f:	89 7d dc             	mov    DWORD PTR [rbp-0x24],edi
-  805da2:	89 75 d8             	mov    DWORD PTR [rbp-0x28],esi
-  805da5:	89 55 d4             	mov    DWORD PTR [rbp-0x2c],edx
-  805da8:	89 4d d0             	mov    DWORD PTR [rbp-0x30],ecx
-  805dab:	44 89 45 cc          	mov    DWORD PTR [rbp-0x34],r8d
+  805db7:	f3 0f 1e fa          	endbr64 
+  805dbb:	55                   	push   rbp
+  805dbc:	48 89 e5             	mov    rbp,rsp
+  805dbf:	89 7d dc             	mov    DWORD PTR [rbp-0x24],edi
+  805dc2:	89 75 d8             	mov    DWORD PTR [rbp-0x28],esi
+  805dc5:	89 55 d4             	mov    DWORD PTR [rbp-0x2c],edx
+  805dc8:	89 4d d0             	mov    DWORD PTR [rbp-0x30],ecx
+  805dcb:	44 89 45 cc          	mov    DWORD PTR [rbp-0x34],r8d
     unsigned int* fb= (unsigned int*) FRAMEBUFFER_ADDR;
-  805daf:	48 c7 45 f0 00 00 00 	mov    QWORD PTR [rbp-0x10],0x40000000
-  805db6:	40 
+  805dcf:	48 c7 45 f0 00 00 00 	mov    QWORD PTR [rbp-0x10],0x40000000
+  805dd6:	40 
     //目前只写32bpp
     for(int py=x;py<h+x;py++){
-  805db7:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
-  805dba:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
-  805dbd:	eb 64                	jmp    805e23 <fill_rect+0x8c>
+  805dd7:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
+  805dda:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  805ddd:	eb 64                	jmp    805e43 <fill_rect+0x8c>
         for(int px=y;px<w+y;px++){
-  805dbf:	8b 45 d8             	mov    eax,DWORD PTR [rbp-0x28]
-  805dc2:	89 45 f8             	mov    DWORD PTR [rbp-0x8],eax
-  805dc5:	eb 4b                	jmp    805e12 <fill_rect+0x7b>
+  805ddf:	8b 45 d8             	mov    eax,DWORD PTR [rbp-0x28]
+  805de2:	89 45 f8             	mov    DWORD PTR [rbp-0x8],eax
+  805de5:	eb 4b                	jmp    805e32 <fill_rect+0x7b>
             addr_t ptr=FRAMEBUFFER_ADDR+py*framebuffer.common.framebuffer_pitch
-  805dc7:	8b 15 63 17 c2 ff    	mov    edx,DWORD PTR [rip+0xffffffffffc21763]        # 427530 <framebuffer+0x10>
-  805dcd:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  805dd0:	0f af c2             	imul   eax,edx
-  805dd3:	89 c1                	mov    ecx,eax
+  805de7:	8b 15 43 17 c2 ff    	mov    edx,DWORD PTR [rip+0xffffffffffc21743]        # 427530 <framebuffer+0x10>
+  805ded:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  805df0:	0f af c2             	imul   eax,edx
+  805df3:	89 c1                	mov    ecx,eax
                        +px*framebuffer.common.framebuffer_bpp/8;
-  805dd5:	0f b6 05 60 17 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21760]        # 42753c <framebuffer+0x1c>
-  805ddc:	0f b6 c0             	movzx  eax,al
-  805ddf:	0f af 45 f8          	imul   eax,DWORD PTR [rbp-0x8]
-  805de3:	8d 50 07             	lea    edx,[rax+0x7]
-  805de6:	85 c0                	test   eax,eax
-  805de8:	0f 48 c2             	cmovs  eax,edx
-  805deb:	c1 f8 03             	sar    eax,0x3
-  805dee:	48 98                	cdqe   
-  805df0:	48 01 c8             	add    rax,rcx
+  805df5:	0f b6 05 40 17 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21740]        # 42753c <framebuffer+0x1c>
+  805dfc:	0f b6 c0             	movzx  eax,al
+  805dff:	0f af 45 f8          	imul   eax,DWORD PTR [rbp-0x8]
+  805e03:	8d 50 07             	lea    edx,[rax+0x7]
+  805e06:	85 c0                	test   eax,eax
+  805e08:	0f 48 c2             	cmovs  eax,edx
+  805e0b:	c1 f8 03             	sar    eax,0x3
+  805e0e:	48 98                	cdqe   
+  805e10:	48 01 c8             	add    rax,rcx
             addr_t ptr=FRAMEBUFFER_ADDR+py*framebuffer.common.framebuffer_pitch
-  805df3:	48 05 00 00 00 40    	add    rax,0x40000000
-  805df9:	48 89 45 e8          	mov    QWORD PTR [rbp-0x18],rax
+  805e13:	48 05 00 00 00 40    	add    rax,0x40000000
+  805e19:	48 89 45 e8          	mov    QWORD PTR [rbp-0x18],rax
             fb=(unsigned int*)ptr;
-  805dfd:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  805e01:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
+  805e1d:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  805e21:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
             *fb=color;
-  805e05:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  805e09:	8b 55 cc             	mov    edx,DWORD PTR [rbp-0x34]
-  805e0c:	89 10                	mov    DWORD PTR [rax],edx
+  805e25:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  805e29:	8b 55 cc             	mov    edx,DWORD PTR [rbp-0x34]
+  805e2c:	89 10                	mov    DWORD PTR [rax],edx
         for(int px=y;px<w+y;px++){
-  805e0e:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1
-  805e12:	8b 55 d4             	mov    edx,DWORD PTR [rbp-0x2c]
-  805e15:	8b 45 d8             	mov    eax,DWORD PTR [rbp-0x28]
-  805e18:	01 d0                	add    eax,edx
-  805e1a:	39 45 f8             	cmp    DWORD PTR [rbp-0x8],eax
-  805e1d:	7c a8                	jl     805dc7 <fill_rect+0x30>
+  805e2e:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1
+  805e32:	8b 55 d4             	mov    edx,DWORD PTR [rbp-0x2c]
+  805e35:	8b 45 d8             	mov    eax,DWORD PTR [rbp-0x28]
+  805e38:	01 d0                	add    eax,edx
+  805e3a:	39 45 f8             	cmp    DWORD PTR [rbp-0x8],eax
+  805e3d:	7c a8                	jl     805de7 <fill_rect+0x30>
     for(int py=x;py<h+x;py++){
-  805e1f:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
-  805e23:	8b 55 d0             	mov    edx,DWORD PTR [rbp-0x30]
-  805e26:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
-  805e29:	01 d0                	add    eax,edx
-  805e2b:	39 45 fc             	cmp    DWORD PTR [rbp-0x4],eax
-  805e2e:	7c 8f                	jl     805dbf <fill_rect+0x28>
+  805e3f:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
+  805e43:	8b 55 d0             	mov    edx,DWORD PTR [rbp-0x30]
+  805e46:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
+  805e49:	01 d0                	add    eax,edx
+  805e4b:	39 45 fc             	cmp    DWORD PTR [rbp-0x4],eax
+  805e4e:	7c 8f                	jl     805ddf <fill_rect+0x28>
         }
     }
 }
-  805e30:	90                   	nop
-  805e31:	90                   	nop
-  805e32:	5d                   	pop    rbp
-  805e33:	c3                   	ret    
+  805e50:	90                   	nop
+  805e51:	90                   	nop
+  805e52:	5d                   	pop    rbp
+  805e53:	c3                   	ret    
 
-0000000000805e34 <draw_text>:
+0000000000805e54 <draw_text>:
 unsigned char letters[];
 void draw_text(int x, int y, int size, char *str)
 {
-  805e34:	f3 0f 1e fa          	endbr64 
-  805e38:	55                   	push   rbp
-  805e39:	48 89 e5             	mov    rbp,rsp
-  805e3c:	48 83 ec 30          	sub    rsp,0x30
-  805e40:	89 7d ec             	mov    DWORD PTR [rbp-0x14],edi
-  805e43:	89 75 e8             	mov    DWORD PTR [rbp-0x18],esi
-  805e46:	89 55 e4             	mov    DWORD PTR [rbp-0x1c],edx
-  805e49:	48 89 4d d8          	mov    QWORD PTR [rbp-0x28],rcx
+  805e54:	f3 0f 1e fa          	endbr64 
+  805e58:	55                   	push   rbp
+  805e59:	48 89 e5             	mov    rbp,rsp
+  805e5c:	48 83 ec 30          	sub    rsp,0x30
+  805e60:	89 7d ec             	mov    DWORD PTR [rbp-0x14],edi
+  805e63:	89 75 e8             	mov    DWORD PTR [rbp-0x18],esi
+  805e66:	89 55 e4             	mov    DWORD PTR [rbp-0x1c],edx
+  805e69:	48 89 4d d8          	mov    QWORD PTR [rbp-0x28],rcx
     int tx=x;
-  805e4d:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
-  805e50:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  805e6d:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+  805e70:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
     while(*str!='\0')
-  805e53:	eb 5a                	jmp    805eaf <draw_text+0x7b>
+  805e73:	eb 5a                	jmp    805ecf <draw_text+0x7b>
     {
         if(*str=='\n')
-  805e55:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
-  805e59:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  805e5c:	3c 0a                	cmp    al,0xa
-  805e5e:	75 1c                	jne    805e7c <draw_text+0x48>
+  805e75:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
+  805e79:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  805e7c:	3c 0a                	cmp    al,0xa
+  805e7e:	75 1c                	jne    805e9c <draw_text+0x48>
         {
             y+=font_height*size;
-  805e60:	8b 15 06 17 c2 ff    	mov    edx,DWORD PTR [rip+0xffffffffffc21706]        # 42756c <font_height>
-  805e66:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
-  805e69:	0f af d0             	imul   edx,eax
-  805e6c:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
-  805e6f:	01 d0                	add    eax,edx
-  805e71:	89 45 e8             	mov    DWORD PTR [rbp-0x18],eax
+  805e80:	8b 15 e6 16 c2 ff    	mov    edx,DWORD PTR [rip+0xffffffffffc216e6]        # 42756c <font_height>
+  805e86:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
+  805e89:	0f af d0             	imul   edx,eax
+  805e8c:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  805e8f:	01 d0                	add    eax,edx
+  805e91:	89 45 e8             	mov    DWORD PTR [rbp-0x18],eax
             tx=x;
-  805e74:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
-  805e77:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
-  805e7a:	eb 2e                	jmp    805eaa <draw_text+0x76>
+  805e94:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+  805e97:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  805e9a:	eb 2e                	jmp    805eca <draw_text+0x76>
         }
         else
         {
             draw_letter(tx,y,size,*str);
-  805e7c:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
-  805e80:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  805e83:	0f be c8             	movsx  ecx,al
-  805e86:	8b 55 e4             	mov    edx,DWORD PTR [rbp-0x1c]
-  805e89:	8b 75 e8             	mov    esi,DWORD PTR [rbp-0x18]
-  805e8c:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  805e8f:	89 c7                	mov    edi,eax
-  805e91:	e8 28 00 00 00       	call   805ebe <draw_letter>
+  805e9c:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
+  805ea0:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  805ea3:	0f be c8             	movsx  ecx,al
+  805ea6:	8b 55 e4             	mov    edx,DWORD PTR [rbp-0x1c]
+  805ea9:	8b 75 e8             	mov    esi,DWORD PTR [rbp-0x18]
+  805eac:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  805eaf:	89 c7                	mov    edi,eax
+  805eb1:	e8 28 00 00 00       	call   805ede <draw_letter>
             tx+=size*font_width;
-  805e96:	8b 55 e4             	mov    edx,DWORD PTR [rbp-0x1c]
-  805e99:	8b 05 c9 16 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc216c9]        # 427568 <font_width>
-  805e9f:	0f af d0             	imul   edx,eax
-  805ea2:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  805ea5:	01 d0                	add    eax,edx
-  805ea7:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  805eb6:	8b 55 e4             	mov    edx,DWORD PTR [rbp-0x1c]
+  805eb9:	8b 05 a9 16 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc216a9]        # 427568 <font_width>
+  805ebf:	0f af d0             	imul   edx,eax
+  805ec2:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  805ec5:	01 d0                	add    eax,edx
+  805ec7:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
         }
         str++;
-  805eaa:	48 83 45 d8 01       	add    QWORD PTR [rbp-0x28],0x1
+  805eca:	48 83 45 d8 01       	add    QWORD PTR [rbp-0x28],0x1
     while(*str!='\0')
-  805eaf:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
-  805eb3:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  805eb6:	84 c0                	test   al,al
-  805eb8:	75 9b                	jne    805e55 <draw_text+0x21>
+  805ecf:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
+  805ed3:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  805ed6:	84 c0                	test   al,al
+  805ed8:	75 9b                	jne    805e75 <draw_text+0x21>
     }
 }
-  805eba:	90                   	nop
-  805ebb:	90                   	nop
-  805ebc:	c9                   	leave  
-  805ebd:	c3                   	ret    
+  805eda:	90                   	nop
+  805edb:	90                   	nop
+  805edc:	c9                   	leave  
+  805edd:	c3                   	ret    
 
-0000000000805ebe <draw_letter>:
+0000000000805ede <draw_letter>:
 void draw_letter(int x, int y, int size, char c) {
-  805ebe:	f3 0f 1e fa          	endbr64 
-  805ec2:	55                   	push   rbp
-  805ec3:	48 89 e5             	mov    rbp,rsp
-  805ec6:	48 83 ec 30          	sub    rsp,0x30
-  805eca:	89 7d dc             	mov    DWORD PTR [rbp-0x24],edi
-  805ecd:	89 75 d8             	mov    DWORD PTR [rbp-0x28],esi
-  805ed0:	89 55 d4             	mov    DWORD PTR [rbp-0x2c],edx
-  805ed3:	89 c8                	mov    eax,ecx
-  805ed5:	88 45 d0             	mov    BYTE PTR [rbp-0x30],al
+  805ede:	f3 0f 1e fa          	endbr64 
+  805ee2:	55                   	push   rbp
+  805ee3:	48 89 e5             	mov    rbp,rsp
+  805ee6:	48 83 ec 30          	sub    rsp,0x30
+  805eea:	89 7d dc             	mov    DWORD PTR [rbp-0x24],edi
+  805eed:	89 75 d8             	mov    DWORD PTR [rbp-0x28],esi
+  805ef0:	89 55 d4             	mov    DWORD PTR [rbp-0x2c],edx
+  805ef3:	89 c8                	mov    eax,ecx
+  805ef5:	88 45 d0             	mov    BYTE PTR [rbp-0x30],al
     u8 *glyph = glyph_table;
-  805ed8:	48 8b 05 99 16 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc21699]        # 427578 <glyph_table>
-  805edf:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
+  805ef8:	48 8b 05 79 16 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc21679]        # 427578 <glyph_table>
+  805eff:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
     if (c < glyph_nr) {
-  805ee3:	0f be 55 d0          	movsx  edx,BYTE PTR [rbp-0x30]
-  805ee7:	8b 05 97 16 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc21697]        # 427584 <glyph_nr>
-  805eed:	39 c2                	cmp    edx,eax
-  805eef:	73 13                	jae    805f04 <draw_letter+0x46>
+  805f03:	0f be 55 d0          	movsx  edx,BYTE PTR [rbp-0x30]
+  805f07:	8b 05 77 16 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc21677]        # 427584 <glyph_nr>
+  805f0d:	39 c2                	cmp    edx,eax
+  805f0f:	73 13                	jae    805f24 <draw_letter+0x46>
         glyph += c * bytes_per_glyph;
-  805ef1:	0f be 55 d0          	movsx  edx,BYTE PTR [rbp-0x30]
-  805ef5:	8b 05 85 16 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc21685]        # 427580 <bytes_per_glyph>
-  805efb:	0f af c2             	imul   eax,edx
-  805efe:	89 c0                	mov    eax,eax
-  805f00:	48 01 45 f8          	add    QWORD PTR [rbp-0x8],rax
+  805f11:	0f be 55 d0          	movsx  edx,BYTE PTR [rbp-0x30]
+  805f15:	8b 05 65 16 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc21665]        # 427580 <bytes_per_glyph>
+  805f1b:	0f af c2             	imul   eax,edx
+  805f1e:	89 c0                	mov    eax,eax
+  805f20:	48 01 45 f8          	add    QWORD PTR [rbp-0x8],rax
     }
     /* output the font to frame buffer */
     for (u32 ch_y = 0; ch_y < font_height; ch_y++) {
-  805f04:	c7 45 f4 00 00 00 00 	mov    DWORD PTR [rbp-0xc],0x0
-  805f0b:	e9 c9 00 00 00       	jmp    805fd9 <draw_letter+0x11b>
+  805f24:	c7 45 f4 00 00 00 00 	mov    DWORD PTR [rbp-0xc],0x0
+  805f2b:	e9 c9 00 00 00       	jmp    805ff9 <draw_letter+0x11b>
         u8 mask = 1 << 7;
-  805f10:	c6 45 f3 80          	mov    BYTE PTR [rbp-0xd],0x80
+  805f30:	c6 45 f3 80          	mov    BYTE PTR [rbp-0xd],0x80
 
         for (u32 ch_x = 0; ch_x < font_width; ch_x++) {
-  805f14:	c7 45 ec 00 00 00 00 	mov    DWORD PTR [rbp-0x14],0x0
-  805f1b:	e9 9a 00 00 00       	jmp    805fba <draw_letter+0xfc>
+  805f34:	c7 45 ec 00 00 00 00 	mov    DWORD PTR [rbp-0x14],0x0
+  805f3b:	e9 9a 00 00 00       	jmp    805fda <draw_letter+0xfc>
             if ((*(glyph + ch_x / 8) & mask) != 0) {
-  805f20:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
-  805f23:	c1 e8 03             	shr    eax,0x3
-  805f26:	89 c2                	mov    edx,eax
-  805f28:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  805f2c:	48 01 d0             	add    rax,rdx
-  805f2f:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  805f32:	22 45 f3             	and    al,BYTE PTR [rbp-0xd]
-  805f35:	84 c0                	test   al,al
-  805f37:	74 37                	je     805f70 <draw_letter+0xb2>
+  805f40:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+  805f43:	c1 e8 03             	shr    eax,0x3
+  805f46:	89 c2                	mov    edx,eax
+  805f48:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  805f4c:	48 01 d0             	add    rax,rdx
+  805f4f:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  805f52:	22 45 f3             	and    al,BYTE PTR [rbp-0xd]
+  805f55:	84 c0                	test   al,al
+  805f57:	74 37                	je     805f90 <draw_letter+0xb2>
                 fill_rect(y+ch_y*size,x+ch_x*size,size,size,-1);
-  805f39:	8b 45 d4             	mov    eax,DWORD PTR [rbp-0x2c]
-  805f3c:	0f af 45 ec          	imul   eax,DWORD PTR [rbp-0x14]
-  805f40:	89 c2                	mov    edx,eax
-  805f42:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
-  805f45:	01 d0                	add    eax,edx
-  805f47:	89 c6                	mov    esi,eax
-  805f49:	8b 45 d4             	mov    eax,DWORD PTR [rbp-0x2c]
-  805f4c:	0f af 45 f4          	imul   eax,DWORD PTR [rbp-0xc]
-  805f50:	89 c2                	mov    edx,eax
-  805f52:	8b 45 d8             	mov    eax,DWORD PTR [rbp-0x28]
-  805f55:	01 d0                	add    eax,edx
-  805f57:	89 c7                	mov    edi,eax
-  805f59:	8b 55 d4             	mov    edx,DWORD PTR [rbp-0x2c]
-  805f5c:	8b 45 d4             	mov    eax,DWORD PTR [rbp-0x2c]
-  805f5f:	41 b8 ff ff ff ff    	mov    r8d,0xffffffff
-  805f65:	89 d1                	mov    ecx,edx
-  805f67:	89 c2                	mov    edx,eax
-  805f69:	e8 29 fe ff ff       	call   805d97 <fill_rect>
-  805f6e:	eb 35                	jmp    805fa5 <draw_letter+0xe7>
+  805f59:	8b 45 d4             	mov    eax,DWORD PTR [rbp-0x2c]
+  805f5c:	0f af 45 ec          	imul   eax,DWORD PTR [rbp-0x14]
+  805f60:	89 c2                	mov    edx,eax
+  805f62:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
+  805f65:	01 d0                	add    eax,edx
+  805f67:	89 c6                	mov    esi,eax
+  805f69:	8b 45 d4             	mov    eax,DWORD PTR [rbp-0x2c]
+  805f6c:	0f af 45 f4          	imul   eax,DWORD PTR [rbp-0xc]
+  805f70:	89 c2                	mov    edx,eax
+  805f72:	8b 45 d8             	mov    eax,DWORD PTR [rbp-0x28]
+  805f75:	01 d0                	add    eax,edx
+  805f77:	89 c7                	mov    edi,eax
+  805f79:	8b 55 d4             	mov    edx,DWORD PTR [rbp-0x2c]
+  805f7c:	8b 45 d4             	mov    eax,DWORD PTR [rbp-0x2c]
+  805f7f:	41 b8 ff ff ff ff    	mov    r8d,0xffffffff
+  805f85:	89 d1                	mov    ecx,edx
+  805f87:	89 c2                	mov    edx,eax
+  805f89:	e8 29 fe ff ff       	call   805db7 <fill_rect>
+  805f8e:	eb 35                	jmp    805fc5 <draw_letter+0xe7>
             } else {
                 fill_rect(y+ch_y*size,x+ch_x*size,size,size,0);
-  805f70:	8b 45 d4             	mov    eax,DWORD PTR [rbp-0x2c]
-  805f73:	0f af 45 ec          	imul   eax,DWORD PTR [rbp-0x14]
-  805f77:	89 c2                	mov    edx,eax
-  805f79:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
-  805f7c:	01 d0                	add    eax,edx
-  805f7e:	89 c6                	mov    esi,eax
-  805f80:	8b 45 d4             	mov    eax,DWORD PTR [rbp-0x2c]
-  805f83:	0f af 45 f4          	imul   eax,DWORD PTR [rbp-0xc]
-  805f87:	89 c2                	mov    edx,eax
-  805f89:	8b 45 d8             	mov    eax,DWORD PTR [rbp-0x28]
-  805f8c:	01 d0                	add    eax,edx
-  805f8e:	89 c7                	mov    edi,eax
-  805f90:	8b 55 d4             	mov    edx,DWORD PTR [rbp-0x2c]
-  805f93:	8b 45 d4             	mov    eax,DWORD PTR [rbp-0x2c]
-  805f96:	41 b8 00 00 00 00    	mov    r8d,0x0
-  805f9c:	89 d1                	mov    ecx,edx
-  805f9e:	89 c2                	mov    edx,eax
-  805fa0:	e8 f2 fd ff ff       	call   805d97 <fill_rect>
+  805f90:	8b 45 d4             	mov    eax,DWORD PTR [rbp-0x2c]
+  805f93:	0f af 45 ec          	imul   eax,DWORD PTR [rbp-0x14]
+  805f97:	89 c2                	mov    edx,eax
+  805f99:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
+  805f9c:	01 d0                	add    eax,edx
+  805f9e:	89 c6                	mov    esi,eax
+  805fa0:	8b 45 d4             	mov    eax,DWORD PTR [rbp-0x2c]
+  805fa3:	0f af 45 f4          	imul   eax,DWORD PTR [rbp-0xc]
+  805fa7:	89 c2                	mov    edx,eax
+  805fa9:	8b 45 d8             	mov    eax,DWORD PTR [rbp-0x28]
+  805fac:	01 d0                	add    eax,edx
+  805fae:	89 c7                	mov    edi,eax
+  805fb0:	8b 55 d4             	mov    edx,DWORD PTR [rbp-0x2c]
+  805fb3:	8b 45 d4             	mov    eax,DWORD PTR [rbp-0x2c]
+  805fb6:	41 b8 00 00 00 00    	mov    r8d,0x0
+  805fbc:	89 d1                	mov    ecx,edx
+  805fbe:	89 c2                	mov    edx,eax
+  805fc0:	e8 f2 fd ff ff       	call   805db7 <fill_rect>
             }
 
             mask >>= 1;
-  805fa5:	d0 6d f3             	shr    BYTE PTR [rbp-0xd],1
+  805fc5:	d0 6d f3             	shr    BYTE PTR [rbp-0xd],1
             if (ch_x % 8 == 0) {
-  805fa8:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
-  805fab:	83 e0 07             	and    eax,0x7
-  805fae:	85 c0                	test   eax,eax
-  805fb0:	75 04                	jne    805fb6 <draw_letter+0xf8>
+  805fc8:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+  805fcb:	83 e0 07             	and    eax,0x7
+  805fce:	85 c0                	test   eax,eax
+  805fd0:	75 04                	jne    805fd6 <draw_letter+0xf8>
                 mask = 1 << 7;
-  805fb2:	c6 45 f3 80          	mov    BYTE PTR [rbp-0xd],0x80
+  805fd2:	c6 45 f3 80          	mov    BYTE PTR [rbp-0xd],0x80
         for (u32 ch_x = 0; ch_x < font_width; ch_x++) {
-  805fb6:	83 45 ec 01          	add    DWORD PTR [rbp-0x14],0x1
-  805fba:	8b 05 a8 15 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc215a8]        # 427568 <font_width>
-  805fc0:	39 45 ec             	cmp    DWORD PTR [rbp-0x14],eax
-  805fc3:	0f 82 57 ff ff ff    	jb     805f20 <draw_letter+0x62>
+  805fd6:	83 45 ec 01          	add    DWORD PTR [rbp-0x14],0x1
+  805fda:	8b 05 88 15 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc21588]        # 427568 <font_width>
+  805fe0:	39 45 ec             	cmp    DWORD PTR [rbp-0x14],eax
+  805fe3:	0f 82 57 ff ff ff    	jb     805f40 <draw_letter+0x62>
             }
         }
 
         glyph += font_width_bytes;
-  805fc9:	8b 05 a1 15 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc215a1]        # 427570 <font_width_bytes>
-  805fcf:	89 c0                	mov    eax,eax
-  805fd1:	48 01 45 f8          	add    QWORD PTR [rbp-0x8],rax
+  805fe9:	8b 05 81 15 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc21581]        # 427570 <font_width_bytes>
+  805fef:	89 c0                	mov    eax,eax
+  805ff1:	48 01 45 f8          	add    QWORD PTR [rbp-0x8],rax
     for (u32 ch_y = 0; ch_y < font_height; ch_y++) {
-  805fd5:	83 45 f4 01          	add    DWORD PTR [rbp-0xc],0x1
-  805fd9:	8b 05 8d 15 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc2158d]        # 42756c <font_height>
-  805fdf:	39 45 f4             	cmp    DWORD PTR [rbp-0xc],eax
-  805fe2:	0f 82 28 ff ff ff    	jb     805f10 <draw_letter+0x52>
+  805ff5:	83 45 f4 01          	add    DWORD PTR [rbp-0xc],0x1
+  805ff9:	8b 05 6d 15 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc2156d]        # 42756c <font_height>
+  805fff:	39 45 f4             	cmp    DWORD PTR [rbp-0xc],eax
+  806002:	0f 82 28 ff ff ff    	jb     805f30 <draw_letter+0x52>
     }
 }
-  805fe8:	90                   	nop
-  805fe9:	90                   	nop
-  805fea:	c9                   	leave  
-  805feb:	c3                   	ret    
+  806008:	90                   	nop
+  806009:	90                   	nop
+  80600a:	c9                   	leave  
+  80600b:	c3                   	ret    
 
-0000000000805fec <scr_up>:
+000000000080600c <scr_up>:
 //向上滚动一个像素
 void scr_up(){
-  805fec:	f3 0f 1e fa          	endbr64 
-  805ff0:	55                   	push   rbp
-  805ff1:	48 89 e5             	mov    rbp,rsp
+  80600c:	f3 0f 1e fa          	endbr64 
+  806010:	55                   	push   rbp
+  806011:	48 89 e5             	mov    rbp,rsp
     for(int dy=0;dy<max_ch_nr_y-1;dy++){
-  805ff4:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
-  805ffb:	eb 6c                	jmp    806069 <scr_up+0x7d>
+  806014:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
+  80601b:	eb 6c                	jmp    806089 <scr_up+0x7d>
         for(int dx=0;dx<max_ch_nr_x;dx++){
-  805ffd:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0
-  806004:	eb 52                	jmp    806058 <scr_up+0x6c>
+  80601d:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0
+  806024:	eb 52                	jmp    806078 <scr_up+0x6c>
             char *p=(char*)(FRAMEBUFFER_ADDR+dy*framebuffer.common.framebuffer_pitch
-  806006:	8b 15 24 15 c2 ff    	mov    edx,DWORD PTR [rip+0xffffffffffc21524]        # 427530 <framebuffer+0x10>
-  80600c:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  80600f:	0f af c2             	imul   eax,edx
-  806012:	89 c1                	mov    ecx,eax
+  806026:	8b 15 04 15 c2 ff    	mov    edx,DWORD PTR [rip+0xffffffffffc21504]        # 427530 <framebuffer+0x10>
+  80602c:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  80602f:	0f af c2             	imul   eax,edx
+  806032:	89 c1                	mov    ecx,eax
                     +dx*framebuffer.common.framebuffer_bpp/8);
-  806014:	0f b6 05 21 15 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21521]        # 42753c <framebuffer+0x1c>
-  80601b:	0f b6 c0             	movzx  eax,al
-  80601e:	0f af 45 f8          	imul   eax,DWORD PTR [rbp-0x8]
-  806022:	8d 50 07             	lea    edx,[rax+0x7]
-  806025:	85 c0                	test   eax,eax
-  806027:	0f 48 c2             	cmovs  eax,edx
-  80602a:	c1 f8 03             	sar    eax,0x3
-  80602d:	48 98                	cdqe   
-  80602f:	48 01 c8             	add    rax,rcx
-  806032:	48 05 00 00 00 40    	add    rax,0x40000000
+  806034:	0f b6 05 01 15 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21501]        # 42753c <framebuffer+0x1c>
+  80603b:	0f b6 c0             	movzx  eax,al
+  80603e:	0f af 45 f8          	imul   eax,DWORD PTR [rbp-0x8]
+  806042:	8d 50 07             	lea    edx,[rax+0x7]
+  806045:	85 c0                	test   eax,eax
+  806047:	0f 48 c2             	cmovs  eax,edx
+  80604a:	c1 f8 03             	sar    eax,0x3
+  80604d:	48 98                	cdqe   
+  80604f:	48 01 c8             	add    rax,rcx
+  806052:	48 05 00 00 00 40    	add    rax,0x40000000
             char *p=(char*)(FRAMEBUFFER_ADDR+dy*framebuffer.common.framebuffer_pitch
-  806038:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
+  806058:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
             *p=*(p+framebuffer.common.framebuffer_pitch);
-  80603c:	8b 05 ee 14 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc214ee]        # 427530 <framebuffer+0x10>
-  806042:	89 c2                	mov    edx,eax
-  806044:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  806048:	48 01 d0             	add    rax,rdx
-  80604b:	0f b6 10             	movzx  edx,BYTE PTR [rax]
-  80604e:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  806052:	88 10                	mov    BYTE PTR [rax],dl
+  80605c:	8b 05 ce 14 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc214ce]        # 427530 <framebuffer+0x10>
+  806062:	89 c2                	mov    edx,eax
+  806064:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  806068:	48 01 d0             	add    rax,rdx
+  80606b:	0f b6 10             	movzx  edx,BYTE PTR [rax]
+  80606e:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  806072:	88 10                	mov    BYTE PTR [rax],dl
         for(int dx=0;dx<max_ch_nr_x;dx++){
-  806054:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1
-  806058:	8b 55 f8             	mov    edx,DWORD PTR [rbp-0x8]
-  80605b:	8b 05 f3 14 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc214f3]        # 427554 <max_ch_nr_x>
-  806061:	39 c2                	cmp    edx,eax
-  806063:	72 a1                	jb     806006 <scr_up+0x1a>
+  806074:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1
+  806078:	8b 55 f8             	mov    edx,DWORD PTR [rbp-0x8]
+  80607b:	8b 05 d3 14 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc214d3]        # 427554 <max_ch_nr_x>
+  806081:	39 c2                	cmp    edx,eax
+  806083:	72 a1                	jb     806026 <scr_up+0x1a>
     for(int dy=0;dy<max_ch_nr_y-1;dy++){
-  806065:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
-  806069:	8b 05 e9 14 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc214e9]        # 427558 <max_ch_nr_y>
-  80606f:	8d 50 ff             	lea    edx,[rax-0x1]
-  806072:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  806075:	39 c2                	cmp    edx,eax
-  806077:	77 84                	ja     805ffd <scr_up+0x11>
+  806085:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
+  806089:	8b 05 c9 14 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc214c9]        # 427558 <max_ch_nr_y>
+  80608f:	8d 50 ff             	lea    edx,[rax-0x1]
+  806092:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  806095:	39 c2                	cmp    edx,eax
+  806097:	77 84                	ja     80601d <scr_up+0x11>
         }
 
     }
 }
-  806079:	90                   	nop
-  80607a:	90                   	nop
-  80607b:	5d                   	pop    rbp
-  80607c:	c3                   	ret    
+  806099:	90                   	nop
+  80609a:	90                   	nop
+  80609b:	5d                   	pop    rbp
+  80609c:	c3                   	ret    
 
-000000000080607d <scr_down>:
+000000000080609d <scr_down>:
 void scr_down(){
-  80607d:	f3 0f 1e fa          	endbr64 
-  806081:	55                   	push   rbp
-  806082:	48 89 e5             	mov    rbp,rsp
+  80609d:	f3 0f 1e fa          	endbr64 
+  8060a1:	55                   	push   rbp
+  8060a2:	48 89 e5             	mov    rbp,rsp
     for(int dy=1;dy<max_ch_nr_y;dy++){
-  806085:	c7 45 fc 01 00 00 00 	mov    DWORD PTR [rbp-0x4],0x1
-  80608c:	eb 72                	jmp    806100 <scr_down+0x83>
+  8060a5:	c7 45 fc 01 00 00 00 	mov    DWORD PTR [rbp-0x4],0x1
+  8060ac:	eb 72                	jmp    806120 <scr_down+0x83>
         for(int dx=0;dx<max_ch_nr_x;dx++){
-  80608e:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0
-  806095:	eb 58                	jmp    8060ef <scr_down+0x72>
+  8060ae:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0
+  8060b5:	eb 58                	jmp    80610f <scr_down+0x72>
             char *p=(char*)(FRAMEBUFFER_ADDR+dy*framebuffer.common.framebuffer_pitch
-  806097:	8b 15 93 14 c2 ff    	mov    edx,DWORD PTR [rip+0xffffffffffc21493]        # 427530 <framebuffer+0x10>
-  80609d:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8060a0:	0f af c2             	imul   eax,edx
-  8060a3:	89 c1                	mov    ecx,eax
+  8060b7:	8b 15 73 14 c2 ff    	mov    edx,DWORD PTR [rip+0xffffffffffc21473]        # 427530 <framebuffer+0x10>
+  8060bd:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  8060c0:	0f af c2             	imul   eax,edx
+  8060c3:	89 c1                	mov    ecx,eax
                             +dx*framebuffer.common.framebuffer_bpp/8);
-  8060a5:	0f b6 05 90 14 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21490]        # 42753c <framebuffer+0x1c>
-  8060ac:	0f b6 c0             	movzx  eax,al
-  8060af:	0f af 45 f8          	imul   eax,DWORD PTR [rbp-0x8]
-  8060b3:	8d 50 07             	lea    edx,[rax+0x7]
-  8060b6:	85 c0                	test   eax,eax
-  8060b8:	0f 48 c2             	cmovs  eax,edx
-  8060bb:	c1 f8 03             	sar    eax,0x3
-  8060be:	48 98                	cdqe   
-  8060c0:	48 01 c8             	add    rax,rcx
-  8060c3:	48 05 00 00 00 40    	add    rax,0x40000000
+  8060c5:	0f b6 05 70 14 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21470]        # 42753c <framebuffer+0x1c>
+  8060cc:	0f b6 c0             	movzx  eax,al
+  8060cf:	0f af 45 f8          	imul   eax,DWORD PTR [rbp-0x8]
+  8060d3:	8d 50 07             	lea    edx,[rax+0x7]
+  8060d6:	85 c0                	test   eax,eax
+  8060d8:	0f 48 c2             	cmovs  eax,edx
+  8060db:	c1 f8 03             	sar    eax,0x3
+  8060de:	48 98                	cdqe   
+  8060e0:	48 01 c8             	add    rax,rcx
+  8060e3:	48 05 00 00 00 40    	add    rax,0x40000000
             char *p=(char*)(FRAMEBUFFER_ADDR+dy*framebuffer.common.framebuffer_pitch
-  8060c9:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
+  8060e9:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
             *p=*(p-framebuffer.common.framebuffer_pitch);
-  8060cd:	8b 05 5d 14 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc2145d]        # 427530 <framebuffer+0x10>
-  8060d3:	89 c0                	mov    eax,eax
-  8060d5:	48 f7 d8             	neg    rax
-  8060d8:	48 89 c2             	mov    rdx,rax
-  8060db:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  8060df:	48 01 d0             	add    rax,rdx
-  8060e2:	0f b6 10             	movzx  edx,BYTE PTR [rax]
-  8060e5:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  8060e9:	88 10                	mov    BYTE PTR [rax],dl
+  8060ed:	8b 05 3d 14 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc2143d]        # 427530 <framebuffer+0x10>
+  8060f3:	89 c0                	mov    eax,eax
+  8060f5:	48 f7 d8             	neg    rax
+  8060f8:	48 89 c2             	mov    rdx,rax
+  8060fb:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  8060ff:	48 01 d0             	add    rax,rdx
+  806102:	0f b6 10             	movzx  edx,BYTE PTR [rax]
+  806105:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  806109:	88 10                	mov    BYTE PTR [rax],dl
         for(int dx=0;dx<max_ch_nr_x;dx++){
-  8060eb:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1
-  8060ef:	8b 55 f8             	mov    edx,DWORD PTR [rbp-0x8]
-  8060f2:	8b 05 5c 14 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc2145c]        # 427554 <max_ch_nr_x>
-  8060f8:	39 c2                	cmp    edx,eax
-  8060fa:	72 9b                	jb     806097 <scr_down+0x1a>
+  80610b:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1
+  80610f:	8b 55 f8             	mov    edx,DWORD PTR [rbp-0x8]
+  806112:	8b 05 3c 14 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc2143c]        # 427554 <max_ch_nr_x>
+  806118:	39 c2                	cmp    edx,eax
+  80611a:	72 9b                	jb     8060b7 <scr_down+0x1a>
     for(int dy=1;dy<max_ch_nr_y;dy++){
-  8060fc:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
-  806100:	8b 55 fc             	mov    edx,DWORD PTR [rbp-0x4]
-  806103:	8b 05 4f 14 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc2144f]        # 427558 <max_ch_nr_y>
-  806109:	39 c2                	cmp    edx,eax
-  80610b:	72 81                	jb     80608e <scr_down+0x11>
+  80611c:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
+  806120:	8b 55 fc             	mov    edx,DWORD PTR [rbp-0x4]
+  806123:	8b 05 2f 14 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc2142f]        # 427558 <max_ch_nr_y>
+  806129:	39 c2                	cmp    edx,eax
+  80612b:	72 81                	jb     8060ae <scr_down+0x11>
         }
 
     }
 }
-  80610d:	90                   	nop
-  80610e:	90                   	nop
-  80610f:	5d                   	pop    rbp
-  806110:	c3                   	ret    
+  80612d:	90                   	nop
+  80612e:	90                   	nop
+  80612f:	5d                   	pop    rbp
+  806130:	c3                   	ret    
 
-0000000000806111 <print>:
+0000000000806131 <print>:
 void print(char* s){
-  806111:	f3 0f 1e fa          	endbr64 
-  806115:	55                   	push   rbp
-  806116:	48 89 e5             	mov    rbp,rsp
-  806119:	48 83 ec 18          	sub    rsp,0x18
-  80611d:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
+  806131:	f3 0f 1e fa          	endbr64 
+  806135:	55                   	push   rbp
+  806136:	48 89 e5             	mov    rbp,rsp
+  806139:	48 83 ec 18          	sub    rsp,0x18
+  80613d:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
     for(;*s;s++){
-  806121:	e9 f7 00 00 00       	jmp    80621d <print+0x10c>
+  806141:	e9 f7 00 00 00       	jmp    80623d <print+0x10c>
         if(fb_cursor_x>max_ch_nr_x||*s=='\n')
-  806126:	8b 15 20 14 c2 ff    	mov    edx,DWORD PTR [rip+0xffffffffffc21420]        # 42754c <fb_cursor_x>
-  80612c:	8b 05 22 14 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc21422]        # 427554 <max_ch_nr_x>
-  806132:	39 c2                	cmp    edx,eax
-  806134:	77 0b                	ja     806141 <print+0x30>
-  806136:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  80613a:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  80613d:	3c 0a                	cmp    al,0xa
-  80613f:	75 19                	jne    80615a <print+0x49>
+  806146:	8b 15 00 14 c2 ff    	mov    edx,DWORD PTR [rip+0xffffffffffc21400]        # 42754c <fb_cursor_x>
+  80614c:	8b 05 02 14 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc21402]        # 427554 <max_ch_nr_x>
+  806152:	39 c2                	cmp    edx,eax
+  806154:	77 0b                	ja     806161 <print+0x30>
+  806156:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  80615a:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  80615d:	3c 0a                	cmp    al,0xa
+  80615f:	75 19                	jne    80617a <print+0x49>
         {
             fb_cursor_y+=1;
-  806141:	8b 05 09 14 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc21409]        # 427550 <fb_cursor_y>
-  806147:	83 c0 01             	add    eax,0x1
-  80614a:	89 05 00 14 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc21400],eax        # 427550 <fb_cursor_y>
+  806161:	8b 05 e9 13 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc213e9]        # 427550 <fb_cursor_y>
+  806167:	83 c0 01             	add    eax,0x1
+  80616a:	89 05 e0 13 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc213e0],eax        # 427550 <fb_cursor_y>
             fb_cursor_x=0;
-  806150:	c7 05 f2 13 c2 ff 00 	mov    DWORD PTR [rip+0xffffffffffc213f2],0x0        # 42754c <fb_cursor_x>
-  806157:	00 00 00 
+  806170:	c7 05 d2 13 c2 ff 00 	mov    DWORD PTR [rip+0xffffffffffc213d2],0x0        # 42754c <fb_cursor_x>
+  806177:	00 00 00 
         }
         if(*s=='\n')continue;
-  80615a:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  80615e:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  806161:	3c 0a                	cmp    al,0xa
-  806163:	0f 84 ae 00 00 00    	je     806217 <print+0x106>
+  80617a:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  80617e:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  806181:	3c 0a                	cmp    al,0xa
+  806183:	0f 84 ae 00 00 00    	je     806237 <print+0x106>
         if(fb_cursor_y>=max_ch_nr_y){
-  806169:	8b 15 e1 13 c2 ff    	mov    edx,DWORD PTR [rip+0xffffffffffc213e1]        # 427550 <fb_cursor_y>
-  80616f:	8b 05 e3 13 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc213e3]        # 427558 <max_ch_nr_y>
-  806175:	39 c2                	cmp    edx,eax
-  806177:	72 3c                	jb     8061b5 <print+0xa4>
+  806189:	8b 15 c1 13 c2 ff    	mov    edx,DWORD PTR [rip+0xffffffffffc213c1]        # 427550 <fb_cursor_y>
+  80618f:	8b 05 c3 13 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc213c3]        # 427558 <max_ch_nr_y>
+  806195:	39 c2                	cmp    edx,eax
+  806197:	72 3c                	jb     8061d5 <print+0xa4>
             for(int i=0;i<font_height*font_size;i++)
-  806179:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
-  806180:	eb 0e                	jmp    806190 <print+0x7f>
+  806199:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
+  8061a0:	eb 0e                	jmp    8061b0 <print+0x7f>
                 scr_up();
-  806182:	b8 00 00 00 00       	mov    eax,0x0
-  806187:	e8 60 fe ff ff       	call   805fec <scr_up>
+  8061a2:	b8 00 00 00 00       	mov    eax,0x0
+  8061a7:	e8 60 fe ff ff       	call   80600c <scr_up>
             for(int i=0;i<font_height*font_size;i++)
-  80618c:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
-  806190:	8b 05 d6 13 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc213d6]        # 42756c <font_height>
-  806196:	8b 15 14 43 00 00    	mov    edx,DWORD PTR [rip+0x4314]        # 80a4b0 <font_size>
-  80619c:	0f af d0             	imul   edx,eax
-  80619f:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8061a2:	39 c2                	cmp    edx,eax
-  8061a4:	77 dc                	ja     806182 <print+0x71>
+  8061ac:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
+  8061b0:	8b 05 b6 13 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc213b6]        # 42756c <font_height>
+  8061b6:	8b 15 f4 42 00 00    	mov    edx,DWORD PTR [rip+0x42f4]        # 80a4b0 <font_size>
+  8061bc:	0f af d0             	imul   edx,eax
+  8061bf:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  8061c2:	39 c2                	cmp    edx,eax
+  8061c4:	77 dc                	ja     8061a2 <print+0x71>
             fb_cursor_y=max_ch_nr_y-1;
-  8061a6:	8b 05 ac 13 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc213ac]        # 427558 <max_ch_nr_y>
-  8061ac:	83 e8 01             	sub    eax,0x1
-  8061af:	89 05 9b 13 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc2139b],eax        # 427550 <fb_cursor_y>
+  8061c6:	8b 05 8c 13 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc2138c]        # 427558 <max_ch_nr_y>
+  8061cc:	83 e8 01             	sub    eax,0x1
+  8061cf:	89 05 7b 13 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc2137b],eax        # 427550 <fb_cursor_y>
         }
         draw_letter(fb_cursor_x*font_width*font_size,fb_cursor_y*font_height*font_size,font_size,*s);
-  8061b5:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  8061b9:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  8061bc:	0f be d0             	movsx  edx,al
-  8061bf:	8b 05 eb 42 00 00    	mov    eax,DWORD PTR [rip+0x42eb]        # 80a4b0 <font_size>
-  8061c5:	8b 35 85 13 c2 ff    	mov    esi,DWORD PTR [rip+0xffffffffffc21385]        # 427550 <fb_cursor_y>
-  8061cb:	8b 0d 9b 13 c2 ff    	mov    ecx,DWORD PTR [rip+0xffffffffffc2139b]        # 42756c <font_height>
-  8061d1:	0f af ce             	imul   ecx,esi
-  8061d4:	8b 35 d6 42 00 00    	mov    esi,DWORD PTR [rip+0x42d6]        # 80a4b0 <font_size>
-  8061da:	0f af ce             	imul   ecx,esi
-  8061dd:	41 89 c8             	mov    r8d,ecx
-  8061e0:	8b 35 66 13 c2 ff    	mov    esi,DWORD PTR [rip+0xffffffffffc21366]        # 42754c <fb_cursor_x>
-  8061e6:	8b 0d 7c 13 c2 ff    	mov    ecx,DWORD PTR [rip+0xffffffffffc2137c]        # 427568 <font_width>
-  8061ec:	0f af ce             	imul   ecx,esi
-  8061ef:	8b 35 bb 42 00 00    	mov    esi,DWORD PTR [rip+0x42bb]        # 80a4b0 <font_size>
-  8061f5:	0f af ce             	imul   ecx,esi
-  8061f8:	89 cf                	mov    edi,ecx
-  8061fa:	89 d1                	mov    ecx,edx
-  8061fc:	89 c2                	mov    edx,eax
-  8061fe:	44 89 c6             	mov    esi,r8d
-  806201:	e8 b8 fc ff ff       	call   805ebe <draw_letter>
+  8061d5:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  8061d9:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  8061dc:	0f be d0             	movsx  edx,al
+  8061df:	8b 05 cb 42 00 00    	mov    eax,DWORD PTR [rip+0x42cb]        # 80a4b0 <font_size>
+  8061e5:	8b 35 65 13 c2 ff    	mov    esi,DWORD PTR [rip+0xffffffffffc21365]        # 427550 <fb_cursor_y>
+  8061eb:	8b 0d 7b 13 c2 ff    	mov    ecx,DWORD PTR [rip+0xffffffffffc2137b]        # 42756c <font_height>
+  8061f1:	0f af ce             	imul   ecx,esi
+  8061f4:	8b 35 b6 42 00 00    	mov    esi,DWORD PTR [rip+0x42b6]        # 80a4b0 <font_size>
+  8061fa:	0f af ce             	imul   ecx,esi
+  8061fd:	41 89 c8             	mov    r8d,ecx
+  806200:	8b 35 46 13 c2 ff    	mov    esi,DWORD PTR [rip+0xffffffffffc21346]        # 42754c <fb_cursor_x>
+  806206:	8b 0d 5c 13 c2 ff    	mov    ecx,DWORD PTR [rip+0xffffffffffc2135c]        # 427568 <font_width>
+  80620c:	0f af ce             	imul   ecx,esi
+  80620f:	8b 35 9b 42 00 00    	mov    esi,DWORD PTR [rip+0x429b]        # 80a4b0 <font_size>
+  806215:	0f af ce             	imul   ecx,esi
+  806218:	89 cf                	mov    edi,ecx
+  80621a:	89 d1                	mov    ecx,edx
+  80621c:	89 c2                	mov    edx,eax
+  80621e:	44 89 c6             	mov    esi,r8d
+  806221:	e8 b8 fc ff ff       	call   805ede <draw_letter>
         fb_cursor_x+=1;
-  806206:	8b 05 40 13 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc21340]        # 42754c <fb_cursor_x>
-  80620c:	83 c0 01             	add    eax,0x1
-  80620f:	89 05 37 13 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc21337],eax        # 42754c <fb_cursor_x>
-  806215:	eb 01                	jmp    806218 <print+0x107>
+  806226:	8b 05 20 13 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc21320]        # 42754c <fb_cursor_x>
+  80622c:	83 c0 01             	add    eax,0x1
+  80622f:	89 05 17 13 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc21317],eax        # 42754c <fb_cursor_x>
+  806235:	eb 01                	jmp    806238 <print+0x107>
         if(*s=='\n')continue;
-  806217:	90                   	nop
+  806237:	90                   	nop
     for(;*s;s++){
-  806218:	48 83 45 e8 01       	add    QWORD PTR [rbp-0x18],0x1
-  80621d:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  806221:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  806224:	84 c0                	test   al,al
-  806226:	0f 85 fa fe ff ff    	jne    806126 <print+0x15>
+  806238:	48 83 45 e8 01       	add    QWORD PTR [rbp-0x18],0x1
+  80623d:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  806241:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  806244:	84 c0                	test   al,al
+  806246:	0f 85 fa fe ff ff    	jne    806146 <print+0x15>
     }
 }
-  80622c:	90                   	nop
-  80622d:	90                   	nop
-  80622e:	c9                   	leave  
-  80622f:	c3                   	ret    
+  80624c:	90                   	nop
+  80624d:	90                   	nop
+  80624e:	c9                   	leave  
+  80624f:	c3                   	ret    
 
-0000000000806230 <shift>:
+0000000000806250 <shift>:
 /* 0x5D - Apps      */ {  0,        0,       0x5D,      0x5D }
         };
 char k_shift=0,k_ctrl=0,k_capslock=0;
 
 void shift()
 {
-  806230:	f3 0f 1e fa          	endbr64 
-  806234:	55                   	push   rbp
-  806235:	48 89 e5             	mov    rbp,rsp
+  806250:	f3 0f 1e fa          	endbr64 
+  806254:	55                   	push   rbp
+  806255:	48 89 e5             	mov    rbp,rsp
     k_shift=!k_shift;
-  806238:	0f b6 05 6e 15 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc2156e]        # 4277ad <k_shift>
-  80623f:	84 c0                	test   al,al
-  806241:	0f 94 c0             	sete   al
-  806244:	88 05 63 15 c2 ff    	mov    BYTE PTR [rip+0xffffffffffc21563],al        # 4277ad <k_shift>
+  806258:	0f b6 05 4e 15 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc2154e]        # 4277ad <k_shift>
+  80625f:	84 c0                	test   al,al
+  806261:	0f 94 c0             	sete   al
+  806264:	88 05 43 15 c2 ff    	mov    BYTE PTR [rip+0xffffffffffc21543],al        # 4277ad <k_shift>
 }
-  80624a:	90                   	nop
-  80624b:	5d                   	pop    rbp
-  80624c:	c3                   	ret    
+  80626a:	90                   	nop
+  80626b:	5d                   	pop    rbp
+  80626c:	c3                   	ret    
 
-000000000080624d <ctrl>:
+000000000080626d <ctrl>:
 void ctrl()
 {
-  80624d:	f3 0f 1e fa          	endbr64 
-  806251:	55                   	push   rbp
-  806252:	48 89 e5             	mov    rbp,rsp
+  80626d:	f3 0f 1e fa          	endbr64 
+  806271:	55                   	push   rbp
+  806272:	48 89 e5             	mov    rbp,rsp
     k_ctrl=!k_ctrl;
-  806255:	0f b6 05 52 15 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21552]        # 4277ae <k_ctrl>
-  80625c:	84 c0                	test   al,al
-  80625e:	0f 94 c0             	sete   al
-  806261:	88 05 47 15 c2 ff    	mov    BYTE PTR [rip+0xffffffffffc21547],al        # 4277ae <k_ctrl>
+  806275:	0f b6 05 32 15 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21532]        # 4277ae <k_ctrl>
+  80627c:	84 c0                	test   al,al
+  80627e:	0f 94 c0             	sete   al
+  806281:	88 05 27 15 c2 ff    	mov    BYTE PTR [rip+0xffffffffffc21527],al        # 4277ae <k_ctrl>
 }
-  806267:	90                   	nop
-  806268:	5d                   	pop    rbp
-  806269:	c3                   	ret    
+  806287:	90                   	nop
+  806288:	5d                   	pop    rbp
+  806289:	c3                   	ret    
 
-000000000080626a <capslock>:
+000000000080628a <capslock>:
 void capslock()
 {
-  80626a:	f3 0f 1e fa          	endbr64 
-  80626e:	55                   	push   rbp
-  80626f:	48 89 e5             	mov    rbp,rsp
+  80628a:	f3 0f 1e fa          	endbr64 
+  80628e:	55                   	push   rbp
+  80628f:	48 89 e5             	mov    rbp,rsp
     k_capslock=k_capslock==0?1:0;
-  806272:	0f b6 05 36 15 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21536]        # 4277af <k_capslock>
-  806279:	84 c0                	test   al,al
-  80627b:	0f 94 c0             	sete   al
-  80627e:	88 05 2b 15 c2 ff    	mov    BYTE PTR [rip+0xffffffffffc2152b],al        # 4277af <k_capslock>
+  806292:	0f b6 05 16 15 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21516]        # 4277af <k_capslock>
+  806299:	84 c0                	test   al,al
+  80629b:	0f 94 c0             	sete   al
+  80629e:	88 05 0b 15 c2 ff    	mov    BYTE PTR [rip+0xffffffffffc2150b],al        # 4277af <k_capslock>
 }
-  806284:	90                   	nop
-  806285:	5d                   	pop    rbp
-  806286:	c3                   	ret    
+  8062a4:	90                   	nop
+  8062a5:	5d                   	pop    rbp
+  8062a6:	c3                   	ret    
 
-0000000000806287 <to_ascii>:
+00000000008062a7 <to_ascii>:
 char to_ascii(char scan_code)
 {
-  806287:	f3 0f 1e fa          	endbr64 
-  80628b:	55                   	push   rbp
-  80628c:	48 89 e5             	mov    rbp,rsp
-  80628f:	89 f8                	mov    eax,edi
-  806291:	88 45 ec             	mov    BYTE PTR [rbp-0x14],al
+  8062a7:	f3 0f 1e fa          	endbr64 
+  8062ab:	55                   	push   rbp
+  8062ac:	48 89 e5             	mov    rbp,rsp
+  8062af:	89 f8                	mov    eax,edi
+  8062b1:	88 45 ec             	mov    BYTE PTR [rbp-0x14],al
     for(int i=0;i<0x5e;i++)//sizeof(key_map)/sizeof(key_code)
-  806294:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
-  80629b:	e9 c7 00 00 00       	jmp    806367 <to_ascii+0xe0>
+  8062b4:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
+  8062bb:	e9 c7 00 00 00       	jmp    806387 <to_ascii+0xe0>
         if(key_map[i].scan_code==scan_code)
-  8062a0:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8062a3:	48 63 d0             	movsxd rdx,eax
-  8062a6:	48 89 d0             	mov    rax,rdx
-  8062a9:	48 c1 e0 02          	shl    rax,0x2
-  8062ad:	48 01 d0             	add    rax,rdx
-  8062b0:	48 05 42 21 81 00    	add    rax,0x812142
-  8062b6:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  8062b9:	38 45 ec             	cmp    BYTE PTR [rbp-0x14],al
-  8062bc:	0f 85 a1 00 00 00    	jne    806363 <to_ascii+0xdc>
+  8062c0:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  8062c3:	48 63 d0             	movsxd rdx,eax
+  8062c6:	48 89 d0             	mov    rax,rdx
+  8062c9:	48 c1 e0 02          	shl    rax,0x2
+  8062cd:	48 01 d0             	add    rax,rdx
+  8062d0:	48 05 42 21 81 00    	add    rax,0x812142
+  8062d6:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  8062d9:	38 45 ec             	cmp    BYTE PTR [rbp-0x14],al
+  8062dc:	0f 85 a1 00 00 00    	jne    806383 <to_ascii+0xdc>
         {
             if(k_capslock&&key_map[i].ascii>='a'&&key_map[i].ascii<='z')return key_map[i].ascii_shift;
-  8062c2:	0f b6 05 e6 14 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc214e6]        # 4277af <k_capslock>
-  8062c9:	84 c0                	test   al,al
-  8062cb:	74 55                	je     806322 <to_ascii+0x9b>
-  8062cd:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8062d0:	48 63 d0             	movsxd rdx,eax
-  8062d3:	48 89 d0             	mov    rax,rdx
-  8062d6:	48 c1 e0 02          	shl    rax,0x2
-  8062da:	48 01 d0             	add    rax,rdx
-  8062dd:	48 05 40 21 81 00    	add    rax,0x812140
-  8062e3:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  8062e6:	3c 60                	cmp    al,0x60
-  8062e8:	7e 38                	jle    806322 <to_ascii+0x9b>
-  8062ea:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8062ed:	48 63 d0             	movsxd rdx,eax
-  8062f0:	48 89 d0             	mov    rax,rdx
-  8062f3:	48 c1 e0 02          	shl    rax,0x2
-  8062f7:	48 01 d0             	add    rax,rdx
-  8062fa:	48 05 40 21 81 00    	add    rax,0x812140
-  806300:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  806303:	3c 7a                	cmp    al,0x7a
-  806305:	7f 1b                	jg     806322 <to_ascii+0x9b>
-  806307:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  80630a:	48 63 d0             	movsxd rdx,eax
-  80630d:	48 89 d0             	mov    rax,rdx
-  806310:	48 c1 e0 02          	shl    rax,0x2
-  806314:	48 01 d0             	add    rax,rdx
-  806317:	48 05 41 21 81 00    	add    rax,0x812141
-  80631d:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  806320:	eb 54                	jmp    806376 <to_ascii+0xef>
+  8062e2:	0f b6 05 c6 14 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc214c6]        # 4277af <k_capslock>
+  8062e9:	84 c0                	test   al,al
+  8062eb:	74 55                	je     806342 <to_ascii+0x9b>
+  8062ed:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  8062f0:	48 63 d0             	movsxd rdx,eax
+  8062f3:	48 89 d0             	mov    rax,rdx
+  8062f6:	48 c1 e0 02          	shl    rax,0x2
+  8062fa:	48 01 d0             	add    rax,rdx
+  8062fd:	48 05 40 21 81 00    	add    rax,0x812140
+  806303:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  806306:	3c 60                	cmp    al,0x60
+  806308:	7e 38                	jle    806342 <to_ascii+0x9b>
+  80630a:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  80630d:	48 63 d0             	movsxd rdx,eax
+  806310:	48 89 d0             	mov    rax,rdx
+  806313:	48 c1 e0 02          	shl    rax,0x2
+  806317:	48 01 d0             	add    rax,rdx
+  80631a:	48 05 40 21 81 00    	add    rax,0x812140
+  806320:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  806323:	3c 7a                	cmp    al,0x7a
+  806325:	7f 1b                	jg     806342 <to_ascii+0x9b>
+  806327:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  80632a:	48 63 d0             	movsxd rdx,eax
+  80632d:	48 89 d0             	mov    rax,rdx
+  806330:	48 c1 e0 02          	shl    rax,0x2
+  806334:	48 01 d0             	add    rax,rdx
+  806337:	48 05 41 21 81 00    	add    rax,0x812141
+  80633d:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  806340:	eb 54                	jmp    806396 <to_ascii+0xef>
             else if(k_shift)return key_map[i].ascii_shift;
-  806322:	0f b6 05 84 14 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21484]        # 4277ad <k_shift>
-  806329:	84 c0                	test   al,al
-  80632b:	74 1b                	je     806348 <to_ascii+0xc1>
-  80632d:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  806330:	48 63 d0             	movsxd rdx,eax
-  806333:	48 89 d0             	mov    rax,rdx
-  806336:	48 c1 e0 02          	shl    rax,0x2
-  80633a:	48 01 d0             	add    rax,rdx
-  80633d:	48 05 41 21 81 00    	add    rax,0x812141
-  806343:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  806346:	eb 2e                	jmp    806376 <to_ascii+0xef>
+  806342:	0f b6 05 64 14 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21464]        # 4277ad <k_shift>
+  806349:	84 c0                	test   al,al
+  80634b:	74 1b                	je     806368 <to_ascii+0xc1>
+  80634d:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  806350:	48 63 d0             	movsxd rdx,eax
+  806353:	48 89 d0             	mov    rax,rdx
+  806356:	48 c1 e0 02          	shl    rax,0x2
+  80635a:	48 01 d0             	add    rax,rdx
+  80635d:	48 05 41 21 81 00    	add    rax,0x812141
+  806363:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  806366:	eb 2e                	jmp    806396 <to_ascii+0xef>
             else return key_map[i].ascii;
-  806348:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  80634b:	48 63 d0             	movsxd rdx,eax
-  80634e:	48 89 d0             	mov    rax,rdx
-  806351:	48 c1 e0 02          	shl    rax,0x2
-  806355:	48 01 d0             	add    rax,rdx
-  806358:	48 05 40 21 81 00    	add    rax,0x812140
-  80635e:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  806361:	eb 13                	jmp    806376 <to_ascii+0xef>
+  806368:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  80636b:	48 63 d0             	movsxd rdx,eax
+  80636e:	48 89 d0             	mov    rax,rdx
+  806371:	48 c1 e0 02          	shl    rax,0x2
+  806375:	48 01 d0             	add    rax,rdx
+  806378:	48 05 40 21 81 00    	add    rax,0x812140
+  80637e:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  806381:	eb 13                	jmp    806396 <to_ascii+0xef>
     for(int i=0;i<0x5e;i++)//sizeof(key_map)/sizeof(key_code)
-  806363:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
-  806367:	83 7d fc 5d          	cmp    DWORD PTR [rbp-0x4],0x5d
-  80636b:	0f 8e 2f ff ff ff    	jle    8062a0 <to_ascii+0x19>
+  806383:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
+  806387:	83 7d fc 5d          	cmp    DWORD PTR [rbp-0x4],0x5d
+  80638b:	0f 8e 2f ff ff ff    	jle    8062c0 <to_ascii+0x19>
         }
 
     return '\0';
-  806371:	b8 00 00 00 00       	mov    eax,0x0
+  806391:	b8 00 00 00 00       	mov    eax,0x0
 }
-  806376:	5d                   	pop    rbp
-  806377:	c3                   	ret    
+  806396:	5d                   	pop    rbp
+  806397:	c3                   	ret    
 
-0000000000806378 <init_kb>:
+0000000000806398 <init_kb>:
 int init_kb()
 {
-  806378:	f3 0f 1e fa          	endbr64 
-  80637c:	55                   	push   rbp
-  80637d:	48 89 e5             	mov    rbp,rsp
+  806398:	f3 0f 1e fa          	endbr64 
+  80639c:	55                   	push   rbp
+  80639d:	48 89 e5             	mov    rbp,rsp
     reg_device(&dev_keyboard);
-  806380:	bf 80 20 81 00       	mov    edi,0x812080
-  806385:	e8 b5 c7 ff ff       	call   802b3f <reg_device>
+  8063a0:	bf 80 20 81 00       	mov    edi,0x812080
+  8063a5:	e8 95 c7 ff ff       	call   802b3f <reg_device>
     reg_driver(&drv_keyboard);
-  80638a:	bf e0 1f 81 00       	mov    edi,0x811fe0
-  80638f:	e8 93 ca ff ff       	call   802e27 <reg_driver>
+  8063aa:	bf e0 1f 81 00       	mov    edi,0x811fe0
+  8063af:	e8 73 ca ff ff       	call   802e27 <reg_driver>
 }
-  806394:	90                   	nop
-  806395:	5d                   	pop    rbp
-  806396:	c3                   	ret    
+  8063b4:	90                   	nop
+  8063b5:	5d                   	pop    rbp
+  8063b6:	c3                   	ret    
 
-0000000000806397 <key_proc>:
+00000000008063b7 <key_proc>:
 int key_proc()
 {
-  806397:	f3 0f 1e fa          	endbr64 
-  80639b:	55                   	push   rbp
-  80639c:	48 89 e5             	mov    rbp,rsp
-  80639f:	48 83 ec 10          	sub    rsp,0x10
+  8063b7:	f3 0f 1e fa          	endbr64 
+  8063bb:	55                   	push   rbp
+  8063bc:	48 89 e5             	mov    rbp,rsp
+  8063bf:	48 83 ec 10          	sub    rsp,0x10
     //获取完整的扫描码
     u8 scan1=0,scan2=0,ch=0;
-  8063a3:	c6 45 ff 00          	mov    BYTE PTR [rbp-0x1],0x0
-  8063a7:	c6 45 fe 00          	mov    BYTE PTR [rbp-0x2],0x0
-  8063ab:	c6 45 fd 00          	mov    BYTE PTR [rbp-0x3],0x0
+  8063c3:	c6 45 ff 00          	mov    BYTE PTR [rbp-0x1],0x0
+  8063c7:	c6 45 fe 00          	mov    BYTE PTR [rbp-0x2],0x0
+  8063cb:	c6 45 fd 00          	mov    BYTE PTR [rbp-0x3],0x0
     key_code tmpc;
     scan1=inb(0x60);
-  8063af:	bf 60 00 00 00       	mov    edi,0x60
-  8063b4:	e8 30 eb ff ff       	call   804ee9 <inb>
-  8063b9:	88 45 ff             	mov    BYTE PTR [rbp-0x1],al
+  8063cf:	bf 60 00 00 00       	mov    edi,0x60
+  8063d4:	e8 30 eb ff ff       	call   804f09 <inb>
+  8063d9:	88 45 ff             	mov    BYTE PTR [rbp-0x1],al
 //    tmpc.scan_code2=scan2;
 //    tmpc.ascii= ch;
 
 
 //    ENQUEUE(key_bufq,tmpc)
     if((key_bufq.tail+1)%key_bufq.size!=key_bufq.head)
-  8063bc:	8b 05 0a 41 00 00    	mov    eax,DWORD PTR [rip+0x410a]        # 80a4cc <key_bufq+0xc>
-  8063c2:	83 c0 01             	add    eax,0x1
-  8063c5:	8b 0d 05 41 00 00    	mov    ecx,DWORD PTR [rip+0x4105]        # 80a4d0 <key_bufq+0x10>
-  8063cb:	99                   	cdq    
-  8063cc:	f7 f9                	idiv   ecx
-  8063ce:	8b 05 f4 40 00 00    	mov    eax,DWORD PTR [rip+0x40f4]        # 80a4c8 <key_bufq+0x8>
-  8063d4:	39 c2                	cmp    edx,eax
-  8063d6:	74 32                	je     80640a <key_proc+0x73>
+  8063dc:	8b 05 ea 40 00 00    	mov    eax,DWORD PTR [rip+0x40ea]        # 80a4cc <key_bufq+0xc>
+  8063e2:	83 c0 01             	add    eax,0x1
+  8063e5:	8b 0d e5 40 00 00    	mov    ecx,DWORD PTR [rip+0x40e5]        # 80a4d0 <key_bufq+0x10>
+  8063eb:	99                   	cdq    
+  8063ec:	f7 f9                	idiv   ecx
+  8063ee:	8b 05 d4 40 00 00    	mov    eax,DWORD PTR [rip+0x40d4]        # 80a4c8 <key_bufq+0x8>
+  8063f4:	39 c2                	cmp    edx,eax
+  8063f6:	74 32                	je     80642a <key_proc+0x73>
     {
         key_bufq.data[key_bufq.tail]=scan1;
-  8063d8:	48 8b 15 e1 40 00 00 	mov    rdx,QWORD PTR [rip+0x40e1]        # 80a4c0 <key_bufq>
-  8063df:	8b 05 e7 40 00 00    	mov    eax,DWORD PTR [rip+0x40e7]        # 80a4cc <key_bufq+0xc>
-  8063e5:	48 98                	cdqe   
-  8063e7:	48 01 c2             	add    rdx,rax
-  8063ea:	0f b6 45 ff          	movzx  eax,BYTE PTR [rbp-0x1]
-  8063ee:	88 02                	mov    BYTE PTR [rdx],al
+  8063f8:	48 8b 15 c1 40 00 00 	mov    rdx,QWORD PTR [rip+0x40c1]        # 80a4c0 <key_bufq>
+  8063ff:	8b 05 c7 40 00 00    	mov    eax,DWORD PTR [rip+0x40c7]        # 80a4cc <key_bufq+0xc>
+  806405:	48 98                	cdqe   
+  806407:	48 01 c2             	add    rdx,rax
+  80640a:	0f b6 45 ff          	movzx  eax,BYTE PTR [rbp-0x1]
+  80640e:	88 02                	mov    BYTE PTR [rdx],al
         key_bufq.tail=(key_bufq.tail+1)%key_bufq.size;
-  8063f0:	8b 05 d6 40 00 00    	mov    eax,DWORD PTR [rip+0x40d6]        # 80a4cc <key_bufq+0xc>
-  8063f6:	83 c0 01             	add    eax,0x1
-  8063f9:	8b 0d d1 40 00 00    	mov    ecx,DWORD PTR [rip+0x40d1]        # 80a4d0 <key_bufq+0x10>
-  8063ff:	99                   	cdq    
-  806400:	f7 f9                	idiv   ecx
-  806402:	89 d0                	mov    eax,edx
-  806404:	89 05 c2 40 00 00    	mov    DWORD PTR [rip+0x40c2],eax        # 80a4cc <key_bufq+0xc>
+  806410:	8b 05 b6 40 00 00    	mov    eax,DWORD PTR [rip+0x40b6]        # 80a4cc <key_bufq+0xc>
+  806416:	83 c0 01             	add    eax,0x1
+  806419:	8b 0d b1 40 00 00    	mov    ecx,DWORD PTR [rip+0x40b1]        # 80a4d0 <key_bufq+0x10>
+  80641f:	99                   	cdq    
+  806420:	f7 f9                	idiv   ecx
+  806422:	89 d0                	mov    eax,edx
+  806424:	89 05 a2 40 00 00    	mov    DWORD PTR [rip+0x40a2],eax        # 80a4cc <key_bufq+0xc>
     }
 
     if(scan1==0x48)
-  80640a:	80 7d ff 48          	cmp    BYTE PTR [rbp-0x1],0x48
-  80640e:	75 0a                	jne    80641a <key_proc+0x83>
+  80642a:	80 7d ff 48          	cmp    BYTE PTR [rbp-0x1],0x48
+  80642e:	75 0a                	jne    80643a <key_proc+0x83>
         scr_up();
-  806410:	b8 00 00 00 00       	mov    eax,0x0
-  806415:	e8 d2 fb ff ff       	call   805fec <scr_up>
+  806430:	b8 00 00 00 00       	mov    eax,0x0
+  806435:	e8 d2 fb ff ff       	call   80600c <scr_up>
     if(scan1==0x50)
-  80641a:	80 7d ff 50          	cmp    BYTE PTR [rbp-0x1],0x50
-  80641e:	75 0a                	jne    80642a <key_proc+0x93>
+  80643a:	80 7d ff 50          	cmp    BYTE PTR [rbp-0x1],0x50
+  80643e:	75 0a                	jne    80644a <key_proc+0x93>
         scr_down();
-  806420:	b8 00 00 00 00       	mov    eax,0x0
-  806425:	e8 53 fc ff ff       	call   80607d <scr_down>
+  806440:	b8 00 00 00 00       	mov    eax,0x0
+  806445:	e8 53 fc ff ff       	call   80609d <scr_down>
     switch (scan1)
-  80642a:	0f b6 45 ff          	movzx  eax,BYTE PTR [rbp-0x1]
-  80642e:	3d b6 00 00 00       	cmp    eax,0xb6
-  806433:	74 41                	je     806476 <key_proc+0xdf>
-  806435:	3d b6 00 00 00       	cmp    eax,0xb6
-  80643a:	7f 5e                	jg     80649a <key_proc+0x103>
-  80643c:	3d aa 00 00 00       	cmp    eax,0xaa
-  806441:	74 33                	je     806476 <key_proc+0xdf>
-  806443:	3d aa 00 00 00       	cmp    eax,0xaa
-  806448:	7f 50                	jg     80649a <key_proc+0x103>
-  80644a:	3d 9d 00 00 00       	cmp    eax,0x9d
-  80644f:	74 31                	je     806482 <key_proc+0xeb>
-  806451:	3d 9d 00 00 00       	cmp    eax,0x9d
-  806456:	7f 42                	jg     80649a <key_proc+0x103>
-  806458:	83 f8 3a             	cmp    eax,0x3a
-  80645b:	74 31                	je     80648e <key_proc+0xf7>
-  80645d:	83 f8 3a             	cmp    eax,0x3a
-  806460:	7f 38                	jg     80649a <key_proc+0x103>
-  806462:	83 f8 36             	cmp    eax,0x36
-  806465:	74 0f                	je     806476 <key_proc+0xdf>
-  806467:	83 f8 36             	cmp    eax,0x36
-  80646a:	7f 2e                	jg     80649a <key_proc+0x103>
-  80646c:	83 f8 1d             	cmp    eax,0x1d
-  80646f:	74 11                	je     806482 <key_proc+0xeb>
-  806471:	83 f8 2a             	cmp    eax,0x2a
-  806474:	75 24                	jne    80649a <key_proc+0x103>
+  80644a:	0f b6 45 ff          	movzx  eax,BYTE PTR [rbp-0x1]
+  80644e:	3d b6 00 00 00       	cmp    eax,0xb6
+  806453:	74 41                	je     806496 <key_proc+0xdf>
+  806455:	3d b6 00 00 00       	cmp    eax,0xb6
+  80645a:	7f 5e                	jg     8064ba <key_proc+0x103>
+  80645c:	3d aa 00 00 00       	cmp    eax,0xaa
+  806461:	74 33                	je     806496 <key_proc+0xdf>
+  806463:	3d aa 00 00 00       	cmp    eax,0xaa
+  806468:	7f 50                	jg     8064ba <key_proc+0x103>
+  80646a:	3d 9d 00 00 00       	cmp    eax,0x9d
+  80646f:	74 31                	je     8064a2 <key_proc+0xeb>
+  806471:	3d 9d 00 00 00       	cmp    eax,0x9d
+  806476:	7f 42                	jg     8064ba <key_proc+0x103>
+  806478:	83 f8 3a             	cmp    eax,0x3a
+  80647b:	74 31                	je     8064ae <key_proc+0xf7>
+  80647d:	83 f8 3a             	cmp    eax,0x3a
+  806480:	7f 38                	jg     8064ba <key_proc+0x103>
+  806482:	83 f8 36             	cmp    eax,0x36
+  806485:	74 0f                	je     806496 <key_proc+0xdf>
+  806487:	83 f8 36             	cmp    eax,0x36
+  80648a:	7f 2e                	jg     8064ba <key_proc+0x103>
+  80648c:	83 f8 1d             	cmp    eax,0x1d
+  80648f:	74 11                	je     8064a2 <key_proc+0xeb>
+  806491:	83 f8 2a             	cmp    eax,0x2a
+  806494:	75 24                	jne    8064ba <key_proc+0x103>
     {
         case 0x36:
         case 0x2a:
         case 0xaa:
         case 0xb6:
             shift();
-  806476:	b8 00 00 00 00       	mov    eax,0x0
-  80647b:	e8 b0 fd ff ff       	call   806230 <shift>
+  806496:	b8 00 00 00 00       	mov    eax,0x0
+  80649b:	e8 b0 fd ff ff       	call   806250 <shift>
             break;
-  806480:	eb 19                	jmp    80649b <key_proc+0x104>
+  8064a0:	eb 19                	jmp    8064bb <key_proc+0x104>
         case 0x1d:
         case 0x9d:
             ctrl();
-  806482:	b8 00 00 00 00       	mov    eax,0x0
-  806487:	e8 c1 fd ff ff       	call   80624d <ctrl>
+  8064a2:	b8 00 00 00 00       	mov    eax,0x0
+  8064a7:	e8 c1 fd ff ff       	call   80626d <ctrl>
             break;
-  80648c:	eb 0d                	jmp    80649b <key_proc+0x104>
+  8064ac:	eb 0d                	jmp    8064bb <key_proc+0x104>
         case 0x3a:
             capslock();
-  80648e:	b8 00 00 00 00       	mov    eax,0x0
-  806493:	e8 d2 fd ff ff       	call   80626a <capslock>
+  8064ae:	b8 00 00 00 00       	mov    eax,0x0
+  8064b3:	e8 d2 fd ff ff       	call   80628a <capslock>
             break;
-  806498:	eb 01                	jmp    80649b <key_proc+0x104>
+  8064b8:	eb 01                	jmp    8064bb <key_proc+0x104>
         default:
             break;
-  80649a:	90                   	nop
+  8064ba:	90                   	nop
 //        //logf("%x\n",stdin.w_ptr);
 //        //print_stdin();
 //        //printchar(ch);
 //        //flush_screen(0);*/
 //    }
     eoi();
-  80649b:	b8 00 00 00 00       	mov    eax,0x0
-  8064a0:	e8 59 ea ff ff       	call   804efe <eoi>
+  8064bb:	b8 00 00 00 00       	mov    eax,0x0
+  8064c0:	e8 59 ea ff ff       	call   804f1e <eoi>
     asm volatile("leave \r\n iretq");
-  8064a5:	c9                   	leave  
-  8064a6:	48 cf                	iretq  
+  8064c5:	c9                   	leave  
+  8064c6:	48 cf                	iretq  
 }
-  8064a8:	90                   	nop
-  8064a9:	c9                   	leave  
-  8064aa:	c3                   	ret    
+  8064c8:	90                   	nop
+  8064c9:	c9                   	leave  
+  8064ca:	c3                   	ret    
 
-00000000008064ab <sys_getkbc>:
+00000000008064cb <sys_getkbc>:
 
 char sys_getkbc()
 {
-  8064ab:	f3 0f 1e fa          	endbr64 
-  8064af:	55                   	push   rbp
-  8064b0:	48 89 e5             	mov    rbp,rsp
+  8064cb:	f3 0f 1e fa          	endbr64 
+  8064cf:	55                   	push   rbp
+  8064d0:	48 89 e5             	mov    rbp,rsp
     if(key_bufq.tail==key_bufq.head)return -1;
-  8064b3:	8b 15 13 40 00 00    	mov    edx,DWORD PTR [rip+0x4013]        # 80a4cc <key_bufq+0xc>
-  8064b9:	8b 05 09 40 00 00    	mov    eax,DWORD PTR [rip+0x4009]        # 80a4c8 <key_bufq+0x8>
-  8064bf:	39 c2                	cmp    edx,eax
-  8064c1:	75 07                	jne    8064ca <sys_getkbc+0x1f>
-  8064c3:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  8064c8:	eb 30                	jmp    8064fa <sys_getkbc+0x4f>
+  8064d3:	8b 15 f3 3f 00 00    	mov    edx,DWORD PTR [rip+0x3ff3]        # 80a4cc <key_bufq+0xc>
+  8064d9:	8b 05 e9 3f 00 00    	mov    eax,DWORD PTR [rip+0x3fe9]        # 80a4c8 <key_bufq+0x8>
+  8064df:	39 c2                	cmp    edx,eax
+  8064e1:	75 07                	jne    8064ea <sys_getkbc+0x1f>
+  8064e3:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  8064e8:	eb 30                	jmp    80651a <sys_getkbc+0x4f>
     char c=key_buf[key_bufq.tail];
-  8064ca:	8b 05 fc 3f 00 00    	mov    eax,DWORD PTR [rip+0x3ffc]        # 80a4cc <key_bufq+0xc>
-  8064d0:	48 98                	cdqe   
-  8064d2:	0f b6 80 a0 75 42 00 	movzx  eax,BYTE PTR [rax+0x4275a0]
-  8064d9:	88 45 ff             	mov    BYTE PTR [rbp-0x1],al
+  8064ea:	8b 05 dc 3f 00 00    	mov    eax,DWORD PTR [rip+0x3fdc]        # 80a4cc <key_bufq+0xc>
+  8064f0:	48 98                	cdqe   
+  8064f2:	0f b6 80 a0 75 42 00 	movzx  eax,BYTE PTR [rax+0x4275a0]
+  8064f9:	88 45 ff             	mov    BYTE PTR [rbp-0x1],al
     QTAIL(key_bufq)=(QTAIL(key_bufq)+1)%QSIZE(key_bufq);
-  8064dc:	8b 05 ea 3f 00 00    	mov    eax,DWORD PTR [rip+0x3fea]        # 80a4cc <key_bufq+0xc>
-  8064e2:	83 c0 01             	add    eax,0x1
-  8064e5:	8b 0d e5 3f 00 00    	mov    ecx,DWORD PTR [rip+0x3fe5]        # 80a4d0 <key_bufq+0x10>
-  8064eb:	99                   	cdq    
-  8064ec:	f7 f9                	idiv   ecx
-  8064ee:	89 d0                	mov    eax,edx
-  8064f0:	89 05 d6 3f 00 00    	mov    DWORD PTR [rip+0x3fd6],eax        # 80a4cc <key_bufq+0xc>
+  8064fc:	8b 05 ca 3f 00 00    	mov    eax,DWORD PTR [rip+0x3fca]        # 80a4cc <key_bufq+0xc>
+  806502:	83 c0 01             	add    eax,0x1
+  806505:	8b 0d c5 3f 00 00    	mov    ecx,DWORD PTR [rip+0x3fc5]        # 80a4d0 <key_bufq+0x10>
+  80650b:	99                   	cdq    
+  80650c:	f7 f9                	idiv   ecx
+  80650e:	89 d0                	mov    eax,edx
+  806510:	89 05 b6 3f 00 00    	mov    DWORD PTR [rip+0x3fb6],eax        # 80a4cc <key_bufq+0xc>
     return c;
-  8064f6:	0f b6 45 ff          	movzx  eax,BYTE PTR [rbp-0x1]
-  8064fa:	5d                   	pop    rbp
-  8064fb:	c3                   	ret    
+  806516:	0f b6 45 ff          	movzx  eax,BYTE PTR [rbp-0x1]
+  80651a:	5d                   	pop    rbp
+  80651b:	c3                   	ret    
 
-00000000008064fc <init_disk>:
+000000000080651c <init_disk>:
         .read=async_read_disk,
         .write=async_write_disk
 };
 int disks[4];//四块硬盘的dev号
 int init_disk()
 {
-  8064fc:	f3 0f 1e fa          	endbr64 
-  806500:	55                   	push   rbp
-  806501:	48 89 e5             	mov    rbp,rsp
+  80651c:	f3 0f 1e fa          	endbr64 
+  806520:	55                   	push   rbp
+  806521:	48 89 e5             	mov    rbp,rsp
     //disk_devi= reg_device(&dev_disk);
     //disk_drvi= reg_driver(&drv_disk);
     //dev_disk.drv=&drv_disk;
     hd_iterate();
-  806504:	b8 00 00 00 00       	mov    eax,0x0
-  806509:	e8 8d 09 00 00       	call   806e9b <hd_iterate>
+  806524:	b8 00 00 00 00       	mov    eax,0x0
+  806529:	e8 8d 09 00 00       	call   806ebb <hd_iterate>
     return 0;
-  80650e:	b8 00 00 00 00       	mov    eax,0x0
+  80652e:	b8 00 00 00 00       	mov    eax,0x0
 }
-  806513:	5d                   	pop    rbp
-  806514:	c3                   	ret    
+  806533:	5d                   	pop    rbp
+  806534:	c3                   	ret    
 
-0000000000806515 <disk_int_handler_c>:
+0000000000806535 <disk_int_handler_c>:
 
 int disk_int_handler_c()
 {
-  806515:	f3 0f 1e fa          	endbr64 
-  806519:	55                   	push   rbp
-  80651a:	48 89 e5             	mov    rbp,rsp
-  80651d:	48 83 ec 20          	sub    rsp,0x20
+  806535:	f3 0f 1e fa          	endbr64 
+  806539:	55                   	push   rbp
+  80653a:	48 89 e5             	mov    rbp,rsp
+  80653d:	48 83 ec 20          	sub    rsp,0x20
     if(running_req==NULL)
-  806521:	48 8b 05 98 3f c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23f98]        # 42a4c0 <running_req>
-  806528:	48 85 c0             	test   rax,rax
-  80652b:	75 0a                	jne    806537 <disk_int_handler_c+0x22>
+  806541:	48 8b 05 78 3f c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23f78]        # 42a4c0 <running_req>
+  806548:	48 85 c0             	test   rax,rax
+  80654b:	75 0a                	jne    806557 <disk_int_handler_c+0x22>
     {
         //printf("err:null running dreq\n");
         return 1;//同步读写硬盘
-  80652d:	b8 01 00 00 00       	mov    eax,0x1
-  806532:	e9 a3 01 00 00       	jmp    8066da <disk_int_handler_c+0x1c5>
+  80654d:	b8 01 00 00 00       	mov    eax,0x1
+  806552:	e9 a3 01 00 00       	jmp    8066fa <disk_int_handler_c+0x1c5>
     }
     short *p=running_req->buf;
-  806537:	48 8b 05 82 3f c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23f82]        # 42a4c0 <running_req>
-  80653e:	48 8b 40 10          	mov    rax,QWORD PTR [rax+0x10]
-  806542:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
+  806557:	48 8b 05 62 3f c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23f62]        # 42a4c0 <running_req>
+  80655e:	48 8b 40 10          	mov    rax,QWORD PTR [rax+0x10]
+  806562:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
     int port=PORT_DISK_MAJOR;
-  806546:	c7 45 f4 f0 01 00 00 	mov    DWORD PTR [rbp-0xc],0x1f0
+  806566:	c7 45 f4 f0 01 00 00 	mov    DWORD PTR [rbp-0xc],0x1f0
     if(running_req->disk==DISK_SLAVE_MAJOR||\
-  80654d:	48 8b 05 6c 3f c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23f6c]        # 42a4c0 <running_req>
-  806554:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
-  806557:	83 f8 02             	cmp    eax,0x2
-  80655a:	74 0f                	je     80656b <disk_int_handler_c+0x56>
+  80656d:	48 8b 05 4c 3f c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23f4c]        # 42a4c0 <running_req>
+  806574:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
+  806577:	83 f8 02             	cmp    eax,0x2
+  80657a:	74 0f                	je     80658b <disk_int_handler_c+0x56>
     running_req->disk==DISK_SLAVE_SLAVE)
-  80655c:	48 8b 05 5d 3f c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23f5d]        # 42a4c0 <running_req>
-  806563:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
+  80657c:	48 8b 05 3d 3f c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23f3d]        # 42a4c0 <running_req>
+  806583:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
     if(running_req->disk==DISK_SLAVE_MAJOR||\
-  806566:	83 f8 03             	cmp    eax,0x3
-  806569:	75 07                	jne    806572 <disk_int_handler_c+0x5d>
+  806586:	83 f8 03             	cmp    eax,0x3
+  806589:	75 07                	jne    806592 <disk_int_handler_c+0x5d>
         port=PORT_DISK_SLAVE;
-  80656b:	c7 45 f4 70 01 00 00 	mov    DWORD PTR [rbp-0xc],0x170
+  80658b:	c7 45 f4 70 01 00 00 	mov    DWORD PTR [rbp-0xc],0x170
     if(running_req->func==DISKREQ_READ)
-  806572:	48 8b 05 47 3f c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23f47]        # 42a4c0 <running_req>
-  806579:	8b 00                	mov    eax,DWORD PTR [rax]
-  80657b:	85 c0                	test   eax,eax
-  80657d:	75 42                	jne    8065c1 <disk_int_handler_c+0xac>
+  806592:	48 8b 05 27 3f c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23f27]        # 42a4c0 <running_req>
+  806599:	8b 00                	mov    eax,DWORD PTR [rax]
+  80659b:	85 c0                	test   eax,eax
+  80659d:	75 42                	jne    8065e1 <disk_int_handler_c+0xac>
     {
         ////printf("sys_read dist:%x\n",p);
         //读取
         for(int i=0;i<running_req->sec_n*256;i++)
-  80657f:	c7 45 f0 00 00 00 00 	mov    DWORD PTR [rbp-0x10],0x0
-  806586:	eb 22                	jmp    8065aa <disk_int_handler_c+0x95>
+  80659f:	c7 45 f0 00 00 00 00 	mov    DWORD PTR [rbp-0x10],0x0
+  8065a6:	eb 22                	jmp    8065ca <disk_int_handler_c+0x95>
         {
             *p++=inw(port);
-  806588:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
-  80658b:	0f b7 c0             	movzx  eax,ax
-  80658e:	89 c7                	mov    edi,eax
-  806590:	e8 5e e9 ff ff       	call   804ef3 <inw>
-  806595:	89 c2                	mov    edx,eax
-  806597:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  80659b:	48 8d 48 02          	lea    rcx,[rax+0x2]
-  80659f:	48 89 4d f8          	mov    QWORD PTR [rbp-0x8],rcx
-  8065a3:	66 89 10             	mov    WORD PTR [rax],dx
+  8065a8:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
+  8065ab:	0f b7 c0             	movzx  eax,ax
+  8065ae:	89 c7                	mov    edi,eax
+  8065b0:	e8 5e e9 ff ff       	call   804f13 <inw>
+  8065b5:	89 c2                	mov    edx,eax
+  8065b7:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  8065bb:	48 8d 48 02          	lea    rcx,[rax+0x2]
+  8065bf:	48 89 4d f8          	mov    QWORD PTR [rbp-0x8],rcx
+  8065c3:	66 89 10             	mov    WORD PTR [rax],dx
         for(int i=0;i<running_req->sec_n*256;i++)
-  8065a6:	83 45 f0 01          	add    DWORD PTR [rbp-0x10],0x1
-  8065aa:	48 8b 05 0f 3f c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23f0f]        # 42a4c0 <running_req>
-  8065b1:	8b 40 0c             	mov    eax,DWORD PTR [rax+0xc]
-  8065b4:	c1 e0 08             	shl    eax,0x8
-  8065b7:	39 45 f0             	cmp    DWORD PTR [rbp-0x10],eax
-  8065ba:	7c cc                	jl     806588 <disk_int_handler_c+0x73>
-  8065bc:	e9 ca 00 00 00       	jmp    80668b <disk_int_handler_c+0x176>
+  8065c6:	83 45 f0 01          	add    DWORD PTR [rbp-0x10],0x1
+  8065ca:	48 8b 05 ef 3e c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23eef]        # 42a4c0 <running_req>
+  8065d1:	8b 40 0c             	mov    eax,DWORD PTR [rax+0xc]
+  8065d4:	c1 e0 08             	shl    eax,0x8
+  8065d7:	39 45 f0             	cmp    DWORD PTR [rbp-0x10],eax
+  8065da:	7c cc                	jl     8065a8 <disk_int_handler_c+0x73>
+  8065dc:	e9 ca 00 00 00       	jmp    8066ab <disk_int_handler_c+0x176>
         }
     }else if(running_req->func==DISKREQ_WRITE)
-  8065c1:	48 8b 05 f8 3e c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23ef8]        # 42a4c0 <running_req>
-  8065c8:	8b 00                	mov    eax,DWORD PTR [rax]
-  8065ca:	83 f8 01             	cmp    eax,0x1
-  8065cd:	75 42                	jne    806611 <disk_int_handler_c+0xfc>
+  8065e1:	48 8b 05 d8 3e c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23ed8]        # 42a4c0 <running_req>
+  8065e8:	8b 00                	mov    eax,DWORD PTR [rax]
+  8065ea:	83 f8 01             	cmp    eax,0x1
+  8065ed:	75 42                	jne    806631 <disk_int_handler_c+0xfc>
     {
         for(int i=0;i<running_req->sec_n*256;i++)
-  8065cf:	c7 45 ec 00 00 00 00 	mov    DWORD PTR [rbp-0x14],0x0
-  8065d6:	eb 25                	jmp    8065fd <disk_int_handler_c+0xe8>
+  8065ef:	c7 45 ec 00 00 00 00 	mov    DWORD PTR [rbp-0x14],0x0
+  8065f6:	eb 25                	jmp    80661d <disk_int_handler_c+0xe8>
             outw(port,*p++);
-  8065d8:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  8065dc:	48 8d 50 02          	lea    rdx,[rax+0x2]
-  8065e0:	48 89 55 f8          	mov    QWORD PTR [rbp-0x8],rdx
-  8065e4:	0f b7 00             	movzx  eax,WORD PTR [rax]
-  8065e7:	0f b7 d0             	movzx  edx,ax
-  8065ea:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
-  8065ed:	0f b7 c0             	movzx  eax,ax
-  8065f0:	89 d6                	mov    esi,edx
-  8065f2:	89 c7                	mov    edi,eax
-  8065f4:	e8 e4 e8 ff ff       	call   804edd <outw>
+  8065f8:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  8065fc:	48 8d 50 02          	lea    rdx,[rax+0x2]
+  806600:	48 89 55 f8          	mov    QWORD PTR [rbp-0x8],rdx
+  806604:	0f b7 00             	movzx  eax,WORD PTR [rax]
+  806607:	0f b7 d0             	movzx  edx,ax
+  80660a:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
+  80660d:	0f b7 c0             	movzx  eax,ax
+  806610:	89 d6                	mov    esi,edx
+  806612:	89 c7                	mov    edi,eax
+  806614:	e8 e4 e8 ff ff       	call   804efd <outw>
         for(int i=0;i<running_req->sec_n*256;i++)
-  8065f9:	83 45 ec 01          	add    DWORD PTR [rbp-0x14],0x1
-  8065fd:	48 8b 05 bc 3e c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23ebc]        # 42a4c0 <running_req>
-  806604:	8b 40 0c             	mov    eax,DWORD PTR [rax+0xc]
-  806607:	c1 e0 08             	shl    eax,0x8
-  80660a:	39 45 ec             	cmp    DWORD PTR [rbp-0x14],eax
-  80660d:	7c c9                	jl     8065d8 <disk_int_handler_c+0xc3>
-  80660f:	eb 7a                	jmp    80668b <disk_int_handler_c+0x176>
+  806619:	83 45 ec 01          	add    DWORD PTR [rbp-0x14],0x1
+  80661d:	48 8b 05 9c 3e c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23e9c]        # 42a4c0 <running_req>
+  806624:	8b 40 0c             	mov    eax,DWORD PTR [rax+0xc]
+  806627:	c1 e0 08             	shl    eax,0x8
+  80662a:	39 45 ec             	cmp    DWORD PTR [rbp-0x14],eax
+  80662d:	7c c9                	jl     8065f8 <disk_int_handler_c+0xc3>
+  80662f:	eb 7a                	jmp    8066ab <disk_int_handler_c+0x176>
     }else if(running_req->func==DISKREQ_CHECK)
-  806611:	48 8b 05 a8 3e c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23ea8]        # 42a4c0 <running_req>
-  806618:	8b 00                	mov    eax,DWORD PTR [rax]
-  80661a:	83 f8 02             	cmp    eax,0x2
-  80661d:	75 34                	jne    806653 <disk_int_handler_c+0x13e>
+  806631:	48 8b 05 88 3e c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23e88]        # 42a4c0 <running_req>
+  806638:	8b 00                	mov    eax,DWORD PTR [rax]
+  80663a:	83 f8 02             	cmp    eax,0x2
+  80663d:	75 34                	jne    806673 <disk_int_handler_c+0x13e>
     {
         char stat=inb(port+7);
-  80661f:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
-  806622:	83 c0 07             	add    eax,0x7
-  806625:	0f b6 c0             	movzx  eax,al
-  806628:	89 c7                	mov    edi,eax
-  80662a:	e8 ba e8 ff ff       	call   804ee9 <inb>
-  80662f:	88 45 e7             	mov    BYTE PTR [rbp-0x19],al
+  80663f:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
+  806642:	83 c0 07             	add    eax,0x7
+  806645:	0f b6 c0             	movzx  eax,al
+  806648:	89 c7                	mov    edi,eax
+  80664a:	e8 ba e8 ff ff       	call   804f09 <inb>
+  80664f:	88 45 e7             	mov    BYTE PTR [rbp-0x19],al
         short dat=inw(port);
-  806632:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
-  806635:	0f b7 c0             	movzx  eax,ax
-  806638:	89 c7                	mov    edi,eax
-  80663a:	e8 b4 e8 ff ff       	call   804ef3 <inw>
-  80663f:	66 89 45 e4          	mov    WORD PTR [rbp-0x1c],ax
+  806652:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
+  806655:	0f b7 c0             	movzx  eax,ax
+  806658:	89 c7                	mov    edi,eax
+  80665a:	e8 b4 e8 ff ff       	call   804f13 <inw>
+  80665f:	66 89 45 e4          	mov    WORD PTR [rbp-0x1c],ax
         if(1)
         {
             running_req->result=DISK_CHK_OK;
-  806643:	48 8b 05 76 3e c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23e76]        # 42a4c0 <running_req>
-  80664a:	c7 40 20 01 00 00 00 	mov    DWORD PTR [rax+0x20],0x1
-  806651:	eb 38                	jmp    80668b <disk_int_handler_c+0x176>
+  806663:	48 8b 05 56 3e c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23e56]        # 42a4c0 <running_req>
+  80666a:	c7 40 20 01 00 00 00 	mov    DWORD PTR [rax+0x20],0x1
+  806671:	eb 38                	jmp    8066ab <disk_int_handler_c+0x176>
             char err=inb(port+1);//错误原因
             printf("checking disk err:%x\nresetting hd\n",err);
             running_req->result=DISK_CHK_ERR;
             request(running_req->disk,DISKREQ_RESET,0,0,0);
         }
     }else if(running_req->func==DISKREQ_RESET)
-  806653:	48 8b 05 66 3e c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23e66]        # 42a4c0 <running_req>
-  80665a:	8b 00                	mov    eax,DWORD PTR [rax]
-  80665c:	83 f8 03             	cmp    eax,0x3
-  80665f:	75 2a                	jne    80668b <disk_int_handler_c+0x176>
+  806673:	48 8b 05 46 3e c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23e46]        # 42a4c0 <running_req>
+  80667a:	8b 00                	mov    eax,DWORD PTR [rax]
+  80667c:	83 f8 03             	cmp    eax,0x3
+  80667f:	75 2a                	jne    8066ab <disk_int_handler_c+0x176>
     {
         int stat=inb(port+7);
-  806661:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
-  806664:	83 c0 07             	add    eax,0x7
-  806667:	0f b6 c0             	movzx  eax,al
-  80666a:	89 c7                	mov    edi,eax
-  80666c:	e8 78 e8 ff ff       	call   804ee9 <inb>
-  806671:	0f b6 c0             	movzx  eax,al
-  806674:	89 45 e8             	mov    DWORD PTR [rbp-0x18],eax
+  806681:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
+  806684:	83 c0 07             	add    eax,0x7
+  806687:	0f b6 c0             	movzx  eax,al
+  80668a:	89 c7                	mov    edi,eax
+  80668c:	e8 78 e8 ff ff       	call   804f09 <inb>
+  806691:	0f b6 c0             	movzx  eax,al
+  806694:	89 45 e8             	mov    DWORD PTR [rbp-0x18],eax
         printf("reset disk done.\nstat now:%x\n",stat);
-  806677:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
-  80667a:	89 c6                	mov    esi,eax
-  80667c:	bf 16 23 81 00       	mov    edi,0x812316
-  806681:	b8 00 00 00 00       	mov    eax,0x0
-  806686:	e8 4e a6 ff ff       	call   800cd9 <printf>
+  806697:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  80669a:	89 c6                	mov    esi,eax
+  80669c:	bf 16 23 81 00       	mov    edi,0x812316
+  8066a1:	b8 00 00 00 00       	mov    eax,0x0
+  8066a6:	e8 2e a6 ff ff       	call   800cd9 <printf>
     }
     running_req->stat=REQ_STAT_DONE;
-  80668b:	48 8b 05 2e 3e c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23e2e]        # 42a4c0 <running_req>
-  806692:	c7 40 1c 03 00 00 00 	mov    DWORD PTR [rax+0x1c],0x3
+  8066ab:	48 8b 05 0e 3e c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23e0e]        # 42a4c0 <running_req>
+  8066b2:	c7 40 1c 03 00 00 00 	mov    DWORD PTR [rax+0x1c],0x3
     running_req->args->stat=REQ_STAT_EMPTY;
-  806699:	48 8b 05 20 3e c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23e20]        # 42a4c0 <running_req>
-  8066a0:	48 8b 40 28          	mov    rax,QWORD PTR [rax+0x28]
-  8066a4:	c7 80 ac 00 00 00 00 	mov    DWORD PTR [rax+0xac],0x0
-  8066ab:	00 00 00 
+  8066b9:	48 8b 05 00 3e c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23e00]        # 42a4c0 <running_req>
+  8066c0:	48 8b 40 28          	mov    rax,QWORD PTR [rax+0x28]
+  8066c4:	c7 80 ac 00 00 00 00 	mov    DWORD PTR [rax+0xac],0x0
+  8066cb:	00 00 00 
     running_devman_req->stat=REQ_STAT_DONE;
-  8066ae:	48 8b 05 13 3e c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23e13]        # 42a4c8 <running_devman_req>
-  8066b5:	c7 80 ac 00 00 00 03 	mov    DWORD PTR [rax+0xac],0x3
-  8066bc:	00 00 00 
+  8066ce:	48 8b 05 f3 3d c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23df3]        # 42a4c8 <running_devman_req>
+  8066d5:	c7 80 ac 00 00 00 03 	mov    DWORD PTR [rax+0xac],0x3
+  8066dc:	00 00 00 
     running_devman_req=NULL;
-  8066bf:	48 c7 05 fe 3d c2 ff 	mov    QWORD PTR [rip+0xffffffffffc23dfe],0x0        # 42a4c8 <running_devman_req>
-  8066c6:	00 00 00 00 
+  8066df:	48 c7 05 de 3d c2 ff 	mov    QWORD PTR [rip+0xffffffffffc23dde],0x0        # 42a4c8 <running_devman_req>
+  8066e6:	00 00 00 00 
     //set_proc_stat(running_req->pid,READY);
     running_req=NULL;
-  8066ca:	48 c7 05 eb 3d c2 ff 	mov    QWORD PTR [rip+0xffffffffffc23deb],0x0        # 42a4c0 <running_req>
-  8066d1:	00 00 00 00 
+  8066ea:	48 c7 05 cb 3d c2 ff 	mov    QWORD PTR [rip+0xffffffffffc23dcb],0x0        # 42a4c0 <running_req>
+  8066f1:	00 00 00 00 
     return 0;
-  8066d5:	b8 00 00 00 00       	mov    eax,0x0
+  8066f5:	b8 00 00 00 00       	mov    eax,0x0
 }
-  8066da:	c9                   	leave  
-  8066db:	c3                   	ret    
+  8066fa:	c9                   	leave  
+  8066fb:	c3                   	ret    
 
-00000000008066dc <check_dreq_stat>:
+00000000008066fc <check_dreq_stat>:
 int check_dreq_stat(int req_id)
 {
-  8066dc:	f3 0f 1e fa          	endbr64 
-  8066e0:	55                   	push   rbp
-  8066e1:	48 89 e5             	mov    rbp,rsp
-  8066e4:	89 7d fc             	mov    DWORD PTR [rbp-0x4],edi
+  8066fc:	f3 0f 1e fa          	endbr64 
+  806700:	55                   	push   rbp
+  806701:	48 89 e5             	mov    rbp,rsp
+  806704:	89 7d fc             	mov    DWORD PTR [rbp-0x4],edi
     return disk_reqs[req_id].stat;
-  8066e7:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8066ea:	48 63 d0             	movsxd rdx,eax
-  8066ed:	48 89 d0             	mov    rax,rdx
-  8066f0:	48 01 c0             	add    rax,rax
-  8066f3:	48 01 d0             	add    rax,rdx
-  8066f6:	48 c1 e0 04          	shl    rax,0x4
-  8066fa:	48 05 dc 77 42 00    	add    rax,0x4277dc
-  806700:	8b 00                	mov    eax,DWORD PTR [rax]
+  806707:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  80670a:	48 63 d0             	movsxd rdx,eax
+  80670d:	48 89 d0             	mov    rax,rdx
+  806710:	48 01 c0             	add    rax,rax
+  806713:	48 01 d0             	add    rax,rdx
+  806716:	48 c1 e0 04          	shl    rax,0x4
+  80671a:	48 05 dc 77 42 00    	add    rax,0x4277dc
+  806720:	8b 00                	mov    eax,DWORD PTR [rax]
 }
-  806702:	5d                   	pop    rbp
-  806703:	c3                   	ret    
+  806722:	5d                   	pop    rbp
+  806723:	c3                   	ret    
 
-0000000000806704 <request>:
+0000000000806724 <request>:
 int request(int disk,int func,int lba,int secn,char *buf){
-  806704:	f3 0f 1e fa          	endbr64 
-  806708:	55                   	push   rbp
-  806709:	48 89 e5             	mov    rbp,rsp
-  80670c:	89 7d ec             	mov    DWORD PTR [rbp-0x14],edi
-  80670f:	89 75 e8             	mov    DWORD PTR [rbp-0x18],esi
-  806712:	89 55 e4             	mov    DWORD PTR [rbp-0x1c],edx
-  806715:	89 4d e0             	mov    DWORD PTR [rbp-0x20],ecx
-  806718:	4c 89 45 d8          	mov    QWORD PTR [rbp-0x28],r8
+  806724:	f3 0f 1e fa          	endbr64 
+  806728:	55                   	push   rbp
+  806729:	48 89 e5             	mov    rbp,rsp
+  80672c:	89 7d ec             	mov    DWORD PTR [rbp-0x14],edi
+  80672f:	89 75 e8             	mov    DWORD PTR [rbp-0x18],esi
+  806732:	89 55 e4             	mov    DWORD PTR [rbp-0x1c],edx
+  806735:	89 4d e0             	mov    DWORD PTR [rbp-0x20],ecx
+  806738:	4c 89 45 d8          	mov    QWORD PTR [rbp-0x28],r8
     if((tail+1)%MAX_DISK_REQUEST_COUNT==head)
-  80671c:	8b 05 d2 3d c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc23dd2]        # 42a4f4 <tail>
-  806722:	83 c0 01             	add    eax,0x1
-  806725:	48 63 d0             	movsxd rdx,eax
-  806728:	48 69 d2 89 88 88 88 	imul   rdx,rdx,0xffffffff88888889
-  80672f:	48 c1 ea 20          	shr    rdx,0x20
-  806733:	01 c2                	add    edx,eax
-  806735:	c1 fa 07             	sar    edx,0x7
-  806738:	89 c1                	mov    ecx,eax
-  80673a:	c1 f9 1f             	sar    ecx,0x1f
-  80673d:	29 ca                	sub    edx,ecx
-  80673f:	69 ca f0 00 00 00    	imul   ecx,edx,0xf0
-  806745:	29 c8                	sub    eax,ecx
-  806747:	89 c2                	mov    edx,eax
-  806749:	8b 05 a1 3d c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc23da1]        # 42a4f0 <head>
-  80674f:	39 c2                	cmp    edx,eax
-  806751:	75 0a                	jne    80675d <request+0x59>
+  80673c:	8b 05 b2 3d c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc23db2]        # 42a4f4 <tail>
+  806742:	83 c0 01             	add    eax,0x1
+  806745:	48 63 d0             	movsxd rdx,eax
+  806748:	48 69 d2 89 88 88 88 	imul   rdx,rdx,0xffffffff88888889
+  80674f:	48 c1 ea 20          	shr    rdx,0x20
+  806753:	01 c2                	add    edx,eax
+  806755:	c1 fa 07             	sar    edx,0x7
+  806758:	89 c1                	mov    ecx,eax
+  80675a:	c1 f9 1f             	sar    ecx,0x1f
+  80675d:	29 ca                	sub    edx,ecx
+  80675f:	69 ca f0 00 00 00    	imul   ecx,edx,0xf0
+  806765:	29 c8                	sub    eax,ecx
+  806767:	89 c2                	mov    edx,eax
+  806769:	8b 05 81 3d c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc23d81]        # 42a4f0 <head>
+  80676f:	39 c2                	cmp    edx,eax
+  806771:	75 0a                	jne    80677d <request+0x59>
     {
         return -1;
-  806753:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  806758:	e9 0d 01 00 00       	jmp    80686a <request+0x166>
+  806773:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  806778:	e9 0d 01 00 00       	jmp    80688a <request+0x166>
     }
     disk_reqs[tail].disk=disk;
-  80675d:	8b 05 91 3d c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc23d91]        # 42a4f4 <tail>
-  806763:	48 63 d0             	movsxd rdx,eax
-  806766:	48 89 d0             	mov    rax,rdx
-  806769:	48 01 c0             	add    rax,rax
-  80676c:	48 01 d0             	add    rax,rdx
-  80676f:	48 c1 e0 04          	shl    rax,0x4
-  806773:	48 8d 90 c4 77 42 00 	lea    rdx,[rax+0x4277c4]
-  80677a:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
-  80677d:	89 02                	mov    DWORD PTR [rdx],eax
+  80677d:	8b 05 71 3d c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc23d71]        # 42a4f4 <tail>
+  806783:	48 63 d0             	movsxd rdx,eax
+  806786:	48 89 d0             	mov    rax,rdx
+  806789:	48 01 c0             	add    rax,rax
+  80678c:	48 01 d0             	add    rax,rdx
+  80678f:	48 c1 e0 04          	shl    rax,0x4
+  806793:	48 8d 90 c4 77 42 00 	lea    rdx,[rax+0x4277c4]
+  80679a:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+  80679d:	89 02                	mov    DWORD PTR [rdx],eax
     disk_reqs[tail].func=func;
-  80677f:	8b 05 6f 3d c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc23d6f]        # 42a4f4 <tail>
-  806785:	48 63 d0             	movsxd rdx,eax
-  806788:	48 89 d0             	mov    rax,rdx
-  80678b:	48 01 c0             	add    rax,rax
-  80678e:	48 01 d0             	add    rax,rdx
-  806791:	48 c1 e0 04          	shl    rax,0x4
-  806795:	48 8d 90 c0 77 42 00 	lea    rdx,[rax+0x4277c0]
-  80679c:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
-  80679f:	89 02                	mov    DWORD PTR [rdx],eax
+  80679f:	8b 05 4f 3d c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc23d4f]        # 42a4f4 <tail>
+  8067a5:	48 63 d0             	movsxd rdx,eax
+  8067a8:	48 89 d0             	mov    rax,rdx
+  8067ab:	48 01 c0             	add    rax,rax
+  8067ae:	48 01 d0             	add    rax,rdx
+  8067b1:	48 c1 e0 04          	shl    rax,0x4
+  8067b5:	48 8d 90 c0 77 42 00 	lea    rdx,[rax+0x4277c0]
+  8067bc:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  8067bf:	89 02                	mov    DWORD PTR [rdx],eax
     disk_reqs[tail].lba=lba;
-  8067a1:	8b 05 4d 3d c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc23d4d]        # 42a4f4 <tail>
-  8067a7:	48 63 d0             	movsxd rdx,eax
-  8067aa:	48 89 d0             	mov    rax,rdx
-  8067ad:	48 01 c0             	add    rax,rax
-  8067b0:	48 01 d0             	add    rax,rdx
-  8067b3:	48 c1 e0 04          	shl    rax,0x4
-  8067b7:	48 8d 90 c8 77 42 00 	lea    rdx,[rax+0x4277c8]
-  8067be:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
-  8067c1:	89 02                	mov    DWORD PTR [rdx],eax
+  8067c1:	8b 05 2d 3d c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc23d2d]        # 42a4f4 <tail>
+  8067c7:	48 63 d0             	movsxd rdx,eax
+  8067ca:	48 89 d0             	mov    rax,rdx
+  8067cd:	48 01 c0             	add    rax,rax
+  8067d0:	48 01 d0             	add    rax,rdx
+  8067d3:	48 c1 e0 04          	shl    rax,0x4
+  8067d7:	48 8d 90 c8 77 42 00 	lea    rdx,[rax+0x4277c8]
+  8067de:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
+  8067e1:	89 02                	mov    DWORD PTR [rdx],eax
     disk_reqs[tail].sec_n=secn;
-  8067c3:	8b 05 2b 3d c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc23d2b]        # 42a4f4 <tail>
-  8067c9:	48 63 d0             	movsxd rdx,eax
-  8067cc:	48 89 d0             	mov    rax,rdx
-  8067cf:	48 01 c0             	add    rax,rax
-  8067d2:	48 01 d0             	add    rax,rdx
-  8067d5:	48 c1 e0 04          	shl    rax,0x4
-  8067d9:	48 8d 90 cc 77 42 00 	lea    rdx,[rax+0x4277cc]
-  8067e0:	8b 45 e0             	mov    eax,DWORD PTR [rbp-0x20]
-  8067e3:	89 02                	mov    DWORD PTR [rdx],eax
+  8067e3:	8b 05 0b 3d c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc23d0b]        # 42a4f4 <tail>
+  8067e9:	48 63 d0             	movsxd rdx,eax
+  8067ec:	48 89 d0             	mov    rax,rdx
+  8067ef:	48 01 c0             	add    rax,rax
+  8067f2:	48 01 d0             	add    rax,rdx
+  8067f5:	48 c1 e0 04          	shl    rax,0x4
+  8067f9:	48 8d 90 cc 77 42 00 	lea    rdx,[rax+0x4277cc]
+  806800:	8b 45 e0             	mov    eax,DWORD PTR [rbp-0x20]
+  806803:	89 02                	mov    DWORD PTR [rdx],eax
     disk_reqs[tail].stat=REQ_STAT_READY;
-  8067e5:	8b 05 09 3d c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc23d09]        # 42a4f4 <tail>
-  8067eb:	48 63 d0             	movsxd rdx,eax
-  8067ee:	48 89 d0             	mov    rax,rdx
-  8067f1:	48 01 c0             	add    rax,rax
-  8067f4:	48 01 d0             	add    rax,rdx
-  8067f7:	48 c1 e0 04          	shl    rax,0x4
-  8067fb:	48 05 dc 77 42 00    	add    rax,0x4277dc
-  806801:	c7 00 01 00 00 00    	mov    DWORD PTR [rax],0x1
+  806805:	8b 05 e9 3c c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc23ce9]        # 42a4f4 <tail>
+  80680b:	48 63 d0             	movsxd rdx,eax
+  80680e:	48 89 d0             	mov    rax,rdx
+  806811:	48 01 c0             	add    rax,rax
+  806814:	48 01 d0             	add    rax,rdx
+  806817:	48 c1 e0 04          	shl    rax,0x4
+  80681b:	48 05 dc 77 42 00    	add    rax,0x4277dc
+  806821:	c7 00 01 00 00 00    	mov    DWORD PTR [rax],0x1
     disk_reqs[tail].buf=buf;
-  806807:	8b 05 e7 3c c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc23ce7]        # 42a4f4 <tail>
-  80680d:	48 63 d0             	movsxd rdx,eax
-  806810:	48 89 d0             	mov    rax,rdx
-  806813:	48 01 c0             	add    rax,rax
-  806816:	48 01 d0             	add    rax,rdx
-  806819:	48 c1 e0 04          	shl    rax,0x4
-  80681d:	48 8d 90 d0 77 42 00 	lea    rdx,[rax+0x4277d0]
-  806824:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
-  806828:	48 89 02             	mov    QWORD PTR [rdx],rax
+  806827:	8b 05 c7 3c c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc23cc7]        # 42a4f4 <tail>
+  80682d:	48 63 d0             	movsxd rdx,eax
+  806830:	48 89 d0             	mov    rax,rdx
+  806833:	48 01 c0             	add    rax,rax
+  806836:	48 01 d0             	add    rax,rdx
+  806839:	48 c1 e0 04          	shl    rax,0x4
+  80683d:	48 8d 90 d0 77 42 00 	lea    rdx,[rax+0x4277d0]
+  806844:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
+  806848:	48 89 02             	mov    QWORD PTR [rdx],rax
     int r=tail;
-  80682b:	8b 05 c3 3c c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc23cc3]        # 42a4f4 <tail>
-  806831:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  80684b:	8b 05 a3 3c c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc23ca3]        # 42a4f4 <tail>
+  806851:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
     tail=(tail+1)%MAX_DISK_REQUEST_COUNT;
-  806834:	8b 05 ba 3c c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc23cba]        # 42a4f4 <tail>
-  80683a:	8d 50 01             	lea    edx,[rax+0x1]
-  80683d:	48 63 c2             	movsxd rax,edx
-  806840:	48 69 c0 89 88 88 88 	imul   rax,rax,0xffffffff88888889
-  806847:	48 c1 e8 20          	shr    rax,0x20
-  80684b:	01 d0                	add    eax,edx
-  80684d:	c1 f8 07             	sar    eax,0x7
-  806850:	89 d1                	mov    ecx,edx
-  806852:	c1 f9 1f             	sar    ecx,0x1f
-  806855:	29 c8                	sub    eax,ecx
-  806857:	69 c8 f0 00 00 00    	imul   ecx,eax,0xf0
-  80685d:	89 d0                	mov    eax,edx
-  80685f:	29 c8                	sub    eax,ecx
-  806861:	89 05 8d 3c c2 ff    	mov    DWORD PTR [rip+0xffffffffffc23c8d],eax        # 42a4f4 <tail>
+  806854:	8b 05 9a 3c c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc23c9a]        # 42a4f4 <tail>
+  80685a:	8d 50 01             	lea    edx,[rax+0x1]
+  80685d:	48 63 c2             	movsxd rax,edx
+  806860:	48 69 c0 89 88 88 88 	imul   rax,rax,0xffffffff88888889
+  806867:	48 c1 e8 20          	shr    rax,0x20
+  80686b:	01 d0                	add    eax,edx
+  80686d:	c1 f8 07             	sar    eax,0x7
+  806870:	89 d1                	mov    ecx,edx
+  806872:	c1 f9 1f             	sar    ecx,0x1f
+  806875:	29 c8                	sub    eax,ecx
+  806877:	69 c8 f0 00 00 00    	imul   ecx,eax,0xf0
+  80687d:	89 d0                	mov    eax,edx
+  80687f:	29 c8                	sub    eax,ecx
+  806881:	89 05 6d 3c c2 ff    	mov    DWORD PTR [rip+0xffffffffffc23c6d],eax        # 42a4f4 <tail>
     return r;
-  806867:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  806887:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
 }
-  80686a:	5d                   	pop    rbp
-  80686b:	c3                   	ret    
+  80688a:	5d                   	pop    rbp
+  80688b:	c3                   	ret    
 
-000000000080686c <execute_request>:
+000000000080688c <execute_request>:
 int execute_request(){
-  80686c:	f3 0f 1e fa          	endbr64 
-  806870:	55                   	push   rbp
-  806871:	48 89 e5             	mov    rbp,rsp
-  806874:	48 83 ec 10          	sub    rsp,0x10
+  80688c:	f3 0f 1e fa          	endbr64 
+  806890:	55                   	push   rbp
+  806891:	48 89 e5             	mov    rbp,rsp
+  806894:	48 83 ec 10          	sub    rsp,0x10
     //查看是否有已经在运行的请求
     if(running_req!=NULL)
-  806878:	48 8b 05 41 3c c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23c41]        # 42a4c0 <running_req>
-  80687f:	48 85 c0             	test   rax,rax
-  806882:	74 6a                	je     8068ee <execute_request+0x82>
+  806898:	48 8b 05 21 3c c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23c21]        # 42a4c0 <running_req>
+  80689f:	48 85 c0             	test   rax,rax
+  8068a2:	74 6a                	je     80690e <execute_request+0x82>
     {
         running_req->time++;
-  806884:	48 8b 05 35 3c c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23c35]        # 42a4c0 <running_req>
-  80688b:	8b 50 24             	mov    edx,DWORD PTR [rax+0x24]
-  80688e:	83 c2 01             	add    edx,0x1
-  806891:	89 50 24             	mov    DWORD PTR [rax+0x24],edx
+  8068a4:	48 8b 05 15 3c c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23c15]        # 42a4c0 <running_req>
+  8068ab:	8b 50 24             	mov    edx,DWORD PTR [rax+0x24]
+  8068ae:	83 c2 01             	add    edx,0x1
+  8068b1:	89 50 24             	mov    DWORD PTR [rax+0x24],edx
         if(running_req->func!=DISKREQ_CHECK)
-  806894:	48 8b 05 25 3c c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23c25]        # 42a4c0 <running_req>
-  80689b:	8b 00                	mov    eax,DWORD PTR [rax]
-  80689d:	83 f8 02             	cmp    eax,0x2
-  8068a0:	74 0a                	je     8068ac <execute_request+0x40>
+  8068b4:	48 8b 05 05 3c c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23c05]        # 42a4c0 <running_req>
+  8068bb:	8b 00                	mov    eax,DWORD PTR [rax]
+  8068bd:	83 f8 02             	cmp    eax,0x2
+  8068c0:	74 0a                	je     8068cc <execute_request+0x40>
             return 2;
-  8068a2:	b8 02 00 00 00       	mov    eax,0x2
-  8068a7:	e9 b4 01 00 00       	jmp    806a60 <execute_request+0x1f4>
+  8068c2:	b8 02 00 00 00       	mov    eax,0x2
+  8068c7:	e9 b4 01 00 00       	jmp    806a80 <execute_request+0x1f4>
         if(running_req->time>MAX_DISK_CHKTIME)
-  8068ac:	48 8b 05 0d 3c c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23c0d]        # 42a4c0 <running_req>
-  8068b3:	8b 40 24             	mov    eax,DWORD PTR [rax+0x24]
-  8068b6:	83 f8 0a             	cmp    eax,0xa
-  8068b9:	7e 29                	jle    8068e4 <execute_request+0x78>
+  8068cc:	48 8b 05 ed 3b c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23bed]        # 42a4c0 <running_req>
+  8068d3:	8b 40 24             	mov    eax,DWORD PTR [rax+0x24]
+  8068d6:	83 f8 0a             	cmp    eax,0xa
+  8068d9:	7e 29                	jle    806904 <execute_request+0x78>
         {
             //检测硬盘超时，视为没有硬盘连接
             running_req->result=DISK_CHK_ERR;
-  8068bb:	48 8b 05 fe 3b c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23bfe]        # 42a4c0 <running_req>
-  8068c2:	c7 40 20 02 00 00 00 	mov    DWORD PTR [rax+0x20],0x2
+  8068db:	48 8b 05 de 3b c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23bde]        # 42a4c0 <running_req>
+  8068e2:	c7 40 20 02 00 00 00 	mov    DWORD PTR [rax+0x20],0x2
             running_req->stat=REQ_STAT_DONE;
-  8068c9:	48 8b 05 f0 3b c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23bf0]        # 42a4c0 <running_req>
-  8068d0:	c7 40 1c 03 00 00 00 	mov    DWORD PTR [rax+0x1c],0x3
+  8068e9:	48 8b 05 d0 3b c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23bd0]        # 42a4c0 <running_req>
+  8068f0:	c7 40 1c 03 00 00 00 	mov    DWORD PTR [rax+0x1c],0x3
             running_req=NULL;
-  8068d7:	48 c7 05 de 3b c2 ff 	mov    QWORD PTR [rip+0xffffffffffc23bde],0x0        # 42a4c0 <running_req>
-  8068de:	00 00 00 00 
-  8068e2:	eb 0a                	jmp    8068ee <execute_request+0x82>
+  8068f7:	48 c7 05 be 3b c2 ff 	mov    QWORD PTR [rip+0xffffffffffc23bbe],0x0        # 42a4c0 <running_req>
+  8068fe:	00 00 00 00 
+  806902:	eb 0a                	jmp    80690e <execute_request+0x82>
         }else
         {
             //未到时间继续等待
             return 2;
-  8068e4:	b8 02 00 00 00       	mov    eax,0x2
-  8068e9:	e9 72 01 00 00       	jmp    806a60 <execute_request+0x1f4>
+  806904:	b8 02 00 00 00       	mov    eax,0x2
+  806909:	e9 72 01 00 00       	jmp    806a80 <execute_request+0x1f4>
         }
     }
     if(head==tail)return 1;//检查是否为空
-  8068ee:	8b 15 fc 3b c2 ff    	mov    edx,DWORD PTR [rip+0xffffffffffc23bfc]        # 42a4f0 <head>
-  8068f4:	8b 05 fa 3b c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc23bfa]        # 42a4f4 <tail>
-  8068fa:	39 c2                	cmp    edx,eax
-  8068fc:	75 0a                	jne    806908 <execute_request+0x9c>
-  8068fe:	b8 01 00 00 00       	mov    eax,0x1
-  806903:	e9 58 01 00 00       	jmp    806a60 <execute_request+0x1f4>
+  80690e:	8b 15 dc 3b c2 ff    	mov    edx,DWORD PTR [rip+0xffffffffffc23bdc]        # 42a4f0 <head>
+  806914:	8b 05 da 3b c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc23bda]        # 42a4f4 <tail>
+  80691a:	39 c2                	cmp    edx,eax
+  80691c:	75 0a                	jne    806928 <execute_request+0x9c>
+  80691e:	b8 01 00 00 00       	mov    eax,0x1
+  806923:	e9 58 01 00 00       	jmp    806a80 <execute_request+0x1f4>
     running_req=&disk_reqs[head];
-  806908:	8b 05 e2 3b c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc23be2]        # 42a4f0 <head>
-  80690e:	48 63 d0             	movsxd rdx,eax
-  806911:	48 89 d0             	mov    rax,rdx
-  806914:	48 01 c0             	add    rax,rax
-  806917:	48 01 d0             	add    rax,rdx
-  80691a:	48 c1 e0 04          	shl    rax,0x4
-  80691e:	48 05 c0 77 42 00    	add    rax,0x4277c0
-  806924:	48 89 05 95 3b c2 ff 	mov    QWORD PTR [rip+0xffffffffffc23b95],rax        # 42a4c0 <running_req>
+  806928:	8b 05 c2 3b c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc23bc2]        # 42a4f0 <head>
+  80692e:	48 63 d0             	movsxd rdx,eax
+  806931:	48 89 d0             	mov    rax,rdx
+  806934:	48 01 c0             	add    rax,rax
+  806937:	48 01 d0             	add    rax,rdx
+  80693a:	48 c1 e0 04          	shl    rax,0x4
+  80693e:	48 05 c0 77 42 00    	add    rax,0x4277c0
+  806944:	48 89 05 75 3b c2 ff 	mov    QWORD PTR [rip+0xffffffffffc23b75],rax        # 42a4c0 <running_req>
     head=(head+1)%MAX_DISK_REQUEST_COUNT;
-  80692b:	8b 05 bf 3b c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc23bbf]        # 42a4f0 <head>
-  806931:	8d 50 01             	lea    edx,[rax+0x1]
-  806934:	48 63 c2             	movsxd rax,edx
-  806937:	48 69 c0 89 88 88 88 	imul   rax,rax,0xffffffff88888889
-  80693e:	48 c1 e8 20          	shr    rax,0x20
-  806942:	01 d0                	add    eax,edx
-  806944:	c1 f8 07             	sar    eax,0x7
-  806947:	89 d1                	mov    ecx,edx
-  806949:	c1 f9 1f             	sar    ecx,0x1f
-  80694c:	29 c8                	sub    eax,ecx
-  80694e:	69 c8 f0 00 00 00    	imul   ecx,eax,0xf0
-  806954:	89 d0                	mov    eax,edx
-  806956:	29 c8                	sub    eax,ecx
-  806958:	89 05 92 3b c2 ff    	mov    DWORD PTR [rip+0xffffffffffc23b92],eax        # 42a4f0 <head>
+  80694b:	8b 05 9f 3b c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc23b9f]        # 42a4f0 <head>
+  806951:	8d 50 01             	lea    edx,[rax+0x1]
+  806954:	48 63 c2             	movsxd rax,edx
+  806957:	48 69 c0 89 88 88 88 	imul   rax,rax,0xffffffff88888889
+  80695e:	48 c1 e8 20          	shr    rax,0x20
+  806962:	01 d0                	add    eax,edx
+  806964:	c1 f8 07             	sar    eax,0x7
+  806967:	89 d1                	mov    ecx,edx
+  806969:	c1 f9 1f             	sar    ecx,0x1f
+  80696c:	29 c8                	sub    eax,ecx
+  80696e:	69 c8 f0 00 00 00    	imul   ecx,eax,0xf0
+  806974:	89 d0                	mov    eax,edx
+  806976:	29 c8                	sub    eax,ecx
+  806978:	89 05 72 3b c2 ff    	mov    DWORD PTR [rip+0xffffffffffc23b72],eax        # 42a4f0 <head>
     running_req->stat=REQ_STAT_WORKING;
-  80695e:	48 8b 05 5b 3b c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23b5b]        # 42a4c0 <running_req>
-  806965:	c7 40 1c 02 00 00 00 	mov    DWORD PTR [rax+0x1c],0x2
+  80697e:	48 8b 05 3b 3b c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23b3b]        # 42a4c0 <running_req>
+  806985:	c7 40 1c 02 00 00 00 	mov    DWORD PTR [rax+0x1c],0x2
     //set_proc_stat(running_req->pid,SUSPENDED);
     int r=0;
-  80696c:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
+  80698c:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
     switch (running_req->func)
-  806973:	48 8b 05 46 3b c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23b46]        # 42a4c0 <running_req>
-  80697a:	8b 00                	mov    eax,DWORD PTR [rax]
-  80697c:	83 f8 03             	cmp    eax,0x3
-  80697f:	0f 84 ad 00 00 00    	je     806a32 <execute_request+0x1c6>
-  806985:	83 f8 03             	cmp    eax,0x3
-  806988:	0f 8f bf 00 00 00    	jg     806a4d <execute_request+0x1e1>
-  80698e:	83 f8 02             	cmp    eax,0x2
-  806991:	0f 84 85 00 00 00    	je     806a1c <execute_request+0x1b0>
-  806997:	83 f8 02             	cmp    eax,0x2
-  80699a:	0f 8f ad 00 00 00    	jg     806a4d <execute_request+0x1e1>
-  8069a0:	85 c0                	test   eax,eax
-  8069a2:	74 0a                	je     8069ae <execute_request+0x142>
-  8069a4:	83 f8 01             	cmp    eax,0x1
-  8069a7:	74 3c                	je     8069e5 <execute_request+0x179>
+  806993:	48 8b 05 26 3b c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23b26]        # 42a4c0 <running_req>
+  80699a:	8b 00                	mov    eax,DWORD PTR [rax]
+  80699c:	83 f8 03             	cmp    eax,0x3
+  80699f:	0f 84 ad 00 00 00    	je     806a52 <execute_request+0x1c6>
+  8069a5:	83 f8 03             	cmp    eax,0x3
+  8069a8:	0f 8f bf 00 00 00    	jg     806a6d <execute_request+0x1e1>
+  8069ae:	83 f8 02             	cmp    eax,0x2
+  8069b1:	0f 84 85 00 00 00    	je     806a3c <execute_request+0x1b0>
+  8069b7:	83 f8 02             	cmp    eax,0x2
+  8069ba:	0f 8f ad 00 00 00    	jg     806a6d <execute_request+0x1e1>
+  8069c0:	85 c0                	test   eax,eax
+  8069c2:	74 0a                	je     8069ce <execute_request+0x142>
+  8069c4:	83 f8 01             	cmp    eax,0x1
+  8069c7:	74 3c                	je     806a05 <execute_request+0x179>
         break;
     case DISKREQ_RESET:
         r=async_reset_disk(running_req->disk);
         break;
     default:
         break;
-  8069a9:	e9 9f 00 00 00       	jmp    806a4d <execute_request+0x1e1>
+  8069c9:	e9 9f 00 00 00       	jmp    806a6d <execute_request+0x1e1>
         running_req->lba,running_req->sec_n,running_req->buf);
-  8069ae:	48 8b 05 0b 3b c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23b0b]        # 42a4c0 <running_req>
+  8069ce:	48 8b 05 eb 3a c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23aeb]        # 42a4c0 <running_req>
         r=async_read_disk(running_req->disk,\
-  8069b5:	48 8b 48 10          	mov    rcx,QWORD PTR [rax+0x10]
+  8069d5:	48 8b 48 10          	mov    rcx,QWORD PTR [rax+0x10]
         running_req->lba,running_req->sec_n,running_req->buf);
-  8069b9:	48 8b 05 00 3b c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23b00]        # 42a4c0 <running_req>
+  8069d9:	48 8b 05 e0 3a c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23ae0]        # 42a4c0 <running_req>
         r=async_read_disk(running_req->disk,\
-  8069c0:	8b 50 0c             	mov    edx,DWORD PTR [rax+0xc]
+  8069e0:	8b 50 0c             	mov    edx,DWORD PTR [rax+0xc]
         running_req->lba,running_req->sec_n,running_req->buf);
-  8069c3:	48 8b 05 f6 3a c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23af6]        # 42a4c0 <running_req>
-  8069ca:	8b 40 08             	mov    eax,DWORD PTR [rax+0x8]
+  8069e3:	48 8b 05 d6 3a c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23ad6]        # 42a4c0 <running_req>
+  8069ea:	8b 40 08             	mov    eax,DWORD PTR [rax+0x8]
         r=async_read_disk(running_req->disk,\
-  8069cd:	89 c6                	mov    esi,eax
-  8069cf:	48 8b 05 ea 3a c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23aea]        # 42a4c0 <running_req>
-  8069d6:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
-  8069d9:	89 c7                	mov    edi,eax
-  8069db:	e8 a7 00 00 00       	call   806a87 <async_read_disk>
-  8069e0:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  8069ed:	89 c6                	mov    esi,eax
+  8069ef:	48 8b 05 ca 3a c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23aca]        # 42a4c0 <running_req>
+  8069f6:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
+  8069f9:	89 c7                	mov    edi,eax
+  8069fb:	e8 a7 00 00 00       	call   806aa7 <async_read_disk>
+  806a00:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
         break;
-  8069e3:	eb 69                	jmp    806a4e <execute_request+0x1e2>
+  806a03:	eb 69                	jmp    806a6e <execute_request+0x1e2>
          running_req->lba,running_req->sec_n,running_req->buf);
-  8069e5:	48 8b 05 d4 3a c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23ad4]        # 42a4c0 <running_req>
+  806a05:	48 8b 05 b4 3a c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23ab4]        # 42a4c0 <running_req>
         r=async_write_disk(running_req->disk,\
-  8069ec:	48 8b 48 10          	mov    rcx,QWORD PTR [rax+0x10]
+  806a0c:	48 8b 48 10          	mov    rcx,QWORD PTR [rax+0x10]
          running_req->lba,running_req->sec_n,running_req->buf);
-  8069f0:	48 8b 05 c9 3a c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23ac9]        # 42a4c0 <running_req>
+  806a10:	48 8b 05 a9 3a c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23aa9]        # 42a4c0 <running_req>
         r=async_write_disk(running_req->disk,\
-  8069f7:	8b 50 0c             	mov    edx,DWORD PTR [rax+0xc]
+  806a17:	8b 50 0c             	mov    edx,DWORD PTR [rax+0xc]
          running_req->lba,running_req->sec_n,running_req->buf);
-  8069fa:	48 8b 05 bf 3a c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23abf]        # 42a4c0 <running_req>
-  806a01:	8b 40 08             	mov    eax,DWORD PTR [rax+0x8]
+  806a1a:	48 8b 05 9f 3a c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23a9f]        # 42a4c0 <running_req>
+  806a21:	8b 40 08             	mov    eax,DWORD PTR [rax+0x8]
         r=async_write_disk(running_req->disk,\
-  806a04:	89 c6                	mov    esi,eax
-  806a06:	48 8b 05 b3 3a c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23ab3]        # 42a4c0 <running_req>
-  806a0d:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
-  806a10:	89 c7                	mov    edi,eax
-  806a12:	e8 88 01 00 00       	call   806b9f <async_write_disk>
-  806a17:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  806a24:	89 c6                	mov    esi,eax
+  806a26:	48 8b 05 93 3a c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23a93]        # 42a4c0 <running_req>
+  806a2d:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
+  806a30:	89 c7                	mov    edi,eax
+  806a32:	e8 88 01 00 00       	call   806bbf <async_write_disk>
+  806a37:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
         break;
-  806a1a:	eb 32                	jmp    806a4e <execute_request+0x1e2>
+  806a3a:	eb 32                	jmp    806a6e <execute_request+0x1e2>
         r=async_check_disk(running_req->disk);
-  806a1c:	48 8b 05 9d 3a c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23a9d]        # 42a4c0 <running_req>
-  806a23:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
-  806a26:	89 c7                	mov    edi,eax
-  806a28:	e8 8f 06 00 00       	call   8070bc <async_check_disk>
-  806a2d:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  806a3c:	48 8b 05 7d 3a c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23a7d]        # 42a4c0 <running_req>
+  806a43:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
+  806a46:	89 c7                	mov    edi,eax
+  806a48:	e8 8f 06 00 00       	call   8070dc <async_check_disk>
+  806a4d:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
         break;
-  806a30:	eb 1c                	jmp    806a4e <execute_request+0x1e2>
+  806a50:	eb 1c                	jmp    806a6e <execute_request+0x1e2>
         r=async_reset_disk(running_req->disk);
-  806a32:	48 8b 05 87 3a c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23a87]        # 42a4c0 <running_req>
-  806a39:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
-  806a3c:	89 c7                	mov    edi,eax
-  806a3e:	b8 00 00 00 00       	mov    eax,0x0
-  806a43:	e8 1a 00 00 00       	call   806a62 <async_reset_disk>
-  806a48:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  806a52:	48 8b 05 67 3a c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23a67]        # 42a4c0 <running_req>
+  806a59:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
+  806a5c:	89 c7                	mov    edi,eax
+  806a5e:	b8 00 00 00 00       	mov    eax,0x0
+  806a63:	e8 1a 00 00 00       	call   806a82 <async_reset_disk>
+  806a68:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
         break;
-  806a4b:	eb 01                	jmp    806a4e <execute_request+0x1e2>
+  806a6b:	eb 01                	jmp    806a6e <execute_request+0x1e2>
         break;
-  806a4d:	90                   	nop
+  806a6d:	90                   	nop
     }
     if(r==-1)return -1;
-  806a4e:	83 7d fc ff          	cmp    DWORD PTR [rbp-0x4],0xffffffff
-  806a52:	75 07                	jne    806a5b <execute_request+0x1ef>
-  806a54:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  806a59:	eb 05                	jmp    806a60 <execute_request+0x1f4>
+  806a6e:	83 7d fc ff          	cmp    DWORD PTR [rbp-0x4],0xffffffff
+  806a72:	75 07                	jne    806a7b <execute_request+0x1ef>
+  806a74:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  806a79:	eb 05                	jmp    806a80 <execute_request+0x1f4>
     return 0;
-  806a5b:	b8 00 00 00 00       	mov    eax,0x0
+  806a7b:	b8 00 00 00 00       	mov    eax,0x0
 }
-  806a60:	c9                   	leave  
-  806a61:	c3                   	ret    
+  806a80:	c9                   	leave  
+  806a81:	c3                   	ret    
 
-0000000000806a62 <async_reset_disk>:
+0000000000806a82 <async_reset_disk>:
 int async_reset_disk(int disk)
 {
-  806a62:	f3 0f 1e fa          	endbr64 
-  806a66:	55                   	push   rbp
-  806a67:	48 89 e5             	mov    rbp,rsp
-  806a6a:	48 83 ec 10          	sub    rsp,0x10
-  806a6e:	89 7d fc             	mov    DWORD PTR [rbp-0x4],edi
+  806a82:	f3 0f 1e fa          	endbr64 
+  806a86:	55                   	push   rbp
+  806a87:	48 89 e5             	mov    rbp,rsp
+  806a8a:	48 83 ec 10          	sub    rsp,0x10
+  806a8e:	89 7d fc             	mov    DWORD PTR [rbp-0x4],edi
     outb(PORT_DISK_CONTROL,DISK_CMD_RESET);
-  806a71:	be 0c 00 00 00       	mov    esi,0xc
-  806a76:	bf f6 03 00 00       	mov    edi,0x3f6
-  806a7b:	e8 50 e4 ff ff       	call   804ed0 <outb>
+  806a91:	be 0c 00 00 00       	mov    esi,0xc
+  806a96:	bf f6 03 00 00       	mov    edi,0x3f6
+  806a9b:	e8 50 e4 ff ff       	call   804ef0 <outb>
     return 0;
-  806a80:	b8 00 00 00 00       	mov    eax,0x0
+  806aa0:	b8 00 00 00 00       	mov    eax,0x0
 }
-  806a85:	c9                   	leave  
-  806a86:	c3                   	ret    
+  806aa5:	c9                   	leave  
+  806aa6:	c3                   	ret    
 
-0000000000806a87 <async_read_disk>:
+0000000000806aa7 <async_read_disk>:
 int async_read_disk(int disk,unsigned int lba,int sec_n,char* mem_addr)
 {
-  806a87:	f3 0f 1e fa          	endbr64 
-  806a8b:	55                   	push   rbp
-  806a8c:	48 89 e5             	mov    rbp,rsp
-  806a8f:	48 83 ec 30          	sub    rsp,0x30
-  806a93:	89 7d ec             	mov    DWORD PTR [rbp-0x14],edi
-  806a96:	89 75 e8             	mov    DWORD PTR [rbp-0x18],esi
-  806a99:	89 55 e4             	mov    DWORD PTR [rbp-0x1c],edx
-  806a9c:	48 89 4d d8          	mov    QWORD PTR [rbp-0x28],rcx
+  806aa7:	f3 0f 1e fa          	endbr64 
+  806aab:	55                   	push   rbp
+  806aac:	48 89 e5             	mov    rbp,rsp
+  806aaf:	48 83 ec 30          	sub    rsp,0x30
+  806ab3:	89 7d ec             	mov    DWORD PTR [rbp-0x14],edi
+  806ab6:	89 75 e8             	mov    DWORD PTR [rbp-0x18],esi
+  806ab9:	89 55 e4             	mov    DWORD PTR [rbp-0x1c],edx
+  806abc:	48 89 4d d8          	mov    QWORD PTR [rbp-0x28],rcx
     unsigned short port=PORT_DISK_MAJOR;
-  806aa0:	66 c7 45 fe f0 01    	mov    WORD PTR [rbp-0x2],0x1f0
+  806ac0:	66 c7 45 fe f0 01    	mov    WORD PTR [rbp-0x2],0x1f0
     int slave_disk=0;
-  806aa6:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0
+  806ac6:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0
     if(disk==DISK_SLAVE_MAJOR||disk==DISK_SLAVE_SLAVE)
-  806aad:	83 7d ec 02          	cmp    DWORD PTR [rbp-0x14],0x2
-  806ab1:	74 06                	je     806ab9 <async_read_disk+0x32>
-  806ab3:	83 7d ec 03          	cmp    DWORD PTR [rbp-0x14],0x3
-  806ab7:	75 06                	jne    806abf <async_read_disk+0x38>
+  806acd:	83 7d ec 02          	cmp    DWORD PTR [rbp-0x14],0x2
+  806ad1:	74 06                	je     806ad9 <async_read_disk+0x32>
+  806ad3:	83 7d ec 03          	cmp    DWORD PTR [rbp-0x14],0x3
+  806ad7:	75 06                	jne    806adf <async_read_disk+0x38>
         port=PORT_DISK_SLAVE;
-  806ab9:	66 c7 45 fe 70 01    	mov    WORD PTR [rbp-0x2],0x170
+  806ad9:	66 c7 45 fe 70 01    	mov    WORD PTR [rbp-0x2],0x170
     if(disk==DISK_SLAVE_SLAVE||disk==DISK_MAJOR_SLAVE)
-  806abf:	83 7d ec 03          	cmp    DWORD PTR [rbp-0x14],0x3
-  806ac3:	74 06                	je     806acb <async_read_disk+0x44>
-  806ac5:	83 7d ec 01          	cmp    DWORD PTR [rbp-0x14],0x1
-  806ac9:	75 07                	jne    806ad2 <async_read_disk+0x4b>
+  806adf:	83 7d ec 03          	cmp    DWORD PTR [rbp-0x14],0x3
+  806ae3:	74 06                	je     806aeb <async_read_disk+0x44>
+  806ae5:	83 7d ec 01          	cmp    DWORD PTR [rbp-0x14],0x1
+  806ae9:	75 07                	jne    806af2 <async_read_disk+0x4b>
         slave_disk=1;
-  806acb:	c7 45 f8 01 00 00 00 	mov    DWORD PTR [rbp-0x8],0x1
+  806aeb:	c7 45 f8 01 00 00 00 	mov    DWORD PTR [rbp-0x8],0x1
     outb(port+2,sec_n);
-  806ad2:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
-  806ad5:	0f b6 d0             	movzx  edx,al
-  806ad8:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
-  806adc:	83 c0 02             	add    eax,0x2
-  806adf:	0f b7 c0             	movzx  eax,ax
-  806ae2:	89 d6                	mov    esi,edx
-  806ae4:	89 c7                	mov    edi,eax
-  806ae6:	e8 e5 e3 ff ff       	call   804ed0 <outb>
+  806af2:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
+  806af5:	0f b6 d0             	movzx  edx,al
+  806af8:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
+  806afc:	83 c0 02             	add    eax,0x2
+  806aff:	0f b7 c0             	movzx  eax,ax
+  806b02:	89 d6                	mov    esi,edx
+  806b04:	89 c7                	mov    edi,eax
+  806b06:	e8 e5 e3 ff ff       	call   804ef0 <outb>
     outb(port+3,lba&0xff);
-  806aeb:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
-  806aee:	0f b6 d0             	movzx  edx,al
-  806af1:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
-  806af5:	83 c0 03             	add    eax,0x3
-  806af8:	0f b7 c0             	movzx  eax,ax
-  806afb:	89 d6                	mov    esi,edx
-  806afd:	89 c7                	mov    edi,eax
-  806aff:	e8 cc e3 ff ff       	call   804ed0 <outb>
+  806b0b:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  806b0e:	0f b6 d0             	movzx  edx,al
+  806b11:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
+  806b15:	83 c0 03             	add    eax,0x3
+  806b18:	0f b7 c0             	movzx  eax,ax
+  806b1b:	89 d6                	mov    esi,edx
+  806b1d:	89 c7                	mov    edi,eax
+  806b1f:	e8 cc e3 ff ff       	call   804ef0 <outb>
     outb(port+4,(lba>>8)&0xff);
-  806b04:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
-  806b07:	c1 e8 08             	shr    eax,0x8
-  806b0a:	0f b6 d0             	movzx  edx,al
-  806b0d:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
-  806b11:	83 c0 04             	add    eax,0x4
-  806b14:	0f b7 c0             	movzx  eax,ax
-  806b17:	89 d6                	mov    esi,edx
-  806b19:	89 c7                	mov    edi,eax
-  806b1b:	e8 b0 e3 ff ff       	call   804ed0 <outb>
+  806b24:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  806b27:	c1 e8 08             	shr    eax,0x8
+  806b2a:	0f b6 d0             	movzx  edx,al
+  806b2d:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
+  806b31:	83 c0 04             	add    eax,0x4
+  806b34:	0f b7 c0             	movzx  eax,ax
+  806b37:	89 d6                	mov    esi,edx
+  806b39:	89 c7                	mov    edi,eax
+  806b3b:	e8 b0 e3 ff ff       	call   804ef0 <outb>
     outb(port+5,(lba>>16)&0xff);
-  806b20:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
-  806b23:	c1 e8 10             	shr    eax,0x10
-  806b26:	0f b6 d0             	movzx  edx,al
-  806b29:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
-  806b2d:	83 c0 05             	add    eax,0x5
-  806b30:	0f b7 c0             	movzx  eax,ax
-  806b33:	89 d6                	mov    esi,edx
-  806b35:	89 c7                	mov    edi,eax
-  806b37:	e8 94 e3 ff ff       	call   804ed0 <outb>
+  806b40:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  806b43:	c1 e8 10             	shr    eax,0x10
+  806b46:	0f b6 d0             	movzx  edx,al
+  806b49:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
+  806b4d:	83 c0 05             	add    eax,0x5
+  806b50:	0f b7 c0             	movzx  eax,ax
+  806b53:	89 d6                	mov    esi,edx
+  806b55:	89 c7                	mov    edi,eax
+  806b57:	e8 94 e3 ff ff       	call   804ef0 <outb>
     char drv=slave_disk?0x10:0;
-  806b3c:	83 7d f8 00          	cmp    DWORD PTR [rbp-0x8],0x0
-  806b40:	74 07                	je     806b49 <async_read_disk+0xc2>
-  806b42:	b8 10 00 00 00       	mov    eax,0x10
-  806b47:	eb 05                	jmp    806b4e <async_read_disk+0xc7>
-  806b49:	b8 00 00 00 00       	mov    eax,0x0
-  806b4e:	88 45 f7             	mov    BYTE PTR [rbp-0x9],al
+  806b5c:	83 7d f8 00          	cmp    DWORD PTR [rbp-0x8],0x0
+  806b60:	74 07                	je     806b69 <async_read_disk+0xc2>
+  806b62:	b8 10 00 00 00       	mov    eax,0x10
+  806b67:	eb 05                	jmp    806b6e <async_read_disk+0xc7>
+  806b69:	b8 00 00 00 00       	mov    eax,0x0
+  806b6e:	88 45 f7             	mov    BYTE PTR [rbp-0x9],al
     char lba_hi=(lba>>24)&0xf|drv|0xe0;
-  806b51:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
-  806b54:	c1 e8 18             	shr    eax,0x18
-  806b57:	83 e0 0f             	and    eax,0xf
-  806b5a:	89 c2                	mov    edx,eax
-  806b5c:	0f b6 45 f7          	movzx  eax,BYTE PTR [rbp-0x9]
-  806b60:	09 d0                	or     eax,edx
-  806b62:	83 c8 e0             	or     eax,0xffffffe0
-  806b65:	88 45 f6             	mov    BYTE PTR [rbp-0xa],al
+  806b71:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  806b74:	c1 e8 18             	shr    eax,0x18
+  806b77:	83 e0 0f             	and    eax,0xf
+  806b7a:	89 c2                	mov    edx,eax
+  806b7c:	0f b6 45 f7          	movzx  eax,BYTE PTR [rbp-0x9]
+  806b80:	09 d0                	or     eax,edx
+  806b82:	83 c8 e0             	or     eax,0xffffffe0
+  806b85:	88 45 f6             	mov    BYTE PTR [rbp-0xa],al
     outb(port+6,lba_hi);
-  806b68:	0f b6 45 f6          	movzx  eax,BYTE PTR [rbp-0xa]
-  806b6c:	0f b6 d0             	movzx  edx,al
-  806b6f:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
-  806b73:	83 c0 06             	add    eax,0x6
-  806b76:	0f b7 c0             	movzx  eax,ax
-  806b79:	89 d6                	mov    esi,edx
-  806b7b:	89 c7                	mov    edi,eax
-  806b7d:	e8 4e e3 ff ff       	call   804ed0 <outb>
+  806b88:	0f b6 45 f6          	movzx  eax,BYTE PTR [rbp-0xa]
+  806b8c:	0f b6 d0             	movzx  edx,al
+  806b8f:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
+  806b93:	83 c0 06             	add    eax,0x6
+  806b96:	0f b7 c0             	movzx  eax,ax
+  806b99:	89 d6                	mov    esi,edx
+  806b9b:	89 c7                	mov    edi,eax
+  806b9d:	e8 4e e3 ff ff       	call   804ef0 <outb>
     outb(port+7,DISK_CMD_READ);
-  806b82:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
-  806b86:	83 c0 07             	add    eax,0x7
-  806b89:	0f b7 c0             	movzx  eax,ax
-  806b8c:	be 20 00 00 00       	mov    esi,0x20
-  806b91:	89 c7                	mov    edi,eax
-  806b93:	e8 38 e3 ff ff       	call   804ed0 <outb>
+  806ba2:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
+  806ba6:	83 c0 07             	add    eax,0x7
+  806ba9:	0f b7 c0             	movzx  eax,ax
+  806bac:	be 20 00 00 00       	mov    esi,0x20
+  806bb1:	89 c7                	mov    edi,eax
+  806bb3:	e8 38 e3 ff ff       	call   804ef0 <outb>
     // }
     // for(int i=0;i<running_req->sec_n*256;i++)
     // {
     //     *mem_addr++=inw(port);
     // }
     return 0;
-  806b98:	b8 00 00 00 00       	mov    eax,0x0
+  806bb8:	b8 00 00 00 00       	mov    eax,0x0
 }
-  806b9d:	c9                   	leave  
-  806b9e:	c3                   	ret    
+  806bbd:	c9                   	leave  
+  806bbe:	c3                   	ret    
 
-0000000000806b9f <async_write_disk>:
+0000000000806bbf <async_write_disk>:
 int async_write_disk(int disk,unsigned int lba, int sec_n, char* mem_ptr)
 {
-  806b9f:	f3 0f 1e fa          	endbr64 
-  806ba3:	55                   	push   rbp
-  806ba4:	48 89 e5             	mov    rbp,rsp
-  806ba7:	48 83 ec 30          	sub    rsp,0x30
-  806bab:	89 7d ec             	mov    DWORD PTR [rbp-0x14],edi
-  806bae:	89 75 e8             	mov    DWORD PTR [rbp-0x18],esi
-  806bb1:	89 55 e4             	mov    DWORD PTR [rbp-0x1c],edx
-  806bb4:	48 89 4d d8          	mov    QWORD PTR [rbp-0x28],rcx
+  806bbf:	f3 0f 1e fa          	endbr64 
+  806bc3:	55                   	push   rbp
+  806bc4:	48 89 e5             	mov    rbp,rsp
+  806bc7:	48 83 ec 30          	sub    rsp,0x30
+  806bcb:	89 7d ec             	mov    DWORD PTR [rbp-0x14],edi
+  806bce:	89 75 e8             	mov    DWORD PTR [rbp-0x18],esi
+  806bd1:	89 55 e4             	mov    DWORD PTR [rbp-0x1c],edx
+  806bd4:	48 89 4d d8          	mov    QWORD PTR [rbp-0x28],rcx
     unsigned short port=PORT_DISK_MAJOR;
-  806bb8:	66 c7 45 fe f0 01    	mov    WORD PTR [rbp-0x2],0x1f0
+  806bd8:	66 c7 45 fe f0 01    	mov    WORD PTR [rbp-0x2],0x1f0
     int slave_disk=0;
-  806bbe:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0
+  806bde:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0
     if(disk==DISK_SLAVE_MAJOR||disk==DISK_SLAVE_SLAVE)
-  806bc5:	83 7d ec 02          	cmp    DWORD PTR [rbp-0x14],0x2
-  806bc9:	74 06                	je     806bd1 <async_write_disk+0x32>
-  806bcb:	83 7d ec 03          	cmp    DWORD PTR [rbp-0x14],0x3
-  806bcf:	75 06                	jne    806bd7 <async_write_disk+0x38>
+  806be5:	83 7d ec 02          	cmp    DWORD PTR [rbp-0x14],0x2
+  806be9:	74 06                	je     806bf1 <async_write_disk+0x32>
+  806beb:	83 7d ec 03          	cmp    DWORD PTR [rbp-0x14],0x3
+  806bef:	75 06                	jne    806bf7 <async_write_disk+0x38>
         port=PORT_DISK_SLAVE;
-  806bd1:	66 c7 45 fe 70 01    	mov    WORD PTR [rbp-0x2],0x170
+  806bf1:	66 c7 45 fe 70 01    	mov    WORD PTR [rbp-0x2],0x170
     if(disk==DISK_SLAVE_SLAVE||disk==DISK_MAJOR_SLAVE)
-  806bd7:	83 7d ec 03          	cmp    DWORD PTR [rbp-0x14],0x3
-  806bdb:	74 06                	je     806be3 <async_write_disk+0x44>
-  806bdd:	83 7d ec 01          	cmp    DWORD PTR [rbp-0x14],0x1
-  806be1:	75 07                	jne    806bea <async_write_disk+0x4b>
+  806bf7:	83 7d ec 03          	cmp    DWORD PTR [rbp-0x14],0x3
+  806bfb:	74 06                	je     806c03 <async_write_disk+0x44>
+  806bfd:	83 7d ec 01          	cmp    DWORD PTR [rbp-0x14],0x1
+  806c01:	75 07                	jne    806c0a <async_write_disk+0x4b>
         slave_disk=1;
-  806be3:	c7 45 f8 01 00 00 00 	mov    DWORD PTR [rbp-0x8],0x1
+  806c03:	c7 45 f8 01 00 00 00 	mov    DWORD PTR [rbp-0x8],0x1
     while (1)
     {
         byte t=inb(0x1f7);
-  806bea:	bf f7 00 00 00       	mov    edi,0xf7
-  806bef:	e8 f5 e2 ff ff       	call   804ee9 <inb>
-  806bf4:	88 45 f7             	mov    BYTE PTR [rbp-0x9],al
+  806c0a:	bf f7 00 00 00       	mov    edi,0xf7
+  806c0f:	e8 f5 e2 ff ff       	call   804f09 <inb>
+  806c14:	88 45 f7             	mov    BYTE PTR [rbp-0x9],al
         //logf("istat:%x",t);
         byte err=t&1;
-  806bf7:	0f b6 45 f7          	movzx  eax,BYTE PTR [rbp-0x9]
-  806bfb:	83 e0 01             	and    eax,0x1
-  806bfe:	88 45 f6             	mov    BYTE PTR [rbp-0xa],al
+  806c17:	0f b6 45 f7          	movzx  eax,BYTE PTR [rbp-0x9]
+  806c1b:	83 e0 01             	and    eax,0x1
+  806c1e:	88 45 f6             	mov    BYTE PTR [rbp-0xa],al
         if(err!=0)
-  806c01:	80 7d f6 00          	cmp    BYTE PTR [rbp-0xa],0x0
-  806c05:	74 0a                	je     806c11 <async_write_disk+0x72>
+  806c21:	80 7d f6 00          	cmp    BYTE PTR [rbp-0xa],0x0
+  806c25:	74 0a                	je     806c31 <async_write_disk+0x72>
         {
             //printf("ERR iwriting disk\n");
             return -1;
-  806c07:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  806c0c:	e9 d5 00 00 00       	jmp    806ce6 <async_write_disk+0x147>
+  806c27:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  806c2c:	e9 d5 00 00 00       	jmp    806d06 <async_write_disk+0x147>
         }
         t&=0x88;
-  806c11:	80 65 f7 88          	and    BYTE PTR [rbp-0x9],0x88
+  806c31:	80 65 f7 88          	and    BYTE PTR [rbp-0x9],0x88
         if(t==0x8)break;
-  806c15:	80 7d f7 08          	cmp    BYTE PTR [rbp-0x9],0x8
-  806c19:	74 02                	je     806c1d <async_write_disk+0x7e>
+  806c35:	80 7d f7 08          	cmp    BYTE PTR [rbp-0x9],0x8
+  806c39:	74 02                	je     806c3d <async_write_disk+0x7e>
     {
-  806c1b:	eb cd                	jmp    806bea <async_write_disk+0x4b>
+  806c3b:	eb cd                	jmp    806c0a <async_write_disk+0x4b>
         if(t==0x8)break;
-  806c1d:	90                   	nop
+  806c3d:	90                   	nop
     }
     outb(port+2,sec_n);
-  806c1e:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
-  806c21:	0f b6 d0             	movzx  edx,al
-  806c24:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
-  806c28:	83 c0 02             	add    eax,0x2
-  806c2b:	0f b7 c0             	movzx  eax,ax
-  806c2e:	89 d6                	mov    esi,edx
-  806c30:	89 c7                	mov    edi,eax
-  806c32:	e8 99 e2 ff ff       	call   804ed0 <outb>
+  806c3e:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
+  806c41:	0f b6 d0             	movzx  edx,al
+  806c44:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
+  806c48:	83 c0 02             	add    eax,0x2
+  806c4b:	0f b7 c0             	movzx  eax,ax
+  806c4e:	89 d6                	mov    esi,edx
+  806c50:	89 c7                	mov    edi,eax
+  806c52:	e8 99 e2 ff ff       	call   804ef0 <outb>
     outb(port+3,lba&0xff);
-  806c37:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
-  806c3a:	0f b6 d0             	movzx  edx,al
-  806c3d:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
-  806c41:	83 c0 03             	add    eax,0x3
-  806c44:	0f b7 c0             	movzx  eax,ax
-  806c47:	89 d6                	mov    esi,edx
-  806c49:	89 c7                	mov    edi,eax
-  806c4b:	e8 80 e2 ff ff       	call   804ed0 <outb>
+  806c57:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  806c5a:	0f b6 d0             	movzx  edx,al
+  806c5d:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
+  806c61:	83 c0 03             	add    eax,0x3
+  806c64:	0f b7 c0             	movzx  eax,ax
+  806c67:	89 d6                	mov    esi,edx
+  806c69:	89 c7                	mov    edi,eax
+  806c6b:	e8 80 e2 ff ff       	call   804ef0 <outb>
     outb(port+4,(lba>>8)&0xff);
-  806c50:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
-  806c53:	c1 e8 08             	shr    eax,0x8
-  806c56:	0f b6 d0             	movzx  edx,al
-  806c59:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
-  806c5d:	83 c0 04             	add    eax,0x4
-  806c60:	0f b7 c0             	movzx  eax,ax
-  806c63:	89 d6                	mov    esi,edx
-  806c65:	89 c7                	mov    edi,eax
-  806c67:	e8 64 e2 ff ff       	call   804ed0 <outb>
+  806c70:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  806c73:	c1 e8 08             	shr    eax,0x8
+  806c76:	0f b6 d0             	movzx  edx,al
+  806c79:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
+  806c7d:	83 c0 04             	add    eax,0x4
+  806c80:	0f b7 c0             	movzx  eax,ax
+  806c83:	89 d6                	mov    esi,edx
+  806c85:	89 c7                	mov    edi,eax
+  806c87:	e8 64 e2 ff ff       	call   804ef0 <outb>
     outb(port+5,(lba>>16)&0xff);
-  806c6c:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
-  806c6f:	c1 e8 10             	shr    eax,0x10
-  806c72:	0f b6 d0             	movzx  edx,al
-  806c75:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
-  806c79:	83 c0 05             	add    eax,0x5
-  806c7c:	0f b7 c0             	movzx  eax,ax
-  806c7f:	89 d6                	mov    esi,edx
-  806c81:	89 c7                	mov    edi,eax
-  806c83:	e8 48 e2 ff ff       	call   804ed0 <outb>
+  806c8c:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  806c8f:	c1 e8 10             	shr    eax,0x10
+  806c92:	0f b6 d0             	movzx  edx,al
+  806c95:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
+  806c99:	83 c0 05             	add    eax,0x5
+  806c9c:	0f b7 c0             	movzx  eax,ax
+  806c9f:	89 d6                	mov    esi,edx
+  806ca1:	89 c7                	mov    edi,eax
+  806ca3:	e8 48 e2 ff ff       	call   804ef0 <outb>
     char drv=slave_disk?0x10:0;
-  806c88:	83 7d f8 00          	cmp    DWORD PTR [rbp-0x8],0x0
-  806c8c:	74 07                	je     806c95 <async_write_disk+0xf6>
-  806c8e:	b8 10 00 00 00       	mov    eax,0x10
-  806c93:	eb 05                	jmp    806c9a <async_write_disk+0xfb>
-  806c95:	b8 00 00 00 00       	mov    eax,0x0
-  806c9a:	88 45 f5             	mov    BYTE PTR [rbp-0xb],al
+  806ca8:	83 7d f8 00          	cmp    DWORD PTR [rbp-0x8],0x0
+  806cac:	74 07                	je     806cb5 <async_write_disk+0xf6>
+  806cae:	b8 10 00 00 00       	mov    eax,0x10
+  806cb3:	eb 05                	jmp    806cba <async_write_disk+0xfb>
+  806cb5:	b8 00 00 00 00       	mov    eax,0x0
+  806cba:	88 45 f5             	mov    BYTE PTR [rbp-0xb],al
     unsigned char lba_hi=(lba>>24)&0xf|drv|0xe0;
-  806c9d:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
-  806ca0:	c1 e8 18             	shr    eax,0x18
-  806ca3:	83 e0 0f             	and    eax,0xf
-  806ca6:	89 c2                	mov    edx,eax
-  806ca8:	0f b6 45 f5          	movzx  eax,BYTE PTR [rbp-0xb]
-  806cac:	09 d0                	or     eax,edx
-  806cae:	83 c8 e0             	or     eax,0xffffffe0
-  806cb1:	88 45 f4             	mov    BYTE PTR [rbp-0xc],al
+  806cbd:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  806cc0:	c1 e8 18             	shr    eax,0x18
+  806cc3:	83 e0 0f             	and    eax,0xf
+  806cc6:	89 c2                	mov    edx,eax
+  806cc8:	0f b6 45 f5          	movzx  eax,BYTE PTR [rbp-0xb]
+  806ccc:	09 d0                	or     eax,edx
+  806cce:	83 c8 e0             	or     eax,0xffffffe0
+  806cd1:	88 45 f4             	mov    BYTE PTR [rbp-0xc],al
     outb(port+6,lba_hi);
-  806cb4:	0f b6 55 f4          	movzx  edx,BYTE PTR [rbp-0xc]
-  806cb8:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
-  806cbc:	83 c0 06             	add    eax,0x6
-  806cbf:	0f b7 c0             	movzx  eax,ax
-  806cc2:	89 d6                	mov    esi,edx
-  806cc4:	89 c7                	mov    edi,eax
-  806cc6:	e8 05 e2 ff ff       	call   804ed0 <outb>
+  806cd4:	0f b6 55 f4          	movzx  edx,BYTE PTR [rbp-0xc]
+  806cd8:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
+  806cdc:	83 c0 06             	add    eax,0x6
+  806cdf:	0f b7 c0             	movzx  eax,ax
+  806ce2:	89 d6                	mov    esi,edx
+  806ce4:	89 c7                	mov    edi,eax
+  806ce6:	e8 05 e2 ff ff       	call   804ef0 <outb>
     outb(port+7,DISK_CMD_WRITE);
-  806ccb:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
-  806ccf:	83 c0 07             	add    eax,0x7
-  806cd2:	0f b7 c0             	movzx  eax,ax
-  806cd5:	be 30 00 00 00       	mov    esi,0x30
-  806cda:	89 c7                	mov    edi,eax
-  806cdc:	e8 ef e1 ff ff       	call   804ed0 <outb>
+  806ceb:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
+  806cef:	83 c0 07             	add    eax,0x7
+  806cf2:	0f b7 c0             	movzx  eax,ax
+  806cf5:	be 30 00 00 00       	mov    esi,0x30
+  806cfa:	89 c7                	mov    edi,eax
+  806cfc:	e8 ef e1 ff ff       	call   804ef0 <outb>
     //     if(t==0x8)break;
     // }
     // short *p=mem_ptr;
     // for(int i=0;i<running_req->sec_n*256;i++)
     //         outw(port,*p++);
     return 0;
-  806ce1:	b8 00 00 00 00       	mov    eax,0x0
+  806d01:	b8 00 00 00 00       	mov    eax,0x0
 }
-  806ce6:	c9                   	leave  
-  806ce7:	c3                   	ret    
+  806d06:	c9                   	leave  
+  806d07:	c3                   	ret    
 
-0000000000806ce8 <read_disk>:
+0000000000806d08 <read_disk>:
 int read_disk(driver_args* args)
 {
-  806ce8:	f3 0f 1e fa          	endbr64 
-  806cec:	55                   	push   rbp
-  806ced:	48 89 e5             	mov    rbp,rsp
-  806cf0:	48 83 ec 20          	sub    rsp,0x20
-  806cf4:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
+  806d08:	f3 0f 1e fa          	endbr64 
+  806d0c:	55                   	push   rbp
+  806d0d:	48 89 e5             	mov    rbp,rsp
+  806d10:	48 83 ec 20          	sub    rsp,0x20
+  806d14:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
     int ret=read_disk_asm(args->lba,args->sec_c,args->dist_addr);
-  806cf8:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  806cfc:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
-  806cff:	48 98                	cdqe   
-  806d01:	48 89 c2             	mov    rdx,rax
-  806d04:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  806d08:	8b 48 18             	mov    ecx,DWORD PTR [rax+0x18]
-  806d0b:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  806d0f:	8b 00                	mov    eax,DWORD PTR [rax]
-  806d11:	89 ce                	mov    esi,ecx
-  806d13:	89 c7                	mov    edi,eax
-  806d15:	e8 92 05 00 00       	call   8072ac <read_disk_asm>
-  806d1a:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  806d18:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  806d1c:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
+  806d1f:	48 98                	cdqe   
+  806d21:	48 89 c2             	mov    rdx,rax
+  806d24:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  806d28:	8b 48 18             	mov    ecx,DWORD PTR [rax+0x18]
+  806d2b:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  806d2f:	8b 00                	mov    eax,DWORD PTR [rax]
+  806d31:	89 ce                	mov    esi,ecx
+  806d33:	89 c7                	mov    edi,eax
+  806d35:	e8 92 05 00 00       	call   8072cc <read_disk_asm>
+  806d3a:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
     
     running_req->stat=REQ_STAT_DONE;
-  806d1d:	48 8b 05 9c 37 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc2379c]        # 42a4c0 <running_req>
-  806d24:	c7 40 1c 03 00 00 00 	mov    DWORD PTR [rax+0x1c],0x3
+  806d3d:	48 8b 05 7c 37 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc2377c]        # 42a4c0 <running_req>
+  806d44:	c7 40 1c 03 00 00 00 	mov    DWORD PTR [rax+0x1c],0x3
     running_req->args->stat=REQ_STAT_EMPTY;
-  806d2b:	48 8b 05 8e 37 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc2378e]        # 42a4c0 <running_req>
-  806d32:	48 8b 40 28          	mov    rax,QWORD PTR [rax+0x28]
-  806d36:	c7 80 ac 00 00 00 00 	mov    DWORD PTR [rax+0xac],0x0
-  806d3d:	00 00 00 
+  806d4b:	48 8b 05 6e 37 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc2376e]        # 42a4c0 <running_req>
+  806d52:	48 8b 40 28          	mov    rax,QWORD PTR [rax+0x28]
+  806d56:	c7 80 ac 00 00 00 00 	mov    DWORD PTR [rax+0xac],0x0
+  806d5d:	00 00 00 
     //set_proc_stat(running_req->pid,READY);
     running_req=NULL;
-  806d40:	48 c7 05 75 37 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc23775],0x0        # 42a4c0 <running_req>
-  806d47:	00 00 00 00 
+  806d60:	48 c7 05 55 37 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc23755],0x0        # 42a4c0 <running_req>
+  806d67:	00 00 00 00 
     return ret;
-  806d4b:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  806d6b:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
 }
-  806d4e:	c9                   	leave  
-  806d4f:	c3                   	ret    
+  806d6e:	c9                   	leave  
+  806d6f:	c3                   	ret    
 
-0000000000806d50 <write_disk>:
+0000000000806d70 <write_disk>:
 int write_disk(driver_args* args)
 {
-  806d50:	f3 0f 1e fa          	endbr64 
-  806d54:	55                   	push   rbp
-  806d55:	48 89 e5             	mov    rbp,rsp
-  806d58:	48 83 ec 20          	sub    rsp,0x20
-  806d5c:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
+  806d70:	f3 0f 1e fa          	endbr64 
+  806d74:	55                   	push   rbp
+  806d75:	48 89 e5             	mov    rbp,rsp
+  806d78:	48 83 ec 20          	sub    rsp,0x20
+  806d7c:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
     int ret=write_disk_asm(args->lba,args->sec_c,args->src_addr);
-  806d60:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  806d64:	8b 40 08             	mov    eax,DWORD PTR [rax+0x8]
-  806d67:	48 98                	cdqe   
-  806d69:	48 89 c2             	mov    rdx,rax
-  806d6c:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  806d70:	8b 48 18             	mov    ecx,DWORD PTR [rax+0x18]
-  806d73:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  806d77:	8b 00                	mov    eax,DWORD PTR [rax]
-  806d79:	89 ce                	mov    esi,ecx
-  806d7b:	89 c7                	mov    edi,eax
-  806d7d:	e8 aa 05 00 00       	call   80732c <write_disk_asm>
-  806d82:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  806d80:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  806d84:	8b 40 08             	mov    eax,DWORD PTR [rax+0x8]
+  806d87:	48 98                	cdqe   
+  806d89:	48 89 c2             	mov    rdx,rax
+  806d8c:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  806d90:	8b 48 18             	mov    ecx,DWORD PTR [rax+0x18]
+  806d93:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  806d97:	8b 00                	mov    eax,DWORD PTR [rax]
+  806d99:	89 ce                	mov    esi,ecx
+  806d9b:	89 c7                	mov    edi,eax
+  806d9d:	e8 aa 05 00 00       	call   80734c <write_disk_asm>
+  806da2:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
     
     running_req->stat=REQ_STAT_DONE;
-  806d85:	48 8b 05 34 37 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23734]        # 42a4c0 <running_req>
-  806d8c:	c7 40 1c 03 00 00 00 	mov    DWORD PTR [rax+0x1c],0x3
+  806da5:	48 8b 05 14 37 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23714]        # 42a4c0 <running_req>
+  806dac:	c7 40 1c 03 00 00 00 	mov    DWORD PTR [rax+0x1c],0x3
     running_req->args->stat=REQ_STAT_EMPTY;
-  806d93:	48 8b 05 26 37 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23726]        # 42a4c0 <running_req>
-  806d9a:	48 8b 40 28          	mov    rax,QWORD PTR [rax+0x28]
-  806d9e:	c7 80 ac 00 00 00 00 	mov    DWORD PTR [rax+0xac],0x0
-  806da5:	00 00 00 
+  806db3:	48 8b 05 06 37 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc23706]        # 42a4c0 <running_req>
+  806dba:	48 8b 40 28          	mov    rax,QWORD PTR [rax+0x28]
+  806dbe:	c7 80 ac 00 00 00 00 	mov    DWORD PTR [rax+0xac],0x0
+  806dc5:	00 00 00 
     //set_proc_stat(running_req->pid,READY);
     running_req=NULL;
-  806da8:	48 c7 05 0d 37 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc2370d],0x0        # 42a4c0 <running_req>
-  806daf:	00 00 00 00 
+  806dc8:	48 c7 05 ed 36 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc236ed],0x0        # 42a4c0 <running_req>
+  806dcf:	00 00 00 00 
     return ret;
-  806db3:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  806dd3:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
 }
-  806db6:	c9                   	leave  
-  806db7:	c3                   	ret    
+  806dd6:	c9                   	leave  
+  806dd7:	c3                   	ret    
 
-0000000000806db8 <chk_result>:
+0000000000806dd8 <chk_result>:
 int chk_result(int r)
 {
-  806db8:	f3 0f 1e fa          	endbr64 
-  806dbc:	55                   	push   rbp
-  806dbd:	48 89 e5             	mov    rbp,rsp
-  806dc0:	89 7d fc             	mov    DWORD PTR [rbp-0x4],edi
+  806dd8:	f3 0f 1e fa          	endbr64 
+  806ddc:	55                   	push   rbp
+  806ddd:	48 89 e5             	mov    rbp,rsp
+  806de0:	89 7d fc             	mov    DWORD PTR [rbp-0x4],edi
     while(disk_reqs[r].stat!=REQ_STAT_DONE);
-  806dc3:	90                   	nop
-  806dc4:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  806dc7:	48 63 d0             	movsxd rdx,eax
-  806dca:	48 89 d0             	mov    rax,rdx
-  806dcd:	48 01 c0             	add    rax,rax
-  806dd0:	48 01 d0             	add    rax,rdx
-  806dd3:	48 c1 e0 04          	shl    rax,0x4
-  806dd7:	48 05 dc 77 42 00    	add    rax,0x4277dc
-  806ddd:	8b 00                	mov    eax,DWORD PTR [rax]
-  806ddf:	83 f8 03             	cmp    eax,0x3
-  806de2:	75 e0                	jne    806dc4 <chk_result+0xc>
-    return disk_reqs[r].result==DISK_CHK_OK?1:0;
+  806de3:	90                   	nop
   806de4:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
   806de7:	48 63 d0             	movsxd rdx,eax
   806dea:	48 89 d0             	mov    rax,rdx
   806ded:	48 01 c0             	add    rax,rax
   806df0:	48 01 d0             	add    rax,rdx
   806df3:	48 c1 e0 04          	shl    rax,0x4
-  806df7:	48 05 e0 77 42 00    	add    rax,0x4277e0
+  806df7:	48 05 dc 77 42 00    	add    rax,0x4277dc
   806dfd:	8b 00                	mov    eax,DWORD PTR [rax]
-  806dff:	83 f8 01             	cmp    eax,0x1
-  806e02:	0f 94 c0             	sete   al
-  806e05:	0f b6 c0             	movzx  eax,al
+  806dff:	83 f8 03             	cmp    eax,0x3
+  806e02:	75 e0                	jne    806de4 <chk_result+0xc>
+    return disk_reqs[r].result==DISK_CHK_OK?1:0;
+  806e04:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  806e07:	48 63 d0             	movsxd rdx,eax
+  806e0a:	48 89 d0             	mov    rax,rdx
+  806e0d:	48 01 c0             	add    rax,rax
+  806e10:	48 01 d0             	add    rax,rdx
+  806e13:	48 c1 e0 04          	shl    rax,0x4
+  806e17:	48 05 e0 77 42 00    	add    rax,0x4277e0
+  806e1d:	8b 00                	mov    eax,DWORD PTR [rax]
+  806e1f:	83 f8 01             	cmp    eax,0x1
+  806e22:	0f 94 c0             	sete   al
+  806e25:	0f b6 c0             	movzx  eax,al
 }
-  806e08:	5d                   	pop    rbp
-  806e09:	c3                   	ret    
+  806e28:	5d                   	pop    rbp
+  806e29:	c3                   	ret    
 
-0000000000806e0a <disk_existent>:
+0000000000806e2a <disk_existent>:
 int disk_existent(int disk)
 {
-  806e0a:	f3 0f 1e fa          	endbr64 
-  806e0e:	55                   	push   rbp
-  806e0f:	48 89 e5             	mov    rbp,rsp
-  806e12:	48 83 ec 10          	sub    rsp,0x10
-  806e16:	89 7d fc             	mov    DWORD PTR [rbp-0x4],edi
+  806e2a:	f3 0f 1e fa          	endbr64 
+  806e2e:	55                   	push   rbp
+  806e2f:	48 89 e5             	mov    rbp,rsp
+  806e32:	48 83 ec 10          	sub    rsp,0x10
+  806e36:	89 7d fc             	mov    DWORD PTR [rbp-0x4],edi
     switch (disk)
-  806e19:	83 7d fc 03          	cmp    DWORD PTR [rbp-0x4],0x3
-  806e1d:	74 5f                	je     806e7e <disk_existent+0x74>
-  806e1f:	83 7d fc 03          	cmp    DWORD PTR [rbp-0x4],0x3
-  806e23:	7f 6e                	jg     806e93 <disk_existent+0x89>
-  806e25:	83 7d fc 02          	cmp    DWORD PTR [rbp-0x4],0x2
-  806e29:	74 3e                	je     806e69 <disk_existent+0x5f>
-  806e2b:	83 7d fc 02          	cmp    DWORD PTR [rbp-0x4],0x2
-  806e2f:	7f 62                	jg     806e93 <disk_existent+0x89>
-  806e31:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
-  806e35:	74 08                	je     806e3f <disk_existent+0x35>
-  806e37:	83 7d fc 01          	cmp    DWORD PTR [rbp-0x4],0x1
-  806e3b:	74 17                	je     806e54 <disk_existent+0x4a>
+  806e39:	83 7d fc 03          	cmp    DWORD PTR [rbp-0x4],0x3
+  806e3d:	74 5f                	je     806e9e <disk_existent+0x74>
+  806e3f:	83 7d fc 03          	cmp    DWORD PTR [rbp-0x4],0x3
+  806e43:	7f 6e                	jg     806eb3 <disk_existent+0x89>
+  806e45:	83 7d fc 02          	cmp    DWORD PTR [rbp-0x4],0x2
+  806e49:	74 3e                	je     806e89 <disk_existent+0x5f>
+  806e4b:	83 7d fc 02          	cmp    DWORD PTR [rbp-0x4],0x2
+  806e4f:	7f 62                	jg     806eb3 <disk_existent+0x89>
+  806e51:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
+  806e55:	74 08                	je     806e5f <disk_existent+0x35>
+  806e57:	83 7d fc 01          	cmp    DWORD PTR [rbp-0x4],0x1
+  806e5b:	74 17                	je     806e74 <disk_existent+0x4a>
         
     case DISK_SLAVE_SLAVE:
         return sys_find_dev("hd3")!=-1;
         break;
     default:
         break;
-  806e3d:	eb 54                	jmp    806e93 <disk_existent+0x89>
+  806e5d:	eb 54                	jmp    806eb3 <disk_existent+0x89>
         return sys_find_dev("hd0")!=-1;
-  806e3f:	bf 34 23 81 00       	mov    edi,0x812334
-  806e44:	e8 2e c1 ff ff       	call   802f77 <sys_find_dev>
-  806e49:	83 f8 ff             	cmp    eax,0xffffffff
-  806e4c:	0f 95 c0             	setne  al
-  806e4f:	0f b6 c0             	movzx  eax,al
-  806e52:	eb 45                	jmp    806e99 <disk_existent+0x8f>
+  806e5f:	bf 34 23 81 00       	mov    edi,0x812334
+  806e64:	e8 0e c1 ff ff       	call   802f77 <sys_find_dev>
+  806e69:	83 f8 ff             	cmp    eax,0xffffffff
+  806e6c:	0f 95 c0             	setne  al
+  806e6f:	0f b6 c0             	movzx  eax,al
+  806e72:	eb 45                	jmp    806eb9 <disk_existent+0x8f>
         return sys_find_dev("hd1")!=-1;
-  806e54:	bf 38 23 81 00       	mov    edi,0x812338
-  806e59:	e8 19 c1 ff ff       	call   802f77 <sys_find_dev>
-  806e5e:	83 f8 ff             	cmp    eax,0xffffffff
-  806e61:	0f 95 c0             	setne  al
-  806e64:	0f b6 c0             	movzx  eax,al
-  806e67:	eb 30                	jmp    806e99 <disk_existent+0x8f>
+  806e74:	bf 38 23 81 00       	mov    edi,0x812338
+  806e79:	e8 f9 c0 ff ff       	call   802f77 <sys_find_dev>
+  806e7e:	83 f8 ff             	cmp    eax,0xffffffff
+  806e81:	0f 95 c0             	setne  al
+  806e84:	0f b6 c0             	movzx  eax,al
+  806e87:	eb 30                	jmp    806eb9 <disk_existent+0x8f>
         return sys_find_dev("hd2")!=-1;
-  806e69:	bf 3c 23 81 00       	mov    edi,0x81233c
-  806e6e:	e8 04 c1 ff ff       	call   802f77 <sys_find_dev>
-  806e73:	83 f8 ff             	cmp    eax,0xffffffff
-  806e76:	0f 95 c0             	setne  al
-  806e79:	0f b6 c0             	movzx  eax,al
-  806e7c:	eb 1b                	jmp    806e99 <disk_existent+0x8f>
+  806e89:	bf 3c 23 81 00       	mov    edi,0x81233c
+  806e8e:	e8 e4 c0 ff ff       	call   802f77 <sys_find_dev>
+  806e93:	83 f8 ff             	cmp    eax,0xffffffff
+  806e96:	0f 95 c0             	setne  al
+  806e99:	0f b6 c0             	movzx  eax,al
+  806e9c:	eb 1b                	jmp    806eb9 <disk_existent+0x8f>
         return sys_find_dev("hd3")!=-1;
-  806e7e:	bf 40 23 81 00       	mov    edi,0x812340
-  806e83:	e8 ef c0 ff ff       	call   802f77 <sys_find_dev>
-  806e88:	83 f8 ff             	cmp    eax,0xffffffff
-  806e8b:	0f 95 c0             	setne  al
-  806e8e:	0f b6 c0             	movzx  eax,al
-  806e91:	eb 06                	jmp    806e99 <disk_existent+0x8f>
+  806e9e:	bf 40 23 81 00       	mov    edi,0x812340
+  806ea3:	e8 cf c0 ff ff       	call   802f77 <sys_find_dev>
+  806ea8:	83 f8 ff             	cmp    eax,0xffffffff
+  806eab:	0f 95 c0             	setne  al
+  806eae:	0f b6 c0             	movzx  eax,al
+  806eb1:	eb 06                	jmp    806eb9 <disk_existent+0x8f>
         break;
-  806e93:	90                   	nop
+  806eb3:	90                   	nop
     }
     return 0;
-  806e94:	b8 00 00 00 00       	mov    eax,0x0
+  806eb4:	b8 00 00 00 00       	mov    eax,0x0
 }
-  806e99:	c9                   	leave  
-  806e9a:	c3                   	ret    
+  806eb9:	c9                   	leave  
+  806eba:	c3                   	ret    
 
-0000000000806e9b <hd_iterate>:
+0000000000806ebb <hd_iterate>:
 int hd_iterate()
 {
-  806e9b:	f3 0f 1e fa          	endbr64 
-  806e9f:	55                   	push   rbp
-  806ea0:	48 89 e5             	mov    rbp,rsp
-  806ea3:	48 81 ec e0 00 00 00 	sub    rsp,0xe0
+  806ebb:	f3 0f 1e fa          	endbr64 
+  806ebf:	55                   	push   rbp
+  806ec0:	48 89 e5             	mov    rbp,rsp
+  806ec3:	48 81 ec e0 00 00 00 	sub    rsp,0xe0
     char *name;
     
     int r[4];
     r[0]=request(DISK_MAJOR_MAJOR,DISKREQ_CHECK,0,1,0);
-  806eaa:	41 b8 00 00 00 00    	mov    r8d,0x0
-  806eb0:	b9 01 00 00 00       	mov    ecx,0x1
-  806eb5:	ba 00 00 00 00       	mov    edx,0x0
-  806eba:	be 02 00 00 00       	mov    esi,0x2
-  806ebf:	bf 00 00 00 00       	mov    edi,0x0
-  806ec4:	e8 3b f8 ff ff       	call   806704 <request>
-  806ec9:	89 45 d0             	mov    DWORD PTR [rbp-0x30],eax
+  806eca:	41 b8 00 00 00 00    	mov    r8d,0x0
+  806ed0:	b9 01 00 00 00       	mov    ecx,0x1
+  806ed5:	ba 00 00 00 00       	mov    edx,0x0
+  806eda:	be 02 00 00 00       	mov    esi,0x2
+  806edf:	bf 00 00 00 00       	mov    edi,0x0
+  806ee4:	e8 3b f8 ff ff       	call   806724 <request>
+  806ee9:	89 45 d0             	mov    DWORD PTR [rbp-0x30],eax
     r[1]=request(DISK_MAJOR_SLAVE,DISKREQ_CHECK,0,1,0);
-  806ecc:	41 b8 00 00 00 00    	mov    r8d,0x0
-  806ed2:	b9 01 00 00 00       	mov    ecx,0x1
-  806ed7:	ba 00 00 00 00       	mov    edx,0x0
-  806edc:	be 02 00 00 00       	mov    esi,0x2
-  806ee1:	bf 01 00 00 00       	mov    edi,0x1
-  806ee6:	e8 19 f8 ff ff       	call   806704 <request>
-  806eeb:	89 45 d4             	mov    DWORD PTR [rbp-0x2c],eax
+  806eec:	41 b8 00 00 00 00    	mov    r8d,0x0
+  806ef2:	b9 01 00 00 00       	mov    ecx,0x1
+  806ef7:	ba 00 00 00 00       	mov    edx,0x0
+  806efc:	be 02 00 00 00       	mov    esi,0x2
+  806f01:	bf 01 00 00 00       	mov    edi,0x1
+  806f06:	e8 19 f8 ff ff       	call   806724 <request>
+  806f0b:	89 45 d4             	mov    DWORD PTR [rbp-0x2c],eax
     r[2]=request(DISK_SLAVE_MAJOR,DISKREQ_CHECK,0,1,0);
-  806eee:	41 b8 00 00 00 00    	mov    r8d,0x0
-  806ef4:	b9 01 00 00 00       	mov    ecx,0x1
-  806ef9:	ba 00 00 00 00       	mov    edx,0x0
-  806efe:	be 02 00 00 00       	mov    esi,0x2
-  806f03:	bf 02 00 00 00       	mov    edi,0x2
-  806f08:	e8 f7 f7 ff ff       	call   806704 <request>
-  806f0d:	89 45 d8             	mov    DWORD PTR [rbp-0x28],eax
+  806f0e:	41 b8 00 00 00 00    	mov    r8d,0x0
+  806f14:	b9 01 00 00 00       	mov    ecx,0x1
+  806f19:	ba 00 00 00 00       	mov    edx,0x0
+  806f1e:	be 02 00 00 00       	mov    esi,0x2
+  806f23:	bf 02 00 00 00       	mov    edi,0x2
+  806f28:	e8 f7 f7 ff ff       	call   806724 <request>
+  806f2d:	89 45 d8             	mov    DWORD PTR [rbp-0x28],eax
     r[3]=request(DISK_SLAVE_SLAVE,DISKREQ_CHECK,0,1,0);
-  806f10:	41 b8 00 00 00 00    	mov    r8d,0x0
-  806f16:	b9 01 00 00 00       	mov    ecx,0x1
-  806f1b:	ba 00 00 00 00       	mov    edx,0x0
-  806f20:	be 02 00 00 00       	mov    esi,0x2
-  806f25:	bf 03 00 00 00       	mov    edi,0x3
-  806f2a:	e8 d5 f7 ff ff       	call   806704 <request>
-  806f2f:	89 45 dc             	mov    DWORD PTR [rbp-0x24],eax
+  806f30:	41 b8 00 00 00 00    	mov    r8d,0x0
+  806f36:	b9 01 00 00 00       	mov    ecx,0x1
+  806f3b:	ba 00 00 00 00       	mov    edx,0x0
+  806f40:	be 02 00 00 00       	mov    esi,0x2
+  806f45:	bf 03 00 00 00       	mov    edi,0x3
+  806f4a:	e8 d5 f7 ff ff       	call   806724 <request>
+  806f4f:	89 45 dc             	mov    DWORD PTR [rbp-0x24],eax
     for(int i=0;i<4;i++)
-  806f32:	c7 45 f4 00 00 00 00 	mov    DWORD PTR [rbp-0xc],0x0
-  806f39:	e9 72 01 00 00       	jmp    8070b0 <hd_iterate+0x215>
+  806f52:	c7 45 f4 00 00 00 00 	mov    DWORD PTR [rbp-0xc],0x0
+  806f59:	e9 72 01 00 00       	jmp    8070d0 <hd_iterate+0x215>
     {
         int disk;
         switch (i)
-  806f3e:	83 7d f4 03          	cmp    DWORD PTR [rbp-0xc],0x3
-  806f42:	74 3b                	je     806f7f <hd_iterate+0xe4>
-  806f44:	83 7d f4 03          	cmp    DWORD PTR [rbp-0xc],0x3
-  806f48:	7f 3e                	jg     806f88 <hd_iterate+0xed>
-  806f4a:	83 7d f4 02          	cmp    DWORD PTR [rbp-0xc],0x2
-  806f4e:	74 26                	je     806f76 <hd_iterate+0xdb>
-  806f50:	83 7d f4 02          	cmp    DWORD PTR [rbp-0xc],0x2
-  806f54:	7f 32                	jg     806f88 <hd_iterate+0xed>
-  806f56:	83 7d f4 00          	cmp    DWORD PTR [rbp-0xc],0x0
-  806f5a:	74 08                	je     806f64 <hd_iterate+0xc9>
-  806f5c:	83 7d f4 01          	cmp    DWORD PTR [rbp-0xc],0x1
-  806f60:	74 0b                	je     806f6d <hd_iterate+0xd2>
-  806f62:	eb 24                	jmp    806f88 <hd_iterate+0xed>
+  806f5e:	83 7d f4 03          	cmp    DWORD PTR [rbp-0xc],0x3
+  806f62:	74 3b                	je     806f9f <hd_iterate+0xe4>
+  806f64:	83 7d f4 03          	cmp    DWORD PTR [rbp-0xc],0x3
+  806f68:	7f 3e                	jg     806fa8 <hd_iterate+0xed>
+  806f6a:	83 7d f4 02          	cmp    DWORD PTR [rbp-0xc],0x2
+  806f6e:	74 26                	je     806f96 <hd_iterate+0xdb>
+  806f70:	83 7d f4 02          	cmp    DWORD PTR [rbp-0xc],0x2
+  806f74:	7f 32                	jg     806fa8 <hd_iterate+0xed>
+  806f76:	83 7d f4 00          	cmp    DWORD PTR [rbp-0xc],0x0
+  806f7a:	74 08                	je     806f84 <hd_iterate+0xc9>
+  806f7c:	83 7d f4 01          	cmp    DWORD PTR [rbp-0xc],0x1
+  806f80:	74 0b                	je     806f8d <hd_iterate+0xd2>
+  806f82:	eb 24                	jmp    806fa8 <hd_iterate+0xed>
         {
         case 0:disk=DISK_MAJOR_MAJOR;break;
-  806f64:	c7 45 f0 00 00 00 00 	mov    DWORD PTR [rbp-0x10],0x0
-  806f6b:	eb 25                	jmp    806f92 <hd_iterate+0xf7>
+  806f84:	c7 45 f0 00 00 00 00 	mov    DWORD PTR [rbp-0x10],0x0
+  806f8b:	eb 25                	jmp    806fb2 <hd_iterate+0xf7>
         case 1:disk=DISK_MAJOR_SLAVE;break;
-  806f6d:	c7 45 f0 01 00 00 00 	mov    DWORD PTR [rbp-0x10],0x1
-  806f74:	eb 1c                	jmp    806f92 <hd_iterate+0xf7>
+  806f8d:	c7 45 f0 01 00 00 00 	mov    DWORD PTR [rbp-0x10],0x1
+  806f94:	eb 1c                	jmp    806fb2 <hd_iterate+0xf7>
         case 2:disk=DISK_SLAVE_MAJOR;break;
-  806f76:	c7 45 f0 02 00 00 00 	mov    DWORD PTR [rbp-0x10],0x2
-  806f7d:	eb 13                	jmp    806f92 <hd_iterate+0xf7>
+  806f96:	c7 45 f0 02 00 00 00 	mov    DWORD PTR [rbp-0x10],0x2
+  806f9d:	eb 13                	jmp    806fb2 <hd_iterate+0xf7>
         case 3:disk=DISK_SLAVE_SLAVE;break;
-  806f7f:	c7 45 f0 03 00 00 00 	mov    DWORD PTR [rbp-0x10],0x3
-  806f86:	eb 0a                	jmp    806f92 <hd_iterate+0xf7>
+  806f9f:	c7 45 f0 03 00 00 00 	mov    DWORD PTR [rbp-0x10],0x3
+  806fa6:	eb 0a                	jmp    806fb2 <hd_iterate+0xf7>
         default:
             return -1;
-  806f88:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  806f8d:	e9 28 01 00 00       	jmp    8070ba <hd_iterate+0x21f>
+  806fa8:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  806fad:	e9 28 01 00 00       	jmp    8070da <hd_iterate+0x21f>
             break;
         }
         if(chk_result(r[i]))//&&!disk_existent(disk)
-  806f92:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
-  806f95:	48 98                	cdqe   
-  806f97:	8b 44 85 d0          	mov    eax,DWORD PTR [rbp+rax*4-0x30]
-  806f9b:	89 c7                	mov    edi,eax
-  806f9d:	e8 16 fe ff ff       	call   806db8 <chk_result>
-  806fa2:	85 c0                	test   eax,eax
-  806fa4:	0f 84 81 00 00 00    	je     80702b <hd_iterate+0x190>
+  806fb2:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
+  806fb5:	48 98                	cdqe   
+  806fb7:	8b 44 85 d0          	mov    eax,DWORD PTR [rbp+rax*4-0x30]
+  806fbb:	89 c7                	mov    edi,eax
+  806fbd:	e8 16 fe ff ff       	call   806dd8 <chk_result>
+  806fc2:	85 c0                	test   eax,eax
+  806fc4:	0f 84 81 00 00 00    	je     80704b <hd_iterate+0x190>
         {
             printf("disk %d checked.\n",i);
-  806faa:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
-  806fad:	89 c6                	mov    esi,eax
-  806faf:	bf 44 23 81 00       	mov    edi,0x812344
-  806fb4:	b8 00 00 00 00       	mov    eax,0x0
-  806fb9:	e8 1b 9d ff ff       	call   800cd9 <printf>
+  806fca:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
+  806fcd:	89 c6                	mov    esi,eax
+  806fcf:	bf 44 23 81 00       	mov    edi,0x812344
+  806fd4:	b8 00 00 00 00       	mov    eax,0x0
+  806fd9:	e8 fb 9c ff ff       	call   800cd9 <printf>
             //新硬盘
             device hd={
-  806fbe:	48 8d 95 20 ff ff ff 	lea    rdx,[rbp-0xe0]
-  806fc5:	b8 00 00 00 00       	mov    eax,0x0
-  806fca:	b9 15 00 00 00       	mov    ecx,0x15
-  806fcf:	48 89 d7             	mov    rdi,rdx
-  806fd2:	f3 48 ab             	rep stos QWORD PTR es:[rdi],rax
-  806fd5:	8b 45 f0             	mov    eax,DWORD PTR [rbp-0x10]
-  806fd8:	89 85 24 ff ff ff    	mov    DWORD PTR [rbp-0xdc],eax
-  806fde:	c7 85 28 ff ff ff 01 	mov    DWORD PTR [rbp-0xd8],0x1
-  806fe5:	00 00 00 
-  806fe8:	c7 85 2c ff ff ff 01 	mov    DWORD PTR [rbp-0xd4],0x1
-  806fef:	00 00 00 
+  806fde:	48 8d 95 20 ff ff ff 	lea    rdx,[rbp-0xe0]
+  806fe5:	b8 00 00 00 00       	mov    eax,0x0
+  806fea:	b9 15 00 00 00       	mov    ecx,0x15
+  806fef:	48 89 d7             	mov    rdi,rdx
+  806ff2:	f3 48 ab             	rep stos QWORD PTR es:[rdi],rax
+  806ff5:	8b 45 f0             	mov    eax,DWORD PTR [rbp-0x10]
+  806ff8:	89 85 24 ff ff ff    	mov    DWORD PTR [rbp-0xdc],eax
+  806ffe:	c7 85 28 ff ff ff 01 	mov    DWORD PTR [rbp-0xd8],0x1
+  807005:	00 00 00 
+  807008:	c7 85 2c ff ff ff 01 	mov    DWORD PTR [rbp-0xd4],0x1
+  80700f:	00 00 00 
                 .type=DEV_TYPE_BLKDEV,
                 .stype=DEV_STYPE_HD,
                 .slave_dev=disk,
                 .start_port=i<2?PORT_DISK_MAJOR:PORT_DISK_SLAVE
-  806ff2:	83 7d f4 01          	cmp    DWORD PTR [rbp-0xc],0x1
-  806ff6:	7f 07                	jg     806fff <hd_iterate+0x164>
-  806ff8:	b8 f0 01 00 00       	mov    eax,0x1f0
-  806ffd:	eb 05                	jmp    807004 <hd_iterate+0x169>
-  806fff:	b8 70 01 00 00       	mov    eax,0x170
+  807012:	83 7d f4 01          	cmp    DWORD PTR [rbp-0xc],0x1
+  807016:	7f 07                	jg     80701f <hd_iterate+0x164>
+  807018:	b8 f0 01 00 00       	mov    eax,0x1f0
+  80701d:	eb 05                	jmp    807024 <hd_iterate+0x169>
+  80701f:	b8 70 01 00 00       	mov    eax,0x170
             device hd={
-  807004:	89 85 58 ff ff ff    	mov    DWORD PTR [rbp-0xa8],eax
+  807024:	89 85 58 ff ff ff    	mov    DWORD PTR [rbp-0xa8],eax
             };
             disks[i]=reg_device(&hd);
-  80700a:	48 8d 85 20 ff ff ff 	lea    rax,[rbp-0xe0]
-  807011:	48 89 c7             	mov    rdi,rax
-  807014:	e8 26 bb ff ff       	call   802b3f <reg_device>
-  807019:	8b 55 f4             	mov    edx,DWORD PTR [rbp-0xc]
-  80701c:	48 63 d2             	movsxd rdx,edx
-  80701f:	89 04 95 e0 a4 42 00 	mov    DWORD PTR [rdx*4+0x42a4e0],eax
-  807026:	e9 81 00 00 00       	jmp    8070ac <hd_iterate+0x211>
+  80702a:	48 8d 85 20 ff ff ff 	lea    rax,[rbp-0xe0]
+  807031:	48 89 c7             	mov    rdi,rax
+  807034:	e8 06 bb ff ff       	call   802b3f <reg_device>
+  807039:	8b 55 f4             	mov    edx,DWORD PTR [rbp-0xc]
+  80703c:	48 63 d2             	movsxd rdx,edx
+  80703f:	89 04 95 e0 a4 42 00 	mov    DWORD PTR [rdx*4+0x42a4e0],eax
+  807046:	e9 81 00 00 00       	jmp    8070cc <hd_iterate+0x211>
         }else if(!chk_result(r[i]))//&&disk_existent(disk)
-  80702b:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
-  80702e:	48 98                	cdqe   
-  807030:	8b 44 85 d0          	mov    eax,DWORD PTR [rbp+rax*4-0x30]
-  807034:	89 c7                	mov    edi,eax
-  807036:	e8 7d fd ff ff       	call   806db8 <chk_result>
-  80703b:	85 c0                	test   eax,eax
-  80703d:	75 6d                	jne    8070ac <hd_iterate+0x211>
+  80704b:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
+  80704e:	48 98                	cdqe   
+  807050:	8b 44 85 d0          	mov    eax,DWORD PTR [rbp+rax*4-0x30]
+  807054:	89 c7                	mov    edi,eax
+  807056:	e8 7d fd ff ff       	call   806dd8 <chk_result>
+  80705b:	85 c0                	test   eax,eax
+  80705d:	75 6d                	jne    8070cc <hd_iterate+0x211>
         {
             switch (i)
-  80703f:	83 7d f4 03          	cmp    DWORD PTR [rbp-0xc],0x3
-  807043:	74 3e                	je     807083 <hd_iterate+0x1e8>
-  807045:	83 7d f4 03          	cmp    DWORD PTR [rbp-0xc],0x3
-  807049:	7f 41                	jg     80708c <hd_iterate+0x1f1>
-  80704b:	83 7d f4 02          	cmp    DWORD PTR [rbp-0xc],0x2
-  80704f:	74 28                	je     807079 <hd_iterate+0x1de>
-  807051:	83 7d f4 02          	cmp    DWORD PTR [rbp-0xc],0x2
-  807055:	7f 35                	jg     80708c <hd_iterate+0x1f1>
-  807057:	83 7d f4 00          	cmp    DWORD PTR [rbp-0xc],0x0
-  80705b:	74 08                	je     807065 <hd_iterate+0x1ca>
-  80705d:	83 7d f4 01          	cmp    DWORD PTR [rbp-0xc],0x1
-  807061:	74 0c                	je     80706f <hd_iterate+0x1d4>
-  807063:	eb 27                	jmp    80708c <hd_iterate+0x1f1>
+  80705f:	83 7d f4 03          	cmp    DWORD PTR [rbp-0xc],0x3
+  807063:	74 3e                	je     8070a3 <hd_iterate+0x1e8>
+  807065:	83 7d f4 03          	cmp    DWORD PTR [rbp-0xc],0x3
+  807069:	7f 41                	jg     8070ac <hd_iterate+0x1f1>
+  80706b:	83 7d f4 02          	cmp    DWORD PTR [rbp-0xc],0x2
+  80706f:	74 28                	je     807099 <hd_iterate+0x1de>
+  807071:	83 7d f4 02          	cmp    DWORD PTR [rbp-0xc],0x2
+  807075:	7f 35                	jg     8070ac <hd_iterate+0x1f1>
+  807077:	83 7d f4 00          	cmp    DWORD PTR [rbp-0xc],0x0
+  80707b:	74 08                	je     807085 <hd_iterate+0x1ca>
+  80707d:	83 7d f4 01          	cmp    DWORD PTR [rbp-0xc],0x1
+  807081:	74 0c                	je     80708f <hd_iterate+0x1d4>
+  807083:	eb 27                	jmp    8070ac <hd_iterate+0x1f1>
             {
             case 0:name="hd0";break;
-  807065:	48 c7 45 f8 34 23 81 	mov    QWORD PTR [rbp-0x8],0x812334
-  80706c:	00 
-  80706d:	eb 1d                	jmp    80708c <hd_iterate+0x1f1>
+  807085:	48 c7 45 f8 34 23 81 	mov    QWORD PTR [rbp-0x8],0x812334
+  80708c:	00 
+  80708d:	eb 1d                	jmp    8070ac <hd_iterate+0x1f1>
             case 1:name="hd1";break;
-  80706f:	48 c7 45 f8 38 23 81 	mov    QWORD PTR [rbp-0x8],0x812338
-  807076:	00 
-  807077:	eb 13                	jmp    80708c <hd_iterate+0x1f1>
+  80708f:	48 c7 45 f8 38 23 81 	mov    QWORD PTR [rbp-0x8],0x812338
+  807096:	00 
+  807097:	eb 13                	jmp    8070ac <hd_iterate+0x1f1>
             case 2:name="hd2";break;
-  807079:	48 c7 45 f8 3c 23 81 	mov    QWORD PTR [rbp-0x8],0x81233c
-  807080:	00 
-  807081:	eb 09                	jmp    80708c <hd_iterate+0x1f1>
+  807099:	48 c7 45 f8 3c 23 81 	mov    QWORD PTR [rbp-0x8],0x81233c
+  8070a0:	00 
+  8070a1:	eb 09                	jmp    8070ac <hd_iterate+0x1f1>
             case 3:name="hd3";break;
-  807083:	48 c7 45 f8 40 23 81 	mov    QWORD PTR [rbp-0x8],0x812340
-  80708a:	00 
-  80708b:	90                   	nop
+  8070a3:	48 c7 45 f8 40 23 81 	mov    QWORD PTR [rbp-0x8],0x812340
+  8070aa:	00 
+  8070ab:	90                   	nop
             }
             //有硬盘被卸载了
             int devi=sys_find_dev(name);
-  80708c:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  807090:	48 89 c7             	mov    rdi,rax
-  807093:	e8 df be ff ff       	call   802f77 <sys_find_dev>
-  807098:	89 45 ec             	mov    DWORD PTR [rbp-0x14],eax
+  8070ac:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  8070b0:	48 89 c7             	mov    rdi,rax
+  8070b3:	e8 bf be ff ff       	call   802f77 <sys_find_dev>
+  8070b8:	89 45 ec             	mov    DWORD PTR [rbp-0x14],eax
             dispose_device(get_dev(devi));
-  80709b:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
-  80709e:	89 c7                	mov    edi,eax
-  8070a0:	e8 a6 c5 ff ff       	call   80364b <get_dev>
-  8070a5:	89 c7                	mov    edi,eax
-  8070a7:	e8 f2 c4 ff ff       	call   80359e <dispose_device>
+  8070bb:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+  8070be:	89 c7                	mov    edi,eax
+  8070c0:	e8 86 c5 ff ff       	call   80364b <get_dev>
+  8070c5:	89 c7                	mov    edi,eax
+  8070c7:	e8 d2 c4 ff ff       	call   80359e <dispose_device>
     for(int i=0;i<4;i++)
-  8070ac:	83 45 f4 01          	add    DWORD PTR [rbp-0xc],0x1
-  8070b0:	83 7d f4 03          	cmp    DWORD PTR [rbp-0xc],0x3
-  8070b4:	0f 8e 84 fe ff ff    	jle    806f3e <hd_iterate+0xa3>
+  8070cc:	83 45 f4 01          	add    DWORD PTR [rbp-0xc],0x1
+  8070d0:	83 7d f4 03          	cmp    DWORD PTR [rbp-0xc],0x3
+  8070d4:	0f 8e 84 fe ff ff    	jle    806f5e <hd_iterate+0xa3>
         }
 
     }
 }
-  8070ba:	c9                   	leave  
-  8070bb:	c3                   	ret    
+  8070da:	c9                   	leave  
+  8070db:	c3                   	ret    
 
-00000000008070bc <async_check_disk>:
+00000000008070dc <async_check_disk>:
 
 int async_check_disk(int disk)
 {
-  8070bc:	f3 0f 1e fa          	endbr64 
-  8070c0:	55                   	push   rbp
-  8070c1:	48 89 e5             	mov    rbp,rsp
-  8070c4:	48 83 ec 20          	sub    rsp,0x20
-  8070c8:	89 7d ec             	mov    DWORD PTR [rbp-0x14],edi
+  8070dc:	f3 0f 1e fa          	endbr64 
+  8070e0:	55                   	push   rbp
+  8070e1:	48 89 e5             	mov    rbp,rsp
+  8070e4:	48 83 ec 20          	sub    rsp,0x20
+  8070e8:	89 7d ec             	mov    DWORD PTR [rbp-0x14],edi
     unsigned short disknr=PORT_DISK_MAJOR;
-  8070cb:	66 c7 45 fe f0 01    	mov    WORD PTR [rbp-0x2],0x1f0
+  8070eb:	66 c7 45 fe f0 01    	mov    WORD PTR [rbp-0x2],0x1f0
     unsigned short chkcmd=0xe0;
-  8070d1:	66 c7 45 fc e0 00    	mov    WORD PTR [rbp-0x4],0xe0
+  8070f1:	66 c7 45 fc e0 00    	mov    WORD PTR [rbp-0x4],0xe0
     if(disk==DISK_SLAVE_MAJOR||disk==DISK_SLAVE_SLAVE)
-  8070d7:	83 7d ec 02          	cmp    DWORD PTR [rbp-0x14],0x2
-  8070db:	74 06                	je     8070e3 <async_check_disk+0x27>
-  8070dd:	83 7d ec 03          	cmp    DWORD PTR [rbp-0x14],0x3
-  8070e1:	75 06                	jne    8070e9 <async_check_disk+0x2d>
+  8070f7:	83 7d ec 02          	cmp    DWORD PTR [rbp-0x14],0x2
+  8070fb:	74 06                	je     807103 <async_check_disk+0x27>
+  8070fd:	83 7d ec 03          	cmp    DWORD PTR [rbp-0x14],0x3
+  807101:	75 06                	jne    807109 <async_check_disk+0x2d>
         disknr=PORT_DISK_SLAVE;
-  8070e3:	66 c7 45 fe 70 01    	mov    WORD PTR [rbp-0x2],0x170
+  807103:	66 c7 45 fe 70 01    	mov    WORD PTR [rbp-0x2],0x170
     if(disk==DISK_MAJOR_SLAVE||disk==DISK_SLAVE_SLAVE)
-  8070e9:	83 7d ec 01          	cmp    DWORD PTR [rbp-0x14],0x1
-  8070ed:	74 06                	je     8070f5 <async_check_disk+0x39>
-  8070ef:	83 7d ec 03          	cmp    DWORD PTR [rbp-0x14],0x3
-  8070f3:	75 06                	jne    8070fb <async_check_disk+0x3f>
+  807109:	83 7d ec 01          	cmp    DWORD PTR [rbp-0x14],0x1
+  80710d:	74 06                	je     807115 <async_check_disk+0x39>
+  80710f:	83 7d ec 03          	cmp    DWORD PTR [rbp-0x14],0x3
+  807113:	75 06                	jne    80711b <async_check_disk+0x3f>
         chkcmd=0xf0;
-  8070f5:	66 c7 45 fc f0 00    	mov    WORD PTR [rbp-0x4],0xf0
+  807115:	66 c7 45 fc f0 00    	mov    WORD PTR [rbp-0x4],0xf0
     outb(disknr+2,1);
-  8070fb:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
-  8070ff:	83 c0 02             	add    eax,0x2
-  807102:	0f b7 c0             	movzx  eax,ax
-  807105:	be 01 00 00 00       	mov    esi,0x1
-  80710a:	89 c7                	mov    edi,eax
-  80710c:	e8 bf dd ff ff       	call   804ed0 <outb>
+  80711b:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
+  80711f:	83 c0 02             	add    eax,0x2
+  807122:	0f b7 c0             	movzx  eax,ax
+  807125:	be 01 00 00 00       	mov    esi,0x1
+  80712a:	89 c7                	mov    edi,eax
+  80712c:	e8 bf dd ff ff       	call   804ef0 <outb>
     outb(disknr+3,0);
-  807111:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
-  807115:	83 c0 03             	add    eax,0x3
-  807118:	0f b7 c0             	movzx  eax,ax
-  80711b:	be 00 00 00 00       	mov    esi,0x0
-  807120:	89 c7                	mov    edi,eax
-  807122:	e8 a9 dd ff ff       	call   804ed0 <outb>
+  807131:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
+  807135:	83 c0 03             	add    eax,0x3
+  807138:	0f b7 c0             	movzx  eax,ax
+  80713b:	be 00 00 00 00       	mov    esi,0x0
+  807140:	89 c7                	mov    edi,eax
+  807142:	e8 a9 dd ff ff       	call   804ef0 <outb>
     outb(disknr+4,0);
-  807127:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
-  80712b:	83 c0 04             	add    eax,0x4
-  80712e:	0f b7 c0             	movzx  eax,ax
-  807131:	be 00 00 00 00       	mov    esi,0x0
-  807136:	89 c7                	mov    edi,eax
-  807138:	e8 93 dd ff ff       	call   804ed0 <outb>
+  807147:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
+  80714b:	83 c0 04             	add    eax,0x4
+  80714e:	0f b7 c0             	movzx  eax,ax
+  807151:	be 00 00 00 00       	mov    esi,0x0
+  807156:	89 c7                	mov    edi,eax
+  807158:	e8 93 dd ff ff       	call   804ef0 <outb>
     outb(disknr+5,0);
-  80713d:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
-  807141:	83 c0 05             	add    eax,0x5
-  807144:	0f b7 c0             	movzx  eax,ax
-  807147:	be 00 00 00 00       	mov    esi,0x0
-  80714c:	89 c7                	mov    edi,eax
-  80714e:	e8 7d dd ff ff       	call   804ed0 <outb>
+  80715d:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
+  807161:	83 c0 05             	add    eax,0x5
+  807164:	0f b7 c0             	movzx  eax,ax
+  807167:	be 00 00 00 00       	mov    esi,0x0
+  80716c:	89 c7                	mov    edi,eax
+  80716e:	e8 7d dd ff ff       	call   804ef0 <outb>
     outb(disknr+6,chkcmd);//主硬盘
-  807153:	0f b7 45 fc          	movzx  eax,WORD PTR [rbp-0x4]
-  807157:	0f b6 d0             	movzx  edx,al
-  80715a:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
-  80715e:	83 c0 06             	add    eax,0x6
-  807161:	0f b7 c0             	movzx  eax,ax
-  807164:	89 d6                	mov    esi,edx
-  807166:	89 c7                	mov    edi,eax
-  807168:	e8 63 dd ff ff       	call   804ed0 <outb>
+  807173:	0f b7 45 fc          	movzx  eax,WORD PTR [rbp-0x4]
+  807177:	0f b6 d0             	movzx  edx,al
+  80717a:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
+  80717e:	83 c0 06             	add    eax,0x6
+  807181:	0f b7 c0             	movzx  eax,ax
+  807184:	89 d6                	mov    esi,edx
+  807186:	89 c7                	mov    edi,eax
+  807188:	e8 63 dd ff ff       	call   804ef0 <outb>
     outb(disknr+7,DISK_CMD_CHECK);
-  80716d:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
-  807171:	83 c0 07             	add    eax,0x7
-  807174:	0f b7 c0             	movzx  eax,ax
-  807177:	be 90 00 00 00       	mov    esi,0x90
-  80717c:	89 c7                	mov    edi,eax
-  80717e:	e8 4d dd ff ff       	call   804ed0 <outb>
+  80718d:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
+  807191:	83 c0 07             	add    eax,0x7
+  807194:	0f b7 c0             	movzx  eax,ax
+  807197:	be 90 00 00 00       	mov    esi,0x90
+  80719c:	89 c7                	mov    edi,eax
+  80719e:	e8 4d dd ff ff       	call   804ef0 <outb>
     //     // {
     //     //     printf("DISK ERR\n");
     //     //     return -1;
     //     // }
     // }
     return 0;
-  807183:	b8 00 00 00 00       	mov    eax,0x0
+  8071a3:	b8 00 00 00 00       	mov    eax,0x0
 }
-  807188:	c9                   	leave  
-  807189:	c3                   	ret    
+  8071a8:	c9                   	leave  
+  8071a9:	c3                   	ret    
 
-000000000080718a <hd_do_req>:
+00000000008071aa <hd_do_req>:
 
 //接口函数：负责接收VFS的请求然后执行
 int hd_do_req(driver_args *args)
 {
-  80718a:	f3 0f 1e fa          	endbr64 
-  80718e:	55                   	push   rbp
-  80718f:	48 89 e5             	mov    rbp,rsp
-  807192:	48 83 ec 18          	sub    rsp,0x18
-  807196:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
+  8071aa:	f3 0f 1e fa          	endbr64 
+  8071ae:	55                   	push   rbp
+  8071af:	48 89 e5             	mov    rbp,rsp
+  8071b2:	48 83 ec 18          	sub    rsp,0x18
+  8071b6:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
     int diski=0;
-  80719a:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
+  8071ba:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
     for(;disks[diski]!=args->dev;diski++);
-  8071a1:	eb 04                	jmp    8071a7 <hd_do_req+0x1d>
-  8071a3:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
-  8071a7:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8071aa:	48 98                	cdqe   
-  8071ac:	8b 14 85 e0 a4 42 00 	mov    edx,DWORD PTR [rax*4+0x42a4e0]
-  8071b3:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  8071b7:	8b 80 8c 00 00 00    	mov    eax,DWORD PTR [rax+0x8c]
-  8071bd:	39 c2                	cmp    edx,eax
-  8071bf:	75 e2                	jne    8071a3 <hd_do_req+0x19>
+  8071c1:	eb 04                	jmp    8071c7 <hd_do_req+0x1d>
+  8071c3:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
+  8071c7:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  8071ca:	48 98                	cdqe   
+  8071cc:	8b 14 85 e0 a4 42 00 	mov    edx,DWORD PTR [rax*4+0x42a4e0]
+  8071d3:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  8071d7:	8b 80 8c 00 00 00    	mov    eax,DWORD PTR [rax+0x8c]
+  8071dd:	39 c2                	cmp    edx,eax
+  8071df:	75 e2                	jne    8071c3 <hd_do_req+0x19>
     switch (args->cmd)
-  8071c1:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  8071c5:	8b 80 a8 00 00 00    	mov    eax,DWORD PTR [rax+0xa8]
-  8071cb:	83 f8 04             	cmp    eax,0x4
-  8071ce:	74 72                	je     807242 <hd_do_req+0xb8>
-  8071d0:	83 f8 04             	cmp    eax,0x4
-  8071d3:	0f 8f 96 00 00 00    	jg     80726f <hd_do_req+0xe5>
-  8071d9:	83 f8 02             	cmp    eax,0x2
-  8071dc:	74 0a                	je     8071e8 <hd_do_req+0x5e>
-  8071de:	83 f8 03             	cmp    eax,0x3
-  8071e1:	74 32                	je     807215 <hd_do_req+0x8b>
-  8071e3:	e9 87 00 00 00       	jmp    80726f <hd_do_req+0xe5>
+  8071e1:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  8071e5:	8b 80 a8 00 00 00    	mov    eax,DWORD PTR [rax+0xa8]
+  8071eb:	83 f8 04             	cmp    eax,0x4
+  8071ee:	74 72                	je     807262 <hd_do_req+0xb8>
+  8071f0:	83 f8 04             	cmp    eax,0x4
+  8071f3:	0f 8f 96 00 00 00    	jg     80728f <hd_do_req+0xe5>
+  8071f9:	83 f8 02             	cmp    eax,0x2
+  8071fc:	74 0a                	je     807208 <hd_do_req+0x5e>
+  8071fe:	83 f8 03             	cmp    eax,0x3
+  807201:	74 32                	je     807235 <hd_do_req+0x8b>
+  807203:	e9 87 00 00 00       	jmp    80728f <hd_do_req+0xe5>
     {
     case DRVF_READ:
         request(diski,DISKREQ_READ,args->lba,args->sec_c,args->dist_addr);
-  8071e8:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  8071ec:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
-  8071ef:	48 98                	cdqe   
-  8071f1:	48 89 c6             	mov    rsi,rax
-  8071f4:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  8071f8:	8b 48 18             	mov    ecx,DWORD PTR [rax+0x18]
-  8071fb:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  8071ff:	8b 10                	mov    edx,DWORD PTR [rax]
-  807201:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  807204:	49 89 f0             	mov    r8,rsi
-  807207:	be 00 00 00 00       	mov    esi,0x0
-  80720c:	89 c7                	mov    edi,eax
-  80720e:	e8 f1 f4 ff ff       	call   806704 <request>
+  807208:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  80720c:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
+  80720f:	48 98                	cdqe   
+  807211:	48 89 c6             	mov    rsi,rax
+  807214:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  807218:	8b 48 18             	mov    ecx,DWORD PTR [rax+0x18]
+  80721b:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  80721f:	8b 10                	mov    edx,DWORD PTR [rax]
+  807221:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  807224:	49 89 f0             	mov    r8,rsi
+  807227:	be 00 00 00 00       	mov    esi,0x0
+  80722c:	89 c7                	mov    edi,eax
+  80722e:	e8 f1 f4 ff ff       	call   806724 <request>
         break;
-  807213:	eb 61                	jmp    807276 <hd_do_req+0xec>
+  807233:	eb 61                	jmp    807296 <hd_do_req+0xec>
     case DRVF_WRITE:
         request(diski,DISKREQ_WRITE,args->lba,args->sec_c,args->src_addr);
-  807215:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  807219:	8b 40 08             	mov    eax,DWORD PTR [rax+0x8]
-  80721c:	48 98                	cdqe   
-  80721e:	48 89 c6             	mov    rsi,rax
-  807221:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  807225:	8b 48 18             	mov    ecx,DWORD PTR [rax+0x18]
-  807228:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  80722c:	8b 10                	mov    edx,DWORD PTR [rax]
-  80722e:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  807231:	49 89 f0             	mov    r8,rsi
-  807234:	be 01 00 00 00       	mov    esi,0x1
-  807239:	89 c7                	mov    edi,eax
-  80723b:	e8 c4 f4 ff ff       	call   806704 <request>
+  807235:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  807239:	8b 40 08             	mov    eax,DWORD PTR [rax+0x8]
+  80723c:	48 98                	cdqe   
+  80723e:	48 89 c6             	mov    rsi,rax
+  807241:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  807245:	8b 48 18             	mov    ecx,DWORD PTR [rax+0x18]
+  807248:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  80724c:	8b 10                	mov    edx,DWORD PTR [rax]
+  80724e:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  807251:	49 89 f0             	mov    r8,rsi
+  807254:	be 01 00 00 00       	mov    esi,0x1
+  807259:	89 c7                	mov    edi,eax
+  80725b:	e8 c4 f4 ff ff       	call   806724 <request>
         break;
-  807240:	eb 34                	jmp    807276 <hd_do_req+0xec>
+  807260:	eb 34                	jmp    807296 <hd_do_req+0xec>
     case DRVF_CHK:
         request(diski,DISKREQ_CHECK,args->lba,args->sec_c,args->dist_addr);
-  807242:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  807246:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
-  807249:	48 98                	cdqe   
-  80724b:	48 89 c6             	mov    rsi,rax
-  80724e:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  807252:	8b 48 18             	mov    ecx,DWORD PTR [rax+0x18]
-  807255:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  807259:	8b 10                	mov    edx,DWORD PTR [rax]
-  80725b:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  80725e:	49 89 f0             	mov    r8,rsi
-  807261:	be 02 00 00 00       	mov    esi,0x2
-  807266:	89 c7                	mov    edi,eax
-  807268:	e8 97 f4 ff ff       	call   806704 <request>
+  807262:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  807266:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
+  807269:	48 98                	cdqe   
+  80726b:	48 89 c6             	mov    rsi,rax
+  80726e:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  807272:	8b 48 18             	mov    ecx,DWORD PTR [rax+0x18]
+  807275:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  807279:	8b 10                	mov    edx,DWORD PTR [rax]
+  80727b:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  80727e:	49 89 f0             	mov    r8,rsi
+  807281:	be 02 00 00 00       	mov    esi,0x2
+  807286:	89 c7                	mov    edi,eax
+  807288:	e8 97 f4 ff ff       	call   806724 <request>
         break;
-  80726d:	eb 07                	jmp    807276 <hd_do_req+0xec>
+  80728d:	eb 07                	jmp    807296 <hd_do_req+0xec>
     default:return -1;
-  80726f:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  807274:	eb 1e                	jmp    807294 <hd_do_req+0x10a>
+  80728f:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  807294:	eb 1e                	jmp    8072b4 <hd_do_req+0x10a>
     }
     args->stat=REQ_STAT_WORKING;
-  807276:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  80727a:	c7 80 ac 00 00 00 02 	mov    DWORD PTR [rax+0xac],0x2
-  807281:	00 00 00 
+  807296:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  80729a:	c7 80 ac 00 00 00 02 	mov    DWORD PTR [rax+0xac],0x2
+  8072a1:	00 00 00 
     running_devman_req=args;
-  807284:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  807288:	48 89 05 39 32 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc23239],rax        # 42a4c8 <running_devman_req>
+  8072a4:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  8072a8:	48 89 05 19 32 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc23219],rax        # 42a4c8 <running_devman_req>
     return 0;
-  80728f:	b8 00 00 00 00       	mov    eax,0x0
-  807294:	c9                   	leave  
-  807295:	c3                   	ret    
-  807296:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
-  80729d:	00 00 00 
+  8072af:	b8 00 00 00 00       	mov    eax,0x0
+  8072b4:	c9                   	leave  
+  8072b5:	c3                   	ret    
+  8072b6:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
+  8072bd:	00 00 00 
 
-00000000008072a0 <disk_int_handler>:
-  8072a0:	e8 59 dc ff ff       	call   804efe <eoi>
-  8072a5:	e8 6b f2 ff ff       	call   806515 <disk_int_handler_c>
-  8072aa:	48 cf                	iretq  
+00000000008072c0 <disk_int_handler>:
+  8072c0:	e8 59 dc ff ff       	call   804f1e <eoi>
+  8072c5:	e8 6b f2 ff ff       	call   806535 <disk_int_handler_c>
+  8072ca:	48 cf                	iretq  
 
-00000000008072ac <read_disk_asm>:
-  8072ac:	55                   	push   rbp
-  8072ad:	89 e5                	mov    ebp,esp
-  8072af:	66 ba f7 01          	mov    dx,0x1f7
-  8072b3:	31 c9                	xor    ecx,ecx
-  8072b5:	67 8b 44 24 08       	mov    eax,DWORD PTR [esp+0x8]
-  8072ba:	67 8b 4c 24 0c       	mov    ecx,DWORD PTR [esp+0xc]
-  8072bf:	67 8b 5c 24 10       	mov    ebx,DWORD PTR [esp+0x10]
-  8072c4:	89 c6                	mov    esi,eax
-  8072c6:	66 ba f2 01          	mov    dx,0x1f2
-  8072ca:	88 c8                	mov    al,cl
-  8072cc:	ee                   	out    dx,al
-  8072cd:	66 ba f3 01          	mov    dx,0x1f3
-  8072d1:	89 f0                	mov    eax,esi
-  8072d3:	ee                   	out    dx,al
-  8072d4:	66 ff c2             	inc    dx
-  8072d7:	c1 e8 08             	shr    eax,0x8
-  8072da:	ee                   	out    dx,al
-  8072db:	66 ff c2             	inc    dx
-  8072de:	c1 e8 08             	shr    eax,0x8
-  8072e1:	ee                   	out    dx,al
-  8072e2:	66 ff c2             	inc    dx
-  8072e5:	66 c1 e8 08          	shr    ax,0x8
-  8072e9:	24 0f                	and    al,0xf
-  8072eb:	0c e0                	or     al,0xe0
-  8072ed:	ee                   	out    dx,al
-  8072ee:	66 ff c2             	inc    dx
-  8072f1:	b0 20                	mov    al,0x20
+00000000008072cc <read_disk_asm>:
+  8072cc:	55                   	push   rbp
+  8072cd:	89 e5                	mov    ebp,esp
+  8072cf:	66 ba f7 01          	mov    dx,0x1f7
+  8072d3:	31 c9                	xor    ecx,ecx
+  8072d5:	67 8b 44 24 08       	mov    eax,DWORD PTR [esp+0x8]
+  8072da:	67 8b 4c 24 0c       	mov    ecx,DWORD PTR [esp+0xc]
+  8072df:	67 8b 5c 24 10       	mov    ebx,DWORD PTR [esp+0x10]
+  8072e4:	89 c6                	mov    esi,eax
+  8072e6:	66 ba f2 01          	mov    dx,0x1f2
+  8072ea:	88 c8                	mov    al,cl
+  8072ec:	ee                   	out    dx,al
+  8072ed:	66 ba f3 01          	mov    dx,0x1f3
+  8072f1:	89 f0                	mov    eax,esi
   8072f3:	ee                   	out    dx,al
+  8072f4:	66 ff c2             	inc    dx
+  8072f7:	c1 e8 08             	shr    eax,0x8
+  8072fa:	ee                   	out    dx,al
+  8072fb:	66 ff c2             	inc    dx
+  8072fe:	c1 e8 08             	shr    eax,0x8
+  807301:	ee                   	out    dx,al
+  807302:	66 ff c2             	inc    dx
+  807305:	66 c1 e8 08          	shr    ax,0x8
+  807309:	24 0f                	and    al,0xf
+  80730b:	0c e0                	or     al,0xe0
+  80730d:	ee                   	out    dx,al
+  80730e:	66 ff c2             	inc    dx
+  807311:	b0 20                	mov    al,0x20
+  807313:	ee                   	out    dx,al
 
-00000000008072f4 <read_disk_asm.wait>:
-  8072f4:	90                   	nop
-  8072f5:	ec                   	in     al,dx
-  8072f6:	24 88                	and    al,0x88
-  8072f8:	3c 08                	cmp    al,0x8
-  8072fa:	75 f8                	jne    8072f4 <read_disk_asm.wait>
-  8072fc:	66 89 d7             	mov    di,dx
-  8072ff:	89 c8                	mov    eax,ecx
-  807301:	66 b9 00 01          	mov    cx,0x100
-  807305:	66 f7 e1             	mul    cx
-  807308:	89 c1                	mov    ecx,eax
-  80730a:	66 ba f0 01          	mov    dx,0x1f0
+0000000000807314 <read_disk_asm.wait>:
+  807314:	90                   	nop
+  807315:	ec                   	in     al,dx
+  807316:	24 88                	and    al,0x88
+  807318:	3c 08                	cmp    al,0x8
+  80731a:	75 f8                	jne    807314 <read_disk_asm.wait>
+  80731c:	66 89 d7             	mov    di,dx
+  80731f:	89 c8                	mov    eax,ecx
+  807321:	66 b9 00 01          	mov    cx,0x100
+  807325:	66 f7 e1             	mul    cx
+  807328:	89 c1                	mov    ecx,eax
+  80732a:	66 ba f0 01          	mov    dx,0x1f0
 
-000000000080730e <read_disk_asm.read>:
-  80730e:	66 ed                	in     ax,dx
-  807310:	66 67 89 03          	mov    WORD PTR [ebx],ax
-  807314:	83 c3 02             	add    ebx,0x2
-  807317:	e2 f5                	loop   80730e <read_disk_asm.read>
-  807319:	c9                   	leave  
-  80731a:	b8 00 00 00 00       	mov    eax,0x0
-  80731f:	c3                   	ret    
+000000000080732e <read_disk_asm.read>:
+  80732e:	66 ed                	in     ax,dx
+  807330:	66 67 89 03          	mov    WORD PTR [ebx],ax
+  807334:	83 c3 02             	add    ebx,0x2
+  807337:	e2 f5                	loop   80732e <read_disk_asm.read>
+  807339:	c9                   	leave  
+  80733a:	b8 00 00 00 00       	mov    eax,0x0
+  80733f:	c3                   	ret    
 
-0000000000807320 <read_disk_asm.err_disk_reading>:
-  807320:	66 ba f1 01          	mov    dx,0x1f1
-  807324:	31 c0                	xor    eax,eax
-  807326:	66 ed                	in     ax,dx
-  807328:	89 ec                	mov    esp,ebp
-  80732a:	5d                   	pop    rbp
-  80732b:	c3                   	ret    
+0000000000807340 <read_disk_asm.err_disk_reading>:
+  807340:	66 ba f1 01          	mov    dx,0x1f1
+  807344:	31 c0                	xor    eax,eax
+  807346:	66 ed                	in     ax,dx
+  807348:	89 ec                	mov    esp,ebp
+  80734a:	5d                   	pop    rbp
+  80734b:	c3                   	ret    
 
-000000000080732c <write_disk_asm>:
-  80732c:	55                   	push   rbp
-  80732d:	89 e5                	mov    ebp,esp
-  80732f:	67 8b 44 24 08       	mov    eax,DWORD PTR [esp+0x8]
-  807334:	67 8b 4c 24 0c       	mov    ecx,DWORD PTR [esp+0xc]
-  807339:	67 8b 5c 24 10       	mov    ebx,DWORD PTR [esp+0x10]
-  80733e:	50                   	push   rax
-  80733f:	66 ba f2 01          	mov    dx,0x1f2
-  807343:	88 c8                	mov    al,cl
-  807345:	ee                   	out    dx,al
-  807346:	58                   	pop    rax
-  807347:	66 ba f3 01          	mov    dx,0x1f3
-  80734b:	ee                   	out    dx,al
-  80734c:	c1 e8 08             	shr    eax,0x8
-  80734f:	66 ba f4 01          	mov    dx,0x1f4
-  807353:	ee                   	out    dx,al
-  807354:	c1 e8 08             	shr    eax,0x8
-  807357:	66 ba f5 01          	mov    dx,0x1f5
-  80735b:	ee                   	out    dx,al
-  80735c:	c1 e8 08             	shr    eax,0x8
-  80735f:	24 0f                	and    al,0xf
-  807361:	0c e0                	or     al,0xe0
-  807363:	66 ba f6 01          	mov    dx,0x1f6
-  807367:	ee                   	out    dx,al
-  807368:	66 ba f7 01          	mov    dx,0x1f7
-  80736c:	b0 30                	mov    al,0x30
-  80736e:	ee                   	out    dx,al
+000000000080734c <write_disk_asm>:
+  80734c:	55                   	push   rbp
+  80734d:	89 e5                	mov    ebp,esp
+  80734f:	67 8b 44 24 08       	mov    eax,DWORD PTR [esp+0x8]
+  807354:	67 8b 4c 24 0c       	mov    ecx,DWORD PTR [esp+0xc]
+  807359:	67 8b 5c 24 10       	mov    ebx,DWORD PTR [esp+0x10]
+  80735e:	50                   	push   rax
+  80735f:	66 ba f2 01          	mov    dx,0x1f2
+  807363:	88 c8                	mov    al,cl
+  807365:	ee                   	out    dx,al
+  807366:	58                   	pop    rax
+  807367:	66 ba f3 01          	mov    dx,0x1f3
+  80736b:	ee                   	out    dx,al
+  80736c:	c1 e8 08             	shr    eax,0x8
+  80736f:	66 ba f4 01          	mov    dx,0x1f4
+  807373:	ee                   	out    dx,al
+  807374:	c1 e8 08             	shr    eax,0x8
+  807377:	66 ba f5 01          	mov    dx,0x1f5
+  80737b:	ee                   	out    dx,al
+  80737c:	c1 e8 08             	shr    eax,0x8
+  80737f:	24 0f                	and    al,0xf
+  807381:	0c e0                	or     al,0xe0
+  807383:	66 ba f6 01          	mov    dx,0x1f6
+  807387:	ee                   	out    dx,al
+  807388:	66 ba f7 01          	mov    dx,0x1f7
+  80738c:	b0 30                	mov    al,0x30
+  80738e:	ee                   	out    dx,al
 
-000000000080736f <write_disk_asm.not_ready2>:
-  80736f:	90                   	nop
-  807370:	ec                   	in     al,dx
-  807371:	24 88                	and    al,0x88
-  807373:	3c 08                	cmp    al,0x8
-  807375:	75 f8                	jne    80736f <write_disk_asm.not_ready2>
-  807377:	89 c8                	mov    eax,ecx
-  807379:	66 b9 00 01          	mov    cx,0x100
-  80737d:	66 f7 e1             	mul    cx
-  807380:	89 c1                	mov    ecx,eax
-  807382:	66 ba f0 01          	mov    dx,0x1f0
+000000000080738f <write_disk_asm.not_ready2>:
+  80738f:	90                   	nop
+  807390:	ec                   	in     al,dx
+  807391:	24 88                	and    al,0x88
+  807393:	3c 08                	cmp    al,0x8
+  807395:	75 f8                	jne    80738f <write_disk_asm.not_ready2>
+  807397:	89 c8                	mov    eax,ecx
+  807399:	66 b9 00 01          	mov    cx,0x100
+  80739d:	66 f7 e1             	mul    cx
+  8073a0:	89 c1                	mov    ecx,eax
+  8073a2:	66 ba f0 01          	mov    dx,0x1f0
 
-0000000000807386 <write_disk_asm.go_on_write>:
-  807386:	66 67 8b 03          	mov    ax,WORD PTR [ebx]
-  80738a:	66 ef                	out    dx,ax
-  80738c:	83 c3 02             	add    ebx,0x2
-  80738f:	e2 f5                	loop   807386 <write_disk_asm.go_on_write>
-  807391:	89 ec                	mov    esp,ebp
-  807393:	5d                   	pop    rbp
-  807394:	c3                   	ret    
+00000000008073a6 <write_disk_asm.go_on_write>:
+  8073a6:	66 67 8b 03          	mov    ax,WORD PTR [ebx]
+  8073aa:	66 ef                	out    dx,ax
+  8073ac:	83 c3 02             	add    ebx,0x2
+  8073af:	e2 f5                	loop   8073a6 <write_disk_asm.go_on_write>
+  8073b1:	89 ec                	mov    esp,ebp
+  8073b3:	5d                   	pop    rbp
+  8073b4:	c3                   	ret    
 
-0000000000807395 <init_fat16>:
+00000000008073b5 <init_fat16>:
 
 int fat16_drvi;
 extern driver drv_disk;
 extern int disk_drvi;
 int init_fat16()
 {
-  807395:	f3 0f 1e fa          	endbr64 
-  807399:	55                   	push   rbp
-  80739a:	48 89 e5             	mov    rbp,rsp
-  80739d:	48 81 ec c0 00 00 00 	sub    rsp,0xc0
+  8073b5:	f3 0f 1e fa          	endbr64 
+  8073b9:	55                   	push   rbp
+  8073ba:	48 89 e5             	mov    rbp,rsp
+  8073bd:	48 81 ec c0 00 00 00 	sub    rsp,0xc0
     reg_device(&fat16_dev);
-  8073a4:	bf 00 24 81 00       	mov    edi,0x812400
-  8073a9:	e8 91 b7 ff ff       	call   802b3f <reg_device>
+  8073c4:	bf 00 24 81 00       	mov    edi,0x812400
+  8073c9:	e8 71 b7 ff ff       	call   802b3f <reg_device>
     fat16_drvi=reg_driver(&fat16_drv);
-  8073ae:	bf 60 23 81 00       	mov    edi,0x812360
-  8073b3:	e8 6f ba ff ff       	call   802e27 <reg_driver>
-  8073b8:	89 05 a6 b3 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc2b3a6],eax        # 432764 <fat16_drvi>
+  8073ce:	bf 60 23 81 00       	mov    edi,0x812360
+  8073d3:	e8 4f ba ff ff       	call   802e27 <reg_driver>
+  8073d8:	89 05 86 b3 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc2b386],eax        # 432764 <fat16_drvi>
     driver_args arg;
     load(&arg);//syscall(SYSCALL_CALL_DRVFUNC,fat16_drvi,DRVF_OPEN,&arg,0,0);
-  8073be:	48 8d 85 40 ff ff ff 	lea    rax,[rbp-0xc0]
-  8073c5:	48 89 c7             	mov    rdi,rax
-  8073c8:	e8 26 00 00 00       	call   8073f3 <load>
+  8073de:	48 8d 85 40 ff ff ff 	lea    rax,[rbp-0xc0]
+  8073e5:	48 89 c7             	mov    rdi,rax
+  8073e8:	e8 26 00 00 00       	call   807413 <load>
     reg_vol(disk_drvi,fat16_drvi,"a");
-  8073cd:	8b 0d 91 b3 c2 ff    	mov    ecx,DWORD PTR [rip+0xffffffffffc2b391]        # 432764 <fat16_drvi>
-  8073d3:	8b 05 f7 30 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc230f7]        # 42a4d0 <disk_drvi>
-  8073d9:	ba a8 24 81 00       	mov    edx,0x8124a8
-  8073de:	89 ce                	mov    esi,ecx
-  8073e0:	89 c7                	mov    edi,eax
-  8073e2:	b8 00 00 00 00       	mov    eax,0x0
-  8073e7:	e8 db a6 ff ff       	call   801ac7 <reg_vol>
+  8073ed:	8b 0d 71 b3 c2 ff    	mov    ecx,DWORD PTR [rip+0xffffffffffc2b371]        # 432764 <fat16_drvi>
+  8073f3:	8b 05 d7 30 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc230d7]        # 42a4d0 <disk_drvi>
+  8073f9:	ba a8 24 81 00       	mov    edx,0x8124a8
+  8073fe:	89 ce                	mov    esi,ecx
+  807400:	89 c7                	mov    edi,eax
+  807402:	b8 00 00 00 00       	mov    eax,0x0
+  807407:	e8 bb a6 ff ff       	call   801ac7 <reg_vol>
     return 0;
-  8073ec:	b8 00 00 00 00       	mov    eax,0x0
+  80740c:	b8 00 00 00 00       	mov    eax,0x0
 }
-  8073f1:	c9                   	leave  
-  8073f2:	c3                   	ret    
+  807411:	c9                   	leave  
+  807412:	c3                   	ret    
 
-00000000008073f3 <load>:
+0000000000807413 <load>:
 int load(driver_args *args)
 {
-  8073f3:	f3 0f 1e fa          	endbr64 
-  8073f7:	55                   	push   rbp
-  8073f8:	48 89 e5             	mov    rbp,rsp
-  8073fb:	48 83 ec 20          	sub    rsp,0x20
-  8073ff:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
+  807413:	f3 0f 1e fa          	endbr64 
+  807417:	55                   	push   rbp
+  807418:	48 89 e5             	mov    rbp,rsp
+  80741b:	48 83 ec 20          	sub    rsp,0x20
+  80741f:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
     //sys_read superblock
     int req_id=-1;
-  807403:	c7 45 fc ff ff ff ff 	mov    DWORD PTR [rbp-0x4],0xffffffff
+  807423:	c7 45 fc ff ff ff ff 	mov    DWORD PTR [rbp-0x4],0xffffffff
     read_sec(&superblock,0,1);
-  80740a:	ba 01 00 00 00       	mov    edx,0x1
-  80740f:	be 00 00 00 00       	mov    esi,0x0
-  807414:	bf 00 a5 42 00       	mov    edi,0x42a500
-  807419:	e8 61 0b 00 00       	call   807f7f <read_sec>
+  80742a:	ba 01 00 00 00       	mov    edx,0x1
+  80742f:	be 00 00 00 00       	mov    esi,0x0
+  807434:	bf 00 a5 42 00       	mov    edi,0x42a500
+  807439:	e8 61 0b 00 00       	call   807f9f <read_sec>
     //只能一个一个读
     read_sec(fat,superblock.rsvdSec,superblock.secPerFAT);
-  80741e:	0f b7 05 f1 30 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc230f1]        # 42a516 <superblock+0x16>
-  807425:	0f b7 d0             	movzx  edx,ax
-  807428:	0f b7 05 df 30 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc230df]        # 42a50e <superblock+0xe>
-  80742f:	0f b7 c0             	movzx  eax,ax
-  807432:	89 c6                	mov    esi,eax
-  807434:	bf 60 e7 42 00       	mov    edi,0x42e760
-  807439:	e8 41 0b 00 00       	call   807f7f <read_sec>
+  80743e:	0f b7 05 d1 30 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc230d1]        # 42a516 <superblock+0x16>
+  807445:	0f b7 d0             	movzx  edx,ax
+  807448:	0f b7 05 bf 30 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc230bf]        # 42a50e <superblock+0xe>
+  80744f:	0f b7 c0             	movzx  eax,ax
+  807452:	89 c6                	mov    esi,eax
+  807454:	bf 60 e7 42 00       	mov    edi,0x42e760
+  807459:	e8 41 0b 00 00       	call   807f9f <read_sec>
 
     //sys_read root
     int root_sec_num=superblock.rsvdSec+superblock.secPerFAT*\
-  80743e:	0f b7 05 c9 30 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc230c9]        # 42a50e <superblock+0xe>
-  807445:	0f b7 c8             	movzx  ecx,ax
-  807448:	0f b7 05 c7 30 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc230c7]        # 42a516 <superblock+0x16>
-  80744f:	0f b7 d0             	movzx  edx,ax
+  80745e:	0f b7 05 a9 30 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc230a9]        # 42a50e <superblock+0xe>
+  807465:	0f b7 c8             	movzx  ecx,ax
+  807468:	0f b7 05 a7 30 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc230a7]        # 42a516 <superblock+0x16>
+  80746f:	0f b7 d0             	movzx  edx,ax
     superblock.numOfFAT;
-  807452:	0f b6 05 b7 30 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc230b7]        # 42a510 <superblock+0x10>
-  807459:	0f b6 c0             	movzx  eax,al
+  807472:	0f b6 05 97 30 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc23097]        # 42a510 <superblock+0x10>
+  807479:	0f b6 c0             	movzx  eax,al
     int root_sec_num=superblock.rsvdSec+superblock.secPerFAT*\
-  80745c:	0f af c2             	imul   eax,edx
-  80745f:	01 c8                	add    eax,ecx
-  807461:	89 45 f8             	mov    DWORD PTR [rbp-0x8],eax
+  80747c:	0f af c2             	imul   eax,edx
+  80747f:	01 c8                	add    eax,ecx
+  807481:	89 45 f8             	mov    DWORD PTR [rbp-0x8],eax
     //printf("root sec num:%d\n",root_sec_num);
     //usually a root dir has 32 secs
     int root_sec_c=((u32)superblock.rootEntries* sizeof(dir_entry))/(u32)superblock.bytesPerSec;
-  807464:	0f b7 05 a6 30 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc230a6]        # 42a511 <superblock+0x11>
-  80746b:	0f b7 c0             	movzx  eax,ax
-  80746e:	48 c1 e0 05          	shl    rax,0x5
-  807472:	0f b7 15 92 30 c2 ff 	movzx  edx,WORD PTR [rip+0xffffffffffc23092]        # 42a50b <superblock+0xb>
-  807479:	0f b7 ca             	movzx  ecx,dx
-  80747c:	ba 00 00 00 00       	mov    edx,0x0
-  807481:	48 f7 f1             	div    rcx
-  807484:	89 45 f4             	mov    DWORD PTR [rbp-0xc],eax
+  807484:	0f b7 05 86 30 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc23086]        # 42a511 <superblock+0x11>
+  80748b:	0f b7 c0             	movzx  eax,ax
+  80748e:	48 c1 e0 05          	shl    rax,0x5
+  807492:	0f b7 15 72 30 c2 ff 	movzx  edx,WORD PTR [rip+0xffffffffffc23072]        # 42a50b <superblock+0xb>
+  807499:	0f b7 ca             	movzx  ecx,dx
+  80749c:	ba 00 00 00 00       	mov    edx,0x0
+  8074a1:	48 f7 f1             	div    rcx
+  8074a4:	89 45 f4             	mov    DWORD PTR [rbp-0xc],eax
     read_sec(root_dir,root_sec_num,root_sec_c);
-  807487:	8b 55 f4             	mov    edx,DWORD PTR [rbp-0xc]
-  80748a:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  80748d:	89 c6                	mov    esi,eax
-  80748f:	bf 40 a5 42 00       	mov    edi,0x42a540
-  807494:	e8 e6 0a 00 00       	call   807f7f <read_sec>
+  8074a7:	8b 55 f4             	mov    edx,DWORD PTR [rbp-0xc]
+  8074aa:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  8074ad:	89 c6                	mov    esi,eax
+  8074af:	bf 40 a5 42 00       	mov    edi,0x42a540
+  8074b4:	e8 e6 0a 00 00       	call   807f9f <read_sec>
 
     cur_dir.fistCluNum=0;
-  807499:	66 c7 05 b8 70 c2 ff 	mov    WORD PTR [rip+0xffffffffffc270b8],0x0        # 42e55a <cur_dir+0x1a>
-  8074a0:	00 00 
+  8074b9:	66 c7 05 98 70 c2 ff 	mov    WORD PTR [rip+0xffffffffffc27098],0x0        # 42e55a <cur_dir+0x1a>
+  8074c0:	00 00 
 
     //set some vars
     //why? because the .bss won't be packed into bin so any init
     //of global var in .c is meaningless.
     clu_sec_balance=superblock.rsvdSec+32+32-2;//63;
-  8074a2:	0f b7 05 65 30 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc23065]        # 42a50e <superblock+0xe>
-  8074a9:	0f b7 c0             	movzx  eax,ax
-  8074ac:	83 c0 3e             	add    eax,0x3e
-  8074af:	89 05 8b 31 00 00    	mov    DWORD PTR [rip+0x318b],eax        # 80a640 <clu_sec_balance>
+  8074c2:	0f b7 05 45 30 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc23045]        # 42a50e <superblock+0xe>
+  8074c9:	0f b7 c0             	movzx  eax,ax
+  8074cc:	83 c0 3e             	add    eax,0x3e
+  8074cf:	89 05 6b 31 00 00    	mov    DWORD PTR [rip+0x316b],eax        # 80a640 <clu_sec_balance>
     //printf("clu sec bal:%d\n",clu_sec_balance);
     dir_depth=0;
-  8074b5:	c7 05 a1 b2 c2 ff 00 	mov    DWORD PTR [rip+0xffffffffffc2b2a1],0x0        # 432760 <dir_depth>
-  8074bc:	00 00 00 
+  8074d5:	c7 05 81 b2 c2 ff 00 	mov    DWORD PTR [rip+0xffffffffffc2b281],0x0        # 432760 <dir_depth>
+  8074dc:	00 00 00 
     return 0;
-  8074bf:	b8 00 00 00 00       	mov    eax,0x0
+  8074df:	b8 00 00 00 00       	mov    eax,0x0
 
 }
-  8074c4:	c9                   	leave  
-  8074c5:	c3                   	ret    
+  8074e4:	c9                   	leave  
+  8074e5:	c3                   	ret    
 
-00000000008074c6 <verify_name>:
+00000000008074e6 <verify_name>:
 
 //检查输入的文件名长度是否合法，以及是否出现非法字符（但是不检查大小写和.）
 //返回值为布尔值。
 int verify_name(char *str)
 {
-  8074c6:	f3 0f 1e fa          	endbr64 
-  8074ca:	55                   	push   rbp
-  8074cb:	48 89 e5             	mov    rbp,rsp
-  8074ce:	48 83 ec 70          	sub    rsp,0x70
-  8074d2:	48 89 7d 98          	mov    QWORD PTR [rbp-0x68],rdi
+  8074e6:	f3 0f 1e fa          	endbr64 
+  8074ea:	55                   	push   rbp
+  8074eb:	48 89 e5             	mov    rbp,rsp
+  8074ee:	48 83 ec 70          	sub    rsp,0x70
+  8074f2:	48 89 7d 98          	mov    QWORD PTR [rbp-0x68],rdi
     char valid_ch[]="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,/![]|+";
-  8074d6:	48 b8 61 62 63 64 65 	movabs rax,0x6867666564636261
-  8074dd:	66 67 68 
-  8074e0:	48 ba 69 6a 6b 6c 6d 	movabs rdx,0x706f6e6d6c6b6a69
-  8074e7:	6e 6f 70 
-  8074ea:	48 89 45 a0          	mov    QWORD PTR [rbp-0x60],rax
-  8074ee:	48 89 55 a8          	mov    QWORD PTR [rbp-0x58],rdx
-  8074f2:	48 b8 71 72 73 74 75 	movabs rax,0x7877767574737271
-  8074f9:	76 77 78 
-  8074fc:	48 ba 79 7a 41 42 43 	movabs rdx,0x4645444342417a79
-  807503:	44 45 46 
-  807506:	48 89 45 b0          	mov    QWORD PTR [rbp-0x50],rax
-  80750a:	48 89 55 b8          	mov    QWORD PTR [rbp-0x48],rdx
-  80750e:	48 b8 47 48 49 4a 4b 	movabs rax,0x4e4d4c4b4a494847
-  807515:	4c 4d 4e 
-  807518:	48 ba 4f 50 51 52 53 	movabs rdx,0x565554535251504f
-  80751f:	54 55 56 
-  807522:	48 89 45 c0          	mov    QWORD PTR [rbp-0x40],rax
-  807526:	48 89 55 c8          	mov    QWORD PTR [rbp-0x38],rdx
-  80752a:	48 b8 57 58 59 5a 30 	movabs rax,0x333231305a595857
-  807531:	31 32 33 
-  807534:	48 ba 34 35 36 37 38 	movabs rdx,0x2f2c393837363534
-  80753b:	39 2c 2f 
-  80753e:	48 89 45 d0          	mov    QWORD PTR [rbp-0x30],rax
-  807542:	48 89 55 d8          	mov    QWORD PTR [rbp-0x28],rdx
-  807546:	c7 45 e0 21 5b 5d 7c 	mov    DWORD PTR [rbp-0x20],0x7c5d5b21
-  80754d:	66 c7 45 e4 2b 00    	mov    WORD PTR [rbp-0x1c],0x2b
+  8074f6:	48 b8 61 62 63 64 65 	movabs rax,0x6867666564636261
+  8074fd:	66 67 68 
+  807500:	48 ba 69 6a 6b 6c 6d 	movabs rdx,0x706f6e6d6c6b6a69
+  807507:	6e 6f 70 
+  80750a:	48 89 45 a0          	mov    QWORD PTR [rbp-0x60],rax
+  80750e:	48 89 55 a8          	mov    QWORD PTR [rbp-0x58],rdx
+  807512:	48 b8 71 72 73 74 75 	movabs rax,0x7877767574737271
+  807519:	76 77 78 
+  80751c:	48 ba 79 7a 41 42 43 	movabs rdx,0x4645444342417a79
+  807523:	44 45 46 
+  807526:	48 89 45 b0          	mov    QWORD PTR [rbp-0x50],rax
+  80752a:	48 89 55 b8          	mov    QWORD PTR [rbp-0x48],rdx
+  80752e:	48 b8 47 48 49 4a 4b 	movabs rax,0x4e4d4c4b4a494847
+  807535:	4c 4d 4e 
+  807538:	48 ba 4f 50 51 52 53 	movabs rdx,0x565554535251504f
+  80753f:	54 55 56 
+  807542:	48 89 45 c0          	mov    QWORD PTR [rbp-0x40],rax
+  807546:	48 89 55 c8          	mov    QWORD PTR [rbp-0x38],rdx
+  80754a:	48 b8 57 58 59 5a 30 	movabs rax,0x333231305a595857
+  807551:	31 32 33 
+  807554:	48 ba 34 35 36 37 38 	movabs rdx,0x2f2c393837363534
+  80755b:	39 2c 2f 
+  80755e:	48 89 45 d0          	mov    QWORD PTR [rbp-0x30],rax
+  807562:	48 89 55 d8          	mov    QWORD PTR [rbp-0x28],rdx
+  807566:	c7 45 e0 21 5b 5d 7c 	mov    DWORD PTR [rbp-0x20],0x7c5d5b21
+  80756d:	66 c7 45 e4 2b 00    	mov    WORD PTR [rbp-0x1c],0x2b
     if(strlen(str)>11||strlen(str)==0) {
-  807553:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
-  807557:	48 89 c7             	mov    rdi,rax
-  80755a:	e8 24 28 00 00       	call   809d83 <strlen>
-  80755f:	83 f8 0b             	cmp    eax,0xb
-  807562:	7f 10                	jg     807574 <verify_name+0xae>
-  807564:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
-  807568:	48 89 c7             	mov    rdi,rax
-  80756b:	e8 13 28 00 00       	call   809d83 <strlen>
-  807570:	85 c0                	test   eax,eax
-  807572:	75 0a                	jne    80757e <verify_name+0xb8>
+  807573:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
+  807577:	48 89 c7             	mov    rdi,rax
+  80757a:	e8 24 28 00 00       	call   809da3 <strlen>
+  80757f:	83 f8 0b             	cmp    eax,0xb
+  807582:	7f 10                	jg     807594 <verify_name+0xae>
+  807584:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
+  807588:	48 89 c7             	mov    rdi,rax
+  80758b:	e8 13 28 00 00       	call   809da3 <strlen>
+  807590:	85 c0                	test   eax,eax
+  807592:	75 0a                	jne    80759e <verify_name+0xb8>
         //printf("length not valid\n");
         return 0;
-  807574:	b8 00 00 00 00       	mov    eax,0x0
-  807579:	e9 b3 01 00 00       	jmp    807731 <verify_name+0x26b>
+  807594:	b8 00 00 00 00       	mov    eax,0x0
+  807599:	e9 b3 01 00 00       	jmp    807751 <verify_name+0x26b>
     }
     int c=0,i=0,flag=0,vchf=1;
-  80757e:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
-  807585:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0
-  80758c:	c7 45 f4 00 00 00 00 	mov    DWORD PTR [rbp-0xc],0x0
-  807593:	c7 45 e8 01 00 00 00 	mov    DWORD PTR [rbp-0x18],0x1
+  80759e:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
+  8075a5:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0
+  8075ac:	c7 45 f4 00 00 00 00 	mov    DWORD PTR [rbp-0xc],0x0
+  8075b3:	c7 45 e8 01 00 00 00 	mov    DWORD PTR [rbp-0x18],0x1
     for(;str[i]!='.'&&str[i]!='\0';i++)
-  80759a:	eb 6b                	jmp    807607 <verify_name+0x141>
+  8075ba:	eb 6b                	jmp    807627 <verify_name+0x141>
     {
         int j=0;
-  80759c:	c7 45 f0 00 00 00 00 	mov    DWORD PTR [rbp-0x10],0x0
+  8075bc:	c7 45 f0 00 00 00 00 	mov    DWORD PTR [rbp-0x10],0x0
         for(;j<sizeof(valid_ch);j++)
-  8075a3:	eb 22                	jmp    8075c7 <verify_name+0x101>
+  8075c3:	eb 22                	jmp    8075e7 <verify_name+0x101>
             if(str[i]==valid_ch[j])break;
-  8075a5:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  8075a8:	48 63 d0             	movsxd rdx,eax
-  8075ab:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
-  8075af:	48 01 d0             	add    rax,rdx
-  8075b2:	0f b6 10             	movzx  edx,BYTE PTR [rax]
-  8075b5:	8b 45 f0             	mov    eax,DWORD PTR [rbp-0x10]
-  8075b8:	48 98                	cdqe   
-  8075ba:	0f b6 44 05 a0       	movzx  eax,BYTE PTR [rbp+rax*1-0x60]
-  8075bf:	38 c2                	cmp    dl,al
-  8075c1:	74 0e                	je     8075d1 <verify_name+0x10b>
+  8075c5:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  8075c8:	48 63 d0             	movsxd rdx,eax
+  8075cb:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
+  8075cf:	48 01 d0             	add    rax,rdx
+  8075d2:	0f b6 10             	movzx  edx,BYTE PTR [rax]
+  8075d5:	8b 45 f0             	mov    eax,DWORD PTR [rbp-0x10]
+  8075d8:	48 98                	cdqe   
+  8075da:	0f b6 44 05 a0       	movzx  eax,BYTE PTR [rbp+rax*1-0x60]
+  8075df:	38 c2                	cmp    dl,al
+  8075e1:	74 0e                	je     8075f1 <verify_name+0x10b>
         for(;j<sizeof(valid_ch);j++)
-  8075c3:	83 45 f0 01          	add    DWORD PTR [rbp-0x10],0x1
-  8075c7:	8b 45 f0             	mov    eax,DWORD PTR [rbp-0x10]
-  8075ca:	83 f8 45             	cmp    eax,0x45
-  8075cd:	76 d6                	jbe    8075a5 <verify_name+0xdf>
-  8075cf:	eb 01                	jmp    8075d2 <verify_name+0x10c>
+  8075e3:	83 45 f0 01          	add    DWORD PTR [rbp-0x10],0x1
+  8075e7:	8b 45 f0             	mov    eax,DWORD PTR [rbp-0x10]
+  8075ea:	83 f8 45             	cmp    eax,0x45
+  8075ed:	76 d6                	jbe    8075c5 <verify_name+0xdf>
+  8075ef:	eb 01                	jmp    8075f2 <verify_name+0x10c>
             if(str[i]==valid_ch[j])break;
-  8075d1:	90                   	nop
+  8075f1:	90                   	nop
         if(j>=sizeof(valid_ch))
-  8075d2:	8b 45 f0             	mov    eax,DWORD PTR [rbp-0x10]
-  8075d5:	83 f8 45             	cmp    eax,0x45
-  8075d8:	76 0a                	jbe    8075e4 <verify_name+0x11e>
+  8075f2:	8b 45 f0             	mov    eax,DWORD PTR [rbp-0x10]
+  8075f5:	83 f8 45             	cmp    eax,0x45
+  8075f8:	76 0a                	jbe    807604 <verify_name+0x11e>
         {
             //printf("invalid char\n");
             return 0;//出现非法字符
-  8075da:	b8 00 00 00 00       	mov    eax,0x0
-  8075df:	e9 4d 01 00 00       	jmp    807731 <verify_name+0x26b>
+  8075fa:	b8 00 00 00 00       	mov    eax,0x0
+  8075ff:	e9 4d 01 00 00       	jmp    807751 <verify_name+0x26b>
         }
         if(str[i]!=' ')flag=1;
-  8075e4:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  8075e7:	48 63 d0             	movsxd rdx,eax
-  8075ea:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
-  8075ee:	48 01 d0             	add    rax,rdx
-  8075f1:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  8075f4:	3c 20                	cmp    al,0x20
-  8075f6:	74 07                	je     8075ff <verify_name+0x139>
-  8075f8:	c7 45 f4 01 00 00 00 	mov    DWORD PTR [rbp-0xc],0x1
+  807604:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  807607:	48 63 d0             	movsxd rdx,eax
+  80760a:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
+  80760e:	48 01 d0             	add    rax,rdx
+  807611:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  807614:	3c 20                	cmp    al,0x20
+  807616:	74 07                	je     80761f <verify_name+0x139>
+  807618:	c7 45 f4 01 00 00 00 	mov    DWORD PTR [rbp-0xc],0x1
         c++;
-  8075ff:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
+  80761f:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
     for(;str[i]!='.'&&str[i]!='\0';i++)
-  807603:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1
-  807607:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  80760a:	48 63 d0             	movsxd rdx,eax
-  80760d:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
-  807611:	48 01 d0             	add    rax,rdx
-  807614:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  807617:	3c 2e                	cmp    al,0x2e
-  807619:	74 18                	je     807633 <verify_name+0x16d>
-  80761b:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  80761e:	48 63 d0             	movsxd rdx,eax
-  807621:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
-  807625:	48 01 d0             	add    rax,rdx
-  807628:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  80762b:	84 c0                	test   al,al
-  80762d:	0f 85 69 ff ff ff    	jne    80759c <verify_name+0xd6>
+  807623:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1
+  807627:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  80762a:	48 63 d0             	movsxd rdx,eax
+  80762d:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
+  807631:	48 01 d0             	add    rax,rdx
+  807634:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  807637:	3c 2e                	cmp    al,0x2e
+  807639:	74 18                	je     807653 <verify_name+0x16d>
+  80763b:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  80763e:	48 63 d0             	movsxd rdx,eax
+  807641:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
+  807645:	48 01 d0             	add    rax,rdx
+  807648:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  80764b:	84 c0                	test   al,al
+  80764d:	0f 85 69 ff ff ff    	jne    8075bc <verify_name+0xd6>
     }
     if(c>8||flag==0){
-  807633:	83 7d fc 08          	cmp    DWORD PTR [rbp-0x4],0x8
-  807637:	7f 06                	jg     80763f <verify_name+0x179>
-  807639:	83 7d f4 00          	cmp    DWORD PTR [rbp-0xc],0x0
-  80763d:	75 0a                	jne    807649 <verify_name+0x183>
+  807653:	83 7d fc 08          	cmp    DWORD PTR [rbp-0x4],0x8
+  807657:	7f 06                	jg     80765f <verify_name+0x179>
+  807659:	83 7d f4 00          	cmp    DWORD PTR [rbp-0xc],0x0
+  80765d:	75 0a                	jne    807669 <verify_name+0x183>
         //printf("file name blank\n");
         return 0;//不能全是空格
-  80763f:	b8 00 00 00 00       	mov    eax,0x0
-  807644:	e9 e8 00 00 00       	jmp    807731 <verify_name+0x26b>
+  80765f:	b8 00 00 00 00       	mov    eax,0x0
+  807664:	e9 e8 00 00 00       	jmp    807751 <verify_name+0x26b>
     }
     if(str[i]=='\0')//没有扩展名
-  807649:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  80764c:	48 63 d0             	movsxd rdx,eax
-  80764f:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
-  807653:	48 01 d0             	add    rax,rdx
-  807656:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  807659:	84 c0                	test   al,al
-  80765b:	75 0a                	jne    807667 <verify_name+0x1a1>
+  807669:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  80766c:	48 63 d0             	movsxd rdx,eax
+  80766f:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
+  807673:	48 01 d0             	add    rax,rdx
+  807676:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  807679:	84 c0                	test   al,al
+  80767b:	75 0a                	jne    807687 <verify_name+0x1a1>
         return 1;
-  80765d:	b8 01 00 00 00       	mov    eax,0x1
-  807662:	e9 ca 00 00 00       	jmp    807731 <verify_name+0x26b>
+  80767d:	b8 01 00 00 00       	mov    eax,0x1
+  807682:	e9 ca 00 00 00       	jmp    807751 <verify_name+0x26b>
     c=0;
-  807667:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
+  807687:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
     flag=0;
-  80766e:	c7 45 f4 00 00 00 00 	mov    DWORD PTR [rbp-0xc],0x0
+  80768e:	c7 45 f4 00 00 00 00 	mov    DWORD PTR [rbp-0xc],0x0
     for(i++;str[i]!='\0';i++)
-  807675:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1
-  807679:	e9 83 00 00 00       	jmp    807701 <verify_name+0x23b>
+  807695:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1
+  807699:	e9 83 00 00 00       	jmp    807721 <verify_name+0x23b>
     {
         int j=0;
-  80767e:	c7 45 ec 00 00 00 00 	mov    DWORD PTR [rbp-0x14],0x0
+  80769e:	c7 45 ec 00 00 00 00 	mov    DWORD PTR [rbp-0x14],0x0
         for(;j<sizeof(valid_ch);j++)
-  807685:	eb 22                	jmp    8076a9 <verify_name+0x1e3>
+  8076a5:	eb 22                	jmp    8076c9 <verify_name+0x1e3>
             if(str[i]==valid_ch[j])break;
-  807687:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  80768a:	48 63 d0             	movsxd rdx,eax
-  80768d:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
-  807691:	48 01 d0             	add    rax,rdx
-  807694:	0f b6 10             	movzx  edx,BYTE PTR [rax]
-  807697:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
-  80769a:	48 98                	cdqe   
-  80769c:	0f b6 44 05 a0       	movzx  eax,BYTE PTR [rbp+rax*1-0x60]
-  8076a1:	38 c2                	cmp    dl,al
-  8076a3:	74 0e                	je     8076b3 <verify_name+0x1ed>
+  8076a7:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  8076aa:	48 63 d0             	movsxd rdx,eax
+  8076ad:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
+  8076b1:	48 01 d0             	add    rax,rdx
+  8076b4:	0f b6 10             	movzx  edx,BYTE PTR [rax]
+  8076b7:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+  8076ba:	48 98                	cdqe   
+  8076bc:	0f b6 44 05 a0       	movzx  eax,BYTE PTR [rbp+rax*1-0x60]
+  8076c1:	38 c2                	cmp    dl,al
+  8076c3:	74 0e                	je     8076d3 <verify_name+0x1ed>
         for(;j<sizeof(valid_ch);j++)
-  8076a5:	83 45 ec 01          	add    DWORD PTR [rbp-0x14],0x1
-  8076a9:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
-  8076ac:	83 f8 45             	cmp    eax,0x45
-  8076af:	76 d6                	jbe    807687 <verify_name+0x1c1>
-  8076b1:	eb 01                	jmp    8076b4 <verify_name+0x1ee>
+  8076c5:	83 45 ec 01          	add    DWORD PTR [rbp-0x14],0x1
+  8076c9:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+  8076cc:	83 f8 45             	cmp    eax,0x45
+  8076cf:	76 d6                	jbe    8076a7 <verify_name+0x1c1>
+  8076d1:	eb 01                	jmp    8076d4 <verify_name+0x1ee>
             if(str[i]==valid_ch[j])break;
-  8076b3:	90                   	nop
+  8076d3:	90                   	nop
         if(j>=sizeof(valid_ch)){
-  8076b4:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
-  8076b7:	83 f8 45             	cmp    eax,0x45
-  8076ba:	76 07                	jbe    8076c3 <verify_name+0x1fd>
+  8076d4:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+  8076d7:	83 f8 45             	cmp    eax,0x45
+  8076da:	76 07                	jbe    8076e3 <verify_name+0x1fd>
             //printf("invalid char:%x\n",str[i]);
             return 0;//出现非法字符
-  8076bc:	b8 00 00 00 00       	mov    eax,0x0
-  8076c1:	eb 6e                	jmp    807731 <verify_name+0x26b>
+  8076dc:	b8 00 00 00 00       	mov    eax,0x0
+  8076e1:	eb 6e                	jmp    807751 <verify_name+0x26b>
         }
         if(str[i]!=' ')flag=1;
-  8076c3:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  8076c6:	48 63 d0             	movsxd rdx,eax
-  8076c9:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
-  8076cd:	48 01 d0             	add    rax,rdx
-  8076d0:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  8076d3:	3c 20                	cmp    al,0x20
-  8076d5:	74 07                	je     8076de <verify_name+0x218>
-  8076d7:	c7 45 f4 01 00 00 00 	mov    DWORD PTR [rbp-0xc],0x1
+  8076e3:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  8076e6:	48 63 d0             	movsxd rdx,eax
+  8076e9:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
+  8076ed:	48 01 d0             	add    rax,rdx
+  8076f0:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  8076f3:	3c 20                	cmp    al,0x20
+  8076f5:	74 07                	je     8076fe <verify_name+0x218>
+  8076f7:	c7 45 f4 01 00 00 00 	mov    DWORD PTR [rbp-0xc],0x1
         if(str[i]=='.'){
-  8076de:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  8076e1:	48 63 d0             	movsxd rdx,eax
-  8076e4:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
-  8076e8:	48 01 d0             	add    rax,rdx
-  8076eb:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  8076ee:	3c 2e                	cmp    al,0x2e
-  8076f0:	75 07                	jne    8076f9 <verify_name+0x233>
+  8076fe:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  807701:	48 63 d0             	movsxd rdx,eax
+  807704:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
+  807708:	48 01 d0             	add    rax,rdx
+  80770b:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  80770e:	3c 2e                	cmp    al,0x2e
+  807710:	75 07                	jne    807719 <verify_name+0x233>
             //printf("multiple dots.");
             return 0;//不能多次出现.
-  8076f2:	b8 00 00 00 00       	mov    eax,0x0
-  8076f7:	eb 38                	jmp    807731 <verify_name+0x26b>
+  807712:	b8 00 00 00 00       	mov    eax,0x0
+  807717:	eb 38                	jmp    807751 <verify_name+0x26b>
         }
         c++;
-  8076f9:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
+  807719:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
     for(i++;str[i]!='\0';i++)
-  8076fd:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1
-  807701:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  807704:	48 63 d0             	movsxd rdx,eax
-  807707:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
-  80770b:	48 01 d0             	add    rax,rdx
-  80770e:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  807711:	84 c0                	test   al,al
-  807713:	0f 85 65 ff ff ff    	jne    80767e <verify_name+0x1b8>
+  80771d:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1
+  807721:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  807724:	48 63 d0             	movsxd rdx,eax
+  807727:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
+  80772b:	48 01 d0             	add    rax,rdx
+  80772e:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  807731:	84 c0                	test   al,al
+  807733:	0f 85 65 ff ff ff    	jne    80769e <verify_name+0x1b8>
     }
     if(c>3||flag==0){
-  807719:	83 7d fc 03          	cmp    DWORD PTR [rbp-0x4],0x3
-  80771d:	7f 06                	jg     807725 <verify_name+0x25f>
-  80771f:	83 7d f4 00          	cmp    DWORD PTR [rbp-0xc],0x0
-  807723:	75 07                	jne    80772c <verify_name+0x266>
+  807739:	83 7d fc 03          	cmp    DWORD PTR [rbp-0x4],0x3
+  80773d:	7f 06                	jg     807745 <verify_name+0x25f>
+  80773f:	83 7d f4 00          	cmp    DWORD PTR [rbp-0xc],0x0
+  807743:	75 07                	jne    80774c <verify_name+0x266>
         //printf("file name blank\n");
         return 0;//不能全是空格
-  807725:	b8 00 00 00 00       	mov    eax,0x0
-  80772a:	eb 05                	jmp    807731 <verify_name+0x26b>
+  807745:	b8 00 00 00 00       	mov    eax,0x0
+  80774a:	eb 05                	jmp    807751 <verify_name+0x26b>
     }
     return 1;
-  80772c:	b8 01 00 00 00       	mov    eax,0x1
+  80774c:	b8 01 00 00 00       	mov    eax,0x1
 }
-  807731:	c9                   	leave  
-  807732:	c3                   	ret    
+  807751:	c9                   	leave  
+  807752:	c3                   	ret    
 
-0000000000807733 <format_name>:
+0000000000807753 <format_name>:
 //将“aaa.bb”的文件名形式转换为可以直接strcmp(,,11)的形式。
 //默认文件名合法，请先检查文件名再使用。
 void format_name(char *str)
 {
-  807733:	f3 0f 1e fa          	endbr64 
-  807737:	55                   	push   rbp
-  807738:	48 89 e5             	mov    rbp,rsp
-  80773b:	48 83 ec 30          	sub    rsp,0x30
-  80773f:	48 89 7d d8          	mov    QWORD PTR [rbp-0x28],rdi
+  807753:	f3 0f 1e fa          	endbr64 
+  807757:	55                   	push   rbp
+  807758:	48 89 e5             	mov    rbp,rsp
+  80775b:	48 83 ec 30          	sub    rsp,0x30
+  80775f:	48 89 7d d8          	mov    QWORD PTR [rbp-0x28],rdi
     char v[12]="           ";
-  807743:	48 b8 20 20 20 20 20 	movabs rax,0x2020202020202020
-  80774a:	20 20 20 
-  80774d:	48 89 45 e8          	mov    QWORD PTR [rbp-0x18],rax
-  807751:	c7 45 f0 20 20 20 00 	mov    DWORD PTR [rbp-0x10],0x202020
+  807763:	48 b8 20 20 20 20 20 	movabs rax,0x2020202020202020
+  80776a:	20 20 20 
+  80776d:	48 89 45 e8          	mov    QWORD PTR [rbp-0x18],rax
+  807771:	c7 45 f0 20 20 20 00 	mov    DWORD PTR [rbp-0x10],0x202020
     int ptr=0;
-  807758:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
+  807778:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
     int namelen=0;
-  80775f:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0
+  80777f:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0
     for(int i=0;str[i]!='\0';i++)
-  807766:	c7 45 f4 00 00 00 00 	mov    DWORD PTR [rbp-0xc],0x0
-  80776d:	e9 9b 00 00 00       	jmp    80780d <format_name+0xda>
+  807786:	c7 45 f4 00 00 00 00 	mov    DWORD PTR [rbp-0xc],0x0
+  80778d:	e9 9b 00 00 00       	jmp    80782d <format_name+0xda>
     {
         if(str[i]>='a'&&str[i]<='z')
-  807772:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
-  807775:	48 63 d0             	movsxd rdx,eax
-  807778:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
-  80777c:	48 01 d0             	add    rax,rdx
-  80777f:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  807782:	3c 60                	cmp    al,0x60
-  807784:	7e 3e                	jle    8077c4 <format_name+0x91>
-  807786:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
-  807789:	48 63 d0             	movsxd rdx,eax
-  80778c:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
-  807790:	48 01 d0             	add    rax,rdx
-  807793:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  807796:	3c 7a                	cmp    al,0x7a
-  807798:	7f 2a                	jg     8077c4 <format_name+0x91>
+  807792:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
+  807795:	48 63 d0             	movsxd rdx,eax
+  807798:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
+  80779c:	48 01 d0             	add    rax,rdx
+  80779f:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  8077a2:	3c 60                	cmp    al,0x60
+  8077a4:	7e 3e                	jle    8077e4 <format_name+0x91>
+  8077a6:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
+  8077a9:	48 63 d0             	movsxd rdx,eax
+  8077ac:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
+  8077b0:	48 01 d0             	add    rax,rdx
+  8077b3:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  8077b6:	3c 7a                	cmp    al,0x7a
+  8077b8:	7f 2a                	jg     8077e4 <format_name+0x91>
         {
             v[ptr++]=str[i]-'a'+'A';
-  80779a:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
-  80779d:	48 63 d0             	movsxd rdx,eax
-  8077a0:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
-  8077a4:	48 01 d0             	add    rax,rdx
-  8077a7:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  8077aa:	8d 48 e0             	lea    ecx,[rax-0x20]
-  8077ad:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8077b0:	8d 50 01             	lea    edx,[rax+0x1]
-  8077b3:	89 55 fc             	mov    DWORD PTR [rbp-0x4],edx
-  8077b6:	89 ca                	mov    edx,ecx
-  8077b8:	48 98                	cdqe   
-  8077ba:	88 54 05 e8          	mov    BYTE PTR [rbp+rax*1-0x18],dl
+  8077ba:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
+  8077bd:	48 63 d0             	movsxd rdx,eax
+  8077c0:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
+  8077c4:	48 01 d0             	add    rax,rdx
+  8077c7:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  8077ca:	8d 48 e0             	lea    ecx,[rax-0x20]
+  8077cd:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  8077d0:	8d 50 01             	lea    edx,[rax+0x1]
+  8077d3:	89 55 fc             	mov    DWORD PTR [rbp-0x4],edx
+  8077d6:	89 ca                	mov    edx,ecx
+  8077d8:	48 98                	cdqe   
+  8077da:	88 54 05 e8          	mov    BYTE PTR [rbp+rax*1-0x18],dl
             namelen++;
-  8077be:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1
-  8077c2:	eb 45                	jmp    807809 <format_name+0xd6>
+  8077de:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1
+  8077e2:	eb 45                	jmp    807829 <format_name+0xd6>
         }
         else if(str[i]=='.')
-  8077c4:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
-  8077c7:	48 63 d0             	movsxd rdx,eax
-  8077ca:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
-  8077ce:	48 01 d0             	add    rax,rdx
-  8077d1:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  8077d4:	3c 2e                	cmp    al,0x2e
-  8077d6:	75 0d                	jne    8077e5 <format_name+0xb2>
+  8077e4:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
+  8077e7:	48 63 d0             	movsxd rdx,eax
+  8077ea:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
+  8077ee:	48 01 d0             	add    rax,rdx
+  8077f1:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  8077f4:	3c 2e                	cmp    al,0x2e
+  8077f6:	75 0d                	jne    807805 <format_name+0xb2>
         {
             ptr+=(8-namelen);
-  8077d8:	b8 08 00 00 00       	mov    eax,0x8
-  8077dd:	2b 45 f8             	sub    eax,DWORD PTR [rbp-0x8]
-  8077e0:	01 45 fc             	add    DWORD PTR [rbp-0x4],eax
-  8077e3:	eb 24                	jmp    807809 <format_name+0xd6>
+  8077f8:	b8 08 00 00 00       	mov    eax,0x8
+  8077fd:	2b 45 f8             	sub    eax,DWORD PTR [rbp-0x8]
+  807800:	01 45 fc             	add    DWORD PTR [rbp-0x4],eax
+  807803:	eb 24                	jmp    807829 <format_name+0xd6>
         }else
         {
             v[ptr++]=str[i];
-  8077e5:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
-  8077e8:	48 63 d0             	movsxd rdx,eax
-  8077eb:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
-  8077ef:	48 8d 0c 02          	lea    rcx,[rdx+rax*1]
-  8077f3:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8077f6:	8d 50 01             	lea    edx,[rax+0x1]
-  8077f9:	89 55 fc             	mov    DWORD PTR [rbp-0x4],edx
-  8077fc:	0f b6 11             	movzx  edx,BYTE PTR [rcx]
-  8077ff:	48 98                	cdqe   
-  807801:	88 54 05 e8          	mov    BYTE PTR [rbp+rax*1-0x18],dl
+  807805:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
+  807808:	48 63 d0             	movsxd rdx,eax
+  80780b:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
+  80780f:	48 8d 0c 02          	lea    rcx,[rdx+rax*1]
+  807813:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  807816:	8d 50 01             	lea    edx,[rax+0x1]
+  807819:	89 55 fc             	mov    DWORD PTR [rbp-0x4],edx
+  80781c:	0f b6 11             	movzx  edx,BYTE PTR [rcx]
+  80781f:	48 98                	cdqe   
+  807821:	88 54 05 e8          	mov    BYTE PTR [rbp+rax*1-0x18],dl
             namelen++;
-  807805:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1
+  807825:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1
     for(int i=0;str[i]!='\0';i++)
-  807809:	83 45 f4 01          	add    DWORD PTR [rbp-0xc],0x1
-  80780d:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
-  807810:	48 63 d0             	movsxd rdx,eax
-  807813:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
-  807817:	48 01 d0             	add    rax,rdx
-  80781a:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  80781d:	84 c0                	test   al,al
-  80781f:	0f 85 4d ff ff ff    	jne    807772 <format_name+0x3f>
+  807829:	83 45 f4 01          	add    DWORD PTR [rbp-0xc],0x1
+  80782d:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
+  807830:	48 63 d0             	movsxd rdx,eax
+  807833:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
+  807837:	48 01 d0             	add    rax,rdx
+  80783a:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  80783d:	84 c0                	test   al,al
+  80783f:	0f 85 4d ff ff ff    	jne    807792 <format_name+0x3f>
         }
     }
     v[12]='\0';
-  807825:	c6 45 f4 00          	mov    BYTE PTR [rbp-0xc],0x0
+  807845:	c6 45 f4 00          	mov    BYTE PTR [rbp-0xc],0x0
     strcpy(str,v);
-  807829:	48 8d 55 e8          	lea    rdx,[rbp-0x18]
-  80782d:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
-  807831:	48 89 d6             	mov    rsi,rdx
-  807834:	48 89 c7             	mov    rdi,rax
-  807837:	e8 28 23 00 00       	call   809b64 <strcpy>
+  807849:	48 8d 55 e8          	lea    rdx,[rbp-0x18]
+  80784d:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
+  807851:	48 89 d6             	mov    rsi,rdx
+  807854:	48 89 c7             	mov    rdi,rax
+  807857:	e8 28 23 00 00       	call   809b84 <strcpy>
 }
-  80783c:	90                   	nop
-  80783d:	c9                   	leave  
-  80783e:	c3                   	ret    
+  80785c:	90                   	nop
+  80785d:	c9                   	leave  
+  80785e:	c3                   	ret    
 
-000000000080783f <req_cluster>:
+000000000080785f <req_cluster>:
 int req_cluster()
 {
-  80783f:	f3 0f 1e fa          	endbr64 
-  807843:	55                   	push   rbp
-  807844:	48 89 e5             	mov    rbp,rsp
+  80785f:	f3 0f 1e fa          	endbr64 
+  807863:	55                   	push   rbp
+  807864:	48 89 e5             	mov    rbp,rsp
     for(int i=3;i<sizeof(fat)/sizeof(short);i++)
-  807847:	c7 45 fc 03 00 00 00 	mov    DWORD PTR [rbp-0x4],0x3
-  80784e:	eb 2a                	jmp    80787a <req_cluster+0x3b>
+  807867:	c7 45 fc 03 00 00 00 	mov    DWORD PTR [rbp-0x4],0x3
+  80786e:	eb 2a                	jmp    80789a <req_cluster+0x3b>
     {
         if(fat[i]==0)
-  807850:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  807853:	48 98                	cdqe   
-  807855:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
-  80785c:	00 
-  80785d:	66 85 c0             	test   ax,ax
-  807860:	75 14                	jne    807876 <req_cluster+0x37>
+  807870:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  807873:	48 98                	cdqe   
+  807875:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
+  80787c:	00 
+  80787d:	66 85 c0             	test   ax,ax
+  807880:	75 14                	jne    807896 <req_cluster+0x37>
         {
             fat[i]=0xffff;
-  807862:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  807865:	48 98                	cdqe   
-  807867:	66 c7 84 00 60 e7 42 	mov    WORD PTR [rax+rax*1+0x42e760],0xffff
-  80786e:	00 ff ff 
+  807882:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  807885:	48 98                	cdqe   
+  807887:	66 c7 84 00 60 e7 42 	mov    WORD PTR [rax+rax*1+0x42e760],0xffff
+  80788e:	00 ff ff 
             return i;
-  807871:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  807874:	eb 13                	jmp    807889 <req_cluster+0x4a>
+  807891:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  807894:	eb 13                	jmp    8078a9 <req_cluster+0x4a>
     for(int i=3;i<sizeof(fat)/sizeof(short);i++)
-  807876:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
-  80787a:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  80787d:	3d ff 1f 00 00       	cmp    eax,0x1fff
-  807882:	76 cc                	jbe    807850 <req_cluster+0x11>
+  807896:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
+  80789a:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  80789d:	3d ff 1f 00 00       	cmp    eax,0x1fff
+  8078a2:	76 cc                	jbe    807870 <req_cluster+0x11>
         }
     }
     return -1;
-  807884:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  8078a4:	b8 ff ff ff ff       	mov    eax,0xffffffff
 }
-  807889:	5d                   	pop    rbp
-  80788a:	c3                   	ret    
+  8078a9:	5d                   	pop    rbp
+  8078aa:	c3                   	ret    
 
-000000000080788b <write_sec>:
+00000000008078ab <write_sec>:
 int write_sec(char *src, int sec_num, int sec_c)
 {
-  80788b:	f3 0f 1e fa          	endbr64 
-  80788f:	55                   	push   rbp
-  807890:	48 89 e5             	mov    rbp,rsp
-  807893:	48 81 ec d0 00 00 00 	sub    rsp,0xd0
-  80789a:	48 89 bd 38 ff ff ff 	mov    QWORD PTR [rbp-0xc8],rdi
-  8078a1:	89 b5 34 ff ff ff    	mov    DWORD PTR [rbp-0xcc],esi
-  8078a7:	89 95 30 ff ff ff    	mov    DWORD PTR [rbp-0xd0],edx
+  8078ab:	f3 0f 1e fa          	endbr64 
+  8078af:	55                   	push   rbp
+  8078b0:	48 89 e5             	mov    rbp,rsp
+  8078b3:	48 81 ec d0 00 00 00 	sub    rsp,0xd0
+  8078ba:	48 89 bd 38 ff ff ff 	mov    QWORD PTR [rbp-0xc8],rdi
+  8078c1:	89 b5 34 ff ff ff    	mov    DWORD PTR [rbp-0xcc],esi
+  8078c7:	89 95 30 ff ff ff    	mov    DWORD PTR [rbp-0xd0],edx
     driver_args arg={
-  8078ad:	48 8d 95 40 ff ff ff 	lea    rdx,[rbp-0xc0]
-  8078b4:	b8 00 00 00 00       	mov    eax,0x0
-  8078b9:	b9 18 00 00 00       	mov    ecx,0x18
-  8078be:	48 89 d7             	mov    rdi,rdx
-  8078c1:	f3 48 ab             	rep stos QWORD PTR es:[rdi],rax
-  8078c4:	48 8b 85 38 ff ff ff 	mov    rax,QWORD PTR [rbp-0xc8]
-  8078cb:	89 85 48 ff ff ff    	mov    DWORD PTR [rbp-0xb8],eax
-  8078d1:	8b 85 34 ff ff ff    	mov    eax,DWORD PTR [rbp-0xcc]
-  8078d7:	89 85 54 ff ff ff    	mov    DWORD PTR [rbp-0xac],eax
-  8078dd:	8b 85 30 ff ff ff    	mov    eax,DWORD PTR [rbp-0xd0]
-  8078e3:	89 85 58 ff ff ff    	mov    DWORD PTR [rbp-0xa8],eax
+  8078cd:	48 8d 95 40 ff ff ff 	lea    rdx,[rbp-0xc0]
+  8078d4:	b8 00 00 00 00       	mov    eax,0x0
+  8078d9:	b9 18 00 00 00       	mov    ecx,0x18
+  8078de:	48 89 d7             	mov    rdi,rdx
+  8078e1:	f3 48 ab             	rep stos QWORD PTR es:[rdi],rax
+  8078e4:	48 8b 85 38 ff ff ff 	mov    rax,QWORD PTR [rbp-0xc8]
+  8078eb:	89 85 48 ff ff ff    	mov    DWORD PTR [rbp-0xb8],eax
+  8078f1:	8b 85 34 ff ff ff    	mov    eax,DWORD PTR [rbp-0xcc]
+  8078f7:	89 85 54 ff ff ff    	mov    DWORD PTR [rbp-0xac],eax
+  8078fd:	8b 85 30 ff ff ff    	mov    eax,DWORD PTR [rbp-0xd0]
+  807903:	89 85 58 ff ff ff    	mov    DWORD PTR [rbp-0xa8],eax
             .src_addr=src,
             .sec_n=sec_num,
             .sec_c=sec_c
     };
     return drv_disk.read(&arg);
-  8078e9:	48 8b 15 c8 2c 00 00 	mov    rdx,QWORD PTR [rip+0x2cc8]        # 80a5b8 <drv_disk+0x18>
-  8078f0:	48 8d 85 40 ff ff ff 	lea    rax,[rbp-0xc0]
-  8078f7:	48 89 c7             	mov    rdi,rax
-  8078fa:	ff d2                	call   rdx
+  807909:	48 8b 15 a8 2c 00 00 	mov    rdx,QWORD PTR [rip+0x2ca8]        # 80a5b8 <drv_disk+0x18>
+  807910:	48 8d 85 40 ff ff ff 	lea    rax,[rbp-0xc0]
+  807917:	48 89 c7             	mov    rdi,rax
+  80791a:	ff d2                	call   rdx
 }
-  8078fc:	c9                   	leave  
-  8078fd:	c3                   	ret    
+  80791c:	c9                   	leave  
+  80791d:	c3                   	ret    
 
-00000000008078fe <set_attr>:
+000000000080791e <set_attr>:
 void set_attr(dir_entry *f,char attr)
 {
-  8078fe:	f3 0f 1e fa          	endbr64 
-  807902:	55                   	push   rbp
-  807903:	48 89 e5             	mov    rbp,rsp
-  807906:	48 89 7d f8          	mov    QWORD PTR [rbp-0x8],rdi
-  80790a:	89 f0                	mov    eax,esi
-  80790c:	88 45 f4             	mov    BYTE PTR [rbp-0xc],al
+  80791e:	f3 0f 1e fa          	endbr64 
+  807922:	55                   	push   rbp
+  807923:	48 89 e5             	mov    rbp,rsp
+  807926:	48 89 7d f8          	mov    QWORD PTR [rbp-0x8],rdi
+  80792a:	89 f0                	mov    eax,esi
+  80792c:	88 45 f4             	mov    BYTE PTR [rbp-0xc],al
     f->attr|=attr;
-  80790f:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  807913:	0f b6 40 0b          	movzx  eax,BYTE PTR [rax+0xb]
-  807917:	0a 45 f4             	or     al,BYTE PTR [rbp-0xc]
-  80791a:	89 c2                	mov    edx,eax
-  80791c:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  807920:	88 50 0b             	mov    BYTE PTR [rax+0xb],dl
+  80792f:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  807933:	0f b6 40 0b          	movzx  eax,BYTE PTR [rax+0xb]
+  807937:	0a 45 f4             	or     al,BYTE PTR [rbp-0xc]
+  80793a:	89 c2                	mov    edx,eax
+  80793c:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  807940:	88 50 0b             	mov    BYTE PTR [rax+0xb],dl
 }
-  807923:	90                   	nop
-  807924:	5d                   	pop    rbp
-  807925:	c3                   	ret    
+  807943:	90                   	nop
+  807944:	5d                   	pop    rbp
+  807945:	c3                   	ret    
 
-0000000000807926 <update_fat_and_root>:
+0000000000807946 <update_fat_and_root>:
 mkdir
 touch
 rm
 */
 void update_fat_and_root()
 {
-  807926:	f3 0f 1e fa          	endbr64 
-  80792a:	55                   	push   rbp
-  80792b:	48 89 e5             	mov    rbp,rsp
-  80792e:	48 83 ec 10          	sub    rsp,0x10
+  807946:	f3 0f 1e fa          	endbr64 
+  80794a:	55                   	push   rbp
+  80794b:	48 89 e5             	mov    rbp,rsp
+  80794e:	48 83 ec 10          	sub    rsp,0x10
     int root_loc=superblock.rsvdSec+\
-  807932:	0f b7 05 d5 2b c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc22bd5]        # 42a50e <superblock+0xe>
-  807939:	0f b7 c8             	movzx  ecx,ax
+  807952:	0f b7 05 b5 2b c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc22bb5]        # 42a50e <superblock+0xe>
+  807959:	0f b7 c8             	movzx  ecx,ax
     superblock.secPerFAT*superblock.numOfFAT;
-  80793c:	0f b7 05 d3 2b c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc22bd3]        # 42a516 <superblock+0x16>
-  807943:	0f b7 d0             	movzx  edx,ax
-  807946:	0f b6 05 c3 2b c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc22bc3]        # 42a510 <superblock+0x10>
-  80794d:	0f b6 c0             	movzx  eax,al
-  807950:	0f af c2             	imul   eax,edx
+  80795c:	0f b7 05 b3 2b c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc22bb3]        # 42a516 <superblock+0x16>
+  807963:	0f b7 d0             	movzx  edx,ax
+  807966:	0f b6 05 a3 2b c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc22ba3]        # 42a510 <superblock+0x10>
+  80796d:	0f b6 c0             	movzx  eax,al
+  807970:	0f af c2             	imul   eax,edx
     int root_loc=superblock.rsvdSec+\
-  807953:	01 c8                	add    eax,ecx
-  807955:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  807973:	01 c8                	add    eax,ecx
+  807975:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
     //printf("root_loc:0x%x\n",root_loc);
     write_sec(root_dir,root_loc,sizeof(root_dir));
-  807958:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  80795b:	ba 00 40 00 00       	mov    edx,0x4000
-  807960:	89 c6                	mov    esi,eax
-  807962:	bf 40 a5 42 00       	mov    edi,0x42a540
-  807967:	e8 1f ff ff ff       	call   80788b <write_sec>
+  807978:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  80797b:	ba 00 40 00 00       	mov    edx,0x4000
+  807980:	89 c6                	mov    esi,eax
+  807982:	bf 40 a5 42 00       	mov    edi,0x42a540
+  807987:	e8 1f ff ff ff       	call   8078ab <write_sec>
     //printf("updated root\n");
     write_sec(fat,superblock.rsvdSec,sizeof(fat));
-  80796c:	0f b7 05 9b 2b c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc22b9b]        # 42a50e <superblock+0xe>
-  807973:	0f b7 c0             	movzx  eax,ax
-  807976:	ba 00 40 00 00       	mov    edx,0x4000
-  80797b:	89 c6                	mov    esi,eax
-  80797d:	bf 60 e7 42 00       	mov    edi,0x42e760
-  807982:	e8 04 ff ff ff       	call   80788b <write_sec>
+  80798c:	0f b7 05 7b 2b c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc22b7b]        # 42a50e <superblock+0xe>
+  807993:	0f b7 c0             	movzx  eax,ax
+  807996:	ba 00 40 00 00       	mov    edx,0x4000
+  80799b:	89 c6                	mov    esi,eax
+  80799d:	bf 60 e7 42 00       	mov    edi,0x42e760
+  8079a2:	e8 04 ff ff ff       	call   8078ab <write_sec>
     //printf("updated fat\n");
 
 }
-  807987:	90                   	nop
-  807988:	c9                   	leave  
-  807989:	c3                   	ret    
+  8079a7:	90                   	nop
+  8079a8:	c9                   	leave  
+  8079a9:	c3                   	ret    
 
-000000000080798a <add_dot_and_ddot_dir>:
+00000000008079aa <add_dot_and_ddot_dir>:
 void add_dot_and_ddot_dir(dir_entry dir)
 {
-  80798a:	f3 0f 1e fa          	endbr64 
-  80798e:	55                   	push   rbp
-  80798f:	48 89 e5             	mov    rbp,rsp
-  807992:	48 83 ec 10          	sub    rsp,0x10
+  8079aa:	f3 0f 1e fa          	endbr64 
+  8079ae:	55                   	push   rbp
+  8079af:	48 89 e5             	mov    rbp,rsp
+  8079b2:	48 83 ec 10          	sub    rsp,0x10
     //it must be a regular dir to add. and ..
     //and this must be done when the dir is created
     //regular dir
     int cluster = dir.fistCluNum;
-  807996:	0f b7 45 2a          	movzx  eax,WORD PTR [rbp+0x2a]
-  80799a:	0f b7 c0             	movzx  eax,ax
-  80799d:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  8079b6:	0f b7 45 2a          	movzx  eax,WORD PTR [rbp+0x2a]
+  8079ba:	0f b7 c0             	movzx  eax,ax
+  8079bd:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
     read_sec(a_clu_of_dir,cluster+clu_sec_balance,\
     superblock.secPerClu);
-  8079a0:	0f b6 05 66 2b c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc22b66]        # 42a50d <superblock+0xd>
+  8079c0:	0f b6 05 46 2b c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc22b46]        # 42a50d <superblock+0xd>
     read_sec(a_clu_of_dir,cluster+clu_sec_balance,\
-  8079a7:	0f b6 c0             	movzx  eax,al
-  8079aa:	8b 0d 90 2c 00 00    	mov    ecx,DWORD PTR [rip+0x2c90]        # 80a640 <clu_sec_balance>
-  8079b0:	8b 55 fc             	mov    edx,DWORD PTR [rbp-0x4]
-  8079b3:	01 d1                	add    ecx,edx
-  8079b5:	89 c2                	mov    edx,eax
-  8079b7:	89 ce                	mov    esi,ecx
-  8079b9:	bf 60 e5 42 00       	mov    edi,0x42e560
-  8079be:	e8 bc 05 00 00       	call   807f7f <read_sec>
+  8079c7:	0f b6 c0             	movzx  eax,al
+  8079ca:	8b 0d 70 2c 00 00    	mov    ecx,DWORD PTR [rip+0x2c70]        # 80a640 <clu_sec_balance>
+  8079d0:	8b 55 fc             	mov    edx,DWORD PTR [rbp-0x4]
+  8079d3:	01 d1                	add    ecx,edx
+  8079d5:	89 c2                	mov    edx,eax
+  8079d7:	89 ce                	mov    esi,ecx
+  8079d9:	bf 60 e5 42 00       	mov    edi,0x42e560
+  8079de:	e8 bc 05 00 00       	call   807f9f <read_sec>
     //.
     strcpy(a_clu_of_dir[0].name,".       ");
-  8079c3:	be aa 24 81 00       	mov    esi,0x8124aa
-  8079c8:	bf 60 e5 42 00       	mov    edi,0x42e560
-  8079cd:	e8 92 21 00 00       	call   809b64 <strcpy>
+  8079e3:	be aa 24 81 00       	mov    esi,0x8124aa
+  8079e8:	bf 60 e5 42 00       	mov    edi,0x42e560
+  8079ed:	e8 92 21 00 00       	call   809b84 <strcpy>
     strcpy(a_clu_of_dir[0].extension,"   ");
-  8079d2:	be b3 24 81 00       	mov    esi,0x8124b3
-  8079d7:	bf 68 e5 42 00       	mov    edi,0x42e568
-  8079dc:	e8 83 21 00 00       	call   809b64 <strcpy>
+  8079f2:	be b3 24 81 00       	mov    esi,0x8124b3
+  8079f7:	bf 68 e5 42 00       	mov    edi,0x42e568
+  8079fc:	e8 83 21 00 00       	call   809b84 <strcpy>
     a_clu_of_dir[0].fistCluNum=dir.fistCluNum;
-  8079e1:	0f b7 45 2a          	movzx  eax,WORD PTR [rbp+0x2a]
-  8079e5:	66 89 05 8e 6b c2 ff 	mov    WORD PTR [rip+0xffffffffffc26b8e],ax        # 42e57a <a_clu_of_dir+0x1a>
+  807a01:	0f b7 45 2a          	movzx  eax,WORD PTR [rbp+0x2a]
+  807a05:	66 89 05 6e 6b c2 ff 	mov    WORD PTR [rip+0xffffffffffc26b6e],ax        # 42e57a <a_clu_of_dir+0x1a>
     a_clu_of_dir[0].len=0;
-  8079ec:	c7 05 86 6b c2 ff 00 	mov    DWORD PTR [rip+0xffffffffffc26b86],0x0        # 42e57c <a_clu_of_dir+0x1c>
-  8079f3:	00 00 00 
+  807a0c:	c7 05 66 6b c2 ff 00 	mov    DWORD PTR [rip+0xffffffffffc26b66],0x0        # 42e57c <a_clu_of_dir+0x1c>
+  807a13:	00 00 00 
     set_attr(&a_clu_of_dir[0],ATTR_DIR);
-  8079f6:	be 10 00 00 00       	mov    esi,0x10
-  8079fb:	bf 60 e5 42 00       	mov    edi,0x42e560
-  807a00:	e8 f9 fe ff ff       	call   8078fe <set_attr>
+  807a16:	be 10 00 00 00       	mov    esi,0x10
+  807a1b:	bf 60 e5 42 00       	mov    edi,0x42e560
+  807a20:	e8 f9 fe ff ff       	call   80791e <set_attr>
     //..
     strcpy(a_clu_of_dir[1].name,"..      ");
-  807a05:	be b7 24 81 00       	mov    esi,0x8124b7
-  807a0a:	bf 80 e5 42 00       	mov    edi,0x42e580
-  807a0f:	e8 50 21 00 00       	call   809b64 <strcpy>
+  807a25:	be b7 24 81 00       	mov    esi,0x8124b7
+  807a2a:	bf 80 e5 42 00       	mov    edi,0x42e580
+  807a2f:	e8 50 21 00 00       	call   809b84 <strcpy>
     strcpy(a_clu_of_dir[1].extension,"   ");
-  807a14:	be b3 24 81 00       	mov    esi,0x8124b3
-  807a19:	bf 88 e5 42 00       	mov    edi,0x42e588
-  807a1e:	e8 41 21 00 00       	call   809b64 <strcpy>
+  807a34:	be b3 24 81 00       	mov    esi,0x8124b3
+  807a39:	bf 88 e5 42 00       	mov    edi,0x42e588
+  807a3e:	e8 41 21 00 00       	call   809b84 <strcpy>
     a_clu_of_dir[1].fistCluNum=cur_dir.fistCluNum;
-  807a23:	0f b7 05 30 6b c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc26b30]        # 42e55a <cur_dir+0x1a>
-  807a2a:	66 89 05 69 6b c2 ff 	mov    WORD PTR [rip+0xffffffffffc26b69],ax        # 42e59a <a_clu_of_dir+0x3a>
+  807a43:	0f b7 05 10 6b c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc26b10]        # 42e55a <cur_dir+0x1a>
+  807a4a:	66 89 05 49 6b c2 ff 	mov    WORD PTR [rip+0xffffffffffc26b49],ax        # 42e59a <a_clu_of_dir+0x3a>
     a_clu_of_dir[1].len=0;
-  807a31:	c7 05 61 6b c2 ff 00 	mov    DWORD PTR [rip+0xffffffffffc26b61],0x0        # 42e59c <a_clu_of_dir+0x3c>
-  807a38:	00 00 00 
+  807a51:	c7 05 41 6b c2 ff 00 	mov    DWORD PTR [rip+0xffffffffffc26b41],0x0        # 42e59c <a_clu_of_dir+0x3c>
+  807a58:	00 00 00 
     set_attr(&a_clu_of_dir[1],ATTR_DIR);
-  807a3b:	be 10 00 00 00       	mov    esi,0x10
-  807a40:	bf 80 e5 42 00       	mov    edi,0x42e580
-  807a45:	e8 b4 fe ff ff       	call   8078fe <set_attr>
+  807a5b:	be 10 00 00 00       	mov    esi,0x10
+  807a60:	bf 80 e5 42 00       	mov    edi,0x42e580
+  807a65:	e8 b4 fe ff ff       	call   80791e <set_attr>
     //update the dir
     int dir_loc=cluster+clu_sec_balance;
-  807a4a:	8b 15 f0 2b 00 00    	mov    edx,DWORD PTR [rip+0x2bf0]        # 80a640 <clu_sec_balance>
-  807a50:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  807a53:	01 d0                	add    eax,edx
-  807a55:	89 45 f8             	mov    DWORD PTR [rbp-0x8],eax
+  807a6a:	8b 15 d0 2b 00 00    	mov    edx,DWORD PTR [rip+0x2bd0]        # 80a640 <clu_sec_balance>
+  807a70:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  807a73:	01 d0                	add    eax,edx
+  807a75:	89 45 f8             	mov    DWORD PTR [rbp-0x8],eax
     write_sec(a_clu_of_dir,dir_loc,sizeof(a_clu_of_dir));
-  807a58:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  807a5b:	ba 00 02 00 00       	mov    edx,0x200
-  807a60:	89 c6                	mov    esi,eax
-  807a62:	bf 60 e5 42 00       	mov    edi,0x42e560
-  807a67:	e8 1f fe ff ff       	call   80788b <write_sec>
+  807a78:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  807a7b:	ba 00 02 00 00       	mov    edx,0x200
+  807a80:	89 c6                	mov    esi,eax
+  807a82:	bf 60 e5 42 00       	mov    edi,0x42e560
+  807a87:	e8 1f fe ff ff       	call   8078ab <write_sec>
     //no need to update fat and root
 }
-  807a6c:	90                   	nop
-  807a6d:	c9                   	leave  
-  807a6e:	c3                   	ret    
+  807a8c:	90                   	nop
+  807a8d:	c9                   	leave  
+  807a8e:	c3                   	ret    
 
-0000000000807a6f <translate_attr>:
+0000000000807a8f <translate_attr>:
 void translate_attr(char attr,char *attr_s)
 {
-  807a6f:	f3 0f 1e fa          	endbr64 
-  807a73:	55                   	push   rbp
-  807a74:	48 89 e5             	mov    rbp,rsp
-  807a77:	89 f8                	mov    eax,edi
-  807a79:	48 89 75 e0          	mov    QWORD PTR [rbp-0x20],rsi
-  807a7d:	88 45 ec             	mov    BYTE PTR [rbp-0x14],al
+  807a8f:	f3 0f 1e fa          	endbr64 
+  807a93:	55                   	push   rbp
+  807a94:	48 89 e5             	mov    rbp,rsp
+  807a97:	89 f8                	mov    eax,edi
+  807a99:	48 89 75 e0          	mov    QWORD PTR [rbp-0x20],rsi
+  807a9d:	88 45 ec             	mov    BYTE PTR [rbp-0x14],al
     //rwhds (s: system h:hidden)
     int v=attr&1;
-  807a80:	0f be 45 ec          	movsx  eax,BYTE PTR [rbp-0x14]
-  807a84:	83 e0 01             	and    eax,0x1
-  807a87:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  807aa0:	0f be 45 ec          	movsx  eax,BYTE PTR [rbp-0x14]
+  807aa4:	83 e0 01             	and    eax,0x1
+  807aa7:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
     if(v)//sys_read-only
-  807a8a:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
-  807a8e:	74 0b                	je     807a9b <translate_attr+0x2c>
+  807aaa:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
+  807aae:	74 0b                	je     807abb <translate_attr+0x2c>
         attr_s[1]='-';
-  807a90:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  807a94:	48 83 c0 01          	add    rax,0x1
-  807a98:	c6 00 2d             	mov    BYTE PTR [rax],0x2d
+  807ab0:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  807ab4:	48 83 c0 01          	add    rax,0x1
+  807ab8:	c6 00 2d             	mov    BYTE PTR [rax],0x2d
     v=attr&2;
-  807a9b:	0f be 45 ec          	movsx  eax,BYTE PTR [rbp-0x14]
-  807a9f:	83 e0 02             	and    eax,0x2
-  807aa2:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  807abb:	0f be 45 ec          	movsx  eax,BYTE PTR [rbp-0x14]
+  807abf:	83 e0 02             	and    eax,0x2
+  807ac2:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
     if(v)//hidden
-  807aa5:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
-  807aa9:	74 0b                	je     807ab6 <translate_attr+0x47>
+  807ac5:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
+  807ac9:	74 0b                	je     807ad6 <translate_attr+0x47>
         attr_s[2]='h';
-  807aab:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  807aaf:	48 83 c0 02          	add    rax,0x2
-  807ab3:	c6 00 68             	mov    BYTE PTR [rax],0x68
+  807acb:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  807acf:	48 83 c0 02          	add    rax,0x2
+  807ad3:	c6 00 68             	mov    BYTE PTR [rax],0x68
     v=attr&4;
-  807ab6:	0f be 45 ec          	movsx  eax,BYTE PTR [rbp-0x14]
-  807aba:	83 e0 04             	and    eax,0x4
-  807abd:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  807ad6:	0f be 45 ec          	movsx  eax,BYTE PTR [rbp-0x14]
+  807ada:	83 e0 04             	and    eax,0x4
+  807add:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
     if(v)//system
-  807ac0:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
-  807ac4:	74 0b                	je     807ad1 <translate_attr+0x62>
+  807ae0:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
+  807ae4:	74 0b                	je     807af1 <translate_attr+0x62>
         attr_s[4]='s';
-  807ac6:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  807aca:	48 83 c0 04          	add    rax,0x4
-  807ace:	c6 00 73             	mov    BYTE PTR [rax],0x73
+  807ae6:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  807aea:	48 83 c0 04          	add    rax,0x4
+  807aee:	c6 00 73             	mov    BYTE PTR [rax],0x73
     v=attr&8;
-  807ad1:	0f be 45 ec          	movsx  eax,BYTE PTR [rbp-0x14]
-  807ad5:	83 e0 08             	and    eax,0x8
-  807ad8:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  807af1:	0f be 45 ec          	movsx  eax,BYTE PTR [rbp-0x14]
+  807af5:	83 e0 08             	and    eax,0x8
+  807af8:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
     if(v)//volume label
-  807adb:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
-  807adf:	74 0b                	je     807aec <translate_attr+0x7d>
+  807afb:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
+  807aff:	74 0b                	je     807b0c <translate_attr+0x7d>
         attr_s[3]='v';
-  807ae1:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  807ae5:	48 83 c0 03          	add    rax,0x3
-  807ae9:	c6 00 76             	mov    BYTE PTR [rax],0x76
+  807b01:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  807b05:	48 83 c0 03          	add    rax,0x3
+  807b09:	c6 00 76             	mov    BYTE PTR [rax],0x76
     v=attr&16;
-  807aec:	0f be 45 ec          	movsx  eax,BYTE PTR [rbp-0x14]
-  807af0:	83 e0 10             	and    eax,0x10
-  807af3:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  807b0c:	0f be 45 ec          	movsx  eax,BYTE PTR [rbp-0x14]
+  807b10:	83 e0 10             	and    eax,0x10
+  807b13:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
     if(v)//dir
-  807af6:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
-  807afa:	74 0b                	je     807b07 <translate_attr+0x98>
+  807b16:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
+  807b1a:	74 0b                	je     807b27 <translate_attr+0x98>
         attr_s[3]='d';
-  807afc:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  807b00:	48 83 c0 03          	add    rax,0x3
-  807b04:	c6 00 64             	mov    BYTE PTR [rax],0x64
+  807b1c:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  807b20:	48 83 c0 03          	add    rax,0x3
+  807b24:	c6 00 64             	mov    BYTE PTR [rax],0x64
     //archive: do nothing
     attr_s[5]='\0';
-  807b07:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  807b0b:	48 83 c0 05          	add    rax,0x5
-  807b0f:	c6 00 00             	mov    BYTE PTR [rax],0x0
+  807b27:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  807b2b:	48 83 c0 05          	add    rax,0x5
+  807b2f:	c6 00 00             	mov    BYTE PTR [rax],0x0
 }
-  807b12:	90                   	nop
-  807b13:	5d                   	pop    rbp
-  807b14:	c3                   	ret    
+  807b32:	90                   	nop
+  807b33:	5d                   	pop    rbp
+  807b34:	c3                   	ret    
 
-0000000000807b15 <extend_cluster>:
+0000000000807b35 <extend_cluster>:
 int extend_cluster(short cluster)
 {
-  807b15:	f3 0f 1e fa          	endbr64 
-  807b19:	55                   	push   rbp
-  807b1a:	48 89 e5             	mov    rbp,rsp
-  807b1d:	48 83 ec 18          	sub    rsp,0x18
-  807b21:	89 f8                	mov    eax,edi
-  807b23:	66 89 45 ec          	mov    WORD PTR [rbp-0x14],ax
+  807b35:	f3 0f 1e fa          	endbr64 
+  807b39:	55                   	push   rbp
+  807b3a:	48 89 e5             	mov    rbp,rsp
+  807b3d:	48 83 ec 18          	sub    rsp,0x18
+  807b41:	89 f8                	mov    eax,edi
+  807b43:	66 89 45 ec          	mov    WORD PTR [rbp-0x14],ax
     int new_clu=req_cluster();
-  807b27:	b8 00 00 00 00       	mov    eax,0x0
-  807b2c:	e8 0e fd ff ff       	call   80783f <req_cluster>
-  807b31:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  807b47:	b8 00 00 00 00       	mov    eax,0x0
+  807b4c:	e8 0e fd ff ff       	call   80785f <req_cluster>
+  807b51:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
     if(new_clu==-1)
-  807b34:	83 7d fc ff          	cmp    DWORD PTR [rbp-0x4],0xffffffff
-  807b38:	75 07                	jne    807b41 <extend_cluster+0x2c>
+  807b54:	83 7d fc ff          	cmp    DWORD PTR [rbp-0x4],0xffffffff
+  807b58:	75 07                	jne    807b61 <extend_cluster+0x2c>
         return -1;
-  807b3a:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  807b3f:	eb 16                	jmp    807b57 <extend_cluster+0x42>
+  807b5a:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  807b5f:	eb 16                	jmp    807b77 <extend_cluster+0x42>
     fat[cluster]=new_clu;
-  807b41:	0f bf 45 ec          	movsx  eax,WORD PTR [rbp-0x14]
-  807b45:	8b 55 fc             	mov    edx,DWORD PTR [rbp-0x4]
-  807b48:	48 98                	cdqe   
-  807b4a:	66 89 94 00 60 e7 42 	mov    WORD PTR [rax+rax*1+0x42e760],dx
-  807b51:	00 
+  807b61:	0f bf 45 ec          	movsx  eax,WORD PTR [rbp-0x14]
+  807b65:	8b 55 fc             	mov    edx,DWORD PTR [rbp-0x4]
+  807b68:	48 98                	cdqe   
+  807b6a:	66 89 94 00 60 e7 42 	mov    WORD PTR [rax+rax*1+0x42e760],dx
+  807b71:	00 
     return 0;
-  807b52:	b8 00 00 00 00       	mov    eax,0x0
+  807b72:	b8 00 00 00 00       	mov    eax,0x0
 }
-  807b57:	c9                   	leave  
-  807b58:	c3                   	ret    
+  807b77:	c9                   	leave  
+  807b78:	c3                   	ret    
 
-0000000000807b59 <touch>:
+0000000000807b79 <touch>:
 得出的结果换算成16进制填入即可。也就是：38H字节0~4位是日期数；38H字节5~7位和39H字节0位是月份；
 39H字节的1~7位为年号，原定义中0~119分别代表1980~2099，目前高版本的Windows允许取0~127，
 即年号最大可以到2107年。
 */
 int touch(driver_args *arg)
 {
-  807b59:	f3 0f 1e fa          	endbr64 
-  807b5d:	55                   	push   rbp
-  807b5e:	48 89 e5             	mov    rbp,rsp
-  807b61:	48 83 ec 60          	sub    rsp,0x60
-  807b65:	48 89 7d a8          	mov    QWORD PTR [rbp-0x58],rdi
+  807b79:	f3 0f 1e fa          	endbr64 
+  807b7d:	55                   	push   rbp
+  807b7e:	48 89 e5             	mov    rbp,rsp
+  807b81:	48 83 ec 60          	sub    rsp,0x60
+  807b85:	48 89 7d a8          	mov    QWORD PTR [rbp-0x58],rdi
     char *name=arg->path;
-  807b69:	48 8b 45 a8          	mov    rax,QWORD PTR [rbp-0x58]
-  807b6d:	48 8b 40 20          	mov    rax,QWORD PTR [rax+0x20]
-  807b71:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
+  807b89:	48 8b 45 a8          	mov    rax,QWORD PTR [rbp-0x58]
+  807b8d:	48 8b 40 20          	mov    rax,QWORD PTR [rax+0x20]
+  807b91:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
     dir_entry dir;
     dir.fistCluNum=arg->entry.id;
-  807b75:	48 8b 45 a8          	mov    rax,QWORD PTR [rbp-0x58]
-  807b79:	8b 40 3c             	mov    eax,DWORD PTR [rax+0x3c]
-  807b7c:	66 89 45 ca          	mov    WORD PTR [rbp-0x36],ax
+  807b95:	48 8b 45 a8          	mov    rax,QWORD PTR [rbp-0x58]
+  807b99:	8b 40 3c             	mov    eax,DWORD PTR [rax+0x3c]
+  807b9c:	66 89 45 ca          	mov    WORD PTR [rbp-0x36],ax
     //default set to 512
     int max_files=16;
-  807b80:	c7 45 ec 10 00 00 00 	mov    DWORD PTR [rbp-0x14],0x10
+  807ba0:	c7 45 ec 10 00 00 00 	mov    DWORD PTR [rbp-0x14],0x10
     dir_entry *dir_table=a_clu_of_dir;
-  807b87:	48 c7 45 e0 60 e5 42 	mov    QWORD PTR [rbp-0x20],0x42e560
-  807b8e:	00 
+  807ba7:	48 c7 45 e0 60 e5 42 	mov    QWORD PTR [rbp-0x20],0x42e560
+  807bae:	00 
     read_sec(a_clu_of_dir,dir.fistCluNum+clu_sec_balance,\
         superblock.secPerClu);
-  807b8f:	0f b6 05 77 29 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc22977]        # 42a50d <superblock+0xd>
+  807baf:	0f b6 05 57 29 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc22957]        # 42a50d <superblock+0xd>
     read_sec(a_clu_of_dir,dir.fistCluNum+clu_sec_balance,\
-  807b96:	0f b6 c0             	movzx  eax,al
-  807b99:	0f b7 55 ca          	movzx  edx,WORD PTR [rbp-0x36]
-  807b9d:	0f b7 ca             	movzx  ecx,dx
-  807ba0:	8b 15 9a 2a 00 00    	mov    edx,DWORD PTR [rip+0x2a9a]        # 80a640 <clu_sec_balance>
-  807ba6:	01 d1                	add    ecx,edx
-  807ba8:	89 c2                	mov    edx,eax
-  807baa:	89 ce                	mov    esi,ecx
-  807bac:	bf 60 e5 42 00       	mov    edi,0x42e560
-  807bb1:	e8 c9 03 00 00       	call   807f7f <read_sec>
+  807bb6:	0f b6 c0             	movzx  eax,al
+  807bb9:	0f b7 55 ca          	movzx  edx,WORD PTR [rbp-0x36]
+  807bbd:	0f b7 ca             	movzx  ecx,dx
+  807bc0:	8b 15 7a 2a 00 00    	mov    edx,DWORD PTR [rip+0x2a7a]        # 80a640 <clu_sec_balance>
+  807bc6:	01 d1                	add    ecx,edx
+  807bc8:	89 c2                	mov    edx,eax
+  807bca:	89 ce                	mov    esi,ecx
+  807bcc:	bf 60 e5 42 00       	mov    edi,0x42e560
+  807bd1:	e8 c9 03 00 00       	call   807f9f <read_sec>
     //current cluster you're at
     unsigned short cluster=dir.fistCluNum;
-  807bb6:	0f b7 45 ca          	movzx  eax,WORD PTR [rbp-0x36]
-  807bba:	66 89 45 fe          	mov    WORD PTR [rbp-0x2],ax
+  807bd6:	0f b7 45 ca          	movzx  eax,WORD PTR [rbp-0x36]
+  807bda:	66 89 45 fe          	mov    WORD PTR [rbp-0x2],ax
     do{
         for(int i=0;i<max_files;i++)
-  807bbe:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0
-  807bc5:	e9 2e 01 00 00       	jmp    807cf8 <touch+0x19f>
+  807bde:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0
+  807be5:	e9 2e 01 00 00       	jmp    807d18 <touch+0x19f>
         {
             //printf("%s\n",dir_table[i].name);
             if((unsigned char)dir_table[i].name[0]==0xe5||\
-  807bca:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  807bcd:	48 98                	cdqe   
-  807bcf:	48 c1 e0 05          	shl    rax,0x5
-  807bd3:	48 89 c2             	mov    rdx,rax
-  807bd6:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  807bda:	48 01 d0             	add    rax,rdx
-  807bdd:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  807be0:	3c e5                	cmp    al,0xe5
-  807be2:	74 1e                	je     807c02 <touch+0xa9>
+  807bea:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  807bed:	48 98                	cdqe   
+  807bef:	48 c1 e0 05          	shl    rax,0x5
+  807bf3:	48 89 c2             	mov    rdx,rax
+  807bf6:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  807bfa:	48 01 d0             	add    rax,rdx
+  807bfd:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  807c00:	3c e5                	cmp    al,0xe5
+  807c02:	74 1e                	je     807c22 <touch+0xa9>
             dir_table[i].name[0]==0)
-  807be4:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  807be7:	48 98                	cdqe   
-  807be9:	48 c1 e0 05          	shl    rax,0x5
-  807bed:	48 89 c2             	mov    rdx,rax
-  807bf0:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  807bf4:	48 01 d0             	add    rax,rdx
-  807bf7:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  807c04:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  807c07:	48 98                	cdqe   
+  807c09:	48 c1 e0 05          	shl    rax,0x5
+  807c0d:	48 89 c2             	mov    rdx,rax
+  807c10:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  807c14:	48 01 d0             	add    rax,rdx
+  807c17:	0f b6 00             	movzx  eax,BYTE PTR [rax]
             if((unsigned char)dir_table[i].name[0]==0xe5||\
-  807bfa:	84 c0                	test   al,al
-  807bfc:	0f 85 f2 00 00 00    	jne    807cf4 <touch+0x19b>
+  807c1a:	84 c0                	test   al,al
+  807c1c:	0f 85 f2 00 00 00    	jne    807d14 <touch+0x19b>
             {
                 //available
                 //put name
                 format_name(name);
-  807c02:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  807c06:	48 89 c7             	mov    rdi,rax
-  807c09:	e8 25 fb ff ff       	call   807733 <format_name>
+  807c22:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  807c26:	48 89 c7             	mov    rdi,rax
+  807c29:	e8 25 fb ff ff       	call   807753 <format_name>
                 memcpy(dir_table[i].name,name,11);
-  807c0e:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  807c11:	48 98                	cdqe   
-  807c13:	48 c1 e0 05          	shl    rax,0x5
-  807c17:	48 89 c2             	mov    rdx,rax
-  807c1a:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  807c1e:	48 01 d0             	add    rax,rdx
-  807c21:	48 89 c1             	mov    rcx,rax
-  807c24:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  807c28:	ba 0b 00 00 00       	mov    edx,0xb
-  807c2d:	48 89 c6             	mov    rsi,rax
-  807c30:	48 89 cf             	mov    rdi,rcx
-  807c33:	e8 2e 1e 00 00       	call   809a66 <memcpy>
+  807c2e:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  807c31:	48 98                	cdqe   
+  807c33:	48 c1 e0 05          	shl    rax,0x5
+  807c37:	48 89 c2             	mov    rdx,rax
+  807c3a:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  807c3e:	48 01 d0             	add    rax,rdx
+  807c41:	48 89 c1             	mov    rcx,rax
+  807c44:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  807c48:	ba 0b 00 00 00       	mov    edx,0xb
+  807c4d:	48 89 c6             	mov    rsi,rax
+  807c50:	48 89 cf             	mov    rdi,rcx
+  807c53:	e8 2e 1e 00 00       	call   809a86 <memcpy>
                 int clu=req_cluster();
-  807c38:	b8 00 00 00 00       	mov    eax,0x0
-  807c3d:	e8 fd fb ff ff       	call   80783f <req_cluster>
-  807c42:	89 45 dc             	mov    DWORD PTR [rbp-0x24],eax
+  807c58:	b8 00 00 00 00       	mov    eax,0x0
+  807c5d:	e8 fd fb ff ff       	call   80785f <req_cluster>
+  807c62:	89 45 dc             	mov    DWORD PTR [rbp-0x24],eax
                 if(clu==-1)
-  807c45:	83 7d dc ff          	cmp    DWORD PTR [rbp-0x24],0xffffffff
-  807c49:	75 0a                	jne    807c55 <touch+0xfc>
+  807c65:	83 7d dc ff          	cmp    DWORD PTR [rbp-0x24],0xffffffff
+  807c69:	75 0a                	jne    807c75 <touch+0xfc>
                 {
                     //puts("err: full disk");
                     return -1;
-  807c4b:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  807c50:	e9 fc 00 00 00       	jmp    807d51 <touch+0x1f8>
+  807c6b:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  807c70:	e9 fc 00 00 00       	jmp    807d71 <touch+0x1f8>
                 }
                 dir_table[i].fistCluNum=clu;
-  807c55:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  807c58:	48 98                	cdqe   
-  807c5a:	48 c1 e0 05          	shl    rax,0x5
-  807c5e:	48 89 c2             	mov    rdx,rax
-  807c61:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  807c65:	48 01 d0             	add    rax,rdx
-  807c68:	8b 55 dc             	mov    edx,DWORD PTR [rbp-0x24]
-  807c6b:	66 89 50 1a          	mov    WORD PTR [rax+0x1a],dx
+  807c75:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  807c78:	48 98                	cdqe   
+  807c7a:	48 c1 e0 05          	shl    rax,0x5
+  807c7e:	48 89 c2             	mov    rdx,rax
+  807c81:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  807c85:	48 01 d0             	add    rax,rdx
+  807c88:	8b 55 dc             	mov    edx,DWORD PTR [rbp-0x24]
+  807c8b:	66 89 50 1a          	mov    WORD PTR [rax+0x1a],dx
                 set_attr(&dir_table[i],ATTR_ARCHIVE);
-  807c6f:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  807c72:	48 98                	cdqe   
-  807c74:	48 c1 e0 05          	shl    rax,0x5
-  807c78:	48 89 c2             	mov    rdx,rax
-  807c7b:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  807c7f:	48 01 d0             	add    rax,rdx
-  807c82:	be 20 00 00 00       	mov    esi,0x20
-  807c87:	48 89 c7             	mov    rdi,rax
-  807c8a:	e8 6f fc ff ff       	call   8078fe <set_attr>
+  807c8f:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  807c92:	48 98                	cdqe   
+  807c94:	48 c1 e0 05          	shl    rax,0x5
+  807c98:	48 89 c2             	mov    rdx,rax
+  807c9b:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  807c9f:	48 01 d0             	add    rax,rdx
+  807ca2:	be 20 00 00 00       	mov    esi,0x20
+  807ca7:	48 89 c7             	mov    rdi,rax
+  807caa:	e8 6f fc ff ff       	call   80791e <set_attr>
                 dir_table[i].len=superblock.bytesPerSec*superblock.secPerClu;
-  807c8f:	0f b7 05 75 28 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc22875]        # 42a50b <superblock+0xb>
-  807c96:	0f b7 d0             	movzx  edx,ax
-  807c99:	0f b6 05 6d 28 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc2286d]        # 42a50d <superblock+0xd>
-  807ca0:	0f b6 c0             	movzx  eax,al
-  807ca3:	0f af d0             	imul   edx,eax
-  807ca6:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  807ca9:	48 98                	cdqe   
-  807cab:	48 c1 e0 05          	shl    rax,0x5
-  807caf:	48 89 c1             	mov    rcx,rax
-  807cb2:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  807cb6:	48 01 c8             	add    rax,rcx
-  807cb9:	89 50 1c             	mov    DWORD PTR [rax+0x1c],edx
+  807caf:	0f b7 05 55 28 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc22855]        # 42a50b <superblock+0xb>
+  807cb6:	0f b7 d0             	movzx  edx,ax
+  807cb9:	0f b6 05 4d 28 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc2284d]        # 42a50d <superblock+0xd>
+  807cc0:	0f b6 c0             	movzx  eax,al
+  807cc3:	0f af d0             	imul   edx,eax
+  807cc6:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  807cc9:	48 98                	cdqe   
+  807ccb:	48 c1 e0 05          	shl    rax,0x5
+  807ccf:	48 89 c1             	mov    rcx,rax
+  807cd2:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  807cd6:	48 01 c8             	add    rax,rcx
+  807cd9:	89 50 1c             	mov    DWORD PTR [rax+0x1c],edx
                 //date and time
                 //dir_table[i].lastModfDate=get_date_stab();
                 //dir_table[i].lastModfTime=get_time_stab();
                 //update
                 write_sec(dir_table,cluster+clu_sec_balance,\
                 superblock.bytesPerSec*superblock.secPerClu);
-  807cbc:	0f b7 05 48 28 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc22848]        # 42a50b <superblock+0xb>
-  807cc3:	0f b7 d0             	movzx  edx,ax
-  807cc6:	0f b6 05 40 28 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc22840]        # 42a50d <superblock+0xd>
-  807ccd:	0f b6 c0             	movzx  eax,al
+  807cdc:	0f b7 05 28 28 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc22828]        # 42a50b <superblock+0xb>
+  807ce3:	0f b7 d0             	movzx  edx,ax
+  807ce6:	0f b6 05 20 28 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc22820]        # 42a50d <superblock+0xd>
+  807ced:	0f b6 c0             	movzx  eax,al
                 write_sec(dir_table,cluster+clu_sec_balance,\
-  807cd0:	0f af d0             	imul   edx,eax
-  807cd3:	0f b7 4d fe          	movzx  ecx,WORD PTR [rbp-0x2]
-  807cd7:	8b 05 63 29 00 00    	mov    eax,DWORD PTR [rip+0x2963]        # 80a640 <clu_sec_balance>
-  807cdd:	01 c1                	add    ecx,eax
-  807cdf:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  807ce3:	89 ce                	mov    esi,ecx
-  807ce5:	48 89 c7             	mov    rdi,rax
-  807ce8:	e8 9e fb ff ff       	call   80788b <write_sec>
+  807cf0:	0f af d0             	imul   edx,eax
+  807cf3:	0f b7 4d fe          	movzx  ecx,WORD PTR [rbp-0x2]
+  807cf7:	8b 05 43 29 00 00    	mov    eax,DWORD PTR [rip+0x2943]        # 80a640 <clu_sec_balance>
+  807cfd:	01 c1                	add    ecx,eax
+  807cff:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  807d03:	89 ce                	mov    esi,ecx
+  807d05:	48 89 c7             	mov    rdi,rax
+  807d08:	e8 9e fb ff ff       	call   8078ab <write_sec>
                 return -1;
-  807ced:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  807cf2:	eb 5d                	jmp    807d51 <touch+0x1f8>
+  807d0d:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  807d12:	eb 5d                	jmp    807d71 <touch+0x1f8>
         for(int i=0;i<max_files;i++)
-  807cf4:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1
-  807cf8:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  807cfb:	3b 45 ec             	cmp    eax,DWORD PTR [rbp-0x14]
-  807cfe:	0f 8c c6 fe ff ff    	jl     807bca <touch+0x71>
+  807d14:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1
+  807d18:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  807d1b:	3b 45 ec             	cmp    eax,DWORD PTR [rbp-0x14]
+  807d1e:	0f 8c c6 fe ff ff    	jl     807bea <touch+0x71>
         if(fat[cluster]>=FAT_EOF&&extend_cluster(cluster)==-1)
         {
             //extend fail
             //puts("err:full disk");
             return -1;
         }else if(cluster<FAT_EOF)
-  807d04:	66 83 7d fe f6       	cmp    WORD PTR [rbp-0x2],0xfff6
-  807d09:	77 36                	ja     807d41 <touch+0x1e8>
+  807d24:	66 83 7d fe f6       	cmp    WORD PTR [rbp-0x2],0xfff6
+  807d29:	77 36                	ja     807d61 <touch+0x1e8>
         {
             cluster=fat[cluster];
-  807d0b:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
-  807d0f:	48 98                	cdqe   
-  807d11:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
-  807d18:	00 
-  807d19:	66 89 45 fe          	mov    WORD PTR [rbp-0x2],ax
+  807d2b:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
+  807d2f:	48 98                	cdqe   
+  807d31:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
+  807d38:	00 
+  807d39:	66 89 45 fe          	mov    WORD PTR [rbp-0x2],ax
             //update
             //if you can reach here it means it's a regular dir
             read_sec(dir_table,cluster+clu_sec_balance,\
             superblock.secPerClu);
-  807d1d:	0f b6 05 e9 27 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc227e9]        # 42a50d <superblock+0xd>
+  807d3d:	0f b6 05 c9 27 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc227c9]        # 42a50d <superblock+0xd>
             read_sec(dir_table,cluster+clu_sec_balance,\
-  807d24:	0f b6 d0             	movzx  edx,al
-  807d27:	0f b7 4d fe          	movzx  ecx,WORD PTR [rbp-0x2]
-  807d2b:	8b 05 0f 29 00 00    	mov    eax,DWORD PTR [rip+0x290f]        # 80a640 <clu_sec_balance>
-  807d31:	01 c1                	add    ecx,eax
-  807d33:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  807d37:	89 ce                	mov    esi,ecx
-  807d39:	48 89 c7             	mov    rdi,rax
-  807d3c:	e8 3e 02 00 00       	call   807f7f <read_sec>
+  807d44:	0f b6 d0             	movzx  edx,al
+  807d47:	0f b7 4d fe          	movzx  ecx,WORD PTR [rbp-0x2]
+  807d4b:	8b 05 ef 28 00 00    	mov    eax,DWORD PTR [rip+0x28ef]        # 80a640 <clu_sec_balance>
+  807d51:	01 c1                	add    ecx,eax
+  807d53:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  807d57:	89 ce                	mov    esi,ecx
+  807d59:	48 89 c7             	mov    rdi,rax
+  807d5c:	e8 3e 02 00 00       	call   807f9f <read_sec>
         }
     }while(cluster<FAT_EOF);
-  807d41:	66 83 7d fe f6       	cmp    WORD PTR [rbp-0x2],0xfff6
-  807d46:	0f 86 72 fe ff ff    	jbe    807bbe <touch+0x65>
+  807d61:	66 83 7d fe f6       	cmp    WORD PTR [rbp-0x2],0xfff6
+  807d66:	0f 86 72 fe ff ff    	jbe    807bde <touch+0x65>
     return 0;
-  807d4c:	b8 00 00 00 00       	mov    eax,0x0
+  807d6c:	b8 00 00 00 00       	mov    eax,0x0
 }
-  807d51:	c9                   	leave  
-  807d52:	c3                   	ret    
+  807d71:	c9                   	leave  
+  807d72:	c3                   	ret    
 
-0000000000807d53 <mkdir>:
+0000000000807d73 <mkdir>:
 //attention: the name must be char[12]
 int mkdir(driver_args *arg)
 {
-  807d53:	f3 0f 1e fa          	endbr64 
-  807d57:	55                   	push   rbp
-  807d58:	48 89 e5             	mov    rbp,rsp
-  807d5b:	48 83 ec 50          	sub    rsp,0x50
-  807d5f:	48 89 7d b8          	mov    QWORD PTR [rbp-0x48],rdi
+  807d73:	f3 0f 1e fa          	endbr64 
+  807d77:	55                   	push   rbp
+  807d78:	48 89 e5             	mov    rbp,rsp
+  807d7b:	48 83 ec 50          	sub    rsp,0x50
+  807d7f:	48 89 7d b8          	mov    QWORD PTR [rbp-0x48],rdi
     char *name=arg->path;
-  807d63:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
-  807d67:	48 8b 40 20          	mov    rax,QWORD PTR [rax+0x20]
-  807d6b:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
+  807d83:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
+  807d87:	48 8b 40 20          	mov    rax,QWORD PTR [rax+0x20]
+  807d8b:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
     dir_entry dir;
     dir.fistCluNum=arg->entry.id;
-  807d6f:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
-  807d73:	8b 40 3c             	mov    eax,DWORD PTR [rax+0x3c]
-  807d76:	66 89 45 da          	mov    WORD PTR [rbp-0x26],ax
+  807d8f:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
+  807d93:	8b 40 3c             	mov    eax,DWORD PTR [rax+0x3c]
+  807d96:	66 89 45 da          	mov    WORD PTR [rbp-0x26],ax
     format_name(name);
-  807d7a:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  807d7e:	48 89 c7             	mov    rdi,rax
-  807d81:	e8 ad f9 ff ff       	call   807733 <format_name>
+  807d9a:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  807d9e:	48 89 c7             	mov    rdi,rax
+  807da1:	e8 ad f9 ff ff       	call   807753 <format_name>
     //regular dir
     unsigned short cluster = dir.fistCluNum;
-  807d86:	0f b7 45 da          	movzx  eax,WORD PTR [rbp-0x26]
-  807d8a:	66 89 45 fe          	mov    WORD PTR [rbp-0x2],ax
+  807da6:	0f b7 45 da          	movzx  eax,WORD PTR [rbp-0x26]
+  807daa:	66 89 45 fe          	mov    WORD PTR [rbp-0x2],ax
     do
     {
         read_sec(a_clu_of_dir,cluster+clu_sec_balance,\
             superblock.secPerClu);
-  807d8e:	0f b6 05 78 27 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc22778]        # 42a50d <superblock+0xd>
+  807dae:	0f b6 05 58 27 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc22758]        # 42a50d <superblock+0xd>
         read_sec(a_clu_of_dir,cluster+clu_sec_balance,\
-  807d95:	0f b6 c0             	movzx  eax,al
-  807d98:	0f b7 4d fe          	movzx  ecx,WORD PTR [rbp-0x2]
-  807d9c:	8b 15 9e 28 00 00    	mov    edx,DWORD PTR [rip+0x289e]        # 80a640 <clu_sec_balance>
-  807da2:	01 d1                	add    ecx,edx
-  807da4:	89 c2                	mov    edx,eax
-  807da6:	89 ce                	mov    esi,ecx
-  807da8:	bf 60 e5 42 00       	mov    edi,0x42e560
-  807dad:	e8 cd 01 00 00       	call   807f7f <read_sec>
+  807db5:	0f b6 c0             	movzx  eax,al
+  807db8:	0f b7 4d fe          	movzx  ecx,WORD PTR [rbp-0x2]
+  807dbc:	8b 15 7e 28 00 00    	mov    edx,DWORD PTR [rip+0x287e]        # 80a640 <clu_sec_balance>
+  807dc2:	01 d1                	add    ecx,edx
+  807dc4:	89 c2                	mov    edx,eax
+  807dc6:	89 ce                	mov    esi,ecx
+  807dc8:	bf 60 e5 42 00       	mov    edi,0x42e560
+  807dcd:	e8 cd 01 00 00       	call   807f9f <read_sec>
         for (int i = 0; i < 16; i++)
-  807db2:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0
-  807db9:	e9 8c 01 00 00       	jmp    807f4a <mkdir+0x1f7>
+  807dd2:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0
+  807dd9:	e9 8c 01 00 00       	jmp    807f6a <mkdir+0x1f7>
         {
             if(a_clu_of_dir[i].fistCluNum==0||\
-  807dbe:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  807dc1:	48 98                	cdqe   
-  807dc3:	48 c1 e0 05          	shl    rax,0x5
-  807dc7:	48 05 7a e5 42 00    	add    rax,0x42e57a
-  807dcd:	0f b7 00             	movzx  eax,WORD PTR [rax]
-  807dd0:	66 85 c0             	test   ax,ax
-  807dd3:	74 30                	je     807e05 <mkdir+0xb2>
+  807dde:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  807de1:	48 98                	cdqe   
+  807de3:	48 c1 e0 05          	shl    rax,0x5
+  807de7:	48 05 7a e5 42 00    	add    rax,0x42e57a
+  807ded:	0f b7 00             	movzx  eax,WORD PTR [rax]
+  807df0:	66 85 c0             	test   ax,ax
+  807df3:	74 30                	je     807e25 <mkdir+0xb2>
             (unsigned char)root_dir[i].name[0]==0xe5||\
-  807dd5:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  807dd8:	48 98                	cdqe   
-  807dda:	48 c1 e0 05          	shl    rax,0x5
-  807dde:	48 05 40 a5 42 00    	add    rax,0x42a540
-  807de4:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  807df5:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  807df8:	48 98                	cdqe   
+  807dfa:	48 c1 e0 05          	shl    rax,0x5
+  807dfe:	48 05 40 a5 42 00    	add    rax,0x42a540
+  807e04:	0f b6 00             	movzx  eax,BYTE PTR [rax]
             if(a_clu_of_dir[i].fistCluNum==0||\
-  807de7:	3c e5                	cmp    al,0xe5
-  807de9:	74 1a                	je     807e05 <mkdir+0xb2>
+  807e07:	3c e5                	cmp    al,0xe5
+  807e09:	74 1a                	je     807e25 <mkdir+0xb2>
             (unsigned char)root_dir[i].name[0]==0)
-  807deb:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  807dee:	48 98                	cdqe   
-  807df0:	48 c1 e0 05          	shl    rax,0x5
-  807df4:	48 05 40 a5 42 00    	add    rax,0x42a540
-  807dfa:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  807e0b:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  807e0e:	48 98                	cdqe   
+  807e10:	48 c1 e0 05          	shl    rax,0x5
+  807e14:	48 05 40 a5 42 00    	add    rax,0x42a540
+  807e1a:	0f b6 00             	movzx  eax,BYTE PTR [rax]
             (unsigned char)root_dir[i].name[0]==0xe5||\
-  807dfd:	84 c0                	test   al,al
-  807dff:	0f 85 41 01 00 00    	jne    807f46 <mkdir+0x1f3>
+  807e1d:	84 c0                	test   al,al
+  807e1f:	0f 85 41 01 00 00    	jne    807f66 <mkdir+0x1f3>
             {
                 memset(&a_clu_of_dir[i],0,sizeof(dir_entry));
-  807e05:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  807e08:	48 98                	cdqe   
-  807e0a:	48 c1 e0 05          	shl    rax,0x5
-  807e0e:	48 05 60 e5 42 00    	add    rax,0x42e560
-  807e14:	ba 20 00 00 00       	mov    edx,0x20
-  807e19:	be 00 00 00 00       	mov    esi,0x0
-  807e1e:	48 89 c7             	mov    rdi,rax
-  807e21:	e8 ef 1c 00 00       	call   809b15 <memset>
+  807e25:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  807e28:	48 98                	cdqe   
+  807e2a:	48 c1 e0 05          	shl    rax,0x5
+  807e2e:	48 05 60 e5 42 00    	add    rax,0x42e560
+  807e34:	ba 20 00 00 00       	mov    edx,0x20
+  807e39:	be 00 00 00 00       	mov    esi,0x0
+  807e3e:	48 89 c7             	mov    rdi,rax
+  807e41:	e8 ef 1c 00 00       	call   809b35 <memset>
                 memset(a_clu_of_dir[i].name,' ',11);
-  807e26:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  807e29:	48 98                	cdqe   
-  807e2b:	48 c1 e0 05          	shl    rax,0x5
-  807e2f:	48 05 60 e5 42 00    	add    rax,0x42e560
-  807e35:	ba 0b 00 00 00       	mov    edx,0xb
-  807e3a:	be 20 00 00 00       	mov    esi,0x20
-  807e3f:	48 89 c7             	mov    rdi,rax
-  807e42:	e8 ce 1c 00 00       	call   809b15 <memset>
+  807e46:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  807e49:	48 98                	cdqe   
+  807e4b:	48 c1 e0 05          	shl    rax,0x5
+  807e4f:	48 05 60 e5 42 00    	add    rax,0x42e560
+  807e55:	ba 0b 00 00 00       	mov    edx,0xb
+  807e5a:	be 20 00 00 00       	mov    esi,0x20
+  807e5f:	48 89 c7             	mov    rdi,rax
+  807e62:	e8 ce 1c 00 00       	call   809b35 <memset>
                 strcpy(a_clu_of_dir[i].name,name);
-  807e47:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  807e4a:	48 98                	cdqe   
-  807e4c:	48 c1 e0 05          	shl    rax,0x5
-  807e50:	48 8d 90 60 e5 42 00 	lea    rdx,[rax+0x42e560]
-  807e57:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  807e5b:	48 89 c6             	mov    rsi,rax
-  807e5e:	48 89 d7             	mov    rdi,rdx
-  807e61:	e8 fe 1c 00 00       	call   809b64 <strcpy>
+  807e67:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  807e6a:	48 98                	cdqe   
+  807e6c:	48 c1 e0 05          	shl    rax,0x5
+  807e70:	48 8d 90 60 e5 42 00 	lea    rdx,[rax+0x42e560]
+  807e77:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  807e7b:	48 89 c6             	mov    rsi,rax
+  807e7e:	48 89 d7             	mov    rdi,rdx
+  807e81:	e8 fe 1c 00 00       	call   809b84 <strcpy>
                 a_clu_of_dir[i].name[strlen(name)]=' ';
-  807e66:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  807e6a:	48 89 c7             	mov    rdi,rax
-  807e6d:	e8 11 1f 00 00       	call   809d83 <strlen>
-  807e72:	48 63 d0             	movsxd rdx,eax
-  807e75:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  807e78:	48 98                	cdqe   
-  807e7a:	48 c1 e0 05          	shl    rax,0x5
-  807e7e:	48 01 d0             	add    rax,rdx
-  807e81:	48 05 60 e5 42 00    	add    rax,0x42e560
-  807e87:	c6 00 20             	mov    BYTE PTR [rax],0x20
+  807e86:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  807e8a:	48 89 c7             	mov    rdi,rax
+  807e8d:	e8 11 1f 00 00       	call   809da3 <strlen>
+  807e92:	48 63 d0             	movsxd rdx,eax
+  807e95:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  807e98:	48 98                	cdqe   
+  807e9a:	48 c1 e0 05          	shl    rax,0x5
+  807e9e:	48 01 d0             	add    rax,rdx
+  807ea1:	48 05 60 e5 42 00    	add    rax,0x42e560
+  807ea7:	c6 00 20             	mov    BYTE PTR [rax],0x20
                 int clu=req_cluster();
-  807e8a:	b8 00 00 00 00       	mov    eax,0x0
-  807e8f:	e8 ab f9 ff ff       	call   80783f <req_cluster>
-  807e94:	89 45 ec             	mov    DWORD PTR [rbp-0x14],eax
+  807eaa:	b8 00 00 00 00       	mov    eax,0x0
+  807eaf:	e8 ab f9 ff ff       	call   80785f <req_cluster>
+  807eb4:	89 45 ec             	mov    DWORD PTR [rbp-0x14],eax
                 if(clu==-1)//check
-  807e97:	83 7d ec ff          	cmp    DWORD PTR [rbp-0x14],0xffffffff
-  807e9b:	75 0a                	jne    807ea7 <mkdir+0x154>
+  807eb7:	83 7d ec ff          	cmp    DWORD PTR [rbp-0x14],0xffffffff
+  807ebb:	75 0a                	jne    807ec7 <mkdir+0x154>
                 {
                     //puts("err:full dir");
                     return -1;
-  807e9d:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  807ea2:	e9 d6 00 00 00       	jmp    807f7d <mkdir+0x22a>
+  807ebd:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  807ec2:	e9 d6 00 00 00       	jmp    807f9d <mkdir+0x22a>
                 }
                 a_clu_of_dir[i].fistCluNum=clu;
-  807ea7:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
-  807eaa:	89 c2                	mov    edx,eax
-  807eac:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  807eaf:	48 98                	cdqe   
-  807eb1:	48 c1 e0 05          	shl    rax,0x5
-  807eb5:	48 05 7a e5 42 00    	add    rax,0x42e57a
-  807ebb:	66 89 10             	mov    WORD PTR [rax],dx
+  807ec7:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+  807eca:	89 c2                	mov    edx,eax
+  807ecc:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  807ecf:	48 98                	cdqe   
+  807ed1:	48 c1 e0 05          	shl    rax,0x5
+  807ed5:	48 05 7a e5 42 00    	add    rax,0x42e57a
+  807edb:	66 89 10             	mov    WORD PTR [rax],dx
                 //set attr
                 set_attr(&a_clu_of_dir[i],ATTR_DIR);
-  807ebe:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  807ec1:	48 98                	cdqe   
-  807ec3:	48 c1 e0 05          	shl    rax,0x5
-  807ec7:	48 05 60 e5 42 00    	add    rax,0x42e560
-  807ecd:	be 10 00 00 00       	mov    esi,0x10
-  807ed2:	48 89 c7             	mov    rdi,rax
-  807ed5:	e8 24 fa ff ff       	call   8078fe <set_attr>
+  807ede:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  807ee1:	48 98                	cdqe   
+  807ee3:	48 c1 e0 05          	shl    rax,0x5
+  807ee7:	48 05 60 e5 42 00    	add    rax,0x42e560
+  807eed:	be 10 00 00 00       	mov    esi,0x10
+  807ef2:	48 89 c7             	mov    rdi,rax
+  807ef5:	e8 24 fa ff ff       	call   80791e <set_attr>
                 //set length
                 a_clu_of_dir[i].len=0;
-  807eda:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  807edd:	48 98                	cdqe   
-  807edf:	48 c1 e0 05          	shl    rax,0x5
-  807ee3:	48 05 7c e5 42 00    	add    rax,0x42e57c
-  807ee9:	c7 00 00 00 00 00    	mov    DWORD PTR [rax],0x0
+  807efa:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  807efd:	48 98                	cdqe   
+  807eff:	48 c1 e0 05          	shl    rax,0x5
+  807f03:	48 05 7c e5 42 00    	add    rax,0x42e57c
+  807f09:	c7 00 00 00 00 00    	mov    DWORD PTR [rax],0x0
                 //date and time
                 /*a_clu_of_dir[i].lastModfDate=get_date_stab();
                 a_clu_of_dir[i].lastModfTime=get_time_stab();*/
                 //set date:temporarily none
                 //add . and ..
                 add_dot_and_ddot_dir(a_clu_of_dir[i]);
-  807eef:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  807ef2:	48 98                	cdqe   
-  807ef4:	48 c1 e0 05          	shl    rax,0x5
-  807ef8:	48 05 60 e5 42 00    	add    rax,0x42e560
-  807efe:	ff 70 18             	push   QWORD PTR [rax+0x18]
-  807f01:	ff 70 10             	push   QWORD PTR [rax+0x10]
-  807f04:	ff 70 08             	push   QWORD PTR [rax+0x8]
-  807f07:	ff 30                	push   QWORD PTR [rax]
-  807f09:	e8 7c fa ff ff       	call   80798a <add_dot_and_ddot_dir>
-  807f0e:	48 83 c4 20          	add    rsp,0x20
+  807f0f:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  807f12:	48 98                	cdqe   
+  807f14:	48 c1 e0 05          	shl    rax,0x5
+  807f18:	48 05 60 e5 42 00    	add    rax,0x42e560
+  807f1e:	ff 70 18             	push   QWORD PTR [rax+0x18]
+  807f21:	ff 70 10             	push   QWORD PTR [rax+0x10]
+  807f24:	ff 70 08             	push   QWORD PTR [rax+0x8]
+  807f27:	ff 30                	push   QWORD PTR [rax]
+  807f29:	e8 7c fa ff ff       	call   8079aa <add_dot_and_ddot_dir>
+  807f2e:	48 83 c4 20          	add    rsp,0x20
                 //update the dir
                 int dir_loc=cluster+clu_sec_balance;
-  807f12:	0f b7 55 fe          	movzx  edx,WORD PTR [rbp-0x2]
-  807f16:	8b 05 24 27 00 00    	mov    eax,DWORD PTR [rip+0x2724]        # 80a640 <clu_sec_balance>
-  807f1c:	01 d0                	add    eax,edx
-  807f1e:	89 45 e8             	mov    DWORD PTR [rbp-0x18],eax
+  807f32:	0f b7 55 fe          	movzx  edx,WORD PTR [rbp-0x2]
+  807f36:	8b 05 04 27 00 00    	mov    eax,DWORD PTR [rip+0x2704]        # 80a640 <clu_sec_balance>
+  807f3c:	01 d0                	add    eax,edx
+  807f3e:	89 45 e8             	mov    DWORD PTR [rbp-0x18],eax
                 write_sec(a_clu_of_dir,dir_loc,sizeof(a_clu_of_dir));
-  807f21:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
-  807f24:	ba 00 02 00 00       	mov    edx,0x200
-  807f29:	89 c6                	mov    esi,eax
-  807f2b:	bf 60 e5 42 00       	mov    edi,0x42e560
-  807f30:	e8 56 f9 ff ff       	call   80788b <write_sec>
+  807f41:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  807f44:	ba 00 02 00 00       	mov    edx,0x200
+  807f49:	89 c6                	mov    esi,eax
+  807f4b:	bf 60 e5 42 00       	mov    edi,0x42e560
+  807f50:	e8 56 f9 ff ff       	call   8078ab <write_sec>
                 update_fat_and_root();
-  807f35:	b8 00 00 00 00       	mov    eax,0x0
-  807f3a:	e8 e7 f9 ff ff       	call   807926 <update_fat_and_root>
+  807f55:	b8 00 00 00 00       	mov    eax,0x0
+  807f5a:	e8 e7 f9 ff ff       	call   807946 <update_fat_and_root>
                 return 0;
-  807f3f:	b8 00 00 00 00       	mov    eax,0x0
-  807f44:	eb 37                	jmp    807f7d <mkdir+0x22a>
+  807f5f:	b8 00 00 00 00       	mov    eax,0x0
+  807f64:	eb 37                	jmp    807f9d <mkdir+0x22a>
         for (int i = 0; i < 16; i++)
-  807f46:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1
-  807f4a:	83 7d f8 0f          	cmp    DWORD PTR [rbp-0x8],0xf
-  807f4e:	0f 8e 6a fe ff ff    	jle    807dbe <mkdir+0x6b>
+  807f66:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1
+  807f6a:	83 7d f8 0f          	cmp    DWORD PTR [rbp-0x8],0xf
+  807f6e:	0f 8e 6a fe ff ff    	jle    807dde <mkdir+0x6b>
             }
         }
 
         if(cluster<FAT_EOF)
-  807f54:	66 83 7d fe f6       	cmp    WORD PTR [rbp-0x2],0xfff6
-  807f59:	77 12                	ja     807f6d <mkdir+0x21a>
+  807f74:	66 83 7d fe f6       	cmp    WORD PTR [rbp-0x2],0xfff6
+  807f79:	77 12                	ja     807f8d <mkdir+0x21a>
             cluster=fat[cluster];
-  807f5b:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
-  807f5f:	48 98                	cdqe   
-  807f61:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
-  807f68:	00 
-  807f69:	66 89 45 fe          	mov    WORD PTR [rbp-0x2],ax
+  807f7b:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
+  807f7f:	48 98                	cdqe   
+  807f81:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
+  807f88:	00 
+  807f89:	66 89 45 fe          	mov    WORD PTR [rbp-0x2],ax
     } while (cluster<FAT_EOF);
-  807f6d:	66 83 7d fe f6       	cmp    WORD PTR [rbp-0x2],0xfff6
-  807f72:	0f 86 16 fe ff ff    	jbe    807d8e <mkdir+0x3b>
+  807f8d:	66 83 7d fe f6       	cmp    WORD PTR [rbp-0x2],0xfff6
+  807f92:	0f 86 16 fe ff ff    	jbe    807dae <mkdir+0x3b>
     return -1;
-  807f78:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  807f98:	b8 ff ff ff ff       	mov    eax,0xffffffff
 }
-  807f7d:	c9                   	leave  
-  807f7e:	c3                   	ret    
+  807f9d:	c9                   	leave  
+  807f9e:	c3                   	ret    
 
-0000000000807f7f <read_sec>:
+0000000000807f9f <read_sec>:
     }
     
     
 }*/
 int read_sec(char *dist, int sec_num, int sec_count)
 {
-  807f7f:	f3 0f 1e fa          	endbr64 
-  807f83:	55                   	push   rbp
-  807f84:	48 89 e5             	mov    rbp,rsp
-  807f87:	48 81 ec e0 00 00 00 	sub    rsp,0xe0
-  807f8e:	48 89 bd 28 ff ff ff 	mov    QWORD PTR [rbp-0xd8],rdi
-  807f95:	89 b5 24 ff ff ff    	mov    DWORD PTR [rbp-0xdc],esi
-  807f9b:	89 95 20 ff ff ff    	mov    DWORD PTR [rbp-0xe0],edx
+  807f9f:	f3 0f 1e fa          	endbr64 
+  807fa3:	55                   	push   rbp
+  807fa4:	48 89 e5             	mov    rbp,rsp
+  807fa7:	48 81 ec e0 00 00 00 	sub    rsp,0xe0
+  807fae:	48 89 bd 28 ff ff ff 	mov    QWORD PTR [rbp-0xd8],rdi
+  807fb5:	89 b5 24 ff ff ff    	mov    DWORD PTR [rbp-0xdc],esi
+  807fbb:	89 95 20 ff ff ff    	mov    DWORD PTR [rbp-0xe0],edx
     driver_args arg={
-  807fa1:	48 8d 95 30 ff ff ff 	lea    rdx,[rbp-0xd0]
-  807fa8:	b8 00 00 00 00       	mov    eax,0x0
-  807fad:	b9 18 00 00 00       	mov    ecx,0x18
-  807fb2:	48 89 d7             	mov    rdi,rdx
-  807fb5:	f3 48 ab             	rep stos QWORD PTR es:[rdi],rax
-  807fb8:	8b 85 24 ff ff ff    	mov    eax,DWORD PTR [rbp-0xdc]
-  807fbe:	89 85 30 ff ff ff    	mov    DWORD PTR [rbp-0xd0],eax
-  807fc4:	48 8b 85 28 ff ff ff 	mov    rax,QWORD PTR [rbp-0xd8]
-  807fcb:	89 85 34 ff ff ff    	mov    DWORD PTR [rbp-0xcc],eax
-  807fd1:	c7 85 48 ff ff ff 01 	mov    DWORD PTR [rbp-0xb8],0x1
-  807fd8:	00 00 00 
+  807fc1:	48 8d 95 30 ff ff ff 	lea    rdx,[rbp-0xd0]
+  807fc8:	b8 00 00 00 00       	mov    eax,0x0
+  807fcd:	b9 18 00 00 00       	mov    ecx,0x18
+  807fd2:	48 89 d7             	mov    rdi,rdx
+  807fd5:	f3 48 ab             	rep stos QWORD PTR es:[rdi],rax
+  807fd8:	8b 85 24 ff ff ff    	mov    eax,DWORD PTR [rbp-0xdc]
+  807fde:	89 85 30 ff ff ff    	mov    DWORD PTR [rbp-0xd0],eax
+  807fe4:	48 8b 85 28 ff ff ff 	mov    rax,QWORD PTR [rbp-0xd8]
+  807feb:	89 85 34 ff ff ff    	mov    DWORD PTR [rbp-0xcc],eax
+  807ff1:	c7 85 48 ff ff ff 01 	mov    DWORD PTR [rbp-0xb8],0x1
+  807ff8:	00 00 00 
             .dist_addr=dist,
             .lba=sec_num,
             .sec_c=1
     };
     for(int i=0;i<sec_count;i++)
-  807fdb:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
-  807fe2:	eb 3e                	jmp    808022 <read_sec+0xa3>
+  807ffb:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
+  808002:	eb 3e                	jmp    808042 <read_sec+0xa3>
     {
         drv_disk.read(&arg);
-  807fe4:	48 8b 15 cd 25 00 00 	mov    rdx,QWORD PTR [rip+0x25cd]        # 80a5b8 <drv_disk+0x18>
-  807feb:	48 8d 85 30 ff ff ff 	lea    rax,[rbp-0xd0]
-  807ff2:	48 89 c7             	mov    rdi,rax
-  807ff5:	ff d2                	call   rdx
+  808004:	48 8b 15 ad 25 00 00 	mov    rdx,QWORD PTR [rip+0x25ad]        # 80a5b8 <drv_disk+0x18>
+  80800b:	48 8d 85 30 ff ff ff 	lea    rax,[rbp-0xd0]
+  808012:	48 89 c7             	mov    rdi,rax
+  808015:	ff d2                	call   rdx
         arg.dist_addr+=superblock.bytesPerSec;
-  807ff7:	8b 95 34 ff ff ff    	mov    edx,DWORD PTR [rbp-0xcc]
-  807ffd:	0f b7 05 07 25 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc22507]        # 42a50b <superblock+0xb>
-  808004:	0f b7 c0             	movzx  eax,ax
-  808007:	01 d0                	add    eax,edx
-  808009:	89 85 34 ff ff ff    	mov    DWORD PTR [rbp-0xcc],eax
+  808017:	8b 95 34 ff ff ff    	mov    edx,DWORD PTR [rbp-0xcc]
+  80801d:	0f b7 05 e7 24 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc224e7]        # 42a50b <superblock+0xb>
+  808024:	0f b7 c0             	movzx  eax,ax
+  808027:	01 d0                	add    eax,edx
+  808029:	89 85 34 ff ff ff    	mov    DWORD PTR [rbp-0xcc],eax
         arg.lba++;
-  80800f:	8b 85 30 ff ff ff    	mov    eax,DWORD PTR [rbp-0xd0]
-  808015:	83 c0 01             	add    eax,0x1
-  808018:	89 85 30 ff ff ff    	mov    DWORD PTR [rbp-0xd0],eax
+  80802f:	8b 85 30 ff ff ff    	mov    eax,DWORD PTR [rbp-0xd0]
+  808035:	83 c0 01             	add    eax,0x1
+  808038:	89 85 30 ff ff ff    	mov    DWORD PTR [rbp-0xd0],eax
     for(int i=0;i<sec_count;i++)
-  80801e:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
-  808022:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  808025:	3b 85 20 ff ff ff    	cmp    eax,DWORD PTR [rbp-0xe0]
-  80802b:	7c b7                	jl     807fe4 <read_sec+0x65>
+  80803e:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
+  808042:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  808045:	3b 85 20 ff ff ff    	cmp    eax,DWORD PTR [rbp-0xe0]
+  80804b:	7c b7                	jl     808004 <read_sec+0x65>
     }
     return 0;
-  80802d:	b8 00 00 00 00       	mov    eax,0x0
+  80804d:	b8 00 00 00 00       	mov    eax,0x0
 }
-  808032:	c9                   	leave  
-  808033:	c3                   	ret    
+  808052:	c9                   	leave  
+  808053:	c3                   	ret    
 
-0000000000808034 <rm>:
+0000000000808054 <rm>:
 
 int rm(driver_args* args)
 {
-  808034:	f3 0f 1e fa          	endbr64 
-  808038:	55                   	push   rbp
-  808039:	48 89 e5             	mov    rbp,rsp
-  80803c:	48 81 ec 10 01 00 00 	sub    rsp,0x110
-  808043:	48 89 bd f8 fe ff ff 	mov    QWORD PTR [rbp-0x108],rdi
+  808054:	f3 0f 1e fa          	endbr64 
+  808058:	55                   	push   rbp
+  808059:	48 89 e5             	mov    rbp,rsp
+  80805c:	48 81 ec 10 01 00 00 	sub    rsp,0x110
+  808063:	48 89 bd f8 fe ff ff 	mov    QWORD PTR [rbp-0x108],rdi
     char *name=args->path;
-  80804a:	48 8b 85 f8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x108]
-  808051:	48 8b 40 20          	mov    rax,QWORD PTR [rax+0x20]
-  808055:	48 89 45 e8          	mov    QWORD PTR [rbp-0x18],rax
+  80806a:	48 8b 85 f8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x108]
+  808071:	48 8b 40 20          	mov    rax,QWORD PTR [rax+0x20]
+  808075:	48 89 45 e8          	mov    QWORD PTR [rbp-0x18],rax
     dir_entry dir;
     driver_args tmparg={
-  808059:	48 8d 95 00 ff ff ff 	lea    rdx,[rbp-0x100]
-  808060:	b8 00 00 00 00       	mov    eax,0x0
-  808065:	b9 18 00 00 00       	mov    ecx,0x18
-  80806a:	48 89 d7             	mov    rdi,rdx
-  80806d:	f3 48 ab             	rep stos QWORD PTR es:[rdi],rax
+  808079:	48 8d 95 00 ff ff ff 	lea    rdx,[rbp-0x100]
+  808080:	b8 00 00 00 00       	mov    eax,0x0
+  808085:	b9 18 00 00 00       	mov    ecx,0x18
+  80808a:	48 89 d7             	mov    rdi,rdx
+  80808d:	f3 48 ab             	rep stos QWORD PTR es:[rdi],rax
             .path=args->dir_path,
-  808070:	48 8b 85 f8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x108]
-  808077:	48 8b 80 a0 00 00 00 	mov    rax,QWORD PTR [rax+0xa0]
+  808090:	48 8b 85 f8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x108]
+  808097:	48 8b 80 a0 00 00 00 	mov    rax,QWORD PTR [rax+0xa0]
     driver_args tmparg={
-  80807e:	48 89 85 20 ff ff ff 	mov    QWORD PTR [rbp-0xe0],rax
+  80809e:	48 89 85 20 ff ff ff 	mov    QWORD PTR [rbp-0xe0],rax
     };
     if(get_entry(&tmparg)==-1)return -1;
-  808085:	48 8d 85 00 ff ff ff 	lea    rax,[rbp-0x100]
-  80808c:	48 89 c7             	mov    rdi,rax
-  80808f:	e8 07 0a 00 00       	call   808a9b <get_entry>
-  808094:	83 f8 ff             	cmp    eax,0xffffffff
-  808097:	75 0a                	jne    8080a3 <rm+0x6f>
-  808099:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  80809e:	e9 a8 01 00 00       	jmp    80824b <rm+0x217>
+  8080a5:	48 8d 85 00 ff ff ff 	lea    rax,[rbp-0x100]
+  8080ac:	48 89 c7             	mov    rdi,rax
+  8080af:	e8 07 0a 00 00       	call   808abb <get_entry>
+  8080b4:	83 f8 ff             	cmp    eax,0xffffffff
+  8080b7:	75 0a                	jne    8080c3 <rm+0x6f>
+  8080b9:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  8080be:	e9 a8 01 00 00       	jmp    80826b <rm+0x217>
     dir.fistCluNum=tmparg.entry.id;
-  8080a3:	8b 85 3c ff ff ff    	mov    eax,DWORD PTR [rbp-0xc4]
-  8080a9:	66 89 45 da          	mov    WORD PTR [rbp-0x26],ax
+  8080c3:	8b 85 3c ff ff ff    	mov    eax,DWORD PTR [rbp-0xc4]
+  8080c9:	66 89 45 da          	mov    WORD PTR [rbp-0x26],ax
     dir_entry *dir_table=a_clu_of_dir;
-  8080ad:	48 c7 45 e0 60 e5 42 	mov    QWORD PTR [rbp-0x20],0x42e560
-  8080b4:	00 
+  8080cd:	48 c7 45 e0 60 e5 42 	mov    QWORD PTR [rbp-0x20],0x42e560
+  8080d4:	00 
     //regular dir
     read_sec(a_clu_of_dir,dir.fistCluNum+clu_sec_balance,\
     superblock.secPerClu);
-  8080b5:	0f b6 05 51 24 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc22451]        # 42a50d <superblock+0xd>
+  8080d5:	0f b6 05 31 24 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc22431]        # 42a50d <superblock+0xd>
     read_sec(a_clu_of_dir,dir.fistCluNum+clu_sec_balance,\
-  8080bc:	0f b6 c0             	movzx  eax,al
-  8080bf:	0f b7 55 da          	movzx  edx,WORD PTR [rbp-0x26]
-  8080c3:	0f b7 ca             	movzx  ecx,dx
-  8080c6:	8b 15 74 25 00 00    	mov    edx,DWORD PTR [rip+0x2574]        # 80a640 <clu_sec_balance>
-  8080cc:	01 d1                	add    ecx,edx
-  8080ce:	89 c2                	mov    edx,eax
-  8080d0:	89 ce                	mov    esi,ecx
-  8080d2:	bf 60 e5 42 00       	mov    edi,0x42e560
-  8080d7:	e8 a3 fe ff ff       	call   807f7f <read_sec>
+  8080dc:	0f b6 c0             	movzx  eax,al
+  8080df:	0f b7 55 da          	movzx  edx,WORD PTR [rbp-0x26]
+  8080e3:	0f b7 ca             	movzx  ecx,dx
+  8080e6:	8b 15 54 25 00 00    	mov    edx,DWORD PTR [rip+0x2554]        # 80a640 <clu_sec_balance>
+  8080ec:	01 d1                	add    ecx,edx
+  8080ee:	89 c2                	mov    edx,eax
+  8080f0:	89 ce                	mov    esi,ecx
+  8080f2:	bf 60 e5 42 00       	mov    edi,0x42e560
+  8080f7:	e8 a3 fe ff ff       	call   807f9f <read_sec>
     dir_table=a_clu_of_dir;
-  8080dc:	48 c7 45 e0 60 e5 42 	mov    QWORD PTR [rbp-0x20],0x42e560
-  8080e3:	00 
+  8080fc:	48 c7 45 e0 60 e5 42 	mov    QWORD PTR [rbp-0x20],0x42e560
+  808103:	00 
     //current cluster you're at
     unsigned short cluster=dir.fistCluNum;
-  8080e4:	0f b7 45 da          	movzx  eax,WORD PTR [rbp-0x26]
-  8080e8:	66 89 45 fe          	mov    WORD PTR [rbp-0x2],ax
+  808104:	0f b7 45 da          	movzx  eax,WORD PTR [rbp-0x26]
+  808108:	66 89 45 fe          	mov    WORD PTR [rbp-0x2],ax
     int i=0;
-  8080ec:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0
+  80810c:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0
     while(cluster<FAT_EOF){
-  8080f3:	e9 89 00 00 00       	jmp    808181 <rm+0x14d>
+  808113:	e9 89 00 00 00       	jmp    8081a1 <rm+0x14d>
         read_sec(dir_table,cluster+clu_sec_balance,\
             superblock.secPerClu);
-  8080f8:	0f b6 05 0e 24 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc2240e]        # 42a50d <superblock+0xd>
+  808118:	0f b6 05 ee 23 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc223ee]        # 42a50d <superblock+0xd>
         read_sec(dir_table,cluster+clu_sec_balance,\
-  8080ff:	0f b6 d0             	movzx  edx,al
-  808102:	0f b7 4d fe          	movzx  ecx,WORD PTR [rbp-0x2]
-  808106:	8b 05 34 25 00 00    	mov    eax,DWORD PTR [rip+0x2534]        # 80a640 <clu_sec_balance>
-  80810c:	01 c1                	add    ecx,eax
-  80810e:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  808112:	89 ce                	mov    esi,ecx
-  808114:	48 89 c7             	mov    rdi,rax
-  808117:	e8 63 fe ff ff       	call   807f7f <read_sec>
+  80811f:	0f b6 d0             	movzx  edx,al
+  808122:	0f b7 4d fe          	movzx  ecx,WORD PTR [rbp-0x2]
+  808126:	8b 05 14 25 00 00    	mov    eax,DWORD PTR [rip+0x2514]        # 80a640 <clu_sec_balance>
+  80812c:	01 c1                	add    ecx,eax
+  80812e:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  808132:	89 ce                	mov    esi,ecx
+  808134:	48 89 c7             	mov    rdi,rax
+  808137:	e8 63 fe ff ff       	call   807f9f <read_sec>
         for(;i<16;i++)
-  80811c:	eb 44                	jmp    808162 <rm+0x12e>
+  80813c:	eb 44                	jmp    808182 <rm+0x12e>
         {
             if(dir_table[i].fistCluNum==args->entry.id)
-  80811e:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  808121:	48 98                	cdqe   
-  808123:	48 c1 e0 05          	shl    rax,0x5
-  808127:	48 89 c2             	mov    rdx,rax
-  80812a:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  80812e:	48 01 d0             	add    rax,rdx
-  808131:	0f b7 40 1a          	movzx  eax,WORD PTR [rax+0x1a]
-  808135:	0f b7 d0             	movzx  edx,ax
-  808138:	48 8b 85 f8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x108]
-  80813f:	8b 40 3c             	mov    eax,DWORD PTR [rax+0x3c]
-  808142:	39 c2                	cmp    edx,eax
-  808144:	75 18                	jne    80815e <rm+0x12a>
+  80813e:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  808141:	48 98                	cdqe   
+  808143:	48 c1 e0 05          	shl    rax,0x5
+  808147:	48 89 c2             	mov    rdx,rax
+  80814a:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  80814e:	48 01 d0             	add    rax,rdx
+  808151:	0f b7 40 1a          	movzx  eax,WORD PTR [rax+0x1a]
+  808155:	0f b7 d0             	movzx  edx,ax
+  808158:	48 8b 85 f8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x108]
+  80815f:	8b 40 3c             	mov    eax,DWORD PTR [rax+0x3c]
+  808162:	39 c2                	cmp    edx,eax
+  808164:	75 18                	jne    80817e <rm+0x12a>
             {
                 if(dir_table[i].attr&ATTR_DIR){
                     //要处理里面的文件
                 }
                 dir_table[i].name[0]=0xe5;
-  808146:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  808149:	48 98                	cdqe   
-  80814b:	48 c1 e0 05          	shl    rax,0x5
-  80814f:	48 89 c2             	mov    rdx,rax
-  808152:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  808156:	48 01 d0             	add    rax,rdx
-  808159:	c6 00 e5             	mov    BYTE PTR [rax],0xe5
+  808166:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  808169:	48 98                	cdqe   
+  80816b:	48 c1 e0 05          	shl    rax,0x5
+  80816f:	48 89 c2             	mov    rdx,rax
+  808172:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  808176:	48 01 d0             	add    rax,rdx
+  808179:	c6 00 e5             	mov    BYTE PTR [rax],0xe5
                 goto del_entry_finish;
-  80815c:	eb 2f                	jmp    80818d <rm+0x159>
+  80817c:	eb 2f                	jmp    8081ad <rm+0x159>
         for(;i<16;i++)
-  80815e:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1
-  808162:	83 7d f8 0f          	cmp    DWORD PTR [rbp-0x8],0xf
-  808166:	7e b6                	jle    80811e <rm+0xea>
+  80817e:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1
+  808182:	83 7d f8 0f          	cmp    DWORD PTR [rbp-0x8],0xf
+  808186:	7e b6                	jle    80813e <rm+0xea>
             }
         }
         if(cluster<FAT_EOF)
-  808168:	66 83 7d fe f6       	cmp    WORD PTR [rbp-0x2],0xfff6
-  80816d:	77 12                	ja     808181 <rm+0x14d>
+  808188:	66 83 7d fe f6       	cmp    WORD PTR [rbp-0x2],0xfff6
+  80818d:	77 12                	ja     8081a1 <rm+0x14d>
         {
             cluster=fat[cluster];
-  80816f:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
-  808173:	48 98                	cdqe   
-  808175:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
-  80817c:	00 
-  80817d:	66 89 45 fe          	mov    WORD PTR [rbp-0x2],ax
+  80818f:	0f b7 45 fe          	movzx  eax,WORD PTR [rbp-0x2]
+  808193:	48 98                	cdqe   
+  808195:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
+  80819c:	00 
+  80819d:	66 89 45 fe          	mov    WORD PTR [rbp-0x2],ax
     while(cluster<FAT_EOF){
-  808181:	66 83 7d fe f6       	cmp    WORD PTR [rbp-0x2],0xfff6
-  808186:	0f 86 6c ff ff ff    	jbe    8080f8 <rm+0xc4>
+  8081a1:	66 83 7d fe f6       	cmp    WORD PTR [rbp-0x2],0xfff6
+  8081a6:	0f 86 6c ff ff ff    	jbe    808118 <rm+0xc4>
             //update
             //if you can reach here it means it's a regular dir
         }
 
     }
 del_entry_finish:
-  80818c:	90                   	nop
+  8081ac:	90                   	nop
     ;
     //del fat
     unsigned short del_clu=dir_table[i].fistCluNum;
-  80818d:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
-  808190:	48 98                	cdqe   
-  808192:	48 c1 e0 05          	shl    rax,0x5
-  808196:	48 89 c2             	mov    rdx,rax
-  808199:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  80819d:	48 01 d0             	add    rax,rdx
-  8081a0:	0f b7 40 1a          	movzx  eax,WORD PTR [rax+0x1a]
-  8081a4:	66 89 45 f6          	mov    WORD PTR [rbp-0xa],ax
+  8081ad:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  8081b0:	48 98                	cdqe   
+  8081b2:	48 c1 e0 05          	shl    rax,0x5
+  8081b6:	48 89 c2             	mov    rdx,rax
+  8081b9:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  8081bd:	48 01 d0             	add    rax,rdx
+  8081c0:	0f b7 40 1a          	movzx  eax,WORD PTR [rax+0x1a]
+  8081c4:	66 89 45 f6          	mov    WORD PTR [rbp-0xa],ax
     unsigned short pion=del_clu<FAT_EOF?fat[del_clu]:0xffff;
-  8081a8:	66 83 7d f6 f6       	cmp    WORD PTR [rbp-0xa],0xfff6
-  8081ad:	77 10                	ja     8081bf <rm+0x18b>
-  8081af:	0f b7 45 f6          	movzx  eax,WORD PTR [rbp-0xa]
-  8081b3:	48 98                	cdqe   
-  8081b5:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
-  8081bc:	00 
-  8081bd:	eb 05                	jmp    8081c4 <rm+0x190>
-  8081bf:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  8081c4:	66 89 45 f4          	mov    WORD PTR [rbp-0xc],ax
+  8081c8:	66 83 7d f6 f6       	cmp    WORD PTR [rbp-0xa],0xfff6
+  8081cd:	77 10                	ja     8081df <rm+0x18b>
+  8081cf:	0f b7 45 f6          	movzx  eax,WORD PTR [rbp-0xa]
+  8081d3:	48 98                	cdqe   
+  8081d5:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
+  8081dc:	00 
+  8081dd:	eb 05                	jmp    8081e4 <rm+0x190>
+  8081df:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  8081e4:	66 89 45 f4          	mov    WORD PTR [rbp-0xc],ax
     while(pion<FAT_EOF)
-  8081c8:	eb 2a                	jmp    8081f4 <rm+0x1c0>
+  8081e8:	eb 2a                	jmp    808214 <rm+0x1c0>
     {
         fat[del_clu]=0;
-  8081ca:	0f b7 45 f6          	movzx  eax,WORD PTR [rbp-0xa]
-  8081ce:	48 98                	cdqe   
-  8081d0:	66 c7 84 00 60 e7 42 	mov    WORD PTR [rax+rax*1+0x42e760],0x0
-  8081d7:	00 00 00 
+  8081ea:	0f b7 45 f6          	movzx  eax,WORD PTR [rbp-0xa]
+  8081ee:	48 98                	cdqe   
+  8081f0:	66 c7 84 00 60 e7 42 	mov    WORD PTR [rax+rax*1+0x42e760],0x0
+  8081f7:	00 00 00 
         del_clu=pion;
-  8081da:	0f b7 45 f4          	movzx  eax,WORD PTR [rbp-0xc]
-  8081de:	66 89 45 f6          	mov    WORD PTR [rbp-0xa],ax
+  8081fa:	0f b7 45 f4          	movzx  eax,WORD PTR [rbp-0xc]
+  8081fe:	66 89 45 f6          	mov    WORD PTR [rbp-0xa],ax
         pion=fat[pion];
-  8081e2:	0f b7 45 f4          	movzx  eax,WORD PTR [rbp-0xc]
-  8081e6:	48 98                	cdqe   
-  8081e8:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
-  8081ef:	00 
-  8081f0:	66 89 45 f4          	mov    WORD PTR [rbp-0xc],ax
+  808202:	0f b7 45 f4          	movzx  eax,WORD PTR [rbp-0xc]
+  808206:	48 98                	cdqe   
+  808208:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
+  80820f:	00 
+  808210:	66 89 45 f4          	mov    WORD PTR [rbp-0xc],ax
     while(pion<FAT_EOF)
-  8081f4:	66 83 7d f4 f6       	cmp    WORD PTR [rbp-0xc],0xfff6
-  8081f9:	76 cf                	jbe    8081ca <rm+0x196>
+  808214:	66 83 7d f4 f6       	cmp    WORD PTR [rbp-0xc],0xfff6
+  808219:	76 cf                	jbe    8081ea <rm+0x196>
     }
     fat[del_clu]=0;
-  8081fb:	0f b7 45 f6          	movzx  eax,WORD PTR [rbp-0xa]
-  8081ff:	48 98                	cdqe   
-  808201:	66 c7 84 00 60 e7 42 	mov    WORD PTR [rax+rax*1+0x42e760],0x0
-  808208:	00 00 00 
+  80821b:	0f b7 45 f6          	movzx  eax,WORD PTR [rbp-0xa]
+  80821f:	48 98                	cdqe   
+  808221:	66 c7 84 00 60 e7 42 	mov    WORD PTR [rax+rax*1+0x42e760],0x0
+  808228:	00 00 00 
     //del dir entry
     write_sec(dir_table,cluster+clu_sec_balance,\
     superblock.secPerClu*superblock.bytesPerSec);
-  80820b:	0f b6 05 fb 22 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc222fb]        # 42a50d <superblock+0xd>
-  808212:	0f b6 d0             	movzx  edx,al
-  808215:	0f b7 05 ef 22 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc222ef]        # 42a50b <superblock+0xb>
-  80821c:	0f b7 c0             	movzx  eax,ax
+  80822b:	0f b6 05 db 22 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc222db]        # 42a50d <superblock+0xd>
+  808232:	0f b6 d0             	movzx  edx,al
+  808235:	0f b7 05 cf 22 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc222cf]        # 42a50b <superblock+0xb>
+  80823c:	0f b7 c0             	movzx  eax,ax
     write_sec(dir_table,cluster+clu_sec_balance,\
-  80821f:	0f af d0             	imul   edx,eax
-  808222:	0f b7 4d fe          	movzx  ecx,WORD PTR [rbp-0x2]
-  808226:	8b 05 14 24 00 00    	mov    eax,DWORD PTR [rip+0x2414]        # 80a640 <clu_sec_balance>
-  80822c:	01 c1                	add    ecx,eax
-  80822e:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  808232:	89 ce                	mov    esi,ecx
-  808234:	48 89 c7             	mov    rdi,rax
-  808237:	e8 4f f6 ff ff       	call   80788b <write_sec>
+  80823f:	0f af d0             	imul   edx,eax
+  808242:	0f b7 4d fe          	movzx  ecx,WORD PTR [rbp-0x2]
+  808246:	8b 05 f4 23 00 00    	mov    eax,DWORD PTR [rip+0x23f4]        # 80a640 <clu_sec_balance>
+  80824c:	01 c1                	add    ecx,eax
+  80824e:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  808252:	89 ce                	mov    esi,ecx
+  808254:	48 89 c7             	mov    rdi,rax
+  808257:	e8 4f f6 ff ff       	call   8078ab <write_sec>
     update_fat_and_root();
-  80823c:	b8 00 00 00 00       	mov    eax,0x0
-  808241:	e8 e0 f6 ff ff       	call   807926 <update_fat_and_root>
+  80825c:	b8 00 00 00 00       	mov    eax,0x0
+  808261:	e8 e0 f6 ff ff       	call   807946 <update_fat_and_root>
     return 0;
-  808246:	b8 00 00 00 00       	mov    eax,0x0
+  808266:	b8 00 00 00 00       	mov    eax,0x0
 }
-  80824b:	c9                   	leave  
-  80824c:	c3                   	ret    
+  80826b:	c9                   	leave  
+  80826c:	c3                   	ret    
 
-000000000080824d <find>:
+000000000080826d <find>:
 int find_f=0;
 int find(char *name)
 {
-  80824d:	f3 0f 1e fa          	endbr64 
-  808251:	55                   	push   rbp
-  808252:	48 89 e5             	mov    rbp,rsp
-  808255:	48 83 ec 30          	sub    rsp,0x30
-  808259:	48 89 7d d8          	mov    QWORD PTR [rbp-0x28],rdi
+  80826d:	f3 0f 1e fa          	endbr64 
+  808271:	55                   	push   rbp
+  808272:	48 89 e5             	mov    rbp,rsp
+  808275:	48 83 ec 30          	sub    rsp,0x30
+  808279:	48 89 7d d8          	mov    QWORD PTR [rbp-0x28],rdi
     //default set to 512
     int max_files=MAX_FILES_PER_DIR;
-  80825d:	c7 45 fc 00 02 00 00 	mov    DWORD PTR [rbp-0x4],0x200
+  80827d:	c7 45 fc 00 02 00 00 	mov    DWORD PTR [rbp-0x4],0x200
     int index=0;
-  808264:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0
+  808284:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0
     dir_entry *dir_table=a_clu_of_dir;
-  80826b:	48 c7 45 f0 60 e5 42 	mov    QWORD PTR [rbp-0x10],0x42e560
-  808272:	00 
+  80828b:	48 c7 45 f0 60 e5 42 	mov    QWORD PTR [rbp-0x10],0x42e560
+  808292:	00 
     //current cluster you're at
     unsigned short cluster=cur_dir.fistCluNum;
-  808273:	0f b7 05 e0 62 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc262e0]        # 42e55a <cur_dir+0x1a>
-  80827a:	66 89 45 ee          	mov    WORD PTR [rbp-0x12],ax
+  808293:	0f b7 05 c0 62 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc262c0]        # 42e55a <cur_dir+0x1a>
+  80829a:	66 89 45 ee          	mov    WORD PTR [rbp-0x12],ax
     if(cur_dir.fistCluNum==0)
-  80827e:	0f b7 05 d5 62 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc262d5]        # 42e55a <cur_dir+0x1a>
-  808285:	66 85 c0             	test   ax,ax
-  808288:	75 0a                	jne    808294 <find+0x47>
+  80829e:	0f b7 05 b5 62 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc262b5]        # 42e55a <cur_dir+0x1a>
+  8082a5:	66 85 c0             	test   ax,ax
+  8082a8:	75 0a                	jne    8082b4 <find+0x47>
         dir_table=root_dir;
-  80828a:	48 c7 45 f0 40 a5 42 	mov    QWORD PTR [rbp-0x10],0x42a540
-  808291:	00 
-  808292:	eb 2b                	jmp    8082bf <find+0x72>
+  8082aa:	48 c7 45 f0 40 a5 42 	mov    QWORD PTR [rbp-0x10],0x42a540
+  8082b1:	00 
+  8082b2:	eb 2b                	jmp    8082df <find+0x72>
     else {
         max_files=16;
-  808294:	c7 45 fc 10 00 00 00 	mov    DWORD PTR [rbp-0x4],0x10
+  8082b4:	c7 45 fc 10 00 00 00 	mov    DWORD PTR [rbp-0x4],0x10
         read_sec(dir_table, cluster + clu_sec_balance, \
             superblock.secPerClu);
-  80829b:	0f b6 05 6b 22 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc2226b]        # 42a50d <superblock+0xd>
+  8082bb:	0f b6 05 4b 22 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc2224b]        # 42a50d <superblock+0xd>
         read_sec(dir_table, cluster + clu_sec_balance, \
-  8082a2:	0f b6 d0             	movzx  edx,al
-  8082a5:	0f b7 4d ee          	movzx  ecx,WORD PTR [rbp-0x12]
-  8082a9:	8b 05 91 23 00 00    	mov    eax,DWORD PTR [rip+0x2391]        # 80a640 <clu_sec_balance>
-  8082af:	01 c1                	add    ecx,eax
-  8082b1:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  8082b5:	89 ce                	mov    esi,ecx
-  8082b7:	48 89 c7             	mov    rdi,rax
-  8082ba:	e8 c0 fc ff ff       	call   807f7f <read_sec>
+  8082c2:	0f b6 d0             	movzx  edx,al
+  8082c5:	0f b7 4d ee          	movzx  ecx,WORD PTR [rbp-0x12]
+  8082c9:	8b 05 71 23 00 00    	mov    eax,DWORD PTR [rip+0x2371]        # 80a640 <clu_sec_balance>
+  8082cf:	01 c1                	add    ecx,eax
+  8082d1:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  8082d5:	89 ce                	mov    esi,ecx
+  8082d7:	48 89 c7             	mov    rdi,rax
+  8082da:	e8 c0 fc ff ff       	call   807f9f <read_sec>
     }
     do{
         for(int i=0;i<max_files;i++)
-  8082bf:	c7 45 e8 00 00 00 00 	mov    DWORD PTR [rbp-0x18],0x0
-  8082c6:	eb 57                	jmp    80831f <find+0xd2>
+  8082df:	c7 45 e8 00 00 00 00 	mov    DWORD PTR [rbp-0x18],0x0
+  8082e6:	eb 57                	jmp    80833f <find+0xd2>
         {
             if(dir_table[i].name[0]==0||dir_table[i].name[0]==0xe5)
-  8082c8:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
-  8082cb:	48 98                	cdqe   
-  8082cd:	48 c1 e0 05          	shl    rax,0x5
-  8082d1:	48 89 c2             	mov    rdx,rax
-  8082d4:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  8082d8:	48 01 d0             	add    rax,rdx
-  8082db:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  8082de:	84 c0                	test   al,al
-  8082e0:	74 38                	je     80831a <find+0xcd>
+  8082e8:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  8082eb:	48 98                	cdqe   
+  8082ed:	48 c1 e0 05          	shl    rax,0x5
+  8082f1:	48 89 c2             	mov    rdx,rax
+  8082f4:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  8082f8:	48 01 d0             	add    rax,rdx
+  8082fb:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  8082fe:	84 c0                	test   al,al
+  808300:	74 38                	je     80833a <find+0xcd>
                 continue;
             if(memcmp(dir_table[i].name,name,11)==0)
-  8082e2:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
-  8082e5:	48 98                	cdqe   
-  8082e7:	48 c1 e0 05          	shl    rax,0x5
-  8082eb:	48 89 c2             	mov    rdx,rax
-  8082ee:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  8082f2:	48 01 d0             	add    rax,rdx
-  8082f5:	48 89 c1             	mov    rcx,rax
-  8082f8:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
-  8082fc:	ba 0b 00 00 00       	mov    edx,0xb
-  808301:	48 89 c6             	mov    rsi,rax
-  808304:	48 89 cf             	mov    rdi,rcx
-  808307:	e8 a4 17 00 00       	call   809ab0 <memcmp>
-  80830c:	85 c0                	test   eax,eax
-  80830e:	75 0b                	jne    80831b <find+0xce>
+  808302:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  808305:	48 98                	cdqe   
+  808307:	48 c1 e0 05          	shl    rax,0x5
+  80830b:	48 89 c2             	mov    rdx,rax
+  80830e:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  808312:	48 01 d0             	add    rax,rdx
+  808315:	48 89 c1             	mov    rcx,rax
+  808318:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
+  80831c:	ba 0b 00 00 00       	mov    edx,0xb
+  808321:	48 89 c6             	mov    rsi,rax
+  808324:	48 89 cf             	mov    rdi,rcx
+  808327:	e8 a4 17 00 00       	call   809ad0 <memcmp>
+  80832c:	85 c0                	test   eax,eax
+  80832e:	75 0b                	jne    80833b <find+0xce>
             {
                 return index+i;
-  808310:	8b 55 f8             	mov    edx,DWORD PTR [rbp-0x8]
-  808313:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
-  808316:	01 d0                	add    eax,edx
-  808318:	eb 71                	jmp    80838b <find+0x13e>
+  808330:	8b 55 f8             	mov    edx,DWORD PTR [rbp-0x8]
+  808333:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  808336:	01 d0                	add    eax,edx
+  808338:	eb 71                	jmp    8083ab <find+0x13e>
                 continue;
-  80831a:	90                   	nop
+  80833a:	90                   	nop
         for(int i=0;i<max_files;i++)
-  80831b:	83 45 e8 01          	add    DWORD PTR [rbp-0x18],0x1
-  80831f:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
-  808322:	3b 45 fc             	cmp    eax,DWORD PTR [rbp-0x4]
-  808325:	7c a1                	jl     8082c8 <find+0x7b>
+  80833b:	83 45 e8 01          	add    DWORD PTR [rbp-0x18],0x1
+  80833f:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  808342:	3b 45 fc             	cmp    eax,DWORD PTR [rbp-0x4]
+  808345:	7c a1                	jl     8082e8 <find+0x7b>
             }
         }
         if(cur_dir.fistCluNum==0)
-  808327:	0f b7 05 2c 62 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc2622c]        # 42e55a <cur_dir+0x1a>
-  80832e:	66 85 c0             	test   ax,ax
-  808331:	75 07                	jne    80833a <find+0xed>
+  808347:	0f b7 05 0c 62 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc2620c]        # 42e55a <cur_dir+0x1a>
+  80834e:	66 85 c0             	test   ax,ax
+  808351:	75 07                	jne    80835a <find+0xed>
             return -1;
-  808333:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  808338:	eb 51                	jmp    80838b <find+0x13e>
+  808353:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  808358:	eb 51                	jmp    8083ab <find+0x13e>
         else if(cluster<FAT_EOF)
-  80833a:	66 83 7d ee f6       	cmp    WORD PTR [rbp-0x12],0xfff6
-  80833f:	77 3a                	ja     80837b <find+0x12e>
+  80835a:	66 83 7d ee f6       	cmp    WORD PTR [rbp-0x12],0xfff6
+  80835f:	77 3a                	ja     80839b <find+0x12e>
         {
             index+=16;
-  808341:	83 45 f8 10          	add    DWORD PTR [rbp-0x8],0x10
+  808361:	83 45 f8 10          	add    DWORD PTR [rbp-0x8],0x10
             cluster=fat[cluster];
-  808345:	0f b7 45 ee          	movzx  eax,WORD PTR [rbp-0x12]
-  808349:	48 98                	cdqe   
-  80834b:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
-  808352:	00 
-  808353:	66 89 45 ee          	mov    WORD PTR [rbp-0x12],ax
+  808365:	0f b7 45 ee          	movzx  eax,WORD PTR [rbp-0x12]
+  808369:	48 98                	cdqe   
+  80836b:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
+  808372:	00 
+  808373:	66 89 45 ee          	mov    WORD PTR [rbp-0x12],ax
             //update
             //if you can reach here it means it's a regular dir
             read_sec(dir_table,cluster+clu_sec_balance,\
             superblock.secPerClu);
-  808357:	0f b6 05 af 21 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc221af]        # 42a50d <superblock+0xd>
+  808377:	0f b6 05 8f 21 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc2218f]        # 42a50d <superblock+0xd>
             read_sec(dir_table,cluster+clu_sec_balance,\
-  80835e:	0f b6 d0             	movzx  edx,al
-  808361:	0f b7 4d ee          	movzx  ecx,WORD PTR [rbp-0x12]
-  808365:	8b 05 d5 22 00 00    	mov    eax,DWORD PTR [rip+0x22d5]        # 80a640 <clu_sec_balance>
-  80836b:	01 c1                	add    ecx,eax
-  80836d:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  808371:	89 ce                	mov    esi,ecx
-  808373:	48 89 c7             	mov    rdi,rax
-  808376:	e8 04 fc ff ff       	call   807f7f <read_sec>
+  80837e:	0f b6 d0             	movzx  edx,al
+  808381:	0f b7 4d ee          	movzx  ecx,WORD PTR [rbp-0x12]
+  808385:	8b 05 b5 22 00 00    	mov    eax,DWORD PTR [rip+0x22b5]        # 80a640 <clu_sec_balance>
+  80838b:	01 c1                	add    ecx,eax
+  80838d:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  808391:	89 ce                	mov    esi,ecx
+  808393:	48 89 c7             	mov    rdi,rax
+  808396:	e8 04 fc ff ff       	call   807f9f <read_sec>
         }
     }while(cluster<FAT_EOF);
-  80837b:	66 83 7d ee f6       	cmp    WORD PTR [rbp-0x12],0xfff6
-  808380:	0f 86 39 ff ff ff    	jbe    8082bf <find+0x72>
+  80839b:	66 83 7d ee f6       	cmp    WORD PTR [rbp-0x12],0xfff6
+  8083a0:	0f 86 39 ff ff ff    	jbe    8082df <find+0x72>
     return -1;
-  808386:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  8083a6:	b8 ff ff ff ff       	mov    eax,0xffffffff
 
 }
-  80838b:	c9                   	leave  
-  80838c:	c3                   	ret    
+  8083ab:	c9                   	leave  
+  8083ac:	c3                   	ret    
 
-000000000080838d <read_file_byname>:
+00000000008083ad <read_file_byname>:
 
 int read_file_byname(char *full_name,char *dist,int pos,int len)
 {
-  80838d:	f3 0f 1e fa          	endbr64 
-  808391:	55                   	push   rbp
-  808392:	48 89 e5             	mov    rbp,rsp
-  808395:	41 57                	push   r15
-  808397:	41 56                	push   r14
-  808399:	41 55                	push   r13
-  80839b:	41 54                	push   r12
-  80839d:	53                   	push   rbx
-  80839e:	48 81 ec 88 00 00 00 	sub    rsp,0x88
-  8083a5:	48 89 bd 68 ff ff ff 	mov    QWORD PTR [rbp-0x98],rdi
-  8083ac:	48 89 b5 60 ff ff ff 	mov    QWORD PTR [rbp-0xa0],rsi
-  8083b3:	89 95 5c ff ff ff    	mov    DWORD PTR [rbp-0xa4],edx
-  8083b9:	89 8d 58 ff ff ff    	mov    DWORD PTR [rbp-0xa8],ecx
-  8083bf:	48 89 e0             	mov    rax,rsp
-  8083c2:	48 89 c3             	mov    rbx,rax
+  8083ad:	f3 0f 1e fa          	endbr64 
+  8083b1:	55                   	push   rbp
+  8083b2:	48 89 e5             	mov    rbp,rsp
+  8083b5:	41 57                	push   r15
+  8083b7:	41 56                	push   r14
+  8083b9:	41 55                	push   r13
+  8083bb:	41 54                	push   r12
+  8083bd:	53                   	push   rbx
+  8083be:	48 81 ec 88 00 00 00 	sub    rsp,0x88
+  8083c5:	48 89 bd 68 ff ff ff 	mov    QWORD PTR [rbp-0x98],rdi
+  8083cc:	48 89 b5 60 ff ff ff 	mov    QWORD PTR [rbp-0xa0],rsi
+  8083d3:	89 95 5c ff ff ff    	mov    DWORD PTR [rbp-0xa4],edx
+  8083d9:	89 8d 58 ff ff ff    	mov    DWORD PTR [rbp-0xa8],ecx
+  8083df:	48 89 e0             	mov    rax,rsp
+  8083e2:	48 89 c3             	mov    rbx,rax
     int index= find(NULL);
-  8083c5:	bf 00 00 00 00       	mov    edi,0x0
-  8083ca:	e8 7e fe ff ff       	call   80824d <find>
-  8083cf:	89 45 cc             	mov    DWORD PTR [rbp-0x34],eax
+  8083e5:	bf 00 00 00 00       	mov    edi,0x0
+  8083ea:	e8 7e fe ff ff       	call   80826d <find>
+  8083ef:	89 45 cc             	mov    DWORD PTR [rbp-0x34],eax
     if(index==-1||pos<0)
-  8083d2:	83 7d cc ff          	cmp    DWORD PTR [rbp-0x34],0xffffffff
-  8083d6:	74 09                	je     8083e1 <read_file_byname+0x54>
-  8083d8:	83 bd 5c ff ff ff 00 	cmp    DWORD PTR [rbp-0xa4],0x0
-  8083df:	79 0a                	jns    8083eb <read_file_byname+0x5e>
+  8083f2:	83 7d cc ff          	cmp    DWORD PTR [rbp-0x34],0xffffffff
+  8083f6:	74 09                	je     808401 <read_file_byname+0x54>
+  8083f8:	83 bd 5c ff ff ff 00 	cmp    DWORD PTR [rbp-0xa4],0x0
+  8083ff:	79 0a                	jns    80840b <read_file_byname+0x5e>
         return -1;
-  8083e1:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  8083e6:	e9 ea 02 00 00       	jmp    8086d5 <read_file_byname+0x348>
+  808401:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  808406:	e9 ea 02 00 00       	jmp    8086f5 <read_file_byname+0x348>
     
     //default set to 512
     int max_files=MAX_FILES_PER_DIR;
-  8083eb:	c7 45 b0 00 02 00 00 	mov    DWORD PTR [rbp-0x50],0x200
+  80840b:	c7 45 b0 00 02 00 00 	mov    DWORD PTR [rbp-0x50],0x200
     dir_entry *dir_table=root_dir;
-  8083f2:	48 c7 45 c0 40 a5 42 	mov    QWORD PTR [rbp-0x40],0x42a540
-  8083f9:	00 
+  808412:	48 c7 45 c0 40 a5 42 	mov    QWORD PTR [rbp-0x40],0x42a540
+  808419:	00 
     int in_root=1;
-  8083fa:	c7 45 bc 01 00 00 00 	mov    DWORD PTR [rbp-0x44],0x1
+  80841a:	c7 45 bc 01 00 00 00 	mov    DWORD PTR [rbp-0x44],0x1
     if(cur_dir.fistCluNum!=0)
-  808401:	0f b7 05 52 61 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc26152]        # 42e55a <cur_dir+0x1a>
-  808408:	66 85 c0             	test   ax,ax
-  80840b:	74 40                	je     80844d <read_file_byname+0xc0>
+  808421:	0f b7 05 32 61 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc26132]        # 42e55a <cur_dir+0x1a>
+  808428:	66 85 c0             	test   ax,ax
+  80842b:	74 40                	je     80846d <read_file_byname+0xc0>
     {
         //regular dir
         in_root=0;
-  80840d:	c7 45 bc 00 00 00 00 	mov    DWORD PTR [rbp-0x44],0x0
+  80842d:	c7 45 bc 00 00 00 00 	mov    DWORD PTR [rbp-0x44],0x0
         max_files=16;
-  808414:	c7 45 b0 10 00 00 00 	mov    DWORD PTR [rbp-0x50],0x10
+  808434:	c7 45 b0 10 00 00 00 	mov    DWORD PTR [rbp-0x50],0x10
         read_sec(a_clu_of_dir,cur_dir.fistCluNum+clu_sec_balance,\
         superblock.secPerClu);
-  80841b:	0f b6 05 eb 20 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc220eb]        # 42a50d <superblock+0xd>
+  80843b:	0f b6 05 cb 20 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc220cb]        # 42a50d <superblock+0xd>
         read_sec(a_clu_of_dir,cur_dir.fistCluNum+clu_sec_balance,\
-  808422:	0f b6 c0             	movzx  eax,al
-  808425:	0f b7 15 2e 61 c2 ff 	movzx  edx,WORD PTR [rip+0xffffffffffc2612e]        # 42e55a <cur_dir+0x1a>
-  80842c:	0f b7 ca             	movzx  ecx,dx
-  80842f:	8b 15 0b 22 00 00    	mov    edx,DWORD PTR [rip+0x220b]        # 80a640 <clu_sec_balance>
-  808435:	01 d1                	add    ecx,edx
-  808437:	89 c2                	mov    edx,eax
-  808439:	89 ce                	mov    esi,ecx
-  80843b:	bf 60 e5 42 00       	mov    edi,0x42e560
-  808440:	e8 3a fb ff ff       	call   807f7f <read_sec>
+  808442:	0f b6 c0             	movzx  eax,al
+  808445:	0f b7 15 0e 61 c2 ff 	movzx  edx,WORD PTR [rip+0xffffffffffc2610e]        # 42e55a <cur_dir+0x1a>
+  80844c:	0f b7 ca             	movzx  ecx,dx
+  80844f:	8b 15 eb 21 00 00    	mov    edx,DWORD PTR [rip+0x21eb]        # 80a640 <clu_sec_balance>
+  808455:	01 d1                	add    ecx,edx
+  808457:	89 c2                	mov    edx,eax
+  808459:	89 ce                	mov    esi,ecx
+  80845b:	bf 60 e5 42 00       	mov    edi,0x42e560
+  808460:	e8 3a fb ff ff       	call   807f9f <read_sec>
         dir_table=a_clu_of_dir;
-  808445:	48 c7 45 c0 60 e5 42 	mov    QWORD PTR [rbp-0x40],0x42e560
-  80844c:	00 
+  808465:	48 c7 45 c0 60 e5 42 	mov    QWORD PTR [rbp-0x40],0x42e560
+  80846c:	00 
     }
     //current cluster you're at
     unsigned short cluster=cur_dir.fistCluNum;
-  80844d:	0f b7 05 06 61 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc26106]        # 42e55a <cur_dir+0x1a>
-  808454:	66 89 45 ba          	mov    WORD PTR [rbp-0x46],ax
+  80846d:	0f b7 05 e6 60 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc260e6]        # 42e55a <cur_dir+0x1a>
+  808474:	66 89 45 ba          	mov    WORD PTR [rbp-0x46],ax
     while(!in_root&&index>=16&&cluster<FAT_EOF){
-  808458:	eb 41                	jmp    80849b <read_file_byname+0x10e>
+  808478:	eb 41                	jmp    8084bb <read_file_byname+0x10e>
         index-=16;
-  80845a:	83 6d cc 10          	sub    DWORD PTR [rbp-0x34],0x10
+  80847a:	83 6d cc 10          	sub    DWORD PTR [rbp-0x34],0x10
         if(cluster<FAT_EOF)
-  80845e:	66 83 7d ba f6       	cmp    WORD PTR [rbp-0x46],0xfff6
-  808463:	77 36                	ja     80849b <read_file_byname+0x10e>
+  80847e:	66 83 7d ba f6       	cmp    WORD PTR [rbp-0x46],0xfff6
+  808483:	77 36                	ja     8084bb <read_file_byname+0x10e>
         {
             cluster=fat[cluster];
-  808465:	0f b7 45 ba          	movzx  eax,WORD PTR [rbp-0x46]
-  808469:	48 98                	cdqe   
-  80846b:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
-  808472:	00 
-  808473:	66 89 45 ba          	mov    WORD PTR [rbp-0x46],ax
+  808485:	0f b7 45 ba          	movzx  eax,WORD PTR [rbp-0x46]
+  808489:	48 98                	cdqe   
+  80848b:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
+  808492:	00 
+  808493:	66 89 45 ba          	mov    WORD PTR [rbp-0x46],ax
             //update
             //if you can reach here it means it's a regular dir
             read_sec(dir_table,cluster+clu_sec_balance,\
             superblock.secPerClu);
-  808477:	0f b6 05 8f 20 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc2208f]        # 42a50d <superblock+0xd>
+  808497:	0f b6 05 6f 20 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc2206f]        # 42a50d <superblock+0xd>
             read_sec(dir_table,cluster+clu_sec_balance,\
-  80847e:	0f b6 d0             	movzx  edx,al
-  808481:	0f b7 4d ba          	movzx  ecx,WORD PTR [rbp-0x46]
-  808485:	8b 05 b5 21 00 00    	mov    eax,DWORD PTR [rip+0x21b5]        # 80a640 <clu_sec_balance>
-  80848b:	01 c1                	add    ecx,eax
-  80848d:	48 8b 45 c0          	mov    rax,QWORD PTR [rbp-0x40]
-  808491:	89 ce                	mov    esi,ecx
-  808493:	48 89 c7             	mov    rdi,rax
-  808496:	e8 e4 fa ff ff       	call   807f7f <read_sec>
+  80849e:	0f b6 d0             	movzx  edx,al
+  8084a1:	0f b7 4d ba          	movzx  ecx,WORD PTR [rbp-0x46]
+  8084a5:	8b 05 95 21 00 00    	mov    eax,DWORD PTR [rip+0x2195]        # 80a640 <clu_sec_balance>
+  8084ab:	01 c1                	add    ecx,eax
+  8084ad:	48 8b 45 c0          	mov    rax,QWORD PTR [rbp-0x40]
+  8084b1:	89 ce                	mov    esi,ecx
+  8084b3:	48 89 c7             	mov    rdi,rax
+  8084b6:	e8 e4 fa ff ff       	call   807f9f <read_sec>
     while(!in_root&&index>=16&&cluster<FAT_EOF){
-  80849b:	83 7d bc 00          	cmp    DWORD PTR [rbp-0x44],0x0
-  80849f:	75 0d                	jne    8084ae <read_file_byname+0x121>
-  8084a1:	83 7d cc 0f          	cmp    DWORD PTR [rbp-0x34],0xf
-  8084a5:	7e 07                	jle    8084ae <read_file_byname+0x121>
-  8084a7:	66 83 7d ba f6       	cmp    WORD PTR [rbp-0x46],0xfff6
-  8084ac:	76 ac                	jbe    80845a <read_file_byname+0xcd>
+  8084bb:	83 7d bc 00          	cmp    DWORD PTR [rbp-0x44],0x0
+  8084bf:	75 0d                	jne    8084ce <read_file_byname+0x121>
+  8084c1:	83 7d cc 0f          	cmp    DWORD PTR [rbp-0x34],0xf
+  8084c5:	7e 07                	jle    8084ce <read_file_byname+0x121>
+  8084c7:	66 83 7d ba f6       	cmp    WORD PTR [rbp-0x46],0xfff6
+  8084cc:	76 ac                	jbe    80847a <read_file_byname+0xcd>
         }
     }
     //arrived
     dir_entry file=dir_table[index];
-  8084ae:	8b 45 cc             	mov    eax,DWORD PTR [rbp-0x34]
-  8084b1:	48 98                	cdqe   
-  8084b3:	48 c1 e0 05          	shl    rax,0x5
-  8084b7:	48 89 c2             	mov    rdx,rax
-  8084ba:	48 8b 45 c0          	mov    rax,QWORD PTR [rbp-0x40]
-  8084be:	48 8d 0c 02          	lea    rcx,[rdx+rax*1]
-  8084c2:	48 8b 01             	mov    rax,QWORD PTR [rcx]
-  8084c5:	48 8b 51 08          	mov    rdx,QWORD PTR [rcx+0x8]
-  8084c9:	48 89 85 70 ff ff ff 	mov    QWORD PTR [rbp-0x90],rax
-  8084d0:	48 89 95 78 ff ff ff 	mov    QWORD PTR [rbp-0x88],rdx
-  8084d7:	48 8b 41 10          	mov    rax,QWORD PTR [rcx+0x10]
-  8084db:	48 8b 51 18          	mov    rdx,QWORD PTR [rcx+0x18]
-  8084df:	48 89 45 80          	mov    QWORD PTR [rbp-0x80],rax
-  8084e3:	48 89 55 88          	mov    QWORD PTR [rbp-0x78],rdx
+  8084ce:	8b 45 cc             	mov    eax,DWORD PTR [rbp-0x34]
+  8084d1:	48 98                	cdqe   
+  8084d3:	48 c1 e0 05          	shl    rax,0x5
+  8084d7:	48 89 c2             	mov    rdx,rax
+  8084da:	48 8b 45 c0          	mov    rax,QWORD PTR [rbp-0x40]
+  8084de:	48 8d 0c 02          	lea    rcx,[rdx+rax*1]
+  8084e2:	48 8b 01             	mov    rax,QWORD PTR [rcx]
+  8084e5:	48 8b 51 08          	mov    rdx,QWORD PTR [rcx+0x8]
+  8084e9:	48 89 85 70 ff ff ff 	mov    QWORD PTR [rbp-0x90],rax
+  8084f0:	48 89 95 78 ff ff ff 	mov    QWORD PTR [rbp-0x88],rdx
+  8084f7:	48 8b 41 10          	mov    rax,QWORD PTR [rcx+0x10]
+  8084fb:	48 8b 51 18          	mov    rdx,QWORD PTR [rcx+0x18]
+  8084ff:	48 89 45 80          	mov    QWORD PTR [rbp-0x80],rax
+  808503:	48 89 55 88          	mov    QWORD PTR [rbp-0x78],rdx
     int f_cluster = file.fistCluNum;
-  8084e7:	0f b7 45 8a          	movzx  eax,WORD PTR [rbp-0x76]
-  8084eb:	0f b7 c0             	movzx  eax,ax
-  8084ee:	89 45 b4             	mov    DWORD PTR [rbp-0x4c],eax
+  808507:	0f b7 45 8a          	movzx  eax,WORD PTR [rbp-0x76]
+  80850b:	0f b7 c0             	movzx  eax,ax
+  80850e:	89 45 b4             	mov    DWORD PTR [rbp-0x4c],eax
     int cluster_size=superblock.bytesPerSec*superblock.secPerClu;
-  8084f1:	0f b7 05 13 20 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc22013]        # 42a50b <superblock+0xb>
-  8084f8:	0f b7 d0             	movzx  edx,ax
-  8084fb:	0f b6 05 0b 20 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc2200b]        # 42a50d <superblock+0xd>
-  808502:	0f b6 c0             	movzx  eax,al
-  808505:	0f af c2             	imul   eax,edx
-  808508:	89 45 ac             	mov    DWORD PTR [rbp-0x54],eax
+  808511:	0f b7 05 f3 1f c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc21ff3]        # 42a50b <superblock+0xb>
+  808518:	0f b7 d0             	movzx  edx,ax
+  80851b:	0f b6 05 eb 1f c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21feb]        # 42a50d <superblock+0xd>
+  808522:	0f b6 c0             	movzx  eax,al
+  808525:	0f af c2             	imul   eax,edx
+  808528:	89 45 ac             	mov    DWORD PTR [rbp-0x54],eax
     while(fat[f_cluster]<FAT_EOF&&pos>=cluster_size)
-  80850b:	eb 25                	jmp    808532 <read_file_byname+0x1a5>
+  80852b:	eb 25                	jmp    808552 <read_file_byname+0x1a5>
     {
         pos-=cluster_size;
-  80850d:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
-  808510:	29 85 5c ff ff ff    	sub    DWORD PTR [rbp-0xa4],eax
+  80852d:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
+  808530:	29 85 5c ff ff ff    	sub    DWORD PTR [rbp-0xa4],eax
         f_cluster=fat[f_cluster];
-  808516:	8b 45 b4             	mov    eax,DWORD PTR [rbp-0x4c]
-  808519:	48 98                	cdqe   
-  80851b:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
-  808522:	00 
-  808523:	98                   	cwde   
-  808524:	89 45 b4             	mov    DWORD PTR [rbp-0x4c],eax
+  808536:	8b 45 b4             	mov    eax,DWORD PTR [rbp-0x4c]
+  808539:	48 98                	cdqe   
+  80853b:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
+  808542:	00 
+  808543:	98                   	cwde   
+  808544:	89 45 b4             	mov    DWORD PTR [rbp-0x4c],eax
         if(pos<cluster_size)
-  808527:	8b 85 5c ff ff ff    	mov    eax,DWORD PTR [rbp-0xa4]
-  80852d:	3b 45 ac             	cmp    eax,DWORD PTR [rbp-0x54]
-  808530:	7c 0d                	jl     80853f <read_file_byname+0x1b2>
+  808547:	8b 85 5c ff ff ff    	mov    eax,DWORD PTR [rbp-0xa4]
+  80854d:	3b 45 ac             	cmp    eax,DWORD PTR [rbp-0x54]
+  808550:	7c 0d                	jl     80855f <read_file_byname+0x1b2>
     while(fat[f_cluster]<FAT_EOF&&pos>=cluster_size)
-  808532:	8b 85 5c ff ff ff    	mov    eax,DWORD PTR [rbp-0xa4]
-  808538:	3b 45 ac             	cmp    eax,DWORD PTR [rbp-0x54]
-  80853b:	7d d0                	jge    80850d <read_file_byname+0x180>
-  80853d:	eb 01                	jmp    808540 <read_file_byname+0x1b3>
+  808552:	8b 85 5c ff ff ff    	mov    eax,DWORD PTR [rbp-0xa4]
+  808558:	3b 45 ac             	cmp    eax,DWORD PTR [rbp-0x54]
+  80855b:	7d d0                	jge    80852d <read_file_byname+0x180>
+  80855d:	eb 01                	jmp    808560 <read_file_byname+0x1b3>
             break;
-  80853f:	90                   	nop
+  80855f:	90                   	nop
     }
     if(f_cluster>=FAT_EOF&&pos>=cluster_size)
-  808540:	81 7d b4 f6 ff 00 00 	cmp    DWORD PTR [rbp-0x4c],0xfff6
-  808547:	7e 15                	jle    80855e <read_file_byname+0x1d1>
-  808549:	8b 85 5c ff ff ff    	mov    eax,DWORD PTR [rbp-0xa4]
-  80854f:	3b 45 ac             	cmp    eax,DWORD PTR [rbp-0x54]
-  808552:	7c 0a                	jl     80855e <read_file_byname+0x1d1>
+  808560:	81 7d b4 f6 ff 00 00 	cmp    DWORD PTR [rbp-0x4c],0xfff6
+  808567:	7e 15                	jle    80857e <read_file_byname+0x1d1>
+  808569:	8b 85 5c ff ff ff    	mov    eax,DWORD PTR [rbp-0xa4]
+  80856f:	3b 45 ac             	cmp    eax,DWORD PTR [rbp-0x54]
+  808572:	7c 0a                	jl     80857e <read_file_byname+0x1d1>
         return -1;//pos out of range
-  808554:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  808559:	e9 77 01 00 00       	jmp    8086d5 <read_file_byname+0x348>
+  808574:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  808579:	e9 77 01 00 00       	jmp    8086f5 <read_file_byname+0x348>
     //
     char temp[cluster_size];
-  80855e:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
-  808561:	48 63 d0             	movsxd rdx,eax
-  808564:	48 83 ea 01          	sub    rdx,0x1
-  808568:	48 89 55 a0          	mov    QWORD PTR [rbp-0x60],rdx
-  80856c:	48 63 d0             	movsxd rdx,eax
-  80856f:	49 89 d6             	mov    r14,rdx
-  808572:	41 bf 00 00 00 00    	mov    r15d,0x0
-  808578:	48 63 d0             	movsxd rdx,eax
-  80857b:	49 89 d4             	mov    r12,rdx
-  80857e:	41 bd 00 00 00 00    	mov    r13d,0x0
-  808584:	48 98                	cdqe   
-  808586:	ba 10 00 00 00       	mov    edx,0x10
-  80858b:	48 83 ea 01          	sub    rdx,0x1
-  80858f:	48 01 d0             	add    rax,rdx
-  808592:	be 10 00 00 00       	mov    esi,0x10
-  808597:	ba 00 00 00 00       	mov    edx,0x0
-  80859c:	48 f7 f6             	div    rsi
-  80859f:	48 6b c0 10          	imul   rax,rax,0x10
-  8085a3:	48 89 c1             	mov    rcx,rax
-  8085a6:	48 81 e1 00 f0 ff ff 	and    rcx,0xfffffffffffff000
-  8085ad:	48 89 e2             	mov    rdx,rsp
-  8085b0:	48 29 ca             	sub    rdx,rcx
-  8085b3:	48 39 d4             	cmp    rsp,rdx
-  8085b6:	74 12                	je     8085ca <read_file_byname+0x23d>
-  8085b8:	48 81 ec 00 10 00 00 	sub    rsp,0x1000
-  8085bf:	48 83 8c 24 f8 0f 00 	or     QWORD PTR [rsp+0xff8],0x0
-  8085c6:	00 00 
-  8085c8:	eb e9                	jmp    8085b3 <read_file_byname+0x226>
-  8085ca:	48 89 c2             	mov    rdx,rax
-  8085cd:	81 e2 ff 0f 00 00    	and    edx,0xfff
-  8085d3:	48 29 d4             	sub    rsp,rdx
-  8085d6:	48 89 c2             	mov    rdx,rax
-  8085d9:	81 e2 ff 0f 00 00    	and    edx,0xfff
-  8085df:	48 85 d2             	test   rdx,rdx
-  8085e2:	74 10                	je     8085f4 <read_file_byname+0x267>
-  8085e4:	25 ff 0f 00 00       	and    eax,0xfff
-  8085e9:	48 83 e8 08          	sub    rax,0x8
-  8085ed:	48 01 e0             	add    rax,rsp
-  8085f0:	48 83 08 00          	or     QWORD PTR [rax],0x0
-  8085f4:	48 89 e0             	mov    rax,rsp
-  8085f7:	48 83 c0 00          	add    rax,0x0
-  8085fb:	48 89 45 98          	mov    QWORD PTR [rbp-0x68],rax
+  80857e:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
+  808581:	48 63 d0             	movsxd rdx,eax
+  808584:	48 83 ea 01          	sub    rdx,0x1
+  808588:	48 89 55 a0          	mov    QWORD PTR [rbp-0x60],rdx
+  80858c:	48 63 d0             	movsxd rdx,eax
+  80858f:	49 89 d6             	mov    r14,rdx
+  808592:	41 bf 00 00 00 00    	mov    r15d,0x0
+  808598:	48 63 d0             	movsxd rdx,eax
+  80859b:	49 89 d4             	mov    r12,rdx
+  80859e:	41 bd 00 00 00 00    	mov    r13d,0x0
+  8085a4:	48 98                	cdqe   
+  8085a6:	ba 10 00 00 00       	mov    edx,0x10
+  8085ab:	48 83 ea 01          	sub    rdx,0x1
+  8085af:	48 01 d0             	add    rax,rdx
+  8085b2:	be 10 00 00 00       	mov    esi,0x10
+  8085b7:	ba 00 00 00 00       	mov    edx,0x0
+  8085bc:	48 f7 f6             	div    rsi
+  8085bf:	48 6b c0 10          	imul   rax,rax,0x10
+  8085c3:	48 89 c1             	mov    rcx,rax
+  8085c6:	48 81 e1 00 f0 ff ff 	and    rcx,0xfffffffffffff000
+  8085cd:	48 89 e2             	mov    rdx,rsp
+  8085d0:	48 29 ca             	sub    rdx,rcx
+  8085d3:	48 39 d4             	cmp    rsp,rdx
+  8085d6:	74 12                	je     8085ea <read_file_byname+0x23d>
+  8085d8:	48 81 ec 00 10 00 00 	sub    rsp,0x1000
+  8085df:	48 83 8c 24 f8 0f 00 	or     QWORD PTR [rsp+0xff8],0x0
+  8085e6:	00 00 
+  8085e8:	eb e9                	jmp    8085d3 <read_file_byname+0x226>
+  8085ea:	48 89 c2             	mov    rdx,rax
+  8085ed:	81 e2 ff 0f 00 00    	and    edx,0xfff
+  8085f3:	48 29 d4             	sub    rsp,rdx
+  8085f6:	48 89 c2             	mov    rdx,rax
+  8085f9:	81 e2 ff 0f 00 00    	and    edx,0xfff
+  8085ff:	48 85 d2             	test   rdx,rdx
+  808602:	74 10                	je     808614 <read_file_byname+0x267>
+  808604:	25 ff 0f 00 00       	and    eax,0xfff
+  808609:	48 83 e8 08          	sub    rax,0x8
+  80860d:	48 01 e0             	add    rax,rsp
+  808610:	48 83 08 00          	or     QWORD PTR [rax],0x0
+  808614:	48 89 e0             	mov    rax,rsp
+  808617:	48 83 c0 00          	add    rax,0x0
+  80861b:	48 89 45 98          	mov    QWORD PTR [rbp-0x68],rax
     //the first time of reading might be not aligned
     read_sec(temp,f_cluster+clu_sec_balance,superblock.secPerClu);
-  8085ff:	0f b6 05 07 1f c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21f07]        # 42a50d <superblock+0xd>
-  808606:	0f b6 d0             	movzx  edx,al
-  808609:	8b 0d 31 20 00 00    	mov    ecx,DWORD PTR [rip+0x2031]        # 80a640 <clu_sec_balance>
-  80860f:	8b 45 b4             	mov    eax,DWORD PTR [rbp-0x4c]
-  808612:	01 c1                	add    ecx,eax
-  808614:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
-  808618:	89 ce                	mov    esi,ecx
-  80861a:	48 89 c7             	mov    rdi,rax
-  80861d:	e8 5d f9 ff ff       	call   807f7f <read_sec>
+  80861f:	0f b6 05 e7 1e c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21ee7]        # 42a50d <superblock+0xd>
+  808626:	0f b6 d0             	movzx  edx,al
+  808629:	8b 0d 11 20 00 00    	mov    ecx,DWORD PTR [rip+0x2011]        # 80a640 <clu_sec_balance>
+  80862f:	8b 45 b4             	mov    eax,DWORD PTR [rbp-0x4c]
+  808632:	01 c1                	add    ecx,eax
+  808634:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
+  808638:	89 ce                	mov    esi,ecx
+  80863a:	48 89 c7             	mov    rdi,rax
+  80863d:	e8 5d f9 ff ff       	call   807f9f <read_sec>
     memcpy(dist,temp+pos,cluster_size-pos);
-  808622:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
-  808625:	2b 85 5c ff ff ff    	sub    eax,DWORD PTR [rbp-0xa4]
-  80862b:	89 c2                	mov    edx,eax
-  80862d:	8b 85 5c ff ff ff    	mov    eax,DWORD PTR [rbp-0xa4]
-  808633:	48 63 c8             	movsxd rcx,eax
-  808636:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
-  80863a:	48 01 c1             	add    rcx,rax
-  80863d:	48 8b 85 60 ff ff ff 	mov    rax,QWORD PTR [rbp-0xa0]
-  808644:	48 89 ce             	mov    rsi,rcx
-  808647:	48 89 c7             	mov    rdi,rax
-  80864a:	e8 17 14 00 00       	call   809a66 <memcpy>
+  808642:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
+  808645:	2b 85 5c ff ff ff    	sub    eax,DWORD PTR [rbp-0xa4]
+  80864b:	89 c2                	mov    edx,eax
+  80864d:	8b 85 5c ff ff ff    	mov    eax,DWORD PTR [rbp-0xa4]
+  808653:	48 63 c8             	movsxd rcx,eax
+  808656:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
+  80865a:	48 01 c1             	add    rcx,rax
+  80865d:	48 8b 85 60 ff ff ff 	mov    rax,QWORD PTR [rbp-0xa0]
+  808664:	48 89 ce             	mov    rsi,rcx
+  808667:	48 89 c7             	mov    rdi,rax
+  80866a:	e8 17 14 00 00       	call   809a86 <memcpy>
     dist+=cluster_size-pos;
-  80864f:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
-  808652:	2b 85 5c ff ff ff    	sub    eax,DWORD PTR [rbp-0xa4]
-  808658:	48 98                	cdqe   
-  80865a:	48 01 85 60 ff ff ff 	add    QWORD PTR [rbp-0xa0],rax
+  80866f:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
+  808672:	2b 85 5c ff ff ff    	sub    eax,DWORD PTR [rbp-0xa4]
+  808678:	48 98                	cdqe   
+  80867a:	48 01 85 60 ff ff ff 	add    QWORD PTR [rbp-0xa0],rax
     len-=cluster_size-pos;
-  808661:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
-  808664:	2b 85 5c ff ff ff    	sub    eax,DWORD PTR [rbp-0xa4]
-  80866a:	29 85 58 ff ff ff    	sub    DWORD PTR [rbp-0xa8],eax
+  808681:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
+  808684:	2b 85 5c ff ff ff    	sub    eax,DWORD PTR [rbp-0xa4]
+  80868a:	29 85 58 ff ff ff    	sub    DWORD PTR [rbp-0xa8],eax
     while (f_cluster<FAT_EOF&&len>0)
-  808670:	eb 4c                	jmp    8086be <read_file_byname+0x331>
+  808690:	eb 4c                	jmp    8086de <read_file_byname+0x331>
     {
         f_cluster=fat[f_cluster];
-  808672:	8b 45 b4             	mov    eax,DWORD PTR [rbp-0x4c]
-  808675:	48 98                	cdqe   
-  808677:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
-  80867e:	00 
-  80867f:	98                   	cwde   
-  808680:	89 45 b4             	mov    DWORD PTR [rbp-0x4c],eax
+  808692:	8b 45 b4             	mov    eax,DWORD PTR [rbp-0x4c]
+  808695:	48 98                	cdqe   
+  808697:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
+  80869e:	00 
+  80869f:	98                   	cwde   
+  8086a0:	89 45 b4             	mov    DWORD PTR [rbp-0x4c],eax
         read_sec(dist,f_cluster+clu_sec_balance,superblock.secPerClu);
-  808683:	0f b6 05 83 1e c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21e83]        # 42a50d <superblock+0xd>
-  80868a:	0f b6 d0             	movzx  edx,al
-  80868d:	8b 0d ad 1f 00 00    	mov    ecx,DWORD PTR [rip+0x1fad]        # 80a640 <clu_sec_balance>
-  808693:	8b 45 b4             	mov    eax,DWORD PTR [rbp-0x4c]
-  808696:	01 c1                	add    ecx,eax
-  808698:	48 8b 85 60 ff ff ff 	mov    rax,QWORD PTR [rbp-0xa0]
-  80869f:	89 ce                	mov    esi,ecx
-  8086a1:	48 89 c7             	mov    rdi,rax
-  8086a4:	e8 d6 f8 ff ff       	call   807f7f <read_sec>
+  8086a3:	0f b6 05 63 1e c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21e63]        # 42a50d <superblock+0xd>
+  8086aa:	0f b6 d0             	movzx  edx,al
+  8086ad:	8b 0d 8d 1f 00 00    	mov    ecx,DWORD PTR [rip+0x1f8d]        # 80a640 <clu_sec_balance>
+  8086b3:	8b 45 b4             	mov    eax,DWORD PTR [rbp-0x4c]
+  8086b6:	01 c1                	add    ecx,eax
+  8086b8:	48 8b 85 60 ff ff ff 	mov    rax,QWORD PTR [rbp-0xa0]
+  8086bf:	89 ce                	mov    esi,ecx
+  8086c1:	48 89 c7             	mov    rdi,rax
+  8086c4:	e8 d6 f8 ff ff       	call   807f9f <read_sec>
         dist+=cluster_size;
-  8086a9:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
-  8086ac:	48 98                	cdqe   
-  8086ae:	48 01 85 60 ff ff ff 	add    QWORD PTR [rbp-0xa0],rax
+  8086c9:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
+  8086cc:	48 98                	cdqe   
+  8086ce:	48 01 85 60 ff ff ff 	add    QWORD PTR [rbp-0xa0],rax
         len-=cluster_size;
-  8086b5:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
-  8086b8:	29 85 58 ff ff ff    	sub    DWORD PTR [rbp-0xa8],eax
+  8086d5:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
+  8086d8:	29 85 58 ff ff ff    	sub    DWORD PTR [rbp-0xa8],eax
     while (f_cluster<FAT_EOF&&len>0)
-  8086be:	81 7d b4 f6 ff 00 00 	cmp    DWORD PTR [rbp-0x4c],0xfff6
-  8086c5:	7f 09                	jg     8086d0 <read_file_byname+0x343>
-  8086c7:	83 bd 58 ff ff ff 00 	cmp    DWORD PTR [rbp-0xa8],0x0
-  8086ce:	7f a2                	jg     808672 <read_file_byname+0x2e5>
+  8086de:	81 7d b4 f6 ff 00 00 	cmp    DWORD PTR [rbp-0x4c],0xfff6
+  8086e5:	7f 09                	jg     8086f0 <read_file_byname+0x343>
+  8086e7:	83 bd 58 ff ff ff 00 	cmp    DWORD PTR [rbp-0xa8],0x0
+  8086ee:	7f a2                	jg     808692 <read_file_byname+0x2e5>
     }
     return 0;
-  8086d0:	b8 00 00 00 00       	mov    eax,0x0
-  8086d5:	48 89 dc             	mov    rsp,rbx
+  8086f0:	b8 00 00 00 00       	mov    eax,0x0
+  8086f5:	48 89 dc             	mov    rsp,rbx
     
 }
-  8086d8:	48 8d 65 d8          	lea    rsp,[rbp-0x28]
-  8086dc:	5b                   	pop    rbx
-  8086dd:	41 5c                	pop    r12
-  8086df:	41 5d                	pop    r13
-  8086e1:	41 5e                	pop    r14
-  8086e3:	41 5f                	pop    r15
-  8086e5:	5d                   	pop    rbp
-  8086e6:	c3                   	ret    
+  8086f8:	48 8d 65 d8          	lea    rsp,[rbp-0x28]
+  8086fc:	5b                   	pop    rbx
+  8086fd:	41 5c                	pop    r12
+  8086ff:	41 5d                	pop    r13
+  808701:	41 5e                	pop    r14
+  808703:	41 5f                	pop    r15
+  808705:	5d                   	pop    rbp
+  808706:	c3                   	ret    
 
-00000000008086e7 <write_file_byname>:
+0000000000808707 <write_file_byname>:
 int write_file_byname(char *full_name,char *src,int pos,int len)
 {
-  8086e7:	f3 0f 1e fa          	endbr64 
-  8086eb:	55                   	push   rbp
-  8086ec:	48 89 e5             	mov    rbp,rsp
-  8086ef:	41 57                	push   r15
-  8086f1:	41 56                	push   r14
-  8086f3:	41 55                	push   r13
-  8086f5:	41 54                	push   r12
-  8086f7:	53                   	push   rbx
-  8086f8:	48 81 ec 88 00 00 00 	sub    rsp,0x88
-  8086ff:	48 89 bd 68 ff ff ff 	mov    QWORD PTR [rbp-0x98],rdi
-  808706:	48 89 b5 60 ff ff ff 	mov    QWORD PTR [rbp-0xa0],rsi
-  80870d:	89 95 5c ff ff ff    	mov    DWORD PTR [rbp-0xa4],edx
-  808713:	89 8d 58 ff ff ff    	mov    DWORD PTR [rbp-0xa8],ecx
-  808719:	48 89 e0             	mov    rax,rsp
-  80871c:	48 89 c3             	mov    rbx,rax
+  808707:	f3 0f 1e fa          	endbr64 
+  80870b:	55                   	push   rbp
+  80870c:	48 89 e5             	mov    rbp,rsp
+  80870f:	41 57                	push   r15
+  808711:	41 56                	push   r14
+  808713:	41 55                	push   r13
+  808715:	41 54                	push   r12
+  808717:	53                   	push   rbx
+  808718:	48 81 ec 88 00 00 00 	sub    rsp,0x88
+  80871f:	48 89 bd 68 ff ff ff 	mov    QWORD PTR [rbp-0x98],rdi
+  808726:	48 89 b5 60 ff ff ff 	mov    QWORD PTR [rbp-0xa0],rsi
+  80872d:	89 95 5c ff ff ff    	mov    DWORD PTR [rbp-0xa4],edx
+  808733:	89 8d 58 ff ff ff    	mov    DWORD PTR [rbp-0xa8],ecx
+  808739:	48 89 e0             	mov    rax,rsp
+  80873c:	48 89 c3             	mov    rbx,rax
     int index= find(NULL);
-  80871f:	bf 00 00 00 00       	mov    edi,0x0
-  808724:	e8 24 fb ff ff       	call   80824d <find>
-  808729:	89 45 cc             	mov    DWORD PTR [rbp-0x34],eax
+  80873f:	bf 00 00 00 00       	mov    edi,0x0
+  808744:	e8 24 fb ff ff       	call   80826d <find>
+  808749:	89 45 cc             	mov    DWORD PTR [rbp-0x34],eax
     if(index==-1||pos<0)
-  80872c:	83 7d cc ff          	cmp    DWORD PTR [rbp-0x34],0xffffffff
-  808730:	74 09                	je     80873b <write_file_byname+0x54>
-  808732:	83 bd 5c ff ff ff 00 	cmp    DWORD PTR [rbp-0xa4],0x0
-  808739:	79 0a                	jns    808745 <write_file_byname+0x5e>
+  80874c:	83 7d cc ff          	cmp    DWORD PTR [rbp-0x34],0xffffffff
+  808750:	74 09                	je     80875b <write_file_byname+0x54>
+  808752:	83 bd 5c ff ff ff 00 	cmp    DWORD PTR [rbp-0xa4],0x0
+  808759:	79 0a                	jns    808765 <write_file_byname+0x5e>
         return -1;
-  80873b:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  808740:	e9 1e 03 00 00       	jmp    808a63 <write_file_byname+0x37c>
+  80875b:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  808760:	e9 1e 03 00 00       	jmp    808a83 <write_file_byname+0x37c>
     
     //default set to 512
     int max_files=MAX_FILES_PER_DIR;
-  808745:	c7 45 b0 00 02 00 00 	mov    DWORD PTR [rbp-0x50],0x200
+  808765:	c7 45 b0 00 02 00 00 	mov    DWORD PTR [rbp-0x50],0x200
     dir_entry *dir_table=root_dir;
-  80874c:	48 c7 45 c0 40 a5 42 	mov    QWORD PTR [rbp-0x40],0x42a540
-  808753:	00 
+  80876c:	48 c7 45 c0 40 a5 42 	mov    QWORD PTR [rbp-0x40],0x42a540
+  808773:	00 
     int in_root=1;
-  808754:	c7 45 bc 01 00 00 00 	mov    DWORD PTR [rbp-0x44],0x1
+  808774:	c7 45 bc 01 00 00 00 	mov    DWORD PTR [rbp-0x44],0x1
     if(cur_dir.fistCluNum!=0)
-  80875b:	0f b7 05 f8 5d c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc25df8]        # 42e55a <cur_dir+0x1a>
-  808762:	66 85 c0             	test   ax,ax
-  808765:	74 40                	je     8087a7 <write_file_byname+0xc0>
+  80877b:	0f b7 05 d8 5d c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc25dd8]        # 42e55a <cur_dir+0x1a>
+  808782:	66 85 c0             	test   ax,ax
+  808785:	74 40                	je     8087c7 <write_file_byname+0xc0>
     {
         //regular dir
         in_root=0;
-  808767:	c7 45 bc 00 00 00 00 	mov    DWORD PTR [rbp-0x44],0x0
+  808787:	c7 45 bc 00 00 00 00 	mov    DWORD PTR [rbp-0x44],0x0
         max_files=16;
-  80876e:	c7 45 b0 10 00 00 00 	mov    DWORD PTR [rbp-0x50],0x10
+  80878e:	c7 45 b0 10 00 00 00 	mov    DWORD PTR [rbp-0x50],0x10
         read_sec(a_clu_of_dir,cur_dir.fistCluNum+clu_sec_balance,\
         superblock.secPerClu);
-  808775:	0f b6 05 91 1d c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21d91]        # 42a50d <superblock+0xd>
+  808795:	0f b6 05 71 1d c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21d71]        # 42a50d <superblock+0xd>
         read_sec(a_clu_of_dir,cur_dir.fistCluNum+clu_sec_balance,\
-  80877c:	0f b6 c0             	movzx  eax,al
-  80877f:	0f b7 15 d4 5d c2 ff 	movzx  edx,WORD PTR [rip+0xffffffffffc25dd4]        # 42e55a <cur_dir+0x1a>
-  808786:	0f b7 ca             	movzx  ecx,dx
-  808789:	8b 15 b1 1e 00 00    	mov    edx,DWORD PTR [rip+0x1eb1]        # 80a640 <clu_sec_balance>
-  80878f:	01 d1                	add    ecx,edx
-  808791:	89 c2                	mov    edx,eax
-  808793:	89 ce                	mov    esi,ecx
-  808795:	bf 60 e5 42 00       	mov    edi,0x42e560
-  80879a:	e8 e0 f7 ff ff       	call   807f7f <read_sec>
+  80879c:	0f b6 c0             	movzx  eax,al
+  80879f:	0f b7 15 b4 5d c2 ff 	movzx  edx,WORD PTR [rip+0xffffffffffc25db4]        # 42e55a <cur_dir+0x1a>
+  8087a6:	0f b7 ca             	movzx  ecx,dx
+  8087a9:	8b 15 91 1e 00 00    	mov    edx,DWORD PTR [rip+0x1e91]        # 80a640 <clu_sec_balance>
+  8087af:	01 d1                	add    ecx,edx
+  8087b1:	89 c2                	mov    edx,eax
+  8087b3:	89 ce                	mov    esi,ecx
+  8087b5:	bf 60 e5 42 00       	mov    edi,0x42e560
+  8087ba:	e8 e0 f7 ff ff       	call   807f9f <read_sec>
         dir_table=a_clu_of_dir;
-  80879f:	48 c7 45 c0 60 e5 42 	mov    QWORD PTR [rbp-0x40],0x42e560
-  8087a6:	00 
+  8087bf:	48 c7 45 c0 60 e5 42 	mov    QWORD PTR [rbp-0x40],0x42e560
+  8087c6:	00 
     }
     //current cluster you're at
     unsigned short cluster=cur_dir.fistCluNum;
-  8087a7:	0f b7 05 ac 5d c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc25dac]        # 42e55a <cur_dir+0x1a>
-  8087ae:	66 89 45 ba          	mov    WORD PTR [rbp-0x46],ax
+  8087c7:	0f b7 05 8c 5d c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc25d8c]        # 42e55a <cur_dir+0x1a>
+  8087ce:	66 89 45 ba          	mov    WORD PTR [rbp-0x46],ax
     while(!in_root&&index>=16&&cluster<FAT_EOF){
-  8087b2:	eb 41                	jmp    8087f5 <write_file_byname+0x10e>
+  8087d2:	eb 41                	jmp    808815 <write_file_byname+0x10e>
         index-=16;
-  8087b4:	83 6d cc 10          	sub    DWORD PTR [rbp-0x34],0x10
+  8087d4:	83 6d cc 10          	sub    DWORD PTR [rbp-0x34],0x10
         if(cluster<FAT_EOF)
-  8087b8:	66 83 7d ba f6       	cmp    WORD PTR [rbp-0x46],0xfff6
-  8087bd:	77 36                	ja     8087f5 <write_file_byname+0x10e>
+  8087d8:	66 83 7d ba f6       	cmp    WORD PTR [rbp-0x46],0xfff6
+  8087dd:	77 36                	ja     808815 <write_file_byname+0x10e>
         {
             cluster=fat[cluster];
-  8087bf:	0f b7 45 ba          	movzx  eax,WORD PTR [rbp-0x46]
-  8087c3:	48 98                	cdqe   
-  8087c5:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
-  8087cc:	00 
-  8087cd:	66 89 45 ba          	mov    WORD PTR [rbp-0x46],ax
+  8087df:	0f b7 45 ba          	movzx  eax,WORD PTR [rbp-0x46]
+  8087e3:	48 98                	cdqe   
+  8087e5:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
+  8087ec:	00 
+  8087ed:	66 89 45 ba          	mov    WORD PTR [rbp-0x46],ax
             //update
             //if you can reach here it means it's a regular dir
             read_sec(dir_table,cluster+clu_sec_balance,\
             superblock.secPerClu);
-  8087d1:	0f b6 05 35 1d c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21d35]        # 42a50d <superblock+0xd>
+  8087f1:	0f b6 05 15 1d c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21d15]        # 42a50d <superblock+0xd>
             read_sec(dir_table,cluster+clu_sec_balance,\
-  8087d8:	0f b6 d0             	movzx  edx,al
-  8087db:	0f b7 4d ba          	movzx  ecx,WORD PTR [rbp-0x46]
-  8087df:	8b 05 5b 1e 00 00    	mov    eax,DWORD PTR [rip+0x1e5b]        # 80a640 <clu_sec_balance>
-  8087e5:	01 c1                	add    ecx,eax
-  8087e7:	48 8b 45 c0          	mov    rax,QWORD PTR [rbp-0x40]
-  8087eb:	89 ce                	mov    esi,ecx
-  8087ed:	48 89 c7             	mov    rdi,rax
-  8087f0:	e8 8a f7 ff ff       	call   807f7f <read_sec>
+  8087f8:	0f b6 d0             	movzx  edx,al
+  8087fb:	0f b7 4d ba          	movzx  ecx,WORD PTR [rbp-0x46]
+  8087ff:	8b 05 3b 1e 00 00    	mov    eax,DWORD PTR [rip+0x1e3b]        # 80a640 <clu_sec_balance>
+  808805:	01 c1                	add    ecx,eax
+  808807:	48 8b 45 c0          	mov    rax,QWORD PTR [rbp-0x40]
+  80880b:	89 ce                	mov    esi,ecx
+  80880d:	48 89 c7             	mov    rdi,rax
+  808810:	e8 8a f7 ff ff       	call   807f9f <read_sec>
     while(!in_root&&index>=16&&cluster<FAT_EOF){
-  8087f5:	83 7d bc 00          	cmp    DWORD PTR [rbp-0x44],0x0
-  8087f9:	75 0d                	jne    808808 <write_file_byname+0x121>
-  8087fb:	83 7d cc 0f          	cmp    DWORD PTR [rbp-0x34],0xf
-  8087ff:	7e 07                	jle    808808 <write_file_byname+0x121>
-  808801:	66 83 7d ba f6       	cmp    WORD PTR [rbp-0x46],0xfff6
-  808806:	76 ac                	jbe    8087b4 <write_file_byname+0xcd>
+  808815:	83 7d bc 00          	cmp    DWORD PTR [rbp-0x44],0x0
+  808819:	75 0d                	jne    808828 <write_file_byname+0x121>
+  80881b:	83 7d cc 0f          	cmp    DWORD PTR [rbp-0x34],0xf
+  80881f:	7e 07                	jle    808828 <write_file_byname+0x121>
+  808821:	66 83 7d ba f6       	cmp    WORD PTR [rbp-0x46],0xfff6
+  808826:	76 ac                	jbe    8087d4 <write_file_byname+0xcd>
         }
     }
     //arrived
     dir_entry file=dir_table[index];
-  808808:	8b 45 cc             	mov    eax,DWORD PTR [rbp-0x34]
-  80880b:	48 98                	cdqe   
-  80880d:	48 c1 e0 05          	shl    rax,0x5
-  808811:	48 89 c2             	mov    rdx,rax
-  808814:	48 8b 45 c0          	mov    rax,QWORD PTR [rbp-0x40]
-  808818:	48 8d 0c 02          	lea    rcx,[rdx+rax*1]
-  80881c:	48 8b 01             	mov    rax,QWORD PTR [rcx]
-  80881f:	48 8b 51 08          	mov    rdx,QWORD PTR [rcx+0x8]
-  808823:	48 89 85 70 ff ff ff 	mov    QWORD PTR [rbp-0x90],rax
-  80882a:	48 89 95 78 ff ff ff 	mov    QWORD PTR [rbp-0x88],rdx
-  808831:	48 8b 41 10          	mov    rax,QWORD PTR [rcx+0x10]
-  808835:	48 8b 51 18          	mov    rdx,QWORD PTR [rcx+0x18]
-  808839:	48 89 45 80          	mov    QWORD PTR [rbp-0x80],rax
-  80883d:	48 89 55 88          	mov    QWORD PTR [rbp-0x78],rdx
+  808828:	8b 45 cc             	mov    eax,DWORD PTR [rbp-0x34]
+  80882b:	48 98                	cdqe   
+  80882d:	48 c1 e0 05          	shl    rax,0x5
+  808831:	48 89 c2             	mov    rdx,rax
+  808834:	48 8b 45 c0          	mov    rax,QWORD PTR [rbp-0x40]
+  808838:	48 8d 0c 02          	lea    rcx,[rdx+rax*1]
+  80883c:	48 8b 01             	mov    rax,QWORD PTR [rcx]
+  80883f:	48 8b 51 08          	mov    rdx,QWORD PTR [rcx+0x8]
+  808843:	48 89 85 70 ff ff ff 	mov    QWORD PTR [rbp-0x90],rax
+  80884a:	48 89 95 78 ff ff ff 	mov    QWORD PTR [rbp-0x88],rdx
+  808851:	48 8b 41 10          	mov    rax,QWORD PTR [rcx+0x10]
+  808855:	48 8b 51 18          	mov    rdx,QWORD PTR [rcx+0x18]
+  808859:	48 89 45 80          	mov    QWORD PTR [rbp-0x80],rax
+  80885d:	48 89 55 88          	mov    QWORD PTR [rbp-0x78],rdx
     int f_cluster = file.fistCluNum;
-  808841:	0f b7 45 8a          	movzx  eax,WORD PTR [rbp-0x76]
-  808845:	0f b7 c0             	movzx  eax,ax
-  808848:	89 45 b4             	mov    DWORD PTR [rbp-0x4c],eax
+  808861:	0f b7 45 8a          	movzx  eax,WORD PTR [rbp-0x76]
+  808865:	0f b7 c0             	movzx  eax,ax
+  808868:	89 45 b4             	mov    DWORD PTR [rbp-0x4c],eax
     int cluster_size=superblock.bytesPerSec*superblock.secPerClu;
-  80884b:	0f b7 05 b9 1c c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc21cb9]        # 42a50b <superblock+0xb>
-  808852:	0f b7 d0             	movzx  edx,ax
-  808855:	0f b6 05 b1 1c c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21cb1]        # 42a50d <superblock+0xd>
-  80885c:	0f b6 c0             	movzx  eax,al
-  80885f:	0f af c2             	imul   eax,edx
-  808862:	89 45 ac             	mov    DWORD PTR [rbp-0x54],eax
+  80886b:	0f b7 05 99 1c c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc21c99]        # 42a50b <superblock+0xb>
+  808872:	0f b7 d0             	movzx  edx,ax
+  808875:	0f b6 05 91 1c c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21c91]        # 42a50d <superblock+0xd>
+  80887c:	0f b6 c0             	movzx  eax,al
+  80887f:	0f af c2             	imul   eax,edx
+  808882:	89 45 ac             	mov    DWORD PTR [rbp-0x54],eax
     while(fat[f_cluster]<FAT_EOF&&pos>=cluster_size)
-  808865:	eb 25                	jmp    80888c <write_file_byname+0x1a5>
+  808885:	eb 25                	jmp    8088ac <write_file_byname+0x1a5>
     {
         pos-=cluster_size;
-  808867:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
-  80886a:	29 85 5c ff ff ff    	sub    DWORD PTR [rbp-0xa4],eax
+  808887:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
+  80888a:	29 85 5c ff ff ff    	sub    DWORD PTR [rbp-0xa4],eax
         if(pos<cluster_size)
-  808870:	8b 85 5c ff ff ff    	mov    eax,DWORD PTR [rbp-0xa4]
-  808876:	3b 45 ac             	cmp    eax,DWORD PTR [rbp-0x54]
-  808879:	7c 1e                	jl     808899 <write_file_byname+0x1b2>
+  808890:	8b 85 5c ff ff ff    	mov    eax,DWORD PTR [rbp-0xa4]
+  808896:	3b 45 ac             	cmp    eax,DWORD PTR [rbp-0x54]
+  808899:	7c 1e                	jl     8088b9 <write_file_byname+0x1b2>
             break;
         f_cluster=fat[f_cluster];
-  80887b:	8b 45 b4             	mov    eax,DWORD PTR [rbp-0x4c]
-  80887e:	48 98                	cdqe   
-  808880:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
-  808887:	00 
-  808888:	98                   	cwde   
-  808889:	89 45 b4             	mov    DWORD PTR [rbp-0x4c],eax
+  80889b:	8b 45 b4             	mov    eax,DWORD PTR [rbp-0x4c]
+  80889e:	48 98                	cdqe   
+  8088a0:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
+  8088a7:	00 
+  8088a8:	98                   	cwde   
+  8088a9:	89 45 b4             	mov    DWORD PTR [rbp-0x4c],eax
     while(fat[f_cluster]<FAT_EOF&&pos>=cluster_size)
-  80888c:	8b 85 5c ff ff ff    	mov    eax,DWORD PTR [rbp-0xa4]
-  808892:	3b 45 ac             	cmp    eax,DWORD PTR [rbp-0x54]
-  808895:	7d d0                	jge    808867 <write_file_byname+0x180>
-  808897:	eb 01                	jmp    80889a <write_file_byname+0x1b3>
+  8088ac:	8b 85 5c ff ff ff    	mov    eax,DWORD PTR [rbp-0xa4]
+  8088b2:	3b 45 ac             	cmp    eax,DWORD PTR [rbp-0x54]
+  8088b5:	7d d0                	jge    808887 <write_file_byname+0x180>
+  8088b7:	eb 01                	jmp    8088ba <write_file_byname+0x1b3>
             break;
-  808899:	90                   	nop
+  8088b9:	90                   	nop
     }
     if(f_cluster>=FAT_EOF&&pos>=cluster_size)
-  80889a:	81 7d b4 f6 ff 00 00 	cmp    DWORD PTR [rbp-0x4c],0xfff6
-  8088a1:	7e 15                	jle    8088b8 <write_file_byname+0x1d1>
-  8088a3:	8b 85 5c ff ff ff    	mov    eax,DWORD PTR [rbp-0xa4]
-  8088a9:	3b 45 ac             	cmp    eax,DWORD PTR [rbp-0x54]
-  8088ac:	7c 0a                	jl     8088b8 <write_file_byname+0x1d1>
+  8088ba:	81 7d b4 f6 ff 00 00 	cmp    DWORD PTR [rbp-0x4c],0xfff6
+  8088c1:	7e 15                	jle    8088d8 <write_file_byname+0x1d1>
+  8088c3:	8b 85 5c ff ff ff    	mov    eax,DWORD PTR [rbp-0xa4]
+  8088c9:	3b 45 ac             	cmp    eax,DWORD PTR [rbp-0x54]
+  8088cc:	7c 0a                	jl     8088d8 <write_file_byname+0x1d1>
         return -1;//pos out of range
-  8088ae:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  8088b3:	e9 ab 01 00 00       	jmp    808a63 <write_file_byname+0x37c>
+  8088ce:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  8088d3:	e9 ab 01 00 00       	jmp    808a83 <write_file_byname+0x37c>
     //
     char temp[cluster_size];
-  8088b8:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
-  8088bb:	48 63 d0             	movsxd rdx,eax
-  8088be:	48 83 ea 01          	sub    rdx,0x1
-  8088c2:	48 89 55 a0          	mov    QWORD PTR [rbp-0x60],rdx
-  8088c6:	48 63 d0             	movsxd rdx,eax
-  8088c9:	49 89 d6             	mov    r14,rdx
-  8088cc:	41 bf 00 00 00 00    	mov    r15d,0x0
-  8088d2:	48 63 d0             	movsxd rdx,eax
-  8088d5:	49 89 d4             	mov    r12,rdx
-  8088d8:	41 bd 00 00 00 00    	mov    r13d,0x0
-  8088de:	48 98                	cdqe   
-  8088e0:	ba 10 00 00 00       	mov    edx,0x10
-  8088e5:	48 83 ea 01          	sub    rdx,0x1
-  8088e9:	48 01 d0             	add    rax,rdx
-  8088ec:	be 10 00 00 00       	mov    esi,0x10
-  8088f1:	ba 00 00 00 00       	mov    edx,0x0
-  8088f6:	48 f7 f6             	div    rsi
-  8088f9:	48 6b c0 10          	imul   rax,rax,0x10
-  8088fd:	48 89 c1             	mov    rcx,rax
-  808900:	48 81 e1 00 f0 ff ff 	and    rcx,0xfffffffffffff000
-  808907:	48 89 e2             	mov    rdx,rsp
-  80890a:	48 29 ca             	sub    rdx,rcx
-  80890d:	48 39 d4             	cmp    rsp,rdx
-  808910:	74 12                	je     808924 <write_file_byname+0x23d>
-  808912:	48 81 ec 00 10 00 00 	sub    rsp,0x1000
-  808919:	48 83 8c 24 f8 0f 00 	or     QWORD PTR [rsp+0xff8],0x0
-  808920:	00 00 
-  808922:	eb e9                	jmp    80890d <write_file_byname+0x226>
-  808924:	48 89 c2             	mov    rdx,rax
-  808927:	81 e2 ff 0f 00 00    	and    edx,0xfff
-  80892d:	48 29 d4             	sub    rsp,rdx
-  808930:	48 89 c2             	mov    rdx,rax
-  808933:	81 e2 ff 0f 00 00    	and    edx,0xfff
-  808939:	48 85 d2             	test   rdx,rdx
-  80893c:	74 10                	je     80894e <write_file_byname+0x267>
-  80893e:	25 ff 0f 00 00       	and    eax,0xfff
-  808943:	48 83 e8 08          	sub    rax,0x8
-  808947:	48 01 e0             	add    rax,rsp
-  80894a:	48 83 08 00          	or     QWORD PTR [rax],0x0
-  80894e:	48 89 e0             	mov    rax,rsp
-  808951:	48 83 c0 00          	add    rax,0x0
-  808955:	48 89 45 98          	mov    QWORD PTR [rbp-0x68],rax
+  8088d8:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
+  8088db:	48 63 d0             	movsxd rdx,eax
+  8088de:	48 83 ea 01          	sub    rdx,0x1
+  8088e2:	48 89 55 a0          	mov    QWORD PTR [rbp-0x60],rdx
+  8088e6:	48 63 d0             	movsxd rdx,eax
+  8088e9:	49 89 d6             	mov    r14,rdx
+  8088ec:	41 bf 00 00 00 00    	mov    r15d,0x0
+  8088f2:	48 63 d0             	movsxd rdx,eax
+  8088f5:	49 89 d4             	mov    r12,rdx
+  8088f8:	41 bd 00 00 00 00    	mov    r13d,0x0
+  8088fe:	48 98                	cdqe   
+  808900:	ba 10 00 00 00       	mov    edx,0x10
+  808905:	48 83 ea 01          	sub    rdx,0x1
+  808909:	48 01 d0             	add    rax,rdx
+  80890c:	be 10 00 00 00       	mov    esi,0x10
+  808911:	ba 00 00 00 00       	mov    edx,0x0
+  808916:	48 f7 f6             	div    rsi
+  808919:	48 6b c0 10          	imul   rax,rax,0x10
+  80891d:	48 89 c1             	mov    rcx,rax
+  808920:	48 81 e1 00 f0 ff ff 	and    rcx,0xfffffffffffff000
+  808927:	48 89 e2             	mov    rdx,rsp
+  80892a:	48 29 ca             	sub    rdx,rcx
+  80892d:	48 39 d4             	cmp    rsp,rdx
+  808930:	74 12                	je     808944 <write_file_byname+0x23d>
+  808932:	48 81 ec 00 10 00 00 	sub    rsp,0x1000
+  808939:	48 83 8c 24 f8 0f 00 	or     QWORD PTR [rsp+0xff8],0x0
+  808940:	00 00 
+  808942:	eb e9                	jmp    80892d <write_file_byname+0x226>
+  808944:	48 89 c2             	mov    rdx,rax
+  808947:	81 e2 ff 0f 00 00    	and    edx,0xfff
+  80894d:	48 29 d4             	sub    rsp,rdx
+  808950:	48 89 c2             	mov    rdx,rax
+  808953:	81 e2 ff 0f 00 00    	and    edx,0xfff
+  808959:	48 85 d2             	test   rdx,rdx
+  80895c:	74 10                	je     80896e <write_file_byname+0x267>
+  80895e:	25 ff 0f 00 00       	and    eax,0xfff
+  808963:	48 83 e8 08          	sub    rax,0x8
+  808967:	48 01 e0             	add    rax,rsp
+  80896a:	48 83 08 00          	or     QWORD PTR [rax],0x0
+  80896e:	48 89 e0             	mov    rax,rsp
+  808971:	48 83 c0 00          	add    rax,0x0
+  808975:	48 89 45 98          	mov    QWORD PTR [rbp-0x68],rax
     //the first time of writing might not be aligned
     if(pos>0)
-  808959:	83 bd 5c ff ff ff 00 	cmp    DWORD PTR [rbp-0xa4],0x0
-  808960:	0f 8e a2 00 00 00    	jle    808a08 <write_file_byname+0x321>
+  808979:	83 bd 5c ff ff ff 00 	cmp    DWORD PTR [rbp-0xa4],0x0
+  808980:	0f 8e a2 00 00 00    	jle    808a28 <write_file_byname+0x321>
     {
         memcpy(temp+pos,src,cluster_size-pos);
-  808966:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
-  808969:	2b 85 5c ff ff ff    	sub    eax,DWORD PTR [rbp-0xa4]
-  80896f:	89 c2                	mov    edx,eax
-  808971:	8b 85 5c ff ff ff    	mov    eax,DWORD PTR [rbp-0xa4]
-  808977:	48 63 c8             	movsxd rcx,eax
-  80897a:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
-  80897e:	48 01 c1             	add    rcx,rax
-  808981:	48 8b 85 60 ff ff ff 	mov    rax,QWORD PTR [rbp-0xa0]
-  808988:	48 89 c6             	mov    rsi,rax
-  80898b:	48 89 cf             	mov    rdi,rcx
-  80898e:	e8 d3 10 00 00       	call   809a66 <memcpy>
+  808986:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
+  808989:	2b 85 5c ff ff ff    	sub    eax,DWORD PTR [rbp-0xa4]
+  80898f:	89 c2                	mov    edx,eax
+  808991:	8b 85 5c ff ff ff    	mov    eax,DWORD PTR [rbp-0xa4]
+  808997:	48 63 c8             	movsxd rcx,eax
+  80899a:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
+  80899e:	48 01 c1             	add    rcx,rax
+  8089a1:	48 8b 85 60 ff ff ff 	mov    rax,QWORD PTR [rbp-0xa0]
+  8089a8:	48 89 c6             	mov    rsi,rax
+  8089ab:	48 89 cf             	mov    rdi,rcx
+  8089ae:	e8 d3 10 00 00       	call   809a86 <memcpy>
         write_sec(temp,f_cluster,cluster_size-pos);
-  808993:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
-  808996:	2b 85 5c ff ff ff    	sub    eax,DWORD PTR [rbp-0xa4]
-  80899c:	89 c2                	mov    edx,eax
-  80899e:	8b 4d b4             	mov    ecx,DWORD PTR [rbp-0x4c]
-  8089a1:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
-  8089a5:	89 ce                	mov    esi,ecx
-  8089a7:	48 89 c7             	mov    rdi,rax
-  8089aa:	e8 dc ee ff ff       	call   80788b <write_sec>
+  8089b3:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
+  8089b6:	2b 85 5c ff ff ff    	sub    eax,DWORD PTR [rbp-0xa4]
+  8089bc:	89 c2                	mov    edx,eax
+  8089be:	8b 4d b4             	mov    ecx,DWORD PTR [rbp-0x4c]
+  8089c1:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
+  8089c5:	89 ce                	mov    esi,ecx
+  8089c7:	48 89 c7             	mov    rdi,rax
+  8089ca:	e8 dc ee ff ff       	call   8078ab <write_sec>
         if(fat[f_cluster]>=FAT_EOF&&len>0)
         {
             //extend
             extend_cluster(f_cluster);
         }
         f_cluster=fat[f_cluster];
-  8089af:	8b 45 b4             	mov    eax,DWORD PTR [rbp-0x4c]
-  8089b2:	48 98                	cdqe   
-  8089b4:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
-  8089bb:	00 
-  8089bc:	98                   	cwde   
-  8089bd:	89 45 b4             	mov    DWORD PTR [rbp-0x4c],eax
+  8089cf:	8b 45 b4             	mov    eax,DWORD PTR [rbp-0x4c]
+  8089d2:	48 98                	cdqe   
+  8089d4:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
+  8089db:	00 
+  8089dc:	98                   	cwde   
+  8089dd:	89 45 b4             	mov    DWORD PTR [rbp-0x4c],eax
     }
     while (f_cluster<FAT_EOF&&len>=cluster_size)
-  8089c0:	eb 46                	jmp    808a08 <write_file_byname+0x321>
+  8089e0:	eb 46                	jmp    808a28 <write_file_byname+0x321>
     {
         write_sec(src,f_cluster+clu_sec_balance,cluster_size);
-  8089c2:	8b 15 78 1c 00 00    	mov    edx,DWORD PTR [rip+0x1c78]        # 80a640 <clu_sec_balance>
-  8089c8:	8b 45 b4             	mov    eax,DWORD PTR [rbp-0x4c]
-  8089cb:	8d 0c 02             	lea    ecx,[rdx+rax*1]
-  8089ce:	8b 55 ac             	mov    edx,DWORD PTR [rbp-0x54]
-  8089d1:	48 8b 85 60 ff ff ff 	mov    rax,QWORD PTR [rbp-0xa0]
-  8089d8:	89 ce                	mov    esi,ecx
-  8089da:	48 89 c7             	mov    rdi,rax
-  8089dd:	e8 a9 ee ff ff       	call   80788b <write_sec>
+  8089e2:	8b 15 58 1c 00 00    	mov    edx,DWORD PTR [rip+0x1c58]        # 80a640 <clu_sec_balance>
+  8089e8:	8b 45 b4             	mov    eax,DWORD PTR [rbp-0x4c]
+  8089eb:	8d 0c 02             	lea    ecx,[rdx+rax*1]
+  8089ee:	8b 55 ac             	mov    edx,DWORD PTR [rbp-0x54]
+  8089f1:	48 8b 85 60 ff ff ff 	mov    rax,QWORD PTR [rbp-0xa0]
+  8089f8:	89 ce                	mov    esi,ecx
+  8089fa:	48 89 c7             	mov    rdi,rax
+  8089fd:	e8 a9 ee ff ff       	call   8078ab <write_sec>
         src+=cluster_size;
-  8089e2:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
-  8089e5:	48 98                	cdqe   
-  8089e7:	48 01 85 60 ff ff ff 	add    QWORD PTR [rbp-0xa0],rax
+  808a02:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
+  808a05:	48 98                	cdqe   
+  808a07:	48 01 85 60 ff ff ff 	add    QWORD PTR [rbp-0xa0],rax
         len-=cluster_size;
-  8089ee:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
-  8089f1:	29 85 58 ff ff ff    	sub    DWORD PTR [rbp-0xa8],eax
+  808a0e:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
+  808a11:	29 85 58 ff ff ff    	sub    DWORD PTR [rbp-0xa8],eax
         if(fat[f_cluster]>=FAT_EOF&&len>0)
         {
             //extend
             extend_cluster(f_cluster);
         }
         f_cluster=fat[f_cluster];
-  8089f7:	8b 45 b4             	mov    eax,DWORD PTR [rbp-0x4c]
-  8089fa:	48 98                	cdqe   
-  8089fc:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
-  808a03:	00 
-  808a04:	98                   	cwde   
-  808a05:	89 45 b4             	mov    DWORD PTR [rbp-0x4c],eax
+  808a17:	8b 45 b4             	mov    eax,DWORD PTR [rbp-0x4c]
+  808a1a:	48 98                	cdqe   
+  808a1c:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
+  808a23:	00 
+  808a24:	98                   	cwde   
+  808a25:	89 45 b4             	mov    DWORD PTR [rbp-0x4c],eax
     while (f_cluster<FAT_EOF&&len>=cluster_size)
-  808a08:	81 7d b4 f6 ff 00 00 	cmp    DWORD PTR [rbp-0x4c],0xfff6
-  808a0f:	7f 0b                	jg     808a1c <write_file_byname+0x335>
-  808a11:	8b 85 58 ff ff ff    	mov    eax,DWORD PTR [rbp-0xa8]
-  808a17:	3b 45 ac             	cmp    eax,DWORD PTR [rbp-0x54]
-  808a1a:	7d a6                	jge    8089c2 <write_file_byname+0x2db>
+  808a28:	81 7d b4 f6 ff 00 00 	cmp    DWORD PTR [rbp-0x4c],0xfff6
+  808a2f:	7f 0b                	jg     808a3c <write_file_byname+0x335>
+  808a31:	8b 85 58 ff ff ff    	mov    eax,DWORD PTR [rbp-0xa8]
+  808a37:	3b 45 ac             	cmp    eax,DWORD PTR [rbp-0x54]
+  808a3a:	7d a6                	jge    8089e2 <write_file_byname+0x2db>
     }
     if(len>0)
-  808a1c:	83 bd 58 ff ff ff 00 	cmp    DWORD PTR [rbp-0xa8],0x0
-  808a23:	7e 39                	jle    808a5e <write_file_byname+0x377>
+  808a3c:	83 bd 58 ff ff ff 00 	cmp    DWORD PTR [rbp-0xa8],0x0
+  808a43:	7e 39                	jle    808a7e <write_file_byname+0x377>
     {
         //there might be some leftover less than a cluster
         memcpy(temp,src,len);
-  808a25:	8b 95 58 ff ff ff    	mov    edx,DWORD PTR [rbp-0xa8]
-  808a2b:	48 8b 8d 60 ff ff ff 	mov    rcx,QWORD PTR [rbp-0xa0]
-  808a32:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
-  808a36:	48 89 ce             	mov    rsi,rcx
-  808a39:	48 89 c7             	mov    rdi,rax
-  808a3c:	e8 25 10 00 00       	call   809a66 <memcpy>
+  808a45:	8b 95 58 ff ff ff    	mov    edx,DWORD PTR [rbp-0xa8]
+  808a4b:	48 8b 8d 60 ff ff ff 	mov    rcx,QWORD PTR [rbp-0xa0]
+  808a52:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
+  808a56:	48 89 ce             	mov    rsi,rcx
+  808a59:	48 89 c7             	mov    rdi,rax
+  808a5c:	e8 25 10 00 00       	call   809a86 <memcpy>
         write_sec(temp,f_cluster+clu_sec_balance,cluster_size);
-  808a41:	8b 15 f9 1b 00 00    	mov    edx,DWORD PTR [rip+0x1bf9]        # 80a640 <clu_sec_balance>
-  808a47:	8b 45 b4             	mov    eax,DWORD PTR [rbp-0x4c]
-  808a4a:	8d 0c 02             	lea    ecx,[rdx+rax*1]
-  808a4d:	8b 55 ac             	mov    edx,DWORD PTR [rbp-0x54]
-  808a50:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
-  808a54:	89 ce                	mov    esi,ecx
-  808a56:	48 89 c7             	mov    rdi,rax
-  808a59:	e8 2d ee ff ff       	call   80788b <write_sec>
+  808a61:	8b 15 d9 1b 00 00    	mov    edx,DWORD PTR [rip+0x1bd9]        # 80a640 <clu_sec_balance>
+  808a67:	8b 45 b4             	mov    eax,DWORD PTR [rbp-0x4c]
+  808a6a:	8d 0c 02             	lea    ecx,[rdx+rax*1]
+  808a6d:	8b 55 ac             	mov    edx,DWORD PTR [rbp-0x54]
+  808a70:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
+  808a74:	89 ce                	mov    esi,ecx
+  808a76:	48 89 c7             	mov    rdi,rax
+  808a79:	e8 2d ee ff ff       	call   8078ab <write_sec>
     }
     return 0;
-  808a5e:	b8 00 00 00 00       	mov    eax,0x0
-  808a63:	48 89 dc             	mov    rsp,rbx
+  808a7e:	b8 00 00 00 00       	mov    eax,0x0
+  808a83:	48 89 dc             	mov    rsp,rbx
 
 }
-  808a66:	48 8d 65 d8          	lea    rsp,[rbp-0x28]
-  808a6a:	5b                   	pop    rbx
-  808a6b:	41 5c                	pop    r12
-  808a6d:	41 5d                	pop    r13
-  808a6f:	41 5e                	pop    r14
-  808a71:	41 5f                	pop    r15
-  808a73:	5d                   	pop    rbp
-  808a74:	c3                   	ret    
+  808a86:	48 8d 65 d8          	lea    rsp,[rbp-0x28]
+  808a8a:	5b                   	pop    rbx
+  808a8b:	41 5c                	pop    r12
+  808a8d:	41 5d                	pop    r13
+  808a8f:	41 5e                	pop    r14
+  808a91:	41 5f                	pop    r15
+  808a93:	5d                   	pop    rbp
+  808a94:	c3                   	ret    
 
-0000000000808a75 <file_exist>:
+0000000000808a95 <file_exist>:
 
 
 int file_exist(dir_entry entry)
 {
-  808a75:	f3 0f 1e fa          	endbr64 
-  808a79:	55                   	push   rbp
-  808a7a:	48 89 e5             	mov    rbp,rsp
+  808a95:	f3 0f 1e fa          	endbr64 
+  808a99:	55                   	push   rbp
+  808a9a:	48 89 e5             	mov    rbp,rsp
     if((unsigned char)entry.name[0]==0xe5u||\
-  808a7d:	0f b6 45 10          	movzx  eax,BYTE PTR [rbp+0x10]
-  808a81:	3c e5                	cmp    al,0xe5
-  808a83:	74 08                	je     808a8d <file_exist+0x18>
+  808a9d:	0f b6 45 10          	movzx  eax,BYTE PTR [rbp+0x10]
+  808aa1:	3c e5                	cmp    al,0xe5
+  808aa3:	74 08                	je     808aad <file_exist+0x18>
     (unsigned char)entry.name[0]==0u)
-  808a85:	0f b6 45 10          	movzx  eax,BYTE PTR [rbp+0x10]
+  808aa5:	0f b6 45 10          	movzx  eax,BYTE PTR [rbp+0x10]
     if((unsigned char)entry.name[0]==0xe5u||\
-  808a89:	84 c0                	test   al,al
-  808a8b:	75 07                	jne    808a94 <file_exist+0x1f>
+  808aa9:	84 c0                	test   al,al
+  808aab:	75 07                	jne    808ab4 <file_exist+0x1f>
     {
         //printf("file not exist\n");
         return 0;
-  808a8d:	b8 00 00 00 00       	mov    eax,0x0
-  808a92:	eb 05                	jmp    808a99 <file_exist+0x24>
+  808aad:	b8 00 00 00 00       	mov    eax,0x0
+  808ab2:	eb 05                	jmp    808ab9 <file_exist+0x24>
 
     }
     return 1;
-  808a94:	b8 01 00 00 00       	mov    eax,0x1
+  808ab4:	b8 01 00 00 00       	mov    eax,0x1
 }
-  808a99:	5d                   	pop    rbp
-  808a9a:	c3                   	ret    
+  808ab9:	5d                   	pop    rbp
+  808aba:	c3                   	ret    
 
-0000000000808a9b <get_entry>:
+0000000000808abb <get_entry>:
 int get_entry(driver_args* args)
 {
-  808a9b:	f3 0f 1e fa          	endbr64 
-  808a9f:	55                   	push   rbp
-  808aa0:	48 89 e5             	mov    rbp,rsp
-  808aa3:	53                   	push   rbx
-  808aa4:	48 81 ec e8 00 00 00 	sub    rsp,0xe8
-  808aab:	48 89 bd 18 ff ff ff 	mov    QWORD PTR [rbp-0xe8],rdi
+  808abb:	f3 0f 1e fa          	endbr64 
+  808abf:	55                   	push   rbp
+  808ac0:	48 89 e5             	mov    rbp,rsp
+  808ac3:	53                   	push   rbx
+  808ac4:	48 81 ec e8 00 00 00 	sub    rsp,0xe8
+  808acb:	48 89 bd 18 ff ff ff 	mov    QWORD PTR [rbp-0xe8],rdi
     char *name=args->path;
-  808ab2:	48 8b 85 18 ff ff ff 	mov    rax,QWORD PTR [rbp-0xe8]
-  808ab9:	48 8b 40 20          	mov    rax,QWORD PTR [rax+0x20]
-  808abd:	48 89 45 e8          	mov    QWORD PTR [rbp-0x18],rax
+  808ad2:	48 8b 85 18 ff ff ff 	mov    rax,QWORD PTR [rbp-0xe8]
+  808ad9:	48 8b 40 20          	mov    rax,QWORD PTR [rax+0x20]
+  808add:	48 89 45 e8          	mov    QWORD PTR [rbp-0x18],rax
     dir_entry dir;
     dir.fistCluNum=((vfs_dir_entry*)args->cwd)->id;
-  808ac1:	48 8b 85 18 ff ff ff 	mov    rax,QWORD PTR [rbp-0xe8]
-  808ac8:	48 8b 80 98 00 00 00 	mov    rax,QWORD PTR [rax+0x98]
-  808acf:	8b 40 14             	mov    eax,DWORD PTR [rax+0x14]
-  808ad2:	66 89 45 ca          	mov    WORD PTR [rbp-0x36],ax
+  808ae1:	48 8b 85 18 ff ff ff 	mov    rax,QWORD PTR [rbp-0xe8]
+  808ae8:	48 8b 80 98 00 00 00 	mov    rax,QWORD PTR [rax+0x98]
+  808aef:	8b 40 14             	mov    eax,DWORD PTR [rax+0x14]
+  808af2:	66 89 45 ca          	mov    WORD PTR [rbp-0x36],ax
     dir_entry entry;
     vfs_dir_entry ret;
     entry.name[0]=0xe5;
-  808ad6:	c6 45 90 e5          	mov    BYTE PTR [rbp-0x70],0xe5
+  808af6:	c6 45 90 e5          	mov    BYTE PTR [rbp-0x70],0xe5
 
     char *p=name;
-  808ada:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  808ade:	48 89 45 e0          	mov    QWORD PTR [rbp-0x20],rax
+  808afa:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  808afe:	48 89 45 e0          	mov    QWORD PTR [rbp-0x20],rax
     char nametmp[12];
     int index=-1;
-  808ae2:	c7 45 dc ff ff ff ff 	mov    DWORD PTR [rbp-0x24],0xffffffff
+  808b02:	c7 45 dc ff ff ff ff 	mov    DWORD PTR [rbp-0x24],0xffffffff
     while(*name!='\0')
-  808ae9:	e9 2c 01 00 00       	jmp    808c1a <get_entry+0x17f>
+  808b09:	e9 2c 01 00 00       	jmp    808c3a <get_entry+0x17f>
     {
         if(*name=='/')
-  808aee:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  808af2:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  808af5:	3c 2f                	cmp    al,0x2f
-  808af7:	0f 85 18 01 00 00    	jne    808c15 <get_entry+0x17a>
+  808b0e:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  808b12:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  808b15:	3c 2f                	cmp    al,0x2f
+  808b17:	0f 85 18 01 00 00    	jne    808c35 <get_entry+0x17a>
         {
             if(name-p>11)return -1;
-  808afd:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  808b01:	48 2b 45 e0          	sub    rax,QWORD PTR [rbp-0x20]
-  808b05:	48 83 f8 0b          	cmp    rax,0xb
-  808b09:	7e 0a                	jle    808b15 <get_entry+0x7a>
-  808b0b:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  808b10:	e9 50 02 00 00       	jmp    808d65 <get_entry+0x2ca>
+  808b1d:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  808b21:	48 2b 45 e0          	sub    rax,QWORD PTR [rbp-0x20]
+  808b25:	48 83 f8 0b          	cmp    rax,0xb
+  808b29:	7e 0a                	jle    808b35 <get_entry+0x7a>
+  808b2b:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  808b30:	e9 50 02 00 00       	jmp    808d85 <get_entry+0x2ca>
             memcpy(nametmp,p,name-p);
-  808b15:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  808b19:	48 2b 45 e0          	sub    rax,QWORD PTR [rbp-0x20]
-  808b1d:	89 c2                	mov    edx,eax
-  808b1f:	48 8b 4d e0          	mov    rcx,QWORD PTR [rbp-0x20]
-  808b23:	48 8d 85 24 ff ff ff 	lea    rax,[rbp-0xdc]
-  808b2a:	48 89 ce             	mov    rsi,rcx
-  808b2d:	48 89 c7             	mov    rdi,rax
-  808b30:	e8 31 0f 00 00       	call   809a66 <memcpy>
+  808b35:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  808b39:	48 2b 45 e0          	sub    rax,QWORD PTR [rbp-0x20]
+  808b3d:	89 c2                	mov    edx,eax
+  808b3f:	48 8b 4d e0          	mov    rcx,QWORD PTR [rbp-0x20]
+  808b43:	48 8d 85 24 ff ff ff 	lea    rax,[rbp-0xdc]
+  808b4a:	48 89 ce             	mov    rsi,rcx
+  808b4d:	48 89 c7             	mov    rdi,rax
+  808b50:	e8 31 0f 00 00       	call   809a86 <memcpy>
             cur_dir=dir;
-  808b35:	48 8b 45 b0          	mov    rax,QWORD PTR [rbp-0x50]
-  808b39:	48 8b 55 b8          	mov    rdx,QWORD PTR [rbp-0x48]
-  808b3d:	48 89 05 fc 59 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc259fc],rax        # 42e540 <cur_dir>
-  808b44:	48 89 15 fd 59 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc259fd],rdx        # 42e548 <cur_dir+0x8>
-  808b4b:	48 8b 45 c0          	mov    rax,QWORD PTR [rbp-0x40]
-  808b4f:	48 8b 55 c8          	mov    rdx,QWORD PTR [rbp-0x38]
-  808b53:	48 89 05 f6 59 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc259f6],rax        # 42e550 <cur_dir+0x10>
-  808b5a:	48 89 15 f7 59 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc259f7],rdx        # 42e558 <cur_dir+0x18>
+  808b55:	48 8b 45 b0          	mov    rax,QWORD PTR [rbp-0x50]
+  808b59:	48 8b 55 b8          	mov    rdx,QWORD PTR [rbp-0x48]
+  808b5d:	48 89 05 dc 59 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc259dc],rax        # 42e540 <cur_dir>
+  808b64:	48 89 15 dd 59 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc259dd],rdx        # 42e548 <cur_dir+0x8>
+  808b6b:	48 8b 45 c0          	mov    rax,QWORD PTR [rbp-0x40]
+  808b6f:	48 8b 55 c8          	mov    rdx,QWORD PTR [rbp-0x38]
+  808b73:	48 89 05 d6 59 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc259d6],rax        # 42e550 <cur_dir+0x10>
+  808b7a:	48 89 15 d7 59 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc259d7],rdx        # 42e558 <cur_dir+0x18>
             format_name(nametmp);
-  808b61:	48 8d 85 24 ff ff ff 	lea    rax,[rbp-0xdc]
-  808b68:	48 89 c7             	mov    rdi,rax
-  808b6b:	e8 c3 eb ff ff       	call   807733 <format_name>
+  808b81:	48 8d 85 24 ff ff ff 	lea    rax,[rbp-0xdc]
+  808b88:	48 89 c7             	mov    rdi,rax
+  808b8b:	e8 c3 eb ff ff       	call   807753 <format_name>
             index= find(nametmp);
-  808b70:	48 8d 85 24 ff ff ff 	lea    rax,[rbp-0xdc]
-  808b77:	48 89 c7             	mov    rdi,rax
-  808b7a:	e8 ce f6 ff ff       	call   80824d <find>
-  808b7f:	89 45 dc             	mov    DWORD PTR [rbp-0x24],eax
+  808b90:	48 8d 85 24 ff ff ff 	lea    rax,[rbp-0xdc]
+  808b97:	48 89 c7             	mov    rdi,rax
+  808b9a:	e8 ce f6 ff ff       	call   80826d <find>
+  808b9f:	89 45 dc             	mov    DWORD PTR [rbp-0x24],eax
             if(index==-1)return -1;
-  808b82:	83 7d dc ff          	cmp    DWORD PTR [rbp-0x24],0xffffffff
-  808b86:	75 0a                	jne    808b92 <get_entry+0xf7>
-  808b88:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  808b8d:	e9 d3 01 00 00       	jmp    808d65 <get_entry+0x2ca>
+  808ba2:	83 7d dc ff          	cmp    DWORD PTR [rbp-0x24],0xffffffff
+  808ba6:	75 0a                	jne    808bb2 <get_entry+0xf7>
+  808ba8:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  808bad:	e9 d3 01 00 00       	jmp    808d85 <get_entry+0x2ca>
             if(cur_dir.fistCluNum==0)//在根目录
-  808b92:	0f b7 05 c1 59 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc259c1]        # 42e55a <cur_dir+0x1a>
-  808b99:	66 85 c0             	test   ax,ax
-  808b9c:	75 31                	jne    808bcf <get_entry+0x134>
+  808bb2:	0f b7 05 a1 59 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc259a1]        # 42e55a <cur_dir+0x1a>
+  808bb9:	66 85 c0             	test   ax,ax
+  808bbc:	75 31                	jne    808bef <get_entry+0x134>
                 dir=root_dir[index];
-  808b9e:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
-  808ba1:	48 98                	cdqe   
-  808ba3:	48 c1 e0 05          	shl    rax,0x5
-  808ba7:	48 8d 88 40 a5 42 00 	lea    rcx,[rax+0x42a540]
-  808bae:	48 8b 01             	mov    rax,QWORD PTR [rcx]
-  808bb1:	48 8b 51 08          	mov    rdx,QWORD PTR [rcx+0x8]
-  808bb5:	48 89 45 b0          	mov    QWORD PTR [rbp-0x50],rax
-  808bb9:	48 89 55 b8          	mov    QWORD PTR [rbp-0x48],rdx
-  808bbd:	48 8b 41 10          	mov    rax,QWORD PTR [rcx+0x10]
-  808bc1:	48 8b 51 18          	mov    rdx,QWORD PTR [rcx+0x18]
-  808bc5:	48 89 45 c0          	mov    QWORD PTR [rbp-0x40],rax
-  808bc9:	48 89 55 c8          	mov    QWORD PTR [rbp-0x38],rdx
-  808bcd:	eb 3a                	jmp    808c09 <get_entry+0x16e>
+  808bbe:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
+  808bc1:	48 98                	cdqe   
+  808bc3:	48 c1 e0 05          	shl    rax,0x5
+  808bc7:	48 8d 88 40 a5 42 00 	lea    rcx,[rax+0x42a540]
+  808bce:	48 8b 01             	mov    rax,QWORD PTR [rcx]
+  808bd1:	48 8b 51 08          	mov    rdx,QWORD PTR [rcx+0x8]
+  808bd5:	48 89 45 b0          	mov    QWORD PTR [rbp-0x50],rax
+  808bd9:	48 89 55 b8          	mov    QWORD PTR [rbp-0x48],rdx
+  808bdd:	48 8b 41 10          	mov    rax,QWORD PTR [rcx+0x10]
+  808be1:	48 8b 51 18          	mov    rdx,QWORD PTR [rcx+0x18]
+  808be5:	48 89 45 c0          	mov    QWORD PTR [rbp-0x40],rax
+  808be9:	48 89 55 c8          	mov    QWORD PTR [rbp-0x38],rdx
+  808bed:	eb 3a                	jmp    808c29 <get_entry+0x16e>
             else//在子目录
                 dir=a_clu_of_dir[index%16];
-  808bcf:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
-  808bd2:	99                   	cdq    
-  808bd3:	c1 ea 1c             	shr    edx,0x1c
-  808bd6:	01 d0                	add    eax,edx
-  808bd8:	83 e0 0f             	and    eax,0xf
-  808bdb:	29 d0                	sub    eax,edx
-  808bdd:	48 98                	cdqe   
-  808bdf:	48 c1 e0 05          	shl    rax,0x5
-  808be3:	48 8d 88 60 e5 42 00 	lea    rcx,[rax+0x42e560]
-  808bea:	48 8b 01             	mov    rax,QWORD PTR [rcx]
-  808bed:	48 8b 51 08          	mov    rdx,QWORD PTR [rcx+0x8]
-  808bf1:	48 89 45 b0          	mov    QWORD PTR [rbp-0x50],rax
-  808bf5:	48 89 55 b8          	mov    QWORD PTR [rbp-0x48],rdx
-  808bf9:	48 8b 41 10          	mov    rax,QWORD PTR [rcx+0x10]
-  808bfd:	48 8b 51 18          	mov    rdx,QWORD PTR [rcx+0x18]
-  808c01:	48 89 45 c0          	mov    QWORD PTR [rbp-0x40],rax
-  808c05:	48 89 55 c8          	mov    QWORD PTR [rbp-0x38],rdx
+  808bef:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
+  808bf2:	99                   	cdq    
+  808bf3:	c1 ea 1c             	shr    edx,0x1c
+  808bf6:	01 d0                	add    eax,edx
+  808bf8:	83 e0 0f             	and    eax,0xf
+  808bfb:	29 d0                	sub    eax,edx
+  808bfd:	48 98                	cdqe   
+  808bff:	48 c1 e0 05          	shl    rax,0x5
+  808c03:	48 8d 88 60 e5 42 00 	lea    rcx,[rax+0x42e560]
+  808c0a:	48 8b 01             	mov    rax,QWORD PTR [rcx]
+  808c0d:	48 8b 51 08          	mov    rdx,QWORD PTR [rcx+0x8]
+  808c11:	48 89 45 b0          	mov    QWORD PTR [rbp-0x50],rax
+  808c15:	48 89 55 b8          	mov    QWORD PTR [rbp-0x48],rdx
+  808c19:	48 8b 41 10          	mov    rax,QWORD PTR [rcx+0x10]
+  808c1d:	48 8b 51 18          	mov    rdx,QWORD PTR [rcx+0x18]
+  808c21:	48 89 45 c0          	mov    QWORD PTR [rbp-0x40],rax
+  808c25:	48 89 55 c8          	mov    QWORD PTR [rbp-0x38],rdx
             p=name+1;
-  808c09:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  808c0d:	48 83 c0 01          	add    rax,0x1
-  808c11:	48 89 45 e0          	mov    QWORD PTR [rbp-0x20],rax
+  808c29:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  808c2d:	48 83 c0 01          	add    rax,0x1
+  808c31:	48 89 45 e0          	mov    QWORD PTR [rbp-0x20],rax
         }
         name++;
-  808c15:	48 83 45 e8 01       	add    QWORD PTR [rbp-0x18],0x1
+  808c35:	48 83 45 e8 01       	add    QWORD PTR [rbp-0x18],0x1
     while(*name!='\0')
-  808c1a:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  808c1e:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  808c21:	84 c0                	test   al,al
-  808c23:	0f 85 c5 fe ff ff    	jne    808aee <get_entry+0x53>
+  808c3a:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  808c3e:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  808c41:	84 c0                	test   al,al
+  808c43:	0f 85 c5 fe ff ff    	jne    808b0e <get_entry+0x53>
     }
 
     //现在就可以开始找文件了
     format_name(p);
-  808c29:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  808c2d:	48 89 c7             	mov    rdi,rax
-  808c30:	e8 fe ea ff ff       	call   807733 <format_name>
+  808c49:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  808c4d:	48 89 c7             	mov    rdi,rax
+  808c50:	e8 fe ea ff ff       	call   807753 <format_name>
     index= find(p);
-  808c35:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  808c39:	48 89 c7             	mov    rdi,rax
-  808c3c:	e8 0c f6 ff ff       	call   80824d <find>
-  808c41:	89 45 dc             	mov    DWORD PTR [rbp-0x24],eax
+  808c55:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  808c59:	48 89 c7             	mov    rdi,rax
+  808c5c:	e8 0c f6 ff ff       	call   80826d <find>
+  808c61:	89 45 dc             	mov    DWORD PTR [rbp-0x24],eax
     if(index==-1)return -1;
-  808c44:	83 7d dc ff          	cmp    DWORD PTR [rbp-0x24],0xffffffff
-  808c48:	75 0a                	jne    808c54 <get_entry+0x1b9>
-  808c4a:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  808c4f:	e9 11 01 00 00       	jmp    808d65 <get_entry+0x2ca>
+  808c64:	83 7d dc ff          	cmp    DWORD PTR [rbp-0x24],0xffffffff
+  808c68:	75 0a                	jne    808c74 <get_entry+0x1b9>
+  808c6a:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  808c6f:	e9 11 01 00 00       	jmp    808d85 <get_entry+0x2ca>
     
     if(cur_dir.fistCluNum==0)//在根目录
-  808c54:	0f b7 05 ff 58 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc258ff]        # 42e55a <cur_dir+0x1a>
-  808c5b:	66 85 c0             	test   ax,ax
-  808c5e:	75 31                	jne    808c91 <get_entry+0x1f6>
+  808c74:	0f b7 05 df 58 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc258df]        # 42e55a <cur_dir+0x1a>
+  808c7b:	66 85 c0             	test   ax,ax
+  808c7e:	75 31                	jne    808cb1 <get_entry+0x1f6>
         entry=root_dir[index];
-  808c60:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
-  808c63:	48 98                	cdqe   
-  808c65:	48 c1 e0 05          	shl    rax,0x5
-  808c69:	48 8d 88 40 a5 42 00 	lea    rcx,[rax+0x42a540]
-  808c70:	48 8b 01             	mov    rax,QWORD PTR [rcx]
-  808c73:	48 8b 51 08          	mov    rdx,QWORD PTR [rcx+0x8]
-  808c77:	48 89 45 90          	mov    QWORD PTR [rbp-0x70],rax
-  808c7b:	48 89 55 98          	mov    QWORD PTR [rbp-0x68],rdx
-  808c7f:	48 8b 41 10          	mov    rax,QWORD PTR [rcx+0x10]
-  808c83:	48 8b 51 18          	mov    rdx,QWORD PTR [rcx+0x18]
-  808c87:	48 89 45 a0          	mov    QWORD PTR [rbp-0x60],rax
-  808c8b:	48 89 55 a8          	mov    QWORD PTR [rbp-0x58],rdx
-  808c8f:	eb 3a                	jmp    808ccb <get_entry+0x230>
+  808c80:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
+  808c83:	48 98                	cdqe   
+  808c85:	48 c1 e0 05          	shl    rax,0x5
+  808c89:	48 8d 88 40 a5 42 00 	lea    rcx,[rax+0x42a540]
+  808c90:	48 8b 01             	mov    rax,QWORD PTR [rcx]
+  808c93:	48 8b 51 08          	mov    rdx,QWORD PTR [rcx+0x8]
+  808c97:	48 89 45 90          	mov    QWORD PTR [rbp-0x70],rax
+  808c9b:	48 89 55 98          	mov    QWORD PTR [rbp-0x68],rdx
+  808c9f:	48 8b 41 10          	mov    rax,QWORD PTR [rcx+0x10]
+  808ca3:	48 8b 51 18          	mov    rdx,QWORD PTR [rcx+0x18]
+  808ca7:	48 89 45 a0          	mov    QWORD PTR [rbp-0x60],rax
+  808cab:	48 89 55 a8          	mov    QWORD PTR [rbp-0x58],rdx
+  808caf:	eb 3a                	jmp    808ceb <get_entry+0x230>
     else//在子目录
         entry=a_clu_of_dir[index%16];
-  808c91:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
-  808c94:	99                   	cdq    
-  808c95:	c1 ea 1c             	shr    edx,0x1c
-  808c98:	01 d0                	add    eax,edx
-  808c9a:	83 e0 0f             	and    eax,0xf
-  808c9d:	29 d0                	sub    eax,edx
-  808c9f:	48 98                	cdqe   
-  808ca1:	48 c1 e0 05          	shl    rax,0x5
-  808ca5:	48 8d 88 60 e5 42 00 	lea    rcx,[rax+0x42e560]
-  808cac:	48 8b 01             	mov    rax,QWORD PTR [rcx]
-  808caf:	48 8b 51 08          	mov    rdx,QWORD PTR [rcx+0x8]
-  808cb3:	48 89 45 90          	mov    QWORD PTR [rbp-0x70],rax
-  808cb7:	48 89 55 98          	mov    QWORD PTR [rbp-0x68],rdx
-  808cbb:	48 8b 41 10          	mov    rax,QWORD PTR [rcx+0x10]
-  808cbf:	48 8b 51 18          	mov    rdx,QWORD PTR [rcx+0x18]
-  808cc3:	48 89 45 a0          	mov    QWORD PTR [rbp-0x60],rax
-  808cc7:	48 89 55 a8          	mov    QWORD PTR [rbp-0x58],rdx
+  808cb1:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
+  808cb4:	99                   	cdq    
+  808cb5:	c1 ea 1c             	shr    edx,0x1c
+  808cb8:	01 d0                	add    eax,edx
+  808cba:	83 e0 0f             	and    eax,0xf
+  808cbd:	29 d0                	sub    eax,edx
+  808cbf:	48 98                	cdqe   
+  808cc1:	48 c1 e0 05          	shl    rax,0x5
+  808cc5:	48 8d 88 60 e5 42 00 	lea    rcx,[rax+0x42e560]
+  808ccc:	48 8b 01             	mov    rax,QWORD PTR [rcx]
+  808ccf:	48 8b 51 08          	mov    rdx,QWORD PTR [rcx+0x8]
+  808cd3:	48 89 45 90          	mov    QWORD PTR [rbp-0x70],rax
+  808cd7:	48 89 55 98          	mov    QWORD PTR [rbp-0x68],rdx
+  808cdb:	48 8b 41 10          	mov    rax,QWORD PTR [rcx+0x10]
+  808cdf:	48 8b 51 18          	mov    rdx,QWORD PTR [rcx+0x18]
+  808ce3:	48 89 45 a0          	mov    QWORD PTR [rbp-0x60],rax
+  808ce7:	48 89 55 a8          	mov    QWORD PTR [rbp-0x58],rdx
     ret.id=entry.fistCluNum;
-  808ccb:	0f b7 45 aa          	movzx  eax,WORD PTR [rbp-0x56]
-  808ccf:	0f b7 c0             	movzx  eax,ax
-  808cd2:	89 85 44 ff ff ff    	mov    DWORD PTR [rbp-0xbc],eax
+  808ceb:	0f b7 45 aa          	movzx  eax,WORD PTR [rbp-0x56]
+  808cef:	0f b7 c0             	movzx  eax,ax
+  808cf2:	89 85 44 ff ff ff    	mov    DWORD PTR [rbp-0xbc],eax
     args->entry=ret;
-  808cd8:	48 8b 85 18 ff ff ff 	mov    rax,QWORD PTR [rbp-0xe8]
-  808cdf:	48 8b 8d 30 ff ff ff 	mov    rcx,QWORD PTR [rbp-0xd0]
-  808ce6:	48 8b 9d 38 ff ff ff 	mov    rbx,QWORD PTR [rbp-0xc8]
-  808ced:	48 89 48 28          	mov    QWORD PTR [rax+0x28],rcx
-  808cf1:	48 89 58 30          	mov    QWORD PTR [rax+0x30],rbx
-  808cf5:	48 8b 8d 40 ff ff ff 	mov    rcx,QWORD PTR [rbp-0xc0]
-  808cfc:	48 8b 9d 48 ff ff ff 	mov    rbx,QWORD PTR [rbp-0xb8]
-  808d03:	48 89 48 38          	mov    QWORD PTR [rax+0x38],rcx
-  808d07:	48 89 58 40          	mov    QWORD PTR [rax+0x40],rbx
-  808d0b:	48 8b 8d 50 ff ff ff 	mov    rcx,QWORD PTR [rbp-0xb0]
-  808d12:	48 8b 9d 58 ff ff ff 	mov    rbx,QWORD PTR [rbp-0xa8]
-  808d19:	48 89 48 48          	mov    QWORD PTR [rax+0x48],rcx
-  808d1d:	48 89 58 50          	mov    QWORD PTR [rax+0x50],rbx
-  808d21:	48 8b 8d 60 ff ff ff 	mov    rcx,QWORD PTR [rbp-0xa0]
-  808d28:	48 8b 9d 68 ff ff ff 	mov    rbx,QWORD PTR [rbp-0x98]
-  808d2f:	48 89 48 58          	mov    QWORD PTR [rax+0x58],rcx
-  808d33:	48 89 58 60          	mov    QWORD PTR [rax+0x60],rbx
-  808d37:	48 8b 8d 70 ff ff ff 	mov    rcx,QWORD PTR [rbp-0x90]
-  808d3e:	48 8b 9d 78 ff ff ff 	mov    rbx,QWORD PTR [rbp-0x88]
-  808d45:	48 89 48 68          	mov    QWORD PTR [rax+0x68],rcx
-  808d49:	48 89 58 70          	mov    QWORD PTR [rax+0x70],rbx
-  808d4d:	48 8b 4d 80          	mov    rcx,QWORD PTR [rbp-0x80]
-  808d51:	48 8b 5d 88          	mov    rbx,QWORD PTR [rbp-0x78]
-  808d55:	48 89 48 78          	mov    QWORD PTR [rax+0x78],rcx
-  808d59:	48 89 98 80 00 00 00 	mov    QWORD PTR [rax+0x80],rbx
+  808cf8:	48 8b 85 18 ff ff ff 	mov    rax,QWORD PTR [rbp-0xe8]
+  808cff:	48 8b 8d 30 ff ff ff 	mov    rcx,QWORD PTR [rbp-0xd0]
+  808d06:	48 8b 9d 38 ff ff ff 	mov    rbx,QWORD PTR [rbp-0xc8]
+  808d0d:	48 89 48 28          	mov    QWORD PTR [rax+0x28],rcx
+  808d11:	48 89 58 30          	mov    QWORD PTR [rax+0x30],rbx
+  808d15:	48 8b 8d 40 ff ff ff 	mov    rcx,QWORD PTR [rbp-0xc0]
+  808d1c:	48 8b 9d 48 ff ff ff 	mov    rbx,QWORD PTR [rbp-0xb8]
+  808d23:	48 89 48 38          	mov    QWORD PTR [rax+0x38],rcx
+  808d27:	48 89 58 40          	mov    QWORD PTR [rax+0x40],rbx
+  808d2b:	48 8b 8d 50 ff ff ff 	mov    rcx,QWORD PTR [rbp-0xb0]
+  808d32:	48 8b 9d 58 ff ff ff 	mov    rbx,QWORD PTR [rbp-0xa8]
+  808d39:	48 89 48 48          	mov    QWORD PTR [rax+0x48],rcx
+  808d3d:	48 89 58 50          	mov    QWORD PTR [rax+0x50],rbx
+  808d41:	48 8b 8d 60 ff ff ff 	mov    rcx,QWORD PTR [rbp-0xa0]
+  808d48:	48 8b 9d 68 ff ff ff 	mov    rbx,QWORD PTR [rbp-0x98]
+  808d4f:	48 89 48 58          	mov    QWORD PTR [rax+0x58],rcx
+  808d53:	48 89 58 60          	mov    QWORD PTR [rax+0x60],rbx
+  808d57:	48 8b 8d 70 ff ff ff 	mov    rcx,QWORD PTR [rbp-0x90]
+  808d5e:	48 8b 9d 78 ff ff ff 	mov    rbx,QWORD PTR [rbp-0x88]
+  808d65:	48 89 48 68          	mov    QWORD PTR [rax+0x68],rcx
+  808d69:	48 89 58 70          	mov    QWORD PTR [rax+0x70],rbx
+  808d6d:	48 8b 4d 80          	mov    rcx,QWORD PTR [rbp-0x80]
+  808d71:	48 8b 5d 88          	mov    rbx,QWORD PTR [rbp-0x78]
+  808d75:	48 89 48 78          	mov    QWORD PTR [rax+0x78],rcx
+  808d79:	48 89 98 80 00 00 00 	mov    QWORD PTR [rax+0x80],rbx
     return 0;
-  808d60:	b8 00 00 00 00       	mov    eax,0x0
+  808d80:	b8 00 00 00 00       	mov    eax,0x0
 }
-  808d65:	48 8b 5d f8          	mov    rbx,QWORD PTR [rbp-0x8]
-  808d69:	c9                   	leave  
-  808d6a:	c3                   	ret    
+  808d85:	48 8b 5d f8          	mov    rbx,QWORD PTR [rbp-0x8]
+  808d89:	c9                   	leave  
+  808d8a:	c3                   	ret    
 
-0000000000808d6b <get_fname>:
+0000000000808d8b <get_fname>:
         dir=strtok(NULL,'/');
     }
     return 0;
 }*/
 void get_fname(char *path,char *name)
 {
-  808d6b:	f3 0f 1e fa          	endbr64 
-  808d6f:	55                   	push   rbp
-  808d70:	48 89 e5             	mov    rbp,rsp
-  808d73:	48 83 ec 20          	sub    rsp,0x20
-  808d77:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
-  808d7b:	48 89 75 e0          	mov    QWORD PTR [rbp-0x20],rsi
+  808d8b:	f3 0f 1e fa          	endbr64 
+  808d8f:	55                   	push   rbp
+  808d90:	48 89 e5             	mov    rbp,rsp
+  808d93:	48 83 ec 20          	sub    rsp,0x20
+  808d97:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
+  808d9b:	48 89 75 e0          	mov    QWORD PTR [rbp-0x20],rsi
     char *prev,*ptr=strtok(path,'/');
-  808d7f:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  808d83:	be 2f 00 00 00       	mov    esi,0x2f
-  808d88:	48 89 c7             	mov    rdi,rax
-  808d8b:	e8 18 0e 00 00       	call   809ba8 <strtok>
-  808d90:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
+  808d9f:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  808da3:	be 2f 00 00 00       	mov    esi,0x2f
+  808da8:	48 89 c7             	mov    rdi,rax
+  808dab:	e8 18 0e 00 00       	call   809bc8 <strtok>
+  808db0:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
     while(ptr!=NULL)
-  808d94:	eb 1b                	jmp    808db1 <get_fname+0x46>
+  808db4:	eb 1b                	jmp    808dd1 <get_fname+0x46>
     {
         prev=ptr;
-  808d96:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  808d9a:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
+  808db6:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  808dba:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
         ptr=strtok(NULL,'/');
-  808d9e:	be 2f 00 00 00       	mov    esi,0x2f
-  808da3:	bf 00 00 00 00       	mov    edi,0x0
-  808da8:	e8 fb 0d 00 00       	call   809ba8 <strtok>
-  808dad:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
+  808dbe:	be 2f 00 00 00       	mov    esi,0x2f
+  808dc3:	bf 00 00 00 00       	mov    edi,0x0
+  808dc8:	e8 fb 0d 00 00       	call   809bc8 <strtok>
+  808dcd:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
     while(ptr!=NULL)
-  808db1:	48 83 7d f0 00       	cmp    QWORD PTR [rbp-0x10],0x0
-  808db6:	75 de                	jne    808d96 <get_fname+0x2b>
+  808dd1:	48 83 7d f0 00       	cmp    QWORD PTR [rbp-0x10],0x0
+  808dd6:	75 de                	jne    808db6 <get_fname+0x2b>
     }
     strcpy(name,prev);
-  808db8:	48 8b 55 f8          	mov    rdx,QWORD PTR [rbp-0x8]
-  808dbc:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  808dc0:	48 89 d6             	mov    rsi,rdx
-  808dc3:	48 89 c7             	mov    rdi,rax
-  808dc6:	e8 99 0d 00 00       	call   809b64 <strcpy>
+  808dd8:	48 8b 55 f8          	mov    rdx,QWORD PTR [rbp-0x8]
+  808ddc:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  808de0:	48 89 d6             	mov    rsi,rdx
+  808de3:	48 89 c7             	mov    rdi,rax
+  808de6:	e8 99 0d 00 00       	call   809b84 <strcpy>
 }
-  808dcb:	90                   	nop
-  808dcc:	c9                   	leave  
-  808dcd:	c3                   	ret    
+  808deb:	90                   	nop
+  808dec:	c9                   	leave  
+  808ded:	c3                   	ret    
 
-0000000000808dce <read_file>:
+0000000000808dee <read_file>:
 char buf[1024];
 int read_file(driver_args* args)
 {
-  808dce:	f3 0f 1e fa          	endbr64 
-  808dd2:	55                   	push   rbp
-  808dd3:	48 89 e5             	mov    rbp,rsp
-  808dd6:	48 83 ec 60          	sub    rsp,0x60
-  808dda:	48 89 7d a8          	mov    QWORD PTR [rbp-0x58],rdi
+  808dee:	f3 0f 1e fa          	endbr64 
+  808df2:	55                   	push   rbp
+  808df3:	48 89 e5             	mov    rbp,rsp
+  808df6:	48 83 ec 60          	sub    rsp,0x60
+  808dfa:	48 89 7d a8          	mov    QWORD PTR [rbp-0x58],rdi
     int len=args->len;
-  808dde:	48 8b 45 a8          	mov    rax,QWORD PTR [rbp-0x58]
-  808de2:	8b 40 18             	mov    eax,DWORD PTR [rax+0x18]
-  808de5:	89 45 e0             	mov    DWORD PTR [rbp-0x20],eax
+  808dfe:	48 8b 45 a8          	mov    rax,QWORD PTR [rbp-0x58]
+  808e02:	8b 40 18             	mov    eax,DWORD PTR [rax+0x18]
+  808e05:	89 45 e0             	mov    DWORD PTR [rbp-0x20],eax
     int pos=args->pos;
-  808de8:	48 8b 45 a8          	mov    rax,QWORD PTR [rbp-0x58]
-  808dec:	8b 40 14             	mov    eax,DWORD PTR [rax+0x14]
-  808def:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  808e08:	48 8b 45 a8          	mov    rax,QWORD PTR [rbp-0x58]
+  808e0c:	8b 40 14             	mov    eax,DWORD PTR [rax+0x14]
+  808e0f:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
     dir_entry f;
     f.fistCluNum=args->entry.id;
-  808df2:	48 8b 45 a8          	mov    rax,QWORD PTR [rbp-0x58]
-  808df6:	8b 40 3c             	mov    eax,DWORD PTR [rax+0x3c]
-  808df9:	66 89 45 ca          	mov    WORD PTR [rbp-0x36],ax
+  808e12:	48 8b 45 a8          	mov    rax,QWORD PTR [rbp-0x58]
+  808e16:	8b 40 3c             	mov    eax,DWORD PTR [rax+0x3c]
+  808e19:	66 89 45 ca          	mov    WORD PTR [rbp-0x36],ax
     char* dist=args->dist_addr;
-  808dfd:	48 8b 45 a8          	mov    rax,QWORD PTR [rbp-0x58]
-  808e01:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
-  808e04:	48 98                	cdqe   
-  808e06:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
+  808e1d:	48 8b 45 a8          	mov    rax,QWORD PTR [rbp-0x58]
+  808e21:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
+  808e24:	48 98                	cdqe   
+  808e26:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
     int c=len/superblock.bytesPerSec;
-  808e0a:	0f b7 05 fa 16 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc216fa]        # 42a50b <superblock+0xb>
-  808e11:	0f b7 f0             	movzx  esi,ax
-  808e14:	8b 45 e0             	mov    eax,DWORD PTR [rbp-0x20]
-  808e17:	99                   	cdq    
-  808e18:	f7 fe                	idiv   esi
-  808e1a:	89 45 dc             	mov    DWORD PTR [rbp-0x24],eax
+  808e2a:	0f b7 05 da 16 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc216da]        # 42a50b <superblock+0xb>
+  808e31:	0f b7 f0             	movzx  esi,ax
+  808e34:	8b 45 e0             	mov    eax,DWORD PTR [rbp-0x20]
+  808e37:	99                   	cdq    
+  808e38:	f7 fe                	idiv   esi
+  808e3a:	89 45 dc             	mov    DWORD PTR [rbp-0x24],eax
     c+=len%superblock.bytesPerSec?1:0;
-  808e1d:	0f b7 05 e7 16 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc216e7]        # 42a50b <superblock+0xb>
-  808e24:	0f b7 c8             	movzx  ecx,ax
-  808e27:	8b 45 e0             	mov    eax,DWORD PTR [rbp-0x20]
-  808e2a:	99                   	cdq    
-  808e2b:	f7 f9                	idiv   ecx
-  808e2d:	89 d0                	mov    eax,edx
-  808e2f:	85 c0                	test   eax,eax
-  808e31:	0f 95 c0             	setne  al
-  808e34:	0f b6 c0             	movzx  eax,al
-  808e37:	01 45 dc             	add    DWORD PTR [rbp-0x24],eax
+  808e3d:	0f b7 05 c7 16 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc216c7]        # 42a50b <superblock+0xb>
+  808e44:	0f b7 c8             	movzx  ecx,ax
+  808e47:	8b 45 e0             	mov    eax,DWORD PTR [rbp-0x20]
+  808e4a:	99                   	cdq    
+  808e4b:	f7 f9                	idiv   ecx
+  808e4d:	89 d0                	mov    eax,edx
+  808e4f:	85 c0                	test   eax,eax
+  808e51:	0f 95 c0             	setne  al
+  808e54:	0f b6 c0             	movzx  eax,al
+  808e57:	01 45 dc             	add    DWORD PTR [rbp-0x24],eax
     //printf("[fs]%d secs to sys_read.\n",c);
     int n=0;
-  808e3a:	c7 45 ec 00 00 00 00 	mov    DWORD PTR [rbp-0x14],0x0
+  808e5a:	c7 45 ec 00 00 00 00 	mov    DWORD PTR [rbp-0x14],0x0
     unsigned short clu=f.fistCluNum;
-  808e41:	0f b7 45 ca          	movzx  eax,WORD PTR [rbp-0x36]
-  808e45:	66 89 45 ea          	mov    WORD PTR [rbp-0x16],ax
+  808e61:	0f b7 45 ca          	movzx  eax,WORD PTR [rbp-0x36]
+  808e65:	66 89 45 ea          	mov    WORD PTR [rbp-0x16],ax
     int mpos=pos/superblock.bytesPerSec;
-  808e49:	0f b7 05 bb 16 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc216bb]        # 42a50b <superblock+0xb>
-  808e50:	0f b7 f8             	movzx  edi,ax
-  808e53:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  808e56:	99                   	cdq    
-  808e57:	f7 ff                	idiv   edi
-  808e59:	89 45 e4             	mov    DWORD PTR [rbp-0x1c],eax
+  808e69:	0f b7 05 9b 16 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc2169b]        # 42a50b <superblock+0xb>
+  808e70:	0f b7 f8             	movzx  edi,ax
+  808e73:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  808e76:	99                   	cdq    
+  808e77:	f7 ff                	idiv   edi
+  808e79:	89 45 e4             	mov    DWORD PTR [rbp-0x1c],eax
     for(;clu<FAT_EOF&&mpos>0;mpos--)
-  808e5c:	eb 16                	jmp    808e74 <read_file+0xa6>
+  808e7c:	eb 16                	jmp    808e94 <read_file+0xa6>
     {
          clu=fat[clu];
-  808e5e:	0f b7 45 ea          	movzx  eax,WORD PTR [rbp-0x16]
-  808e62:	48 98                	cdqe   
-  808e64:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
-  808e6b:	00 
-  808e6c:	66 89 45 ea          	mov    WORD PTR [rbp-0x16],ax
+  808e7e:	0f b7 45 ea          	movzx  eax,WORD PTR [rbp-0x16]
+  808e82:	48 98                	cdqe   
+  808e84:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
+  808e8b:	00 
+  808e8c:	66 89 45 ea          	mov    WORD PTR [rbp-0x16],ax
     for(;clu<FAT_EOF&&mpos>0;mpos--)
-  808e70:	83 6d e4 01          	sub    DWORD PTR [rbp-0x1c],0x1
-  808e74:	66 83 7d ea f6       	cmp    WORD PTR [rbp-0x16],0xfff6
-  808e79:	77 06                	ja     808e81 <read_file+0xb3>
-  808e7b:	83 7d e4 00          	cmp    DWORD PTR [rbp-0x1c],0x0
-  808e7f:	7f dd                	jg     808e5e <read_file+0x90>
+  808e90:	83 6d e4 01          	sub    DWORD PTR [rbp-0x1c],0x1
+  808e94:	66 83 7d ea f6       	cmp    WORD PTR [rbp-0x16],0xfff6
+  808e99:	77 06                	ja     808ea1 <read_file+0xb3>
+  808e9b:	83 7d e4 00          	cmp    DWORD PTR [rbp-0x1c],0x0
+  808e9f:	7f dd                	jg     808e7e <read_file+0x90>
     }
     if(mpos>0)return -1;//读取位置超出范围
-  808e81:	83 7d e4 00          	cmp    DWORD PTR [rbp-0x1c],0x0
-  808e85:	7e 0a                	jle    808e91 <read_file+0xc3>
-  808e87:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  808e8c:	e9 cd 00 00 00       	jmp    808f5e <read_file+0x190>
+  808ea1:	83 7d e4 00          	cmp    DWORD PTR [rbp-0x1c],0x0
+  808ea5:	7e 0a                	jle    808eb1 <read_file+0xc3>
+  808ea7:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  808eac:	e9 cd 00 00 00       	jmp    808f7e <read_file+0x190>
     pos%=superblock.bytesPerSec;
-  808e91:	0f b7 05 73 16 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc21673]        # 42a50b <superblock+0xb>
-  808e98:	0f b7 c8             	movzx  ecx,ax
-  808e9b:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  808e9e:	99                   	cdq    
-  808e9f:	f7 f9                	idiv   ecx
-  808ea1:	89 55 fc             	mov    DWORD PTR [rbp-0x4],edx
+  808eb1:	0f b7 05 53 16 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc21653]        # 42a50b <superblock+0xb>
+  808eb8:	0f b7 c8             	movzx  ecx,ax
+  808ebb:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  808ebe:	99                   	cdq    
+  808ebf:	f7 f9                	idiv   ecx
+  808ec1:	89 55 fc             	mov    DWORD PTR [rbp-0x4],edx
     int block_size=superblock.secPerClu*superblock.bytesPerSec;
-  808ea4:	0f b6 05 62 16 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21662]        # 42a50d <superblock+0xd>
-  808eab:	0f b6 d0             	movzx  edx,al
-  808eae:	0f b7 05 56 16 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc21656]        # 42a50b <superblock+0xb>
-  808eb5:	0f b7 c0             	movzx  eax,ax
-  808eb8:	0f af c2             	imul   eax,edx
-  808ebb:	89 45 d8             	mov    DWORD PTR [rbp-0x28],eax
+  808ec4:	0f b6 05 42 16 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21642]        # 42a50d <superblock+0xd>
+  808ecb:	0f b6 d0             	movzx  edx,al
+  808ece:	0f b7 05 36 16 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc21636]        # 42a50b <superblock+0xb>
+  808ed5:	0f b7 c0             	movzx  eax,ax
+  808ed8:	0f af c2             	imul   eax,edx
+  808edb:	89 45 d8             	mov    DWORD PTR [rbp-0x28],eax
     while(n<c)
-  808ebe:	e9 89 00 00 00       	jmp    808f4c <read_file+0x17e>
+  808ede:	e9 89 00 00 00       	jmp    808f6c <read_file+0x17e>
     {
         read_sec(buf,clu+clu_sec_balance,superblock.secPerClu);
-  808ec3:	0f b6 05 43 16 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21643]        # 42a50d <superblock+0xd>
-  808eca:	0f b6 c0             	movzx  eax,al
-  808ecd:	0f b7 4d ea          	movzx  ecx,WORD PTR [rbp-0x16]
-  808ed1:	8b 15 69 17 00 00    	mov    edx,DWORD PTR [rip+0x1769]        # 80a640 <clu_sec_balance>
-  808ed7:	01 d1                	add    ecx,edx
-  808ed9:	89 c2                	mov    edx,eax
-  808edb:	89 ce                	mov    esi,ecx
-  808edd:	bf 80 27 43 00       	mov    edi,0x432780
-  808ee2:	e8 98 f0 ff ff       	call   807f7f <read_sec>
+  808ee3:	0f b6 05 23 16 c2 ff 	movzx  eax,BYTE PTR [rip+0xffffffffffc21623]        # 42a50d <superblock+0xd>
+  808eea:	0f b6 c0             	movzx  eax,al
+  808eed:	0f b7 4d ea          	movzx  ecx,WORD PTR [rbp-0x16]
+  808ef1:	8b 15 49 17 00 00    	mov    edx,DWORD PTR [rip+0x1749]        # 80a640 <clu_sec_balance>
+  808ef7:	01 d1                	add    ecx,edx
+  808ef9:	89 c2                	mov    edx,eax
+  808efb:	89 ce                	mov    esi,ecx
+  808efd:	bf 80 27 43 00       	mov    edi,0x432780
+  808f02:	e8 98 f0 ff ff       	call   807f9f <read_sec>
         //printf("%x+%x\n",buf,pos);
         int cplen=block_size-pos>len?len:block_size-pos;
-  808ee7:	8b 45 d8             	mov    eax,DWORD PTR [rbp-0x28]
-  808eea:	2b 45 fc             	sub    eax,DWORD PTR [rbp-0x4]
-  808eed:	8b 55 e0             	mov    edx,DWORD PTR [rbp-0x20]
-  808ef0:	39 c2                	cmp    edx,eax
-  808ef2:	0f 4e c2             	cmovle eax,edx
-  808ef5:	89 45 d4             	mov    DWORD PTR [rbp-0x2c],eax
+  808f07:	8b 45 d8             	mov    eax,DWORD PTR [rbp-0x28]
+  808f0a:	2b 45 fc             	sub    eax,DWORD PTR [rbp-0x4]
+  808f0d:	8b 55 e0             	mov    edx,DWORD PTR [rbp-0x20]
+  808f10:	39 c2                	cmp    edx,eax
+  808f12:	0f 4e c2             	cmovle eax,edx
+  808f15:	89 45 d4             	mov    DWORD PTR [rbp-0x2c],eax
         memcpy(dist,buf+pos,cplen);
-  808ef8:	8b 55 d4             	mov    edx,DWORD PTR [rbp-0x2c]
-  808efb:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  808efe:	48 98                	cdqe   
-  808f00:	48 8d 88 80 27 43 00 	lea    rcx,[rax+0x432780]
-  808f07:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  808f0b:	48 89 ce             	mov    rsi,rcx
-  808f0e:	48 89 c7             	mov    rdi,rax
-  808f11:	e8 50 0b 00 00       	call   809a66 <memcpy>
+  808f18:	8b 55 d4             	mov    edx,DWORD PTR [rbp-0x2c]
+  808f1b:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  808f1e:	48 98                	cdqe   
+  808f20:	48 8d 88 80 27 43 00 	lea    rcx,[rax+0x432780]
+  808f27:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  808f2b:	48 89 ce             	mov    rsi,rcx
+  808f2e:	48 89 c7             	mov    rdi,rax
+  808f31:	e8 50 0b 00 00       	call   809a86 <memcpy>
         n++;
-  808f16:	83 45 ec 01          	add    DWORD PTR [rbp-0x14],0x1
+  808f36:	83 45 ec 01          	add    DWORD PTR [rbp-0x14],0x1
         dist+=block_size-pos;
-  808f1a:	8b 45 d8             	mov    eax,DWORD PTR [rbp-0x28]
-  808f1d:	2b 45 fc             	sub    eax,DWORD PTR [rbp-0x4]
-  808f20:	48 98                	cdqe   
-  808f22:	48 01 45 f0          	add    QWORD PTR [rbp-0x10],rax
+  808f3a:	8b 45 d8             	mov    eax,DWORD PTR [rbp-0x28]
+  808f3d:	2b 45 fc             	sub    eax,DWORD PTR [rbp-0x4]
+  808f40:	48 98                	cdqe   
+  808f42:	48 01 45 f0          	add    QWORD PTR [rbp-0x10],rax
         if(pos>0)pos=0;
-  808f26:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
-  808f2a:	7e 07                	jle    808f33 <read_file+0x165>
-  808f2c:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
+  808f46:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
+  808f4a:	7e 07                	jle    808f53 <read_file+0x165>
+  808f4c:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
         clu=fat[clu];
-  808f33:	0f b7 45 ea          	movzx  eax,WORD PTR [rbp-0x16]
-  808f37:	48 98                	cdqe   
-  808f39:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
-  808f40:	00 
-  808f41:	66 89 45 ea          	mov    WORD PTR [rbp-0x16],ax
+  808f53:	0f b7 45 ea          	movzx  eax,WORD PTR [rbp-0x16]
+  808f57:	48 98                	cdqe   
+  808f59:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
+  808f60:	00 
+  808f61:	66 89 45 ea          	mov    WORD PTR [rbp-0x16],ax
         if(clu>=FAT_EOF)break;
-  808f45:	66 83 7d ea f6       	cmp    WORD PTR [rbp-0x16],0xfff6
-  808f4a:	77 0e                	ja     808f5a <read_file+0x18c>
+  808f65:	66 83 7d ea f6       	cmp    WORD PTR [rbp-0x16],0xfff6
+  808f6a:	77 0e                	ja     808f7a <read_file+0x18c>
     while(n<c)
-  808f4c:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
-  808f4f:	3b 45 dc             	cmp    eax,DWORD PTR [rbp-0x24]
-  808f52:	0f 8c 6b ff ff ff    	jl     808ec3 <read_file+0xf5>
-  808f58:	eb 01                	jmp    808f5b <read_file+0x18d>
+  808f6c:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+  808f6f:	3b 45 dc             	cmp    eax,DWORD PTR [rbp-0x24]
+  808f72:	0f 8c 6b ff ff ff    	jl     808ee3 <read_file+0xf5>
+  808f78:	eb 01                	jmp    808f7b <read_file+0x18d>
         if(clu>=FAT_EOF)break;
-  808f5a:	90                   	nop
+  808f7a:	90                   	nop
     }
     return n;
-  808f5b:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+  808f7b:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
 }
-  808f5e:	c9                   	leave  
-  808f5f:	c3                   	ret    
+  808f7e:	c9                   	leave  
+  808f7f:	c3                   	ret    
 
-0000000000808f60 <write_file>:
+0000000000808f80 <write_file>:
 int write_file(driver_args* args)
 {
-  808f60:	f3 0f 1e fa          	endbr64 
-  808f64:	55                   	push   rbp
-  808f65:	48 89 e5             	mov    rbp,rsp
-  808f68:	48 83 ec 50          	sub    rsp,0x50
-  808f6c:	48 89 7d b8          	mov    QWORD PTR [rbp-0x48],rdi
+  808f80:	f3 0f 1e fa          	endbr64 
+  808f84:	55                   	push   rbp
+  808f85:	48 89 e5             	mov    rbp,rsp
+  808f88:	48 83 ec 50          	sub    rsp,0x50
+  808f8c:	48 89 7d b8          	mov    QWORD PTR [rbp-0x48],rdi
     int len=args->len;
-  808f70:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
-  808f74:	8b 40 18             	mov    eax,DWORD PTR [rax+0x18]
-  808f77:	89 45 e4             	mov    DWORD PTR [rbp-0x1c],eax
+  808f90:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
+  808f94:	8b 40 18             	mov    eax,DWORD PTR [rax+0x18]
+  808f97:	89 45 e4             	mov    DWORD PTR [rbp-0x1c],eax
     int pos=args->pos;
-  808f7a:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
-  808f7e:	8b 40 14             	mov    eax,DWORD PTR [rax+0x14]
-  808f81:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  808f9a:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
+  808f9e:	8b 40 14             	mov    eax,DWORD PTR [rax+0x14]
+  808fa1:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
     dir_entry f;
     f.fistCluNum=args->entry.id;
-  808f84:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
-  808f88:	8b 40 3c             	mov    eax,DWORD PTR [rax+0x3c]
-  808f8b:	66 89 45 da          	mov    WORD PTR [rbp-0x26],ax
+  808fa4:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
+  808fa8:	8b 40 3c             	mov    eax,DWORD PTR [rax+0x3c]
+  808fab:	66 89 45 da          	mov    WORD PTR [rbp-0x26],ax
     char* src=args->src_addr;
-  808f8f:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
-  808f93:	8b 40 08             	mov    eax,DWORD PTR [rax+0x8]
-  808f96:	48 98                	cdqe   
-  808f98:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
+  808faf:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
+  808fb3:	8b 40 08             	mov    eax,DWORD PTR [rax+0x8]
+  808fb6:	48 98                	cdqe   
+  808fb8:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
     pos/=superblock.bytesPerSec;
-  808f9c:	0f b7 05 68 15 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc21568]        # 42a50b <superblock+0xb>
-  808fa3:	0f b7 f0             	movzx  esi,ax
-  808fa6:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  808fa9:	99                   	cdq    
-  808faa:	f7 fe                	idiv   esi
-  808fac:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  808fbc:	0f b7 05 48 15 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc21548]        # 42a50b <superblock+0xb>
+  808fc3:	0f b7 f0             	movzx  esi,ax
+  808fc6:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  808fc9:	99                   	cdq    
+  808fca:	f7 fe                	idiv   esi
+  808fcc:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
     int c=len/512+len%512?1:0;
-  808faf:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
-  808fb2:	8d 90 ff 01 00 00    	lea    edx,[rax+0x1ff]
-  808fb8:	85 c0                	test   eax,eax
-  808fba:	0f 48 c2             	cmovs  eax,edx
-  808fbd:	c1 f8 09             	sar    eax,0x9
-  808fc0:	89 c1                	mov    ecx,eax
-  808fc2:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
-  808fc5:	99                   	cdq    
-  808fc6:	c1 ea 17             	shr    edx,0x17
-  808fc9:	01 d0                	add    eax,edx
-  808fcb:	25 ff 01 00 00       	and    eax,0x1ff
-  808fd0:	29 d0                	sub    eax,edx
-  808fd2:	01 c8                	add    eax,ecx
-  808fd4:	85 c0                	test   eax,eax
-  808fd6:	0f 95 c0             	setne  al
-  808fd9:	0f b6 c0             	movzx  eax,al
-  808fdc:	89 45 e0             	mov    DWORD PTR [rbp-0x20],eax
+  808fcf:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
+  808fd2:	8d 90 ff 01 00 00    	lea    edx,[rax+0x1ff]
+  808fd8:	85 c0                	test   eax,eax
+  808fda:	0f 48 c2             	cmovs  eax,edx
+  808fdd:	c1 f8 09             	sar    eax,0x9
+  808fe0:	89 c1                	mov    ecx,eax
+  808fe2:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
+  808fe5:	99                   	cdq    
+  808fe6:	c1 ea 17             	shr    edx,0x17
+  808fe9:	01 d0                	add    eax,edx
+  808feb:	25 ff 01 00 00       	and    eax,0x1ff
+  808ff0:	29 d0                	sub    eax,edx
+  808ff2:	01 c8                	add    eax,ecx
+  808ff4:	85 c0                	test   eax,eax
+  808ff6:	0f 95 c0             	setne  al
+  808ff9:	0f b6 c0             	movzx  eax,al
+  808ffc:	89 45 e0             	mov    DWORD PTR [rbp-0x20],eax
     int n=0;
-  808fdf:	c7 45 ec 00 00 00 00 	mov    DWORD PTR [rbp-0x14],0x0
+  808fff:	c7 45 ec 00 00 00 00 	mov    DWORD PTR [rbp-0x14],0x0
     unsigned short clu=f.fistCluNum;
-  808fe6:	0f b7 45 da          	movzx  eax,WORD PTR [rbp-0x26]
-  808fea:	66 89 45 ea          	mov    WORD PTR [rbp-0x16],ax
+  809006:	0f b7 45 da          	movzx  eax,WORD PTR [rbp-0x26]
+  80900a:	66 89 45 ea          	mov    WORD PTR [rbp-0x16],ax
     for(;clu<FAT_EOF&&pos>0;pos--,clu=fat[clu]);
-  808fee:	eb 16                	jmp    809006 <write_file+0xa6>
-  808ff0:	83 6d fc 01          	sub    DWORD PTR [rbp-0x4],0x1
-  808ff4:	0f b7 45 ea          	movzx  eax,WORD PTR [rbp-0x16]
-  808ff8:	48 98                	cdqe   
-  808ffa:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
-  809001:	00 
-  809002:	66 89 45 ea          	mov    WORD PTR [rbp-0x16],ax
-  809006:	66 83 7d ea f6       	cmp    WORD PTR [rbp-0x16],0xfff6
-  80900b:	77 06                	ja     809013 <write_file+0xb3>
-  80900d:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
-  809011:	7f dd                	jg     808ff0 <write_file+0x90>
+  80900e:	eb 16                	jmp    809026 <write_file+0xa6>
+  809010:	83 6d fc 01          	sub    DWORD PTR [rbp-0x4],0x1
+  809014:	0f b7 45 ea          	movzx  eax,WORD PTR [rbp-0x16]
+  809018:	48 98                	cdqe   
+  80901a:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
+  809021:	00 
+  809022:	66 89 45 ea          	mov    WORD PTR [rbp-0x16],ax
+  809026:	66 83 7d ea f6       	cmp    WORD PTR [rbp-0x16],0xfff6
+  80902b:	77 06                	ja     809033 <write_file+0xb3>
+  80902d:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
+  809031:	7f dd                	jg     809010 <write_file+0x90>
     if(pos>0)return -1;//读取位置超出范围
-  809013:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
-  809017:	7e 52                	jle    80906b <write_file+0x10b>
-  809019:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  80901e:	eb 59                	jmp    809079 <write_file+0x119>
+  809033:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
+  809037:	7e 52                	jle    80908b <write_file+0x10b>
+  809039:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  80903e:	eb 59                	jmp    809099 <write_file+0x119>
     while(n<c)
     {
         write_sec(src,clu+clu_sec_balance,1);
-  809020:	0f b7 55 ea          	movzx  edx,WORD PTR [rbp-0x16]
-  809024:	8b 05 16 16 00 00    	mov    eax,DWORD PTR [rip+0x1616]        # 80a640 <clu_sec_balance>
-  80902a:	8d 0c 02             	lea    ecx,[rdx+rax*1]
-  80902d:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  809031:	ba 01 00 00 00       	mov    edx,0x1
-  809036:	89 ce                	mov    esi,ecx
-  809038:	48 89 c7             	mov    rdi,rax
-  80903b:	e8 4b e8 ff ff       	call   80788b <write_sec>
+  809040:	0f b7 55 ea          	movzx  edx,WORD PTR [rbp-0x16]
+  809044:	8b 05 f6 15 00 00    	mov    eax,DWORD PTR [rip+0x15f6]        # 80a640 <clu_sec_balance>
+  80904a:	8d 0c 02             	lea    ecx,[rdx+rax*1]
+  80904d:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  809051:	ba 01 00 00 00       	mov    edx,0x1
+  809056:	89 ce                	mov    esi,ecx
+  809058:	48 89 c7             	mov    rdi,rax
+  80905b:	e8 4b e8 ff ff       	call   8078ab <write_sec>
         n++;
-  809040:	83 45 ec 01          	add    DWORD PTR [rbp-0x14],0x1
+  809060:	83 45 ec 01          	add    DWORD PTR [rbp-0x14],0x1
         src+=superblock.bytesPerSec;
-  809044:	0f b7 05 c0 14 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc214c0]        # 42a50b <superblock+0xb>
-  80904b:	0f b7 c0             	movzx  eax,ax
-  80904e:	48 01 45 f0          	add    QWORD PTR [rbp-0x10],rax
+  809064:	0f b7 05 a0 14 c2 ff 	movzx  eax,WORD PTR [rip+0xffffffffffc214a0]        # 42a50b <superblock+0xb>
+  80906b:	0f b7 c0             	movzx  eax,ax
+  80906e:	48 01 45 f0          	add    QWORD PTR [rbp-0x10],rax
         clu=fat[clu];
-  809052:	0f b7 45 ea          	movzx  eax,WORD PTR [rbp-0x16]
-  809056:	48 98                	cdqe   
-  809058:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
-  80905f:	00 
-  809060:	66 89 45 ea          	mov    WORD PTR [rbp-0x16],ax
+  809072:	0f b7 45 ea          	movzx  eax,WORD PTR [rbp-0x16]
+  809076:	48 98                	cdqe   
+  809078:	0f b7 84 00 60 e7 42 	movzx  eax,WORD PTR [rax+rax*1+0x42e760]
+  80907f:	00 
+  809080:	66 89 45 ea          	mov    WORD PTR [rbp-0x16],ax
         if(clu>=FAT_EOF)break;
-  809064:	66 83 7d ea f6       	cmp    WORD PTR [rbp-0x16],0xfff6
-  809069:	77 0a                	ja     809075 <write_file+0x115>
+  809084:	66 83 7d ea f6       	cmp    WORD PTR [rbp-0x16],0xfff6
+  809089:	77 0a                	ja     809095 <write_file+0x115>
     while(n<c)
-  80906b:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
-  80906e:	3b 45 e0             	cmp    eax,DWORD PTR [rbp-0x20]
-  809071:	7c ad                	jl     809020 <write_file+0xc0>
-  809073:	eb 01                	jmp    809076 <write_file+0x116>
+  80908b:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+  80908e:	3b 45 e0             	cmp    eax,DWORD PTR [rbp-0x20]
+  809091:	7c ad                	jl     809040 <write_file+0xc0>
+  809093:	eb 01                	jmp    809096 <write_file+0x116>
         if(clu>=FAT_EOF)break;
-  809075:	90                   	nop
+  809095:	90                   	nop
     }
     return n;
-  809076:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+  809096:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
     
-  809079:	c9                   	leave  
-  80907a:	c3                   	ret    
+  809099:	c9                   	leave  
+  80909a:	c3                   	ret    
 
-000000000080907b <scrdown>:
+000000000080909b <scrdown>:
 //{
 //    video_base=addr;
 //    m_ptr=addr;
 //}
 void scrdown(void)
 {
-  80907b:	f3 0f 1e fa          	endbr64 
-  80907f:	55                   	push   rbp
-  809080:	48 89 e5             	mov    rbp,rsp
+  80909b:	f3 0f 1e fa          	endbr64 
+  80909f:	55                   	push   rbp
+  8090a0:	48 89 e5             	mov    rbp,rsp
     vpage_base+=SCREEN_W*2;
-  809083:	48 8b 05 06 9b c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc29b06]        # 432b90 <vpage_base>
-  80908a:	48 05 a0 00 00 00    	add    rax,0xa0
-  809090:	48 89 05 f9 9a c2 ff 	mov    QWORD PTR [rip+0xffffffffffc29af9],rax        # 432b90 <vpage_base>
+  8090a3:	48 8b 05 e6 9a c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc29ae6]        # 432b90 <vpage_base>
+  8090aa:	48 05 a0 00 00 00    	add    rax,0xa0
+  8090b0:	48 89 05 d9 9a c2 ff 	mov    QWORD PTR [rip+0xffffffffffc29ad9],rax        # 432b90 <vpage_base>
     page_boffset+=SCREEN_W*2;
-  809097:	8b 05 fb 9a c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc29afb]        # 432b98 <page_boffset>
-  80909d:	05 a0 00 00 00       	add    eax,0xa0
-  8090a2:	89 05 f0 9a c2 ff    	mov    DWORD PTR [rip+0xffffffffffc29af0],eax        # 432b98 <page_boffset>
+  8090b7:	8b 05 db 9a c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc29adb]        # 432b98 <page_boffset>
+  8090bd:	05 a0 00 00 00       	add    eax,0xa0
+  8090c2:	89 05 d0 9a c2 ff    	mov    DWORD PTR [rip+0xffffffffffc29ad0],eax        # 432b98 <page_boffset>
     if(vpage_base>=video_end)
-  8090a8:	48 8b 15 e1 9a c2 ff 	mov    rdx,QWORD PTR [rip+0xffffffffffc29ae1]        # 432b90 <vpage_base>
-  8090af:	48 8b 05 d2 9a c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc29ad2]        # 432b88 <video_end>
-  8090b6:	48 39 c2             	cmp    rdx,rax
-  8090b9:	72 0e                	jb     8090c9 <scrdown+0x4e>
+  8090c8:	48 8b 15 c1 9a c2 ff 	mov    rdx,QWORD PTR [rip+0xffffffffffc29ac1]        # 432b90 <vpage_base>
+  8090cf:	48 8b 05 b2 9a c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc29ab2]        # 432b88 <video_end>
+  8090d6:	48 39 c2             	cmp    rdx,rax
+  8090d9:	72 0e                	jb     8090e9 <scrdown+0x4e>
         vpage_base=video_base;
-  8090bb:	48 8b 05 be 9a c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc29abe]        # 432b80 <video_base>
-  8090c2:	48 89 05 c7 9a c2 ff 	mov    QWORD PTR [rip+0xffffffffffc29ac7],rax        # 432b90 <vpage_base>
+  8090db:	48 8b 05 9e 9a c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc29a9e]        # 432b80 <video_base>
+  8090e2:	48 89 05 a7 9a c2 ff 	mov    QWORD PTR [rip+0xffffffffffc29aa7],rax        # 432b90 <vpage_base>
     set_origin();
-  8090c9:	b8 00 00 00 00       	mov    eax,0x0
-  8090ce:	e8 6a 00 00 00       	call   80913d <set_origin>
+  8090e9:	b8 00 00 00 00       	mov    eax,0x0
+  8090ee:	e8 6a 00 00 00       	call   80915d <set_origin>
 }
-  8090d3:	90                   	nop
-  8090d4:	5d                   	pop    rbp
-  8090d5:	c3                   	ret    
+  8090f3:	90                   	nop
+  8090f4:	5d                   	pop    rbp
+  8090f5:	c3                   	ret    
 
-00000000008090d6 <scrup>:
+00000000008090f6 <scrup>:
 void scrup()
 {
-  8090d6:	f3 0f 1e fa          	endbr64 
-  8090da:	55                   	push   rbp
-  8090db:	48 89 e5             	mov    rbp,rsp
+  8090f6:	f3 0f 1e fa          	endbr64 
+  8090fa:	55                   	push   rbp
+  8090fb:	48 89 e5             	mov    rbp,rsp
     if(page_boffset<=0)
-  8090de:	8b 05 b4 9a c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc29ab4]        # 432b98 <page_boffset>
-  8090e4:	85 c0                	test   eax,eax
-  8090e6:	75 24                	jne    80910c <scrup+0x36>
+  8090fe:	8b 05 94 9a c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc29a94]        # 432b98 <page_boffset>
+  809104:	85 c0                	test   eax,eax
+  809106:	75 24                	jne    80912c <scrup+0x36>
     {
         page_boffset=0;
-  8090e8:	c7 05 a6 9a c2 ff 00 	mov    DWORD PTR [rip+0xffffffffffc29aa6],0x0        # 432b98 <page_boffset>
-  8090ef:	00 00 00 
+  809108:	c7 05 86 9a c2 ff 00 	mov    DWORD PTR [rip+0xffffffffffc29a86],0x0        # 432b98 <page_boffset>
+  80910f:	00 00 00 
         vpage_base=video_base;
-  8090f2:	48 8b 05 87 9a c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc29a87]        # 432b80 <video_base>
-  8090f9:	48 89 05 90 9a c2 ff 	mov    QWORD PTR [rip+0xffffffffffc29a90],rax        # 432b90 <vpage_base>
+  809112:	48 8b 05 67 9a c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc29a67]        # 432b80 <video_base>
+  809119:	48 89 05 70 9a c2 ff 	mov    QWORD PTR [rip+0xffffffffffc29a70],rax        # 432b90 <vpage_base>
         set_origin();
-  809100:	b8 00 00 00 00       	mov    eax,0x0
-  809105:	e8 33 00 00 00       	call   80913d <set_origin>
+  809120:	b8 00 00 00 00       	mov    eax,0x0
+  809125:	e8 33 00 00 00       	call   80915d <set_origin>
         return;
-  80910a:	eb 2f                	jmp    80913b <scrup+0x65>
+  80912a:	eb 2f                	jmp    80915b <scrup+0x65>
     }
     vpage_base-=SCREEN_W*2;
-  80910c:	48 8b 05 7d 9a c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc29a7d]        # 432b90 <vpage_base>
-  809113:	48 2d a0 00 00 00    	sub    rax,0xa0
-  809119:	48 89 05 70 9a c2 ff 	mov    QWORD PTR [rip+0xffffffffffc29a70],rax        # 432b90 <vpage_base>
+  80912c:	48 8b 05 5d 9a c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc29a5d]        # 432b90 <vpage_base>
+  809133:	48 2d a0 00 00 00    	sub    rax,0xa0
+  809139:	48 89 05 50 9a c2 ff 	mov    QWORD PTR [rip+0xffffffffffc29a50],rax        # 432b90 <vpage_base>
     page_boffset-=SCREEN_W*2;
-  809120:	8b 05 72 9a c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc29a72]        # 432b98 <page_boffset>
-  809126:	2d a0 00 00 00       	sub    eax,0xa0
-  80912b:	89 05 67 9a c2 ff    	mov    DWORD PTR [rip+0xffffffffffc29a67],eax        # 432b98 <page_boffset>
+  809140:	8b 05 52 9a c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc29a52]        # 432b98 <page_boffset>
+  809146:	2d a0 00 00 00       	sub    eax,0xa0
+  80914b:	89 05 47 9a c2 ff    	mov    DWORD PTR [rip+0xffffffffffc29a47],eax        # 432b98 <page_boffset>
     set_origin();
-  809131:	b8 00 00 00 00       	mov    eax,0x0
-  809136:	e8 02 00 00 00       	call   80913d <set_origin>
+  809151:	b8 00 00 00 00       	mov    eax,0x0
+  809156:	e8 02 00 00 00       	call   80915d <set_origin>
 }
-  80913b:	5d                   	pop    rbp
-  80913c:	c3                   	ret    
+  80915b:	5d                   	pop    rbp
+  80915c:	c3                   	ret    
 
-000000000080913d <set_origin>:
+000000000080915d <set_origin>:
 void set_origin(void)
 {
-  80913d:	f3 0f 1e fa          	endbr64 
-  809141:	55                   	push   rbp
-  809142:	48 89 e5             	mov    rbp,rsp
+  80915d:	f3 0f 1e fa          	endbr64 
+  809161:	55                   	push   rbp
+  809162:	48 89 e5             	mov    rbp,rsp
     asm volatile("cli");
-  809145:	fa                   	cli    
+  809165:	fa                   	cli    
     outb(port_reg_index,12);
-  809146:	8b 05 5c 9a c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc29a5c]        # 432ba8 <port_reg_index>
-  80914c:	0f b7 c0             	movzx  eax,ax
-  80914f:	be 0c 00 00 00       	mov    esi,0xc
-  809154:	89 c7                	mov    edi,eax
-  809156:	e8 75 bd ff ff       	call   804ed0 <outb>
+  809166:	8b 05 3c 9a c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc29a3c]        # 432ba8 <port_reg_index>
+  80916c:	0f b7 c0             	movzx  eax,ax
+  80916f:	be 0c 00 00 00       	mov    esi,0xc
+  809174:	89 c7                	mov    edi,eax
+  809176:	e8 75 bd ff ff       	call   804ef0 <outb>
     outb(port_reg_v,(page_boffset>>9)&0xff);
-  80915b:	8b 05 37 9a c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc29a37]        # 432b98 <page_boffset>
-  809161:	c1 e8 09             	shr    eax,0x9
-  809164:	0f b6 d0             	movzx  edx,al
-  809167:	8b 05 3f 9a c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc29a3f]        # 432bac <port_reg_v>
-  80916d:	0f b7 c0             	movzx  eax,ax
-  809170:	89 d6                	mov    esi,edx
-  809172:	89 c7                	mov    edi,eax
-  809174:	e8 57 bd ff ff       	call   804ed0 <outb>
+  80917b:	8b 05 17 9a c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc29a17]        # 432b98 <page_boffset>
+  809181:	c1 e8 09             	shr    eax,0x9
+  809184:	0f b6 d0             	movzx  edx,al
+  809187:	8b 05 1f 9a c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc29a1f]        # 432bac <port_reg_v>
+  80918d:	0f b7 c0             	movzx  eax,ax
+  809190:	89 d6                	mov    esi,edx
+  809192:	89 c7                	mov    edi,eax
+  809194:	e8 57 bd ff ff       	call   804ef0 <outb>
     outb(port_reg_index,13);
-  809179:	8b 05 29 9a c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc29a29]        # 432ba8 <port_reg_index>
-  80917f:	0f b7 c0             	movzx  eax,ax
-  809182:	be 0d 00 00 00       	mov    esi,0xd
-  809187:	89 c7                	mov    edi,eax
-  809189:	e8 42 bd ff ff       	call   804ed0 <outb>
-    outb(port_reg_v,(page_boffset>>1)&0xff);
-  80918e:	8b 05 04 9a c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc29a04]        # 432b98 <page_boffset>
-  809194:	d1 e8                	shr    eax,1
-  809196:	0f b6 d0             	movzx  edx,al
-  809199:	8b 05 0d 9a c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc29a0d]        # 432bac <port_reg_v>
+  809199:	8b 05 09 9a c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc29a09]        # 432ba8 <port_reg_index>
   80919f:	0f b7 c0             	movzx  eax,ax
-  8091a2:	89 d6                	mov    esi,edx
-  8091a4:	89 c7                	mov    edi,eax
-  8091a6:	e8 25 bd ff ff       	call   804ed0 <outb>
+  8091a2:	be 0d 00 00 00       	mov    esi,0xd
+  8091a7:	89 c7                	mov    edi,eax
+  8091a9:	e8 42 bd ff ff       	call   804ef0 <outb>
+    outb(port_reg_v,(page_boffset>>1)&0xff);
+  8091ae:	8b 05 e4 99 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc299e4]        # 432b98 <page_boffset>
+  8091b4:	d1 e8                	shr    eax,1
+  8091b6:	0f b6 d0             	movzx  edx,al
+  8091b9:	8b 05 ed 99 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc299ed]        # 432bac <port_reg_v>
+  8091bf:	0f b7 c0             	movzx  eax,ax
+  8091c2:	89 d6                	mov    esi,edx
+  8091c4:	89 c7                	mov    edi,eax
+  8091c6:	e8 25 bd ff ff       	call   804ef0 <outb>
     asm volatile("sti");
-  8091ab:	fb                   	sti    
+  8091cb:	fb                   	sti    
 
 }
-  8091ac:	90                   	nop
-  8091ad:	5d                   	pop    rbp
-  8091ae:	c3                   	ret    
+  8091cc:	90                   	nop
+  8091cd:	5d                   	pop    rbp
+  8091ce:	c3                   	ret    
 
-00000000008091af <init_tty>:
+00000000008091cf <init_tty>:
         .type=DEV_TYPE_CHRDEV,
         .flag=DEV_FLAG_USED,
         .drv=&drv_tty
 };
 void init_tty()
 {
-  8091af:	f3 0f 1e fa          	endbr64 
-  8091b3:	55                   	push   rbp
-  8091b4:	48 89 e5             	mov    rbp,rsp
-  8091b7:	48 83 ec 10          	sub    rsp,0x10
+  8091cf:	f3 0f 1e fa          	endbr64 
+  8091d3:	55                   	push   rbp
+  8091d4:	48 89 e5             	mov    rbp,rsp
+  8091d7:	48 83 ec 10          	sub    rsp,0x10
     strcpy(dev_tty.name,"tty0");
-  8091bb:	be c8 26 81 00       	mov    esi,0x8126c8
-  8091c0:	bf 74 25 81 00       	mov    edi,0x812574
-  8091c5:	e8 9a 09 00 00       	call   809b64 <strcpy>
+  8091db:	be c8 26 81 00       	mov    esi,0x8126c8
+  8091e0:	bf 74 25 81 00       	mov    edi,0x812574
+  8091e5:	e8 9a 09 00 00       	call   809b84 <strcpy>
     strcpy(dev_stdout.name,"stdout");
-  8091ca:	be cd 26 81 00       	mov    esi,0x8126cd
-  8091cf:	bf 34 26 81 00       	mov    edi,0x812634
-  8091d4:	e8 8b 09 00 00       	call   809b64 <strcpy>
+  8091ea:	be cd 26 81 00       	mov    esi,0x8126cd
+  8091ef:	bf 34 26 81 00       	mov    edi,0x812634
+  8091f4:	e8 8b 09 00 00       	call   809b84 <strcpy>
     reg_driver(&drv_tty);
-  8091d9:	bf c0 24 81 00       	mov    edi,0x8124c0
-  8091de:	e8 44 9c ff ff       	call   802e27 <reg_driver>
+  8091f9:	bf c0 24 81 00       	mov    edi,0x8124c0
+  8091fe:	e8 24 9c ff ff       	call   802e27 <reg_driver>
     reg_device(&dev_tty);
-  8091e3:	bf 60 25 81 00       	mov    edi,0x812560
-  8091e8:	e8 52 99 ff ff       	call   802b3f <reg_device>
+  809203:	bf 60 25 81 00       	mov    edi,0x812560
+  809208:	e8 32 99 ff ff       	call   802b3f <reg_device>
     reg_device(&dev_stdout);
-  8091ed:	bf 20 26 81 00       	mov    edi,0x812620
-  8091f2:	e8 48 99 ff ff       	call   802b3f <reg_device>
+  80920d:	bf 20 26 81 00       	mov    edi,0x812620
+  809212:	e8 28 99 ff ff       	call   802b3f <reg_device>
     unsigned char *vp=0x20000;
-  8091f7:	48 c7 45 f8 00 00 02 	mov    QWORD PTR [rbp-0x8],0x20000
-  8091fe:	00 
+  809217:	48 c7 45 f8 00 00 02 	mov    QWORD PTR [rbp-0x8],0x20000
+  80921e:	00 
     if(*vp==0x7)
-  8091ff:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  809203:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  809206:	3c 07                	cmp    al,0x7
-  809208:	75 36                	jne    809240 <init_tty+0x91>
+  80921f:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  809223:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  809226:	3c 07                	cmp    al,0x7
+  809228:	75 36                	jne    809260 <init_tty+0x91>
     {
         video_mode=VIDEO_MONOTEXT;
-  80920a:	c7 05 88 99 c2 ff 00 	mov    DWORD PTR [rip+0xffffffffffc29988],0x0        # 432b9c <video_mode>
-  809211:	00 00 00 
+  80922a:	c7 05 68 99 c2 ff 00 	mov    DWORD PTR [rip+0xffffffffffc29968],0x0        # 432b9c <video_mode>
+  809231:	00 00 00 
         video_base=0xb0000;
-  809214:	48 c7 05 61 99 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc29961],0xb0000        # 432b80 <video_base>
-  80921b:	00 00 0b 00 
+  809234:	48 c7 05 41 99 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc29941],0xb0000        # 432b80 <video_base>
+  80923b:	00 00 0b 00 
         video_end=0xb8000-1;
-  80921f:	48 c7 05 5e 99 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc2995e],0xb7fff        # 432b88 <video_end>
-  809226:	ff 7f 0b 00 
+  80923f:	48 c7 05 3e 99 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc2993e],0xb7fff        # 432b88 <video_end>
+  809246:	ff 7f 0b 00 
         port_reg_index=0x3b4;
-  80922a:	c7 05 74 99 c2 ff b4 	mov    DWORD PTR [rip+0xffffffffffc29974],0x3b4        # 432ba8 <port_reg_index>
-  809231:	03 00 00 
+  80924a:	c7 05 54 99 c2 ff b4 	mov    DWORD PTR [rip+0xffffffffffc29954],0x3b4        # 432ba8 <port_reg_index>
+  809251:	03 00 00 
         port_reg_v=0x3b5;
-  809234:	c7 05 6e 99 c2 ff b5 	mov    DWORD PTR [rip+0xffffffffffc2996e],0x3b5        # 432bac <port_reg_v>
-  80923b:	03 00 00 
-  80923e:	eb 61                	jmp    8092a1 <init_tty+0xf2>
+  809254:	c7 05 4e 99 c2 ff b5 	mov    DWORD PTR [rip+0xffffffffffc2994e],0x3b5        # 432bac <port_reg_v>
+  80925b:	03 00 00 
+  80925e:	eb 61                	jmp    8092c1 <init_tty+0xf2>
     }else if(*vp<=0x3)
-  809240:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  809244:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  809247:	3c 03                	cmp    al,0x3
-  809249:	77 36                	ja     809281 <init_tty+0xd2>
+  809260:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  809264:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  809267:	3c 03                	cmp    al,0x3
+  809269:	77 36                	ja     8092a1 <init_tty+0xd2>
     {
         video_mode=VIDEO_CHROMATEXT;
-  80924b:	c7 05 47 99 c2 ff 01 	mov    DWORD PTR [rip+0xffffffffffc29947],0x1        # 432b9c <video_mode>
-  809252:	00 00 00 
+  80926b:	c7 05 27 99 c2 ff 01 	mov    DWORD PTR [rip+0xffffffffffc29927],0x1        # 432b9c <video_mode>
+  809272:	00 00 00 
         video_base=0xb8000;
-  809255:	48 c7 05 20 99 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc29920],0xb8000        # 432b80 <video_base>
-  80925c:	00 80 0b 00 
+  809275:	48 c7 05 00 99 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc29900],0xb8000        # 432b80 <video_base>
+  80927c:	00 80 0b 00 
         video_end=0xc0000-1;
-  809260:	48 c7 05 1d 99 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc2991d],0xbffff        # 432b88 <video_end>
-  809267:	ff ff 0b 00 
+  809280:	48 c7 05 fd 98 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc298fd],0xbffff        # 432b88 <video_end>
+  809287:	ff ff 0b 00 
         port_reg_index=0x3d4;
-  80926b:	c7 05 33 99 c2 ff d4 	mov    DWORD PTR [rip+0xffffffffffc29933],0x3d4        # 432ba8 <port_reg_index>
-  809272:	03 00 00 
+  80928b:	c7 05 13 99 c2 ff d4 	mov    DWORD PTR [rip+0xffffffffffc29913],0x3d4        # 432ba8 <port_reg_index>
+  809292:	03 00 00 
         port_reg_v=0x3d5;
-  809275:	c7 05 2d 99 c2 ff d5 	mov    DWORD PTR [rip+0xffffffffffc2992d],0x3d5        # 432bac <port_reg_v>
-  80927c:	03 00 00 
-  80927f:	eb 20                	jmp    8092a1 <init_tty+0xf2>
+  809295:	c7 05 0d 99 c2 ff d5 	mov    DWORD PTR [rip+0xffffffffffc2990d],0x3d5        # 432bac <port_reg_v>
+  80929c:	03 00 00 
+  80929f:	eb 20                	jmp    8092c1 <init_tty+0xf2>
     }else{
         video_mode=VIDEO_GRAPHICS;
-  809281:	c7 05 11 99 c2 ff 02 	mov    DWORD PTR [rip+0xffffffffffc29911],0x2        # 432b9c <video_mode>
-  809288:	00 00 00 
+  8092a1:	c7 05 f1 98 c2 ff 02 	mov    DWORD PTR [rip+0xffffffffffc298f1],0x2        # 432b9c <video_mode>
+  8092a8:	00 00 00 
         video_base=0xa0000;
-  80928b:	48 c7 05 ea 98 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc298ea],0xa0000        # 432b80 <video_base>
-  809292:	00 00 0a 00 
+  8092ab:	48 c7 05 ca 98 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc298ca],0xa0000        # 432b80 <video_base>
+  8092b2:	00 00 0a 00 
         video_end=0xb0000-1;
-  809296:	48 c7 05 e7 98 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc298e7],0xaffff        # 432b88 <video_end>
-  80929d:	ff ff 0a 00 
+  8092b6:	48 c7 05 c7 98 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc298c7],0xaffff        # 432b88 <video_end>
+  8092bd:	ff ff 0a 00 
     }
     if(*vp<=0x1)line_chs=40;
-  8092a1:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  8092a5:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  8092a8:	3c 01                	cmp    al,0x1
-  8092aa:	77 0f                	ja     8092bb <init_tty+0x10c>
-  8092ac:	c7 05 ee 98 c2 ff 28 	mov    DWORD PTR [rip+0xffffffffffc298ee],0x28        # 432ba4 <line_chs>
-  8092b3:	00 00 00 
-  8092b6:	e9 91 00 00 00       	jmp    80934c <init_tty+0x19d>
+  8092c1:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  8092c5:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  8092c8:	3c 01                	cmp    al,0x1
+  8092ca:	77 0f                	ja     8092db <init_tty+0x10c>
+  8092cc:	c7 05 ce 98 c2 ff 28 	mov    DWORD PTR [rip+0xffffffffffc298ce],0x28        # 432ba4 <line_chs>
+  8092d3:	00 00 00 
+  8092d6:	e9 91 00 00 00       	jmp    80936c <init_tty+0x19d>
     else if(*vp<=0x3||*vp==0x7)line_chs=80;
-  8092bb:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  8092bf:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  8092c2:	3c 03                	cmp    al,0x3
-  8092c4:	76 0b                	jbe    8092d1 <init_tty+0x122>
-  8092c6:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  8092ca:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  8092cd:	3c 07                	cmp    al,0x7
-  8092cf:	75 0c                	jne    8092dd <init_tty+0x12e>
-  8092d1:	c7 05 c9 98 c2 ff 50 	mov    DWORD PTR [rip+0xffffffffffc298c9],0x50        # 432ba4 <line_chs>
-  8092d8:	00 00 00 
-  8092db:	eb 6f                	jmp    80934c <init_tty+0x19d>
+  8092db:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  8092df:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  8092e2:	3c 03                	cmp    al,0x3
+  8092e4:	76 0b                	jbe    8092f1 <init_tty+0x122>
+  8092e6:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  8092ea:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  8092ed:	3c 07                	cmp    al,0x7
+  8092ef:	75 0c                	jne    8092fd <init_tty+0x12e>
+  8092f1:	c7 05 a9 98 c2 ff 50 	mov    DWORD PTR [rip+0xffffffffffc298a9],0x50        # 432ba4 <line_chs>
+  8092f8:	00 00 00 
+  8092fb:	eb 6f                	jmp    80936c <init_tty+0x19d>
     else if(*vp<=0x5||*vp==0x9||*vp==0xd)line_chs=320;
-  8092dd:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  8092e1:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  8092e4:	3c 05                	cmp    al,0x5
-  8092e6:	76 16                	jbe    8092fe <init_tty+0x14f>
-  8092e8:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  8092ec:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  8092ef:	3c 09                	cmp    al,0x9
-  8092f1:	74 0b                	je     8092fe <init_tty+0x14f>
-  8092f3:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  8092f7:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  8092fa:	3c 0d                	cmp    al,0xd
-  8092fc:	75 0c                	jne    80930a <init_tty+0x15b>
-  8092fe:	c7 05 9c 98 c2 ff 40 	mov    DWORD PTR [rip+0xffffffffffc2989c],0x140        # 432ba4 <line_chs>
-  809305:	01 00 00 
-  809308:	eb 42                	jmp    80934c <init_tty+0x19d>
+  8092fd:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  809301:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  809304:	3c 05                	cmp    al,0x5
+  809306:	76 16                	jbe    80931e <init_tty+0x14f>
+  809308:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  80930c:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  80930f:	3c 09                	cmp    al,0x9
+  809311:	74 0b                	je     80931e <init_tty+0x14f>
+  809313:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  809317:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  80931a:	3c 0d                	cmp    al,0xd
+  80931c:	75 0c                	jne    80932a <init_tty+0x15b>
+  80931e:	c7 05 7c 98 c2 ff 40 	mov    DWORD PTR [rip+0xffffffffffc2987c],0x140        # 432ba4 <line_chs>
+  809325:	01 00 00 
+  809328:	eb 42                	jmp    80936c <init_tty+0x19d>
     else if(*vp==0x6||*vp==0xa||*vp>=0xe)line_chs=640;
-  80930a:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  80930e:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  809311:	3c 06                	cmp    al,0x6
-  809313:	74 16                	je     80932b <init_tty+0x17c>
-  809315:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  809319:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  80931c:	3c 0a                	cmp    al,0xa
-  80931e:	74 0b                	je     80932b <init_tty+0x17c>
-  809320:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  809324:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  809327:	3c 0d                	cmp    al,0xd
-  809329:	76 0c                	jbe    809337 <init_tty+0x188>
-  80932b:	c7 05 6f 98 c2 ff 80 	mov    DWORD PTR [rip+0xffffffffffc2986f],0x280        # 432ba4 <line_chs>
-  809332:	02 00 00 
-  809335:	eb 15                	jmp    80934c <init_tty+0x19d>
+  80932a:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  80932e:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  809331:	3c 06                	cmp    al,0x6
+  809333:	74 16                	je     80934b <init_tty+0x17c>
+  809335:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  809339:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  80933c:	3c 0a                	cmp    al,0xa
+  80933e:	74 0b                	je     80934b <init_tty+0x17c>
+  809340:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  809344:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  809347:	3c 0d                	cmp    al,0xd
+  809349:	76 0c                	jbe    809357 <init_tty+0x188>
+  80934b:	c7 05 4f 98 c2 ff 80 	mov    DWORD PTR [rip+0xffffffffffc2984f],0x280        # 432ba4 <line_chs>
+  809352:	02 00 00 
+  809355:	eb 15                	jmp    80936c <init_tty+0x19d>
     else if(*vp==0x8)line_chs=160;
-  809337:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  80933b:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  80933e:	3c 08                	cmp    al,0x8
-  809340:	75 0a                	jne    80934c <init_tty+0x19d>
-  809342:	c7 05 58 98 c2 ff a0 	mov    DWORD PTR [rip+0xffffffffffc29858],0xa0        # 432ba4 <line_chs>
-  809349:	00 00 00 
+  809357:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  80935b:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  80935e:	3c 08                	cmp    al,0x8
+  809360:	75 0a                	jne    80936c <init_tty+0x19d>
+  809362:	c7 05 38 98 c2 ff a0 	mov    DWORD PTR [rip+0xffffffffffc29838],0xa0        # 432ba4 <line_chs>
+  809369:	00 00 00 
     switch (*vp)
-  80934c:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  809350:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  809353:	0f b6 c0             	movzx  eax,al
-  809356:	83 f8 14             	cmp    eax,0x14
-  809359:	77 61                	ja     8093bc <init_tty+0x20d>
-  80935b:	89 c0                	mov    eax,eax
-  80935d:	48 8b 04 c5 d8 26 81 	mov    rax,QWORD PTR [rax*8+0x8126d8]
-  809364:	00 
-  809365:	3e ff e0             	notrack jmp rax
+  80936c:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  809370:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  809373:	0f b6 c0             	movzx  eax,al
+  809376:	83 f8 14             	cmp    eax,0x14
+  809379:	77 61                	ja     8093dc <init_tty+0x20d>
+  80937b:	89 c0                	mov    eax,eax
+  80937d:	48 8b 04 c5 d8 26 81 	mov    rax,QWORD PTR [rax*8+0x8126d8]
+  809384:	00 
+  809385:	3e ff e0             	notrack jmp rax
     {
     case 0x0:case 0x1:vpage_size=40*25;break;
-  809368:	c7 05 3e 98 c2 ff e8 	mov    DWORD PTR [rip+0xffffffffffc2983e],0x3e8        # 432bb0 <vpage_size>
-  80936f:	03 00 00 
-  809372:	eb 49                	jmp    8093bd <init_tty+0x20e>
+  809388:	c7 05 1e 98 c2 ff e8 	mov    DWORD PTR [rip+0xffffffffffc2981e],0x3e8        # 432bb0 <vpage_size>
+  80938f:	03 00 00 
+  809392:	eb 49                	jmp    8093dd <init_tty+0x20e>
     case 2:case 3:case 7:vpage_size=80*25;break;
-  809374:	c7 05 32 98 c2 ff d0 	mov    DWORD PTR [rip+0xffffffffffc29832],0x7d0        # 432bb0 <vpage_size>
-  80937b:	07 00 00 
-  80937e:	eb 3d                	jmp    8093bd <init_tty+0x20e>
+  809394:	c7 05 12 98 c2 ff d0 	mov    DWORD PTR [rip+0xffffffffffc29812],0x7d0        # 432bb0 <vpage_size>
+  80939b:	07 00 00 
+  80939e:	eb 3d                	jmp    8093dd <init_tty+0x20e>
     case 4:case 5:case 9:case 0xd:vpage_size=320*200;break;
-  809380:	c7 05 26 98 c2 ff 00 	mov    DWORD PTR [rip+0xffffffffffc29826],0xfa00        # 432bb0 <vpage_size>
-  809387:	fa 00 00 
-  80938a:	eb 31                	jmp    8093bd <init_tty+0x20e>
+  8093a0:	c7 05 06 98 c2 ff 00 	mov    DWORD PTR [rip+0xffffffffffc29806],0xfa00        # 432bb0 <vpage_size>
+  8093a7:	fa 00 00 
+  8093aa:	eb 31                	jmp    8093dd <init_tty+0x20e>
     case 6:case 0xa:case 0xe:vpage_size=640*200;break;
-  80938c:	c7 05 1a 98 c2 ff 00 	mov    DWORD PTR [rip+0xffffffffffc2981a],0x1f400        # 432bb0 <vpage_size>
-  809393:	f4 01 00 
-  809396:	eb 25                	jmp    8093bd <init_tty+0x20e>
+  8093ac:	c7 05 fa 97 c2 ff 00 	mov    DWORD PTR [rip+0xffffffffffc297fa],0x1f400        # 432bb0 <vpage_size>
+  8093b3:	f4 01 00 
+  8093b6:	eb 25                	jmp    8093dd <init_tty+0x20e>
     case 8:vpage_size=160*200;break;
-  809398:	c7 05 0e 98 c2 ff 00 	mov    DWORD PTR [rip+0xffffffffffc2980e],0x7d00        # 432bb0 <vpage_size>
-  80939f:	7d 00 00 
-  8093a2:	eb 19                	jmp    8093bd <init_tty+0x20e>
+  8093b8:	c7 05 ee 97 c2 ff 00 	mov    DWORD PTR [rip+0xffffffffffc297ee],0x7d00        # 432bb0 <vpage_size>
+  8093bf:	7d 00 00 
+  8093c2:	eb 19                	jmp    8093dd <init_tty+0x20e>
     case 0xf:case 0x10:case 0x11:vpage_size=640*350;break;
-  8093a4:	c7 05 02 98 c2 ff 00 	mov    DWORD PTR [rip+0xffffffffffc29802],0x36b00        # 432bb0 <vpage_size>
-  8093ab:	6b 03 00 
-  8093ae:	eb 0d                	jmp    8093bd <init_tty+0x20e>
+  8093c4:	c7 05 e2 97 c2 ff 00 	mov    DWORD PTR [rip+0xffffffffffc297e2],0x36b00        # 432bb0 <vpage_size>
+  8093cb:	6b 03 00 
+  8093ce:	eb 0d                	jmp    8093dd <init_tty+0x20e>
     case 0x12:case 0x13:case 0x14:vpage_size=640*480;break;
-  8093b0:	c7 05 f6 97 c2 ff 00 	mov    DWORD PTR [rip+0xffffffffffc297f6],0x4b000        # 432bb0 <vpage_size>
-  8093b7:	b0 04 00 
-  8093ba:	eb 01                	jmp    8093bd <init_tty+0x20e>
+  8093d0:	c7 05 d6 97 c2 ff 00 	mov    DWORD PTR [rip+0xffffffffffc297d6],0x4b000        # 432bb0 <vpage_size>
+  8093d7:	b0 04 00 
+  8093da:	eb 01                	jmp    8093dd <init_tty+0x20e>
     default:
         break;
-  8093bc:	90                   	nop
+  8093dc:	90                   	nop
     }
     m_ptr=video_base;
-  8093bd:	48 8b 05 bc 97 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc297bc]        # 432b80 <video_base>
-  8093c4:	48 89 05 7d 12 00 00 	mov    QWORD PTR [rip+0x127d],rax        # 80a648 <m_ptr>
+  8093dd:	48 8b 05 9c 97 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc2979c]        # 432b80 <video_base>
+  8093e4:	48 89 05 5d 12 00 00 	mov    QWORD PTR [rip+0x125d],rax        # 80a648 <m_ptr>
     page_boffset=0;
-  8093cb:	c7 05 c3 97 c2 ff 00 	mov    DWORD PTR [rip+0xffffffffffc297c3],0x0        # 432b98 <page_boffset>
-  8093d2:	00 00 00 
+  8093eb:	c7 05 a3 97 c2 ff 00 	mov    DWORD PTR [rip+0xffffffffffc297a3],0x0        # 432b98 <page_boffset>
+  8093f2:	00 00 00 
     vpage_base=video_base;
-  8093d5:	48 8b 05 a4 97 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc297a4]        # 432b80 <video_base>
-  8093dc:	48 89 05 ad 97 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc297ad],rax        # 432b90 <vpage_base>
+  8093f5:	48 8b 05 84 97 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc29784]        # 432b80 <video_base>
+  8093fc:	48 89 05 8d 97 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc2978d],rax        # 432b90 <vpage_base>
     vp++;
-  8093e3:	48 83 45 f8 01       	add    QWORD PTR [rbp-0x8],0x1
+  809403:	48 83 45 f8 01       	add    QWORD PTR [rbp-0x8],0x1
     vpage=*vp;
-  8093e8:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  8093ec:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  8093ef:	0f b6 c0             	movzx  eax,al
-  8093f2:	89 05 a8 97 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc297a8],eax        # 432ba0 <vpage>
+  809408:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  80940c:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  80940f:	0f b6 c0             	movzx  eax,al
+  809412:	89 05 88 97 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc29788],eax        # 432ba0 <vpage>
     vp++;
-  8093f8:	48 83 45 f8 01       	add    QWORD PTR [rbp-0x8],0x1
+  809418:	48 83 45 f8 01       	add    QWORD PTR [rbp-0x8],0x1
     stline=*vp++;
-  8093fd:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  809401:	48 8d 50 01          	lea    rdx,[rax+0x1]
-  809405:	48 89 55 f8          	mov    QWORD PTR [rbp-0x8],rdx
-  809409:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  80940c:	0f b6 c0             	movzx  eax,al
-  80940f:	89 05 a7 97 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc297a7],eax        # 432bbc <stline>
+  80941d:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  809421:	48 8d 50 01          	lea    rdx,[rax+0x1]
+  809425:	48 89 55 f8          	mov    QWORD PTR [rbp-0x8],rdx
+  809429:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  80942c:	0f b6 c0             	movzx  eax,al
+  80942f:	89 05 87 97 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc29787],eax        # 432bbc <stline>
     endline=*vp++;
-  809415:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  809419:	48 8d 50 01          	lea    rdx,[rax+0x1]
-  80941d:	48 89 55 f8          	mov    QWORD PTR [rbp-0x8],rdx
-  809421:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  809424:	0f b6 c0             	movzx  eax,al
-  809427:	89 05 93 97 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc29793],eax        # 432bc0 <endline>
+  809435:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  809439:	48 8d 50 01          	lea    rdx,[rax+0x1]
+  80943d:	48 89 55 f8          	mov    QWORD PTR [rbp-0x8],rdx
+  809441:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  809444:	0f b6 c0             	movzx  eax,al
+  809447:	89 05 73 97 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc29773],eax        # 432bc0 <endline>
     videoy=*vp++;
-  80942d:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  809431:	48 8d 50 01          	lea    rdx,[rax+0x1]
-  809435:	48 89 55 f8          	mov    QWORD PTR [rbp-0x8],rdx
-  809439:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  80943c:	0f b6 c0             	movzx  eax,al
-  80943f:	89 05 73 97 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc29773],eax        # 432bb8 <videoy>
+  80944d:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  809451:	48 8d 50 01          	lea    rdx,[rax+0x1]
+  809455:	48 89 55 f8          	mov    QWORD PTR [rbp-0x8],rdx
+  809459:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  80945c:	0f b6 c0             	movzx  eax,al
+  80945f:	89 05 53 97 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc29753],eax        # 432bb8 <videoy>
     videox=*vp;
-  809445:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  809449:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  80944c:	0f b6 c0             	movzx  eax,al
-  80944f:	89 05 5f 97 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc2975f],eax        # 432bb4 <videox>
+  809465:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  809469:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  80946c:	0f b6 c0             	movzx  eax,al
+  80946f:	89 05 3f 97 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc2973f],eax        # 432bb4 <videox>
     //logf("video:\n mode:0x%x cursor:%d,%d\n",video_mode,\
     videoy,videox);
 }
-  809455:	90                   	nop
-  809456:	c9                   	leave  
-  809457:	c3                   	ret    
+  809475:	90                   	nop
+  809476:	c9                   	leave  
+  809477:	c3                   	ret    
 
-0000000000809458 <seek_tty>:
+0000000000809478 <seek_tty>:
 char m_color=MONITOR_WHITE;
 int seek_tty(driver_args * args)
 {
-  809458:	f3 0f 1e fa          	endbr64 
-  80945c:	55                   	push   rbp
-  80945d:	48 89 e5             	mov    rbp,rsp
-  809460:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
+  809478:	f3 0f 1e fa          	endbr64 
+  80947c:	55                   	push   rbp
+  80947d:	48 89 e5             	mov    rbp,rsp
+  809480:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
     int pos=args->pos;
-  809464:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  809468:	8b 40 14             	mov    eax,DWORD PTR [rax+0x14]
-  80946b:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
+  809484:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  809488:	8b 40 14             	mov    eax,DWORD PTR [rax+0x14]
+  80948b:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
     m_ptr=0xb8000+pos*2;
-  80946e:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  809471:	05 00 c0 05 00       	add    eax,0x5c000
-  809476:	01 c0                	add    eax,eax
-  809478:	48 98                	cdqe   
-  80947a:	48 89 05 c7 11 00 00 	mov    QWORD PTR [rip+0x11c7],rax        # 80a648 <m_ptr>
+  80948e:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  809491:	05 00 c0 05 00       	add    eax,0x5c000
+  809496:	01 c0                	add    eax,eax
+  809498:	48 98                	cdqe   
+  80949a:	48 89 05 a7 11 00 00 	mov    QWORD PTR [rip+0x11a7],rax        # 80a648 <m_ptr>
 }
-  809481:	90                   	nop
-  809482:	5d                   	pop    rbp
-  809483:	c3                   	ret    
+  8094a1:	90                   	nop
+  8094a2:	5d                   	pop    rbp
+  8094a3:	c3                   	ret    
 
-0000000000809484 <tell_monitor>:
+00000000008094a4 <tell_monitor>:
 int tell_monitor()
 {
-  809484:	f3 0f 1e fa          	endbr64 
-  809488:	55                   	push   rbp
-  809489:	48 89 e5             	mov    rbp,rsp
+  8094a4:	f3 0f 1e fa          	endbr64 
+  8094a8:	55                   	push   rbp
+  8094a9:	48 89 e5             	mov    rbp,rsp
     return (m_ptr-video_base)/2;
-  80948c:	48 8b 05 b5 11 00 00 	mov    rax,QWORD PTR [rip+0x11b5]        # 80a648 <m_ptr>
-  809493:	48 8b 15 e6 96 c2 ff 	mov    rdx,QWORD PTR [rip+0xffffffffffc296e6]        # 432b80 <video_base>
-  80949a:	48 29 d0             	sub    rax,rdx
-  80949d:	48 89 c2             	mov    rdx,rax
-  8094a0:	48 c1 ea 3f          	shr    rdx,0x3f
-  8094a4:	48 01 d0             	add    rax,rdx
-  8094a7:	48 d1 f8             	sar    rax,1
+  8094ac:	48 8b 05 95 11 00 00 	mov    rax,QWORD PTR [rip+0x1195]        # 80a648 <m_ptr>
+  8094b3:	48 8b 15 c6 96 c2 ff 	mov    rdx,QWORD PTR [rip+0xffffffffffc296c6]        # 432b80 <video_base>
+  8094ba:	48 29 d0             	sub    rax,rdx
+  8094bd:	48 89 c2             	mov    rdx,rax
+  8094c0:	48 c1 ea 3f          	shr    rdx,0x3f
+  8094c4:	48 01 d0             	add    rax,rdx
+  8094c7:	48 d1 f8             	sar    rax,1
 }
-  8094aa:	5d                   	pop    rbp
-  8094ab:	c3                   	ret    
+  8094ca:	5d                   	pop    rbp
+  8094cb:	c3                   	ret    
 
-00000000008094ac <del_ch>:
+00000000008094cc <del_ch>:
 void del_ch()
 {
-  8094ac:	f3 0f 1e fa          	endbr64 
-  8094b0:	55                   	push   rbp
-  8094b1:	48 89 e5             	mov    rbp,rsp
-  8094b4:	48 81 ec d0 00 00 00 	sub    rsp,0xd0
+  8094cc:	f3 0f 1e fa          	endbr64 
+  8094d0:	55                   	push   rbp
+  8094d1:	48 89 e5             	mov    rbp,rsp
+  8094d4:	48 81 ec d0 00 00 00 	sub    rsp,0xd0
     char *p=m_ptr-2;
-  8094bb:	48 8b 05 86 11 00 00 	mov    rax,QWORD PTR [rip+0x1186]        # 80a648 <m_ptr>
-  8094c2:	48 83 e8 02          	sub    rax,0x2
-  8094c6:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
+  8094db:	48 8b 05 66 11 00 00 	mov    rax,QWORD PTR [rip+0x1166]        # 80a648 <m_ptr>
+  8094e2:	48 83 e8 02          	sub    rax,0x2
+  8094e6:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
     int pos=tell_monitor()%SCREEN_W;
-  8094ca:	b8 00 00 00 00       	mov    eax,0x0
-  8094cf:	e8 b0 ff ff ff       	call   809484 <tell_monitor>
-  8094d4:	89 c2                	mov    edx,eax
-  8094d6:	48 63 c2             	movsxd rax,edx
-  8094d9:	48 69 c0 67 66 66 66 	imul   rax,rax,0x66666667
-  8094e0:	48 c1 e8 20          	shr    rax,0x20
-  8094e4:	c1 f8 05             	sar    eax,0x5
-  8094e7:	89 d1                	mov    ecx,edx
-  8094e9:	c1 f9 1f             	sar    ecx,0x1f
-  8094ec:	29 c8                	sub    eax,ecx
-  8094ee:	89 45 f4             	mov    DWORD PTR [rbp-0xc],eax
-  8094f1:	8b 4d f4             	mov    ecx,DWORD PTR [rbp-0xc]
-  8094f4:	89 c8                	mov    eax,ecx
-  8094f6:	c1 e0 02             	shl    eax,0x2
-  8094f9:	01 c8                	add    eax,ecx
-  8094fb:	c1 e0 04             	shl    eax,0x4
-  8094fe:	29 c2                	sub    edx,eax
-  809500:	89 55 f4             	mov    DWORD PTR [rbp-0xc],edx
+  8094ea:	b8 00 00 00 00       	mov    eax,0x0
+  8094ef:	e8 b0 ff ff ff       	call   8094a4 <tell_monitor>
+  8094f4:	89 c2                	mov    edx,eax
+  8094f6:	48 63 c2             	movsxd rax,edx
+  8094f9:	48 69 c0 67 66 66 66 	imul   rax,rax,0x66666667
+  809500:	48 c1 e8 20          	shr    rax,0x20
+  809504:	c1 f8 05             	sar    eax,0x5
+  809507:	89 d1                	mov    ecx,edx
+  809509:	c1 f9 1f             	sar    ecx,0x1f
+  80950c:	29 c8                	sub    eax,ecx
+  80950e:	89 45 f4             	mov    DWORD PTR [rbp-0xc],eax
+  809511:	8b 4d f4             	mov    ecx,DWORD PTR [rbp-0xc]
+  809514:	89 c8                	mov    eax,ecx
+  809516:	c1 e0 02             	shl    eax,0x2
+  809519:	01 c8                	add    eax,ecx
+  80951b:	c1 e0 04             	shl    eax,0x4
+  80951e:	29 c2                	sub    edx,eax
+  809520:	89 55 f4             	mov    DWORD PTR [rbp-0xc],edx
     for(;pos<SCREEN_W-1;pos++)
-  809503:	eb 17                	jmp    80951c <del_ch+0x70>
+  809523:	eb 17                	jmp    80953c <del_ch+0x70>
     {
         *p=*(p+2);
-  809505:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  809509:	0f b6 50 02          	movzx  edx,BYTE PTR [rax+0x2]
-  80950d:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  809511:	88 10                	mov    BYTE PTR [rax],dl
+  809525:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  809529:	0f b6 50 02          	movzx  edx,BYTE PTR [rax+0x2]
+  80952d:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  809531:	88 10                	mov    BYTE PTR [rax],dl
         p+=2;
-  809513:	48 83 45 f8 02       	add    QWORD PTR [rbp-0x8],0x2
+  809533:	48 83 45 f8 02       	add    QWORD PTR [rbp-0x8],0x2
     for(;pos<SCREEN_W-1;pos++)
-  809518:	83 45 f4 01          	add    DWORD PTR [rbp-0xc],0x1
-  80951c:	83 7d f4 4e          	cmp    DWORD PTR [rbp-0xc],0x4e
-  809520:	7e e3                	jle    809505 <del_ch+0x59>
+  809538:	83 45 f4 01          	add    DWORD PTR [rbp-0xc],0x1
+  80953c:	83 7d f4 4e          	cmp    DWORD PTR [rbp-0xc],0x4e
+  809540:	7e e3                	jle    809525 <del_ch+0x59>
     }
     driver_args args= {
-  809522:	48 8d 95 30 ff ff ff 	lea    rdx,[rbp-0xd0]
-  809529:	b8 00 00 00 00       	mov    eax,0x0
-  80952e:	b9 18 00 00 00       	mov    ecx,0x18
-  809533:	48 89 d7             	mov    rdi,rdx
-  809536:	f3 48 ab             	rep stos QWORD PTR es:[rdi],rax
+  809542:	48 8d 95 30 ff ff ff 	lea    rdx,[rbp-0xd0]
+  809549:	b8 00 00 00 00       	mov    eax,0x0
+  80954e:	b9 18 00 00 00       	mov    ecx,0x18
+  809553:	48 89 d7             	mov    rdi,rdx
+  809556:	f3 48 ab             	rep stos QWORD PTR es:[rdi],rax
             .pos=tell_monitor() - 1
-  809539:	b8 00 00 00 00       	mov    eax,0x0
-  80953e:	e8 41 ff ff ff       	call   809484 <tell_monitor>
-  809543:	83 e8 01             	sub    eax,0x1
+  809559:	b8 00 00 00 00       	mov    eax,0x0
+  80955e:	e8 41 ff ff ff       	call   8094a4 <tell_monitor>
+  809563:	83 e8 01             	sub    eax,0x1
     driver_args args= {
-  809546:	89 85 44 ff ff ff    	mov    DWORD PTR [rbp-0xbc],eax
+  809566:	89 85 44 ff ff ff    	mov    DWORD PTR [rbp-0xbc],eax
     };
     seek_tty(&args);
-  80954c:	48 8d 85 30 ff ff ff 	lea    rax,[rbp-0xd0]
-  809553:	48 89 c7             	mov    rdi,rax
-  809556:	e8 fd fe ff ff       	call   809458 <seek_tty>
+  80956c:	48 8d 85 30 ff ff ff 	lea    rax,[rbp-0xd0]
+  809573:	48 89 c7             	mov    rdi,rax
+  809576:	e8 fd fe ff ff       	call   809478 <seek_tty>
     set_cur();
-  80955b:	b8 00 00 00 00       	mov    eax,0x0
-  809560:	e8 03 00 00 00       	call   809568 <set_cur>
+  80957b:	b8 00 00 00 00       	mov    eax,0x0
+  809580:	e8 03 00 00 00       	call   809588 <set_cur>
 }
-  809565:	90                   	nop
-  809566:	c9                   	leave  
-  809567:	c3                   	ret    
+  809585:	90                   	nop
+  809586:	c9                   	leave  
+  809587:	c3                   	ret    
 
-0000000000809568 <set_cur>:
+0000000000809588 <set_cur>:
 void set_cur()
 {
-  809568:	f3 0f 1e fa          	endbr64 
-  80956c:	55                   	push   rbp
-  80956d:	48 89 e5             	mov    rbp,rsp
+  809588:	f3 0f 1e fa          	endbr64 
+  80958c:	55                   	push   rbp
+  80958d:	48 89 e5             	mov    rbp,rsp
     asm volatile("cli");
-  809570:	fa                   	cli    
+  809590:	fa                   	cli    
     outb(port_reg_index,14);
-  809571:	8b 05 31 96 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc29631]        # 432ba8 <port_reg_index>
-  809577:	0f b7 c0             	movzx  eax,ax
-  80957a:	be 0e 00 00 00       	mov    esi,0xe
-  80957f:	89 c7                	mov    edi,eax
-  809581:	e8 4a b9 ff ff       	call   804ed0 <outb>
+  809591:	8b 05 11 96 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc29611]        # 432ba8 <port_reg_index>
+  809597:	0f b7 c0             	movzx  eax,ax
+  80959a:	be 0e 00 00 00       	mov    esi,0xe
+  80959f:	89 c7                	mov    edi,eax
+  8095a1:	e8 4a b9 ff ff       	call   804ef0 <outb>
     outb(port_reg_v,((m_ptr-video_base)>>9)&0xff);
-  809586:	48 8b 05 bb 10 00 00 	mov    rax,QWORD PTR [rip+0x10bb]        # 80a648 <m_ptr>
-  80958d:	48 8b 15 ec 95 c2 ff 	mov    rdx,QWORD PTR [rip+0xffffffffffc295ec]        # 432b80 <video_base>
-  809594:	48 29 d0             	sub    rax,rdx
-  809597:	48 c1 f8 09          	sar    rax,0x9
-  80959b:	0f b6 d0             	movzx  edx,al
-  80959e:	8b 05 08 96 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc29608]        # 432bac <port_reg_v>
-  8095a4:	0f b7 c0             	movzx  eax,ax
-  8095a7:	89 d6                	mov    esi,edx
-  8095a9:	89 c7                	mov    edi,eax
-  8095ab:	e8 20 b9 ff ff       	call   804ed0 <outb>
+  8095a6:	48 8b 05 9b 10 00 00 	mov    rax,QWORD PTR [rip+0x109b]        # 80a648 <m_ptr>
+  8095ad:	48 8b 15 cc 95 c2 ff 	mov    rdx,QWORD PTR [rip+0xffffffffffc295cc]        # 432b80 <video_base>
+  8095b4:	48 29 d0             	sub    rax,rdx
+  8095b7:	48 c1 f8 09          	sar    rax,0x9
+  8095bb:	0f b6 d0             	movzx  edx,al
+  8095be:	8b 05 e8 95 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc295e8]        # 432bac <port_reg_v>
+  8095c4:	0f b7 c0             	movzx  eax,ax
+  8095c7:	89 d6                	mov    esi,edx
+  8095c9:	89 c7                	mov    edi,eax
+  8095cb:	e8 20 b9 ff ff       	call   804ef0 <outb>
     outb(port_reg_index,15);
-  8095b0:	8b 05 f2 95 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc295f2]        # 432ba8 <port_reg_index>
-  8095b6:	0f b7 c0             	movzx  eax,ax
-  8095b9:	be 0f 00 00 00       	mov    esi,0xf
-  8095be:	89 c7                	mov    edi,eax
-  8095c0:	e8 0b b9 ff ff       	call   804ed0 <outb>
+  8095d0:	8b 05 d2 95 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc295d2]        # 432ba8 <port_reg_index>
+  8095d6:	0f b7 c0             	movzx  eax,ax
+  8095d9:	be 0f 00 00 00       	mov    esi,0xf
+  8095de:	89 c7                	mov    edi,eax
+  8095e0:	e8 0b b9 ff ff       	call   804ef0 <outb>
     outb(port_reg_v,((m_ptr-video_base)>>1)&0xff);
-  8095c5:	48 8b 05 7c 10 00 00 	mov    rax,QWORD PTR [rip+0x107c]        # 80a648 <m_ptr>
-  8095cc:	48 8b 15 ad 95 c2 ff 	mov    rdx,QWORD PTR [rip+0xffffffffffc295ad]        # 432b80 <video_base>
-  8095d3:	48 29 d0             	sub    rax,rdx
-  8095d6:	48 d1 f8             	sar    rax,1
-  8095d9:	0f b6 d0             	movzx  edx,al
-  8095dc:	8b 05 ca 95 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc295ca]        # 432bac <port_reg_v>
-  8095e2:	0f b7 c0             	movzx  eax,ax
-  8095e5:	89 d6                	mov    esi,edx
-  8095e7:	89 c7                	mov    edi,eax
-  8095e9:	e8 e2 b8 ff ff       	call   804ed0 <outb>
+  8095e5:	48 8b 05 5c 10 00 00 	mov    rax,QWORD PTR [rip+0x105c]        # 80a648 <m_ptr>
+  8095ec:	48 8b 15 8d 95 c2 ff 	mov    rdx,QWORD PTR [rip+0xffffffffffc2958d]        # 432b80 <video_base>
+  8095f3:	48 29 d0             	sub    rax,rdx
+  8095f6:	48 d1 f8             	sar    rax,1
+  8095f9:	0f b6 d0             	movzx  edx,al
+  8095fc:	8b 05 aa 95 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc295aa]        # 432bac <port_reg_v>
+  809602:	0f b7 c0             	movzx  eax,ax
+  809605:	89 d6                	mov    esi,edx
+  809607:	89 c7                	mov    edi,eax
+  809609:	e8 e2 b8 ff ff       	call   804ef0 <outb>
     asm volatile("sti");
-  8095ee:	fb                   	sti    
+  80960e:	fb                   	sti    
 }
-  8095ef:	90                   	nop
-  8095f0:	5d                   	pop    rbp
-  8095f1:	c3                   	ret    
+  80960f:	90                   	nop
+  809610:	5d                   	pop    rbp
+  809611:	c3                   	ret    
 
-00000000008095f2 <read_tty>:
+0000000000809612 <read_tty>:
 
 int read_tty(driver_args *args)
 {
-  8095f2:	f3 0f 1e fa          	endbr64 
-  8095f6:	55                   	push   rbp
-  8095f7:	48 89 e5             	mov    rbp,rsp
-  8095fa:	48 83 ec 20          	sub    rsp,0x20
-  8095fe:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
+  809612:	f3 0f 1e fa          	endbr64 
+  809616:	55                   	push   rbp
+  809617:	48 89 e5             	mov    rbp,rsp
+  80961a:	48 83 ec 20          	sub    rsp,0x20
+  80961e:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
     char* dist=args->dist_addr;
-  809602:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  809606:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
-  809609:	48 98                	cdqe   
-  80960b:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
+  809622:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  809626:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
+  809629:	48 98                	cdqe   
+  80962b:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
     int len=args->len;
-  80960f:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  809613:	8b 40 18             	mov    eax,DWORD PTR [rax+0x18]
-  809616:	89 45 f0             	mov    DWORD PTR [rbp-0x10],eax
+  80962f:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  809633:	8b 40 18             	mov    eax,DWORD PTR [rax+0x18]
+  809636:	89 45 f0             	mov    DWORD PTR [rbp-0x10],eax
     for(int i=0;i<len;i++)
-  809619:	c7 45 f4 00 00 00 00 	mov    DWORD PTR [rbp-0xc],0x0
-  809620:	eb 4a                	jmp    80966c <read_tty+0x7a>
+  809639:	c7 45 f4 00 00 00 00 	mov    DWORD PTR [rbp-0xc],0x0
+  809640:	eb 4a                	jmp    80968c <read_tty+0x7a>
     {
         *dist++=*m_ptr;
-  809622:	48 8b 15 1f 10 00 00 	mov    rdx,QWORD PTR [rip+0x101f]        # 80a648 <m_ptr>
-  809629:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  80962d:	48 8d 48 01          	lea    rcx,[rax+0x1]
-  809631:	48 89 4d f8          	mov    QWORD PTR [rbp-0x8],rcx
-  809635:	0f b6 12             	movzx  edx,BYTE PTR [rdx]
-  809638:	88 10                	mov    BYTE PTR [rax],dl
+  809642:	48 8b 15 ff 0f 00 00 	mov    rdx,QWORD PTR [rip+0xfff]        # 80a648 <m_ptr>
+  809649:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  80964d:	48 8d 48 01          	lea    rcx,[rax+0x1]
+  809651:	48 89 4d f8          	mov    QWORD PTR [rbp-0x8],rcx
+  809655:	0f b6 12             	movzx  edx,BYTE PTR [rdx]
+  809658:	88 10                	mov    BYTE PTR [rax],dl
         if(m_ptr==0xbffff&&i>0)
-  80963a:	48 8b 05 07 10 00 00 	mov    rax,QWORD PTR [rip+0x1007]        # 80a648 <m_ptr>
-  809641:	48 3d ff ff 0b 00    	cmp    rax,0xbffff
-  809647:	75 0d                	jne    809656 <read_tty+0x64>
-  809649:	83 7d f4 00          	cmp    DWORD PTR [rbp-0xc],0x0
-  80964d:	7e 07                	jle    809656 <read_tty+0x64>
+  80965a:	48 8b 05 e7 0f 00 00 	mov    rax,QWORD PTR [rip+0xfe7]        # 80a648 <m_ptr>
+  809661:	48 3d ff ff 0b 00    	cmp    rax,0xbffff
+  809667:	75 0d                	jne    809676 <read_tty+0x64>
+  809669:	83 7d f4 00          	cmp    DWORD PTR [rbp-0xc],0x0
+  80966d:	7e 07                	jle    809676 <read_tty+0x64>
         {
             return 1;//读到尾了
-  80964f:	b8 01 00 00 00       	mov    eax,0x1
-  809654:	eb 2d                	jmp    809683 <read_tty+0x91>
+  80966f:	b8 01 00 00 00       	mov    eax,0x1
+  809674:	eb 2d                	jmp    8096a3 <read_tty+0x91>
         }
         m_ptr+=2;
-  809656:	48 8b 05 eb 0f 00 00 	mov    rax,QWORD PTR [rip+0xfeb]        # 80a648 <m_ptr>
-  80965d:	48 83 c0 02          	add    rax,0x2
-  809661:	48 89 05 e0 0f 00 00 	mov    QWORD PTR [rip+0xfe0],rax        # 80a648 <m_ptr>
+  809676:	48 8b 05 cb 0f 00 00 	mov    rax,QWORD PTR [rip+0xfcb]        # 80a648 <m_ptr>
+  80967d:	48 83 c0 02          	add    rax,0x2
+  809681:	48 89 05 c0 0f 00 00 	mov    QWORD PTR [rip+0xfc0],rax        # 80a648 <m_ptr>
     for(int i=0;i<len;i++)
-  809668:	83 45 f4 01          	add    DWORD PTR [rbp-0xc],0x1
-  80966c:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
-  80966f:	3b 45 f0             	cmp    eax,DWORD PTR [rbp-0x10]
-  809672:	7c ae                	jl     809622 <read_tty+0x30>
+  809688:	83 45 f4 01          	add    DWORD PTR [rbp-0xc],0x1
+  80968c:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
+  80968f:	3b 45 f0             	cmp    eax,DWORD PTR [rbp-0x10]
+  809692:	7c ae                	jl     809642 <read_tty+0x30>
     }
     set_cur();
-  809674:	b8 00 00 00 00       	mov    eax,0x0
-  809679:	e8 ea fe ff ff       	call   809568 <set_cur>
+  809694:	b8 00 00 00 00       	mov    eax,0x0
+  809699:	e8 ea fe ff ff       	call   809588 <set_cur>
     return 0;
-  80967e:	b8 00 00 00 00       	mov    eax,0x0
+  80969e:	b8 00 00 00 00       	mov    eax,0x0
 }
-  809683:	c9                   	leave  
-  809684:	c3                   	ret    
+  8096a3:	c9                   	leave  
+  8096a4:	c3                   	ret    
 
-0000000000809685 <write_tty>:
+00000000008096a5 <write_tty>:
 int write_tty(driver_args *args)
 {
-  809685:	f3 0f 1e fa          	endbr64 
-  809689:	55                   	push   rbp
-  80968a:	48 89 e5             	mov    rbp,rsp
-  80968d:	48 83 ec 30          	sub    rsp,0x30
-  809691:	48 89 7d d8          	mov    QWORD PTR [rbp-0x28],rdi
+  8096a5:	f3 0f 1e fa          	endbr64 
+  8096a9:	55                   	push   rbp
+  8096aa:	48 89 e5             	mov    rbp,rsp
+  8096ad:	48 83 ec 30          	sub    rsp,0x30
+  8096b1:	48 89 7d d8          	mov    QWORD PTR [rbp-0x28],rdi
     char* src=args->src_addr;
-  809695:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
-  809699:	8b 40 08             	mov    eax,DWORD PTR [rax+0x8]
-  80969c:	48 98                	cdqe   
-  80969e:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
+  8096b5:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
+  8096b9:	8b 40 08             	mov    eax,DWORD PTR [rax+0x8]
+  8096bc:	48 98                	cdqe   
+  8096be:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
     int len=args->len;
-  8096a2:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
-  8096a6:	8b 40 18             	mov    eax,DWORD PTR [rax+0x18]
-  8096a9:	89 45 f0             	mov    DWORD PTR [rbp-0x10],eax
+  8096c2:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
+  8096c6:	8b 40 18             	mov    eax,DWORD PTR [rax+0x18]
+  8096c9:	89 45 f0             	mov    DWORD PTR [rbp-0x10],eax
     for(int i=0;i<len;i++)
-  8096ac:	c7 45 f4 00 00 00 00 	mov    DWORD PTR [rbp-0xc],0x0
-  8096b3:	e9 0b 01 00 00       	jmp    8097c3 <write_tty+0x13e>
+  8096cc:	c7 45 f4 00 00 00 00 	mov    DWORD PTR [rbp-0xc],0x0
+  8096d3:	e9 0b 01 00 00       	jmp    8097e3 <write_tty+0x13e>
     {
         if(*src=='\n')
-  8096b8:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  8096bc:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  8096bf:	3c 0a                	cmp    al,0xa
-  8096c1:	75 50                	jne    809713 <write_tty+0x8e>
+  8096d8:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  8096dc:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  8096df:	3c 0a                	cmp    al,0xa
+  8096e1:	75 50                	jne    809733 <write_tty+0x8e>
         {
             unsigned int off=m_ptr-0xb8000;
-  8096c3:	48 8b 05 7e 0f 00 00 	mov    rax,QWORD PTR [rip+0xf7e]        # 80a648 <m_ptr>
-  8096ca:	48 2d 00 80 0b 00    	sub    rax,0xb8000
-  8096d0:	89 45 ec             	mov    DWORD PTR [rbp-0x14],eax
+  8096e3:	48 8b 05 5e 0f 00 00 	mov    rax,QWORD PTR [rip+0xf5e]        # 80a648 <m_ptr>
+  8096ea:	48 2d 00 80 0b 00    	sub    rax,0xb8000
+  8096f0:	89 45 ec             	mov    DWORD PTR [rbp-0x14],eax
             off=(off/160+1)*160;
-  8096d3:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
-  8096d6:	89 c2                	mov    edx,eax
-  8096d8:	b8 cd cc cc cc       	mov    eax,0xcccccccd
-  8096dd:	48 0f af c2          	imul   rax,rdx
-  8096e1:	48 c1 e8 20          	shr    rax,0x20
-  8096e5:	c1 e8 07             	shr    eax,0x7
-  8096e8:	8d 50 01             	lea    edx,[rax+0x1]
-  8096eb:	89 d0                	mov    eax,edx
-  8096ed:	c1 e0 02             	shl    eax,0x2
-  8096f0:	01 d0                	add    eax,edx
-  8096f2:	c1 e0 05             	shl    eax,0x5
-  8096f5:	89 45 ec             	mov    DWORD PTR [rbp-0x14],eax
+  8096f3:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+  8096f6:	89 c2                	mov    edx,eax
+  8096f8:	b8 cd cc cc cc       	mov    eax,0xcccccccd
+  8096fd:	48 0f af c2          	imul   rax,rdx
+  809701:	48 c1 e8 20          	shr    rax,0x20
+  809705:	c1 e8 07             	shr    eax,0x7
+  809708:	8d 50 01             	lea    edx,[rax+0x1]
+  80970b:	89 d0                	mov    eax,edx
+  80970d:	c1 e0 02             	shl    eax,0x2
+  809710:	01 d0                	add    eax,edx
+  809712:	c1 e0 05             	shl    eax,0x5
+  809715:	89 45 ec             	mov    DWORD PTR [rbp-0x14],eax
             ////logf("%x\n",off);
             m_ptr=0xb8000u+off;
-  8096f8:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
-  8096fb:	05 00 80 0b 00       	add    eax,0xb8000
-  809700:	89 c0                	mov    eax,eax
-  809702:	48 89 05 3f 0f 00 00 	mov    QWORD PTR [rip+0xf3f],rax        # 80a648 <m_ptr>
+  809718:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+  80971b:	05 00 80 0b 00       	add    eax,0xb8000
+  809720:	89 c0                	mov    eax,eax
+  809722:	48 89 05 1f 0f 00 00 	mov    QWORD PTR [rip+0xf1f],rax        # 80a648 <m_ptr>
             src++;
-  809709:	48 83 45 f8 01       	add    QWORD PTR [rbp-0x8],0x1
+  809729:	48 83 45 f8 01       	add    QWORD PTR [rbp-0x8],0x1
             continue;
-  80970e:	e9 ac 00 00 00       	jmp    8097bf <write_tty+0x13a>
+  80972e:	e9 ac 00 00 00       	jmp    8097df <write_tty+0x13a>
         }else if(*src=='\0')
-  809713:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  809717:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  80971a:	84 c0                	test   al,al
-  80971c:	0f 84 af 00 00 00    	je     8097d1 <write_tty+0x14c>
+  809733:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  809737:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  80973a:	84 c0                	test   al,al
+  80973c:	0f 84 af 00 00 00    	je     8097f1 <write_tty+0x14c>
             break;
         if(*src=='\b')
-  809722:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  809726:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  809729:	3c 08                	cmp    al,0x8
-  80972b:	75 1e                	jne    80974b <write_tty+0xc6>
+  809742:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  809746:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  809749:	3c 08                	cmp    al,0x8
+  80974b:	75 1e                	jne    80976b <write_tty+0xc6>
         {
             m_ptr-=2;
-  80972d:	48 8b 05 14 0f 00 00 	mov    rax,QWORD PTR [rip+0xf14]        # 80a648 <m_ptr>
-  809734:	48 83 e8 02          	sub    rax,0x2
-  809738:	48 89 05 09 0f 00 00 	mov    QWORD PTR [rip+0xf09],rax        # 80a648 <m_ptr>
+  80974d:	48 8b 05 f4 0e 00 00 	mov    rax,QWORD PTR [rip+0xef4]        # 80a648 <m_ptr>
+  809754:	48 83 e8 02          	sub    rax,0x2
+  809758:	48 89 05 e9 0e 00 00 	mov    QWORD PTR [rip+0xee9],rax        # 80a648 <m_ptr>
             *m_ptr=0;
-  80973f:	48 8b 05 02 0f 00 00 	mov    rax,QWORD PTR [rip+0xf02]        # 80a648 <m_ptr>
-  809746:	c6 00 00             	mov    BYTE PTR [rax],0x0
-  809749:	eb 3e                	jmp    809789 <write_tty+0x104>
+  80975f:	48 8b 05 e2 0e 00 00 	mov    rax,QWORD PTR [rip+0xee2]        # 80a648 <m_ptr>
+  809766:	c6 00 00             	mov    BYTE PTR [rax],0x0
+  809769:	eb 3e                	jmp    8097a9 <write_tty+0x104>
         }else
         {
             *m_ptr++=*src++;
-  80974b:	48 8b 55 f8          	mov    rdx,QWORD PTR [rbp-0x8]
-  80974f:	48 8d 42 01          	lea    rax,[rdx+0x1]
-  809753:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
-  809757:	48 8b 05 ea 0e 00 00 	mov    rax,QWORD PTR [rip+0xeea]        # 80a648 <m_ptr>
-  80975e:	48 8d 48 01          	lea    rcx,[rax+0x1]
-  809762:	48 89 0d df 0e 00 00 	mov    QWORD PTR [rip+0xedf],rcx        # 80a648 <m_ptr>
-  809769:	0f b6 12             	movzx  edx,BYTE PTR [rdx]
-  80976c:	88 10                	mov    BYTE PTR [rax],dl
+  80976b:	48 8b 55 f8          	mov    rdx,QWORD PTR [rbp-0x8]
+  80976f:	48 8d 42 01          	lea    rax,[rdx+0x1]
+  809773:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
+  809777:	48 8b 05 ca 0e 00 00 	mov    rax,QWORD PTR [rip+0xeca]        # 80a648 <m_ptr>
+  80977e:	48 8d 48 01          	lea    rcx,[rax+0x1]
+  809782:	48 89 0d bf 0e 00 00 	mov    QWORD PTR [rip+0xebf],rcx        # 80a648 <m_ptr>
+  809789:	0f b6 12             	movzx  edx,BYTE PTR [rdx]
+  80978c:	88 10                	mov    BYTE PTR [rax],dl
             *m_ptr++=m_color;
-  80976e:	48 8b 05 d3 0e 00 00 	mov    rax,QWORD PTR [rip+0xed3]        # 80a648 <m_ptr>
-  809775:	48 8d 50 01          	lea    rdx,[rax+0x1]
-  809779:	48 89 15 c8 0e 00 00 	mov    QWORD PTR [rip+0xec8],rdx        # 80a648 <m_ptr>
-  809780:	0f b6 15 c9 0e 00 00 	movzx  edx,BYTE PTR [rip+0xec9]        # 80a650 <m_color>
-  809787:	88 10                	mov    BYTE PTR [rax],dl
+  80978e:	48 8b 05 b3 0e 00 00 	mov    rax,QWORD PTR [rip+0xeb3]        # 80a648 <m_ptr>
+  809795:	48 8d 50 01          	lea    rdx,[rax+0x1]
+  809799:	48 89 15 a8 0e 00 00 	mov    QWORD PTR [rip+0xea8],rdx        # 80a648 <m_ptr>
+  8097a0:	0f b6 15 a9 0e 00 00 	movzx  edx,BYTE PTR [rip+0xea9]        # 80a650 <m_color>
+  8097a7:	88 10                	mov    BYTE PTR [rax],dl
         }
         if(m_ptr-vpage_base>=vpage_size*2-line_chs*2&&i>0)
-  809789:	48 8b 05 b8 0e 00 00 	mov    rax,QWORD PTR [rip+0xeb8]        # 80a648 <m_ptr>
-  809790:	48 8b 0d f9 93 c2 ff 	mov    rcx,QWORD PTR [rip+0xffffffffffc293f9]        # 432b90 <vpage_base>
-  809797:	48 29 c8             	sub    rax,rcx
-  80979a:	48 89 c2             	mov    rdx,rax
-  80979d:	8b 05 0d 94 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc2940d]        # 432bb0 <vpage_size>
-  8097a3:	8b 0d fb 93 c2 ff    	mov    ecx,DWORD PTR [rip+0xffffffffffc293fb]        # 432ba4 <line_chs>
-  8097a9:	29 c8                	sub    eax,ecx
-  8097ab:	01 c0                	add    eax,eax
-  8097ad:	48 98                	cdqe   
-  8097af:	48 39 c2             	cmp    rdx,rax
-  8097b2:	7c 0b                	jl     8097bf <write_tty+0x13a>
-  8097b4:	83 7d f4 00          	cmp    DWORD PTR [rbp-0xc],0x0
-  8097b8:	7e 05                	jle    8097bf <write_tty+0x13a>
+  8097a9:	48 8b 05 98 0e 00 00 	mov    rax,QWORD PTR [rip+0xe98]        # 80a648 <m_ptr>
+  8097b0:	48 8b 0d d9 93 c2 ff 	mov    rcx,QWORD PTR [rip+0xffffffffffc293d9]        # 432b90 <vpage_base>
+  8097b7:	48 29 c8             	sub    rax,rcx
+  8097ba:	48 89 c2             	mov    rdx,rax
+  8097bd:	8b 05 ed 93 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc293ed]        # 432bb0 <vpage_size>
+  8097c3:	8b 0d db 93 c2 ff    	mov    ecx,DWORD PTR [rip+0xffffffffffc293db]        # 432ba4 <line_chs>
+  8097c9:	29 c8                	sub    eax,ecx
+  8097cb:	01 c0                	add    eax,eax
+  8097cd:	48 98                	cdqe   
+  8097cf:	48 39 c2             	cmp    rdx,rax
+  8097d2:	7c 0b                	jl     8097df <write_tty+0x13a>
+  8097d4:	83 7d f4 00          	cmp    DWORD PTR [rbp-0xc],0x0
+  8097d8:	7e 05                	jle    8097df <write_tty+0x13a>
         {
             //下滚一行
             scrdown();
-  8097ba:	e8 bc f8 ff ff       	call   80907b <scrdown>
+  8097da:	e8 bc f8 ff ff       	call   80909b <scrdown>
     for(int i=0;i<len;i++)
-  8097bf:	83 45 f4 01          	add    DWORD PTR [rbp-0xc],0x1
-  8097c3:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
-  8097c6:	3b 45 f0             	cmp    eax,DWORD PTR [rbp-0x10]
-  8097c9:	0f 8c e9 fe ff ff    	jl     8096b8 <write_tty+0x33>
-  8097cf:	eb 01                	jmp    8097d2 <write_tty+0x14d>
+  8097df:	83 45 f4 01          	add    DWORD PTR [rbp-0xc],0x1
+  8097e3:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
+  8097e6:	3b 45 f0             	cmp    eax,DWORD PTR [rbp-0x10]
+  8097e9:	0f 8c e9 fe ff ff    	jl     8096d8 <write_tty+0x33>
+  8097ef:	eb 01                	jmp    8097f2 <write_tty+0x14d>
             break;
-  8097d1:	90                   	nop
+  8097f1:	90                   	nop
         }
     }
     set_cur();
-  8097d2:	b8 00 00 00 00       	mov    eax,0x0
-  8097d7:	e8 8c fd ff ff       	call   809568 <set_cur>
+  8097f2:	b8 00 00 00 00       	mov    eax,0x0
+  8097f7:	e8 8c fd ff ff       	call   809588 <set_cur>
     return 0;
-  8097dc:	b8 00 00 00 00       	mov    eax,0x0
+  8097fc:	b8 00 00 00 00       	mov    eax,0x0
 }
-  8097e1:	c9                   	leave  
-  8097e2:	c3                   	ret    
+  809801:	c9                   	leave  
+  809802:	c3                   	ret    
 
-00000000008097e3 <cls>:
+0000000000809803 <cls>:
 
 void cls(driver_args *args)
 {
-  8097e3:	f3 0f 1e fa          	endbr64 
-  8097e7:	55                   	push   rbp
-  8097e8:	48 89 e5             	mov    rbp,rsp
-  8097eb:	48 83 ec 20          	sub    rsp,0x20
-  8097ef:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
+  809803:	f3 0f 1e fa          	endbr64 
+  809807:	55                   	push   rbp
+  809808:	48 89 e5             	mov    rbp,rsp
+  80980b:	48 83 ec 20          	sub    rsp,0x20
+  80980f:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
     for(int i=0;i<vpage_size*2;i+=2)
-  8097f3:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
-  8097fa:	eb 16                	jmp    809812 <cls+0x2f>
+  809813:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
+  80981a:	eb 16                	jmp    809832 <cls+0x2f>
     {
         vpage_base[i]=0;
-  8097fc:	48 8b 15 8d 93 c2 ff 	mov    rdx,QWORD PTR [rip+0xffffffffffc2938d]        # 432b90 <vpage_base>
-  809803:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  809806:	48 98                	cdqe   
-  809808:	48 01 d0             	add    rax,rdx
-  80980b:	c6 00 00             	mov    BYTE PTR [rax],0x0
+  80981c:	48 8b 15 6d 93 c2 ff 	mov    rdx,QWORD PTR [rip+0xffffffffffc2936d]        # 432b90 <vpage_base>
+  809823:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  809826:	48 98                	cdqe   
+  809828:	48 01 d0             	add    rax,rdx
+  80982b:	c6 00 00             	mov    BYTE PTR [rax],0x0
     for(int i=0;i<vpage_size*2;i+=2)
-  80980e:	83 45 fc 02          	add    DWORD PTR [rbp-0x4],0x2
-  809812:	8b 05 98 93 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc29398]        # 432bb0 <vpage_size>
-  809818:	01 c0                	add    eax,eax
-  80981a:	39 45 fc             	cmp    DWORD PTR [rbp-0x4],eax
-  80981d:	7c dd                	jl     8097fc <cls+0x19>
+  80982e:	83 45 fc 02          	add    DWORD PTR [rbp-0x4],0x2
+  809832:	8b 05 78 93 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc29378]        # 432bb0 <vpage_size>
+  809838:	01 c0                	add    eax,eax
+  80983a:	39 45 fc             	cmp    DWORD PTR [rbp-0x4],eax
+  80983d:	7c dd                	jl     80981c <cls+0x19>
     }
     m_ptr=vpage_base;
-  80981f:	48 8b 05 6a 93 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc2936a]        # 432b90 <vpage_base>
-  809826:	48 89 05 1b 0e 00 00 	mov    QWORD PTR [rip+0xe1b],rax        # 80a648 <m_ptr>
+  80983f:	48 8b 05 4a 93 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc2934a]        # 432b90 <vpage_base>
+  809846:	48 89 05 fb 0d 00 00 	mov    QWORD PTR [rip+0xdfb],rax        # 80a648 <m_ptr>
     set_cur();
-  80982d:	b8 00 00 00 00       	mov    eax,0x0
-  809832:	e8 31 fd ff ff       	call   809568 <set_cur>
+  80984d:	b8 00 00 00 00       	mov    eax,0x0
+  809852:	e8 31 fd ff ff       	call   809588 <set_cur>
 }
-  809837:	90                   	nop
-  809838:	c9                   	leave  
-  809839:	c3                   	ret    
+  809857:	90                   	nop
+  809858:	c9                   	leave  
+  809859:	c3                   	ret    
 
-000000000080983a <set_color>:
+000000000080985a <set_color>:
 
 void set_color(char color)
 {
-  80983a:	f3 0f 1e fa          	endbr64 
-  80983e:	55                   	push   rbp
-  80983f:	48 89 e5             	mov    rbp,rsp
-  809842:	89 f8                	mov    eax,edi
-  809844:	88 45 fc             	mov    BYTE PTR [rbp-0x4],al
+  80985a:	f3 0f 1e fa          	endbr64 
+  80985e:	55                   	push   rbp
+  80985f:	48 89 e5             	mov    rbp,rsp
+  809862:	89 f8                	mov    eax,edi
+  809864:	88 45 fc             	mov    BYTE PTR [rbp-0x4],al
     m_color=color;
-  809847:	0f b6 45 fc          	movzx  eax,BYTE PTR [rbp-0x4]
-  80984b:	88 05 ff 0d 00 00    	mov    BYTE PTR [rip+0xdff],al        # 80a650 <m_color>
+  809867:	0f b6 45 fc          	movzx  eax,BYTE PTR [rbp-0x4]
+  80986b:	88 05 df 0d 00 00    	mov    BYTE PTR [rip+0xddf],al        # 80a650 <m_color>
 }
-  809851:	90                   	nop
-  809852:	5d                   	pop    rbp
-  809853:	c3                   	ret    
+  809871:	90                   	nop
+  809872:	5d                   	pop    rbp
+  809873:	c3                   	ret    
 
-0000000000809854 <tty_do_req>:
+0000000000809874 <tty_do_req>:
 
 int tty_do_req(driver_args *args)
 {
-  809854:	f3 0f 1e fa          	endbr64 
-  809858:	55                   	push   rbp
-  809859:	48 89 e5             	mov    rbp,rsp
-  80985c:	48 83 ec 10          	sub    rsp,0x10
-  809860:	48 89 7d f8          	mov    QWORD PTR [rbp-0x8],rdi
+  809874:	f3 0f 1e fa          	endbr64 
+  809878:	55                   	push   rbp
+  809879:	48 89 e5             	mov    rbp,rsp
+  80987c:	48 83 ec 10          	sub    rsp,0x10
+  809880:	48 89 7d f8          	mov    QWORD PTR [rbp-0x8],rdi
     switch (args->cmd)
-  809864:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  809868:	8b 80 a8 00 00 00    	mov    eax,DWORD PTR [rax+0xa8]
-  80986e:	83 f8 0d             	cmp    eax,0xd
-  809871:	74 45                	je     8098b8 <tty_do_req+0x64>
-  809873:	83 f8 0d             	cmp    eax,0xd
-  809876:	7f 53                	jg     8098cb <tty_do_req+0x77>
-  809878:	83 f8 0c             	cmp    eax,0xc
-  80987b:	74 2d                	je     8098aa <tty_do_req+0x56>
-  80987d:	83 f8 0c             	cmp    eax,0xc
-  809880:	7f 49                	jg     8098cb <tty_do_req+0x77>
-  809882:	83 f8 02             	cmp    eax,0x2
-  809885:	74 07                	je     80988e <tty_do_req+0x3a>
-  809887:	83 f8 03             	cmp    eax,0x3
-  80988a:	74 10                	je     80989c <tty_do_req+0x48>
-  80988c:	eb 3d                	jmp    8098cb <tty_do_req+0x77>
+  809884:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  809888:	8b 80 a8 00 00 00    	mov    eax,DWORD PTR [rax+0xa8]
+  80988e:	83 f8 0d             	cmp    eax,0xd
+  809891:	74 45                	je     8098d8 <tty_do_req+0x64>
+  809893:	83 f8 0d             	cmp    eax,0xd
+  809896:	7f 53                	jg     8098eb <tty_do_req+0x77>
+  809898:	83 f8 0c             	cmp    eax,0xc
+  80989b:	74 2d                	je     8098ca <tty_do_req+0x56>
+  80989d:	83 f8 0c             	cmp    eax,0xc
+  8098a0:	7f 49                	jg     8098eb <tty_do_req+0x77>
+  8098a2:	83 f8 02             	cmp    eax,0x2
+  8098a5:	74 07                	je     8098ae <tty_do_req+0x3a>
+  8098a7:	83 f8 03             	cmp    eax,0x3
+  8098aa:	74 10                	je     8098bc <tty_do_req+0x48>
+  8098ac:	eb 3d                	jmp    8098eb <tty_do_req+0x77>
     {
     case DRVF_READ:
         read_tty(args);
-  80988e:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  809892:	48 89 c7             	mov    rdi,rax
-  809895:	e8 58 fd ff ff       	call   8095f2 <read_tty>
+  8098ae:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  8098b2:	48 89 c7             	mov    rdi,rax
+  8098b5:	e8 58 fd ff ff       	call   809612 <read_tty>
         break;
-  80989a:	eb 36                	jmp    8098d2 <tty_do_req+0x7e>
+  8098ba:	eb 36                	jmp    8098f2 <tty_do_req+0x7e>
     case DRVF_WRITE:
         write_tty(args);
-  80989c:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  8098a0:	48 89 c7             	mov    rdi,rax
-  8098a3:	e8 dd fd ff ff       	call   809685 <write_tty>
+  8098bc:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  8098c0:	48 89 c7             	mov    rdi,rax
+  8098c3:	e8 dd fd ff ff       	call   8096a5 <write_tty>
         break;
-  8098a8:	eb 28                	jmp    8098d2 <tty_do_req+0x7e>
+  8098c8:	eb 28                	jmp    8098f2 <tty_do_req+0x7e>
     case DRVF_SEEK:
         seek_tty(args);
-  8098aa:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  8098ae:	48 89 c7             	mov    rdi,rax
-  8098b1:	e8 a2 fb ff ff       	call   809458 <seek_tty>
+  8098ca:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  8098ce:	48 89 c7             	mov    rdi,rax
+  8098d1:	e8 a2 fb ff ff       	call   809478 <seek_tty>
         break;
-  8098b6:	eb 1a                	jmp    8098d2 <tty_do_req+0x7e>
+  8098d6:	eb 1a                	jmp    8098f2 <tty_do_req+0x7e>
     case DRVF_TELL:
         tell_monitor(args);
-  8098b8:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  8098bc:	48 89 c7             	mov    rdi,rax
-  8098bf:	b8 00 00 00 00       	mov    eax,0x0
-  8098c4:	e8 bb fb ff ff       	call   809484 <tell_monitor>
+  8098d8:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  8098dc:	48 89 c7             	mov    rdi,rax
+  8098df:	b8 00 00 00 00       	mov    eax,0x0
+  8098e4:	e8 bb fb ff ff       	call   8094a4 <tell_monitor>
         break;
-  8098c9:	eb 07                	jmp    8098d2 <tty_do_req+0x7e>
+  8098e9:	eb 07                	jmp    8098f2 <tty_do_req+0x7e>
     default:return -1;
-  8098cb:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  8098d0:	eb 05                	jmp    8098d7 <tty_do_req+0x83>
+  8098eb:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  8098f0:	eb 05                	jmp    8098f7 <tty_do_req+0x83>
     }
     return 0;
-  8098d2:	b8 00 00 00 00       	mov    eax,0x0
+  8098f2:	b8 00 00 00 00       	mov    eax,0x0
 }
-  8098d7:	c9                   	leave  
-  8098d8:	c3                   	ret    
+  8098f7:	c9                   	leave  
+  8098f8:	c3                   	ret    
 
-00000000008098d9 <init_com>:
+00000000008098f9 <init_com>:
 //
 #include "com.h"
 #include "int.h"
 
 
 void init_com(int base_port){
-  8098d9:	f3 0f 1e fa          	endbr64 
-  8098dd:	55                   	push   rbp
-  8098de:	48 89 e5             	mov    rbp,rsp
-  8098e1:	48 83 ec 10          	sub    rsp,0x10
-  8098e5:	89 7d fc             	mov    DWORD PTR [rbp-0x4],edi
+  8098f9:	f3 0f 1e fa          	endbr64 
+  8098fd:	55                   	push   rbp
+  8098fe:	48 89 e5             	mov    rbp,rsp
+  809901:	48 83 ec 10          	sub    rsp,0x10
+  809905:	89 7d fc             	mov    DWORD PTR [rbp-0x4],edi
     /* disable all interrupts */
     outb(base_port + COM_REG_IER, 0x00);
-  8098e8:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8098eb:	83 c0 01             	add    eax,0x1
-  8098ee:	0f b7 c0             	movzx  eax,ax
-  8098f1:	be 00 00 00 00       	mov    esi,0x0
-  8098f6:	89 c7                	mov    edi,eax
-  8098f8:	e8 d3 b5 ff ff       	call   804ed0 <outb>
+  809908:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  80990b:	83 c0 01             	add    eax,0x1
+  80990e:	0f b7 c0             	movzx  eax,ax
+  809911:	be 00 00 00 00       	mov    esi,0x0
+  809916:	89 c7                	mov    edi,eax
+  809918:	e8 d3 b5 ff ff       	call   804ef0 <outb>
     
     /* enable DLAB to set bound rate divisor */
     outb(base_port + COM_REG_LCR, 0x80);
-  8098fd:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  809900:	83 c0 03             	add    eax,0x3
-  809903:	0f b7 c0             	movzx  eax,ax
-  809906:	be 80 00 00 00       	mov    esi,0x80
-  80990b:	89 c7                	mov    edi,eax
-  80990d:	e8 be b5 ff ff       	call   804ed0 <outb>
+  80991d:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  809920:	83 c0 03             	add    eax,0x3
+  809923:	0f b7 c0             	movzx  eax,ax
+  809926:	be 80 00 00 00       	mov    esi,0x80
+  80992b:	89 c7                	mov    edi,eax
+  80992d:	e8 be b5 ff ff       	call   804ef0 <outb>
     
     /* set divisor to 38400 baud */
     outb(base_port + COM_REG_DLL, 0x03);
-  809912:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  809915:	0f b7 c0             	movzx  eax,ax
-  809918:	be 03 00 00 00       	mov    esi,0x3
-  80991d:	89 c7                	mov    edi,eax
-  80991f:	e8 ac b5 ff ff       	call   804ed0 <outb>
+  809932:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  809935:	0f b7 c0             	movzx  eax,ax
+  809938:	be 03 00 00 00       	mov    esi,0x3
+  80993d:	89 c7                	mov    edi,eax
+  80993f:	e8 ac b5 ff ff       	call   804ef0 <outb>
     outb(base_port + COM_REG_DLM, 0x00);
-  809924:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  809927:	83 c0 01             	add    eax,0x1
-  80992a:	0f b7 c0             	movzx  eax,ax
-  80992d:	be 00 00 00 00       	mov    esi,0x0
-  809932:	89 c7                	mov    edi,eax
-  809934:	e8 97 b5 ff ff       	call   804ed0 <outb>
+  809944:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  809947:	83 c0 01             	add    eax,0x1
+  80994a:	0f b7 c0             	movzx  eax,ax
+  80994d:	be 00 00 00 00       	mov    esi,0x0
+  809952:	89 c7                	mov    edi,eax
+  809954:	e8 97 b5 ff ff       	call   804ef0 <outb>
     
     /* 8 data bits, parity off, 1 stop bit, DLAB latch off */
     outb(base_port + COM_REG_LCR, 0x03);
-  809939:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  80993c:	83 c0 03             	add    eax,0x3
-  80993f:	0f b7 c0             	movzx  eax,ax
-  809942:	be 03 00 00 00       	mov    esi,0x3
-  809947:	89 c7                	mov    edi,eax
-  809949:	e8 82 b5 ff ff       	call   804ed0 <outb>
+  809959:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  80995c:	83 c0 03             	add    eax,0x3
+  80995f:	0f b7 c0             	movzx  eax,ax
+  809962:	be 03 00 00 00       	mov    esi,0x3
+  809967:	89 c7                	mov    edi,eax
+  809969:	e8 82 b5 ff ff       	call   804ef0 <outb>
     
     /* enable FIFO */
     outb(base_port + COM_REG_FCR, 0xC7);
-  80994e:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  809951:	83 c0 02             	add    eax,0x2
-  809954:	0f b7 c0             	movzx  eax,ax
-  809957:	be c7 00 00 00       	mov    esi,0xc7
-  80995c:	89 c7                	mov    edi,eax
-  80995e:	e8 6d b5 ff ff       	call   804ed0 <outb>
+  80996e:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  809971:	83 c0 02             	add    eax,0x2
+  809974:	0f b7 c0             	movzx  eax,ax
+  809977:	be c7 00 00 00       	mov    esi,0xc7
+  80997c:	89 c7                	mov    edi,eax
+  80997e:	e8 6d b5 ff ff       	call   804ef0 <outb>
 
     /* enable IRQs, set RTS/DSR */
     outb(base_port + COM_REG_MCR, 0x0B);
-  809963:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  809966:	83 c0 04             	add    eax,0x4
-  809969:	0f b7 c0             	movzx  eax,ax
-  80996c:	be 0b 00 00 00       	mov    esi,0xb
-  809971:	89 c7                	mov    edi,eax
-  809973:	e8 58 b5 ff ff       	call   804ed0 <outb>
+  809983:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  809986:	83 c0 04             	add    eax,0x4
+  809989:	0f b7 c0             	movzx  eax,ax
+  80998c:	be 0b 00 00 00       	mov    esi,0xb
+  809991:	89 c7                	mov    edi,eax
+  809993:	e8 58 b5 ff ff       	call   804ef0 <outb>
     
     /* set in loopback mode and test serial chip */
     outb(base_port + COM_REG_MCR, 0x1E);
-  809978:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  80997b:	83 c0 04             	add    eax,0x4
-  80997e:	0f b7 c0             	movzx  eax,ax
-  809981:	be 1e 00 00 00       	mov    esi,0x1e
-  809986:	89 c7                	mov    edi,eax
-  809988:	e8 43 b5 ff ff       	call   804ed0 <outb>
+  809998:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  80999b:	83 c0 04             	add    eax,0x4
+  80999e:	0f b7 c0             	movzx  eax,ax
+  8099a1:	be 1e 00 00 00       	mov    esi,0x1e
+  8099a6:	89 c7                	mov    edi,eax
+  8099a8:	e8 43 b5 ff ff       	call   804ef0 <outb>
     
     /* write a byte to test serial chip */
     outb(base_port + COM_REG_TX, "arttnba3"[0]);
-  80998d:	b8 61 00 00 00       	mov    eax,0x61
-  809992:	0f b6 d0             	movzx  edx,al
-  809995:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  809998:	0f b7 c0             	movzx  eax,ax
-  80999b:	89 d6                	mov    esi,edx
-  80999d:	89 c7                	mov    edi,eax
-  80999f:	e8 2c b5 ff ff       	call   804ed0 <outb>
+  8099ad:	b8 61 00 00 00       	mov    eax,0x61
+  8099b2:	0f b6 d0             	movzx  edx,al
+  8099b5:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  8099b8:	0f b7 c0             	movzx  eax,ax
+  8099bb:	89 d6                	mov    esi,edx
+  8099bd:	89 c7                	mov    edi,eax
+  8099bf:	e8 2c b5 ff ff       	call   804ef0 <outb>
     
     /* check if serial is faulty */
     if (inb(base_port + COM_REG_RX) != "arttnba3"[0]) {
-  8099a4:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8099a7:	0f b6 c0             	movzx  eax,al
-  8099aa:	89 c7                	mov    edi,eax
-  8099ac:	e8 38 b5 ff ff       	call   804ee9 <inb>
-  8099b1:	0f b6 d0             	movzx  edx,al
-  8099b4:	b8 61 00 00 00       	mov    eax,0x61
-  8099b9:	0f be c0             	movsx  eax,al
-  8099bc:	39 c2                	cmp    edx,eax
-  8099be:	75 17                	jne    8099d7 <init_com+0xfe>
+  8099c4:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  8099c7:	0f b6 c0             	movzx  eax,al
+  8099ca:	89 c7                	mov    edi,eax
+  8099cc:	e8 38 b5 ff ff       	call   804f09 <inb>
+  8099d1:	0f b6 d0             	movzx  edx,al
+  8099d4:	b8 61 00 00 00       	mov    eax,0x61
+  8099d9:	0f be c0             	movsx  eax,al
+  8099dc:	39 c2                	cmp    edx,eax
+  8099de:	75 17                	jne    8099f7 <init_com+0xfe>
         return;
     }
     
     /* set in normal mode */
     outb(base_port + COM_REG_MCR, 0x0F);
-  8099c0:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  8099c3:	83 c0 04             	add    eax,0x4
-  8099c6:	0f b7 c0             	movzx  eax,ax
-  8099c9:	be 0f 00 00 00       	mov    esi,0xf
-  8099ce:	89 c7                	mov    edi,eax
-  8099d0:	e8 fb b4 ff ff       	call   804ed0 <outb>
-  8099d5:	eb 01                	jmp    8099d8 <init_com+0xff>
+  8099e0:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  8099e3:	83 c0 04             	add    eax,0x4
+  8099e6:	0f b7 c0             	movzx  eax,ax
+  8099e9:	be 0f 00 00 00       	mov    esi,0xf
+  8099ee:	89 c7                	mov    edi,eax
+  8099f0:	e8 fb b4 ff ff       	call   804ef0 <outb>
+  8099f5:	eb 01                	jmp    8099f8 <init_com+0xff>
         return;
-  8099d7:	90                   	nop
+  8099f7:	90                   	nop
 }
-  8099d8:	c9                   	leave  
-  8099d9:	c3                   	ret    
+  8099f8:	c9                   	leave  
+  8099f9:	c3                   	ret    
 
-00000000008099da <com_putchar>:
+00000000008099fa <com_putchar>:
 void com_putchar(unsigned short ch,int com_base)
 {
-  8099da:	f3 0f 1e fa          	endbr64 
-  8099de:	55                   	push   rbp
-  8099df:	48 89 e5             	mov    rbp,rsp
-  8099e2:	48 83 ec 20          	sub    rsp,0x20
-  8099e6:	89 f8                	mov    eax,edi
-  8099e8:	89 75 e8             	mov    DWORD PTR [rbp-0x18],esi
-  8099eb:	66 89 45 ec          	mov    WORD PTR [rbp-0x14],ax
+  8099fa:	f3 0f 1e fa          	endbr64 
+  8099fe:	55                   	push   rbp
+  8099ff:	48 89 e5             	mov    rbp,rsp
+  809a02:	48 83 ec 20          	sub    rsp,0x20
+  809a06:	89 f8                	mov    eax,edi
+  809a08:	89 75 e8             	mov    DWORD PTR [rbp-0x18],esi
+  809a0b:	66 89 45 ec          	mov    WORD PTR [rbp-0x14],ax
     unsigned char res;
     /* wait for the port to be ready */
     do {
         res = inb(com_base + COM_REG_LSR);
-  8099ef:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
-  8099f2:	83 c0 05             	add    eax,0x5
-  8099f5:	0f b6 c0             	movzx  eax,al
-  8099f8:	89 c7                	mov    edi,eax
-  8099fa:	e8 ea b4 ff ff       	call   804ee9 <inb>
-  8099ff:	88 45 ff             	mov    BYTE PTR [rbp-0x1],al
+  809a0f:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  809a12:	83 c0 05             	add    eax,0x5
+  809a15:	0f b6 c0             	movzx  eax,al
+  809a18:	89 c7                	mov    edi,eax
+  809a1a:	e8 ea b4 ff ff       	call   804f09 <inb>
+  809a1f:	88 45 ff             	mov    BYTE PTR [rbp-0x1],al
         res &= 0x20;
-  809a02:	80 65 ff 20          	and    BYTE PTR [rbp-0x1],0x20
+  809a22:	80 65 ff 20          	and    BYTE PTR [rbp-0x1],0x20
     } while (res == 0);
-  809a06:	80 7d ff 00          	cmp    BYTE PTR [rbp-0x1],0x0
-  809a0a:	74 e3                	je     8099ef <com_putchar+0x15>
+  809a26:	80 7d ff 00          	cmp    BYTE PTR [rbp-0x1],0x0
+  809a2a:	74 e3                	je     809a0f <com_putchar+0x15>
     outb(com_base, ch);
-  809a0c:	0f b7 45 ec          	movzx  eax,WORD PTR [rbp-0x14]
-  809a10:	0f b6 d0             	movzx  edx,al
-  809a13:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
-  809a16:	0f b7 c0             	movzx  eax,ax
-  809a19:	89 d6                	mov    esi,edx
-  809a1b:	89 c7                	mov    edi,eax
-  809a1d:	e8 ae b4 ff ff       	call   804ed0 <outb>
+  809a2c:	0f b7 45 ec          	movzx  eax,WORD PTR [rbp-0x14]
+  809a30:	0f b6 d0             	movzx  edx,al
+  809a33:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  809a36:	0f b7 c0             	movzx  eax,ax
+  809a39:	89 d6                	mov    esi,edx
+  809a3b:	89 c7                	mov    edi,eax
+  809a3d:	e8 ae b4 ff ff       	call   804ef0 <outb>
 }
-  809a22:	90                   	nop
-  809a23:	c9                   	leave  
-  809a24:	c3                   	ret    
+  809a42:	90                   	nop
+  809a43:	c9                   	leave  
+  809a44:	c3                   	ret    
 
-0000000000809a25 <com_puts>:
+0000000000809a45 <com_puts>:
 
 void com_puts(char* s,int com_port){
-  809a25:	f3 0f 1e fa          	endbr64 
-  809a29:	55                   	push   rbp
-  809a2a:	48 89 e5             	mov    rbp,rsp
-  809a2d:	48 83 ec 10          	sub    rsp,0x10
-  809a31:	48 89 7d f8          	mov    QWORD PTR [rbp-0x8],rdi
-  809a35:	89 75 f4             	mov    DWORD PTR [rbp-0xc],esi
+  809a45:	f3 0f 1e fa          	endbr64 
+  809a49:	55                   	push   rbp
+  809a4a:	48 89 e5             	mov    rbp,rsp
+  809a4d:	48 83 ec 10          	sub    rsp,0x10
+  809a51:	48 89 7d f8          	mov    QWORD PTR [rbp-0x8],rdi
+  809a55:	89 75 f4             	mov    DWORD PTR [rbp-0xc],esi
     for(;*s;s++){
-  809a38:	eb 1d                	jmp    809a57 <com_puts+0x32>
+  809a58:	eb 1d                	jmp    809a77 <com_puts+0x32>
         com_putchar(*s,com_port);
-  809a3a:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  809a3e:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  809a41:	66 98                	cbw    
-  809a43:	0f b7 c0             	movzx  eax,ax
-  809a46:	8b 55 f4             	mov    edx,DWORD PTR [rbp-0xc]
-  809a49:	89 d6                	mov    esi,edx
-  809a4b:	89 c7                	mov    edi,eax
-  809a4d:	e8 88 ff ff ff       	call   8099da <com_putchar>
+  809a5a:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  809a5e:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  809a61:	66 98                	cbw    
+  809a63:	0f b7 c0             	movzx  eax,ax
+  809a66:	8b 55 f4             	mov    edx,DWORD PTR [rbp-0xc]
+  809a69:	89 d6                	mov    esi,edx
+  809a6b:	89 c7                	mov    edi,eax
+  809a6d:	e8 88 ff ff ff       	call   8099fa <com_putchar>
     for(;*s;s++){
-  809a52:	48 83 45 f8 01       	add    QWORD PTR [rbp-0x8],0x1
-  809a57:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  809a5b:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  809a5e:	84 c0                	test   al,al
-  809a60:	75 d8                	jne    809a3a <com_puts+0x15>
+  809a72:	48 83 45 f8 01       	add    QWORD PTR [rbp-0x8],0x1
+  809a77:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  809a7b:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  809a7e:	84 c0                	test   al,al
+  809a80:	75 d8                	jne    809a5a <com_puts+0x15>
     }
-  809a62:	90                   	nop
-  809a63:	90                   	nop
-  809a64:	c9                   	leave  
-  809a65:	c3                   	ret    
+  809a82:	90                   	nop
+  809a83:	90                   	nop
+  809a84:	c9                   	leave  
+  809a85:	c3                   	ret    
 
-0000000000809a66 <memcpy>:
+0000000000809a86 <memcpy>:
 #include "mem.h"
 #include "typename.h"
 static u32 mem_end;
 static u32 usr_mem_base;
 void memcpy(u8* dest, u8 *src,u32 size){
-  809a66:	f3 0f 1e fa          	endbr64 
-  809a6a:	55                   	push   rbp
-  809a6b:	48 89 e5             	mov    rbp,rsp
-  809a6e:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
-  809a72:	48 89 75 e0          	mov    QWORD PTR [rbp-0x20],rsi
-  809a76:	89 55 dc             	mov    DWORD PTR [rbp-0x24],edx
+  809a86:	f3 0f 1e fa          	endbr64 
+  809a8a:	55                   	push   rbp
+  809a8b:	48 89 e5             	mov    rbp,rsp
+  809a8e:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
+  809a92:	48 89 75 e0          	mov    QWORD PTR [rbp-0x20],rsi
+  809a96:	89 55 dc             	mov    DWORD PTR [rbp-0x24],edx
     *dest=0xff;//如果页内存还没分配，这样就可以先激发缺页异常分配了，之后写数据就会完整不会少开头第一个字节。
-  809a79:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  809a7d:	c6 00 ff             	mov    BYTE PTR [rax],0xff
+  809a99:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  809a9d:	c6 00 ff             	mov    BYTE PTR [rax],0xff
     for(int i=0;i<size;i++){
-  809a80:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
-  809a87:	eb 1b                	jmp    809aa4 <memcpy+0x3e>
+  809aa0:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
+  809aa7:	eb 1b                	jmp    809ac4 <memcpy+0x3e>
         *(dest)=*(src);
-  809a89:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  809a8d:	0f b6 10             	movzx  edx,BYTE PTR [rax]
-  809a90:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  809a94:	88 10                	mov    BYTE PTR [rax],dl
+  809aa9:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  809aad:	0f b6 10             	movzx  edx,BYTE PTR [rax]
+  809ab0:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  809ab4:	88 10                	mov    BYTE PTR [rax],dl
         dest++;
-  809a96:	48 83 45 e8 01       	add    QWORD PTR [rbp-0x18],0x1
+  809ab6:	48 83 45 e8 01       	add    QWORD PTR [rbp-0x18],0x1
         src++;
-  809a9b:	48 83 45 e0 01       	add    QWORD PTR [rbp-0x20],0x1
+  809abb:	48 83 45 e0 01       	add    QWORD PTR [rbp-0x20],0x1
     for(int i=0;i<size;i++){
-  809aa0:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
-  809aa4:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  809aa7:	39 45 dc             	cmp    DWORD PTR [rbp-0x24],eax
-  809aaa:	77 dd                	ja     809a89 <memcpy+0x23>
+  809ac0:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
+  809ac4:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  809ac7:	39 45 dc             	cmp    DWORD PTR [rbp-0x24],eax
+  809aca:	77 dd                	ja     809aa9 <memcpy+0x23>
     }
 }
-  809aac:	90                   	nop
-  809aad:	90                   	nop
-  809aae:	5d                   	pop    rbp
-  809aaf:	c3                   	ret    
+  809acc:	90                   	nop
+  809acd:	90                   	nop
+  809ace:	5d                   	pop    rbp
+  809acf:	c3                   	ret    
 
-0000000000809ab0 <memcmp>:
+0000000000809ad0 <memcmp>:
 int memcmp(u8 *a,u8* b,int len)
 {
-  809ab0:	f3 0f 1e fa          	endbr64 
-  809ab4:	55                   	push   rbp
-  809ab5:	48 89 e5             	mov    rbp,rsp
-  809ab8:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
-  809abc:	48 89 75 e0          	mov    QWORD PTR [rbp-0x20],rsi
-  809ac0:	89 55 dc             	mov    DWORD PTR [rbp-0x24],edx
+  809ad0:	f3 0f 1e fa          	endbr64 
+  809ad4:	55                   	push   rbp
+  809ad5:	48 89 e5             	mov    rbp,rsp
+  809ad8:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
+  809adc:	48 89 75 e0          	mov    QWORD PTR [rbp-0x20],rsi
+  809ae0:	89 55 dc             	mov    DWORD PTR [rbp-0x24],edx
     for(int i=0;i<len;i++)
-  809ac3:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
-  809aca:	eb 3a                	jmp    809b06 <memcmp+0x56>
+  809ae3:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
+  809aea:	eb 3a                	jmp    809b26 <memcmp+0x56>
     {
         if(*a!=*b)
-  809acc:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  809ad0:	0f b6 10             	movzx  edx,BYTE PTR [rax]
-  809ad3:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  809ad7:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  809ada:	38 c2                	cmp    dl,al
-  809adc:	74 1a                	je     809af8 <memcmp+0x48>
+  809aec:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  809af0:	0f b6 10             	movzx  edx,BYTE PTR [rax]
+  809af3:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  809af7:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  809afa:	38 c2                	cmp    dl,al
+  809afc:	74 1a                	je     809b18 <memcmp+0x48>
             return *a-*b;
-  809ade:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  809ae2:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  809ae5:	0f b6 d0             	movzx  edx,al
-  809ae8:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
-  809aec:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  809aef:	0f b6 c8             	movzx  ecx,al
-  809af2:	89 d0                	mov    eax,edx
-  809af4:	29 c8                	sub    eax,ecx
-  809af6:	eb 1b                	jmp    809b13 <memcmp+0x63>
+  809afe:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  809b02:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  809b05:	0f b6 d0             	movzx  edx,al
+  809b08:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+  809b0c:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  809b0f:	0f b6 c8             	movzx  ecx,al
+  809b12:	89 d0                	mov    eax,edx
+  809b14:	29 c8                	sub    eax,ecx
+  809b16:	eb 1b                	jmp    809b33 <memcmp+0x63>
         a++;
-  809af8:	48 83 45 e8 01       	add    QWORD PTR [rbp-0x18],0x1
+  809b18:	48 83 45 e8 01       	add    QWORD PTR [rbp-0x18],0x1
         b++;
-  809afd:	48 83 45 e0 01       	add    QWORD PTR [rbp-0x20],0x1
+  809b1d:	48 83 45 e0 01       	add    QWORD PTR [rbp-0x20],0x1
     for(int i=0;i<len;i++)
-  809b02:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
-  809b06:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  809b09:	3b 45 dc             	cmp    eax,DWORD PTR [rbp-0x24]
-  809b0c:	7c be                	jl     809acc <memcmp+0x1c>
+  809b22:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
+  809b26:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  809b29:	3b 45 dc             	cmp    eax,DWORD PTR [rbp-0x24]
+  809b2c:	7c be                	jl     809aec <memcmp+0x1c>
     }
     return 0;
-  809b0e:	b8 00 00 00 00       	mov    eax,0x0
+  809b2e:	b8 00 00 00 00       	mov    eax,0x0
 }
-  809b13:	5d                   	pop    rbp
-  809b14:	c3                   	ret    
+  809b33:	5d                   	pop    rbp
+  809b34:	c3                   	ret    
 
-0000000000809b15 <memset>:
+0000000000809b35 <memset>:
 void memset(u8 *buf,u8 value,u32 size){
-  809b15:	f3 0f 1e fa          	endbr64 
-  809b19:	55                   	push   rbp
-  809b1a:	48 89 e5             	mov    rbp,rsp
-  809b1d:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
-  809b21:	89 f0                	mov    eax,esi
-  809b23:	89 55 e0             	mov    DWORD PTR [rbp-0x20],edx
-  809b26:	88 45 e4             	mov    BYTE PTR [rbp-0x1c],al
+  809b35:	f3 0f 1e fa          	endbr64 
+  809b39:	55                   	push   rbp
+  809b3a:	48 89 e5             	mov    rbp,rsp
+  809b3d:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
+  809b41:	89 f0                	mov    eax,esi
+  809b43:	89 55 e0             	mov    DWORD PTR [rbp-0x20],edx
+  809b46:	88 45 e4             	mov    BYTE PTR [rbp-0x1c],al
     for(u32 i=0;i<size;i++){
-  809b29:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
-  809b30:	eb 16                	jmp    809b48 <memset+0x33>
+  809b49:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
+  809b50:	eb 16                	jmp    809b68 <memset+0x33>
         *(buf++)=value;
-  809b32:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  809b36:	48 8d 50 01          	lea    rdx,[rax+0x1]
-  809b3a:	48 89 55 e8          	mov    QWORD PTR [rbp-0x18],rdx
-  809b3e:	0f b6 55 e4          	movzx  edx,BYTE PTR [rbp-0x1c]
-  809b42:	88 10                	mov    BYTE PTR [rax],dl
+  809b52:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  809b56:	48 8d 50 01          	lea    rdx,[rax+0x1]
+  809b5a:	48 89 55 e8          	mov    QWORD PTR [rbp-0x18],rdx
+  809b5e:	0f b6 55 e4          	movzx  edx,BYTE PTR [rbp-0x1c]
+  809b62:	88 10                	mov    BYTE PTR [rax],dl
     for(u32 i=0;i<size;i++){
-  809b44:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
-  809b48:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  809b4b:	3b 45 e0             	cmp    eax,DWORD PTR [rbp-0x20]
-  809b4e:	72 e2                	jb     809b32 <memset+0x1d>
+  809b64:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
+  809b68:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  809b6b:	3b 45 e0             	cmp    eax,DWORD PTR [rbp-0x20]
+  809b6e:	72 e2                	jb     809b52 <memset+0x1d>
     }
 }
-  809b50:	90                   	nop
-  809b51:	90                   	nop
-  809b52:	5d                   	pop    rbp
-  809b53:	c3                   	ret    
+  809b70:	90                   	nop
+  809b71:	90                   	nop
+  809b72:	5d                   	pop    rbp
+  809b73:	c3                   	ret    
 
-0000000000809b54 <get_mem_size>:
+0000000000809b74 <get_mem_size>:
 
 u32 get_mem_size(){
-  809b54:	f3 0f 1e fa          	endbr64 
-  809b58:	55                   	push   rbp
-  809b59:	48 89 e5             	mov    rbp,rsp
+  809b74:	f3 0f 1e fa          	endbr64 
+  809b78:	55                   	push   rbp
+  809b79:	48 89 e5             	mov    rbp,rsp
     return mem_end;
-  809b5c:	8b 05 62 90 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc29062]        # 432bc4 <mem_end>
+  809b7c:	8b 05 42 90 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc29042]        # 432bc4 <mem_end>
 }
-  809b62:	5d                   	pop    rbp
-  809b63:	c3                   	ret    
+  809b82:	5d                   	pop    rbp
+  809b83:	c3                   	ret    
 
-0000000000809b64 <strcpy>:
+0000000000809b84 <strcpy>:
 #include "str.h"
 #include <stdarg.h>
 void strcpy(unsigned char* dest, unsigned char *buf){
-  809b64:	f3 0f 1e fa          	endbr64 
-  809b68:	55                   	push   rbp
-  809b69:	48 89 e5             	mov    rbp,rsp
-  809b6c:	48 89 7d f8          	mov    QWORD PTR [rbp-0x8],rdi
-  809b70:	48 89 75 f0          	mov    QWORD PTR [rbp-0x10],rsi
+  809b84:	f3 0f 1e fa          	endbr64 
+  809b88:	55                   	push   rbp
+  809b89:	48 89 e5             	mov    rbp,rsp
+  809b8c:	48 89 7d f8          	mov    QWORD PTR [rbp-0x8],rdi
+  809b90:	48 89 75 f0          	mov    QWORD PTR [rbp-0x10],rsi
     while(*buf!='\0'){
-  809b74:	eb 1d                	jmp    809b93 <strcpy+0x2f>
+  809b94:	eb 1d                	jmp    809bb3 <strcpy+0x2f>
         *(dest++)=*(buf++);
-  809b76:	48 8b 55 f0          	mov    rdx,QWORD PTR [rbp-0x10]
-  809b7a:	48 8d 42 01          	lea    rax,[rdx+0x1]
-  809b7e:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
-  809b82:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  809b86:	48 8d 48 01          	lea    rcx,[rax+0x1]
-  809b8a:	48 89 4d f8          	mov    QWORD PTR [rbp-0x8],rcx
-  809b8e:	0f b6 12             	movzx  edx,BYTE PTR [rdx]
-  809b91:	88 10                	mov    BYTE PTR [rax],dl
+  809b96:	48 8b 55 f0          	mov    rdx,QWORD PTR [rbp-0x10]
+  809b9a:	48 8d 42 01          	lea    rax,[rdx+0x1]
+  809b9e:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
+  809ba2:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  809ba6:	48 8d 48 01          	lea    rcx,[rax+0x1]
+  809baa:	48 89 4d f8          	mov    QWORD PTR [rbp-0x8],rcx
+  809bae:	0f b6 12             	movzx  edx,BYTE PTR [rdx]
+  809bb1:	88 10                	mov    BYTE PTR [rax],dl
     while(*buf!='\0'){
-  809b93:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  809b97:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  809b9a:	84 c0                	test   al,al
-  809b9c:	75 d8                	jne    809b76 <strcpy+0x12>
+  809bb3:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  809bb7:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  809bba:	84 c0                	test   al,al
+  809bbc:	75 d8                	jne    809b96 <strcpy+0x12>
     }
     *dest='\0';
-  809b9e:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  809ba2:	c6 00 00             	mov    BYTE PTR [rax],0x0
+  809bbe:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  809bc2:	c6 00 00             	mov    BYTE PTR [rax],0x0
 }
-  809ba5:	90                   	nop
-  809ba6:	5d                   	pop    rbp
-  809ba7:	c3                   	ret    
+  809bc5:	90                   	nop
+  809bc6:	5d                   	pop    rbp
+  809bc7:	c3                   	ret    
 
-0000000000809ba8 <strtok>:
+0000000000809bc8 <strtok>:
 static char strtokkee[512],*strtokkeeptr=strtokkee;
 static int tokptr=0;
 static char retbuf[512],*retbptr=retbuf;
 char* strtok(char *str,char splitter){
-  809ba8:	f3 0f 1e fa          	endbr64 
-  809bac:	55                   	push   rbp
-  809bad:	48 89 e5             	mov    rbp,rsp
-  809bb0:	48 83 ec 30          	sub    rsp,0x30
-  809bb4:	48 89 7d d8          	mov    QWORD PTR [rbp-0x28],rdi
-  809bb8:	89 f0                	mov    eax,esi
-  809bba:	88 45 d4             	mov    BYTE PTR [rbp-0x2c],al
+  809bc8:	f3 0f 1e fa          	endbr64 
+  809bcc:	55                   	push   rbp
+  809bcd:	48 89 e5             	mov    rbp,rsp
+  809bd0:	48 83 ec 30          	sub    rsp,0x30
+  809bd4:	48 89 7d d8          	mov    QWORD PTR [rbp-0x28],rdi
+  809bd8:	89 f0                	mov    eax,esi
+  809bda:	88 45 d4             	mov    BYTE PTR [rbp-0x2c],al
     //limit: cannot cut string longer than 512
     if(str!=(void*)0){
-  809bbd:	48 83 7d d8 00       	cmp    QWORD PTR [rbp-0x28],0x0
-  809bc2:	0f 84 9c 00 00 00    	je     809c64 <strtok+0xbc>
+  809bdd:	48 83 7d d8 00       	cmp    QWORD PTR [rbp-0x28],0x0
+  809be2:	0f 84 9c 00 00 00    	je     809c84 <strtok+0xbc>
         //cut for the first time
         strcpy(strtokkee,str);
-  809bc8:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
-  809bcc:	48 89 c6             	mov    rsi,rax
-  809bcf:	bf e0 2b 43 00       	mov    edi,0x432be0
-  809bd4:	e8 8b ff ff ff       	call   809b64 <strcpy>
+  809be8:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
+  809bec:	48 89 c6             	mov    rsi,rax
+  809bef:	bf e0 2b 43 00       	mov    edi,0x432be0
+  809bf4:	e8 8b ff ff ff       	call   809b84 <strcpy>
         char* ptr=strtokkee;
-  809bd9:	48 c7 45 e8 e0 2b 43 	mov    QWORD PTR [rbp-0x18],0x432be0
-  809be0:	00 
+  809bf9:	48 c7 45 e8 e0 2b 43 	mov    QWORD PTR [rbp-0x18],0x432be0
+  809c00:	00 
         for(tokptr=0;strtokkee[tokptr]!=splitter&&strtokkee[tokptr]!='\0';tokptr=(tokptr+1)%512);
-  809be1:	c7 05 f5 91 c2 ff 00 	mov    DWORD PTR [rip+0xffffffffffc291f5],0x0        # 432de0 <tokptr>
-  809be8:	00 00 00 
-  809beb:	eb 1c                	jmp    809c09 <strtok+0x61>
-  809bed:	8b 05 ed 91 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc291ed]        # 432de0 <tokptr>
-  809bf3:	83 c0 01             	add    eax,0x1
-  809bf6:	99                   	cdq    
-  809bf7:	c1 ea 17             	shr    edx,0x17
-  809bfa:	01 d0                	add    eax,edx
-  809bfc:	25 ff 01 00 00       	and    eax,0x1ff
-  809c01:	29 d0                	sub    eax,edx
-  809c03:	89 05 d7 91 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc291d7],eax        # 432de0 <tokptr>
-  809c09:	8b 05 d1 91 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc291d1]        # 432de0 <tokptr>
-  809c0f:	48 98                	cdqe   
-  809c11:	0f b6 80 e0 2b 43 00 	movzx  eax,BYTE PTR [rax+0x432be0]
-  809c18:	38 45 d4             	cmp    BYTE PTR [rbp-0x2c],al
-  809c1b:	74 13                	je     809c30 <strtok+0x88>
-  809c1d:	8b 05 bd 91 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc291bd]        # 432de0 <tokptr>
-  809c23:	48 98                	cdqe   
-  809c25:	0f b6 80 e0 2b 43 00 	movzx  eax,BYTE PTR [rax+0x432be0]
-  809c2c:	84 c0                	test   al,al
-  809c2e:	75 bd                	jne    809bed <strtok+0x45>
+  809c01:	c7 05 d5 91 c2 ff 00 	mov    DWORD PTR [rip+0xffffffffffc291d5],0x0        # 432de0 <tokptr>
+  809c08:	00 00 00 
+  809c0b:	eb 1c                	jmp    809c29 <strtok+0x61>
+  809c0d:	8b 05 cd 91 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc291cd]        # 432de0 <tokptr>
+  809c13:	83 c0 01             	add    eax,0x1
+  809c16:	99                   	cdq    
+  809c17:	c1 ea 17             	shr    edx,0x17
+  809c1a:	01 d0                	add    eax,edx
+  809c1c:	25 ff 01 00 00       	and    eax,0x1ff
+  809c21:	29 d0                	sub    eax,edx
+  809c23:	89 05 b7 91 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc291b7],eax        # 432de0 <tokptr>
+  809c29:	8b 05 b1 91 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc291b1]        # 432de0 <tokptr>
+  809c2f:	48 98                	cdqe   
+  809c31:	0f b6 80 e0 2b 43 00 	movzx  eax,BYTE PTR [rax+0x432be0]
+  809c38:	38 45 d4             	cmp    BYTE PTR [rbp-0x2c],al
+  809c3b:	74 13                	je     809c50 <strtok+0x88>
+  809c3d:	8b 05 9d 91 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc2919d]        # 432de0 <tokptr>
+  809c43:	48 98                	cdqe   
+  809c45:	0f b6 80 e0 2b 43 00 	movzx  eax,BYTE PTR [rax+0x432be0]
+  809c4c:	84 c0                	test   al,al
+  809c4e:	75 bd                	jne    809c0d <strtok+0x45>
         strtokkee[tokptr]='\0';
-  809c30:	8b 05 aa 91 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc291aa]        # 432de0 <tokptr>
-  809c36:	48 98                	cdqe   
-  809c38:	c6 80 e0 2b 43 00 00 	mov    BYTE PTR [rax+0x432be0],0x0
+  809c50:	8b 05 8a 91 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc2918a]        # 432de0 <tokptr>
+  809c56:	48 98                	cdqe   
+  809c58:	c6 80 e0 2b 43 00 00 	mov    BYTE PTR [rax+0x432be0],0x0
         tokptr=(tokptr+1)%512;
-  809c3f:	8b 05 9b 91 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc2919b]        # 432de0 <tokptr>
-  809c45:	83 c0 01             	add    eax,0x1
-  809c48:	99                   	cdq    
-  809c49:	c1 ea 17             	shr    edx,0x17
-  809c4c:	01 d0                	add    eax,edx
-  809c4e:	25 ff 01 00 00       	and    eax,0x1ff
-  809c53:	29 d0                	sub    eax,edx
-  809c55:	89 05 85 91 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc29185],eax        # 432de0 <tokptr>
+  809c5f:	8b 05 7b 91 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc2917b]        # 432de0 <tokptr>
+  809c65:	83 c0 01             	add    eax,0x1
+  809c68:	99                   	cdq    
+  809c69:	c1 ea 17             	shr    edx,0x17
+  809c6c:	01 d0                	add    eax,edx
+  809c6e:	25 ff 01 00 00       	and    eax,0x1ff
+  809c73:	29 d0                	sub    eax,edx
+  809c75:	89 05 65 91 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc29165],eax        # 432de0 <tokptr>
         return ptr;
-  809c5b:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  809c5f:	e9 9e 00 00 00       	jmp    809d02 <strtok+0x15a>
+  809c7b:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  809c7f:	e9 9e 00 00 00       	jmp    809d22 <strtok+0x15a>
     }
     //go on cutting
     int c=0;
-  809c64:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
+  809c84:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
     char* ptr=strtokkee+tokptr;
-  809c6b:	8b 05 6f 91 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc2916f]        # 432de0 <tokptr>
-  809c71:	48 98                	cdqe   
-  809c73:	48 05 e0 2b 43 00    	add    rax,0x432be0
-  809c79:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
+  809c8b:	8b 05 4f 91 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc2914f]        # 432de0 <tokptr>
+  809c91:	48 98                	cdqe   
+  809c93:	48 05 e0 2b 43 00    	add    rax,0x432be0
+  809c99:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
     for(;strtokkee[tokptr]!=splitter&&strtokkee[tokptr]!='\0';tokptr=(tokptr+1)%512,c++);
-  809c7d:	eb 20                	jmp    809c9f <strtok+0xf7>
-  809c7f:	8b 05 5b 91 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc2915b]        # 432de0 <tokptr>
-  809c85:	83 c0 01             	add    eax,0x1
-  809c88:	99                   	cdq    
-  809c89:	c1 ea 17             	shr    edx,0x17
-  809c8c:	01 d0                	add    eax,edx
-  809c8e:	25 ff 01 00 00       	and    eax,0x1ff
-  809c93:	29 d0                	sub    eax,edx
-  809c95:	89 05 45 91 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc29145],eax        # 432de0 <tokptr>
-  809c9b:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
+  809c9d:	eb 20                	jmp    809cbf <strtok+0xf7>
   809c9f:	8b 05 3b 91 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc2913b]        # 432de0 <tokptr>
-  809ca5:	48 98                	cdqe   
-  809ca7:	0f b6 80 e0 2b 43 00 	movzx  eax,BYTE PTR [rax+0x432be0]
-  809cae:	38 45 d4             	cmp    BYTE PTR [rbp-0x2c],al
-  809cb1:	74 13                	je     809cc6 <strtok+0x11e>
-  809cb3:	8b 05 27 91 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc29127]        # 432de0 <tokptr>
-  809cb9:	48 98                	cdqe   
-  809cbb:	0f b6 80 e0 2b 43 00 	movzx  eax,BYTE PTR [rax+0x432be0]
-  809cc2:	84 c0                	test   al,al
-  809cc4:	75 b9                	jne    809c7f <strtok+0xd7>
+  809ca5:	83 c0 01             	add    eax,0x1
+  809ca8:	99                   	cdq    
+  809ca9:	c1 ea 17             	shr    edx,0x17
+  809cac:	01 d0                	add    eax,edx
+  809cae:	25 ff 01 00 00       	and    eax,0x1ff
+  809cb3:	29 d0                	sub    eax,edx
+  809cb5:	89 05 25 91 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc29125],eax        # 432de0 <tokptr>
+  809cbb:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
+  809cbf:	8b 05 1b 91 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc2911b]        # 432de0 <tokptr>
+  809cc5:	48 98                	cdqe   
+  809cc7:	0f b6 80 e0 2b 43 00 	movzx  eax,BYTE PTR [rax+0x432be0]
+  809cce:	38 45 d4             	cmp    BYTE PTR [rbp-0x2c],al
+  809cd1:	74 13                	je     809ce6 <strtok+0x11e>
+  809cd3:	8b 05 07 91 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc29107]        # 432de0 <tokptr>
+  809cd9:	48 98                	cdqe   
+  809cdb:	0f b6 80 e0 2b 43 00 	movzx  eax,BYTE PTR [rax+0x432be0]
+  809ce2:	84 c0                	test   al,al
+  809ce4:	75 b9                	jne    809c9f <strtok+0xd7>
     strtokkee[tokptr]='\0';
-  809cc6:	8b 05 14 91 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc29114]        # 432de0 <tokptr>
-  809ccc:	48 98                	cdqe   
-  809cce:	c6 80 e0 2b 43 00 00 	mov    BYTE PTR [rax+0x432be0],0x0
+  809ce6:	8b 05 f4 90 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc290f4]        # 432de0 <tokptr>
+  809cec:	48 98                	cdqe   
+  809cee:	c6 80 e0 2b 43 00 00 	mov    BYTE PTR [rax+0x432be0],0x0
     tokptr=(tokptr+1)%512;
-  809cd5:	8b 05 05 91 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc29105]        # 432de0 <tokptr>
-  809cdb:	83 c0 01             	add    eax,0x1
-  809cde:	99                   	cdq    
-  809cdf:	c1 ea 17             	shr    edx,0x17
-  809ce2:	01 d0                	add    eax,edx
-  809ce4:	25 ff 01 00 00       	and    eax,0x1ff
-  809ce9:	29 d0                	sub    eax,edx
-  809ceb:	89 05 ef 90 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc290ef],eax        # 432de0 <tokptr>
+  809cf5:	8b 05 e5 90 c2 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc290e5]        # 432de0 <tokptr>
+  809cfb:	83 c0 01             	add    eax,0x1
+  809cfe:	99                   	cdq    
+  809cff:	c1 ea 17             	shr    edx,0x17
+  809d02:	01 d0                	add    eax,edx
+  809d04:	25 ff 01 00 00       	and    eax,0x1ff
+  809d09:	29 d0                	sub    eax,edx
+  809d0b:	89 05 cf 90 c2 ff    	mov    DWORD PTR [rip+0xffffffffffc290cf],eax        # 432de0 <tokptr>
     if(c)
-  809cf1:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
-  809cf5:	74 06                	je     809cfd <strtok+0x155>
+  809d11:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
+  809d15:	74 06                	je     809d1d <strtok+0x155>
         return ptr;
-  809cf7:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  809cfb:	eb 05                	jmp    809d02 <strtok+0x15a>
+  809d17:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  809d1b:	eb 05                	jmp    809d22 <strtok+0x15a>
     else
         return (void*)0;
-  809cfd:	b8 00 00 00 00       	mov    eax,0x0
+  809d1d:	b8 00 00 00 00       	mov    eax,0x0
 }
-  809d02:	c9                   	leave  
-  809d03:	c3                   	ret    
+  809d22:	c9                   	leave  
+  809d23:	c3                   	ret    
 
-0000000000809d04 <strcmp>:
+0000000000809d24 <strcmp>:
 int strcmp(char *s1,char *s2)
 {
-  809d04:	f3 0f 1e fa          	endbr64 
-  809d08:	55                   	push   rbp
-  809d09:	48 89 e5             	mov    rbp,rsp
-  809d0c:	48 89 7d f8          	mov    QWORD PTR [rbp-0x8],rdi
-  809d10:	48 89 75 f0          	mov    QWORD PTR [rbp-0x10],rsi
+  809d24:	f3 0f 1e fa          	endbr64 
+  809d28:	55                   	push   rbp
+  809d29:	48 89 e5             	mov    rbp,rsp
+  809d2c:	48 89 7d f8          	mov    QWORD PTR [rbp-0x8],rdi
+  809d30:	48 89 75 f0          	mov    QWORD PTR [rbp-0x10],rsi
 	while(*s1!='\0'&&*s2!='\0'){
-  809d14:	eb 3c                	jmp    809d52 <strcmp+0x4e>
+  809d34:	eb 3c                	jmp    809d72 <strcmp+0x4e>
 		if(*s1>*s2)
-  809d16:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  809d1a:	0f b6 10             	movzx  edx,BYTE PTR [rax]
-  809d1d:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  809d21:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  809d24:	38 c2                	cmp    dl,al
-  809d26:	7e 07                	jle    809d2f <strcmp+0x2b>
+  809d36:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  809d3a:	0f b6 10             	movzx  edx,BYTE PTR [rax]
+  809d3d:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  809d41:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  809d44:	38 c2                	cmp    dl,al
+  809d46:	7e 07                	jle    809d4f <strcmp+0x2b>
 			return 1;
-  809d28:	b8 01 00 00 00       	mov    eax,0x1
-  809d2d:	eb 52                	jmp    809d81 <strcmp+0x7d>
+  809d48:	b8 01 00 00 00       	mov    eax,0x1
+  809d4d:	eb 52                	jmp    809da1 <strcmp+0x7d>
 		else if(*s1<*s2)
-  809d2f:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  809d33:	0f b6 10             	movzx  edx,BYTE PTR [rax]
-  809d36:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  809d3a:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  809d3d:	38 c2                	cmp    dl,al
-  809d3f:	7d 07                	jge    809d48 <strcmp+0x44>
+  809d4f:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  809d53:	0f b6 10             	movzx  edx,BYTE PTR [rax]
+  809d56:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  809d5a:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  809d5d:	38 c2                	cmp    dl,al
+  809d5f:	7d 07                	jge    809d68 <strcmp+0x44>
 			return -1;
-  809d41:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  809d46:	eb 39                	jmp    809d81 <strcmp+0x7d>
+  809d61:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  809d66:	eb 39                	jmp    809da1 <strcmp+0x7d>
 		s1++;
-  809d48:	48 83 45 f8 01       	add    QWORD PTR [rbp-0x8],0x1
+  809d68:	48 83 45 f8 01       	add    QWORD PTR [rbp-0x8],0x1
 		s2++;
-  809d4d:	48 83 45 f0 01       	add    QWORD PTR [rbp-0x10],0x1
+  809d6d:	48 83 45 f0 01       	add    QWORD PTR [rbp-0x10],0x1
 	while(*s1!='\0'&&*s2!='\0'){
-  809d52:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  809d56:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  809d59:	84 c0                	test   al,al
-  809d5b:	74 0b                	je     809d68 <strcmp+0x64>
-  809d5d:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  809d61:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  809d64:	84 c0                	test   al,al
-  809d66:	75 ae                	jne    809d16 <strcmp+0x12>
+  809d72:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  809d76:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  809d79:	84 c0                	test   al,al
+  809d7b:	74 0b                	je     809d88 <strcmp+0x64>
+  809d7d:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  809d81:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  809d84:	84 c0                	test   al,al
+  809d86:	75 ae                	jne    809d36 <strcmp+0x12>
 	}
 	if(*s1==*s2)
-  809d68:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  809d6c:	0f b6 10             	movzx  edx,BYTE PTR [rax]
-  809d6f:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  809d73:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  809d76:	38 c2                	cmp    dl,al
-  809d78:	75 07                	jne    809d81 <strcmp+0x7d>
+  809d88:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  809d8c:	0f b6 10             	movzx  edx,BYTE PTR [rax]
+  809d8f:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  809d93:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  809d96:	38 c2                	cmp    dl,al
+  809d98:	75 07                	jne    809da1 <strcmp+0x7d>
 		return 0;
-  809d7a:	b8 00 00 00 00       	mov    eax,0x0
-  809d7f:	eb 00                	jmp    809d81 <strcmp+0x7d>
+  809d9a:	b8 00 00 00 00       	mov    eax,0x0
+  809d9f:	eb 00                	jmp    809da1 <strcmp+0x7d>
 }
-  809d81:	5d                   	pop    rbp
-  809d82:	c3                   	ret    
+  809da1:	5d                   	pop    rbp
+  809da2:	c3                   	ret    
 
-0000000000809d83 <strlen>:
+0000000000809da3 <strlen>:
 
 int strlen(char *str)
 {
-  809d83:	f3 0f 1e fa          	endbr64 
-  809d87:	55                   	push   rbp
-  809d88:	48 89 e5             	mov    rbp,rsp
-  809d8b:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
+  809da3:	f3 0f 1e fa          	endbr64 
+  809da7:	55                   	push   rbp
+  809da8:	48 89 e5             	mov    rbp,rsp
+  809dab:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
     int l=0;
-  809d8f:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
+  809daf:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
     for(;*str!='\0';str++,l++);
-  809d96:	eb 09                	jmp    809da1 <strlen+0x1e>
-  809d98:	48 83 45 e8 01       	add    QWORD PTR [rbp-0x18],0x1
-  809d9d:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
-  809da1:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  809da5:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  809da8:	84 c0                	test   al,al
-  809daa:	75 ec                	jne    809d98 <strlen+0x15>
+  809db6:	eb 09                	jmp    809dc1 <strlen+0x1e>
+  809db8:	48 83 45 e8 01       	add    QWORD PTR [rbp-0x18],0x1
+  809dbd:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
+  809dc1:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  809dc5:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  809dc8:	84 c0                	test   al,al
+  809dca:	75 ec                	jne    809db8 <strlen+0x15>
     return l;
-  809dac:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  809dcc:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
 }
-  809daf:	5d                   	pop    rbp
-  809db0:	c3                   	ret    
+  809dcf:	5d                   	pop    rbp
+  809dd0:	c3                   	ret    
 
-0000000000809db1 <sprintf>:
+0000000000809dd1 <sprintf>:
 
 void sprintf(char *dist, char *str,...)
 {
-  809db1:	f3 0f 1e fa          	endbr64 
-  809db5:	55                   	push   rbp
-  809db6:	48 89 e5             	mov    rbp,rsp
-  809db9:	48 81 ec 10 01 00 00 	sub    rsp,0x110
-  809dc0:	48 89 bd f8 fe ff ff 	mov    QWORD PTR [rbp-0x108],rdi
-  809dc7:	48 89 b5 f0 fe ff ff 	mov    QWORD PTR [rbp-0x110],rsi
-  809dce:	48 89 95 60 ff ff ff 	mov    QWORD PTR [rbp-0xa0],rdx
-  809dd5:	48 89 8d 68 ff ff ff 	mov    QWORD PTR [rbp-0x98],rcx
-  809ddc:	4c 89 85 70 ff ff ff 	mov    QWORD PTR [rbp-0x90],r8
-  809de3:	4c 89 8d 78 ff ff ff 	mov    QWORD PTR [rbp-0x88],r9
-  809dea:	84 c0                	test   al,al
-  809dec:	74 20                	je     809e0e <sprintf+0x5d>
-  809dee:	0f 29 45 80          	movaps XMMWORD PTR [rbp-0x80],xmm0
-  809df2:	0f 29 4d 90          	movaps XMMWORD PTR [rbp-0x70],xmm1
-  809df6:	0f 29 55 a0          	movaps XMMWORD PTR [rbp-0x60],xmm2
-  809dfa:	0f 29 5d b0          	movaps XMMWORD PTR [rbp-0x50],xmm3
-  809dfe:	0f 29 65 c0          	movaps XMMWORD PTR [rbp-0x40],xmm4
-  809e02:	0f 29 6d d0          	movaps XMMWORD PTR [rbp-0x30],xmm5
-  809e06:	0f 29 75 e0          	movaps XMMWORD PTR [rbp-0x20],xmm6
-  809e0a:	0f 29 7d f0          	movaps XMMWORD PTR [rbp-0x10],xmm7
+  809dd1:	f3 0f 1e fa          	endbr64 
+  809dd5:	55                   	push   rbp
+  809dd6:	48 89 e5             	mov    rbp,rsp
+  809dd9:	48 81 ec 10 01 00 00 	sub    rsp,0x110
+  809de0:	48 89 bd f8 fe ff ff 	mov    QWORD PTR [rbp-0x108],rdi
+  809de7:	48 89 b5 f0 fe ff ff 	mov    QWORD PTR [rbp-0x110],rsi
+  809dee:	48 89 95 60 ff ff ff 	mov    QWORD PTR [rbp-0xa0],rdx
+  809df5:	48 89 8d 68 ff ff ff 	mov    QWORD PTR [rbp-0x98],rcx
+  809dfc:	4c 89 85 70 ff ff ff 	mov    QWORD PTR [rbp-0x90],r8
+  809e03:	4c 89 8d 78 ff ff ff 	mov    QWORD PTR [rbp-0x88],r9
+  809e0a:	84 c0                	test   al,al
+  809e0c:	74 20                	je     809e2e <sprintf+0x5d>
+  809e0e:	0f 29 45 80          	movaps XMMWORD PTR [rbp-0x80],xmm0
+  809e12:	0f 29 4d 90          	movaps XMMWORD PTR [rbp-0x70],xmm1
+  809e16:	0f 29 55 a0          	movaps XMMWORD PTR [rbp-0x60],xmm2
+  809e1a:	0f 29 5d b0          	movaps XMMWORD PTR [rbp-0x50],xmm3
+  809e1e:	0f 29 65 c0          	movaps XMMWORD PTR [rbp-0x40],xmm4
+  809e22:	0f 29 6d d0          	movaps XMMWORD PTR [rbp-0x30],xmm5
+  809e26:	0f 29 75 e0          	movaps XMMWORD PTR [rbp-0x20],xmm6
+  809e2a:	0f 29 7d f0          	movaps XMMWORD PTR [rbp-0x10],xmm7
 
     //count num of args
     char *pstr=str;
-  809e0e:	48 8b 85 f0 fe ff ff 	mov    rax,QWORD PTR [rbp-0x110]
-  809e15:	48 89 85 48 ff ff ff 	mov    QWORD PTR [rbp-0xb8],rax
+  809e2e:	48 8b 85 f0 fe ff ff 	mov    rax,QWORD PTR [rbp-0x110]
+  809e35:	48 89 85 48 ff ff ff 	mov    QWORD PTR [rbp-0xb8],rax
     char *prev=str;
-  809e1c:	48 8b 85 f0 fe ff ff 	mov    rax,QWORD PTR [rbp-0x110]
-  809e23:	48 89 85 40 ff ff ff 	mov    QWORD PTR [rbp-0xc0],rax
+  809e3c:	48 8b 85 f0 fe ff ff 	mov    rax,QWORD PTR [rbp-0x110]
+  809e43:	48 89 85 40 ff ff ff 	mov    QWORD PTR [rbp-0xc0],rax
     int argnum=0;
-  809e2a:	c7 85 3c ff ff ff 00 	mov    DWORD PTR [rbp-0xc4],0x0
-  809e31:	00 00 00 
+  809e4a:	c7 85 3c ff ff ff 00 	mov    DWORD PTR [rbp-0xc4],0x0
+  809e51:	00 00 00 
     while (*pstr!='\n')
-  809e34:	eb 39                	jmp    809e6f <sprintf+0xbe>
+  809e54:	eb 39                	jmp    809e8f <sprintf+0xbe>
     {
         if(*pstr=='%'&&*prev!='%')
-  809e36:	48 8b 85 48 ff ff ff 	mov    rax,QWORD PTR [rbp-0xb8]
-  809e3d:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  809e40:	3c 25                	cmp    al,0x25
-  809e42:	75 15                	jne    809e59 <sprintf+0xa8>
-  809e44:	48 8b 85 40 ff ff ff 	mov    rax,QWORD PTR [rbp-0xc0]
-  809e4b:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  809e4e:	3c 25                	cmp    al,0x25
-  809e50:	74 07                	je     809e59 <sprintf+0xa8>
+  809e56:	48 8b 85 48 ff ff ff 	mov    rax,QWORD PTR [rbp-0xb8]
+  809e5d:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  809e60:	3c 25                	cmp    al,0x25
+  809e62:	75 15                	jne    809e79 <sprintf+0xa8>
+  809e64:	48 8b 85 40 ff ff ff 	mov    rax,QWORD PTR [rbp-0xc0]
+  809e6b:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  809e6e:	3c 25                	cmp    al,0x25
+  809e70:	74 07                	je     809e79 <sprintf+0xa8>
             argnum++;
-  809e52:	83 85 3c ff ff ff 01 	add    DWORD PTR [rbp-0xc4],0x1
+  809e72:	83 85 3c ff ff ff 01 	add    DWORD PTR [rbp-0xc4],0x1
         prev=pstr;
-  809e59:	48 8b 85 48 ff ff ff 	mov    rax,QWORD PTR [rbp-0xb8]
-  809e60:	48 89 85 40 ff ff ff 	mov    QWORD PTR [rbp-0xc0],rax
+  809e79:	48 8b 85 48 ff ff ff 	mov    rax,QWORD PTR [rbp-0xb8]
+  809e80:	48 89 85 40 ff ff ff 	mov    QWORD PTR [rbp-0xc0],rax
         pstr++;
-  809e67:	48 83 85 48 ff ff ff 	add    QWORD PTR [rbp-0xb8],0x1
-  809e6e:	01 
+  809e87:	48 83 85 48 ff ff ff 	add    QWORD PTR [rbp-0xb8],0x1
+  809e8e:	01 
     while (*pstr!='\n')
-  809e6f:	48 8b 85 48 ff ff ff 	mov    rax,QWORD PTR [rbp-0xb8]
-  809e76:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  809e79:	3c 0a                	cmp    al,0xa
-  809e7b:	75 b9                	jne    809e36 <sprintf+0x85>
+  809e8f:	48 8b 85 48 ff ff ff 	mov    rax,QWORD PTR [rbp-0xb8]
+  809e96:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  809e99:	3c 0a                	cmp    al,0xa
+  809e9b:	75 b9                	jne    809e56 <sprintf+0x85>
     }
 
     va_list vargs;
     va_start(vargs,str);
-  809e7d:	c7 85 08 ff ff ff 10 	mov    DWORD PTR [rbp-0xf8],0x10
-  809e84:	00 00 00 
-  809e87:	c7 85 0c ff ff ff 30 	mov    DWORD PTR [rbp-0xf4],0x30
-  809e8e:	00 00 00 
-  809e91:	48 8d 45 10          	lea    rax,[rbp+0x10]
-  809e95:	48 89 85 10 ff ff ff 	mov    QWORD PTR [rbp-0xf0],rax
-  809e9c:	48 8d 85 50 ff ff ff 	lea    rax,[rbp-0xb0]
-  809ea3:	48 89 85 18 ff ff ff 	mov    QWORD PTR [rbp-0xe8],rax
+  809e9d:	c7 85 08 ff ff ff 10 	mov    DWORD PTR [rbp-0xf8],0x10
+  809ea4:	00 00 00 
+  809ea7:	c7 85 0c ff ff ff 30 	mov    DWORD PTR [rbp-0xf4],0x30
+  809eae:	00 00 00 
+  809eb1:	48 8d 45 10          	lea    rax,[rbp+0x10]
+  809eb5:	48 89 85 10 ff ff ff 	mov    QWORD PTR [rbp-0xf0],rax
+  809ebc:	48 8d 85 50 ff ff ff 	lea    rax,[rbp-0xb0]
+  809ec3:	48 89 85 18 ff ff ff 	mov    QWORD PTR [rbp-0xe8],rax
     pstr=str;
-  809eaa:	48 8b 85 f0 fe ff ff 	mov    rax,QWORD PTR [rbp-0x110]
-  809eb1:	48 89 85 48 ff ff ff 	mov    QWORD PTR [rbp-0xb8],rax
+  809eca:	48 8b 85 f0 fe ff ff 	mov    rax,QWORD PTR [rbp-0x110]
+  809ed1:	48 89 85 48 ff ff ff 	mov    QWORD PTR [rbp-0xb8],rax
     for(;*pstr!='\0';pstr++){
-  809eb8:	e9 e2 01 00 00       	jmp    80a09f <sprintf+0x2ee>
+  809ed8:	e9 e2 01 00 00       	jmp    80a0bf <sprintf+0x2ee>
         if(*pstr=='%'&&*(pstr+1)!='\0'){
-  809ebd:	48 8b 85 48 ff ff ff 	mov    rax,QWORD PTR [rbp-0xb8]
-  809ec4:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  809ec7:	3c 25                	cmp    al,0x25
-  809ec9:	0f 85 aa 01 00 00    	jne    80a079 <sprintf+0x2c8>
-  809ecf:	48 8b 85 48 ff ff ff 	mov    rax,QWORD PTR [rbp-0xb8]
-  809ed6:	48 83 c0 01          	add    rax,0x1
-  809eda:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  809edd:	84 c0                	test   al,al
-  809edf:	0f 84 94 01 00 00    	je     80a079 <sprintf+0x2c8>
+  809edd:	48 8b 85 48 ff ff ff 	mov    rax,QWORD PTR [rbp-0xb8]
+  809ee4:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  809ee7:	3c 25                	cmp    al,0x25
+  809ee9:	0f 85 aa 01 00 00    	jne    80a099 <sprintf+0x2c8>
+  809eef:	48 8b 85 48 ff ff ff 	mov    rax,QWORD PTR [rbp-0xb8]
+  809ef6:	48 83 c0 01          	add    rax,0x1
+  809efa:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  809efd:	84 c0                	test   al,al
+  809eff:	0f 84 94 01 00 00    	je     80a099 <sprintf+0x2c8>
             pstr++;
-  809ee5:	48 83 85 48 ff ff ff 	add    QWORD PTR [rbp-0xb8],0x1
-  809eec:	01 
+  809f05:	48 83 85 48 ff ff ff 	add    QWORD PTR [rbp-0xb8],0x1
+  809f0c:	01 
             if(*pstr=='x'){
-  809eed:	48 8b 85 48 ff ff ff 	mov    rax,QWORD PTR [rbp-0xb8]
-  809ef4:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  809ef7:	3c 78                	cmp    al,0x78
-  809ef9:	75 64                	jne    809f5f <sprintf+0x1ae>
+  809f0d:	48 8b 85 48 ff ff ff 	mov    rax,QWORD PTR [rbp-0xb8]
+  809f14:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  809f17:	3c 78                	cmp    al,0x78
+  809f19:	75 64                	jne    809f7f <sprintf+0x1ae>
                 int v=va_arg(vargs,int);
-  809efb:	8b 85 08 ff ff ff    	mov    eax,DWORD PTR [rbp-0xf8]
-  809f01:	83 f8 2f             	cmp    eax,0x2f
-  809f04:	77 23                	ja     809f29 <sprintf+0x178>
-  809f06:	48 8b 85 18 ff ff ff 	mov    rax,QWORD PTR [rbp-0xe8]
-  809f0d:	8b 95 08 ff ff ff    	mov    edx,DWORD PTR [rbp-0xf8]
-  809f13:	89 d2                	mov    edx,edx
-  809f15:	48 01 d0             	add    rax,rdx
-  809f18:	8b 95 08 ff ff ff    	mov    edx,DWORD PTR [rbp-0xf8]
-  809f1e:	83 c2 08             	add    edx,0x8
-  809f21:	89 95 08 ff ff ff    	mov    DWORD PTR [rbp-0xf8],edx
-  809f27:	eb 12                	jmp    809f3b <sprintf+0x18a>
-  809f29:	48 8b 85 10 ff ff ff 	mov    rax,QWORD PTR [rbp-0xf0]
-  809f30:	48 8d 50 08          	lea    rdx,[rax+0x8]
-  809f34:	48 89 95 10 ff ff ff 	mov    QWORD PTR [rbp-0xf0],rdx
-  809f3b:	8b 00                	mov    eax,DWORD PTR [rax]
-  809f3d:	89 85 24 ff ff ff    	mov    DWORD PTR [rbp-0xdc],eax
+  809f1b:	8b 85 08 ff ff ff    	mov    eax,DWORD PTR [rbp-0xf8]
+  809f21:	83 f8 2f             	cmp    eax,0x2f
+  809f24:	77 23                	ja     809f49 <sprintf+0x178>
+  809f26:	48 8b 85 18 ff ff ff 	mov    rax,QWORD PTR [rbp-0xe8]
+  809f2d:	8b 95 08 ff ff ff    	mov    edx,DWORD PTR [rbp-0xf8]
+  809f33:	89 d2                	mov    edx,edx
+  809f35:	48 01 d0             	add    rax,rdx
+  809f38:	8b 95 08 ff ff ff    	mov    edx,DWORD PTR [rbp-0xf8]
+  809f3e:	83 c2 08             	add    edx,0x8
+  809f41:	89 95 08 ff ff ff    	mov    DWORD PTR [rbp-0xf8],edx
+  809f47:	eb 12                	jmp    809f5b <sprintf+0x18a>
+  809f49:	48 8b 85 10 ff ff ff 	mov    rax,QWORD PTR [rbp-0xf0]
+  809f50:	48 8d 50 08          	lea    rdx,[rax+0x8]
+  809f54:	48 89 95 10 ff ff ff 	mov    QWORD PTR [rbp-0xf0],rdx
+  809f5b:	8b 00                	mov    eax,DWORD PTR [rax]
+  809f5d:	89 85 24 ff ff ff    	mov    DWORD PTR [rbp-0xdc],eax
                 sprint_hex(dist,v);
-  809f43:	8b 95 24 ff ff ff    	mov    edx,DWORD PTR [rbp-0xdc]
-  809f49:	48 8b 85 f8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x108]
-  809f50:	89 d6                	mov    esi,edx
-  809f52:	48 89 c7             	mov    rdi,rax
-  809f55:	e8 4e 02 00 00       	call   80a1a8 <sprint_hex>
+  809f63:	8b 95 24 ff ff ff    	mov    edx,DWORD PTR [rbp-0xdc]
+  809f69:	48 8b 85 f8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x108]
+  809f70:	89 d6                	mov    esi,edx
+  809f72:	48 89 c7             	mov    rdi,rax
+  809f75:	e8 4e 02 00 00       	call   80a1c8 <sprint_hex>
             if(*pstr=='x'){
-  809f5a:	e9 38 01 00 00       	jmp    80a097 <sprintf+0x2e6>
+  809f7a:	e9 38 01 00 00       	jmp    80a0b7 <sprintf+0x2e6>
             }else if(*pstr=='s'){
-  809f5f:	48 8b 85 48 ff ff ff 	mov    rax,QWORD PTR [rbp-0xb8]
-  809f66:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  809f69:	3c 73                	cmp    al,0x73
-  809f6b:	75 68                	jne    809fd5 <sprintf+0x224>
+  809f7f:	48 8b 85 48 ff ff ff 	mov    rax,QWORD PTR [rbp-0xb8]
+  809f86:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  809f89:	3c 73                	cmp    al,0x73
+  809f8b:	75 68                	jne    809ff5 <sprintf+0x224>
                 char* v=va_arg(vargs,char*);
-  809f6d:	8b 85 08 ff ff ff    	mov    eax,DWORD PTR [rbp-0xf8]
-  809f73:	83 f8 2f             	cmp    eax,0x2f
-  809f76:	77 23                	ja     809f9b <sprintf+0x1ea>
-  809f78:	48 8b 85 18 ff ff ff 	mov    rax,QWORD PTR [rbp-0xe8]
-  809f7f:	8b 95 08 ff ff ff    	mov    edx,DWORD PTR [rbp-0xf8]
-  809f85:	89 d2                	mov    edx,edx
-  809f87:	48 01 d0             	add    rax,rdx
-  809f8a:	8b 95 08 ff ff ff    	mov    edx,DWORD PTR [rbp-0xf8]
-  809f90:	83 c2 08             	add    edx,0x8
-  809f93:	89 95 08 ff ff ff    	mov    DWORD PTR [rbp-0xf8],edx
-  809f99:	eb 12                	jmp    809fad <sprintf+0x1fc>
-  809f9b:	48 8b 85 10 ff ff ff 	mov    rax,QWORD PTR [rbp-0xf0]
-  809fa2:	48 8d 50 08          	lea    rdx,[rax+0x8]
-  809fa6:	48 89 95 10 ff ff ff 	mov    QWORD PTR [rbp-0xf0],rdx
-  809fad:	48 8b 00             	mov    rax,QWORD PTR [rax]
-  809fb0:	48 89 85 28 ff ff ff 	mov    QWORD PTR [rbp-0xd8],rax
+  809f8d:	8b 85 08 ff ff ff    	mov    eax,DWORD PTR [rbp-0xf8]
+  809f93:	83 f8 2f             	cmp    eax,0x2f
+  809f96:	77 23                	ja     809fbb <sprintf+0x1ea>
+  809f98:	48 8b 85 18 ff ff ff 	mov    rax,QWORD PTR [rbp-0xe8]
+  809f9f:	8b 95 08 ff ff ff    	mov    edx,DWORD PTR [rbp-0xf8]
+  809fa5:	89 d2                	mov    edx,edx
+  809fa7:	48 01 d0             	add    rax,rdx
+  809faa:	8b 95 08 ff ff ff    	mov    edx,DWORD PTR [rbp-0xf8]
+  809fb0:	83 c2 08             	add    edx,0x8
+  809fb3:	89 95 08 ff ff ff    	mov    DWORD PTR [rbp-0xf8],edx
+  809fb9:	eb 12                	jmp    809fcd <sprintf+0x1fc>
+  809fbb:	48 8b 85 10 ff ff ff 	mov    rax,QWORD PTR [rbp-0xf0]
+  809fc2:	48 8d 50 08          	lea    rdx,[rax+0x8]
+  809fc6:	48 89 95 10 ff ff ff 	mov    QWORD PTR [rbp-0xf0],rdx
+  809fcd:	48 8b 00             	mov    rax,QWORD PTR [rax]
+  809fd0:	48 89 85 28 ff ff ff 	mov    QWORD PTR [rbp-0xd8],rax
                 sprintn(dist,v);
-  809fb7:	48 8b 95 28 ff ff ff 	mov    rdx,QWORD PTR [rbp-0xd8]
-  809fbe:	48 8b 85 f8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x108]
-  809fc5:	48 89 d6             	mov    rsi,rdx
-  809fc8:	48 89 c7             	mov    rdi,rax
-  809fcb:	e8 5a 02 00 00       	call   80a22a <sprintn>
+  809fd7:	48 8b 95 28 ff ff ff 	mov    rdx,QWORD PTR [rbp-0xd8]
+  809fde:	48 8b 85 f8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x108]
+  809fe5:	48 89 d6             	mov    rsi,rdx
+  809fe8:	48 89 c7             	mov    rdi,rax
+  809feb:	e8 5a 02 00 00       	call   80a24a <sprintn>
             if(*pstr=='x'){
-  809fd0:	e9 c2 00 00 00       	jmp    80a097 <sprintf+0x2e6>
+  809ff0:	e9 c2 00 00 00       	jmp    80a0b7 <sprintf+0x2e6>
             }else if(*pstr=='d'){
-  809fd5:	48 8b 85 48 ff ff ff 	mov    rax,QWORD PTR [rbp-0xb8]
-  809fdc:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  809fdf:	3c 64                	cmp    al,0x64
-  809fe1:	75 66                	jne    80a049 <sprintf+0x298>
+  809ff5:	48 8b 85 48 ff ff ff 	mov    rax,QWORD PTR [rbp-0xb8]
+  809ffc:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  809fff:	3c 64                	cmp    al,0x64
+  80a001:	75 66                	jne    80a069 <sprintf+0x298>
                 char* v=va_arg(vargs,char*);
-  809fe3:	8b 85 08 ff ff ff    	mov    eax,DWORD PTR [rbp-0xf8]
-  809fe9:	83 f8 2f             	cmp    eax,0x2f
-  809fec:	77 23                	ja     80a011 <sprintf+0x260>
-  809fee:	48 8b 85 18 ff ff ff 	mov    rax,QWORD PTR [rbp-0xe8]
-  809ff5:	8b 95 08 ff ff ff    	mov    edx,DWORD PTR [rbp-0xf8]
-  809ffb:	89 d2                	mov    edx,edx
-  809ffd:	48 01 d0             	add    rax,rdx
-  80a000:	8b 95 08 ff ff ff    	mov    edx,DWORD PTR [rbp-0xf8]
-  80a006:	83 c2 08             	add    edx,0x8
-  80a009:	89 95 08 ff ff ff    	mov    DWORD PTR [rbp-0xf8],edx
-  80a00f:	eb 12                	jmp    80a023 <sprintf+0x272>
-  80a011:	48 8b 85 10 ff ff ff 	mov    rax,QWORD PTR [rbp-0xf0]
-  80a018:	48 8d 50 08          	lea    rdx,[rax+0x8]
-  80a01c:	48 89 95 10 ff ff ff 	mov    QWORD PTR [rbp-0xf0],rdx
-  80a023:	48 8b 00             	mov    rax,QWORD PTR [rax]
-  80a026:	48 89 85 30 ff ff ff 	mov    QWORD PTR [rbp-0xd0],rax
+  80a003:	8b 85 08 ff ff ff    	mov    eax,DWORD PTR [rbp-0xf8]
+  80a009:	83 f8 2f             	cmp    eax,0x2f
+  80a00c:	77 23                	ja     80a031 <sprintf+0x260>
+  80a00e:	48 8b 85 18 ff ff ff 	mov    rax,QWORD PTR [rbp-0xe8]
+  80a015:	8b 95 08 ff ff ff    	mov    edx,DWORD PTR [rbp-0xf8]
+  80a01b:	89 d2                	mov    edx,edx
+  80a01d:	48 01 d0             	add    rax,rdx
+  80a020:	8b 95 08 ff ff ff    	mov    edx,DWORD PTR [rbp-0xf8]
+  80a026:	83 c2 08             	add    edx,0x8
+  80a029:	89 95 08 ff ff ff    	mov    DWORD PTR [rbp-0xf8],edx
+  80a02f:	eb 12                	jmp    80a043 <sprintf+0x272>
+  80a031:	48 8b 85 10 ff ff ff 	mov    rax,QWORD PTR [rbp-0xf0]
+  80a038:	48 8d 50 08          	lea    rdx,[rax+0x8]
+  80a03c:	48 89 95 10 ff ff ff 	mov    QWORD PTR [rbp-0xf0],rdx
+  80a043:	48 8b 00             	mov    rax,QWORD PTR [rax]
+  80a046:	48 89 85 30 ff ff ff 	mov    QWORD PTR [rbp-0xd0],rax
                 sprint_decimal(dist,v);
-  80a02d:	48 8b 85 30 ff ff ff 	mov    rax,QWORD PTR [rbp-0xd0]
-  80a034:	89 c2                	mov    edx,eax
-  80a036:	48 8b 85 f8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x108]
-  80a03d:	89 d6                	mov    esi,edx
-  80a03f:	48 89 c7             	mov    rdi,rax
-  80a042:	e8 ad 00 00 00       	call   80a0f4 <sprint_decimal>
+  80a04d:	48 8b 85 30 ff ff ff 	mov    rax,QWORD PTR [rbp-0xd0]
+  80a054:	89 c2                	mov    edx,eax
+  80a056:	48 8b 85 f8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x108]
+  80a05d:	89 d6                	mov    esi,edx
+  80a05f:	48 89 c7             	mov    rdi,rax
+  80a062:	e8 ad 00 00 00       	call   80a114 <sprint_decimal>
             if(*pstr=='x'){
-  80a047:	eb 4e                	jmp    80a097 <sprintf+0x2e6>
+  80a067:	eb 4e                	jmp    80a0b7 <sprintf+0x2e6>
             }else if(*pstr=='c'){
-  80a049:	48 8b 85 48 ff ff ff 	mov    rax,QWORD PTR [rbp-0xb8]
-  80a050:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  80a053:	3c 63                	cmp    al,0x63
-  80a055:	75 02                	jne    80a059 <sprintf+0x2a8>
+  80a069:	48 8b 85 48 ff ff ff 	mov    rax,QWORD PTR [rbp-0xb8]
+  80a070:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  80a073:	3c 63                	cmp    al,0x63
+  80a075:	75 02                	jne    80a079 <sprintf+0x2a8>
                 char v=va_arg(vargs,char);
-  80a057:	0f 0b                	ud2    
+  80a077:	0f 0b                	ud2    
                 sprintchar(dist,v);
             }else{
                 sprintchar(dist,*pstr);
-  80a059:	48 8b 85 48 ff ff ff 	mov    rax,QWORD PTR [rbp-0xb8]
-  80a060:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  80a063:	0f be d0             	movsx  edx,al
-  80a066:	48 8b 85 f8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x108]
-  80a06d:	89 d6                	mov    esi,edx
-  80a06f:	48 89 c7             	mov    rdi,rax
-  80a072:	e8 3e 00 00 00       	call   80a0b5 <sprintchar>
-            if(*pstr=='x'){
-  80a077:	eb 1e                	jmp    80a097 <sprintf+0x2e6>
-            }
-        }else{
-            sprintchar(dist,*pstr);
   80a079:	48 8b 85 48 ff ff ff 	mov    rax,QWORD PTR [rbp-0xb8]
   80a080:	0f b6 00             	movzx  eax,BYTE PTR [rax]
   80a083:	0f be d0             	movsx  edx,al
   80a086:	48 8b 85 f8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x108]
   80a08d:	89 d6                	mov    esi,edx
   80a08f:	48 89 c7             	mov    rdi,rax
-  80a092:	e8 1e 00 00 00       	call   80a0b5 <sprintchar>
+  80a092:	e8 3e 00 00 00       	call   80a0d5 <sprintchar>
+            if(*pstr=='x'){
+  80a097:	eb 1e                	jmp    80a0b7 <sprintf+0x2e6>
+            }
+        }else{
+            sprintchar(dist,*pstr);
+  80a099:	48 8b 85 48 ff ff ff 	mov    rax,QWORD PTR [rbp-0xb8]
+  80a0a0:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  80a0a3:	0f be d0             	movsx  edx,al
+  80a0a6:	48 8b 85 f8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x108]
+  80a0ad:	89 d6                	mov    esi,edx
+  80a0af:	48 89 c7             	mov    rdi,rax
+  80a0b2:	e8 1e 00 00 00       	call   80a0d5 <sprintchar>
     for(;*pstr!='\0';pstr++){
-  80a097:	48 83 85 48 ff ff ff 	add    QWORD PTR [rbp-0xb8],0x1
-  80a09e:	01 
-  80a09f:	48 8b 85 48 ff ff ff 	mov    rax,QWORD PTR [rbp-0xb8]
-  80a0a6:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  80a0a9:	84 c0                	test   al,al
-  80a0ab:	0f 85 0c fe ff ff    	jne    809ebd <sprintf+0x10c>
+  80a0b7:	48 83 85 48 ff ff ff 	add    QWORD PTR [rbp-0xb8],0x1
+  80a0be:	01 
+  80a0bf:	48 8b 85 48 ff ff ff 	mov    rax,QWORD PTR [rbp-0xb8]
+  80a0c6:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  80a0c9:	84 c0                	test   al,al
+  80a0cb:	0f 85 0c fe ff ff    	jne    809edd <sprintf+0x10c>
         }
     }
     va_end(vargs);
 }
-  80a0b1:	90                   	nop
-  80a0b2:	90                   	nop
-  80a0b3:	c9                   	leave  
-  80a0b4:	c3                   	ret    
+  80a0d1:	90                   	nop
+  80a0d2:	90                   	nop
+  80a0d3:	c9                   	leave  
+  80a0d4:	c3                   	ret    
 
-000000000080a0b5 <sprintchar>:
+000000000080a0d5 <sprintchar>:
 void sprintchar(char *dist,char c)
 {
-  80a0b5:	f3 0f 1e fa          	endbr64 
-  80a0b9:	55                   	push   rbp
-  80a0ba:	48 89 e5             	mov    rbp,rsp
-  80a0bd:	48 89 7d f8          	mov    QWORD PTR [rbp-0x8],rdi
-  80a0c1:	89 f0                	mov    eax,esi
-  80a0c3:	88 45 f4             	mov    BYTE PTR [rbp-0xc],al
+  80a0d5:	f3 0f 1e fa          	endbr64 
+  80a0d9:	55                   	push   rbp
+  80a0da:	48 89 e5             	mov    rbp,rsp
+  80a0dd:	48 89 7d f8          	mov    QWORD PTR [rbp-0x8],rdi
+  80a0e1:	89 f0                	mov    eax,esi
+  80a0e3:	88 45 f4             	mov    BYTE PTR [rbp-0xc],al
     while(*dist!='\0')
-  80a0c6:	eb 05                	jmp    80a0cd <sprintchar+0x18>
+  80a0e6:	eb 05                	jmp    80a0ed <sprintchar+0x18>
         dist++;
-  80a0c8:	48 83 45 f8 01       	add    QWORD PTR [rbp-0x8],0x1
+  80a0e8:	48 83 45 f8 01       	add    QWORD PTR [rbp-0x8],0x1
     while(*dist!='\0')
-  80a0cd:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  80a0d1:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  80a0d4:	84 c0                	test   al,al
-  80a0d6:	75 f0                	jne    80a0c8 <sprintchar+0x13>
+  80a0ed:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  80a0f1:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  80a0f4:	84 c0                	test   al,al
+  80a0f6:	75 f0                	jne    80a0e8 <sprintchar+0x13>
     *dist++=c;
-  80a0d8:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  80a0dc:	48 8d 50 01          	lea    rdx,[rax+0x1]
-  80a0e0:	48 89 55 f8          	mov    QWORD PTR [rbp-0x8],rdx
-  80a0e4:	0f b6 55 f4          	movzx  edx,BYTE PTR [rbp-0xc]
-  80a0e8:	88 10                	mov    BYTE PTR [rax],dl
+  80a0f8:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  80a0fc:	48 8d 50 01          	lea    rdx,[rax+0x1]
+  80a100:	48 89 55 f8          	mov    QWORD PTR [rbp-0x8],rdx
+  80a104:	0f b6 55 f4          	movzx  edx,BYTE PTR [rbp-0xc]
+  80a108:	88 10                	mov    BYTE PTR [rax],dl
     *dist='\0';
-  80a0ea:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  80a0ee:	c6 00 00             	mov    BYTE PTR [rax],0x0
+  80a10a:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  80a10e:	c6 00 00             	mov    BYTE PTR [rax],0x0
 }
-  80a0f1:	90                   	nop
-  80a0f2:	5d                   	pop    rbp
-  80a0f3:	c3                   	ret    
+  80a111:	90                   	nop
+  80a112:	5d                   	pop    rbp
+  80a113:	c3                   	ret    
 
-000000000080a0f4 <sprint_decimal>:
+000000000080a114 <sprint_decimal>:
 void sprint_decimal(char *dist,int c)
 {
-  80a0f4:	f3 0f 1e fa          	endbr64 
-  80a0f8:	55                   	push   rbp
-  80a0f9:	48 89 e5             	mov    rbp,rsp
-  80a0fc:	48 83 ec 30          	sub    rsp,0x30
-  80a100:	48 89 7d d8          	mov    QWORD PTR [rbp-0x28],rdi
-  80a104:	89 75 d4             	mov    DWORD PTR [rbp-0x2c],esi
+  80a114:	f3 0f 1e fa          	endbr64 
+  80a118:	55                   	push   rbp
+  80a119:	48 89 e5             	mov    rbp,rsp
+  80a11c:	48 83 ec 30          	sub    rsp,0x30
+  80a120:	48 89 7d d8          	mov    QWORD PTR [rbp-0x28],rdi
+  80a124:	89 75 d4             	mov    DWORD PTR [rbp-0x2c],esi
     unsigned char st[22];
     int p=0;
-  80a107:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
+  80a127:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
     while(p<sizeof(unsigned long)*2){
-  80a10e:	eb 65                	jmp    80a175 <sprint_decimal+0x81>
+  80a12e:	eb 65                	jmp    80a195 <sprint_decimal+0x81>
         unsigned char a=c%10+'0';
-  80a110:	8b 55 d4             	mov    edx,DWORD PTR [rbp-0x2c]
-  80a113:	48 63 c2             	movsxd rax,edx
-  80a116:	48 69 c0 67 66 66 66 	imul   rax,rax,0x66666667
-  80a11d:	48 c1 e8 20          	shr    rax,0x20
-  80a121:	c1 f8 02             	sar    eax,0x2
-  80a124:	89 d6                	mov    esi,edx
-  80a126:	c1 fe 1f             	sar    esi,0x1f
-  80a129:	29 f0                	sub    eax,esi
-  80a12b:	89 c1                	mov    ecx,eax
-  80a12d:	89 c8                	mov    eax,ecx
-  80a12f:	c1 e0 02             	shl    eax,0x2
-  80a132:	01 c8                	add    eax,ecx
-  80a134:	01 c0                	add    eax,eax
-  80a136:	89 d1                	mov    ecx,edx
-  80a138:	29 c1                	sub    ecx,eax
-  80a13a:	89 c8                	mov    eax,ecx
-  80a13c:	83 c0 30             	add    eax,0x30
-  80a13f:	88 45 fb             	mov    BYTE PTR [rbp-0x5],al
+  80a130:	8b 55 d4             	mov    edx,DWORD PTR [rbp-0x2c]
+  80a133:	48 63 c2             	movsxd rax,edx
+  80a136:	48 69 c0 67 66 66 66 	imul   rax,rax,0x66666667
+  80a13d:	48 c1 e8 20          	shr    rax,0x20
+  80a141:	c1 f8 02             	sar    eax,0x2
+  80a144:	89 d6                	mov    esi,edx
+  80a146:	c1 fe 1f             	sar    esi,0x1f
+  80a149:	29 f0                	sub    eax,esi
+  80a14b:	89 c1                	mov    ecx,eax
+  80a14d:	89 c8                	mov    eax,ecx
+  80a14f:	c1 e0 02             	shl    eax,0x2
+  80a152:	01 c8                	add    eax,ecx
+  80a154:	01 c0                	add    eax,eax
+  80a156:	89 d1                	mov    ecx,edx
+  80a158:	29 c1                	sub    ecx,eax
+  80a15a:	89 c8                	mov    eax,ecx
+  80a15c:	83 c0 30             	add    eax,0x30
+  80a15f:	88 45 fb             	mov    BYTE PTR [rbp-0x5],al
         st[p++]=a;
-  80a142:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  80a145:	8d 50 01             	lea    edx,[rax+0x1]
-  80a148:	89 55 fc             	mov    DWORD PTR [rbp-0x4],edx
-  80a14b:	48 98                	cdqe   
-  80a14d:	0f b6 55 fb          	movzx  edx,BYTE PTR [rbp-0x5]
-  80a151:	88 54 05 e0          	mov    BYTE PTR [rbp+rax*1-0x20],dl
+  80a162:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  80a165:	8d 50 01             	lea    edx,[rax+0x1]
+  80a168:	89 55 fc             	mov    DWORD PTR [rbp-0x4],edx
+  80a16b:	48 98                	cdqe   
+  80a16d:	0f b6 55 fb          	movzx  edx,BYTE PTR [rbp-0x5]
+  80a171:	88 54 05 e0          	mov    BYTE PTR [rbp+rax*1-0x20],dl
         c/=10;
-  80a155:	8b 45 d4             	mov    eax,DWORD PTR [rbp-0x2c]
-  80a158:	48 63 d0             	movsxd rdx,eax
-  80a15b:	48 69 d2 67 66 66 66 	imul   rdx,rdx,0x66666667
-  80a162:	48 c1 ea 20          	shr    rdx,0x20
-  80a166:	c1 fa 02             	sar    edx,0x2
-  80a169:	c1 f8 1f             	sar    eax,0x1f
-  80a16c:	89 c1                	mov    ecx,eax
-  80a16e:	89 d0                	mov    eax,edx
-  80a170:	29 c8                	sub    eax,ecx
-  80a172:	89 45 d4             	mov    DWORD PTR [rbp-0x2c],eax
+  80a175:	8b 45 d4             	mov    eax,DWORD PTR [rbp-0x2c]
+  80a178:	48 63 d0             	movsxd rdx,eax
+  80a17b:	48 69 d2 67 66 66 66 	imul   rdx,rdx,0x66666667
+  80a182:	48 c1 ea 20          	shr    rdx,0x20
+  80a186:	c1 fa 02             	sar    edx,0x2
+  80a189:	c1 f8 1f             	sar    eax,0x1f
+  80a18c:	89 c1                	mov    ecx,eax
+  80a18e:	89 d0                	mov    eax,edx
+  80a190:	29 c8                	sub    eax,ecx
+  80a192:	89 45 d4             	mov    DWORD PTR [rbp-0x2c],eax
     while(p<sizeof(unsigned long)*2){
-  80a175:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  80a178:	83 f8 0f             	cmp    eax,0xf
-  80a17b:	76 93                	jbe    80a110 <sprint_decimal+0x1c>
+  80a195:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  80a198:	83 f8 0f             	cmp    eax,0xf
+  80a19b:	76 93                	jbe    80a130 <sprint_decimal+0x1c>
     }
     while(p>0)
-  80a17d:	eb 1f                	jmp    80a19e <sprint_decimal+0xaa>
+  80a19d:	eb 1f                	jmp    80a1be <sprint_decimal+0xaa>
     {
         sprintchar(dist,st[--p]);
-  80a17f:	83 6d fc 01          	sub    DWORD PTR [rbp-0x4],0x1
-  80a183:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  80a186:	48 98                	cdqe   
-  80a188:	0f b6 44 05 e0       	movzx  eax,BYTE PTR [rbp+rax*1-0x20]
-  80a18d:	0f be d0             	movsx  edx,al
-  80a190:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
-  80a194:	89 d6                	mov    esi,edx
-  80a196:	48 89 c7             	mov    rdi,rax
-  80a199:	e8 17 ff ff ff       	call   80a0b5 <sprintchar>
+  80a19f:	83 6d fc 01          	sub    DWORD PTR [rbp-0x4],0x1
+  80a1a3:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  80a1a6:	48 98                	cdqe   
+  80a1a8:	0f b6 44 05 e0       	movzx  eax,BYTE PTR [rbp+rax*1-0x20]
+  80a1ad:	0f be d0             	movsx  edx,al
+  80a1b0:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
+  80a1b4:	89 d6                	mov    esi,edx
+  80a1b6:	48 89 c7             	mov    rdi,rax
+  80a1b9:	e8 17 ff ff ff       	call   80a0d5 <sprintchar>
     while(p>0)
-  80a19e:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
-  80a1a2:	7f db                	jg     80a17f <sprint_decimal+0x8b>
+  80a1be:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
+  80a1c2:	7f db                	jg     80a19f <sprint_decimal+0x8b>
     }
 }
-  80a1a4:	90                   	nop
-  80a1a5:	90                   	nop
-  80a1a6:	c9                   	leave  
-  80a1a7:	c3                   	ret    
+  80a1c4:	90                   	nop
+  80a1c5:	90                   	nop
+  80a1c6:	c9                   	leave  
+  80a1c7:	c3                   	ret    
 
-000000000080a1a8 <sprint_hex>:
+000000000080a1c8 <sprint_hex>:
 void sprint_hex(char *dist,unsigned int c)
 {
-  80a1a8:	f3 0f 1e fa          	endbr64 
-  80a1ac:	55                   	push   rbp
-  80a1ad:	48 89 e5             	mov    rbp,rsp
-  80a1b0:	48 83 ec 20          	sub    rsp,0x20
-  80a1b4:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
-  80a1b8:	89 75 e4             	mov    DWORD PTR [rbp-0x1c],esi
+  80a1c8:	f3 0f 1e fa          	endbr64 
+  80a1cc:	55                   	push   rbp
+  80a1cd:	48 89 e5             	mov    rbp,rsp
+  80a1d0:	48 83 ec 20          	sub    rsp,0x20
+  80a1d4:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
+  80a1d8:	89 75 e4             	mov    DWORD PTR [rbp-0x1c],esi
     unsigned char st[10];
     int p=0;
-  80a1bb:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
+  80a1db:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
     while(p<10){
-  80a1c2:	eb 35                	jmp    80a1f9 <sprint_hex+0x51>
+  80a1e2:	eb 35                	jmp    80a219 <sprint_hex+0x51>
         unsigned char a=c%16;
-  80a1c4:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
-  80a1c7:	83 e0 0f             	and    eax,0xf
-  80a1ca:	88 45 fb             	mov    BYTE PTR [rbp-0x5],al
+  80a1e4:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
+  80a1e7:	83 e0 0f             	and    eax,0xf
+  80a1ea:	88 45 fb             	mov    BYTE PTR [rbp-0x5],al
         if(a>9)a+='a'-10;
-  80a1cd:	80 7d fb 09          	cmp    BYTE PTR [rbp-0x5],0x9
-  80a1d1:	76 06                	jbe    80a1d9 <sprint_hex+0x31>
-  80a1d3:	80 45 fb 57          	add    BYTE PTR [rbp-0x5],0x57
-  80a1d7:	eb 04                	jmp    80a1dd <sprint_hex+0x35>
+  80a1ed:	80 7d fb 09          	cmp    BYTE PTR [rbp-0x5],0x9
+  80a1f1:	76 06                	jbe    80a1f9 <sprint_hex+0x31>
+  80a1f3:	80 45 fb 57          	add    BYTE PTR [rbp-0x5],0x57
+  80a1f7:	eb 04                	jmp    80a1fd <sprint_hex+0x35>
         else a+='0';
-  80a1d9:	80 45 fb 30          	add    BYTE PTR [rbp-0x5],0x30
+  80a1f9:	80 45 fb 30          	add    BYTE PTR [rbp-0x5],0x30
         st[p++]=a;
-  80a1dd:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  80a1e0:	8d 50 01             	lea    edx,[rax+0x1]
-  80a1e3:	89 55 fc             	mov    DWORD PTR [rbp-0x4],edx
-  80a1e6:	48 98                	cdqe   
-  80a1e8:	0f b6 55 fb          	movzx  edx,BYTE PTR [rbp-0x5]
-  80a1ec:	88 54 05 f1          	mov    BYTE PTR [rbp+rax*1-0xf],dl
+  80a1fd:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  80a200:	8d 50 01             	lea    edx,[rax+0x1]
+  80a203:	89 55 fc             	mov    DWORD PTR [rbp-0x4],edx
+  80a206:	48 98                	cdqe   
+  80a208:	0f b6 55 fb          	movzx  edx,BYTE PTR [rbp-0x5]
+  80a20c:	88 54 05 f1          	mov    BYTE PTR [rbp+rax*1-0xf],dl
         c/=16;
-  80a1f0:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
-  80a1f3:	c1 e8 04             	shr    eax,0x4
-  80a1f6:	89 45 e4             	mov    DWORD PTR [rbp-0x1c],eax
+  80a210:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
+  80a213:	c1 e8 04             	shr    eax,0x4
+  80a216:	89 45 e4             	mov    DWORD PTR [rbp-0x1c],eax
     while(p<10){
-  80a1f9:	83 7d fc 09          	cmp    DWORD PTR [rbp-0x4],0x9
-  80a1fd:	7e c5                	jle    80a1c4 <sprint_hex+0x1c>
+  80a219:	83 7d fc 09          	cmp    DWORD PTR [rbp-0x4],0x9
+  80a21d:	7e c5                	jle    80a1e4 <sprint_hex+0x1c>
     }
     while(p>0)
-  80a1ff:	eb 1f                	jmp    80a220 <sprint_hex+0x78>
+  80a21f:	eb 1f                	jmp    80a240 <sprint_hex+0x78>
     {
         sprintchar(dist,st[--p]);
-  80a201:	83 6d fc 01          	sub    DWORD PTR [rbp-0x4],0x1
-  80a205:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
-  80a208:	48 98                	cdqe   
-  80a20a:	0f b6 44 05 f1       	movzx  eax,BYTE PTR [rbp+rax*1-0xf]
-  80a20f:	0f be d0             	movsx  edx,al
-  80a212:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-  80a216:	89 d6                	mov    esi,edx
-  80a218:	48 89 c7             	mov    rdi,rax
-  80a21b:	e8 95 fe ff ff       	call   80a0b5 <sprintchar>
+  80a221:	83 6d fc 01          	sub    DWORD PTR [rbp-0x4],0x1
+  80a225:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+  80a228:	48 98                	cdqe   
+  80a22a:	0f b6 44 05 f1       	movzx  eax,BYTE PTR [rbp+rax*1-0xf]
+  80a22f:	0f be d0             	movsx  edx,al
+  80a232:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  80a236:	89 d6                	mov    esi,edx
+  80a238:	48 89 c7             	mov    rdi,rax
+  80a23b:	e8 95 fe ff ff       	call   80a0d5 <sprintchar>
     while(p>0)
-  80a220:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
-  80a224:	7f db                	jg     80a201 <sprint_hex+0x59>
+  80a240:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
+  80a244:	7f db                	jg     80a221 <sprint_hex+0x59>
     }
 }
-  80a226:	90                   	nop
-  80a227:	90                   	nop
-  80a228:	c9                   	leave  
-  80a229:	c3                   	ret    
+  80a246:	90                   	nop
+  80a247:	90                   	nop
+  80a248:	c9                   	leave  
+  80a249:	c3                   	ret    
 
-000000000080a22a <sprintn>:
+000000000080a24a <sprintn>:
 void sprintn(char *dist,char *str)
 {
-  80a22a:	f3 0f 1e fa          	endbr64 
-  80a22e:	55                   	push   rbp
-  80a22f:	48 89 e5             	mov    rbp,rsp
-  80a232:	48 83 ec 10          	sub    rsp,0x10
-  80a236:	48 89 7d f8          	mov    QWORD PTR [rbp-0x8],rdi
-  80a23a:	48 89 75 f0          	mov    QWORD PTR [rbp-0x10],rsi
+  80a24a:	f3 0f 1e fa          	endbr64 
+  80a24e:	55                   	push   rbp
+  80a24f:	48 89 e5             	mov    rbp,rsp
+  80a252:	48 83 ec 10          	sub    rsp,0x10
+  80a256:	48 89 7d f8          	mov    QWORD PTR [rbp-0x8],rdi
+  80a25a:	48 89 75 f0          	mov    QWORD PTR [rbp-0x10],rsi
     while(*str!='\0')
-  80a23e:	eb 20                	jmp    80a260 <sprintn+0x36>
+  80a25e:	eb 20                	jmp    80a280 <sprintn+0x36>
     {
         sprintchar(dist,*str++);
-  80a240:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  80a244:	48 8d 50 01          	lea    rdx,[rax+0x1]
-  80a248:	48 89 55 f0          	mov    QWORD PTR [rbp-0x10],rdx
-  80a24c:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  80a24f:	0f be d0             	movsx  edx,al
-  80a252:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  80a256:	89 d6                	mov    esi,edx
-  80a258:	48 89 c7             	mov    rdi,rax
-  80a25b:	e8 55 fe ff ff       	call   80a0b5 <sprintchar>
-    while(*str!='\0')
   80a260:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-  80a264:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  80a267:	84 c0                	test   al,al
-  80a269:	75 d5                	jne    80a240 <sprintn+0x16>
+  80a264:	48 8d 50 01          	lea    rdx,[rax+0x1]
+  80a268:	48 89 55 f0          	mov    QWORD PTR [rbp-0x10],rdx
+  80a26c:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  80a26f:	0f be d0             	movsx  edx,al
+  80a272:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  80a276:	89 d6                	mov    esi,edx
+  80a278:	48 89 c7             	mov    rdi,rax
+  80a27b:	e8 55 fe ff ff       	call   80a0d5 <sprintchar>
+    while(*str!='\0')
+  80a280:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
+  80a284:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  80a287:	84 c0                	test   al,al
+  80a289:	75 d5                	jne    80a260 <sprintn+0x16>
     }
-  80a26b:	90                   	nop
-  80a26c:	90                   	nop
-  80a26d:	c9                   	leave  
-  80a26e:	c3                   	ret    
-  80a26f:	90                   	nop
+  80a28b:	90                   	nop
+  80a28c:	90                   	nop
+  80a28d:	c9                   	leave  
+  80a28e:	c3                   	ret    
+  80a28f:	90                   	nop
 
-000000000080a270 <create_zero>:
-  80a270:	e8 e8 9a ff ff       	call   803d5d <req_proc>
-  80a275:	83 f8 ff             	cmp    eax,0xffffffff
-  80a278:	74 0c                	je     80a286 <create_zero.retu>
-  80a27a:	e8 d7 9b ff ff       	call   803e56 <set_proc>
-  80a27f:	67 8b 04 24          	mov    eax,DWORD PTR [esp]
-  80a283:	83 c4 40             	add    esp,0x40
+000000000080a290 <create_zero>:
+  80a290:	e8 e2 9a ff ff       	call   803d77 <req_proc>
+  80a295:	83 f8 ff             	cmp    eax,0xffffffff
+  80a298:	74 0c                	je     80a2a6 <create_zero.retu>
+  80a29a:	e8 d1 9b ff ff       	call   803e70 <set_proc>
+  80a29f:	67 8b 04 24          	mov    eax,DWORD PTR [esp]
+  80a2a3:	83 c4 40             	add    esp,0x40
 
-000000000080a286 <create_zero.retu>:
-  80a286:	c3                   	ret    
+000000000080a2a6 <create_zero.retu>:
+  80a2a6:	c3                   	ret    
 
-000000000080a287 <fill_desc>:
-  80a287:	55                   	push   rbp
-  80a288:	48 89 e5             	mov    rbp,rsp
-  80a28b:	67 8b 45 14          	mov    eax,DWORD PTR [ebp+0x14]
-  80a28f:	67 8b 5d 10          	mov    ebx,DWORD PTR [ebp+0x10]
-  80a293:	67 8b 4d 0c          	mov    ecx,DWORD PTR [ebp+0xc]
-  80a297:	67 8b 55 08          	mov    edx,DWORD PTR [ebp+0x8]
-  80a29b:	be da a3 80 00       	mov    esi,0x80a3da
-  80a2a0:	c7 04 25 da a3 80 00 	mov    DWORD PTR ds:0x80a3da,0x0
-  80a2a7:	00 00 00 00 
-  80a2ab:	c7 04 25 de a3 80 00 	mov    DWORD PTR ds:0x80a3de,0x0
-  80a2b2:	00 00 00 00 
-  80a2b6:	66 67 89 0e          	mov    WORD PTR [esi],cx
-  80a2ba:	c1 e9 10             	shr    ecx,0x10
-  80a2bd:	66 67 89 56 02       	mov    WORD PTR [esi+0x2],dx
-  80a2c2:	c1 ea 10             	shr    edx,0x10
-  80a2c5:	67 88 56 04          	mov    BYTE PTR [esi+0x4],dl
-  80a2c9:	66 c1 ea 08          	shr    dx,0x8
-  80a2cd:	67 88 56 07          	mov    BYTE PTR [esi+0x7],dl
-  80a2d1:	66 67 89 5e 05       	mov    WORD PTR [esi+0x5],bx
-  80a2d6:	67 8b 7e 04          	mov    edi,DWORD PTR [esi+0x4]
-  80a2da:	c1 e1 08             	shl    ecx,0x8
-  80a2dd:	09 cf                	or     edi,ecx
-  80a2df:	67 89 7e 04          	mov    DWORD PTR [esi+0x4],edi
-  80a2e3:	8b 14 25 da a3 80 00 	mov    edx,DWORD PTR ds:0x80a3da
-  80a2ea:	67 89 10             	mov    DWORD PTR [eax],edx
-  80a2ed:	8b 14 25 de a3 80 00 	mov    edx,DWORD PTR ds:0x80a3de
-  80a2f4:	67 89 50 04          	mov    DWORD PTR [eax+0x4],edx
-  80a2f8:	c9                   	leave  
-  80a2f9:	c3                   	ret    
+000000000080a2a7 <fill_desc>:
+  80a2a7:	55                   	push   rbp
+  80a2a8:	48 89 e5             	mov    rbp,rsp
+  80a2ab:	67 8b 45 14          	mov    eax,DWORD PTR [ebp+0x14]
+  80a2af:	67 8b 5d 10          	mov    ebx,DWORD PTR [ebp+0x10]
+  80a2b3:	67 8b 4d 0c          	mov    ecx,DWORD PTR [ebp+0xc]
+  80a2b7:	67 8b 55 08          	mov    edx,DWORD PTR [ebp+0x8]
+  80a2bb:	be fa a3 80 00       	mov    esi,0x80a3fa
+  80a2c0:	c7 04 25 fa a3 80 00 	mov    DWORD PTR ds:0x80a3fa,0x0
+  80a2c7:	00 00 00 00 
+  80a2cb:	c7 04 25 fe a3 80 00 	mov    DWORD PTR ds:0x80a3fe,0x0
+  80a2d2:	00 00 00 00 
+  80a2d6:	66 67 89 0e          	mov    WORD PTR [esi],cx
+  80a2da:	c1 e9 10             	shr    ecx,0x10
+  80a2dd:	66 67 89 56 02       	mov    WORD PTR [esi+0x2],dx
+  80a2e2:	c1 ea 10             	shr    edx,0x10
+  80a2e5:	67 88 56 04          	mov    BYTE PTR [esi+0x4],dl
+  80a2e9:	66 c1 ea 08          	shr    dx,0x8
+  80a2ed:	67 88 56 07          	mov    BYTE PTR [esi+0x7],dl
+  80a2f1:	66 67 89 5e 05       	mov    WORD PTR [esi+0x5],bx
+  80a2f6:	67 8b 7e 04          	mov    edi,DWORD PTR [esi+0x4]
+  80a2fa:	c1 e1 08             	shl    ecx,0x8
+  80a2fd:	09 cf                	or     edi,ecx
+  80a2ff:	67 89 7e 04          	mov    DWORD PTR [esi+0x4],edi
+  80a303:	8b 14 25 fa a3 80 00 	mov    edx,DWORD PTR ds:0x80a3fa
+  80a30a:	67 89 10             	mov    DWORD PTR [eax],edx
+  80a30d:	8b 14 25 fe a3 80 00 	mov    edx,DWORD PTR ds:0x80a3fe
+  80a314:	67 89 50 04          	mov    DWORD PTR [eax+0x4],edx
+  80a318:	c9                   	leave  
+  80a319:	c3                   	ret    
 
-000000000080a2fa <switch_proc_asm>:
-  80a2fa:	66 67 8b 44 24 04    	mov    ax,WORD PTR [esp+0x4]
-  80a300:	66 89 04 25 18 a3 80 	mov    WORD PTR ds:0x80a318,ax
-  80a307:	00 
-  80a308:	c7 04 25 14 a3 80 00 	mov    DWORD PTR ds:0x80a314,0x0
-  80a30f:	00 00 00 00 
+000000000080a31a <switch_proc_asm>:
+  80a31a:	66 67 8b 44 24 04    	mov    ax,WORD PTR [esp+0x4]
+  80a320:	66 89 04 25 38 a3 80 	mov    WORD PTR ds:0x80a338,ax
+  80a327:	00 
+  80a328:	c7 04 25 34 a3 80 00 	mov    DWORD PTR ds:0x80a334,0x0
+  80a32f:	00 00 00 00 
 
-000000000080a313 <switch_proc_asm.ljmp>:
-  80a313:	ea                   	(bad)  
-  80a314:	00 00                	add    BYTE PTR [rax],al
-  80a316:	00 00                	add    BYTE PTR [rax],al
-  80a318:	00 00                	add    BYTE PTR [rax],al
-  80a31a:	c3                   	ret    
+000000000080a333 <switch_proc_asm.ljmp>:
+  80a333:	ea                   	(bad)  
+  80a334:	00 00                	add    BYTE PTR [rax],al
+  80a336:	00 00                	add    BYTE PTR [rax],al
+  80a338:	00 00                	add    BYTE PTR [rax],al
+  80a33a:	c3                   	ret    
 
-000000000080a31b <switch_to_old>:
-  80a31b:	67 8b 74 24 04       	mov    esi,DWORD PTR [esp+0x4]
-  80a320:	67 8b 5e 20          	mov    ebx,DWORD PTR [esi+0x20]
-  80a324:	bf 8c a3 80 00       	mov    edi,0x80a38c
-  80a329:	67 89 5f 01          	mov    DWORD PTR [edi+0x1],ebx
-  80a32d:	67 8b 46 38          	mov    eax,DWORD PTR [esi+0x38]
-  80a331:	89 c1                	mov    ecx,eax
-  80a333:	83 e9 04             	sub    ecx,0x4
-  80a336:	67 89 19             	mov    DWORD PTR [ecx],ebx
-  80a339:	50                   	push   rax
-  80a33a:	89 f5                	mov    ebp,esi
-  80a33c:	83 c5 28             	add    ebp,0x28
-  80a33f:	67 8b 45 00          	mov    eax,DWORD PTR [ebp+0x0]
-  80a343:	50                   	push   rax
-  80a344:	83 c5 04             	add    ebp,0x4
-  80a347:	67 8b 45 00          	mov    eax,DWORD PTR [ebp+0x0]
-  80a34b:	50                   	push   rax
-  80a34c:	83 c5 04             	add    ebp,0x4
-  80a34f:	67 8b 45 00          	mov    eax,DWORD PTR [ebp+0x0]
-  80a353:	50                   	push   rax
-  80a354:	83 c5 04             	add    ebp,0x4
-  80a357:	67 8b 45 00          	mov    eax,DWORD PTR [ebp+0x0]
-  80a35b:	50                   	push   rax
-  80a35c:	83 c5 04             	add    ebp,0x4
+000000000080a33b <switch_to_old>:
+  80a33b:	67 8b 74 24 04       	mov    esi,DWORD PTR [esp+0x4]
+  80a340:	67 8b 5e 20          	mov    ebx,DWORD PTR [esi+0x20]
+  80a344:	bf ac a3 80 00       	mov    edi,0x80a3ac
+  80a349:	67 89 5f 01          	mov    DWORD PTR [edi+0x1],ebx
+  80a34d:	67 8b 46 38          	mov    eax,DWORD PTR [esi+0x38]
+  80a351:	89 c1                	mov    ecx,eax
+  80a353:	83 e9 04             	sub    ecx,0x4
+  80a356:	67 89 19             	mov    DWORD PTR [ecx],ebx
+  80a359:	50                   	push   rax
+  80a35a:	89 f5                	mov    ebp,esi
+  80a35c:	83 c5 28             	add    ebp,0x28
   80a35f:	67 8b 45 00          	mov    eax,DWORD PTR [ebp+0x0]
   80a363:	50                   	push   rax
   80a364:	83 c5 04             	add    ebp,0x4
@@ -16198,92 +16195,85 @@ void sprintn(char *dist,char *str)
   80a377:	67 8b 45 00          	mov    eax,DWORD PTR [ebp+0x0]
   80a37b:	50                   	push   rax
   80a37c:	83 c5 04             	add    ebp,0x4
-  80a37f:	67 8b 46 1c          	mov    eax,DWORD PTR [esi+0x1c]
-  80a383:	0f 22 d8             	mov    cr3,rax
-  80a386:	67 8b 46 24          	mov    eax,DWORD PTR [esi+0x24]
-  80a38a:	50                   	push   rax
-  80a38b:	5c                   	pop    rsp
+  80a37f:	67 8b 45 00          	mov    eax,DWORD PTR [ebp+0x0]
+  80a383:	50                   	push   rax
+  80a384:	83 c5 04             	add    ebp,0x4
+  80a387:	67 8b 45 00          	mov    eax,DWORD PTR [ebp+0x0]
+  80a38b:	50                   	push   rax
+  80a38c:	83 c5 04             	add    ebp,0x4
+  80a38f:	67 8b 45 00          	mov    eax,DWORD PTR [ebp+0x0]
+  80a393:	50                   	push   rax
+  80a394:	83 c5 04             	add    ebp,0x4
+  80a397:	67 8b 45 00          	mov    eax,DWORD PTR [ebp+0x0]
+  80a39b:	50                   	push   rax
+  80a39c:	83 c5 04             	add    ebp,0x4
+  80a39f:	67 8b 46 1c          	mov    eax,DWORD PTR [esi+0x1c]
+  80a3a3:	0f 22 d8             	mov    cr3,rax
+  80a3a6:	67 8b 46 24          	mov    eax,DWORD PTR [esi+0x24]
+  80a3aa:	50                   	push   rax
+  80a3ab:	5c                   	pop    rsp
 
-000000000080a38c <switch_to_old.leap>:
-  80a38c:	ea                   	(bad)  
-  80a38d:	00 00                	add    BYTE PTR [rax],al
-  80a38f:	00 00                	add    BYTE PTR [rax],al
-  80a391:	08 00                	or     BYTE PTR [rax],al
+000000000080a3ac <switch_to_old.leap>:
+  80a3ac:	ea                   	(bad)  
+  80a3ad:	00 00                	add    BYTE PTR [rax],al
+  80a3af:	00 00                	add    BYTE PTR [rax],al
+  80a3b1:	08 00                	or     BYTE PTR [rax],al
 
-000000000080a393 <save_context>:
-  80a393:	67 8b 44 24 24       	mov    eax,DWORD PTR [esp+0x24]
-  80a398:	83 c0 44             	add    eax,0x44
-  80a39b:	b9 08 00 00 00       	mov    ecx,0x8
-  80a3a0:	89 e7                	mov    edi,esp
+000000000080a3b3 <save_context>:
+  80a3b3:	67 8b 44 24 24       	mov    eax,DWORD PTR [esp+0x24]
+  80a3b8:	83 c0 44             	add    eax,0x44
+  80a3bb:	b9 08 00 00 00       	mov    ecx,0x8
+  80a3c0:	89 e7                	mov    edi,esp
 
-000000000080a3a2 <save_context.loops>:
-  80a3a2:	67 8b 17             	mov    edx,DWORD PTR [edi]
-  80a3a5:	67 89 10             	mov    DWORD PTR [eax],edx
-  80a3a8:	83 c7 04             	add    edi,0x4
-  80a3ab:	83 e8 04             	sub    eax,0x4
-  80a3ae:	e2 f2                	loop   80a3a2 <save_context.loops>
-  80a3b0:	5b                   	pop    rbx
-  80a3b1:	67 8b 44 24 04       	mov    eax,DWORD PTR [esp+0x4]
-  80a3b6:	67 89 58 24          	mov    DWORD PTR [eax+0x24],ebx
-  80a3ba:	67 48 8b 1c 24       	mov    rbx,QWORD PTR [esp]
-  80a3bf:	67 89 58 20          	mov    DWORD PTR [eax+0x20],ebx
-  80a3c3:	c3                   	ret    
+000000000080a3c2 <save_context.loops>:
+  80a3c2:	67 8b 17             	mov    edx,DWORD PTR [edi]
+  80a3c5:	67 89 10             	mov    DWORD PTR [eax],edx
+  80a3c8:	83 c7 04             	add    edi,0x4
+  80a3cb:	83 e8 04             	sub    eax,0x4
+  80a3ce:	e2 f2                	loop   80a3c2 <save_context.loops>
+  80a3d0:	5b                   	pop    rbx
+  80a3d1:	67 8b 44 24 04       	mov    eax,DWORD PTR [esp+0x4]
+  80a3d6:	67 89 58 24          	mov    DWORD PTR [eax+0x24],ebx
+  80a3da:	67 48 8b 1c 24       	mov    rbx,QWORD PTR [esp]
+  80a3df:	67 89 58 20          	mov    DWORD PTR [eax+0x20],ebx
+  80a3e3:	c3                   	ret    
 
-000000000080a3c4 <move_to_user_mode>:
-  80a3c4:	66 b8 20 00          	mov    ax,0x20
-  80a3c8:	8e d8                	mov    ds,eax
-  80a3ca:	8e c0                	mov    es,eax
-  80a3cc:	8e e8                	mov    gs,eax
-  80a3ce:	6a 20                	push   0x20
-  80a3d0:	54                   	push   rsp
-  80a3d1:	6a 18                	push   0x18
-  80a3d3:	68 d9 a3 80 00       	push   0x80a3d9
-  80a3d8:	cf                   	iret   
+000000000080a3e4 <move_to_user_mode>:
+  80a3e4:	66 b8 20 00          	mov    ax,0x20
+  80a3e8:	8e d8                	mov    ds,eax
+  80a3ea:	8e c0                	mov    es,eax
+  80a3ec:	8e e8                	mov    gs,eax
+  80a3ee:	6a 20                	push   0x20
+  80a3f0:	54                   	push   rsp
+  80a3f1:	6a 18                	push   0x18
+  80a3f3:	68 f9 a3 80 00       	push   0x80a3f9
+  80a3f8:	cf                   	iret   
 
-000000000080a3d9 <move_to_user_mode.done>:
-  80a3d9:	c3                   	ret    
+000000000080a3f9 <move_to_user_mode.done>:
+  80a3f9:	c3                   	ret    
 
-000000000080a3da <desc>:
+000000000080a3fa <desc>:
 	...
 
-000000000080a3e2 <ret_sys_call>:
-  80a3e2:	58                   	pop    rax
-  80a3e3:	8e d8                	mov    ds,eax
-  80a3e5:	58                   	pop    rax
-  80a3e6:	8e c0                	mov    es,eax
-  80a3e8:	41 5f                	pop    r15
-  80a3ea:	41 5e                	pop    r14
-  80a3ec:	41 5d                	pop    r13
-  80a3ee:	41 5c                	pop    r12
-  80a3f0:	41 5b                	pop    r11
-  80a3f2:	41 5a                	pop    r10
-  80a3f4:	41 59                	pop    r9
-  80a3f6:	41 58                	pop    r8
-  80a3f8:	5e                   	pop    rsi
-  80a3f9:	5f                   	pop    rdi
-  80a3fa:	5a                   	pop    rdx
-  80a3fb:	59                   	pop    rcx
-  80a3fc:	5b                   	pop    rbx
-  80a3fd:	58                   	pop    rax
-  80a3fe:	48 b8 2f a4 80 00 00 	movabs rax,0x80a42f
-  80a405:	00 00 00 
-  80a408:	48 89 04 24          	mov    QWORD PTR [rsp],rax
-  80a40c:	50                   	push   rax
-  80a40d:	51                   	push   rcx
-  80a40e:	52                   	push   rdx
-  80a40f:	b9 81 00 00 c0       	mov    ecx,0xc0000081
-  80a414:	0f 32                	rdmsr  
-  80a416:	48 31 c0             	xor    rax,rax
-  80a419:	ba 00 00 20 00       	mov    edx,0x200000
-  80a41e:	0f 30                	wrmsr  
-  80a420:	66 b8 2b 00          	mov    ax,0x2b
-  80a424:	8e d8                	mov    ds,eax
-  80a426:	8e c0                	mov    es,eax
-  80a428:	8e e0                	mov    fs,eax
-  80a42a:	8e e8                	mov    gs,eax
-  80a42c:	5a                   	pop    rdx
-  80a42d:	59                   	pop    rcx
-  80a42e:	58                   	pop    rax
+000000000080a402 <ret_sys_call>:
+  80a402:	58                   	pop    rax
+  80a403:	8e d8                	mov    ds,eax
+  80a405:	58                   	pop    rax
+  80a406:	8e c0                	mov    es,eax
+  80a408:	41 5f                	pop    r15
+  80a40a:	41 5e                	pop    r14
+  80a40c:	41 5d                	pop    r13
+  80a40e:	41 5c                	pop    r12
+  80a410:	41 5b                	pop    r11
+  80a412:	41 5a                	pop    r10
+  80a414:	41 59                	pop    r9
+  80a416:	41 58                	pop    r8
+  80a418:	5e                   	pop    rsi
+  80a419:	5f                   	pop    rdi
+  80a41a:	5a                   	pop    rdx
+  80a41b:	59                   	pop    rcx
+  80a41c:	5b                   	pop    rbx
+  80a41d:	58                   	pop    rax
 
-000000000080a42f <tmp>:
-  80a42f:	48 0f 07             	sysretq 
+000000000080a41e <tmp>:
+  80a41e:	48 0f 07             	sysretq 

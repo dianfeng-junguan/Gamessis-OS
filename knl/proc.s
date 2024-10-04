@@ -189,28 +189,7 @@ ret_sys_call:
     pop rbx
     pop rax
 
-    mov rax,tmp
-    mov [rsp],rax
 
-    push rax
-    push rcx
-    push rdx
-    mov rcx,0xc0000081
-    rdmsr
-    xor rax,rax
-    mov rdx,0x00200000
-    wrmsr
-
-    mov ax,0x2b
-    mov ds,ax
-    mov es,ax
-    mov fs,ax
-    mov gs,ax
-
-    pop rdx
-    pop rcx
-    pop rax
 tmp:
     db 0x48
     sysret
-    ;sysexit
