@@ -1,0 +1,3 @@
+D:/Code/Comprehensive/OS/workspace/64/cmake-build-debug/CMakeFiles/gms.dir
+D:/Code/Comprehensive/OS/workspace/64/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/Code/Comprehensive/OS/workspace/64/cmake-build-debug/CMakeFiles/rebuild_cache.dir
