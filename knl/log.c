@@ -1,4 +1,6 @@
 #include <log.h>
+#include "framebuffer.h"
+
 static unsigned char* video;
 static int xpos,ypos;
 /* 将整数 D 转换为字符串并保存在 BUF 中。如果 BASE 为 'd'，则 D 为十进制，如果 BASE 为 'x'，则 D 为十六进制。 */
@@ -53,8 +55,11 @@ static void itoa (char *buf, int base, int d)
 }
  
 /* 在屏幕上输出字符 C 。 */
-static void putchar (int c)
+static void putchar (char c)
 {
+    char s[2]={c,'\0'};
+    print(s);
+    return;
     if (c == '\n' || c == '\r')
     {
 newline:
@@ -77,7 +82,7 @@ newline:
 void printf (const char *format, ...)
 {
     char **arg = (char **) &format;
-    int c;
+    char c;
     char buf[20];
  
     arg++;

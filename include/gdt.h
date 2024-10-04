@@ -1,6 +1,9 @@
 #pragma once
 #pragma pack(1)
-#define GDT_ADDR 0x800
+
+#include "typename.h"
+
+#define GDT_ADDR 0x104000
 //可执行
 #define SEG_X 0x8
 #define SEG_R 0x4
@@ -32,6 +35,7 @@
 typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
+#ifdef IA32
 typedef struct
 {
     u16 limit_lo16;
@@ -40,8 +44,18 @@ typedef struct
     u16 attr;
     u8 base_hi8;
 }descriptor;
-
+#else
+typedef struct {
+    u16 limit_lo16;
+    u16 base_12;
+    u8 base_3;
+    u16 attr;
+    u8 base_4;
+    u32 base_5678;
+    u32 rsvd;
+}descriptor;
+#endif
 int init_gdt();
-void fill_desc(u32 base, u32 limit,u16 attr,u32 index);
+void fill_desc(u64 base, u64 limit, u16 attr, u32 index);
 void fill_gate(u32 index,u32 offset,u16 selector,u16 attr);
 void fill_ldt_desc(u32 base, u32 limit,u16 attr,descriptor *desc);

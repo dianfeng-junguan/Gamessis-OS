@@ -11,38 +11,6 @@ create_zero:
 call req_proc
 cmp eax,0xffffffff
 je .retu
-;push eax
-;pushf
-;push edi
-;push esi
-;push ebp
-;push esp
-;push gs
-;push fs
-;push ds
-;push ss
-;push cs
-;push es
-;push edx
-;push ecx
-;push ebx
-;push eax
-push eax
-push ebx
-push ecx
-push edx
-push es
-push cs
-push ss
-push ds
-push fs
-push gs
-push esp
-push ebp
-push esi
-push edi
-pushf
-push eax
 call set_proc
 mov eax,[esp];proc_nr
 add esp,16*4
@@ -50,8 +18,8 @@ add esp,16*4
 ret
 
 fill_desc:
-push ebp
-mov ebp,esp
+push rbp
+mov rbp,rsp
 mov eax,[ebp+20];des
 mov ebx,[ebp+16];attr
 mov ecx,[ebp+12];limit
@@ -82,8 +50,7 @@ mov [eax+4],edx
 
 
 
-mov esp,ebp
-pop ebp
+leave
 ret
 switch_proc_asm:
     ;到这里切换到别的进程，等到回来的时候，就是继续执行这里，然后回到源程序
@@ -106,7 +73,7 @@ switch_proc_asm:
     ; ;iret; jmp
     ; jmp eax
 extern print
-switch_to:
+switch_to_old:
     mov esi,[esp+4];tss addr
     mov ebx,[esi+0x20];eip
     mov edi,.leap
@@ -116,50 +83,50 @@ switch_to:
     mov ecx,eax
     sub ecx,4
     mov dword [ecx],ebx;在进程堆栈中放置返回地址:有问题
-    push eax
+    push rax
 
     mov ebp,esi
     add ebp,0x28
     mov eax,[ebp];eax
-    push eax
+    push rax
     add ebp,4
     mov eax,[ebp];ecx
-    push eax
+    push rax
     add ebp,4
     mov eax,[ebp];edx
-    push eax
+    push rax
     add ebp,4
     mov eax,[ebp];ebx
-    push eax
+    push rax
     add ebp,4
     mov eax,[ebp];esp
-    push eax
+    push rax
     add ebp,4;esp is ignored but it's still needed
     mov eax,[ebp];ebp
-    push eax
+    push rax
     add ebp,4
     mov eax,[ebp];esi
-    push eax
+    push rax
     add ebp,4
     mov eax,[ebp];edi
-    push eax
+    push rax
     add ebp,4
 
 
     mov eax,[esi+0x1c]
-    mov cr3,eax;cr3
+    mov cr3,rax;cr3
     ;切换eflags
     mov eax,[esi+0x24]
-    push eax
-    popf
-    popa
-    pop esp
+    push rax
+    ;popf
+    ;popa
+    pop rsp
 .leap:
     db 0xea
     dd 0
     dw 0x8
 save_context:
-    pusha;8 regs
+    ;pusha;8 regs
     mov eax,[esp+36];tss
     add eax,0x44
     mov ecx,8
@@ -170,14 +137,14 @@ save_context:
         add edi,4
         sub eax,4
         loop .loops
-    popa
-    ;保存eflags
-    pushf
-    pop ebx
+    ;popa
+    ;;保存eflags
+    ;pushf
+    pop rbx
     mov eax,[esp+4]
     mov dword [eax+0x24],ebx
     ;保存eip
-    mov ebx,[esp]
+    mov rbx,[esp]
     mov dword [eax+0x20],ebx
 
     ret
@@ -188,8 +155,8 @@ move_to_user_mode:
     mov gs,ax
     
     push 0x20
-    push esp
-    pushf
+    push rsp
+    ;pushf
     push 0x18
     push .done
     iret
@@ -198,3 +165,31 @@ move_to_user_mode:
 %include "knl/gdtdefine.inc"
 desc:
     GDTdescriptor 0,0,0
+global ret_sys_call
+ret_sys_call:
+
+    pop rax
+    mov ds,ax
+    pop rax
+    mov es,ax
+
+    pop r15
+    pop r14
+    pop r13
+    pop r12
+    pop r11
+    pop r10
+    pop r9
+    pop r8
+
+    pop rsi
+    pop rdi
+    pop rdx
+    pop rcx
+    pop rbx
+    pop rax
+
+
+tmp:
+    db 0x48
+    sysret

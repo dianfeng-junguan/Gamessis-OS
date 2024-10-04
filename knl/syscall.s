@@ -21,14 +21,14 @@ REQ_FETCH_KBBUF     EQU 12
 ;因为可变参数，所以采用汇编
 ;参数:eax,ebx,ecx,edx,esi,edi 6个参数
 _syscall:
-    push edi
-    push esi
-    push edx
-    push ecx
-    push ebx
-    push eax
+    push rdi
+    push rsi
+    push rdx
+    push rcx
+    push rbx
+    push rax
     call syscall
-    add esp,24
+    add rsp,24
     iret
 
 

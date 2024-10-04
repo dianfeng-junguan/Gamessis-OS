@@ -7,8 +7,9 @@
 #include "int.h"
 #include "devdrv.h"
 #include "devman.h"
-key_code key_buf[MAX_KEYBUF];
-queue_t key_bufq={
+#include "framebuffer.h"
+char key_buf[MAX_KEYBUF];
+kb_buf key_bufq={
         .data=key_buf,
         .head=0,
         .tail=0,
@@ -159,26 +160,29 @@ int key_proc()
     u8 scan1=0,scan2=0,ch=0;
     key_code tmpc;
     scan1=inb(0x60);
-    ch= to_ascii(scan1);
-    if(scan1 == 0xe0 || scan1 == 0xe1)
-    {
-        ch= to_ascii(scan2);
-        scan2=inb(0x60);
-    }
-    tmpc.scan_code=scan1;
-    tmpc.scan_code2=scan2;
-    tmpc.ascii= ch;
+//    ch= to_ascii(scan1);
+//    if(scan1 == 0xe0 || scan1 == 0xe1)
+//    {
+//        ch= to_ascii(scan2);
+//        scan2=inb(0x60);
+//    }
+//    tmpc.scan_code=scan1;
+//    tmpc.scan_code2=scan2;
+//    tmpc.ascii= ch;
 
-    if(QTAIL(key_bufq)!=QHEAD(key_bufq))
+
+//    ENQUEUE(key_bufq,tmpc)
+    if((key_bufq.tail+1)%key_bufq.size!=key_bufq.head)
     {
-        ENQUEUE(key_bufq,tmpc)
+        key_bufq.data[key_bufq.tail]=scan1;
+        key_bufq.tail=(key_bufq.tail+1)%key_bufq.size;
     }
 
-    /*else if(scan1==0x48)
-        scrup();
-    else if(scan1==0x50)
-        scrdown();*/
-    /*switch (scan1)
+    if(scan1==0x48)
+        scr_up();
+    if(scan1==0x50)
+        scr_down();
+    switch (scan1)
     {
         case 0x36:
         case 0x2a:
@@ -196,30 +200,31 @@ int key_proc()
         default:
             break;
     }
-    if(scan1<=0x80&&ch!=0)
-    {
-        /*extern io_buf stdin;
-        extern int stdinc;
-        char tmpc[]={ch,'\0'};
-        //fwrite(&ch,1,&stdin);
-        insert_to_stdin(ch);
-        if(ch=='\b')
-            del_ch();
-        else
-            printf("%s",tmpc);
-        //logf("%x\n",stdin.w_ptr);
-        //print_stdin();
-        //printchar(ch);
-        //flush_screen(0);
-    }*/
+//    if(scan1<=0x80&&ch!=0)
+//    {
+//        print(&ch);
+//        /*extern io_buf stdin;
+//        extern int stdinc;
+//        char tmpc[]={ch,'\0'};
+//        //fwrite(&ch,1,&stdin);
+//        insert_to_stdin(ch);
+//        if(ch=='\b')
+//            del_ch();
+//        else
+//            printf("%s",tmpc);
+//        //logf("%x\n",stdin.w_ptr);
+//        //print_stdin();
+//        //printchar(ch);
+//        //flush_screen(0);*/
+//    }
     eoi();
-    asm volatile("leave \r\n iret");
+    asm volatile("leave \r\n iretq");
 }
 
 char sys_getkbc()
 {
     if(key_bufq.tail==key_bufq.head)return -1;
-    key_code c=key_buf[key_bufq.tail];
+    char c=key_buf[key_bufq.tail];
     QTAIL(key_bufq)=(QTAIL(key_bufq)+1)%QSIZE(key_bufq);
-    return c.ascii;
+    return c;
 }

@@ -1,8 +1,11 @@
 #include "memory.h"
 #include "typename.h"
 #include "int.h"
+#include "framebuffer.h"
+#include "log.h"
+#include "proc.h"
 //page bitmap. refers to pages of mem.
-unsigned int page_map[PAGE_BITMAP_NR]={0};
+unsigned int *page_map=NULL;//[PAGE_BITMAP_NR]={0};
 page_item *page_index=PAGE_INDEX_ADDR;
 page_item *page_table=PAGE_TABLE_ADDR;
 //64位用
@@ -17,24 +20,32 @@ int mmap_t_i=0;
 
 stat_t mmap(addr_t pa,addr_t la,u32 attr)
 {
-    //内核空间映射不能更改
-    if(la/PML4E_SIZE==0)return ERR;
-    page_item *pdptp=pml4[la/PML4E_SIZE];//指向的pdpt表
+    //从pml4中找到la所属的pml4项目，即属于第几个512GB
+    page_item *pdptp= (page_item *) (pml4[la / PML4E_SIZE] & (~0xff));//指向的pdpt表
     //因为一个pml指向512gb内存，目前电脑还没有内存能达到这个大小，就不进行检查是否越界的判断
+
+    //在这个512GB（一张pdpt表）中找到la所属的pdpt项目，找到指向的pd
     int pdpti=la%PML4E_SIZE/PDPTE_SIZE;
-    page_item* pdp=pdptp[pdpti];//指向的pd
-    if(*pdp&PAGE_PRESENT)return ALREADY_USED;//已分配pd
-    //分配pd
-    addr_t pdaddr=vmalloc();
-    *pdp=pdaddr&PAGE_MASK|attr;
-    page_item* ptp=pdp[la%PDPTE_SIZE/PDE_SIZE];
-    //新分配的pd里面肯定没有已经被占用的项
-    //if(*ptp&PAGE_PRESENT)return -1;//已分配pt
-    //分配pt
-    addr_t ptaddr=vmalloc();
-    *ptp=ptaddr&PAGE_MASK|attr;
-    page_item* pte=ptp[la%PDE_SIZE/PAGE_SIZE];
-    *pte=pa&PAGE_MASK|attr;//映射
+    page_item* pdp= (page_item *) pdptp[pdpti];//指向的pd
+    //检查pdptp是否被占用
+    if(!((unsigned long long)pdp&PAGE_PRESENT))
+    {
+        pdp=(page_item*)vmalloc();
+        pdptp[pdpti]=(addr_t)pdp|attr;
+    }
+    pdp=(page_item*)((addr_t)pdp&~0xff);
+
+    //在pd中找到la指向的pt
+    page_item* pt=(page_item*)pdp[la % PDPTE_SIZE / PDE_SIZE];
+    if(!((unsigned long long)pt & PAGE_PRESENT))
+    {
+        pt=(page_item*)vmalloc();
+        pdp[la%PDPTE_SIZE/PDE_SIZE]= (addr_t)pt | attr;
+    }
+    pt=(page_item*)((addr_t)pt & ~0xff);
+
+    //在pt中找到la指向的page
+    pt[la % PDE_SIZE / PAGE_SIZE]=pa|attr;//映射
     return NORMAL;
 }
 
@@ -44,6 +55,12 @@ stat_t mdemap(addr_t la)
 }
 int init_paging()
 {
+    /*
+     * 目前的情况是：
+     * 0x4000000000(1G)开始的2BF200内存分给了显示缓存
+     * pml4的第一项，pdpt的第二项已经分配了
+     *
+     * */
     #ifdef IA32
     //设置页目录
     unsigned int pt=PAGE_TABLE_ADDR;
@@ -65,24 +82,18 @@ int init_paging()
                     "mov %%rax,%%cr0":"=m"(page_index));
     #else
     //设置PML4
-    set_page_item(pml4,PDPT_ADDR,PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX);
-    set_1gb_pdpt(pdpt,0x40000000ul,PAGE_RWX);//设置PDPT
-    set_page_item(pdpt+1,PD_ADDR,PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX);
-    //打开PAE(physical address extension)
-    asm volatile("mov %cr4,%rax\r\n or $5,%rax\r\n mov %rax,%cr4");
-    //加载PML4
-    asm volatile("mov %0,%%rax\r\n mov %%rax,%%cr4":"=m"(pml4));
-    //打开分页机制
-    asm volatile("mov %cr0,%rax\r\n"
-                    "or $0x80000000,%eax\r\n"
-                    "mov %rax,%cr0");
+//    set_page_item(pml4,PDPT_ADDR,PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX);
+    //设置第一项pdpte，也就是内核空间
+//    set_1gb_pdpt(pdpt,0,PAGE_RWX);//设置PDPT0x40000000ul
+//    set_page_item(pdpt+1,PD_ADDR,PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX);
+
     #endif
 }
 void set_high_mem_base(int base)
 {
     high_mem_base=base;
 }
-void set_mem_area(int base,int len,int type)
+void set_mem_area(unsigned long base, unsigned long len, unsigned long type)
 {
     mmap_struct[mmap_t_i].base=base;
     mmap_struct[mmap_t_i].len=len;
@@ -112,9 +123,9 @@ int vmfree(addr_t ptr)
 }
 void page_err(){
     asm("cli");
-    //puts("page err");
+    print("page err\n");
     unsigned long err_code=0,l_addr=0;
-    asm volatile("mov 4(%%ebp),%0":"=r"(err_code));
+    asm volatile("mov 0(%%rbp),%0":"=r"(err_code));
     asm volatile("mov %%cr2,%0":"=r"(l_addr));//试图访问的地址
     int p=err_code&1;
 
@@ -125,29 +136,30 @@ void page_err(){
         if(l_addr>=MEM_END)
             ;
         //在进程的页表中申请新页
-        int *pdet=0,*pt=0;
-        asm volatile("mov %%cr3,%0":"=r"(pdet));
-        if(!(pdet[l_addr/PAGE_INDEX_SIZE]&PAGE_PRESENT))
-        {
-            //PDE没分配
-            pt=(int *)vmalloc();
-            pdet[l_addr/PAGE_INDEX_SIZE]=(int)pt|PAGE_PRESENT|PAGE_FOR_ALL;
-        }else
-            pt=pdet[l_addr/PAGE_INDEX_SIZE]&0xfffff000;
-        //分配PTE
-        int ptei=l_addr%PAGE_INDEX_SIZE/PAGE_SIZE;
-        pt[ptei]|=get_phyaddr(req_a_page())|PAGE_PRESENT|PAGE_FOR_ALL;
+        mmap(vmalloc(),l_addr&~0xfff,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL);
+//        int *pdet=0,*pt=0;
+//        asm volatile("mov %%cr3,%0":"=r"(pdet));
+//        if(!(pdet[l_addr/PAGE_INDEX_SIZE]&PAGE_PRESENT))
+//        {
+//            //PDE没分配
+//            pt=(int *)vmalloc();
+//            pdet[l_addr/PAGE_INDEX_SIZE]=(int)pt|PAGE_PRESENT|PAGE_FOR_ALL;
+//        }else
+//            pt=pdet[l_addr/PAGE_INDEX_SIZE]&0xfffff000;
+//        //分配PTE
+//        int ptei=l_addr%PAGE_INDEX_SIZE/PAGE_SIZE;
+//        pt[ptei]|=get_phyaddr(req_a_page())|PAGE_PRESENT|PAGE_FOR_ALL;
     }
     else
     {
         //page level protection
     }
-    /*p=err_code&2;
-    if(p)//puts("when writing");else //puts("when reading");
+    p=err_code&2;
+    if(p)print("when writing\n");else //puts("when reading");
     p=err_code&4;
-    if(!p)//puts("supervisor mode");else //puts("user mode");
+    if(!p)print("supervisor mode\n");else //puts("user mode");
     p=err_code&16;
-    if(p)//puts("an instruction tries to fetch");
+    if(p)print("an instruction tries to fetch\n");
     unsigned int addr=0;
     asm volatile("mov 8(%%ebp),%0":"=r"(addr));
     printf("occurred at %x(paddr), %x(laddr)\n",addr,l_addr);
@@ -159,27 +171,38 @@ void page_err(){
         asm volatile("jmp .");
     }
     //杀死问题进程
-    del_proc(cur_proc);*/
+//    del_proc(cur_proc);
     // printf("killed the problem process.\n");
     // printf("shell:>");
     eoi();
     //这里对esp的加法是必要的，因为page fault多push了一个错误码，但是iret识别不了
-    __asm__ volatile ("sti \r\n leave\r\n add $4,%esp \r\n iret");
+    __asm__ volatile ("sti \r\n leave\r\n add $8,%esp \r\n iretq");
 }
 void init_memory()
 {
-    for(int i=0;i<8;i++){
+    extern addr_t _knl_end,_knl_start;//lds中声明的内核的结尾地址，放置位图
+    //获取内存大小
+    size_t mem_size=mmap_struct[mmap_t_i-1].base+mmap_struct[mmap_t_i-1].len;
+    //计算出所需内存页数量
+    int pgc=mem_size/PAGE_SIZE;
+    //计算出位图所需的字节数
+    int pg_bytes=pgc/32;
+    page_map=(unsigned int*)PAGE_4K_ALIGN(0xc00000);
+    int* p=page_map;
+    addr_t curp=0;
+    for(int i=0;i<mmap_t_i;i++){
+        int cont=0;
+        if(mmap_struct[i].type!=MULTIBOOT_MEMORY_AVAILABLE)
+            cont=-1;
+        for(int j=0;j<PAGE_4K_ALIGN(mmap_struct[i].len)/PAGE_4K_SIZE/32;j++){
+            *(p++)=cont;
+        }
+    }
+
+    //低16M空间直接被内核占用
+    for(int i=0;i<128;i++){
         page_map[i]=0xffffffff;
     }
-    //内核页表初始化
-    //目前32mb如下分配：
-    /* 
-    高4mb映射到高1g的起始4mb
-    剩下正常。
-    asm volatile("mov ")
-     */
-    //page_index[768]=page_index[7];
-    //page_index[7]=0;
 }
 /*
 page_map存储方式:

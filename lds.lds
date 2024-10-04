@@ -3,7 +3,8 @@ OUTPUT_ARCH(i386:x86-64)
 ENTRY(init32)
 
 SECTIONS {
-    . = 0x103000;
+    . = 1M;
+    _knl_start = . ;
     .entry :
     {
         init32 = .;
@@ -13,11 +14,37 @@ SECTIONS {
     {
         *(.multiboot2)
     }
+    .pgtbl ALIGN(4096) :
+    {
+        *(.pgtbl)
+    }
+    .gdt ALIGN(4096) :
+    {
+        *(.gdt)
+    }
+    .gdtptr ALIGN(4096) :
+    {
+        *(.gdtptr)
+    }
+    .idt ALIGN(4096) :
+    {
+        *(.idt)
+    }
+    .idtptr ALIGN(4096) :
+    {
+        *(.idtptr)
+    }
+    .tss ALIGN(4096) :
+    {
+        *(.tss)
+    }
+    . = 4M;
     .bss :
     {
         kstack = .;
         *(.bss)
     }
+    . = 8M;
     .text :
     {
         kmain = .;
@@ -30,10 +57,6 @@ SECTIONS {
     .rodata :
     {
         *(.rodata)
-    }
-    .bss :
-    {
-        *(.bss)
     }
     .eh_frame :
     {
@@ -57,4 +80,5 @@ SECTIONS {
     {
         *(.kend)
     }
+    _knl_end = 12M ;
 }

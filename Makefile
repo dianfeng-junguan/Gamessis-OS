@@ -4,19 +4,24 @@ BOOT = boot.efi
 KNL_OFILES = bin/setupa.o bin/int.o bin/main.o bin/log.o \
 			bin/memory.o bin/virfs.o bin/devman.o bin/proc.o bin/inta.o \
 			bin/gdt.o bin/gdta.o bin/clock.o bin/clocka.o bin/exe.o \
-			bin/syscalla.o
+			bin/syscalla.o bin/framebuffer.o
 MODS_OFILES = bin/mods/kb.o bin/mods/disk.o bin/mods/diska.o bin/mods/fat16.o \
-				bin/mods/tty.o
-COM_OFILES = bin/mem.o bin/str.o bin/types.o bin/proca.o
+				bin/mods/tty.o bin/com.o
+COM_OFILES = bin/mem.o bin/str.o bin/types.o bin/proca.o bin/font.o
+k:
+	make knl
+	sync
+	make cpknl
+knl:
+	@bash knl.sh
+	@objcopy -O elf64-x86-64 -B i386 -I binary res/font.psf bin/font.o
+	@ld -T lds.lds -o bin/gmsknl.elf $(KNL_OFILES) $(MODS_OFILES) $(COM_OFILES)
+	@objdump -d bin/gmsknl.elf -j .entry -M intel > knl.s
+	@objdump -S -d bin/gmsknl.elf -M intel >> knl.s
 boot:
 	@gcc -w -e main -nostdlib \
         -fno-builtin -Wl,--subsystem,10 -o bin/boot.efi boot/boot.c \
 		-I lib/efi/em64t -I lib/efi $(CUARGS)
-knl:
-	@bash knl.sh
-	@ld -T lds.lds -o bin/gmsknl.elf $(KNL_OFILES) $(MODS_OFILES) $(COM_OFILES)
-	@objdump -d bin/gmsknl.elf -j .entry -M intel > knl.s
-	@objdump -d bin/gmsknl.elf -M intel >> knl.s
 cpboot:
 	@sudo cp bin/$(BOOT) /mnt/boot/$(BOOT)
 com:
@@ -24,11 +29,13 @@ com:
 	@gcc -c com/str.c -o bin/str.o $(CUARGS)
 	@gcc -c com/syscall.c -o bin/syscall.o $(CUARGS)
 	@gcc -c com/types.c -o bin/types.o $(CUARGS)
-cpknl:
+cpknl_old:
 	@make mount
 	@sudo cp bin/gmsknl.elf /mnt/gmsknl
 	@make umount
-cpknln:
+ck:
+	@sudo cp bin/gmsknl.elf /mnt/boot/gmsknl
+cpknl:
 	@make imgcon
 	@make imgmnt
 	@sudo cp bin/gmsknl.elf /mnt/boot/gmsknl
@@ -48,6 +55,8 @@ debugnew:
 	@sudo qemu-system-i386 plpbt/plpbt.img -m 2G
 bochs:
 	@bochsdbg -q -f bochsrc.bxrc
+bochsl:
+	@bochs -q -f bochsrc.bxrc
 qcow2:
 	@qemu-img create -f qcow2 hda.img 512M
 	@sudo modprobe nbd
@@ -75,3 +84,5 @@ grub:
 	@sudo mkdir /mnt/boot/EFI
 	@sudo grub-install --target=x86_64-efi --efi-directory=/mnt/boot/EFI --bootloader-id=GRUB --recheck --boot-directory=/mnt/boot /dev/nbd0
 	@sudo cp -r well-confugured-grub/* /mnt/boot/grub/
+clean:
+	@rm bin/*.o

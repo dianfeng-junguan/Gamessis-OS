@@ -2,6 +2,24 @@
 #include <memory.h>
 #include <typename.h>
 struct multiboot_tag_framebuffer framebuffer;
+
+//内核内嵌字体
+extern char _binary_res_font_psf_start[];
+extern char _binary_res_font_psf_end[];
+
+/* char output info */
+
+static u32 fb_cursor_x=0, fb_cursor_y=0;    /* count by chars */
+static u32 max_ch_nr_x, max_ch_nr_y;
+
+/* font info */
+
+static struct psf2_header *boot_font;
+static u32 font_width, font_height;
+static u32 font_width_bytes;
+static u8 *glyph_table;
+static u32 bytes_per_glyph, glyph_nr;
+int font_size=1;
 void init_framebuffer()
 {
     //映射页帧内存
@@ -10,7 +28,7 @@ void init_framebuffer()
     size_t bypp=framebuffer.common.framebuffer_bpp/8;
     size_t inter=framebuffer.common.framebuffer_pitch;
     size_t pc=w*h;
-    size_t size=pc*bypp+(pc-1)*inter;
+    size_t size=h*inter;
     int pgc=size/PAGE_SIZE;
     addr_t p=FRAMEBUFFER_ADDR;
     addr_t pp=framebuffer.common.framebuffer_addr;
@@ -23,7 +41,118 @@ void init_framebuffer()
     
     
 }
+void init_font(){
+    boot_font = (struct psf2_header*) _binary_res_font_psf_start;
+
+    font_width_bytes = (boot_font->width + 7) / 8;
+    font_width = font_width_bytes * 8;
+    font_height = boot_font->height;
+
+    glyph_table = (u8*)_binary_res_font_psf_start+boot_font->header_size;
+    glyph_nr = boot_font->glyph_nr;
+    bytes_per_glyph = boot_font->bytes_per_glyph;
+
+    fb_cursor_x = fb_cursor_y = 0;
+    max_ch_nr_x = framebuffer.common.framebuffer_width *framebuffer.common.framebuffer_bpp/8 / font_width;
+    max_ch_nr_y = framebuffer.common.framebuffer_height *framebuffer.common.framebuffer_bpp/8 / font_height;
+    font_size=1;
+}
 void set_framebuffer(struct multiboot_tag_framebuffer tag)
 {
     framebuffer=tag;
+}
+
+void fill_rect(int x,int y,int w,int h,unsigned int color){
+    unsigned int* fb= (unsigned int*) FRAMEBUFFER_ADDR;
+    //目前只写32bpp
+    for(int py=x;py<h+x;py++){
+        for(int px=y;px<w+y;px++){
+            addr_t ptr=FRAMEBUFFER_ADDR+py*framebuffer.common.framebuffer_pitch
+                       +px*framebuffer.common.framebuffer_bpp/8;
+            fb=(unsigned int*)ptr;
+            *fb=color;
+        }
+    }
+}
+unsigned char letters[];
+void draw_text(int x, int y, int size, char *str)
+{
+    int tx=x;
+    while(*str!='\0')
+    {
+        if(*str=='\n')
+        {
+            y+=font_height*size;
+            tx=x;
+        }
+        else
+        {
+            draw_letter(tx,y,size,*str);
+            tx+=size*font_width;
+        }
+        str++;
+    }
+}
+void draw_letter(int x, int y, int size, char c) {
+    u8 *glyph = glyph_table;
+    if (c < glyph_nr) {
+        glyph += c * bytes_per_glyph;
+    }
+    /* output the font to frame buffer */
+    for (u32 ch_y = 0; ch_y < font_height; ch_y++) {
+        u8 mask = 1 << 7;
+
+        for (u32 ch_x = 0; ch_x < font_width; ch_x++) {
+            if ((*(glyph + ch_x / 8) & mask) != 0) {
+                fill_rect(y+ch_y*size,x+ch_x*size,size,size,-1);
+            } else {
+                fill_rect(y+ch_y*size,x+ch_x*size,size,size,0);
+            }
+
+            mask >>= 1;
+            if (ch_x % 8 == 0) {
+                mask = 1 << 7;
+            }
+        }
+
+        glyph += font_width_bytes;
+    }
+}
+//向上滚动一个像素
+void scr_up(){
+    for(int dy=0;dy<max_ch_nr_y-1;dy++){
+        for(int dx=0;dx<max_ch_nr_x;dx++){
+            char *p=(char*)(FRAMEBUFFER_ADDR+dy*framebuffer.common.framebuffer_pitch
+                    +dx*framebuffer.common.framebuffer_bpp/8);
+            *p=*(p+framebuffer.common.framebuffer_pitch);
+        }
+
+    }
+}
+void scr_down(){
+    for(int dy=1;dy<max_ch_nr_y;dy++){
+        for(int dx=0;dx<max_ch_nr_x;dx++){
+            char *p=(char*)(FRAMEBUFFER_ADDR+dy*framebuffer.common.framebuffer_pitch
+                            +dx*framebuffer.common.framebuffer_bpp/8);
+            *p=*(p-framebuffer.common.framebuffer_pitch);
+        }
+
+    }
+}
+void print(char* s){
+    for(;*s;s++){
+        if(fb_cursor_x>max_ch_nr_x||*s=='\n')
+        {
+            fb_cursor_y+=1;
+            fb_cursor_x=0;
+        }
+        if(*s=='\n')continue;
+        if(fb_cursor_y>=max_ch_nr_y){
+            for(int i=0;i<font_height*font_size;i++)
+                scr_up();
+            fb_cursor_y=max_ch_nr_y-1;
+        }
+        draw_letter(fb_cursor_x*font_width*font_size,fb_cursor_y*font_height*font_size,font_size,*s);
+        fb_cursor_x+=1;
+    }
 }

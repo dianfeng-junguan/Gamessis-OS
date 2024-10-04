@@ -6,9 +6,9 @@ extern eoi
 disk_int_handler:
     call eoi
     call disk_int_handler_c
-    iret
+    iretq
 read_disk_asm:
-    push ebp
+    push rbp
     mov ebp,esp
     mov dx,0x1f7
 ;.not_ready1:
@@ -87,23 +87,23 @@ read_disk_asm:
     in ax,dx;ax=0xffff
     ;pop ebx
     mov esp,ebp
-    pop ebp
+    pop rbp
     ret
 write_disk_asm:
-    push ebp
+    push rbp
     mov ebp,esp
 
     mov eax,[esp+8];lba
     mov ecx,[esp+12];sector_num(actually only data in cl are valid)
     mov ebx,[esp+16];mem_ptr
 
-    push eax
+    push rax
     ;第2步：设置要写入的扇区数
     mov dx,0x1f2
     mov al,cl
     out dx,al 
     ;第3步：将LBA地址存入0x1f3~0x1f6
-    pop eax
+    pop rax
     ;LBA地址7~0位写入端口0x1f3
     mov dx,0x1f3
     out dx,al
@@ -149,5 +149,5 @@ write_disk_asm:
     loop .go_on_write
 
     mov esp,ebp
-    pop ebp
+    pop rbp
     ret

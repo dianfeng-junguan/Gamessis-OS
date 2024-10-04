@@ -23,11 +23,11 @@ int exec_call(char *path);
 int load_library(char *path);
 int dispose_library(int dlln);
 
-int req_page_at(int base,int pgn);
+//int req_page_at(int base,int pgn);
 //查看指定区域的页内存是否可用
 int check_pgm(int base,int pgn);
 //返回page的物理地址
-int req_a_page();
+//int req_a_page();
 
 
 int get_module_addr(int mi);

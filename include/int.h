@@ -1,6 +1,6 @@
 #ifndef _H_INTERRUPT
 #define _H_INTERRUPT
-#define IDT_ADDR 0
+#define IDT_ADDR 0x106000
 #define m8259ACTRL 0x20
 #define m8259ADATA 0X21
 #define f8259ACTRL 0xA0
@@ -14,16 +14,27 @@
 #define SYSCALL_FETCH_KBBUF 12
 #define SYSCALL_REG_DEVICE 24
 #define SYSCALL_REG_DRIVER 25
-typedef unsigned char u8;
-typedef unsigned short u16;
-typedef unsigned int u32;
+#include "typename.h"
 
+void wrmsr(unsigned long address,unsigned long value);
+
+#ifdef IA32
 typedef struct{
     u16 offset_low;
     u16 selector;
     u16 attr;
     u16 offset_high;
 }__attribute__((packed)) gate;
+#else
+typedef struct {
+    u16 offset_low;
+    u16 selector;
+    u16 attr;
+    u16 offset_mid;
+    u32 offset_high;
+    u32 rsvd;
+}__attribute__((packed)) gate;
+#endif
 void outb(u16 device,u8 value);
 void outw(u16 dev,u16 v);
 void io_delay();
@@ -38,7 +49,7 @@ void turn_on_int();
 #define TASK_GATE 0xc00
 #define INT_GATE 0xe00
 //注：这里的index指的是idt作为数组，每一项的index，不是0x8,0x10那些
-void set_gate(u8 index,u32 offset,u16 selector,u16 attr);
+void set_gate(u8 index,addr_t offset,u16 selector,u16 attr);
 
 void eoi();
 /*
