@@ -216,3 +216,7 @@ int syscall(int func,int b,int c,int d,int e,int f)
     // ::"m"(func),"m"(a),"m"(b),"m"(c),"m"(d),"m"(e));
     // __asm__ volatile("int $0x80\r\n leave\r\n ret");
 }
+void wrmsr(unsigned long address,unsigned long value)
+{
+    __asm__ __volatile__	("wrmsr	\n\t"::"d"(value >> 32),"a"(value & 0xffffffff),"c"(address):"memory");
+}

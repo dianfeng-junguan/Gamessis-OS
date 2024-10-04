@@ -105,7 +105,7 @@ set_paging:
     mov dword [eax+4],0
     ;PDPT
     mov eax,0x102000
-    mov dword [eax],0x183;0x103007
+    mov dword [eax],0x187;0x103007
     mov dword [eax+4],0
 
 ;    mov ecx,32
@@ -132,6 +132,7 @@ switch_cs:
     mov ecx, 0xc0000080 ; ia32_efer在msr中的地址
     rdmsr
     bts eax, 8
+    bts eax,0   ;开启syscall
     wrmsr
     ;打开保护模式
     mov eax, cr0
@@ -161,10 +162,14 @@ section .gdt align=4096
 ;之后就不会动了，也不会用TSS了
 gdt64:
     dq  0
-    dq  0x0020980000000000   ; 内核态代码段
-    dq  0x0000920000000000   ; 内核态数据段
-    dq  0x0020f80000000000   ; 用户态代码段
-    dq  0x0000f20000000000   ; 用户态数据段
+    dq  0x0020980000000000   ; 内核态代码段64
+    dq  0x0000920000000000   ; 内核态数据段64
+    dq  0                    ; 用户态代码段32
+    dq  0                    ; 用户态数据段32
+    dq  0x0020f80000000000   ; 用户态代码段64
+    dq  0x0000f20000000000   ; 用户态数据段64
+    dq  0x00cf9a000000ffff   ; 内核态代码段32
+    dq  0x00cf92000000ffff   ; 内核态数据段32
     ;0x106000, 108 bytes
     dq  0x009089108000006c  ;tss
     dq 0

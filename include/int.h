@@ -15,6 +15,9 @@
 #define SYSCALL_REG_DEVICE 24
 #define SYSCALL_REG_DRIVER 25
 #include "typename.h"
+
+void wrmsr(unsigned long address,unsigned long value);
+
 #ifdef IA32
 typedef struct{
     u16 offset_low;

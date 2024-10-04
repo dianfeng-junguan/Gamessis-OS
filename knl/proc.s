@@ -165,3 +165,41 @@ move_to_user_mode:
 %include "knl/gdtdefine.inc"
 desc:
     GDTdescriptor 0,0,0
+global ret_sys_call
+ret_sys_call:
+
+    pop rax
+    mov ds,ax
+    pop rax
+    mov es,ax
+
+    pop r15
+    pop r14
+    pop r13
+    pop r12
+    pop r11
+    pop r10
+    pop r9
+    pop r8
+
+    pop rsi
+    pop rdi
+    pop rdx
+    pop rcx
+    pop rbx
+    pop rax
+
+    mov rax,tmp
+    mov [rsp],rax
+
+    push rcx
+    mov rcx,0xc0000081
+    rdmsr
+    or rax,0x0018000000000000
+    wrmsr
+
+    pop rcx
+tmp:
+    db 0x48
+    sysret
+    ;sysexit

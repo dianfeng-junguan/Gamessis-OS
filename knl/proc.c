@@ -5,6 +5,8 @@
 #include "proc.h"
 #include "memory.h"
 #include "pe.h"
+#include "int.h"
+#include "mem.h"
 struct process task[MAX_PROC_COUNT];
 TSS scene_saver;
 TSS *tss=0x108000;
@@ -27,6 +29,8 @@ void init_proc(){
     zi=_TSS_IND(zi)*8;
     //asm volatile("lldt %0"::"m"(xi));
     //asm volatile("ltr %0"::"m"(zi));
+    //把内核代码段选择子写到MSR寄存器中准备用于特权级转换
+    wrmsr(0x174,0x8);
     //创建一个测试进程
     create_test_proc();
 }
@@ -37,14 +41,14 @@ void create_test_proc(){
     int currsp=0x9fc00-1;
     asm volatile("mov %%rsp,%0":"=m"(currsp));
     set_proc(0, 0, 0, 0, 0x10, 0x8, 0x10, 0x10, 0x10, 0x10,
-             0x7e00- sizeof(stack_store_regs), 0, 0, 0, (long)proc_zero, 0, index);
+             0x7e00- sizeof(stack_store_regs), 0, 0, 0, (long)ret_sys_call, 0, index);
     task[index].tss.rsp0=0x400000;
     //把还原现场时用到的堆栈设置好
     stack_store_regs *str= (stack_store_regs *) (0x7e00 - sizeof(stack_store_regs));
     str->rax=0;
     str->rbx=0;
-    str->rcx=0;
-    str->rdx=0;
+    str->rcx=0x1400000;//sysexit采用的栈顶
+    str->rdx=0x1400000;//sysexit采用的返回地址
     str->rsi=0;
     str->rdi=0;
     str->r15=0;
@@ -55,13 +59,14 @@ void create_test_proc(){
     str->r10=0;
     str->r9=0;
     str->r8=0;
-    str->rip=(unsigned long)proc_zero;
+    str->rip=0x1400000;
     str->cs=0x8;
-    str->rflags=0;
+    str->rflags=0x00200006;
     str->rsp=0x7e00;
     str->ss=0x10;
     str->ds=0x10;
     str->es=0x10;
+    memcpy(0x1400000,proc_zero,1024);
 
 }
 int create_proc()
@@ -140,8 +145,8 @@ void proc_zero()
                  "popq %rdx\n"
                  "popq %rcx\n"
                  "popq %rbx\n"
-                 "lea dd(%rip),%rax\n"
-                 "mov %rax,8(%rsp)\n"
+                 //"lea dd(%rip),%rax\n"
+                 //"mov %rax,8(%rsp)\n"
                  "popq %rax\n"
                  "callq eoi\n"
                  "iretq\n"
