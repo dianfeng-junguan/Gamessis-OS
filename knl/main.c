@@ -153,6 +153,7 @@ void main(unsigned int magic,void* addr)
 //    init_disk();
 
     DISK1_FAT32_FS_init();
+
     manage_proc_lock=0;
 
 

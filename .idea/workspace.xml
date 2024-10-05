@@ -20,50 +20,19 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="完善了一下ret_sys_call的堆栈">
-      <change afterPath="$PROJECT_DIR$/include/dirent.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/include/errno.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/include/fat32.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/include/vfs.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/knl/mods/fat32.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/knl/vfs.c" afterDir="false" />
+    <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="借用了别人的vfs和fat32，成功整合进去了">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/clock.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/clock.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/com.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/com.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/devman.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/devman.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/exe.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/exe.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/framebuffer.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/framebuffer.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gdt.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/gdt.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/gmsknl.elf" beforeDir="false" afterPath="$PROJECT_DIR$/bin/gmsknl.elf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/int.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/int.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/log.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/log.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/main.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/memory.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/memory.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/mods/disk.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/mods/disk.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/mods/fat16.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/mods/fat16.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/mods/kb.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/mods/kb.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/mods/tty.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/mods/tty.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/proc.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/proc.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/virfs.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/virfs.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-be9d297969e983a7cc41.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2024-09-27T13-32-28-0083.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-gms-Debug-52f8b173fb76e020bf4a.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/build.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/build.ninja" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/syscalla.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/syscalla.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hda.img" beforeDir="false" afterPath="$PROJECT_DIR$/hda.img" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/devdrv.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/devdrv.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/disk.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/disk.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/fat16.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/fat16.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/virfs.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/virfs.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl.sh" beforeDir="false" afterPath="$PROJECT_DIR$/knl.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/int.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/int.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/memory.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/memory.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/mods/disk.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/mods/disk.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/mods/fat16.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/mods/fat16.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl/proc.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/proc.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/virfs.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/virfs.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/syscall.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl/syscall.s" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -210,7 +179,7 @@
       <workItem from="1727784696472" duration="1341000" />
       <workItem from="1727923202568" duration="27784000" />
       <workItem from="1728027237454" duration="15063000" />
-      <workItem from="1728098344850" duration="8513000" />
+      <workItem from="1728098344850" duration="10878000" />
     </task>
     <task id="LOCAL-00001" summary="重新整理了一下，改用clion开发">
       <option name="closed" value="true" />
@@ -356,7 +325,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728038641944</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="借用了别人的vfs和fat32，成功整合进去了">
+      <option name="closed" value="true" />
+      <created>1728114650274</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1728114650274</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -396,7 +373,8 @@
     <MESSAGE value="使用sysret，实现了特权级切换" />
     <MESSAGE value="使用sysret，实现了特权级切换，正确地切换了cs，ds" />
     <MESSAGE value="完善了一下ret_sys_call的堆栈" />
-    <option name="LAST_COMMIT_MESSAGE" value="完善了一下ret_sys_call的堆栈" />
+    <MESSAGE value="借用了别人的vfs和fat32，成功整合进去了" />
+    <option name="LAST_COMMIT_MESSAGE" value="借用了别人的vfs和fat32，成功整合进去了" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -423,7 +401,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/knl/proc.c</url>
-          <line>131</line>
+          <line>130</line>
           <option name="timeStamp" value="74" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
@@ -437,9 +415,9 @@
           <option name="timeStamp" value="85" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/knl/mods/fat32.c</url>
-          <line>855</line>
-          <option name="timeStamp" value="89" />
+          <url>file://$PROJECT_DIR$/knl/proc.c</url>
+          <line>736</line>
+          <option name="timeStamp" value="90" />
         </line-breakpoint>
         <breakpoint type="OCSymbolicBreakpointType">
           <properties>

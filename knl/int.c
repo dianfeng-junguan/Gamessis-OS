@@ -54,6 +54,10 @@ void init_int(){
 
     turn_on_int();
 
+    //设置IA32_LSTAR,为syscall做设置
+    wrmsr(0xc0000082, _syscall);
+    //设置IA32_FMASK,为syscall做设置
+    wrmsr(0xc0000084, -1);
 }
 void set_gate(u8 index,addr_t offset,u16 selector,u16 attr)
 {

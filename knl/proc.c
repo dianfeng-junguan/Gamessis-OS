@@ -32,9 +32,9 @@ void init_proc(){
     //把内核代码段选择子写到MSR寄存器中准备用于特权级转换(sysexit，现在没用)
     wrmsr(0x174,0x8);
     //准备用于特权级转换(sysret，正在使用)
-    wrmsr(0xc0000081,0x0020000000000000ul);
+    wrmsr(0xc0000081,0x0020000800000000ul);
     //创建一个测试进程
-//    create_test_proc();
+    create_test_proc();
 }
 void create_test_proc(){
 
@@ -49,8 +49,8 @@ void create_test_proc(){
     stack_store_regs *str= (stack_store_regs *) (0x7e00 - sizeof(stack_store_regs));
     str->rax=0;
     str->rbx=0;
-    str->rcx=0;
-    str->rdx=0x1400000;//sysret采用的返回地址
+    str->rcx=proc_zero;//sysret采用的返回地址
+    str->rdx=0;
     str->rsi=0;
     str->rdi=0;
     str->r15=0;
@@ -61,14 +61,13 @@ void create_test_proc(){
     str->r10=0;
     str->r9=0;
     str->r8=0;
-    str->rip=0x1400000;
+    str->rip=proc_zero;
     str->cs=0x8;
     str->rflags=0x00200006;
     str->rsp=0x7e00;
     str->ss=0x2b;
     str->ds=0x2b;
     str->es=0x2b;
-    memcpy(0x1400000,proc_zero,1024);
 
 }
 int create_proc()
@@ -129,31 +128,9 @@ void set_proc(long eax, long ebx, long ecx, long edx, long es, long cs, long ss,
 }
 void proc_zero()
 {
-    asm volatile("leave\n"
-                 "popq %rax\n"
-                 "mov %ax,%ds\n"
-                 "popq %rax\n"
-                 "mov %ax,%es\n"
-                 "popq %r15\n"
-                 "popq %r14\n"
-                 "popq %r13\n"
-                 "popq %r12\n"
-                 "popq %r11\n"
-                 "popq %r10\n"
-                 "popq %r9\n"
-                 "popq %r8\n"
-                 "popq %rsi\n"
-                 "popq %rdi\n"
-                 "popq %rdx\n"
-                 "popq %rcx\n"
-                 "popq %rbx\n"
-                 //"lea dd(%rip),%rax\n"
-                 //"mov %rax,8(%rsp)\n"
-                 "popq %rax\n"
-                 "callq eoi\n"
-                 "iretq\n"
-                 "dd:\n"
-                 "nop\n");
+    asm volatile("mov $1,%rax\n"
+                 ".byte 0x48\n"
+                 "syscall");
     while(1);
 }
 void manage_proc(){
