@@ -4,8 +4,8 @@ BOOT = boot.efi
 KNL_OFILES = bin/setupa.o bin/int.o bin/main.o bin/log.o \
 			bin/memory.o bin/virfs.o bin/devman.o bin/proc.o bin/inta.o \
 			bin/gdt.o bin/gdta.o bin/clock.o bin/clocka.o bin/exe.o \
-			bin/syscalla.o bin/framebuffer.o
-MODS_OFILES = bin/mods/kb.o bin/mods/disk.o bin/mods/diska.o bin/mods/fat16.o \
+			bin/syscalla.o bin/framebuffer.o bin/vfs.o
+MODS_OFILES = bin/mods/kb.o bin/mods/disk.o bin/mods/diska.o bin/mods/fat32.o \
 				bin/mods/tty.o bin/com.o
 COM_OFILES = bin/mem.o bin/str.o bin/types.o bin/proca.o bin/font.o
 k:

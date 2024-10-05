@@ -26,6 +26,9 @@ typedef char buffer_block[BLOCK_SIZE];	// 块缓冲区。
 #define FTYPE_REG 0
 #define FTYPE_BLKDEV 1
 #define FTYPE_CHRDEV 2
+
+
+
 // 缓冲区头数据结构。（极为重要！！！）
 // 在程序中常用bh 来表示buffer_head 类型的缩写。
 typedef struct _buffer_head
@@ -65,6 +68,11 @@ typedef struct
   unsigned int block_size;//块大小
   unsigned char name[8];//超级块上面的名称
 }super_block;
+
+
+#define FS_ATTR_FILE	(1UL << 0)
+#define FS_ATTR_DIR		(1UL << 1)
+#define	FS_ATTR_DEVICE	(1UL << 2)
 
 typedef struct _vfs_dentry_{
     int fno;    //文件描述符
@@ -111,6 +119,7 @@ typedef struct
 }dpt_t;
 #define NONACTIVE_PAR 0
 #define ACTIVE_PAR 0x80
+
 // int setup_sys_vol(void *disk_drv, void *fs_drv);//系统盘符，用特殊方法装载
 // int free_vol(int voli);
 // int reg_vol(int disk_drvi, int fs_drvi, char *name);

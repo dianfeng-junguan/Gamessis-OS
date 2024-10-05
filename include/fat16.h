@@ -101,3 +101,5 @@ void set_attr(dir_entry *f,char attr);
 //returns a boolean.
 int file_exist(dir_entry entry);
 int init_fat16();
+
+struct super_block *fat16_read_superblock(dpt_t* dpte,void* buf);

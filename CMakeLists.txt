@@ -7,4 +7,9 @@ aux_source_directory(knl/mods KNL_MODS)
 aux_source_directory(com KNL_COMS)
 add_executable(gms ${KNL} ${KNL_MODS} ${KNL_COMS}
         knl/com.c
-        include/com.h)
+        include/com.h
+        include/vfs.h
+        knl/vfs.c
+        include/fat32.h
+        knl/mods/fat32.c
+)

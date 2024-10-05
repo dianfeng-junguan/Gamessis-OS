@@ -34,7 +34,7 @@ void init_proc(){
     //准备用于特权级转换(sysret，正在使用)
     wrmsr(0xc0000081,0x0020000000000000ul);
     //创建一个测试进程
-    create_test_proc();
+//    create_test_proc();
 }
 void create_test_proc(){
 

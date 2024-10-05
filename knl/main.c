@@ -7,10 +7,11 @@
 #include <gdt.h>
 #include <framebuffer.h>
 #include <mem.h>
+#include <vfs.h>
 
 #include <tty.h>
 #include <disk.h>
-#include <fat16.h>
+#include <fat32.h>
 #include <kb.h>
 #include "com.h"
 
@@ -149,13 +150,18 @@ void main(unsigned int magic,void* addr)
     //自带驱动
     //init_tty();
     init_kb();
-    manage_proc_lock=0;
-    while (1);
-    init_disk();
+//    init_disk();
 
+    DISK1_FAT32_FS_init();
+    manage_proc_lock=0;
 
 
 //	init_vfs();
-    //init_fat16();
+//    init_fat16();
+
+//    extern device *dev_tree[];
+//    blk_dev* p=dev_tree[DEVTREE_BLKDEVI];
+//    mount_fs("fat16",p->par,vmalloc());
+
     while (1);
 }
