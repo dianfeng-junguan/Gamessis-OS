@@ -3,7 +3,7 @@
 #include "int.h"
 #include "devman.h"
 #include "syscall.h"
-#include <virfs.h>
+#include "virfs.h"
 #include <log.h>
 #define NULL ((void*)0)
 disk_req disk_reqs[MAX_DISK_REQUEST_COUNT];
@@ -294,7 +294,7 @@ int hd_iterate()
     r[1]=request(DISK_MAJOR_SLAVE,DISKREQ_CHECK,0,1,0);
     r[2]=request(DISK_SLAVE_MAJOR,DISKREQ_CHECK,0,1,0);
     r[3]=request(DISK_SLAVE_SLAVE,DISKREQ_CHECK,0,1,0);
-    for(int i=0;i<4;i++)
+    for(int i=0;i<1;i++)
     {
         int disk;
         switch (i)

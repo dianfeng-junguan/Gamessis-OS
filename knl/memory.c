@@ -4,6 +4,8 @@
 #include "framebuffer.h"
 #include "log.h"
 #include "proc.h"
+#include "mem.h"
+
 //page bitmap. refers to pages of mem.
 unsigned int *page_map=NULL;//[PAGE_BITMAP_NR]={0};
 page_item *page_index=PAGE_INDEX_ADDR;
@@ -31,6 +33,7 @@ stat_t mmap(addr_t pa,addr_t la,u32 attr)
     if(!((unsigned long long)pdp&PAGE_PRESENT))
     {
         pdp=(page_item*)vmalloc();
+        memset(pdp,0,4096);
         pdptp[pdpti]=(addr_t)pdp|attr;
     }
     pdp=(page_item*)((addr_t)pdp&~0xff);
@@ -40,6 +43,7 @@ stat_t mmap(addr_t pa,addr_t la,u32 attr)
     if(!((unsigned long long)pt & PAGE_PRESENT))
     {
         pt=(page_item*)vmalloc();
+        memset(pt,0,4096);
         pdp[la%PDPTE_SIZE/PDE_SIZE]= (addr_t)pt | attr;
     }
     pt=(page_item*)((addr_t)pt & ~0xff);

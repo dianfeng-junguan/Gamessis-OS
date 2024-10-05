@@ -358,32 +358,36 @@ void wait_on_buf(buffer_head* bh)
 //扫描块设备，读取分区，识别文件系统
 int scan_dev(int dev)
 {
-    device *blkdev=get_dev(dev);
-    buffer_head* bh=bread(dev,0);
-    if(!bh)return -1;
-    dpt_t* dpte=bh->b_data+0x1be;
+//    device *blkdev=get_dev(dev);
+//    buffer_head* bh=bread(dev,0);
+//    if(!bh)return -1;
+    char* buf=vmalloc();
+    int r=request(DISK_MAJOR_MAJOR,DISK_CMD_READ,0,1,buf);
+    chk_result(r);
+
+    dpt_t* dpte=buf+0x1be;
     for(int i=0;i<4;i++)
     {
-        blkdev->par[i].type=dpte->type;
+//        blkdev->par[i].type=dpte->type;
         int stlba=dpte->start_lba;
-        blkdev->par[i].start_sec=stlba;
-        int i;
-        for(i=0;i<MAX_FS;i++)
-        {
-            if(fs[i].read_superblock&&fs[i].read_superblock(dev,stlba)==0)
-            {
-                reg_vol(dev,i,blkdev->name);//识别成功，注册卷
-            }
-        }
-        if(i==MAX_FS)
-        {
-            printf("err:unrecognised partition fs.\n");
-        }
+//        blkdev->par[i].start_sec=stlba;
+//        int i;
+//        for(i=0;i<MAX_FS;i++)
+//        {
+//            if(fs[i].read_superblock&&fs[i].read_superblock(dev,stlba)==0)
+//            {
+//                reg_vol(dev,i,blkdev->name);//识别成功，注册卷
+//            }
+//        }
+//        if(i==MAX_FS)
+//        {
+//            printf("err:unrecognised partition fs.\n");
+//        }
 
-        blkdev->par[i].end_sec=dpte->end_lba;
+//        blkdev->par[i].end_sec=dpte->end_lba;
         dpte++;
     }
-    brelse(bh);
+//    brelse(bh);
     return 0;
 }
 
@@ -430,5 +434,6 @@ int init_vfs()
     {
         if(scan_dev(p-devs)!=0)return -1;
     }
+
     return 0;
 }

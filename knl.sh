@@ -1,5 +1,5 @@
 cargs="-w -g -fno-pie -fno-pic -nostdlib -nostdinc -fno-stack-protector -nostartfiles \
--I include -O0 -m64"
+-I include -m64"
 for f in $(find knl|grep -E *[.]c$)
 do
     final=${f#*/}
@@ -15,9 +15,9 @@ do
     #echo "$f $final"
     if [ ${final} == "setup" ]
     then
-	    nasm $f -o bin/${final}a.o -f elf32
+	    nasm $f -o bin/${final}a.o -f elf32 -w-zext-reloc -w-zeroing
       objcopy -I elf32-i386 -O elf64-x86-64 bin/${final}a.o bin/${final}a.o
     else
-      nasm $f -o bin/${final}a.o -f elf64
+      nasm $f -o bin/${final}a.o -f elf64 -w-zext-reloc -w-zeroing
     fi
 done

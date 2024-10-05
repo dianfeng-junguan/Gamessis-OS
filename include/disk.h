@@ -56,4 +56,5 @@ int hd_do_req(driver_args *args);
 
 //counts:扇区数
 int dllmain(void*,int,void*);
+int chk_result(int r);
 #endif

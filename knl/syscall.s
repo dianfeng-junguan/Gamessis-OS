@@ -18,17 +18,22 @@ REQ_PRINT           EQU 9
 REQ_EXEC            EQU 10
 REQ_DEL_PROC        EQU 11
 REQ_FETCH_KBBUF     EQU 12
-;因为可变参数，所以采用汇编
-;参数:eax,ebx,ecx,edx,esi,edi 6个参数
 _syscall:
-    push rdi
-    push rsi
-    push rdx
+    push rbp
+    mov rbp,0x108000
+    ;切换堆栈
+    mov qword [rbp+20],rsp
+    mov rsp,qword [rbp+4]
+    ;r11和rcx里面分别存储着rflags和rip
+    push r11
     push rcx
-    push rbx
-    push rax
     call syscall
-    add rsp,24
-    iret
+    pop rcx
+    pop r11
+    mov qword [rbp+4],rsp
+    mov rsp,[rbp+20]
+    pop rbp
+    db 0x48
+    sysret
 
 

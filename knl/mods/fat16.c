@@ -6,6 +6,8 @@
 #define _ONLY_DATA_
 #include "virfs.h"
 #include "devman.h"
+#include "memory.h"
+
 #define NULL (void*)0
 BPB superblock;
 dir_entry root_dir[MAX_FILES_PER_DIR];
@@ -31,17 +33,20 @@ const device fat16_dev={
         .flag=DEV_FLAG_USED,
         .type=DEV_TYPE_BLKDEV
 };
-
 int fat16_drvi;
 extern driver drv_disk;
 extern int disk_drvi;
 int init_fat16()
 {
-    reg_device(&fat16_dev);
-    fat16_drvi=reg_driver(&fat16_drv);
-    driver_args arg;
-    load(&arg);//syscall(SYSCALL_CALL_DRVFUNC,fat16_drvi,DRVF_OPEN,&arg,0,0);
-    reg_vol(disk_drvi,fat16_drvi,"a");
+    //扫描块设备
+//    extern device *dev_tree[];
+//    extern device devs[];
+//    blk_dev* p=dev_tree[DEVTREE_BLKDEVI];
+//    reg_device(&fat16_dev);
+//    fat16_drvi=reg_driver(&fat16_drv);
+//    driver_args arg;
+//    load(&arg);//syscall(SYSCALL_CALL_DRVFUNC,fat16_drvi,DRVF_OPEN,&arg,0,0);
+//    reg_vol(disk_drvi,fat16_drvi,"a");
     return 0;
 }
 int load(driver_args *args)
