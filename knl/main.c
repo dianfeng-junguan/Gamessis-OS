@@ -139,7 +139,7 @@ void main(unsigned int magic,void* addr)
     print("gamessis os loaded.\nkernel:>");
     init_int();
     print("int loaded.\n");
-    set_tss(0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000);
+//    set_tss(0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000);
     init_memory();
     init_com(PORT_COM1);
     com_puts("gamessis os loaded.",PORT_COM1);
@@ -154,6 +154,7 @@ void main(unsigned int magic,void* addr)
 
     sti();
     DISK1_FAT32_FS_init();
+    manage_proc_lock=0;
 
 
 //	init_vfs();
@@ -162,7 +163,6 @@ void main(unsigned int magic,void* addr)
 //    extern device *dev_tree[];
 //    blk_dev* p=dev_tree[DEVTREE_BLKDEVI];
 //    mount_fs("fat16",p->par,vmalloc());
-    manage_proc_lock=0;
 
     while (1);
 }

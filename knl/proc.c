@@ -29,6 +29,9 @@ void init_proc(){
     zi=_TSS_IND(zi)*8;
     //asm volatile("lldt %0"::"m"(xi));
     //asm volatile("ltr %0"::"m"(zi));
+    set_tss(0x400000,0x400000,0x400000,0x800000,0x800000,0x800000,0x800000,0x800000,0x800000,0x800000);
+    //IA32_INTERRUPT_SSP_TABLE_ADDR，准备IST
+    wrmsr(0x6a8,tss->rsvd2);
     //把内核代码段选择子写到MSR寄存器中准备用于特权级转换(sysexit，现在没用)
     wrmsr(0x174,0x8);
     //准备用于特权级转换(sysret，正在使用)
