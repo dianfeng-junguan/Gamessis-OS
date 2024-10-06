@@ -152,9 +152,8 @@ void main(unsigned int magic,void* addr)
     init_kb();
 //    init_disk();
 
+    sti();
     DISK1_FAT32_FS_init();
-
-    manage_proc_lock=0;
 
 
 //	init_vfs();
@@ -163,6 +162,7 @@ void main(unsigned int magic,void* addr)
 //    extern device *dev_tree[];
 //    blk_dev* p=dev_tree[DEVTREE_BLKDEVI];
 //    mount_fs("fat16",p->par,vmalloc());
+    manage_proc_lock=0;
 
     while (1);
 }

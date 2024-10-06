@@ -70,7 +70,6 @@ turn_on_int:
 	nop
 	nop
 	nop
-	sti
 	ret
 extern printf
 report_back_trace_of_err:

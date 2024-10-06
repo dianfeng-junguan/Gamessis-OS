@@ -13,7 +13,7 @@ unsigned int DISK1_FAT32_read_FAT_Entry(struct FAT32_sb_info * fsbi,unsigned int
 	memset(buf,0,512);
 	int r=request(DISK_MAJOR_MAJOR,DISKREQ_READ,fsbi->FAT1_firstsector + (fat_entry >> 7),1,(unsigned char *)buf);
     chk_result(r);
-    printf("DISK1_FAT32_read_FAT_Entry fat_entry:%#018lx,%#010x\n",fat_entry,buf[fat_entry & 0x7f]);
+    printf("DISK1_FAT32_read_FAT_Entry fat_entry:%x,%#010x\n",fat_entry,buf[fat_entry & 0x7f]);
 	return buf[fat_entry & 0x7f] & 0x0fffffff;
 }
 
@@ -444,7 +444,7 @@ struct dir_entry * FAT32_lookup(struct index_node * parent_inode,struct dir_entr
 
 next_cluster:
 	sector = fsbi->Data_firstsector + (cluster - 2) * fsbi->sector_per_cluster;
-	printf("lookup cluster:%#010x,sector:%#018lx\n",cluster,sector);
+	printf("lookup cluster:%#010x,sector:%x\n",cluster,sector);
 	int r=request(DISK_MAJOR_MAJOR,DISKREQ_READ,sector,fsbi->sector_per_cluster,(unsigned char *)buf);
     if(!chk_result(r))
 	{
@@ -786,14 +786,14 @@ struct super_block * fat32_read_superblock(struct Disk_Partition_Table_Entry * D
 	fsbi->fsinfo_sector_infat = fbs->BPB_FSInfo;
 	fsbi->bootsector_bk_infat = fbs->BPB_BkBootSec;	
 	
-	printf("FAT32 Boot Sector\n\tBPB_FSInfo:%#018lx\n\tBPB_BkBootSec:%#018lx\n\tBPB_TotSec32:%#018lx\n",fbs->BPB_FSInfo,fbs->BPB_BkBootSec,fbs->BPB_TotSec32);
+	printf("FAT32 Boot Sector\n\tBPB_FSInfo:%x\n\tBPB_BkBootSec:%x\n\tBPB_TotSec32:%x\n",fbs->BPB_FSInfo,fbs->BPB_BkBootSec,fbs->BPB_TotSec32);
 	
 	////fat32 fsinfo sector
 	fsbi->fat_fsinfo = (struct FAT32_FSInfo *)vmalloc(sizeof(struct FAT32_FSInfo),0);
 	memset(fsbi->fat_fsinfo,0,512);
 	int r=request(DISK_MAJOR_MAJOR,DISKREQ_READ,DPTE->start_LBA + fbs->BPB_FSInfo,1,(unsigned char *)fsbi->fat_fsinfo);
     chk_result(r);
-	printf("FAT32 FSInfo\n\tFSI_LeadSig:%#018lx\n\tFSI_StrucSig:%#018lx\n\tFSI_Free_Count:%#018lx\n",fsbi->fat_fsinfo->FSI_LeadSig,fsbi->fat_fsinfo->FSI_StrucSig,fsbi->fat_fsinfo->FSI_Free_Count);
+	printf("FAT32 FSInfo\n\tFSI_LeadSig:%x\n\tFSI_StrucSig:%x\n\tFSI_Free_Count:%x\n",fsbi->fat_fsinfo->FSI_LeadSig,fsbi->fat_fsinfo->FSI_StrucSig,fsbi->fat_fsinfo->FSI_Free_Count);
 	
 	////directory entry
 	sbp->root = (struct dir_entry *)vmalloc(sizeof(struct dir_entry),0);
@@ -854,7 +854,7 @@ void DISK1_FAT32_FS_init()
 	int r=request(DISK_MAJOR_MAJOR,DISKREQ_READ,0x0,1,(unsigned char *)buf);
     chk_result(r);
     DPT = *(struct Disk_Partition_Table *)buf;
-	printf("DPTE[0] start_LBA:%#x\ttype:%x\n",DPT.DPTE[0].start_LBA,DPT.DPTE[0].type);
+	printf("DPTE[0] start_LBA:%x\ttype:%x\n",DPT.DPTE[0].start_LBA,DPT.DPTE[0].type);
 
 	memset(buf,0,512);
 	int r1=request(DISK_MAJOR_MAJOR,DISKREQ_READ,DPT.DPTE[0].start_LBA,1,(unsigned char *)buf);

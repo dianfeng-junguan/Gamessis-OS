@@ -30,8 +30,8 @@ mem_info_req:
 framebuffer_tag:
     dd 5
     dd 20
-    dd 1920 ; width
-    dd 1080 ; height
+    dd 1024 ; width
+    dd 768 ; height
     dd 32   ; depth
 framebuffer_tag_end:
 dd  0

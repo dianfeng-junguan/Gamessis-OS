@@ -53,8 +53,8 @@ void init_font(){
     bytes_per_glyph = boot_font->bytes_per_glyph;
 
     fb_cursor_x = fb_cursor_y = 0;
-    max_ch_nr_x = framebuffer.common.framebuffer_width *framebuffer.common.framebuffer_bpp/8 / font_width;
-    max_ch_nr_y = framebuffer.common.framebuffer_height *framebuffer.common.framebuffer_bpp/8 / font_height;
+    max_ch_nr_x = framebuffer.common.framebuffer_width / font_width;
+    max_ch_nr_y = framebuffer.common.framebuffer_height / font_height;
     font_size=1;
 }
 void set_framebuffer(struct multiboot_tag_framebuffer tag)
@@ -93,7 +93,7 @@ void draw_text(int x, int y, int size, char *str)
         str++;
     }
 }
-void draw_letter(int x, int y, int size, char c) {
+void draw_letter(int x, volatile int y, int size, char c) {
     u8 *glyph = glyph_table;
     if (c < glyph_nr) {
         glyph += c * bytes_per_glyph;
@@ -103,10 +103,14 @@ void draw_letter(int x, int y, int size, char c) {
         u8 mask = 1 << 7;
 
         for (u32 ch_x = 0; ch_x < font_width; ch_x++) {
+            int px=x+ch_x*size;
+            int py=y+ch_y*size;
+            int* ptr=FRAMEBUFFER_ADDR+py*framebuffer.common.framebuffer_pitch
+                     +px*framebuffer.common.framebuffer_bpp/8;
             if ((*(glyph + ch_x / 8) & mask) != 0) {
-                fill_rect(y+ch_y*size,x+ch_x*size,size,size,-1);
+                *ptr=-1;
             } else {
-                fill_rect(y+ch_y*size,x+ch_x*size,size,size,0);
+                *ptr=0;
             }
 
             mask >>= 1;
@@ -120,14 +124,18 @@ void draw_letter(int x, int y, int size, char c) {
 }
 //向上滚动一个像素
 void scr_up(){
-    for(int dy=0;dy<max_ch_nr_y-1;dy++){
-        for(int dx=0;dx<max_ch_nr_x;dx++){
-            char *p=(char*)(FRAMEBUFFER_ADDR+dy*framebuffer.common.framebuffer_pitch
+    for(int dy=0;dy<framebuffer.common.framebuffer_height-1;dy++){
+        for(int dx=0;dx<framebuffer.common.framebuffer_width;dx++){
+            char *p=(char*)(FRAMEBUFFER_ADDR+
+                    dy*framebuffer.common.framebuffer_pitch
                     +dx*framebuffer.common.framebuffer_bpp/8);
             *p=*(p+framebuffer.common.framebuffer_pitch);
+            p++;
         }
 
     }
+//    for(int i=0;i< framebuffer.common.framebuffer_width*framebuffer.common.framebuffer_bpp/8;i++)
+//        *(p++)=0;
 }
 void scr_down(){
     for(int dy=1;dy<max_ch_nr_y;dy++){
@@ -147,10 +155,11 @@ void print(char* s){
             fb_cursor_x=0;
         }
         if(*s=='\n')continue;
-        if(fb_cursor_y>=max_ch_nr_y){
-            for(int i=0;i<font_height*font_size;i++)
-                scr_up();
-            fb_cursor_y=max_ch_nr_y-1;
+        if(fb_cursor_y>=max_ch_nr_y-1){
+//            for(int i=0;i<font_height*font_size;i++)
+////                scr_up();
+////            fb_cursor_y=max_ch_nr_y-1;
+            fb_cursor_y=0;
         }
         draw_letter(fb_cursor_x*font_width*font_size,fb_cursor_y*font_height*font_size,font_size,*s);
         fb_cursor_x+=1;

@@ -14,6 +14,8 @@
 #define SYSCALL_FETCH_KBBUF 12
 #define SYSCALL_REG_DEVICE 24
 #define SYSCALL_REG_DRIVER 25
+
+#define sti() asm volatile("sti");
 #include "typename.h"
 
 void wrmsr(unsigned long address,unsigned long value);
@@ -40,6 +42,7 @@ void outw(u16 dev,u16 v);
 void io_delay();
 u8 inb(u8 device);
 u16 inw(u16 device);
+
 
 void turn_on_int();
 #define GDT_SEL_CODE 0x8

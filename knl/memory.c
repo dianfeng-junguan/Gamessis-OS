@@ -180,7 +180,7 @@ void page_err(){
     // printf("shell:>");
     eoi();
     //这里对esp的加法是必要的，因为page fault多push了一个错误码，但是iret识别不了
-    __asm__ volatile ("sti \r\n leave\r\n add $8,%esp \r\n iretq");
+    __asm__ volatile ("sti \r\n  leave\n add $8,%esp \n iretq");
 }
 void init_memory()
 {

@@ -23,9 +23,9 @@ clock:
     push r15
 
     mov ax,es
-    push ax
+    push rax
     mov ax,ds
-    push ax
+    push rax
 
     mov ax,0x10
     mov es,ax
@@ -36,9 +36,9 @@ clock:
 	out 0x20,al
     call clock_c
 
-    pop ax
+    pop rax
     mov ds,ax
-    pop ax
+    pop rax
     mov es,ax
 
     pop r15

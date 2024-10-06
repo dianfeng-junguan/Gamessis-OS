@@ -2,7 +2,7 @@ cargs="-w -g -fno-pie -fno-pic -nostdlib -nostdinc -fno-stack-protector -nostart
 -I include -m64"
 for f in $(find knl|grep -E *[.]c$)
 do
-    final=${f#*/}
+  final=${f#*/}
     final=${final%%.*}
     echo "$f $final"
 	gcc -c $f -o bin/$final.o $cargs
