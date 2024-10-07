@@ -168,11 +168,11 @@ int get_according_bnr(vfs_dir_entry *f);
 int write_block(int dev,int block,char *buf,int len);
 int read_block(int dev,int block,char* buf,int len);
 //返回文件描述符
-int sys_open(char *path, int mode);
-int sys_close(int fno);
-int sys_write(int fno, char *src, int len);
-int sys_read(int fno, char *dist, int len);
-int sys_seek(int fno, int offset, int origin);
+//int sys_open(char *path, int mode);
+//int sys_close(int fno);
+//int sys_write(int fno, char *src, int len);
+//int sys_read(int fno, char *dist, int len);
+//int sys_seek(int fno, int offset, int origin);
 int sys_tell(int fno);
 
 int sys_mkfifo(int number);

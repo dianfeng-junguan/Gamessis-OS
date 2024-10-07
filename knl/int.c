@@ -185,6 +185,23 @@ void coprocessor_err(){
     eoi();
     __asm__ volatile ("sti \r\n leave \r\n iretq");
 }
+
+/*
+normal
+system call number:	rax
+arg1:	rdi
+arg2:	rsi
+arg3:	rdx
+arg4:	rcx
+arg5:	r8
+arg6:	r9
+
+sysenter need rdx(rip) rcx(rsp)
+syscall need rcx(rip) r11(rflags)
+
+xchg rcx to r10
+
+*/
 int syscall(int func,int b,int c,int d,int e,int f)
 {
     switch (func)
@@ -203,7 +220,7 @@ int syscall(int func,int b,int c,int d,int e,int f)
         case 12:return sys_close(b);
         case 13:return sys_read(b,c,d);
         case 14:return sys_write(b,c,d);
-        case 15:return sys_seek(b,c,d);
+        case 15:return sys_lseek(b,c,d);
         case 16:return sys_tell(b);
         case 17:return reg_vol(b,c,d);
         case 18:return free_vol(b);

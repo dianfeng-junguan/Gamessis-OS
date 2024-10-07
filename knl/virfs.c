@@ -84,133 +84,132 @@ int reg_vol(int disk_drvi, int fs_drvi, char *name)
     }
     return -1;
 }
-int sys_open(char *path, int mode)
-{
-    //判断是否是绝对路径
-    if(path[0]!='/')
-    {
-
-    }
-    //根据文件路径找到相应的卷
-    char volname[26];
-    int i=0,rec=0;
-    for(;path[i]!='/'&&i<26;i++)
-        volname[i]=path[i];
-    volname[i]='\0';
-    if(!path[i+1])
-        return -2;//是根目录
-    rec=i;
-    for(i=0;i<MAX_VOLUMES;i++)
-        if(vols[i].stat!=VOLUME_STAT_EMPTY&& \
-        (strcmp(vols[i].name,volname)==0))
-            break;
-    if(i==MAX_VOLUMES)return -1;
-    driver_args arg={
-            .path=path+rec+1
-    };
-    vfs_dir_entry dir;
-    vfs_dir_entry res;
-    int voln=i;
-    if(vols[i].fs->find(path+rec+1,dir,&res)==-1)//找不到文件 ((driver*)vols[i].fs_drv)->find(&arg)==-1
-    {
-        if(mode&FILE_MODE_WRITE) {
-            return ((driver *) vols[i].fs_drv)->touch(&arg);//这里之后要改
-        }else
-            return -1;
-    }
-    vfs_dir_entry entry=res;//=arg.entry;
-    int j=-1;
-    for(i=0;i<MAX_OPEN_FILES;i++)
-    {
-        if(opened[i].voln==voln&&opened[i].id==entry.id)
-        {
-            if(mode==FILE_MODE_WRITE)
-            {
-                return -1;//读模式会重新给一个fno但是指向同一个文件
-            }
-        }
-    }
-    for(i=0;i<MAX_OPEN_FILES;i++)
-    {
-        if(!opened[i].mode) {
-            j = i;
-            break;
-        }
-    }
-    if(j==-1)return -1;
-    opened[j]=entry;
-    opened[j].fno=i;
-    opened[j].link_c++;
-    add_proc_openf(&opened[j]);
-    return opened[j].fno;
-}
-int sys_close(int fno)
-{
-    for(int i=0;i<MAX_OPEN_FILES;i++)
-    {
-        if(opened[i].fno==fno)
-        {
-            opened[i].link_c--;
-            return 0;
-        }
-    }
-    return -1;
-}
-int sys_write(int fno, char *src, int len)
-{
-    vfs_dir_entry *f= get_vfs_entry(fno);
-    if(!f)return -1;
-    if(f->type==FTYPE_REG)
-    {
-        return vfs_write_file(f,src,len);
-    }else if(f->type==FTYPE_BLKDEV)
-    {
-        int block=get_according_bnr(f);
-        return write_block(f->dev,block,src,len);
-    }
-    return -1;
-   /*  driver_args args={
-            .fid=f->id,
-            .src_addr=src,
-            .len=len,
-            .pos=pos
-    };
-    return ((driver*)vols[f->voln].fs_drv)->write(&args); */
-}
-int sys_read(int fno, char *dist,  int len)
-{
-    vfs_dir_entry *f= get_vfs_entry(fno);
-    if(!f)return -1;
-    if(f->type==FTYPE_REG)
-    {
-        return vfs_read_file(f,dist,len);
-    }else if(f->type==FTYPE_BLKDEV)
-    {
-        int block=get_according_bnr(f);
-        return read_block(f->dev,block,dist,len);
-    }
-    return -1;
-    // driver_args args={
-    //         .fid=f->id,
-    //         .dist_addr=dist,
-    //         .len=len,
-    //         .pos=pos,
-    //         .entry=*f
-    // };
-    // return ((driver*)vols[f->voln].fs_drv)->read(&args);
-}
-int sys_seek(int fno, int offset, int origin)
-{
-    vfs_dir_entry *f= get_vfs_entry(fno);
-    if(!f)return -1;
-    f->ptr=offset+origin;
-    return 0;
-}
+//int sys_open(char *path, int mode)
+//{
+//    //判断是否是绝对路径
+//    if(path[0]!='/')
+//    {
+//
+//    }
+//    //根据文件路径找到相应的卷
+//    char volname[26];
+//    int i=0,rec=0;
+//    for(;path[i]!='/'&&i<26;i++)
+//        volname[i]=path[i];
+//    volname[i]='\0';
+//    if(!path[i+1])
+//        return -2;//是根目录
+//    rec=i;
+//    for(i=0;i<MAX_VOLUMES;i++)
+//        if(vols[i].stat!=VOLUME_STAT_EMPTY&& \
+//        (strcmp(vols[i].name,volname)==0))
+//            break;
+//    if(i==MAX_VOLUMES)return -1;
+//    driver_args arg={
+//            .path=path+rec+1
+//    };
+//    vfs_dir_entry dir;
+//    vfs_dir_entry res;
+//    int voln=i;
+//    if(vols[i].fs->find(path+rec+1,dir,&res)==-1)//找不到文件 ((driver*)vols[i].fs_drv)->find(&arg)==-1
+//    {
+//        if(mode&FILE_MODE_WRITE) {
+//            return ((driver *) vols[i].fs_drv)->touch(&arg);//这里之后要改
+//        }else
+//            return -1;
+//    }
+//    vfs_dir_entry entry=res;//=arg.entry;
+//    int j=-1;
+//    for(i=0;i<MAX_OPEN_FILES;i++)
+//    {
+//        if(opened[i].voln==voln&&opened[i].id==entry.id)
+//        {
+//            if(mode==FILE_MODE_WRITE)
+//            {
+//                return -1;//读模式会重新给一个fno但是指向同一个文件
+//            }
+//        }
+//    }
+//    for(i=0;i<MAX_OPEN_FILES;i++)
+//    {
+//        if(!opened[i].mode) {
+//            j = i;
+//            break;
+//        }
+//    }
+//    if(j==-1)return -1;
+//    opened[j]=entry;
+//    opened[j].fno=i;
+//    opened[j].link_c++;
+//    add_proc_openf(&opened[j]);
+//    return opened[j].fno;
+//}
+//int sys_close(int fno)
+//{
+//    for(int i=0;i<MAX_OPEN_FILES;i++)
+//    {
+//        if(opened[i].fno==fno)
+//        {
+//            opened[i].link_c--;
+//            return 0;
+//        }
+//    }
+//    return -1;
+//}
+//int sys_write(int fno, char *src, int len)
+//{
+//    vfs_dir_entry *f= get_vfs_entry(fno);
+//    if(!f)return -1;
+//    if(f->type==FTYPE_REG)
+//    {
+//        return vfs_write_file(f,src,len);
+//    }else if(f->type==FTYPE_BLKDEV)
+//    {
+//        int block=get_according_bnr(f);
+//        return write_block(f->dev,block,src,len);
+//    }
+//    return -1;
+//   /*  driver_args args={
+//            .fid=f->id,
+//            .src_addr=src,
+//            .len=len,
+//            .pos=pos
+//    };
+//    return ((driver*)vols[f->voln].fs_drv)->write(&args); */
+//}
+//int sys_read(int fno, char *dist,  int len)
+//{
+//    vfs_dir_entry *f= get_vfs_entry(fno);
+//    if(!f)return -1;
+//    if(f->type==FTYPE_REG)
+//    {
+//        return vfs_read_file(f,dist,len);
+//    }else if(f->type==FTYPE_BLKDEV)
+//    {
+//        int block=get_according_bnr(f);
+//        return read_block(f->dev,block,dist,len);
+//    }
+//    return -1;
+//    // driver_args args={
+//    //         .fid=f->id,
+//    //         .dist_addr=dist,
+//    //         .len=len,
+//    //         .pos=pos,
+//    //         .entry=*f
+//    // };
+//    // return ((driver*)vols[f->voln].fs_drv)->read(&args);
+//}
+//int sys_seek(int fno, int offset, int origin)
+//{
+//    vfs_dir_entry *f= get_vfs_entry(fno);
+//    if(!f)return -1;
+//    f->ptr=offset+origin;
+//    return 0;
+//}
 int sys_tell(int fno)
 {
-    vfs_dir_entry *f= get_vfs_entry(fno);
-    if(!f)return -1;
-    return f->ptr;
+    struct file* f=current->openf[fno];
+    return f->position;
 }
 vfs_dir_entry *get_vfs_entry(int fno)
 {

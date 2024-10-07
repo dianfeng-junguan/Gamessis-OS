@@ -27,7 +27,13 @@ _syscall:
     ;r11和rcx里面分别存储着rflags和rip
     push r11
     push rcx
+
+    ;r10里面存放着第四个参数
+    xchg rcx,r10
+
     call syscall
+
+    xchg r10,rcx
     pop rcx
     pop r11
     mov qword [rbp+4],rsp

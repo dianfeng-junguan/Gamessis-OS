@@ -1,13 +1,14 @@
 //
 // Created by Oniar_Pie on 2023/11/9.
 //
-#include "virfs.h"
+#include "vfs.h"
 #include "proc.h"
 #include "memory.h"
 #include "pe.h"
 #include "int.h"
 #include "mem.h"
 struct process task[MAX_PROC_COUNT];
+struct process* current;
 TSS scene_saver;
 TSS *tss=0x108000;
 int cur_proc=0;
@@ -21,6 +22,7 @@ void init_proc(){
         task[i].parent_pid=-1;
     }
     cur_proc=0;//no proc
+    current=task;
     pidd=1;
      //创建0号进程
     int zi=create_proc();
@@ -490,7 +492,7 @@ int exec_call(char * path,int priority)
     return 0;
 } */
 
-int add_proc_openf(vfs_dir_entry *entry)
+int add_proc_openf(struct index_node *entry)
 {
     for(int i=0;i<MAX_PROC_OPENF;i++){
         if(task[cur_proc].openf[i]==NULL)
@@ -561,7 +563,7 @@ dllmain:
     
 }*/
 
-int reg_proc(int entry, vfs_dir_entry *cwd, vfs_dir_entry *exef)
+int reg_proc(int entry, struct index_node *cwd, struct index_node *exef)
 {
     
     int i=req_proc();
@@ -719,6 +721,7 @@ int sys_free(int ptr)
 
 void switch_to(struct process *from, struct process *to) {
     cur_proc=to-task;
+    current=&task[cur_proc];
     asm volatile("mov %%rsp,%0\r\n"
                  "lea done(%%rip),%%rax\r\n"
                  "mov %%rax,%1\r\n"

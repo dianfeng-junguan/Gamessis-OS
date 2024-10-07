@@ -41,7 +41,7 @@ int load_elf(struct process *proc);
 
 int proc_start();
 
-int sys_read();
+//int sys_read();
 
 //模块管理
 int sys_insmod(char *path);

@@ -160,7 +160,7 @@ int load_pe(struct process *proc)
     IMAGE_DOS_HEADER tdh;
     IMAGE_NT_HEADERS32 tnth;
     sys_read(exefno, &tdh, sizeof(tdh));
-    sys_seek(exefno,tdh.e_lfanew,SEEK_SET);
+    sys_lseek(exefno,tdh.e_lfanew,SEEK_SET);
     sys_read(exefno, &tnth, sizeof(tnth));
 
     //是否需要移动base(先不检查)
@@ -188,7 +188,7 @@ int load_pe(struct process *proc)
 
     //proc->tss.eip=tnth.OptionalHeader.AddressOfEntryPoint+nbase;
     //存放文件头
-    sys_seek(exefno,0,SEEK_SET);
+    sys_lseek(exefno,0,SEEK_SET);
     sys_read(exefno, nbase, PAGE_SIZE);
     //dos头
     PIMAGE_DOS_HEADER dosh=nbase;
@@ -215,7 +215,7 @@ int load_pe(struct process *proc)
         if(disca)
             continue;
         //直接读，缺页内核解决
-        sys_seek(exefno,psec->PointerToRawData,SEEK_SET);
+        sys_lseek(exefno,psec->PointerToRawData,SEEK_SET);
         sys_read(exefno, psec->VirtualAddress + nbase,  psec->SizeOfRawData);
 
     }

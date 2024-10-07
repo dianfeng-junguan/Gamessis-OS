@@ -15,9 +15,8 @@
 #define MAX_UTIME 1
 #define MAX_PROC_OPENF 32
 #include "gdt.h"
-#include "fat16.h"
 #include "typename.h"
-#include "virfs.h"
+#include "vfs.h"
 
 #define _TSS_IND(n) (n*2+5)
 #define _LDT_IND(n) (n*2+6)
@@ -157,9 +156,9 @@ struct process{
     unsigned int parent_pid;
     unsigned int page[8];
     addr_t *pml4;//pml4
-    vfs_dir_entry *cwd;
-    vfs_dir_entry *exef;
-    vfs_dir_entry *openf[MAX_PROC_OPENF];
+    struct file *cwd;
+    struct file *exef;
+    struct file *openf[MAX_PROC_OPENF];
     TSS tss;
     regs_t regs;
 }__attribute__((packed));//208 bytes
@@ -173,7 +172,7 @@ typedef struct
 
 void init_proc();
 int req_proc();
-int reg_proc(int entry, vfs_dir_entry *cwd, vfs_dir_entry *exef);
+int reg_proc(int entry, struct index_node *cwd, struct index_node *exef);
 void set_proc(long eax, long ebx, long ecx, long edx, long es, long cs, long ss, long ds, long fs, long gs, long esp,
               long ebp, long esi, long edi, long rip, long eflags, int proc_nr);
 void manage_proc();
@@ -185,7 +184,7 @@ int set_proc_stat(int pid,int stat);
 //内核将dll加载到指定地方
 int load_dll_at(char *path,int addr);
 
-int add_proc_openf(vfs_dir_entry *entry);
+int add_proc_openf(struct index_node *entry);
 
 int sys_exit(int code);
 
@@ -216,4 +215,6 @@ void create_test_proc();
 
 
 void ret_sys_call();
+
+extern struct process* current;
 #endif //SRC_PROC_H

@@ -42,5 +42,20 @@
 #define DRVF_LS 11
 #define DRVF_SEEK 12
 #define DRVF_TELL 13
+
+#define	SEEK_SET	0	/* Seek relative to start-of-file */
+#define	SEEK_CUR	1	/* Seek relative to current position */
+#define	SEEK_END	2	/* Seek relative to end-of-file */
+
+#define SEEK_MAX	3
+
+#define	SYSTEM_REBOOT	(1UL << 0)
+#define	SYSTEM_POWEROFF	(1UL << 1)
 int syscall(int func,int b,int c,int d,int e,int f);
 int exec(char *path);
+
+unsigned long sys_open(char *filename,int flags);
+unsigned long sys_close(int fd);
+unsigned long sys_read(int fd,void * buf,long count);
+unsigned long sys_write(int fd,void * buf,long count);
+unsigned long sys_lseek(int filds,long offset,int whence);

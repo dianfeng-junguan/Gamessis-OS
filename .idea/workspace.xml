@@ -20,17 +20,21 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="暂时把屏幕上滚改成了y光标回到顶上输出">
+    <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="开启了IST，修复了中断会污染原来堆栈数据的bug">
+      <change afterPath="$PROJECT_DIR$/include/fcntl.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/knl/sys.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gmsknl.elf" beforeDir="false" afterPath="$PROJECT_DIR$/bin/gmsknl.elf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/int.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/int.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/main.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/proc.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/proc.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hda.img" beforeDir="false" afterPath="$PROJECT_DIR$/hda.img" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl.s" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/build.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/build.ninja" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/exe.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/exe.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/proc.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/proc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/syscall.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/syscall.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/virfs.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/virfs.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl/int.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/int.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/main.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl/proc.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/proc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/syscall.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl/syscall.s" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/virfs.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/virfs.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,14 +103,14 @@
     </key>
   </component>
   <component name="RunManager" selected="远程调试.gdb">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="gdb" type="CLion_Remote" version="1" remoteCommand="192.168.56.1:1234" symbolFile="$PROJECT_DIR$/bin/gmsknl.elf" sysroot="">
       <debugger toolchainName="WSL" />
       <method v="2" />
-    </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
     </configuration>
     <configuration name="gms" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="gms" TARGET_NAME="gms" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="gms" RUN_TARGET_NAME="gms">
       <method v="2">
@@ -178,7 +182,8 @@
       <workItem from="1727923202568" duration="27784000" />
       <workItem from="1728027237454" duration="15063000" />
       <workItem from="1728098344850" duration="10878000" />
-      <workItem from="1728179154871" duration="6991000" />
+      <workItem from="1728179154871" duration="9785000" />
+      <workItem from="1728264783354" duration="2632000" />
     </task>
     <task id="LOCAL-00001" summary="重新整理了一下，改用clion开发">
       <option name="closed" value="true" />
@@ -348,7 +353,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728205582865</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="开启了IST，修复了中断会污染原来堆栈数据的bug">
+      <option name="closed" value="true" />
+      <created>1728206920027</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1728206920027</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -391,7 +404,8 @@
     <MESSAGE value="借用了别人的vfs和fat32，成功整合进去了" />
     <MESSAGE value="." />
     <MESSAGE value="暂时把屏幕上滚改成了y光标回到顶上输出" />
-    <option name="LAST_COMMIT_MESSAGE" value="暂时把屏幕上滚改成了y光标回到顶上输出" />
+    <MESSAGE value="开启了IST，修复了中断会污染原来堆栈数据的bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="开启了IST，修复了中断会污染原来堆栈数据的bug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -418,18 +432,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/knl/proc.c</url>
-          <line>133</line>
-          <option name="timeStamp" value="74" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/knl/proc.c</url>
-          <line>739</line>
+          <line>742</line>
           <option name="timeStamp" value="90" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/knl/main.c</url>
-          <line>166</line>
-          <option name="timeStamp" value="96" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/knl/main.c</url>
@@ -437,24 +441,9 @@
           <option name="timeStamp" value="109" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/knl/mods/fat32.c</url>
-          <line>856</line>
-          <option name="timeStamp" value="112" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/knl/main.c</url>
-          <line>155</line>
-          <option name="timeStamp" value="114" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/knl/memory.c</url>
           <line>182</line>
           <option name="timeStamp" value="119" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/knl/main.c</url>
-          <line>154</line>
-          <option name="timeStamp" value="123" />
         </line-breakpoint>
         <breakpoint type="OCSymbolicBreakpointType">
           <properties>
