@@ -202,37 +202,39 @@ syscall need rcx(rip) r11(rflags)
 xchg rcx to r10
 
 */
-int syscall(int func,int b,int c,int d,int e,int f)
+int syscall(int a, int b, int c, int d, int e, int f)
 {
-    switch (func)
+    unsigned long num;
+    asm volatile("":"=a"(num));//这样rax中存的参数就到这了
+    switch (a)
     {
-        case 0:return reg_device(b);
-        case 1:return dispose_device(b);
-        case 2:return reg_driver(b);
-        case 3:return dispose_driver(b);
-        case 4:return call_drv_func(b,c,d);
-        case 5:return req_page_at(b,c);
-        case 6:return free_page(b);
-        case 7:return reg_proc(b, c, d);
-        case 8:del_proc(b);
-        case 10:chk_vm(b,c);
-        case 11:return sys_open(b,c);
-        case 12:return sys_close(b);
-        case 13:return sys_read(b,c,d);
-        case 14:return sys_write(b,c,d);
-        case 15:return sys_lseek(b,c,d);
-        case 16:return sys_tell(b);
-        case 17:return reg_vol(b,c,d);
-        case 18:return free_vol(b);
-        case 19:return execute(b);
-        case SYSCALL_EXIT:return sys_exit(b);
-        case SYSCALL_CALL:return exec_call(b);
-        case SYSCALL_MKFIFO:return sys_mkfifo(b);
-        case SYSCALL_MALLOC:return sys_malloc(b);
-        case SYSCALL_FREE:return sys_free(b);
+        case 0:return reg_device(a);
+        case 1:return dispose_device(a);
+        case 2:return reg_driver(a);
+        case 3:return dispose_driver(a);
+        case 4:return call_drv_func(a,b,c);
+        case 5:return req_page_at(a,b);
+        case 6:return free_page(a);
+        case 7:return reg_proc(a, b, c);
+        case 8:del_proc(a);
+        case 10:chk_vm(a,b);
+        case 11:return sys_open(a,b);
+        case 12:return sys_close(a);
+        case 13:return sys_read(a,b,c);
+        case 14:return sys_write(a,b,c);
+        case 15:return sys_lseek(a,b,c);
+        case 16:return sys_tell(a);
+        case 17:return reg_vol(a,b,c);
+        case 18:return free_vol(a);
+        case 19:return execute(a);
+        case SYSCALL_EXIT:return sys_exit(a);
+        case SYSCALL_CALL:return exec_call(a);
+        case SYSCALL_MKFIFO:return sys_mkfifo(a);
+        case SYSCALL_MALLOC:return sys_malloc(a);
+        case SYSCALL_FREE:return sys_free(a);
         case SYSCALL_KB_READC:return sys_getkbc();
-        case SYSCALL_FIND_DEV:return sys_find_dev(b);
-        case SYSCALL_OPERATE_DEV:return sys_operate_dev(b,c,d);
+        case SYSCALL_FIND_DEV:return sys_find_dev(a);
+        case SYSCALL_OPERATE_DEV:return sys_operate_dev(a,b,c);
     }
     // __asm__ volatile("mov %0,%%eax\r\n mov %1,%%ebx\r\n mov %2,%%ecx\r\n mov %3,%%edx\r\n mov %4,%%esi\r\n mov %5,%%edi"\
     // ::"m"(func),"m"(a),"m"(b),"m"(c),"m"(d),"m"(e));
