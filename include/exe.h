@@ -12,7 +12,7 @@ typedef struct
  * 运行文件，成为独立进程。
  *
  * */
-int execute(char *path);
+int sys_execve(char *path);
 /*
  * 立即调用一个程序（会阻塞当前进程）
  * */
@@ -34,7 +34,6 @@ int get_module_addr(int mi);
 int use_pgm_ava(int nbase, int page_count);
 int lookup_pgind(int vma,int* pgind);
 
-int execute(char *path);
 
 int load_pe(struct process *proc);
 int load_elf(struct process *proc);

@@ -66,7 +66,7 @@ int check_page(int num);
 int get_phyaddr(int num);
 //页表页目录部分
 void set_page_item(page_item *item_addr,int phy_addr,int attr);
-void set_2mb_pde(page_item* pde,int pa);
+void set_2mb_pde(page_item *pde, int pa, int extra_attr);
 void set_1gb_pdpt(page_item* ppdpt,int pa,unsigned int extra_attr);
 //映射一页4KB内存
 stat_t mmap(u64 pa,u64 la,u32 attr);

@@ -259,10 +259,10 @@ void set_1gb_pdpt(page_item* ppdpt,int pa,unsigned int extra_attr)
     unsigned int hipa=pa&0xffffc0000000ul;
     *ppdpt|=hipa;
 }
-void set_2mb_pde(page_item* pde,int pa)
+void set_2mb_pde(page_item *pde, int pa, int extra_attr)
 {
     *pde=0;
-    *pde|=PAGE_PRESENT|PAGE_4MB_PAGE|PDE_4MB_PAT;
+    *pde|=PAGE_PRESENT|PAGE_4MB_PAGE|PDE_4MB_PAT|extra_attr;
     unsigned int hipa=pa&0xffc00000;
     *pde|=hipa;
 }

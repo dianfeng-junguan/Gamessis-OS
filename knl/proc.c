@@ -103,23 +103,23 @@ int req_proc(){
     task[num].priority=0;
     return num;
 }
-void set_proc(long eax, long ebx, long ecx, long edx, long es, long cs, long ss, long ds, long fs, long gs, long esp,
-              long ebp, long esi, long edi, long rip, long eflags, int proc_nr) {
+void set_proc(long rax, long rbx, long rcx, long rdx, long es, long cs, long ss, long ds, long fs, long gs, long rsp,
+              long rbp, long rsi, long rdi, long rip, long rflags, int proc_nr) {
     struct process* proc=&task[proc_nr];
-    proc->regs.rax=eax;
-    proc->regs.rbx=ebx;
-    proc->regs.rcx=ecx;
-    proc->regs.rdx=edx;
+    proc->regs.rax=rax;
+    proc->regs.rbx=rbx;
+    proc->regs.rcx=rcx;
+    proc->regs.rdx=rdx;
     proc->regs.es=es;
     proc->regs.cs=cs;
     proc->regs.ss=ss;
     proc->regs.ds=ds;
     proc->regs.fs=fs;
     proc->regs.gs=gs;
-    proc->regs.rsp=esp;
-    proc->regs.rbp=ebp;
-    proc->regs.rsi=esi;
-    proc->regs.rdi=edi;
+    proc->regs.rsp=rsp;
+    proc->regs.rbp=rbp;
+    proc->regs.rsi=rsi;
+    proc->regs.rdi=rdi;
     proc->regs.rflags=0x202;//设置为默认值:0b 0010 0000 0010
     //能接受中断
     proc->regs.rip=rip;
@@ -509,6 +509,8 @@ int add_proc_openf(struct index_node *entry)
 int sys_exit(int code)
 {
     del_proc(cur_proc);
+    while(1)
+        manage_proc();
     return code;
 }
 /*int load_dll_at(char *path,int addr)
@@ -563,37 +565,31 @@ dllmain:
     
 }*/
 
-int reg_proc(int entry, struct index_node *cwd, struct index_node *exef)
+int reg_proc(addr_t entry, struct index_node *cwd, struct index_node *exef)
 {
     
     int i=req_proc();
     if(i==-1)return -1;
-    /*set_proc(0,0,0,0,SEL_LDT_DATA,SEL_LDT_CODE,SEL_LDT_STACK,SEL_LDT_DATA\
-    ,SEL_LDT_DATA,SEL_LDT_DATA,0x1c00000-4,0,0,0,0,i);*/
-    set_proc(0, 0, 0, 0, 0x10, 0x8, 0x10, 0x10\
-, 0x10, 0x10, 0x1c00000 - 4, 0, 0, 0, 0, 0, i);
+
+    //栈顶设置在了4G处
+    set_proc(0, 0, 0, 0, DS_USER, CS_USER, DS_USER, DS_USER\
+, DS_USER, DS_USER, 0x0000fffffffffffful, 0, 0, 0, entry, 0, i);
     task[i].pml4=vmalloc();
-    int *pt=vmalloc();
-    task[i].pml4[0]=PAGE_TABLE_ADDR|PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL;
-    /*for(int j=0;j<32;j++)
-        pt[j]=(PAGE_TABLE_ADDR+j*0x1000)|PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL;//复制内核页表*/
-    //PAGE_TABLE_ADDR|PAGE_PRESENT;//复制内核页表
-    //task[i].pml4[7]=PAGE_TABLE_ADDR+7*0x1000|PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX;//sys.dll
-    int *stackb=vmalloc();
-    task[i].pml4[6]=(int)stackb|PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX;
-    stackb[1023]=get_phyaddr(req_a_page())|PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX;
-//    task[i].tss.cr3=task[i].pml4;
+    task[i].pml4[0]=vmalloc();
+    unsigned long *pdpt=task[i].pml4;
+    //pdpt第一项(0-1GB)设置为内核空间，这样才能访问中断
+    set_1gb_pdpt(pdpt,0,PAGE_PRESENT|PAGE_RWX);
+
+    //申请一项pd,里面申请一2mb页用于堆栈
+    addr_t *stackb=vmalloc();
+    pdpt[3]=stackb|PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX;//3-4G分配栈空间
+    set_2mb_pde(stackb + 511, get_phyaddr(req_a_page()), PAGE_FOR_ALL|PAGE_RWX);
+    task[i].regs.cr3=task[i].pml4;
 
     task[i].stat=READY;
     task[i].cwd=cwd;
     task[i].exef=exef;
-    /*task[i].tss.es=0x10;
-    task[i].tss.ds=0x10;
-    task[i].tss.ss=0x10;
-    task[i].tss.gs=0x10;
-    task[i].tss.fs=0x10;
-    task[i].tss.cs=0x8;*/
-//    task[i].tss.eip=entry;
+
     return i;
 
 /*

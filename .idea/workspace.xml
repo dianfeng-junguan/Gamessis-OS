@@ -20,16 +20,18 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="借鉴了别人的POSIX函数库实现，实现了文件操作的POSIX函数库">
+    <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="调整了一下syscall的参数安排">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gmsknl.elf" beforeDir="false" afterPath="$PROJECT_DIR$/bin/gmsknl.elf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/int.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/int.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/com/syscall.c" beforeDir="false" afterPath="$PROJECT_DIR$/com/syscall.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hda.img" beforeDir="false" afterPath="$PROJECT_DIR$/hda.img" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/int.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/int.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/syscall.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/syscall.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl.s" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/exe.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/exe.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/memory.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/memory.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/page.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/page.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/pe.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/pe.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/proc.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/proc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/exe.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/exe.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl/int.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/int.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/memory.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/memory.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/proc.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/proc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/sys.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/sys.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,7 +180,7 @@
       <workItem from="1728027237454" duration="15063000" />
       <workItem from="1728098344850" duration="10878000" />
       <workItem from="1728179154871" duration="9785000" />
-      <workItem from="1728264783354" duration="3038000" />
+      <workItem from="1728264783354" duration="7174000" />
     </task>
     <task id="LOCAL-00001" summary="重新整理了一下，改用clion开发">
       <option name="closed" value="true" />
@@ -364,7 +366,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728267582126</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="调整了一下syscall的参数安排">
+      <option name="closed" value="true" />
+      <created>1728267887581</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1728267887581</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -409,7 +419,8 @@
     <MESSAGE value="暂时把屏幕上滚改成了y光标回到顶上输出" />
     <MESSAGE value="开启了IST，修复了中断会污染原来堆栈数据的bug" />
     <MESSAGE value="借鉴了别人的POSIX函数库实现，实现了文件操作的POSIX函数库" />
-    <option name="LAST_COMMIT_MESSAGE" value="借鉴了别人的POSIX函数库实现，实现了文件操作的POSIX函数库" />
+    <MESSAGE value="调整了一下syscall的参数安排" />
+    <option name="LAST_COMMIT_MESSAGE" value="调整了一下syscall的参数安排" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -436,7 +447,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/knl/proc.c</url>
-          <line>742</line>
+          <line>738</line>
           <option name="timeStamp" value="90" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">

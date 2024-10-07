@@ -62,6 +62,40 @@ typedef struct _IMAGE_DATA_DIRECTORY {
     unsigned int   VirtualAddress;                    //数据的相对虚拟地址RVA
     unsigned int   Size;                              //数据的大小
 } IMAGE_DATA_DIRECTORY, *PIMAGE_DATA_DIRECTORY;
+
+typedef struct _IMAGE_OPTIONAL_HEADER64 {
+    unsigned short Magic;
+    unsigned char MajorLinkerVersion;
+    unsigned char MinorLinkerVersion;
+    unsigned int SizeOfCode;
+    unsigned int SizeOfInitializedData;
+    unsigned int SizeOfUninitializedData;
+    unsigned int AddressOfEntryPoint;
+    unsigned int BaseOfCode;
+    unsigned long long ImageBase;
+    unsigned int SectionAlignment;
+    unsigned int FileAlignment;
+    unsigned short MajorOperatingSystemVersion;
+    unsigned short MinorOperatingSystemVersion;
+    unsigned short MajorImageVersion;
+    unsigned short MinorImageVersion;
+    unsigned short MajorSubsystemVersion;
+    unsigned short MinorSubsystemVersion;
+    unsigned int Win32VersionValue;
+    unsigned int SizeOfImage;
+    unsigned int SizeOfHeaders;
+    unsigned int CheckSum;
+    unsigned short Subsystem;
+    unsigned short DllCharacteristics;
+    unsigned long long SizeOfStackReserve;
+    unsigned long long SizeOfStackCommit;
+    unsigned long long SizeOfHeapReserve;
+    unsigned long long SizeOfHeapCommit;
+    unsigned int LoaderFlags;
+    unsigned int NumberOfRvaAndSizes;
+    IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];
+} IMAGE_OPTIONAL_HEADER64,*PIMAGE_OPTIONAL_HEADER64;
+
 typedef struct _IMAGE_OPTIONAL_HEADER {
     unsigned short    Magic;                             //标志PE文件的类型 
     unsigned char    MajorLinkerVersion;                //（没用）连接器主版本
@@ -72,7 +106,11 @@ typedef struct _IMAGE_OPTIONAL_HEADER {
     unsigned int   AddressOfEntryPoint;               //程序开始执行的虚拟地址
     unsigned int   BaseOfCode;                        //起始代码的相对虚拟地址
     unsigned int   BaseOfData;                        //起始数据的相对虚拟地址
+#ifdef IA32
     unsigned int   ImageBase;                         //默认加载基址
+#else
+    unsigned long  ImageBase;
+#endif
     unsigned int   SectionAlignment;                  //块对齐粒度
     unsigned int   FileAlignment;                     //文件对齐粒度
     unsigned short    MajorOperatingSystemVersion;       //（没用）主操作系统版本号
@@ -87,10 +125,17 @@ typedef struct _IMAGE_OPTIONAL_HEADER {
     unsigned int   CheckSum;                          //（没用）驱动和dll需要检测
     unsigned short    Subsystem;                         //子系统 
     unsigned short    DllCharacteristics;                //DLL特征的标志
+#ifdef IA32
     unsigned int   SizeOfStackReserve;                //表示进程中栈可以增长到的最大值一般1mb
     unsigned int   SizeOfStackCommit;                 //表示进程中栈的初始值
     unsigned int   SizeOfHeapReserve;                 //表示进程中堆可以增长的最大值
     unsigned int   SizeOfHeapCommit;                  //表示进程堆的初始值
+#else
+    unsigned long  SizeOfStackReserve;                //表示进程中栈可以增长到的最大值一般1mb
+    unsigned long  SizeOfStackCommit;                 //表示进程中栈的初始值
+    unsigned long  SizeOfHeapReserve;                 //表示进程中堆可以增长的最大值
+    unsigned long  SizeOfHeapCommit;                  //表示进程堆的初始值
+#endif
     unsigned int   LoaderFlags;                       //（没用）
     unsigned int   NumberOfRvaAndSizes;               //数据目录的个数 
     IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];
@@ -124,6 +169,11 @@ typedef struct _IMAGE_NT_HEADERS {
     IMAGE_FILE_HEADER FileHeader;                //文件头 存储着PE文件的基本信息
     IMAGE_OPTIONAL_HEADER32 OptionalHeader;      //扩展头 存储着关于PE文件加载时的信息
 } IMAGE_NT_HEADERS32, *PIMAGE_NT_HEADERS32;
+typedef struct _IMAGE_NT_HEADERS64 {
+    unsigned int Signature;                             //标记 用于判断文件是否为PE文件
+    IMAGE_FILE_HEADER FileHeader;                //文件头 存储着PE文件的基本信息
+    IMAGE_OPTIONAL_HEADER64 OptionalHeader;      //扩展头 存储着关于PE文件加载时的信息
+} IMAGE_NT_HEADERS64, *PIMAGE_NT_HEADERS64;
 typedef struct _IMAGE_SECTION_HEADER {
     unsigned char    Name[IMAGE_SIZEOF_SHORT_NAME];       //区段的名字
     union {                    
@@ -143,7 +193,7 @@ typedef struct _IMAGE_BASE_RELOCATION
 {
     unsigned int   VirtualAddress;
     unsigned int   SizeOfBlock;
-//  WORD    TypeOffset[1];
+//  unsigned short    TypeOffset[1];
 } IMAGE_BASE_RELOCATION,*PIMAGE_BASE_RELOCATION;
 typedef IMAGE_BASE_RELOCATION* PIMAGE_BASE_RELOCATION;
 #define IMAGE_REL_BASED_ABSOLUTE 0

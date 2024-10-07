@@ -18,6 +18,8 @@
 #include "typename.h"
 #include "vfs.h"
 
+#define CS_USER 0x30
+#define DS_USER 0x28
 #define _TSS_IND(n) (n*2+5)
 #define _LDT_IND(n) (n*2+6)
 // 下面是数学协处理器使用的结构，主要用于保存进程切换时i387 的执行状态信息。
@@ -172,9 +174,9 @@ typedef struct
 
 void init_proc();
 int req_proc();
-int reg_proc(int entry, struct index_node *cwd, struct index_node *exef);
-void set_proc(long eax, long ebx, long ecx, long edx, long es, long cs, long ss, long ds, long fs, long gs, long esp,
-              long ebp, long esi, long edi, long rip, long eflags, int proc_nr);
+int reg_proc(addr_t entry, struct index_node *cwd, struct index_node *exef);
+void set_proc(long rax, long rbx, long rcx, long rdx, long es, long cs, long ss, long ds, long fs, long gs, long rsp,
+              long rbp, long rsi, long rdi, long rip, long rflags, int proc_nr);
 void manage_proc();
 void switch_proc_tss(int pnr);
 //tss_ind:tss在gdt中的索引

@@ -189,37 +189,37 @@ unsigned long sys_vfork()
     printf("sys_vfork\n");
     //return do_fork(regs,CLONE_VM | CLONE_FS | CLONE_SIGNAL,regs->rsp,0);
 }
-
-unsigned long sys_execve()
-{
-    char * pathname = NULL;
-    long pathlen = 0;
-    long error = 0;
-    regs_t *regs = (regs_t *)current->tss.rsp0 -1;
-
-    printf("sys_execve\n");
-    pathname = (char *)vmalloc();
-    if(pathname == NULL)
-        return -ENOMEM;
-    memset(pathname,0,PAGE_4K_SIZE);
-    pathlen = strlen((char *)regs->rdi);
-    if(pathlen <= 0)
-    {
-        vmfree(pathname);
-        return -EFAULT;
-    }
-    else if(pathlen >= PAGE_4K_SIZE)
-    {
-        vmfree(pathname);
-        return -ENAMETOOLONG;
-    }
-    strcpy((char *)regs->rdi,pathname);
-
-    error = execute(pathname);//regs,pathname,(char **)regs->rsi,NULL
-
-    vmfree(pathname);
-    return error;
-}
+//
+//unsigned long sys_execve()
+//{
+//    char * pathname = NULL;
+//    long pathlen = 0;
+//    long error = 0;
+//    regs_t *regs = (regs_t *)current->tss.rsp0 -1;
+//
+//    printf("sys_execve\n");
+//    pathname = (char *)vmalloc();
+//    if(pathname == NULL)
+//        return -ENOMEM;
+//    memset(pathname,0,PAGE_4K_SIZE);
+//    pathlen = strlen((char *)regs->rdi);
+//    if(pathlen <= 0)
+//    {
+//        vmfree(pathname);
+//        return -EFAULT;
+//    }
+//    else if(pathlen >= PAGE_4K_SIZE)
+//    {
+//        vmfree(pathname);
+//        return -ENAMETOOLONG;
+//    }
+//    strcpy((char *)regs->rdi,pathname);
+//
+//    error = execute(pathname);//regs,pathname,(char **)regs->rsi,NULL
+//
+//    vmfree(pathname);
+//    return error;
+//}
 
 //unsigned long sys_exit(int exit_code)
 //{

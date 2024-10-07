@@ -1,4 +1,4 @@
-#include "virfs.h"
+#include "vfs.h"
 #include "mem.h"
 #include "syscall.h"
 #include "page.h"
@@ -7,6 +7,7 @@
 #include "proc.h"
 #include "exe.h"
 #include "str.h"
+#include "fcntl.h"
 DLL dlls[MAX_DLLS];
 Module modules[MAX_MODULES];
 /*
@@ -109,12 +110,12 @@ dllmain:
 }
 */
 
-int execute(char *path)
+int sys_execve(char *path)
 {
     //尚未切换到目标进程
     //syscall(SYSCALL_REG_PROC, load_pe,0,0,0,0);
     int fno=-1,cwd_fno=-1;
-    if((fno=sys_open(path, 1)) == -1)return -1;
+    if((fno=sys_open(path, O_EXEC)) <0)return -1;
     //
     char *p=path;
     for(;*p!='\0';p++);
@@ -122,10 +123,10 @@ int execute(char *path)
     if(p>path)
     {
         *p='\0';
-        if((cwd_fno=sys_open(path, 1)) == -1)return -1;
+        if((cwd_fno=sys_open(path, O_DIRECTORY)) <0)return -1;
         *p='/';
     }
-    extern vfs_dir_entry opened[];
+    extern struct file opened[];
     extern struct process task[];
     int pi= reg_proc(proc_start, &opened[cwd_fno], &opened[fno]);
     return pi;
@@ -133,7 +134,7 @@ int execute(char *path)
 
 int exec_call(char *path)
 {
-    int pi=execute(path);
+    int pi= sys_execve(path);
     int tss= _TSS_IND(pi)*8;
     extern struct process task[];
     extern int cur_proc;
@@ -147,15 +148,14 @@ int proc_start()
     extern int cur_proc;
     load_pe(&task[cur_proc]);
     //释放进程资源
-    del_proc(cur_proc);
-    switch_proc_tss(0);
+    sys_exit(0);
 }
-//在cr3切换到目标进程下的加载程序(但进程还没调度到那里)。
+//在cr3切换到目标进程下的加载程序
 int load_pe(struct process *proc)
 {
     // 读取文件头
-    vfs_dir_entry *f=proc->exef;
-    int exefno=f->fno;
+    struct file *f=proc->exef;
+    int exefno=f-current->openf;
 
     IMAGE_DOS_HEADER tdh;
     IMAGE_NT_HEADERS32 tnth;
@@ -164,27 +164,29 @@ int load_pe(struct process *proc)
     sys_read(exefno, &tnth, sizeof(tnth));
 
     //是否需要移动base(先不检查)
-    unsigned int nbase=tnth.OptionalHeader.ImageBase;
+    addr_t nbase=tnth.OptionalHeader.ImageBase;
     int pgn=tnth.OptionalHeader.SizeOfImage/PAGE_SIZE;
     //use_pgm_ava检查在页表中这个范围是否可用，可用就使用
-    while(1)
-    {
-        cont:
-        ;
-        int pdei=nbase/PAGE_INDEX_SIZE;
-        int ptei=nbase%PAGE_INDEX_SIZE/PAGE_SIZE;
-        int *pt=(proc->pml4[pdei]&0xfffff000);
-        for(int i=0;i<pgn;i++)
-        {
-            if(pt[ptei+i%1024]&PAGE_PRESENT&&pt!=NULL)
-            {
-                //移动base
-                nbase+=0x1000;
-                goto cont;
-            }
-        }
-        break;
-    }
+//    while(1)
+//    {
+//        cont:
+//        ;
+//        int pdpti=nbase/0x40000000;
+//        int pdei=nbase%0x40000000/PAGE_INDEX_SIZE;
+//        int ptei=nbase%PAGE_INDEX_SIZE/PAGE_SIZE;
+//        addr_t *pdpt=(proc->pml4[0]&~0xffful);
+//
+//        for(int i=0;i<pgn;i++)
+//        {
+//            if(pt[ptei+i%1024]&PAGE_PRESENT&&pt!=NULL)
+//            {
+//                //移动base
+//                nbase+=0x1000;
+//                goto cont;
+//            }
+//        }
+//        break;
+//    }
 
     //proc->tss.eip=tnth.OptionalHeader.AddressOfEntryPoint+nbase;
     //存放文件头
@@ -192,14 +194,14 @@ int load_pe(struct process *proc)
     sys_read(exefno, nbase, PAGE_SIZE);
     //dos头
     PIMAGE_DOS_HEADER dosh=nbase;
-    PIMAGE_NT_HEADERS32 nth=nbase+dosh->e_lfanew;
+    PIMAGE_NT_HEADERS64 nth=nbase+dosh->e_lfanew;
     PIMAGE_FILE_HEADER fh=&nth->FileHeader;
     //为新进程分配内存页
     //计算所需的页
     int prog_size=nth->OptionalHeader.SizeOfImage;
     int page_count=prog_size/4096;
 
-    int shell_addr=nth->OptionalHeader.AddressOfEntryPoint+nbase;
+    addr_t shell_addr=nth->OptionalHeader.AddressOfEntryPoint+nbase;
     int page_index_item_count=page_count/1024+page_count%1024==0?0:1;
     int start_pgind_item=shell_addr/PAGE_INDEX_SIZE;
 

@@ -226,7 +226,7 @@ int syscall(int a, int b, int c, int d, int e, int f)
         case 16:return sys_tell(a);
         case 17:return reg_vol(a,b,c);
         case 18:return free_vol(a);
-        case 19:return execute(a);
+        case 19:return sys_execve(a);
         case SYSCALL_EXIT:return sys_exit(a);
         case SYSCALL_CALL:return exec_call(a);
         case SYSCALL_MKFIFO:return sys_mkfifo(a);

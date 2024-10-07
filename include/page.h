@@ -8,7 +8,7 @@
 #define PAGE_FOR_ALL 4
 #define PAGE_4MB_PAGE 0x80
 #define PDE_4MB_PAT 0x1000
-#define PAGE_INDEX_SIZE 0x400000
+#define PAGE_INDEX_SIZE 0x200000
 #define PAGE_SIZE 0x1000
 //64位独有
 #define PDE_4MB 0X80
