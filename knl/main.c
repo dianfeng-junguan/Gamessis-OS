@@ -154,7 +154,7 @@ void main(unsigned int magic,void* addr)
 
     sti();
     DISK1_FAT32_FS_init();
-    manage_proc_lock=0;
+//    manage_proc_lock=0;
 
 
 //	init_vfs();
@@ -164,5 +164,10 @@ void main(unsigned int magic,void* addr)
 //    blk_dev* p=dev_tree[DEVTREE_BLKDEVI];
 //    mount_fs("fat16",p->par,vmalloc());
 
-    while (1);
+    while (1)
+    {
+        char c=sys_getkbc();
+        if(c!=-1)
+            putchar(c);
+    }
 }

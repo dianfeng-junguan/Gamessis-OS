@@ -155,7 +155,14 @@ int load_pe(struct process *proc)
 {
     // 读取文件头
     struct file *f=proc->exef;
-    int exefno=f-current->openf;
+    int exefno=-1;
+    for(int i=0;i<MAX_PROC_OPENF;i++)
+        if(current->openf[i]==f)
+        {
+            exefno=i;
+            break;
+        }
+    if(exefno==-1)return ERR;
 
     IMAGE_DOS_HEADER tdh;
     IMAGE_NT_HEADERS32 tnth;

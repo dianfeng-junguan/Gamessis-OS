@@ -55,7 +55,7 @@ static void itoa (char *buf, int base, int d)
 }
  
 /* 在屏幕上输出字符 C 。 */
-static void putchar (char c)
+void putchar (char c)
 {
     char s[2]={c,'\0'};
     print(s);

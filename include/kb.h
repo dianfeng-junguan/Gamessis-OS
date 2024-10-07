@@ -5,6 +5,7 @@
 #ifndef GMS_KNL_KB_H
 #define GMS_KNL_KB_H
 #define MAX_KEYBUF 512
+#define FLAG_BREAK	0x80
 typedef struct
 {
     char ascii;

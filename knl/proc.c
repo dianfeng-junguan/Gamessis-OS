@@ -582,7 +582,7 @@ int reg_proc(addr_t entry, struct index_node *cwd, struct index_node *exef)
 
     //申请一项pd,里面申请一2mb页用于堆栈
     addr_t *stackb=vmalloc();
-    pdpt[3]=stackb|PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX;//3-4G分配栈空间
+    pdpt[3]=(unsigned long)stackb|PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX;//3-4G分配栈空间
     set_2mb_pde(stackb + 511, get_phyaddr(req_a_page()), PAGE_FOR_ALL|PAGE_RWX);
     task[i].regs.cr3=task[i].pml4;
 

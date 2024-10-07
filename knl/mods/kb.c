@@ -163,7 +163,6 @@ int key_proc()
 //    ch= to_ascii(scan1);
 //    if(scan1 == 0xe0 || scan1 == 0xe1)
 //    {
-//        ch= to_ascii(scan2);
 //        scan2=inb(0x60);
 //    }
 //    tmpc.scan_code=scan1;
@@ -224,7 +223,9 @@ int key_proc()
 char sys_getkbc()
 {
     if(key_bufq.tail==key_bufq.head)return -1;
-    char c=key_buf[key_bufq.tail];
-    QTAIL(key_bufq)=(QTAIL(key_bufq)+1)%QSIZE(key_bufq);
+    char c=key_buf[key_bufq.head];
+    QHEAD(key_bufq)=(QHEAD(key_bufq)+1)%QSIZE(key_bufq);
+    if(c&FLAG_BREAK)return -1;
+    c= to_ascii(c&0x7f);
     return c;
 }
