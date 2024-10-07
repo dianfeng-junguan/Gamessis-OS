@@ -20,27 +20,19 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="更改了execve函数，现在加载的是64位pe文件">
+    <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="修改了下键盘获取字符函数，以便打印">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/clock.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/clock.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/exe.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/exe.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/gmsknl.elf" beforeDir="false" afterPath="$PROJECT_DIR$/bin/gmsknl.elf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/int.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/int.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/log.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/log.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/main.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/memory.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/memory.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/mods/kb.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/mods/kb.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/proc.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/proc.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/virfs.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/virfs.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/syscalla.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/syscalla.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hda.img" beforeDir="false" afterPath="$PROJECT_DIR$/hda.img" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/kb.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/kb.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/log.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/log.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/exe.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/exe.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/log.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/log.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/int.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/int.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/mods/kb.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/mods/kb.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl/proc.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/proc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/syscall.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl/syscall.s" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -189,7 +181,7 @@
       <workItem from="1728027237454" duration="15063000" />
       <workItem from="1728098344850" duration="10878000" />
       <workItem from="1728179154871" duration="9785000" />
-      <workItem from="1728264783354" duration="8662000" />
+      <workItem from="1728264783354" duration="11552000" />
     </task>
     <task id="LOCAL-00001" summary="重新整理了一下，改用clion开发">
       <option name="closed" value="true" />
@@ -391,7 +383,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728273963181</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="修改了下键盘获取字符函数，以便打印">
+      <option name="closed" value="true" />
+      <created>1728275467431</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1728275467431</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -438,7 +438,8 @@
     <MESSAGE value="借鉴了别人的POSIX函数库实现，实现了文件操作的POSIX函数库" />
     <MESSAGE value="调整了一下syscall的参数安排" />
     <MESSAGE value="更改了execve函数，现在加载的是64位pe文件" />
-    <option name="LAST_COMMIT_MESSAGE" value="更改了execve函数，现在加载的是64位pe文件" />
+    <MESSAGE value="修改了下键盘获取字符函数，以便打印" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改了下键盘获取字符函数，以便打印" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

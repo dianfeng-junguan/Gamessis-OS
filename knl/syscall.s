@@ -39,6 +39,7 @@ _syscall:
     mov qword [rbp+4],rsp
     mov rsp,[rbp+20]
     pop rbp
+    sti
     db 0x48
     sysret
 

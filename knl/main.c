@@ -154,7 +154,7 @@ void main(unsigned int magic,void* addr)
 
     sti();
     DISK1_FAT32_FS_init();
-//    manage_proc_lock=0;
+    manage_proc_lock=0;
 
 
 //	init_vfs();

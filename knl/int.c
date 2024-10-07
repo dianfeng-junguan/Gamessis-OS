@@ -239,6 +239,7 @@ int syscall(int a, int b, int c, int d, int e, int f)
     // __asm__ volatile("mov %0,%%eax\r\n mov %1,%%ebx\r\n mov %2,%%ecx\r\n mov %3,%%edx\r\n mov %4,%%esi\r\n mov %5,%%edi"\
     // ::"m"(func),"m"(a),"m"(b),"m"(c),"m"(d),"m"(e));
     // __asm__ volatile("int $0x80\r\n leave\r\n ret");
+
 }
 void wrmsr(unsigned long address,unsigned long value)
 {

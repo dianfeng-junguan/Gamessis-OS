@@ -62,13 +62,13 @@ void create_test_proc(){
     str->r14=0;
     str->r13=0;
     str->r12=0;
-    str->r11=0;
+    str->r11=0x200;
     str->r10=0;
     str->r9=0;
     str->r8=0;
     str->rip=proc_zero;
     str->cs=0x8;
-    str->rflags=0x00200006;
+    str->rflags=0x00200206;
     str->rsp=0x7e00;
     str->ss=0x2b;
     str->ds=0x2b;
@@ -133,9 +133,9 @@ void set_proc(long rax, long rbx, long rcx, long rdx, long es, long cs, long ss,
 }
 void proc_zero()
 {
-    asm volatile("mov $1,%rax\n"
-                 ".byte 0x48\n"
-                 "syscall");
+//    asm volatile("mov $1,%rax\n"
+//                 ".byte 0x48\n"
+//                 "syscall");
     while(1);
 }
 void manage_proc(){
@@ -739,7 +739,8 @@ void __switch_to(struct process *from, struct process *to) {
     asm volatile("mov %%fs,%0\r\n"
                  "mov %%gs,%1\r\n"
                  "mov %2,%%fs\r\n"
-                 "mov %3,%%gs":"=m"(to->regs.fs),"=m"(to->regs.gs):
+                 "mov %3,%%gs\r\n"
+                 "sti":"=m"(to->regs.fs),"=m"(to->regs.gs):
                  "m"(from->regs.fs),"m"(from->regs.gs));
 }
 
