@@ -5,6 +5,7 @@ extern print
 extern scene_saver
 extern gdt
 extern manage_proc_lock
+extern save_rsp
 clock:
     push rax
     push rbx
@@ -21,6 +22,8 @@ clock:
     push r13
     push r14
     push r15
+
+    call save_rsp
 
     mov ax,es
     push rax

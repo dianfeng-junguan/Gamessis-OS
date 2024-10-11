@@ -189,7 +189,29 @@ ret_sys_call:
     pop rbx
     pop rax
 
-
 tmp:
     db 0x48
     sysret
+global ret_normal_proc
+ret_normal_proc:
+    pop rax
+    mov ds,ax
+    pop rax
+    mov es,ax
+
+    pop r15
+    pop r14
+    pop r13
+    pop r12
+    pop r11
+    pop r10
+    pop r9
+    pop r8
+
+    pop rsi
+    pop rdi
+    pop rdx
+    pop rcx
+    pop rbx
+    pop rax
+    ret

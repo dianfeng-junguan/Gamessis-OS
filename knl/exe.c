@@ -110,7 +110,7 @@ dllmain:
 }
 */
 
-int sys_execve(char *path)
+int sys_execve(char *path, char *argv)
 {
     //尚未切换到目标进程
     //syscall(SYSCALL_REG_PROC, load_pe,0,0,0,0);
@@ -134,7 +134,7 @@ int sys_execve(char *path)
 
 int exec_call(char *path)
 {
-    int pi= sys_execve(path);
+    int pi= sys_execve(path, NULL);
     int tss= _TSS_IND(pi)*8;
     extern struct process task[];
     extern int cur_proc;
@@ -333,6 +333,8 @@ int load_pe(struct process *proc)
     memcpy((chunk_header*)HEAP_BASE,&hdrtmp,sizeof(hdrtmp));
     task[cur_proc].mem_struct.heap_base=HEAP_BASE;
     task[cur_proc].mem_struct.heap_top=HEAP_BASE+CHUNK_SIZE;
+    //设置栈
+    task[cur_proc].mem_struct.stack_top=STACK_TOP;
 
 
     //完毕,调用入口函数

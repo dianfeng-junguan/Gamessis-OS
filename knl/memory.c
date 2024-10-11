@@ -53,6 +53,39 @@ stat_t mmap(addr_t pa,addr_t la,u32 attr)
     return NORMAL;
 }
 
+stat_t smmap(addr_t pa,addr_t la,u32 attr,page_item* pml4p)
+{
+    //从pml4中找到la所属的pml4项目，即属于第几个512GB
+    page_item *pdptp= (page_item *) (pml4p[la / PML4E_SIZE] & (~0xff));//指向的pdpt表
+    //因为一个pml指向512gb内存，目前电脑还没有内存能达到这个大小，就不进行检查是否越界的判断
+
+    //在这个512GB（一张pdpt表）中找到la所属的pdpt项目，找到指向的pd
+    int pdpti=la%PML4E_SIZE/PDPTE_SIZE;
+    page_item* pdp= (page_item *) pdptp[pdpti];//指向的pd
+    //检查pdptp是否被占用
+    if(!((unsigned long long)pdp&PAGE_PRESENT))
+    {
+        pdp=(page_item*)vmalloc();
+        memset(pdp,0,4096);
+        pdptp[pdpti]=(addr_t)pdp|attr;
+    }
+    pdp=(page_item*)((addr_t)pdp&~0xff);
+
+    //在pd中找到la指向的pt
+    page_item* pt=(page_item*)pdp[la % PDPTE_SIZE / PDE_SIZE];
+    if(!((unsigned long long)pt & PAGE_PRESENT))
+    {
+        pt=(page_item*)vmalloc();
+        memset(pt,0,4096);
+        pdp[la%PDPTE_SIZE/PDE_SIZE]= (addr_t)pt | attr;
+    }
+    pt=(page_item*)((addr_t)pt & ~0xff);
+
+    //在pt中找到la指向的page
+    pt[la % PDE_SIZE / PAGE_SIZE]=pa|attr;//映射
+    return NORMAL;
+}
+
 stat_t mdemap(addr_t la)
 {
     return mmap(0l,la,0);
@@ -140,7 +173,7 @@ void page_err(){
         if(l_addr>=MEM_END)
             ;
         //在进程的页表中申请新页
-        mmap(vmalloc(),l_addr&~0xfff,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL);
+        smmap(get_phyaddr(req_a_page()),l_addr&~0xfff,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,current->pml4);
 //        int *pdet=0,*pt=0;
 //        asm volatile("mov %%cr3,%0":"=r"(pdet));
 //        if(!(pdet[l_addr/PAGE_INDEX_SIZE]&PAGE_PRESENT))
@@ -165,7 +198,7 @@ void page_err(){
     p=err_code&16;
     if(p)print("an instruction tries to fetch\n");
     unsigned int addr=0;
-    asm volatile("mov 8(%%ebp),%0":"=r"(addr));
+    asm volatile("mov 8(%%rbp),%0":"=r"(addr));
     printf("occurred at %x(paddr), %x(laddr)\n",addr,l_addr);
     extern int cur_proc;
     extern struct process *task;
@@ -180,7 +213,7 @@ void page_err(){
     // printf("shell:>");
     eoi();
     //这里对esp的加法是必要的，因为page fault多push了一个错误码，但是iret识别不了
-    __asm__ volatile ("sti \r\n  leave\n add $8,%esp \n iretq");
+    __asm__ volatile ("sti \r\n  leave\n add $8,%rsp \n iretq");
 }
 void init_memory()
 {

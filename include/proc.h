@@ -38,6 +38,9 @@ struct i387_struct
 #define HEAP_BASE 0x1000000
 #define HEAP_MAXTOP 0x1f00000
 #define CHUNK_SIZE 0x1000
+#define INT_STACK_TOP 0x800000
+#define INT_STACK_BASE 0x7ff000
+#define STACK_TOP 0x0000fffffffff000ul
 //堆空间
 typedef struct _chunk_header_{
     int pgn;    //占用页面数量
@@ -205,6 +208,8 @@ void switch_to(struct process *from, struct process *to);
 void __switch_to(struct process *from, struct process *to);
 
 void save_context(TSS *tss);
+//用来保存rsp到当前proc.regs
+void save_rsp();
 void proc_zero();
 void proc_end();
 void* malloc(int size);
@@ -217,6 +222,9 @@ void create_test_proc();
 
 
 void ret_sys_call();
+void ret_normal_proc();
+int sys_fork(void);
 
+void copy_mmap(struct process* from, struct process *to);
 extern struct process* current;
 #endif //SRC_PROC_H

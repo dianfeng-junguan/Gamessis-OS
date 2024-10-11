@@ -176,12 +176,12 @@ unsigned long sys_lseek(int filds,long offset,int whence)
     return ret;
 }
 
-unsigned long sys_fork()
-{
-    TSS *regs = (TSS*)current->tss.rsp0 -1;
-    printf("sys_fork\n");
-    //return do_fork(regs,0,regs->rsp,0);
-}
+//unsigned long sys_fork()
+//{
+//    TSS *regs = (TSS*)current->tss.rsp0 -1;
+//    printf("sys_fork\n");
+//    //return do_fork(regs,0,regs->rsp,0);
+//}
 
 unsigned long sys_vfork()
 {

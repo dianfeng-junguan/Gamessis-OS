@@ -25,7 +25,9 @@
 #define SYSCALL_FREE 24
 #define SYSCALL_FIND_DEV 25
 #define SYSCALL_OPERATE_DEV 26
+#define SYSCALL_FORK 27
 #define SYSCALL_KB_READC 100
+
 
 
 #define DRVF_OPEN 0

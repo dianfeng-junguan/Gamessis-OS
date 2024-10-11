@@ -50,6 +50,11 @@ void create_test_proc(){
     set_proc(0, 0, 0, 0, 0x10, 0x8, 0x10, 0x10, 0x10, 0x10,
              0x7e00- sizeof(stack_store_regs), 0, 0, 0, (long)ret_sys_call, 0, index);
     task[index].tss.rsp0=0x400000;
+    task[index].mem_struct.stack_top=0x7e00;
+    task[index].mem_struct.stack_bottom=0x6e00;
+    task[index].mem_struct.heap_top=0x1101000;
+    task[index].mem_struct.heap_base=0x1100000;
+
     //把还原现场时用到的堆栈设置好
     stack_store_regs *str= (stack_store_regs *) (0x7e00 - sizeof(stack_store_regs));
     str->rax=0;
@@ -133,10 +138,15 @@ void set_proc(long rax, long rbx, long rcx, long rdx, long es, long cs, long ss,
 }
 void proc_zero()
 {
-//    asm volatile("mov $1,%rax\n"
-//                 ".byte 0x48\n"
-//                 "syscall");
+    asm volatile("mov $27,%rax\n"
+                 ".byte 0x48\n"
+                 "syscall");
     while(1);
+}
+void save_rsp(){
+    //在时钟中断context下
+    addr_t * p=INT_STACK_TOP-16;
+    current->regs.rsp=*p;
 }
 void manage_proc(){
     if(cur_proc!=-1)
@@ -573,7 +583,7 @@ int reg_proc(addr_t entry, struct index_node *cwd, struct index_node *exef)
 
     //栈顶设置在了4G处
     set_proc(0, 0, 0, 0, DS_USER, CS_USER, DS_USER, DS_USER\
-, DS_USER, DS_USER, 0x0000fffffffffffful, 0, 0, 0, entry, 0, i);
+, DS_USER, DS_USER, STACK_TOP, 0, 0, 0, entry, 0, i);
     task[i].pml4=vmalloc();
     task[i].pml4[0]=vmalloc();
     unsigned long *pdpt=task[i].pml4;
@@ -755,4 +765,126 @@ void set_tss(u64 rsp0,u64 rsp1,u64 rsp2,u64 ist0,u64 ist1,u64 ist2,u64 ist3,u64 
     tss->ists[4]=ist4;
     tss->ists[5]=ist5;
     tss->ists[6]=ist6;
+}
+
+int fork_child_ret(){
+    return 0;
+
+}
+
+int sys_fork(void){
+    int pid=req_proc();
+    if(pid==-1)return -1;
+    task[pid].regs=current->regs;
+    //使得子程序处于刚调用完系统调用的状态
+    task[pid].regs.rip=ret_normal_proc;
+    task[pid].regs.rsp-=sizeof(stack_store_regs);
+    stack_store_regs *r=task[pid].regs.rsp;
+    r->rax=0;
+    r->ds=DS_USER;
+    r->ss=DS_USER;
+    r->es=DS_USER;
+    r->rax=task[pid].regs.rax;
+    r->rbx=task[pid].regs.rbx;
+    r->rcx=task[pid].regs.rcx;
+    r->rdx=task[pid].regs.rdx;
+    r->rsi=task[pid].regs.rsi;
+    r->rdi=task[pid].regs.rdi;
+
+    r->r8 =task[pid].regs.r8 ;
+    r->r9 =task[pid].regs.r9 ;
+    r->r10=task[pid].regs.r10;
+    r->r11=task[pid].regs.r11;
+    r->r12=task[pid].regs.r12;
+    r->r13=task[pid].regs.r13;
+    r->r14=task[pid].regs.r14;
+    r->r15=task[pid].regs.r15;
+
+    asm volatile("mov %%r10,%0"::"m"(r->rip));
+
+    task[pid].tss=current->tss;
+    task[pid].stat=READY;
+    task[pid].parent_pid=cur_proc;
+    //复制打开文件
+    memcpy(task[pid].openf,current->openf,sizeof(struct file*)*MAX_PROC_OPENF);
+    task[pid].utime=0;
+    task[pid].mem_struct=current->mem_struct;
+    //TODO:根据是子进程还是父进程设置返回值的不同
+
+    //TODO:设置新堆栈
+    //复制父进程的内存映射到子进程，然后重新映射并复制子进程的堆栈和数据段
+    copy_mmap(current,&task[pid]);
+    //复制完毕，开始更改堆栈
+    //栈
+    /*
+     * 这里使用vmalloc是一个权宜之策。
+     * 本来是分配用户空间内存的，但是这样的话当前进程内存空间下就访问不到这个新申请的内存了（除非mmap一下），
+     * 方便以前先用vmalloc。
+     * */
+    addr_t stk=task[pid].mem_struct.stack_top-PAGE_4K_SIZE;
+    for(;stk>=task[pid].mem_struct.stack_bottom;stk-=PAGE_4K_SIZE){
+        addr_t new_stkpg=vmalloc();
+        memcpy(new_stkpg,stk,PAGE_4K_SIZE);//把当前进程的栈空间复制到新栈里面
+        //把新的页面映射到进程页表里
+        smmap(new_stkpg,stk,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,task[pid].pml4);
+    }
+    //中断使用的栈空间
+    addr_t intstk=INT_STACK_TOP-PAGE_4K_SIZE;
+    int f=1;
+    for(;intstk>=INT_STACK_BASE;intstk-=PAGE_4K_SIZE){
+        addr_t new_stkpg=vmalloc();
+        memcpy(new_stkpg,intstk,PAGE_4K_SIZE);//把当前进程的栈空间复制到新栈里面
+        if(f){
+            f=0;
+            addr_t *raxp=new_stkpg+PAGE_4K_SIZE-56;//指向中断堆栈，里面存着rax的值
+            *raxp=0;//这样进程切换到子进程的done标签，从时钟中断返回弹出堆栈的时候rax弹出来的就是0，成为返回值。
+        }
+        //把新的页面映射到进程页表里
+        smmap(new_stkpg,intstk,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,task[pid].pml4);
+    }
+    //堆
+    addr_t hp=task[pid].mem_struct.heap_top-PAGE_4K_SIZE;
+    for(;hp>=task[pid].mem_struct.heap_base;hp-=PAGE_4K_SIZE){
+        addr_t new_hppg=vmalloc();
+        memcpy(new_hppg,hp,PAGE_4K_SIZE);//把当前进程的栈空间复制到新栈里面
+        //把新的页面映射到进程页表里
+        smmap(new_hppg,hp,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,task[pid].pml4);
+    }
+    //父进程运行到这里
+    return pid;
+}
+void copy_mmap(struct process* from, struct process *to){
+    page_item * pml4p=vmalloc();
+    memcpy(pml4p,from->regs.cr3,PAGE_4K_SIZE);//复制pml4
+    to->regs.cr3=pml4p;
+    to->pml4=pml4p;
+    //复制pdpt
+
+    page_item *pml4e= pml4p;
+    for(int i=0;i<512;i++)
+    {
+        if(pml4e[i]&PAGE_PRESENT){
+            addr_t old_data=pml4e[i];//旧的数据，里面保存了属性和要拷贝的数据的地址
+            pml4e[i]=vmalloc()|(old_data&~PAGE_4K_MASK);
+            memcpy(pml4e[i]&PAGE_4K_MASK,old_data&PAGE_4K_MASK,PAGE_4K_SIZE);//把老的数据拷贝到新的页面里
+            page_item *pdpte=pml4e[i]&PAGE_4K_MASK;
+            for(int j=0;j<512;j++)
+            {
+                if(pdpte[j]&PAGE_PRESENT&&!(pdpte[j]&PDPTE_1GB)){
+                    addr_t old_data2=pdpte[j];//旧的数据，里面保存了属性和要拷贝的数据的地址
+                    pdpte[j]=vmalloc()|(old_data2&~PAGE_4K_MASK);
+                    memcpy(pdpte[j]&PAGE_4K_MASK,old_data2&PAGE_4K_MASK,PAGE_4K_SIZE);//把老的数据拷贝到新的页面里
+                    page_item *pde=pdpte[j]&PAGE_4K_MASK;
+                    for(int k=0;k<512;k++)
+                    {
+                        if(pde[j]&PAGE_PRESENT&&!(pde[j]&PDE_4MB)){
+                            addr_t old_data3=pde[j];//旧的数据，里面保存了属性和要拷贝的数据的地址
+                            pde[j]=vmalloc()|(old_data3&~PAGE_4K_MASK);
+                            memcpy(pde[j]&PAGE_4K_MASK,old_data3&PAGE_4K_MASK,PAGE_4K_SIZE);//把老的数据拷贝到新的页面里
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

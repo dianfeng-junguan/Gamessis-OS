@@ -70,6 +70,8 @@ void set_2mb_pde(page_item *pde, int pa, int extra_attr);
 void set_1gb_pdpt(page_item* ppdpt,int pa,unsigned int extra_attr);
 //映射一页4KB内存
 stat_t mmap(u64 pa,u64 la,u32 attr);
+
+stat_t smmap(addr_t pa,addr_t la,u32 attr,page_item* pml4p);
 //解除映射
 stat_t mdemap(u64 la);
 
