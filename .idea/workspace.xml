@@ -20,19 +20,18 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="添加了进程切换时切换cr3的部分">
+    <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="完成了execve功能">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/exe.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/exe.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/gmsknl.elf" beforeDir="false" afterPath="$PROJECT_DIR$/bin/gmsknl.elf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/int.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/int.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/memory.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/memory.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/proc.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/proc.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/syscalla.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/syscalla.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/virfs.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/virfs.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hda.img" beforeDir="false" afterPath="$PROJECT_DIR$/hda.img" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/exe.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/exe.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/proc.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/proc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/syscall.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/syscall.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/exe.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/exe.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/int.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/int.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/proc.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/proc.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/sys.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/sys.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/memory.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/memory.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl/syscall.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl/syscall.s" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -182,7 +181,7 @@
       <workItem from="1728630894713" duration="23000" />
       <workItem from="1728636860752" duration="4065000" />
       <workItem from="1728652338297" duration="6577000" />
-      <workItem from="1728960595779" duration="5643000" />
+      <workItem from="1728960595779" duration="6191000" />
     </task>
     <task id="LOCAL-00001" summary="重新整理了一下，改用clion开发">
       <option name="closed" value="true" />
@@ -416,7 +415,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728963044659</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="完成了execve功能">
+      <option name="closed" value="true" />
+      <created>1728981659124</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1728981659124</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -440,7 +447,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="修复了之前没有进入64位的问题，修复了指针加减数值错误的bug" />
     <MESSAGE value="完成了文字绘制" />
     <MESSAGE value="改了idt gate结构适应64位" />
     <MESSAGE value="PDPTE 1GB页备份" />
@@ -465,7 +471,8 @@
     <MESSAGE value="修复了进程切换后收不了中断的bug" />
     <MESSAGE value="实现了fork函数，但是进程切换时还没切换cr3" />
     <MESSAGE value="添加了进程切换时切换cr3的部分" />
-    <option name="LAST_COMMIT_MESSAGE" value="添加了进程切换时切换cr3的部分" />
+    <MESSAGE value="完成了execve功能" />
+    <option name="LAST_COMMIT_MESSAGE" value="完成了execve功能" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

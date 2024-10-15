@@ -65,12 +65,11 @@ _syscall:
     pop rcx
     pop r11
 
-    push rax
+    mov qword [rsp+15*8],rax;存储好返回值
     pop rax
     mov ds,ax
     pop rax
     mov es,ax
-    pop rax
 
     pop r15
     pop r14
@@ -86,8 +85,7 @@ _syscall:
     pop rdx
     pop rcx
     pop rbx
-    add rsp,8;rax存储着返回值，所以不要pop覆盖掉
-    ;pop rax
+    pop rax
 
     mov qword [rbp+4],rsp
     mov rsp,[rbp+20]

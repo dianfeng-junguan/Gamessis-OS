@@ -266,6 +266,12 @@ int free_page(char *paddr){
     int r=num%32;
     page_map[n]=page_map[n]&~(unsigned int)(1<<r);
 }
+
+int free_pages_at(int base,int pgn){
+    for(int i=0;i<pgn;i++){
+        free_page(base+i*PAGE_4K_SIZE);
+    }
+}
 int check_page(int num){
     int n=num/32;
     int r=num%32;
