@@ -20,14 +20,19 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="实现了fork函数，但是进程切换时还没切换cr3">
+    <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="添加了进程切换时切换cr3的部分">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/gmsknl.elf" beforeDir="false" afterPath="$PROJECT_DIR$/bin/gmsknl.elf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/proc.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/proc.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/syscalla.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/syscalla.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hda.img" beforeDir="false" afterPath="$PROJECT_DIR$/hda.img" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/exe.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/exe.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/proc.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/proc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/syscall.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/syscall.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl.s" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/exe.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/exe.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/int.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/int.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl/proc.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/proc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/sys.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/sys.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl/syscall.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl/syscall.s" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -177,7 +182,7 @@
       <workItem from="1728630894713" duration="23000" />
       <workItem from="1728636860752" duration="4065000" />
       <workItem from="1728652338297" duration="6577000" />
-      <workItem from="1728960595779" duration="2356000" />
+      <workItem from="1728960595779" duration="5643000" />
     </task>
     <task id="LOCAL-00001" summary="重新整理了一下，改用clion开发">
       <option name="closed" value="true" />
@@ -403,7 +408,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728658928737</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="添加了进程切换时切换cr3的部分">
+      <option name="closed" value="true" />
+      <created>1728963044659</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1728963044659</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -427,7 +440,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="改了int的set_gate的参数，函数地址参数改成了64位" />
     <MESSAGE value="修复了之前没有进入64位的问题，修复了指针加减数值错误的bug" />
     <MESSAGE value="完成了文字绘制" />
     <MESSAGE value="改了idt gate结构适应64位" />
@@ -452,7 +464,8 @@
     <MESSAGE value="修改了下键盘获取字符函数，以便打印" />
     <MESSAGE value="修复了进程切换后收不了中断的bug" />
     <MESSAGE value="实现了fork函数，但是进程切换时还没切换cr3" />
-    <option name="LAST_COMMIT_MESSAGE" value="实现了fork函数，但是进程切换时还没切换cr3" />
+    <MESSAGE value="添加了进程切换时切换cr3的部分" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加了进程切换时切换cr3的部分" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -474,7 +487,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/knl/proc.c</url>
-          <line>761</line>
+          <line>760</line>
           <option name="timeStamp" value="90" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
@@ -492,30 +505,20 @@
           <line>159</line>
           <option name="timeStamp" value="120" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+        <line-breakpoint type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/knl/proc.c</url>
-          <line>743</line>
-          <option name="timeStamp" value="127" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/knl/proc.c</url>
-          <line>866</line>
+          <line>865</line>
           <option name="timeStamp" value="128" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+        <line-breakpoint type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/knl/proc.c</url>
-          <line>788</line>
+          <line>787</line>
           <option name="timeStamp" value="131" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/knl/proc.c</url>
-          <line>178</line>
+          <line>177</line>
           <option name="timeStamp" value="132" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/knl/proc.c</url>
-          <line>741</line>
-          <option name="timeStamp" value="133" />
         </line-breakpoint>
         <breakpoint type="OCSymbolicBreakpointType">
           <properties>

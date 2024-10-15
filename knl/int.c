@@ -226,7 +226,7 @@ int syscall(int a, int b, int c, int d, int e, int f)
         case 16:return sys_tell(a);
         case 17:return reg_vol(a,b,c);
         case 18:return free_vol(a);
-        case 19:return sys_execve(a, NULL);
+        case 19:return execute(a, NULL);
         case SYSCALL_EXIT:return sys_exit(a);
         case SYSCALL_CALL:return exec_call(a);
         case SYSCALL_MKFIFO:return sys_mkfifo(a);
@@ -235,6 +235,7 @@ int syscall(int a, int b, int c, int d, int e, int f)
         case SYSCALL_KB_READC:return sys_getkbc();
         case SYSCALL_FIND_DEV:return sys_find_dev(a);
         case SYSCALL_FORK:return sys_fork();
+        case SYSCALL_EXECVE:return sys_execve(a,b);
         case SYSCALL_OPERATE_DEV:return sys_operate_dev(a,b,c);
     }
     // __asm__ volatile("mov %0,%%eax\r\n mov %1,%%ebx\r\n mov %2,%%ecx\r\n mov %3,%%edx\r\n mov %4,%%esi\r\n mov %5,%%edi"\

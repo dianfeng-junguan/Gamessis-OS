@@ -226,5 +226,6 @@ void ret_normal_proc();
 int sys_fork(void);
 
 void copy_mmap(struct process* from, struct process *to);
+void release_mmap(struct process* p);
 extern struct process* current;
 #endif //SRC_PROC_H

@@ -147,9 +147,9 @@ void proc_zero()
     long rax;
     asm volatile("":"=a"(rax));
     if(rax==0){
-        printf("parent proc ret:%d\n",cur_proc);
-    }else{
         printf("child proc ret:%d\n",cur_proc);
+    }else{
+        printf("parent proc ret:%d\n",cur_proc);
     }
     while(1);
 }
@@ -166,14 +166,14 @@ void manage_proc(){
         if(cur_proc!=-1)
             task[cur_proc].utime=0;
         //find
-        int i=0;
-        for(i=0;i<MAX_PROC_COUNT;i++){
+        int i=cur_proc+1;
+        //轮询，直到有一个符合条件
+        while(1){
             if(task[i].pid!=-1&&task[i].stat==READY&&i!=cur_proc){
                 break;
             }
+            i=(i+1)%MAX_TASKS;
         }
-        if(i>=MAX_PROC_COUNT)
-            return;
         //switch
         task[cur_proc].stat=READY;
         task[i].stat=RUNNING;
@@ -865,6 +865,47 @@ int sys_fork(void){
     //父进程运行到这里
     return pid;
 }
+//释放进程页表映射的内存，内核空间除外。
+void release_mmap(struct process* p){
+    page_item * pml4p=p->pml4;
+    //复制pdpt
+    page_item *pml4e= pml4p;
+    for(int i=0;i<512;i++)
+    {
+        if(pml4e[i]&PAGE_PRESENT){
+            page_item *pdpte=pml4e[i]&PAGE_4K_MASK;
+            int j=i==0?1:0;//低1GB的空间不释放（内核空间）
+            for(;j<512;j++)
+            {
+                if(pdpte[j]&PAGE_PRESENT&&!(pdpte[j]&PDPTE_1GB)){
+                    page_item *pde=pdpte[j]&PAGE_4K_MASK;
+                    for(int k=0;k<512;k++)
+                    {
+                        if(pde[k]&PAGE_PRESENT&&!(pde[k]&PDE_4MB)){
+                            page_item *pte=pde[k]&PAGE_4K_MASK;
+                            for(int l=0;l<512;l++){
+                                if(pte[l]&PAGE_PRESENT){
+                                    //释放申请的物理内存
+                                    free_page(pte[l]&PAGE_4K_MASK);
+                                }
+                            }
+                            //里面的项释放完了，这一项指向的vmalloc内存可以释放了
+                            vmfree(pde[k]&PAGE_4K_MASK);
+                        }else if((pde[k]&PAGE_PRESENT)&&(pde[k]&PDE_4MB)){
+                            //释放2MB页
+                            free_pages_at(pde[k]&PAGE_4K_MASK,512);
+                        }
+                    }
+                    //这一页pde的内容释放完了，这一项指向的vmalloc可以释放了
+                    vmfree(pdpte[j]&PAGE_4K_MASK);
+                }//1GB先不写，目前还没有初始化之后动态申请1GB页的
+
+            }
+            //这一页pdpte的内容释放完了，这一项指向的vmalloc可以释放了
+            vmfree(pml4e[i]&PAGE_4K_MASK);
+        }
+    }
+}
 void copy_mmap(struct process* from, struct process *to){
     page_item * pml4p=vmalloc();
     memcpy(pml4p,from->regs.cr3,PAGE_4K_SIZE);//复制pml4
@@ -889,10 +930,10 @@ void copy_mmap(struct process* from, struct process *to){
                     page_item *pde=pdpte[j]&PAGE_4K_MASK;
                     for(int k=0;k<512;k++)
                     {
-                        if(pde[j]&PAGE_PRESENT&&!(pde[j]&PDE_4MB)){
-                            addr_t old_data3=pde[j];//旧的数据，里面保存了属性和要拷贝的数据的地址
-                            pde[j]=vmalloc()|(old_data3&~PAGE_4K_MASK);
-                            memcpy(pde[j]&PAGE_4K_MASK,old_data3&PAGE_4K_MASK,PAGE_4K_SIZE);//把老的数据拷贝到新的页面里
+                        if(pde[k]&PAGE_PRESENT&&!(pde[k]&PDE_4MB)){
+                            addr_t old_data3=pde[k];//旧的数据，里面保存了属性和要拷贝的数据的地址
+                            pde[k]=vmalloc()|(old_data3&~PAGE_4K_MASK);
+                            memcpy(pde[k]&PAGE_4K_MASK,old_data3&PAGE_4K_MASK,PAGE_4K_SIZE);//把老的数据拷贝到新的页面里
                         }
                     }
                 }

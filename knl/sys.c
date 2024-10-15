@@ -190,14 +190,14 @@ unsigned long sys_vfork()
     //return do_fork(regs,CLONE_VM | CLONE_FS | CLONE_SIGNAL,regs->rsp,0);
 }
 //
-//unsigned long sys_execve()
+//unsigned long execute()
 //{
 //    char * pathname = NULL;
 //    long pathlen = 0;
 //    long error = 0;
 //    regs_t *regs = (regs_t *)current->tss.rsp0 -1;
 //
-//    printf("sys_execve\n");
+//    printf("execute\n");
 //    pathname = (char *)vmalloc();
 //    if(pathname == NULL)
 //        return -ENOMEM;

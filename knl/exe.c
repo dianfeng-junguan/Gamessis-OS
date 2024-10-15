@@ -8,6 +8,8 @@
 #include "exe.h"
 #include "str.h"
 #include "fcntl.h"
+#include "errno.h"
+
 DLL dlls[MAX_DLLS];
 Module modules[MAX_MODULES];
 /*
@@ -110,7 +112,7 @@ dllmain:
 }
 */
 
-int sys_execve(char *path, char *argv)
+int execute(char *path, char **argv)
 {
     //尚未切换到目标进程
     //syscall(SYSCALL_REG_PROC, load_pe,0,0,0,0);
@@ -132,9 +134,38 @@ int sys_execve(char *path, char *argv)
     return pi;
 }
 
+int sys_execve(char *path,char **argv){
+    int fno=-1,cwd_fno=-1;
+    if((fno=sys_open(path, O_EXEC)) <0)return -ENOENT;
+    //
+//    char *p=path;
+//    for(;*p!='\0';p++);
+//    for(;*p!='/'&&p>path;p--);
+//    if(p>path)
+//    {
+//        *p='\0';
+//        if((cwd_fno=sys_open(path, O_DIRECTORY)) <0)return -1;
+//        *p='/';
+//    }
+    extern struct file opened[];
+    extern struct process task[];
+    if(sys_close(current->exef-opened)<0)return -1;
+
+    void *retp= load_pe;
+    current->exef=&opened[fno];//改变执行文件
+    //重新设置进程数据
+    //清空原来的页表
+    release_mmap(current);
+    current->regs.rsp=STACK_TOP;//清空栈
+    extern TSS* tss;
+    //sysret直接返回到load_pe加载新程序，然后直接开始运行新程序的main
+    stack_store_regs *rs=tss->ists[0]- sizeof(stack_store_regs);
+    rs->rcx=retp;
+    return 0;
+}
 int exec_call(char *path)
 {
-    int pi= sys_execve(path, NULL);
+    int pi= execute(path, NULL);
     int tss= _TSS_IND(pi)*8;
     extern struct process task[];
     extern int cur_proc;

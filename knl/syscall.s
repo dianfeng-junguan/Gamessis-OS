@@ -65,10 +65,12 @@ _syscall:
     pop rcx
     pop r11
 
+    push rax
     pop rax
     mov ds,ax
     pop rax
     mov es,ax
+    pop rax
 
     pop r15
     pop r14

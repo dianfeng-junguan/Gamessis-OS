@@ -10,9 +10,11 @@ typedef struct
 }Module;
 /*
  * 运行文件，成为独立进程。
- *  TODO:这里的函数实现不对。execve是把当前进程的程序映像换成一个新加载的。
+ *
  * */
-int sys_execve(char *path, char *argv);
+int execute(char *path, char **argv);
+//从新文件加载程序代替现有进程的程序映像。
+int sys_execve(char *path,char **argv);
 /*
  * 立即调用一个程序（会阻塞当前进程）
  * */
