@@ -7,6 +7,8 @@
 #include "pe.h"
 #include "int.h"
 #include "mem.h"
+#include "log.h"
+
 struct process task[MAX_PROC_COUNT];
 struct process* current;
 TSS scene_saver;
@@ -133,6 +135,7 @@ void set_proc(long rax, long rbx, long rcx, long rdx, long es, long cs, long ss,
     proc->regs.ds=ds;
     proc->regs.es=es;
     proc->regs.cr3=PML4_ADDR;//get_phyaddr(n1);//暂时先搞成全局
+    proc->pml4=PML4_ADDR;
 
 
 }
@@ -141,6 +144,13 @@ void proc_zero()
     asm volatile("mov $27,%rax\n"
                  ".byte 0x48\n"
                  "syscall");
+    long rax;
+    asm volatile("":"=a"(rax));
+    if(rax==0){
+        printf("parent proc ret:%d\n",cur_proc);
+    }else{
+        printf("child proc ret:%d\n",cur_proc);
+    }
     while(1);
 }
 void save_rsp(){
@@ -728,6 +738,8 @@ int sys_free(int ptr)
 void switch_to(struct process *from, struct process *to) {
     cur_proc=to-task;
     current=&task[cur_proc];
+    asm volatile("mov %0,%%rax\n"
+                 "mov %%rax,%%cr3\n":"=m"(to->pml4));
     asm volatile("mov %%rsp,%0\r\n"
                  "lea done(%%rip),%%rax\r\n"
                  "mov %%rax,%1\r\n"
