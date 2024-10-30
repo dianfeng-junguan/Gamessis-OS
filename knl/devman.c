@@ -4,7 +4,7 @@
 #include "str.h"
 #include "typename.h"
 #include <disk.h>
-#include <tty.h>
+#include <text_console.h>
 device devs[MAX_DEVICES]={0};
 driver drvs[MAX_DRIVERS]={0};
 driver_args reqs[NR_REQS];

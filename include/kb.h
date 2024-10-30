@@ -21,7 +21,7 @@ void ctrl();
 void capslock();
 
 //系统中断函数：获取键盘缓冲区的一个有效字符
-char sys_getkbc();
+char sys_analyse_key();
 
 int init_kb();
 int key_proc();

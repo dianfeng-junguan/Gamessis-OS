@@ -8,6 +8,8 @@
 #include "devdrv.h"
 #include "devman.h"
 #include "framebuffer.h"
+#include "log.h"
+
 char key_buf[MAX_KEYBUF];
 kb_buf key_bufq={
         .data=key_buf,
@@ -156,6 +158,7 @@ int init_kb()
 }
 int key_proc()
 {
+    asm volatile("cli");
     //获取完整的扫描码
     u8 scan1=0,scan2=0,ch=0;
     key_code tmpc;
@@ -217,15 +220,26 @@ int key_proc()
 //        //flush_screen(0);*/
 //    }
     eoi();
-    asm volatile("leave \r\n iretq");
+    asm volatile("leave\r\n iretq");
 }
 
-char sys_getkbc()
+char sys_analyse_key()
 {
     if(key_bufq.tail==key_bufq.head)return -1;
     char c=key_buf[key_bufq.head];
-    QHEAD(key_bufq)=(QHEAD(key_bufq)+1)%QSIZE(key_bufq);
-    if(c&FLAG_BREAK)return -1;
+    key_bufq.head=(key_bufq.head+1)%key_bufq.size;
+//    QHEAD(key_bufq)=(QHEAD(key_bufq)+1)%QSIZE(key_bufq);
+    printf("scan code:");
+    char res[33]={0};
+    itoa(res,16,c);
+    printf(res);
+    if(c&FLAG_BREAK){
+        printf("\n");
+        return -1;
+    }
     c= to_ascii(c&0x7f);
+    printf(" char:");
+    putchar(c);
+    printf("\n");
     return c;
 }

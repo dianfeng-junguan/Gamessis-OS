@@ -8,14 +8,21 @@
 #include "int.h"
 #include "mem.h"
 #include "log.h"
+#include "kb.h"
+#include "sys/unistd.h"
+#include "syscall.h"
+#include "tty.h"
 
 struct process task[MAX_PROC_COUNT];
+pgroup pgs[MAX_PROC_COUNT];
+session ses[MAX_PROC_COUNT];
 struct process* current;
 TSS scene_saver;
 TSS *tss=0x108000;
 int cur_proc=0;
 int pidd=0;
 int palloc_paddr=0;
+static pid_t sidd=0;
 void init_proc(){
     //task=(struct process*)get_global_var(TASK_PCBS_ADDR);//[MAX_TASKS];;
     for(int i=0;i<MAX_PROC_COUNT;i++){
@@ -41,7 +48,7 @@ void init_proc(){
     //准备用于特权级转换(sysret，正在使用)
     wrmsr(0xc0000081,0x0020000800000000ul);
     //创建一个测试进程
-    create_test_proc();
+//    create_test_proc();
 }
 void create_test_proc(){
 
@@ -141,17 +148,21 @@ void set_proc(long rax, long rbx, long rcx, long rdx, long es, long cs, long ss,
 }
 void proc_zero()
 {
-    asm volatile("mov $27,%rax\n"
-                 ".byte 0x48\n"
-                 "syscall");
-    long rax;
-    asm volatile("":"=a"(rax));
-    if(rax==0){
-        printf("child proc ret:%d\n",cur_proc);
-    }else{
-        printf("parent proc ret:%d\n",cur_proc);
+//    asm volatile("mov $27,%rax\n"
+//                 ".byte 0x48\n"
+//                 "syscall");
+//    long rax;
+//    asm volatile("":"=a"(rax));
+//    if(rax==0){
+//        printf("child proc ret:%d\n",rax);
+//    }else{
+//        printf("parent proc ret:%d\n",rax);
+//    }
+    while (1)
+    {
+        char c= sys_analyse_key();
+        putchar(c);
     }
-    while(1);
 }
 void save_rsp(){
     //在时钟中断context下
@@ -167,13 +178,19 @@ void manage_proc(){
             task[cur_proc].utime=0;
         //find
         int i=cur_proc+1;
+        int times=0;
         //轮询，直到有一个符合条件
-        while(1){
+        while(times<10){
             if(task[i].pid!=-1&&task[i].stat==READY&&i!=cur_proc){
                 break;
             }
-            i=(i+1)%MAX_TASKS;
+            i++;
+            if(i>=MAX_TASKS){
+                times++;
+                i=0;
+            }
         }
+        if(times==10)return;//超过十次尝试都没有，暂时不切换
         //switch
         task[cur_proc].stat=READY;
         task[i].stat=RUNNING;
@@ -707,8 +724,7 @@ void * sys_malloc(int size)
 int sys_free(int ptr)
 {
     chunk_header *hp=ptr-CHUNK_SIZE;//回退到头
-    hp->alloc=0;
-    //合并
+    hp->alloc=0;    //合并
     //向后合并
     chunk_header *p=hp->next;
     while(p!=NULL)
@@ -791,6 +807,8 @@ int sys_fork(void){
     //使得子程序处于刚调用完系统调用的状态
     task[pid].regs.rip=ret_normal_proc;
     task[pid].regs.rsp-=sizeof(stack_store_regs);
+    task[pid].sid=current->sid;
+    task[pid].gpid=current->gpid;
     stack_store_regs *r=task[pid].regs.rsp;
     r->rax=0;
     r->ds=DS_USER;
@@ -940,4 +958,76 @@ void copy_mmap(struct process* from, struct process *to){
             }
         }
     }
+}
+
+pid_t getpgrp(void){
+    return current->gpid;
+}
+
+int getpgid(pid_t pid,gid_t gid){
+    if(pid==0)
+        return current->gpid;
+    for (int i = 0; i <MAX_TASKS; ++i) {
+        if(task[i].pid==pid)
+            return task[i].gpid;
+    }
+    return -1;
+}
+int setpgid(pid_t pid,gid_t gid){
+    if(pid==0)
+    {
+        if(current->sid==current->pid)
+            return -1;
+        current->gpid=gid;
+        return 0;
+    }
+    for (int i = 0; i <MAX_TASKS; ++i) {
+        if(task[i].pid==pid)
+        {
+            if(task[i].sid==task[i].pid)
+                return -1;
+            task[i].gpid=gid;
+            return 0;
+        }
+    }
+    return -1;
+}
+
+pid_t setsid(void){
+    current->sid=current->pid;
+}
+pid_t getsid(pid_t pid){
+    if(pid==0)
+        return current->sid;
+    for (int i = 0; i <MAX_TASKS; ++i) {
+        if(task[i].pid==pid)
+            return task[i].sid;
+    }
+    return -1;
+}
+int tcsetpgrp(int fildes,pid_t pgid_id){
+    //当前controlling terminal断联
+    sys_ioctl(fildes,TTY_DISCONNECT,0);
+    int sid= getsid(0);//获取session id
+    struct process* new_fgl=NULL;
+    for (int i = 0; i <MAX_TASKS; ++i) {
+        if(task[i].stat==ENDED)continue;
+        if(task[i].sid==sid){
+            task[i].fg_pgid=pgid_id;
+            if(task[i].pid==pgid_id){
+                //这是新前台进程组的leader
+                new_fgl=&task[i];
+            }
+        }
+    }
+    //TODO:通知新leader把tty连接
+}
+pid_t tcgetpgrp(int fildes){
+    return current->fg_pgid;
+}
+//===============
+
+int sys_ioctl(int fildes, int request, unsigned long args){
+    current->openf[fildes]->f_ops->ioctl(current->openf[fildes]->dentry->dir_inode,current->openf[fildes]\
+    ,request,args);
 }

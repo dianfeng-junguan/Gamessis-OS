@@ -12,7 +12,7 @@ int init_logging()
     ypos=0;
 }
 
-static void itoa (char *buf, int base, int d)
+void itoa (char *buf, int base, int d)
 {
     char *p = buf;
     char *p1, *p2;
@@ -84,7 +84,7 @@ void printf (const char *format, ...)
     char **arg = (char **) &format;
     char c;
     char buf[20];
- 
+
     arg++;
  
     while ((c = *format++) != 0)

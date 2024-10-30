@@ -1,8 +1,8 @@
 #pragma once
 //专门处理页帧（显存缓冲区）的功能。
 #include <multiboot2.h>
+#include "vfs.h"
 #define FRAMEBUFFER_ADDR 0x40000000ul
-
 #define PSF1_FONT_MAGIC 0x0436
 struct psf1_header {
     unsigned short magic;     /* magic number for identification */
@@ -31,6 +31,12 @@ void fill_rect(int x,int y,int w,int h,unsigned int color);
 void draw_text(int x, int y, int size, char *str);
 void draw_letter(int x, int y, int size, char c);
 void print(char* s);
+
+long open_framebuffer(struct index_node * inode,struct file * filp);
+long close_framebuffer(struct index_node * inode,struct file * filp);
+long read_framebuffer(struct file * filp,char * buf,unsigned long count,long * position);
+long write_framebuffer(struct file * filp,char * buf,unsigned long count,long * position);
+long ioctl_framebuffer(struct index_node * inode,struct file * filp,unsigned long cmd,unsigned long arg);
 
 void scr_up();
 void scr_down();

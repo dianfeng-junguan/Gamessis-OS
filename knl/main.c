@@ -9,7 +9,7 @@
 #include <mem.h>
 #include <vfs.h>
 
-#include <tty.h>
+#include <text_console.h>
 #include <disk.h>
 #include <fat32.h>
 #include <kb.h>
@@ -154,6 +154,7 @@ void main(unsigned int magic,void* addr)
 
     sti();
     DISK1_FAT32_FS_init();
+
     manage_proc_lock=0;
 
 
@@ -166,8 +167,9 @@ void main(unsigned int magic,void* addr)
 
     while (1)
     {
-        char c=sys_getkbc();
-        if(c!=-1)
-            putchar(c);
+        char c= sys_analyse_key();
+//        if(c!=-1){
+//            putchar(c);
+//        }
     }
 }

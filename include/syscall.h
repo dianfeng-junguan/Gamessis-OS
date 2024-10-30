@@ -62,3 +62,4 @@ unsigned long sys_close(int fd);
 unsigned long sys_read(int fd,void * buf,long count);
 unsigned long sys_write(int fd,void * buf,long count);
 unsigned long sys_lseek(int filds,long offset,int whence);
+int sys_ioctl(int fildes, int request, unsigned long args);

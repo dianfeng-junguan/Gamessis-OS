@@ -161,6 +161,10 @@ int vfs_write_file(vfs_dir_entry *f,char *buf,int len);
 #define SEEK_SET 0
 #define SEEK_END 1
 #define SEEK_CUR 2
+
+#define STDIN_FILENO 0
+#define STDOUT_FILENO 1
+#define STDERR_FILENO 2
 int vfs_seek_file(vfs_dir_entry *f,int offset,int origin);
 //返回文件ptr在块设备中的块号
 int get_according_bnr(vfs_dir_entry *f);

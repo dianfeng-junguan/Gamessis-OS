@@ -6,7 +6,7 @@
 
 int init_logging();
 
-static void itoa (char *buf, int base, int d);
+void itoa (char *buf, int base, int d);
 
 void putchar (char c);
 

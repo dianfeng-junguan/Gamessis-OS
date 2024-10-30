@@ -12,7 +12,7 @@
 #define SUSPENDED 2
 #define ENDED 3
 #define MAX_PROC_COUNT 64
-#define MAX_UTIME 1
+#define MAX_UTIME 10
 #define MAX_PROC_OPENF 32
 #include "gdt.h"
 #include "typename.h"
@@ -148,7 +148,9 @@ typedef struct
     u32 io_map_base;
 }TSS;
 struct process{
-    unsigned int pid;
+    unsigned int pid,gpid,sid,fg_pgid;//fg_gid是foreground process group id
+    int in_bgpg;//是否在background process group id
+    int tty_fd;//控制台fd
     unsigned int stat;
     unsigned int utime; //used time
     unsigned int priority;
@@ -166,8 +168,18 @@ struct process{
     struct file *openf[MAX_PROC_OPENF];
     TSS tss;
     regs_t regs;
+    struct process* next;//一个进程组里面的下一个进程
 }__attribute__((packed));//208 bytes
 #endif
+typedef struct _pgroup{
+    struct process* leader;
+    struct process* head;
+    struct _pgroup* next;//一个会话里面的下一个进程组
+}pgroup;//进程组
+typedef struct {
+    struct pgroup *foreground_group;
+    struct pgroup* head;
+}session;//会话
 typedef struct
 {
     unsigned int proc_end_addr;

@@ -175,6 +175,13 @@ build CMakeFiles/gms.dir/knl/mods/kb.c.obj: C_COMPILER__gms_unscanned_Debug D$:/
   OBJECT_DIR = CMakeFiles\gms.dir
   OBJECT_FILE_DIR = CMakeFiles\gms.dir\knl\mods
 
+build CMakeFiles/gms.dir/knl/mods/text_console.c.obj: C_COMPILER__gms_unscanned_Debug D$:/Code/Comprehensive/OS/workspace/64/knl/mods/text_console.c || cmake_object_order_depends_target_gms
+  DEP_FILE = CMakeFiles\gms.dir\knl\mods\text_console.c.obj.d
+  FLAGS = -std=c99 -pedantic -g -fdiagnostics-color=always
+  INCLUDES = -ID:/Code/Comprehensive/OS/workspace/64/include
+  OBJECT_DIR = CMakeFiles\gms.dir
+  OBJECT_FILE_DIR = CMakeFiles\gms.dir\knl\mods
+
 build CMakeFiles/gms.dir/knl/mods/tty.c.obj: C_COMPILER__gms_unscanned_Debug D$:/Code/Comprehensive/OS/workspace/64/knl/mods/tty.c || cmake_object_order_depends_target_gms
   DEP_FILE = CMakeFiles\gms.dir\knl\mods\tty.c.obj.d
   FLAGS = -std=c99 -pedantic -g -fdiagnostics-color=always
@@ -218,7 +225,7 @@ build CMakeFiles/gms.dir/com/types.c.obj: C_COMPILER__gms_unscanned_Debug D$:/Co
 #############################################
 # Link the executable gms.exe
 
-build gms.exe: C_EXECUTABLE_LINKER__gms_Debug CMakeFiles/gms.dir/knl/clock.c.obj CMakeFiles/gms.dir/knl/com.c.obj CMakeFiles/gms.dir/knl/devman.c.obj CMakeFiles/gms.dir/knl/exe.c.obj CMakeFiles/gms.dir/knl/framebuffer.c.obj CMakeFiles/gms.dir/knl/gdt.c.obj CMakeFiles/gms.dir/knl/int.c.obj CMakeFiles/gms.dir/knl/log.c.obj CMakeFiles/gms.dir/knl/main.c.obj CMakeFiles/gms.dir/knl/memory.c.obj CMakeFiles/gms.dir/knl/proc.c.obj CMakeFiles/gms.dir/knl/sys.c.obj CMakeFiles/gms.dir/knl/vfs.c.obj CMakeFiles/gms.dir/knl/virfs.c.obj CMakeFiles/gms.dir/knl/mods/disk.c.obj CMakeFiles/gms.dir/knl/mods/fat16.c.obj CMakeFiles/gms.dir/knl/mods/fat32.c.obj CMakeFiles/gms.dir/knl/mods/kb.c.obj CMakeFiles/gms.dir/knl/mods/tty.c.obj CMakeFiles/gms.dir/com/mem.c.obj CMakeFiles/gms.dir/com/str.c.obj CMakeFiles/gms.dir/com/syscall.c.obj CMakeFiles/gms.dir/com/types.c.obj
+build gms.exe: C_EXECUTABLE_LINKER__gms_Debug CMakeFiles/gms.dir/knl/clock.c.obj CMakeFiles/gms.dir/knl/com.c.obj CMakeFiles/gms.dir/knl/devman.c.obj CMakeFiles/gms.dir/knl/exe.c.obj CMakeFiles/gms.dir/knl/framebuffer.c.obj CMakeFiles/gms.dir/knl/gdt.c.obj CMakeFiles/gms.dir/knl/int.c.obj CMakeFiles/gms.dir/knl/log.c.obj CMakeFiles/gms.dir/knl/main.c.obj CMakeFiles/gms.dir/knl/memory.c.obj CMakeFiles/gms.dir/knl/proc.c.obj CMakeFiles/gms.dir/knl/sys.c.obj CMakeFiles/gms.dir/knl/vfs.c.obj CMakeFiles/gms.dir/knl/virfs.c.obj CMakeFiles/gms.dir/knl/mods/disk.c.obj CMakeFiles/gms.dir/knl/mods/fat16.c.obj CMakeFiles/gms.dir/knl/mods/fat32.c.obj CMakeFiles/gms.dir/knl/mods/kb.c.obj CMakeFiles/gms.dir/knl/mods/text_console.c.obj CMakeFiles/gms.dir/knl/mods/tty.c.obj CMakeFiles/gms.dir/com/mem.c.obj CMakeFiles/gms.dir/com/str.c.obj CMakeFiles/gms.dir/com/syscall.c.obj CMakeFiles/gms.dir/com/types.c.obj
   FLAGS = -std=c99 -pedantic -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\gms.dir

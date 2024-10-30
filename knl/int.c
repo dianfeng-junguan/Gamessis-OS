@@ -232,7 +232,7 @@ int syscall(int a, int b, int c, int d, int e, int f)
         case SYSCALL_MKFIFO:return sys_mkfifo(a);
         case SYSCALL_MALLOC:return sys_malloc(a);
         case SYSCALL_FREE:return sys_free(a);
-        case SYSCALL_KB_READC:return sys_getkbc();
+        case SYSCALL_KB_READC:return sys_analyse_key();
         case SYSCALL_FIND_DEV:return sys_find_dev(a);
         case SYSCALL_FORK:return sys_fork();
         case SYSCALL_EXECVE:return sys_execve(a,b);

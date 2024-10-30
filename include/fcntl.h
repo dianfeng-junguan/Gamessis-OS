@@ -5,6 +5,18 @@
 #ifndef GMS_FCNTL_H
 #define GMS_FCNTL_H
 
+#define F_DUPFD     1
+#define F_GETFD     2
+#define F_SETFD     3
+#define F_GETFL     4
+#define F_SETFL     5
+#define F_GETLK     6
+#define F_SETLK     7
+#define F_SETLKW    8
+
+#define FD_CLOEXEC 1
+
+
 #define	O_RDONLY	00000000	/* Open read-only */
 #define	O_WRONLY	00000001	/* Open write-only */
 #define	O_RDWR		00000002	/* Open read/write */

@@ -1,6 +1,8 @@
 #include <framebuffer.h>
 #include <memory.h>
 #include <typename.h>
+#include "mem.h"
+
 struct multiboot_tag_framebuffer framebuffer;
 
 //内核内嵌字体
@@ -164,4 +166,34 @@ void print(char* s){
         draw_letter(fb_cursor_x*font_width*font_size,fb_cursor_y*font_height*font_size,font_size,*s);
         fb_cursor_x+=1;
     }
+}
+struct file_operations framebuffer_fops={
+        .open=open_framebuffer,.close=close_framebuffer,.read=read_framebuffer,.write=write_framebuffer,
+        .ioctl=ioctl_framebuffer
+};
+long open_framebuffer(struct index_node * inode,struct file * filp){
+    inode->f_ops=&framebuffer_fops;
+    filp->f_ops=&framebuffer_fops;
+}
+long close_framebuffer(struct index_node * inode,struct file * filp){
+
+}
+long read_framebuffer(struct file * filp,char * buf,unsigned long count,long * position){
+
+}
+long write_framebuffer(struct file * filp,char * buf,unsigned long count,long * position){
+    char *tmp= (char*)vmalloc();
+    int c=count/(PAGE_4K_SIZE-1),p=0;
+    //一块一块输出
+    for(int i=0;i<count?count:1;i++){
+        memcpy(tmp,buf+p,PAGE_4K_SIZE-1);
+        tmp[PAGE_4K_SIZE-1]=0;
+        print(tmp);
+        p+=PAGE_4K_SIZE-1;
+    }
+    vmfree(tmp);
+    return 0;
+}
+long ioctl_framebuffer(struct index_node * inode,struct file * filp,unsigned long cmd,unsigned long arg){
+
 }

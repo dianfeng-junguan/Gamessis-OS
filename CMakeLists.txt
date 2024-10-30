@@ -14,4 +14,8 @@ add_executable(gms ${KNL} ${KNL_MODS} ${KNL_COMS}
         knl/mods/fat32.c
         knl/sys.c
         include/fcntl.h
+        include/sys/types.h
+        include/sys/unistd.h
+        include/tty.h
+        knl/mods/tty.c
 )
