@@ -7,6 +7,7 @@
 #include "memory.h"
 #include "log.h"
 #include "mem.h"
+#include "str.h"
 
 struct dir_entry * path_walk(char * name,unsigned long flags)
 {
@@ -75,15 +76,15 @@ struct dir_entry * path_walk(char * name,unsigned long flags)
 
 int fill_dentry(void *buf,char *name, long namelen,long type,long offset)
 {
-//    struct dirent* dent = (struct dirent*)buf;
-//
-//    if((unsigned long)buf < TASK_SIZE && !verify_area(buf,sizeof(struct dirent) + namelen))
-//        return -EFAULT;
-//
-//    memcpy(name,dent->d_name,namelen);
-//    dent->d_namelen = namelen;
-//    dent->d_type = type;
-//    dent->d_offset = offset;
+    struct dirent* dent = (struct dirent*)buf;
+
+    if((unsigned long)buf < PAGE_4K_SIZE)
+        return -EFAULT;
+
+    memcpy(name,dent->d_name,namelen);
+    dent->d_namelen = namelen;
+    dent->d_type = type;
+    dent->d_offset = offset;
     return sizeof(struct dirent) + namelen;
 }
 
@@ -133,4 +134,17 @@ unsigned long unregister_filesystem(struct file_system_type * fs)
     return 0;
 }
 
+
+void mount_rootfs(){
+    root_sb=(struct super_block*)vmalloc();
+    root_sb->root=root_sb+1;//紧凑跟在后面
+    root_sb->sb_ops=NULL;
+    root_sb->root->name=root_sb->root+1;//紧凑跟在后面
+    strcpy(root_sb->root->name,"/");
+    root_sb->root->name_length=1;
+    root_sb->root->parent=root_sb->root;
+    list_init(&root_sb->root->subdirs_list);
+    list_init(&root_sb->root->child_node);
+
+}
 

@@ -160,5 +160,6 @@ struct dir_entry * path_walk(char * name,unsigned long flags);
 int fill_dentry(void *buf,char *name, long namelen,long type,long offset);
 extern struct super_block * root_sb;
 
-
+//挂载临时根文件系统，用于初始化/dev等文件夹。
+void mount_rootfs();
 #endif //GMS_VFS_H

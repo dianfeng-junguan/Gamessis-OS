@@ -146,14 +146,15 @@ void main(unsigned int magic,void* addr)
 	init_paging();
  	init_gdt();
     init_proc();
-    init_drvdev_man();
+    mount_rootfs();
+    init_devman();
+    sti();
+    DISK1_FAT32_FS_init();
     //自带驱动
     //init_tty();
     init_kb();
 //    init_disk();
 
-    sti();
-    DISK1_FAT32_FS_init();
 
     manage_proc_lock=0;
 

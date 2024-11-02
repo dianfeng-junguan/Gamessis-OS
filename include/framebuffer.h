@@ -40,3 +40,5 @@ long ioctl_framebuffer(struct index_node * inode,struct file * filp,unsigned lon
 
 void scr_up();
 void scr_down();
+
+extern struct file_operations framebuffer_fops;

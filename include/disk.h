@@ -23,6 +23,8 @@
 #define DISK_CHK_ERR 2
 #define MAX_DISK_CHKTIME 10
 #include "devdrv.h"
+#include "vfs.h"
+
 typedef struct{
     int func;	//调用功能号
     int disk;	//操作硬盘对象
@@ -57,4 +59,5 @@ int hd_do_req(driver_args *args);
 //counts:扇区数
 int dllmain(void*,int,void*);
 int chk_result(int r);
+extern struct file_operations hd_fops;
 #endif

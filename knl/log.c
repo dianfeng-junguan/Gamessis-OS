@@ -1,5 +1,8 @@
 #include <log.h>
+#include <stdarg.h>
 #include "framebuffer.h"
+#include "memory.h"
+#include "str.h"
 
 static unsigned char* video;
 static int xpos,ypos;
@@ -79,47 +82,57 @@ newline:
 }
  
 /* 格式化字符串并在屏幕上输出，就像 libc 函数 printf 一样。 */
-void printf (const char *format, ...)
+void printf (const char *format,...)
 {
-    char **arg = (char **) &format;
-    char c;
-    char buf[20];
-
-    arg++;
- 
-    while ((c = *format++) != 0)
-    {
-        if (c != '%')
-            putchar (c);
-        else
-        {
-            char *p;
- 
-            c = *format++;
-            switch (c)
-            {
-            case 'd':
-            case 'u':
-            case 'x':
-                itoa (buf, c, *((int *) arg++));
-                p = buf;
-                goto string;
-                break;
- 
-            case 's':
-                p = *arg++;
-                if (! p)
-                    p = "(null)";
- 
-string:
-                while (*p)
-                    putchar (*p++);
-                break;
- 
-            default:
-                putchar (*((int *) arg++));
-                break;
-            }
-        }
-    }
+    if(strlen(format)>=1024)
+        return;//一次性输出不了太长
+    char* tmp=(char*)vmalloc();
+    va_list vargs;
+    va_start(vargs,format);
+    sprintf(tmp,format,vargs);
+    va_end(vargs);
+    print(tmp);
+    comprintf(tmp);
+    vmfree(tmp);
+//    char **arg = (char **) &format;
+//    char c;
+//    char buf[20];
+//
+//    arg++;
+//
+//    while ((c = *format++) != 0)
+//    {
+//        if (c != '%')
+//            putchar (c);
+//        else
+//        {
+//            char *p;
+//
+//            c = *format++;
+//            switch (c)
+//            {
+//            case 'd':
+//            case 'u':
+//            case 'x':
+//                itoa (buf, c, *((int *) arg++));
+//                p = buf;
+//                goto string;
+//                break;
+//
+//            case 's':
+//                p = *arg++;
+//                if (! p)
+//                    p = "(null)";
+//
+//string:
+//                while (*p)
+//                    putchar (*p++);
+//                break;
+//
+//            default:
+//                putchar (*((int *) arg++));
+//                break;
+//            }
+//        }
+//    }
 }

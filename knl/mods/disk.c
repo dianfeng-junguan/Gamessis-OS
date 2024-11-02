@@ -6,6 +6,9 @@
 #include "virfs.h"
 #include <log.h>
 #define NULL ((void*)0)
+struct file_operations hd_fops={
+    //TODO:hd规范化
+};
 disk_req disk_reqs[MAX_DISK_REQUEST_COUNT];
 disk_req *running_req=NULL;
 driver_args *running_devman_req=NULL;
@@ -49,10 +52,12 @@ int disk_int_handler_c()
         {
             *p++=inw(port);
         }
+        running_req->result=DISK_CHK_OK;
     }else if(running_req->func==DISKREQ_WRITE)
     {
         for(int i=0;i<running_req->sec_n*256;i++)
             outw(port,*p++);
+        running_req->result=DISK_CHK_OK;
     }else if(running_req->func==DISKREQ_CHECK)
     {
         char stat=inb(port+7);
@@ -259,7 +264,10 @@ int write_disk(driver_args* args)
 int chk_result(int r)
 {
     while(disk_reqs[r].stat!=REQ_STAT_DONE);
-    return disk_reqs[r].result==DISK_CHK_OK?1:0;
+    if(disk_reqs[r].result==DISK_CHK_OK)
+        return 1;
+    comprintf("disk err\n");
+    return 0;
 }
 int disk_existent(int disk)
 {

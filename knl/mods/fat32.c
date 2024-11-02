@@ -444,7 +444,7 @@ struct dir_entry * FAT32_lookup(struct index_node * parent_inode,struct dir_entr
 
 next_cluster:
 	sector = fsbi->Data_firstsector + (cluster - 2) * fsbi->sector_per_cluster;
-	printf("lookup cluster:%#010x,sector:%x\n",cluster,sector);
+	printf("lookup cluster:0x%x,sector:0x%x\r\n",cluster,sector);
 	int r=request(DISK_MAJOR_MAJOR,DISKREQ_READ,sector,fsbi->sector_per_cluster,(unsigned char *)buf);
     if(!chk_result(r))
 	{

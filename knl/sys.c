@@ -49,7 +49,7 @@ unsigned long sys_open(char *filename,int flags)
         vmfree(path);
         return -ENAMETOOLONG;
     }
-    strcpy(filename,path);
+    strcpy(path,filename);
 
     dentry = path_walk(path,0);
 
@@ -66,15 +66,18 @@ unsigned long sys_open(char *filename,int flags)
             return -ENOENT;//上级目录也不在
         //创建新的文件
         dentry=(struct dir_entry*)vmalloc();
-        list_add_to_behind(&parent->subdirs_list,dentry);
+        list_init(&dentry->subdirs_list);
+        list_init(&dentry->child_node);
+        list_add_to_behind(&parent->subdirs_list,&dentry->child_node);
         dentry->parent=parent;
         dentry->dir_inode=dentry+1;//放在后面
         dentry->dir_inode->file_size=0;
         //继承操作方法
         dentry->dir_inode->f_ops=parent->dir_inode->f_ops;
+        dentry->dir_inode->inode_ops=parent->dir_inode->inode_ops;
         dentry->dir_ops=parent->dir_ops;
-        //继承上级目录的特殊属性
-        dentry->dir_inode->attribute=*(unsigned long*)parent->dir_inode->private_index_info;
+        //这样的创建文件只能创建普通文件，设备文件要通过devman创建
+        dentry->dir_inode->attribute=FS_ATTR_FILE;
     }
     vmfree(path);
 

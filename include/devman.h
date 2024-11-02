@@ -2,7 +2,7 @@
 #include "devdrv.h"
 #include "vfs.h"
 #define NR_REQS 32
-int init_drvdev_man();
+int init_devman();
 int reg_device(device *dev);
 int reg_driver(driver *drv);
 int dispose_device(int dev);

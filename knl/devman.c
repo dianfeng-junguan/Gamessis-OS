@@ -9,6 +9,7 @@
 #include "proc.h"
 #include "mem.h"
 #include "framebuffer.h"
+#include "log.h"
 
 device devs[MAX_DEVICES]={0};
 driver drvs[MAX_DRIVERS]={0};
@@ -26,15 +27,60 @@ static int dev_dfd=-1;
 struct file_operations dev_dir_fops={
     .open=open_dev,.close=close_dev,.ioctl=ioctl_dev,.read=read_dev,.write=write_dev
 };
+struct dir_entry_operations dev_dir_dops={
+
+};
 static int devd_fd=-1;
-int init_drvdev_man()
+void make_dentry(struct dir_entry* d,char* name,int namelen,struct dir_entry* parent,struct dir_entry_operations* dops){
+    strcpy(d->name,name);
+    d->name_length=namelen;
+    //添加dentry的操作方法，这样能够查找设备
+    d->dir_ops=dops;
+    list_init(&d->subdirs_list);
+    list_init(&d->child_node);
+    d->parent=parent;
+    list_add_to_behind(parent->root->subdirs_list,d->child_node);
+}
+void make_inode(struct index_node* i,struct index_node_operations* iops,struct file_operations* fops,unsigned long attr,super_block* sb){
+    i->f_ops=fops;
+    i->attribute=attr;
+    i->sb=sb;
+    i->file_size=0;
+    i->inode_ops=iops;
+}
+void make_devf(struct dir_entry* d,struct index_node* i,char* name,struct dir_entry* ddev,struct file_operations* fops){
+    make_dentry(d,name, strlen(name),root_sb->root,&dev_dir_dops);
+    d->dir_inode=i;
+    make_inode(i,ddev->dir_inode->inode_ops,fops,FS_ATTR_DEVICE,root_sb);
+    list_add_to_behind(&ddev->subdirs_list,&d->child_node);//添加到/dev下
+}
+/*
+ * 创建/dev文件夹，添加必要的设备文件。
+ * 这个/dev文件夹的dentry和inode等数据由devman管理，根文件系统切换时，这个文件夹会跟着挂载到新文件系统的根目录下。
+ * */
+int init_devman()
 {
+    //创建dev文件夹
+    struct dir_entry* ddev=(struct dir_entry*)vmalloc();
+    struct index_node* idev=ddev+1;
+    ddev->name=idev+1;
+    make_dentry(ddev,"dev",3,root_sb->root,root_sb->root->dir_ops);
+    ddev->dir_inode=idev;
+    make_inode(idev,root_sb->root->dir_inode->inode_ops,root_sb->root->dir_inode->f_ops,FS_ATTR_DIR,root_sb);
+
+
     //创建几个设备文件
     //console-framebuffer.c
-    extern struct process *current;
-    devd_fd= sys_open("/dev",O_DIRECTORY);
-    //设置设备的特殊属性，之后创建文件的时候，就会复制这个属性，然后操作就会引导到这里
-    *(unsigned long*)current->openf[devd_fd]->dentry->dir_inode->private_index_info=FS_ATTR_DEVICE;
+    struct dir_entry* dconsole= (struct dir_entry *) vmalloc();
+    struct index_node* iconsole=dconsole+1;
+    dconsole->name=iconsole+1;
+    make_devf(dconsole,iconsole,"console",ddev,&framebuffer_fops);
+    //hd0-disk.c
+    struct dir_entry* dhd0= (struct dir_entry *) vmalloc();
+    struct index_node* ihd0=dhd0+1;
+    dhd0->name=ihd0+1;
+    make_devf(dhd0,ihd0,"hd0",ddev,&hd_fops);
+
 
 }
 //

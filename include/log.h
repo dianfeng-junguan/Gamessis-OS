@@ -1,4 +1,6 @@
 /* 与显示相关的设置。 */
+#include <stdarg.h>
+
 #define COLUMNS                 80
 #define LINES                   24
 #define ATTRIBUTE               7
@@ -10,5 +12,5 @@ void itoa (char *buf, int base, int d);
 
 void putchar (char c);
 
-void printf (const char *format, ...);
+void printf (const char *format,...);
 void comprintf(char* fmt,...);
