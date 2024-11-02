@@ -29,3 +29,4 @@ long close_dev(struct index_node * inode,struct file * filp);
 long read_dev(struct file * filp,char * buf,unsigned long count,long * position);
 long write_dev(struct file * filp,char * buf,unsigned long count,long * position);
 long ioctl_dev(struct index_node * inode,struct file * filp,unsigned long cmd,unsigned long arg);
+extern struct dir_entry* ddev,*dmnt;

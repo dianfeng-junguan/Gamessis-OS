@@ -34,12 +34,13 @@ struct dir_entry * path_walk(char * name,unsigned long flags)
         path = (struct dir_entry *)vmalloc(sizeof(struct dir_entry),0);
         memset(path,0,sizeof(struct dir_entry));
 
-        path->name = vmalloc(tmpnamelen+1,0);
+        path->name = vmalloc();
         memset(path->name,0,tmpnamelen+1);
-        memcpy(tmpname,path->name,tmpnamelen);
+        memcpy(path->name,tmpname,tmpnamelen);
         path->name_length = tmpnamelen;
 
-        if(parent->dir_inode->inode_ops->lookup(parent->dir_inode,path) == NULL)
+        path=parent->dir_inode->inode_ops->lookup(parent->dir_inode,path);
+        if(path == NULL)
         {
             printf("can not find file or dir:%s\n",path->name);
             vmfree(path->name);
@@ -47,10 +48,12 @@ struct dir_entry * path_walk(char * name,unsigned long flags)
             return NULL;
         }
 
-        list_init(&path->child_node);
-        list_init(&path->subdirs_list);
+//        list_init(&path->child_node);
+//        list_init(&path->subdirs_list);
         path->parent = parent;
-        list_add_to_behind(&parent->subdirs_list,&path->child_node);
+        //list_add会查重，如果链表里面已经有了data指针值相同的项，就不添加。
+        //对于/dev这样的文件夹，lookup返回的就是链表里的dentry，data会一样
+        list_add(&parent->subdirs_list,&path->child_node);
 
         if(!*name)
             goto last_component;
@@ -133,13 +136,38 @@ unsigned long unregister_filesystem(struct file_system_type * fs)
             p = p->next;
     return 0;
 }
-
-
+//在parent inode下查找dest dentry
+struct dir_entry* root_lookup(struct index_node * parent_inode,struct dir_entry * dest_dentry){
+    struct dir_entry* tmp= (struct dir_entry *) parent_inode->private_index_info;
+    struct List* p= tmp->subdirs_list.next;
+    while (p){
+        struct dir_entry* dp=p->data;
+        if(strcmp(dp->name,dest_dentry->name)==0){
+            vmfree(dest_dentry);
+            return dp;
+        }
+        p=p->next;
+    }
+    vmfree(dest_dentry);
+    return NULL;
+}
+struct index_node_operations root_iops={
+    .lookup=root_lookup
+};
 void mount_rootfs(){
     root_sb=(struct super_block*)vmalloc();
     root_sb->root=root_sb+1;//紧凑跟在后面
     root_sb->sb_ops=NULL;
-    root_sb->root->name=root_sb->root+1;//紧凑跟在后面
+    struct index_node* ir=root_sb->root+1;
+    root_sb->root->dir_inode=ir;
+    ir->sb=root_sb;
+    ir->attribute=FS_ATTR_DIR;
+    ir->file_size=0;
+    ir->inode_ops=&root_iops;//lookup函数是必要的
+    ir->f_ops=NULL;
+    ir->private_index_info=root_sb->root;
+
+    root_sb->root->name=ir+1;//紧凑跟在后面
     strcpy(root_sb->root->name,"/");
     root_sb->root->name_length=1;
     root_sb->root->parent=root_sb->root;

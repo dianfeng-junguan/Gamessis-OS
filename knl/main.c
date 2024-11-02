@@ -14,6 +14,8 @@
 #include <fat32.h>
 #include <kb.h>
 #include "com.h"
+#include "syscall.h"
+#include "fcntl.h"
 
 int manage_proc_lock=1;
 void main(unsigned int magic,void* addr)
@@ -150,6 +152,10 @@ void main(unsigned int magic,void* addr)
     init_devman();
     sti();
     DISK1_FAT32_FS_init();
+
+    int fd= sys_open("/dev/console",O_WRONLY);
+    sys_write(fd,"try",4);
+    sys_close(fd);
     //自带驱动
     //init_tty();
     init_kb();

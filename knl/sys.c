@@ -68,7 +68,8 @@ unsigned long sys_open(char *filename,int flags)
         dentry=(struct dir_entry*)vmalloc();
         list_init(&dentry->subdirs_list);
         list_init(&dentry->child_node);
-        list_add_to_behind(&parent->subdirs_list,&dentry->child_node);
+        dentry->child_node.data=dentry;
+        list_add(&parent->subdirs_list,&dentry->child_node);
         dentry->parent=parent;
         dentry->dir_inode=dentry+1;//放在后面
         dentry->dir_inode->file_size=0;

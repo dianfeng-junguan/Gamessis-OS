@@ -175,6 +175,7 @@ struct file_operations framebuffer_fops={
 long open_framebuffer(struct index_node * inode,struct file * filp){
     inode->f_ops=&framebuffer_fops;
     filp->f_ops=&framebuffer_fops;
+    return 1;
 }
 long close_framebuffer(struct index_node * inode,struct file * filp){
 
@@ -186,7 +187,7 @@ long write_framebuffer(struct file * filp,char * buf,unsigned long count,long * 
     char *tmp= (char*)vmalloc();
     int c=count/(PAGE_4K_SIZE-1),p=0;
     //一块一块输出
-    for(int i=0;i<count?count:1;i++){
+    for(int i=0;i<(c?c:1);i++){
         memcpy(tmp,buf+p,PAGE_4K_SIZE-1);
         tmp[PAGE_4K_SIZE-1]=0;
         print(tmp);

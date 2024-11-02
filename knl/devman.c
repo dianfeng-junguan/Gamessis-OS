@@ -38,8 +38,9 @@ void make_dentry(struct dir_entry* d,char* name,int namelen,struct dir_entry* pa
     d->dir_ops=dops;
     list_init(&d->subdirs_list);
     list_init(&d->child_node);
+    d->child_node.data=d;
     d->parent=parent;
-    list_add_to_behind(parent->root->subdirs_list,d->child_node);
+    list_add(&parent->subdirs_list,&d->child_node);
 }
 void make_inode(struct index_node* i,struct index_node_operations* iops,struct file_operations* fops,unsigned long attr,super_block* sb){
     i->f_ops=fops;
@@ -52,21 +53,32 @@ void make_devf(struct dir_entry* d,struct index_node* i,char* name,struct dir_en
     make_dentry(d,name, strlen(name),root_sb->root,&dev_dir_dops);
     d->dir_inode=i;
     make_inode(i,ddev->dir_inode->inode_ops,fops,FS_ATTR_DEVICE,root_sb);
-    list_add_to_behind(&ddev->subdirs_list,&d->child_node);//添加到/dev下
+    list_add(&ddev->subdirs_list,&d->child_node);//添加到/dev下
 }
 /*
  * 创建/dev文件夹，添加必要的设备文件。
  * 这个/dev文件夹的dentry和inode等数据由devman管理，根文件系统切换时，这个文件夹会跟着挂载到新文件系统的根目录下。
  * */
+struct dir_entry* ddev=NULL,*dmnt;
 int init_devman()
 {
     //创建dev文件夹
-    struct dir_entry* ddev=(struct dir_entry*)vmalloc();
+    ddev=(struct dir_entry*)vmalloc();
     struct index_node* idev=ddev+1;
     ddev->name=idev+1;
     make_dentry(ddev,"dev",3,root_sb->root,root_sb->root->dir_ops);
     ddev->dir_inode=idev;
     make_inode(idev,root_sb->root->dir_inode->inode_ops,root_sb->root->dir_inode->f_ops,FS_ATTR_DIR,root_sb);
+    idev->private_index_info=ddev;
+
+    //创建mnt文件夹
+    dmnt=(struct dir_entry*)vmalloc();
+    struct index_node* imnt=dmnt+1;
+    dmnt->name=imnt+1;
+    make_dentry(dmnt,"mnt",3,root_sb->root,root_sb->root->dir_ops);
+    dmnt->dir_inode=imnt;
+    make_inode(imnt,root_sb->root->dir_inode->inode_ops,root_sb->root->dir_inode->f_ops,FS_ATTR_DIR,root_sb);
+    imnt->private_index_info=dmnt;
 
 
     //创建几个设备文件

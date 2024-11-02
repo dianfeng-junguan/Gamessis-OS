@@ -5,24 +5,41 @@
 #ifndef GMS_VFS_H
 #define GMS_VFS_H
 
+#include "typename.h"
+
 struct List
 {
     struct List * prev;
+    void* data;
     struct List * next;
 };
 
 __attribute__((always_inline)) inline void list_init(struct List * list)
 {
-    list->prev = list;
-    list->next = list;
+    list->prev = NULL;
+    list->next = NULL;
 }
 
 __attribute__((always_inline)) inline void list_add_to_behind(struct List * entry,struct List * new)	////add to entry behind
 {
     new->next = entry->next;
     new->prev = entry;
-    new->next->prev = new;
+    if(new->next)
+        new->next->prev = new;
     entry->next = new;
+}
+__attribute__((always_inline)) inline void list_add(struct List * entry,struct List * new)	////add to the tail of the link
+{
+    if(entry->next==NULL)
+        list_add_to_behind(entry,new);
+    else{
+        struct List* p=entry;
+        for(;p->next&&p->next!=p;p=p->next){
+            if(p->data==new->data)
+                return;
+        }
+        list_add_to_behind(p,new);
+    }
 }
 
 struct Disk_Partition_Table_Entry

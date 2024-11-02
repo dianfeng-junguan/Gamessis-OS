@@ -20,32 +20,29 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="初步实现了devman接入vfs">
+    <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="完善了devman对/dev文件夹的初始化和rootfs的初始化">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/clock.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/clock.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/devman.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/devman.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/exe.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/exe.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/framebuffer.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/framebuffer.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/gmsknl.elf" beforeDir="false" afterPath="$PROJECT_DIR$/bin/gmsknl.elf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/int.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/int.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/log.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/log.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/main.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/memory.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/memory.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/mods/disk.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/mods/disk.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/mods/fat16.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/mods/fat16.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/mods/kb.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/mods/kb.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/mods/tty.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/mods/tty.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/proc.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/proc.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/virfs.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/virfs.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hda.img" beforeDir="false" afterPath="$PROJECT_DIR$/hda.img" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/devman.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/devman.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/disk.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/disk.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/framebuffer.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/framebuffer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/log.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/log.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/vfs.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/vfs.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl/devman.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/devman.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/log.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/log.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/framebuffer.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/framebuffer.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/mods/disk.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/mods/disk.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl/mods/fat32.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/mods/fat32.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl/sys.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/sys.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl/vfs.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/vfs.c" afterDir="false" />
@@ -204,7 +201,7 @@
       <workItem from="1728652338297" duration="6577000" />
       <workItem from="1728960595779" duration="6191000" />
       <workItem from="1730257277156" duration="10937000" />
-      <workItem from="1730514163911" duration="12153000" />
+      <workItem from="1730514163911" duration="19239000" />
     </task>
     <task id="LOCAL-00001" summary="重新整理了一下，改用clion开发">
       <option name="closed" value="true" />
@@ -470,7 +467,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730520709128</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="完善了devman对/dev文件夹的初始化和rootfs的初始化">
+      <option name="closed" value="true" />
+      <created>1730533211828</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1730533211828</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -494,7 +499,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="修复了中断，把int gate改成trap gate就好了" />
     <MESSAGE value="恢复了键盘功能，硬盘功能" />
     <MESSAGE value="内存管理结构开始使用" />
     <MESSAGE value="内存管理结构升级完毕，未测试" />
@@ -519,7 +523,8 @@
     <MESSAGE value="建立了session, pgroup,规范化了framebuffer和tty接口" />
     <MESSAGE value="实现了串口通讯" />
     <MESSAGE value="初步实现了devman接入vfs" />
-    <option name="LAST_COMMIT_MESSAGE" value="初步实现了devman接入vfs" />
+    <MESSAGE value="完善了devman对/dev文件夹的初始化和rootfs的初始化" />
+    <option name="LAST_COMMIT_MESSAGE" value="完善了devman对/dev文件夹的初始化和rootfs的初始化" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -531,12 +536,12 @@
         </line-breakpoint>
         <line-breakpoint type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/knl/main.c</url>
-          <line>21</line>
+          <line>23</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/knl/main.c</url>
-          <line>76</line>
+          <line>78</line>
           <option name="timeStamp" value="63" />
         </line-breakpoint>
         <line-breakpoint type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
@@ -546,7 +551,7 @@
         </line-breakpoint>
         <line-breakpoint type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/knl/main.c</url>
-          <line>140</line>
+          <line>142</line>
           <option name="timeStamp" value="109" />
         </line-breakpoint>
         <line-breakpoint type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
@@ -581,13 +586,28 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/knl/main.c</url>
-          <line>144</line>
-          <option name="timeStamp" value="150" />
+          <line>155</line>
+          <option name="timeStamp" value="153" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/knl/sys.c</url>
+          <line>53</line>
+          <option name="timeStamp" value="161" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/knl/sys.c</url>
+          <line>108</line>
+          <option name="timeStamp" value="164" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/knl/vfs.c</url>
           <line>41</line>
-          <option name="timeStamp" value="151" />
+          <option name="timeStamp" value="165" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/knl/framebuffer.c</url>
+          <line>195</line>
+          <option name="timeStamp" value="166" />
         </line-breakpoint>
         <breakpoint type="OCSymbolicBreakpointType">
           <properties>

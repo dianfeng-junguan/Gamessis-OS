@@ -6,6 +6,7 @@
 #include "mem.h"
 #include "memory.h"
 #include "proc.h"
+#include "devman.h"
 
 unsigned int DISK1_FAT32_read_FAT_Entry(struct FAT32_sb_info * fsbi,unsigned int fat_entry)
 {
@@ -860,7 +861,10 @@ void DISK1_FAT32_FS_init()
 	int r1=request(DISK_MAJOR_MAJOR,DISKREQ_READ,DPT.DPTE[0].start_LBA,1,(unsigned char *)buf);
     chk_result(r1);
 
-	root_sb = mount_fs("FAT32",&DPT.DPTE[0],buf);	//not dev node
+    //挂载新文件系统到/mnt
+	struct super_block *fat32_sb= mount_fs("FAT32",&DPT.DPTE[0],buf);	//not dev node
+    fat32_sb->root=dmnt;
+//    list_add_to_behind(&root_sb->root->subdirs_list,ddev);//把dev文件夹挂到新的rfs下
 }
 
 
