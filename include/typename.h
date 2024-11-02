@@ -8,7 +8,7 @@ typedef unsigned int u32,dword,__le32,__u32,stat_t;
 #define ALREADY_USED -3
 typedef unsigned long long u64;
 #ifndef IA32
-typedef unsigned long long addr_t,size_t;
+typedef unsigned long long addr_t;
 #else
 typedef unsigned int addr_t,size_t;
 #endif

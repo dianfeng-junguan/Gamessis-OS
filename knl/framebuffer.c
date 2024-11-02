@@ -1,6 +1,7 @@
 #include <framebuffer.h>
 #include <memory.h>
 #include <typename.h>
+#include "sys/types.h"
 #include "mem.h"
 
 struct multiboot_tag_framebuffer framebuffer;

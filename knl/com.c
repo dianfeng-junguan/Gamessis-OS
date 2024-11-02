@@ -20,21 +20,21 @@ void init_com(int base_port){
     outb(base_port + COM_REG_LCR, 0x03);
     
     /* enable FIFO */
-    outb(base_port + COM_REG_FCR, 0xC7);
+    outb(base_port + COM_REG_FCR, 0x87);//0xc7
 
     /* enable IRQs, set RTS/DSR */
     outb(base_port + COM_REG_MCR, 0x0B);
     
     /* set in loopback mode and test serial chip */
-    outb(base_port + COM_REG_MCR, 0x1E);
-    
-    /* write a byte to test serial chip */
-    outb(base_port + COM_REG_TX, "arttnba3"[0]);
-    
-    /* check if serial is faulty */
-    if (inb(base_port + COM_REG_RX) != "arttnba3"[0]) {
-        return;
-    }
+//    outb(base_port + COM_REG_MCR, 0x1E);
+//
+//    /* write a byte to test serial chip */
+//    outb(base_port + COM_REG_TX, 0xae);
+//
+//    /* check if serial is faulty */
+//    if (inb(base_port + COM_REG_RX) != 0xae) {
+//        return;
+//    }
     
     /* set in normal mode */
     outb(base_port + COM_REG_MCR, 0x0F);

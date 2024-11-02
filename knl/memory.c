@@ -1,5 +1,6 @@
 #include "memory.h"
 #include "typename.h"
+#include "sys/types.h"
 #include "int.h"
 #include "framebuffer.h"
 #include "log.h"

@@ -20,39 +20,30 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="决定不进入高地址">
-      <change afterPath="$PROJECT_DIR$/include/sys/types.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/include/sys/unistd.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/include/text_console.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/knl/mods/text_console.c" afterDir="false" />
+    <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="建立了session, pgroup,规范化了framebuffer和tty接口">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/clock.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/clock.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/com.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/com.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/devman.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/devman.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/exe.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/exe.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/framebuffer.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/framebuffer.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/gmsknl.elf" beforeDir="false" afterPath="$PROJECT_DIR$/bin/gmsknl.elf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/int.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/int.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/log.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/log.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/main.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/memory.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/memory.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/mods/kb.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/mods/kb.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/mods/tty.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/mods/tty.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/proc.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/proc.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/build.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/build.ninja" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/virfs.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/virfs.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hda.img" beforeDir="false" afterPath="$PROJECT_DIR$/hda.img" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/fcntl.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/fcntl.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/framebuffer.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/framebuffer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/kb.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/kb.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/log.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/log.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/proc.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/proc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/syscall.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/syscall.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/tty.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/tty.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/virfs.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/virfs.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/com.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/com.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/typename.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/typename.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/devman.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/devman.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/com.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/com.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl/framebuffer.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/framebuffer.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/int.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/int.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/log.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/log.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/mods/kb.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/mods/kb.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/mods/tty.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/mods/tty.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/proc.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/proc.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/sys.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/sys.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/memory.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/memory.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,28 +80,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "to64",
-    "last_opened_file_path": "D:/Code/Comprehensive/OS/workspace/64/knl/mods",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "settings.editor.splitter.proportion": "0.20875764",
-    "structure.view.defaults.are.configured": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;to64&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Code/Comprehensive/OS/workspace/64/knl/mods&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;settings.editor.splitter.proportion&quot;: &quot;0.20875764&quot;,
+    &quot;structure.view.defaults.are.configured&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Code\Comprehensive\OS\workspace\64\knl\mods" />
@@ -121,14 +112,14 @@
     </key>
   </component>
   <component name="RunManager" selected="远程调试.gdb">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="gdb" type="CLion_Remote" version="1" remoteCommand="192.168.56.1:1234" symbolFile="$PROJECT_DIR$/bin/gmsknl.elf" sysroot="">
       <debugger toolchainName="WSL" />
       <method v="2" />
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
     </configuration>
     <configuration name="gms" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="gms" TARGET_NAME="gms" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="gms" RUN_TARGET_NAME="gms">
       <method v="2">
@@ -207,7 +198,8 @@
       <workItem from="1728636860752" duration="4065000" />
       <workItem from="1728652338297" duration="6577000" />
       <workItem from="1728960595779" duration="6191000" />
-      <workItem from="1730257277156" duration="10819000" />
+      <workItem from="1730257277156" duration="10937000" />
+      <workItem from="1730514163911" duration="2471000" />
     </task>
     <task id="LOCAL-00001" summary="重新整理了一下，改用clion开发">
       <option name="closed" value="true" />
@@ -449,7 +441,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728981659124</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="建立了session, pgroup,规范化了framebuffer和tty接口">
+      <option name="closed" value="true" />
+      <created>1730298584923</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1730298584923</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -473,7 +473,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="完成了文字绘制" />
     <MESSAGE value="改了idt gate结构适应64位" />
     <MESSAGE value="PDPTE 1GB页备份" />
     <MESSAGE value="修复了中断，把int gate改成trap gate就好了" />
@@ -498,7 +497,8 @@
     <MESSAGE value="实现了fork函数，但是进程切换时还没切换cr3" />
     <MESSAGE value="添加了进程切换时切换cr3的部分" />
     <MESSAGE value="完成了execve功能" />
-    <option name="LAST_COMMIT_MESSAGE" value="完成了execve功能" />
+    <MESSAGE value="建立了session, pgroup,规范化了framebuffer和tty接口" />
+    <option name="LAST_COMMIT_MESSAGE" value="建立了session, pgroup,规范化了framebuffer和tty接口" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -530,7 +530,7 @@
         </line-breakpoint>
         <line-breakpoint type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/knl/memory.c</url>
-          <line>215</line>
+          <line>216</line>
           <option name="timeStamp" value="119" />
         </line-breakpoint>
         <line-breakpoint type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
@@ -557,6 +557,11 @@
           <url>file://$PROJECT_DIR$/knl/mods/kb.c</url>
           <line>228</line>
           <option name="timeStamp" value="145" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/knl/main.c</url>
+          <line>143</line>
+          <option name="timeStamp" value="149" />
         </line-breakpoint>
         <breakpoint type="OCSymbolicBreakpointType">
           <properties>
