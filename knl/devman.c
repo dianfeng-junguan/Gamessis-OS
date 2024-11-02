@@ -3,8 +3,13 @@
 #include "memory.h"
 #include "str.h"
 #include "typename.h"
+#include "fcntl.h"
 #include <disk.h>
-#include <text_console.h>
+#include <tty.h>
+#include "proc.h"
+#include "mem.h"
+#include "framebuffer.h"
+
 device devs[MAX_DEVICES]={0};
 driver drvs[MAX_DRIVERS]={0};
 driver_args reqs[NR_REQS];
@@ -12,13 +17,100 @@ device* dev_tree[]={NULL,NULL,NULL};
 
 driverfunc dev_funcs[]={
     [OPERATIONS_HD]=hd_do_req,
-    [OPERATIONS_TTY]=tty_do_req,
+    [OPERATIONS_TTY]=NULL,//tty_do_req,
     [OPERATIONS_KEYBOARD]=NULL,
     [OPERATIONS_MOUSE]=NULL
 };
 static int rhead=0,rtail=0;
+static int dev_dfd=-1;
+struct file_operations dev_dir_fops={
+    .open=open_dev,.close=close_dev,.ioctl=ioctl_dev,.read=read_dev,.write=write_dev
+};
+static int devd_fd=-1;
 int init_drvdev_man()
 {
+    //创建几个设备文件
+    //console-framebuffer.c
+    extern struct process *current;
+    devd_fd= sys_open("/dev",O_DIRECTORY);
+    //设置设备的特殊属性，之后创建文件的时候，就会复制这个属性，然后操作就会引导到这里
+    *(unsigned long*)current->openf[devd_fd]->dentry->dir_inode->private_index_info=FS_ATTR_DEVICE;
+
+}
+//
+long open_dev(struct index_node * inode,struct file * filp){
+    //查看文件名
+    char* name=filp->dentry->name;
+    char* p=name+ strlen(name)-1;
+    for(;*p!='/'&&p>=name;p--);
+    if(p>=name)
+        name=p+1;
+    if(memcmp(name,"tty",3)==0){
+        return init_tty(inode,filp);
+    }else if(strcmp(name,"console")==0){
+        return open_framebuffer(inode,filp);
+    }
+    return -1;
+}
+long close_dev(struct index_node * inode,struct file * filp){
+    //查看文件名
+    char* name=filp->dentry->name;
+    char* p=name+ strlen(name)-1;
+    for(;*p!='/'&&p>=name;p--);
+    if(p>=name)
+        name=p+1;
+    if(memcmp(name,"tty",3)==0){
+        return close_tty(inode,filp);
+    }else if(strcmp(name,"console")==0){
+        return close_framebuffer(inode,filp);
+    }
+    return -1;
+
+}
+long read_dev(struct file * filp,char * buf,unsigned long count,long * position){
+    //查看文件名
+    char* name=filp->dentry->name;
+    char* p=name+ strlen(name)-1;
+    for(;*p!='/'&&p>=name;p--);
+    if(p>=name)
+        name=p+1;
+    if(memcmp(name,"tty",3)==0){
+        return read_tty(filp,buf,count,position);
+    }else if(strcmp(name,"console")==0){
+        return read_framebuffer(filp,buf,count,position);
+    }
+    return -1;
+
+}
+long write_dev(struct file * filp,char * buf,unsigned long count,long * position){
+    //查看文件名
+    char* name=filp->dentry->name;
+    char* p=name+ strlen(name)-1;
+    for(;*p!='/'&&p>=name;p--);
+    if(p>=name)
+        name=p+1;
+    if(memcmp(name,"tty",3)==0){
+        return write_tty(filp,buf,count,position);
+    }else if(strcmp(name,"console")==0){
+        return write_framebuffer(filp,buf,count,position);
+    }
+    return -1;
+
+}
+long ioctl_dev(struct index_node * inode,struct file * filp,unsigned long cmd,unsigned long arg){
+    //查看文件名
+    char* name=filp->dentry->name;
+    char* p=name+ strlen(name)-1;
+    for(;*p!='/'&&p>=name;p--);
+    if(p>=name)
+        name=p+1;
+    if(memcmp(name,"tty",3)==0){
+        return tty_do_req(inode,filp,cmd,arg);
+    }else if(strcmp(name,"console")==0){
+        return ioctl_framebuffer(inode,filp,cmd,arg);
+    }
+    return -1;
+
 }
 int load_driver(char *path)
 {

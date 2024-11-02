@@ -97,7 +97,7 @@ long tty_do_req(struct index_node * inode,struct file * filp,unsigned long cmd,u
             write_framebuffer(filp,b->data+saved_wptr,count,0);
         break;
         case TTY_CONNECT:
-            fd=sys_open("sys/console",O_WRONLY|O_CREAT|O_EXCL);
+            fd=sys_open("dev/console",O_WRONLY|O_CREAT|O_EXCL);
             if(fd==-1)return -1;
             ((tty_t*)filp->private_data)->console_fd=fd;
             break;

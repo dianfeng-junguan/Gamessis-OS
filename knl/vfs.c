@@ -6,6 +6,7 @@
 #include "errno.h"
 #include "memory.h"
 #include "log.h"
+#include "mem.h"
 
 struct dir_entry * path_walk(char * name,unsigned long flags)
 {
@@ -70,6 +71,7 @@ struct dir_entry * path_walk(char * name,unsigned long flags)
 
     return path;
 }
+
 
 int fill_dentry(void *buf,char *name, long namelen,long type,long offset)
 {

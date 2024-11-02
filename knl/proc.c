@@ -47,6 +47,7 @@ void init_proc(){
     wrmsr(0x174,0x8);
     //准备用于特权级转换(sysret，正在使用)
     wrmsr(0xc0000081,0x0020000800000000ul);
+    comprintf("proc init set.\r\ntss.ist=0x%x\r\n",tss->ists[0]);
     //创建一个测试进程
 //    create_test_proc();
 }
@@ -1020,7 +1021,9 @@ int tcsetpgrp(int fildes,pid_t pgid_id){
             }
         }
     }
-    //TODO:通知新leader把tty连接
+    //新leader把tty连接
+    new_fgl->openf[new_fgl->tty_fd]->f_ops->ioctl(new_fgl->openf[fildes]->dentry->dir_inode,new_fgl->openf[fildes]\
+    ,TTY_CONNECT,0);
 }
 pid_t tcgetpgrp(int fildes){
     return current->fg_pgid;

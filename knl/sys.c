@@ -52,10 +52,31 @@ unsigned long sys_open(char *filename,int flags)
     strcpy(filename,path);
 
     dentry = path_walk(path,0);
-    vmfree(path);
 
-    if(dentry == NULL)
-        return -ENOENT;
+    if(dentry == NULL){
+        if(!flags&O_CREAT)
+            return -ENOENT;
+        //创建文件
+        //找到上一级目录
+        char* p=path+strlen(path)-1;
+        for(;*p!='/'&&p>path;p--);
+        *p='\0';
+        struct dir_entry *parent= path_walk(path,O_DIRECTORY);
+        if(parent==NULL)
+            return -ENOENT;//上级目录也不在
+        //创建新的文件
+        dentry=(struct dir_entry*)vmalloc();
+        list_add_to_behind(&parent->subdirs_list,dentry);
+        dentry->parent=parent;
+        dentry->dir_inode=dentry+1;//放在后面
+        dentry->dir_inode->file_size=0;
+        //继承操作方法
+        dentry->dir_inode->f_ops=parent->dir_inode->f_ops;
+        dentry->dir_ops=parent->dir_ops;
+        //继承上级目录的特殊属性
+        dentry->dir_inode->attribute=*(unsigned long*)parent->dir_inode->private_index_info;
+    }
+    vmfree(path);
 
     if((flags & O_DIRECTORY) && (dentry->dir_inode->attribute != FS_ATTR_DIR))
         return -ENOTDIR;
@@ -67,8 +88,10 @@ unsigned long sys_open(char *filename,int flags)
     filp->dentry = dentry;
     filp->mode = flags;
 
-    if(dentry->dir_inode->attribute & FS_ATTR_DEVICE)
-        filp->f_ops = NULL;//&keyboard_fops;	//////	find device file operation function
+    if(dentry->dir_inode->attribute & FS_ATTR_DEVICE){
+        extern struct file_operations dev_dir_fops;
+        filp->f_ops = &dev_dir_fops;	//////	find device file operation function
+    }
     else
         filp->f_ops = dentry->dir_inode->f_ops;
     if(filp->f_ops && filp->f_ops->open)

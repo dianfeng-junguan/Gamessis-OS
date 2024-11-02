@@ -142,11 +142,11 @@ void main(unsigned int magic,void* addr)
 //    set_tss(0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000);
     init_memory();
     init_com(PORT_COM1);
-    com_puts("gamessis os loaded.",PORT_COM1);
+    comprintf("\rgamessis os loaded.\r\n");
 	init_paging();
  	init_gdt();
-    init_drvdev_man();
     init_proc();
+    init_drvdev_man();
     //自带驱动
     //init_tty();
     init_kb();

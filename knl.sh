@@ -1,4 +1,4 @@
-cargs="-w -g -fno-pie -fno-pic -nostdlib -nostdinc -fno-stack-protector -nostartfiles \
+cargs="-w -g -fno-pie -fno-pic -nostdlib -fno-stack-protector -nostartfiles \
 -I include -m64"
 for f in $(find knl|grep -E *[.]c$)
 do

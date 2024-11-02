@@ -1,8 +1,11 @@
 //
 // Created by Oniar_Pie on 2024/9/27.
 //
+#include <stdarg.h>
 #include "com.h"
 #include "int.h"
+#include "str.h"
+#include "memory.h"
 
 
 void init_com(int base_port){
@@ -54,4 +57,12 @@ void com_puts(char* s,int com_port){
     for(;*s;s++){
         com_putchar(*s,com_port);
     }
+}
+void comprintf(char* fmt,va_list args){
+    if(strlen(fmt)>=1024)
+        return;//一次性输出不了太长
+    char* tmp=(char*)vmalloc();
+    sprintf(tmp,fmt,args);
+    com_puts(tmp,PORT_COM1);
+    vmfree(tmp);
 }

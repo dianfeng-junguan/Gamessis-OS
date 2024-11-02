@@ -11,3 +11,4 @@ void itoa (char *buf, int base, int d);
 void putchar (char c);
 
 void printf (const char *format, ...);
+void comprintf(char* fmt,...);

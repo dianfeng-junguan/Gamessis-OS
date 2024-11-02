@@ -1,5 +1,6 @@
 #pragma once
 #include "devdrv.h"
+#include "vfs.h"
 #define NR_REQS 32
 int init_drvdev_man();
 int reg_device(device *dev);
@@ -21,3 +22,10 @@ void wait_on_req(int reqi);
 void clear_req(int reqi);
 //取出一个申请并且执行
 int do_req();
+
+
+long open_dev(struct index_node * inode,struct file * filp);
+long close_dev(struct index_node * inode,struct file * filp);
+long read_dev(struct file * filp,char * buf,unsigned long count,long * position);
+long write_dev(struct file * filp,char * buf,unsigned long count,long * position);
+long ioctl_dev(struct index_node * inode,struct file * filp,unsigned long cmd,unsigned long arg);
