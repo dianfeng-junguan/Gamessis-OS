@@ -50,6 +50,7 @@ long read_tty(struct file * filp,char * buf,unsigned long count,long * position)
     while (i<count){
         if(b->rptr==b->size)
             b->rptr=0;
+        if(b->rptr==b->wptr)continue;
         buf[i++]=b->data[b->rptr];
         b->rptr++;
     }

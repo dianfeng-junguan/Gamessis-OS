@@ -20,26 +20,31 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="修改了vfs中的bug，把devman的/dev整合到了vfs里面，现在可以用系统调用操作/dev下的设备了">
-      <change afterPath="$PROJECT_DIR$/include/sys/wait.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/knl/wait.c" afterDir="false" />
+    <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="- 键盘驱动现在读写tty&#10;- 设置了初始化进程的std，fork的时候会继承&#10;- exit的实现,僵尸进程的实现&#10;- wait函数实现">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/build.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/build.ninja" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/proc.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/proc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/syscall.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/syscall.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/tty.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/tty.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/vfs.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/vfs.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/clock.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/clock.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/devman.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/devman.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/exe.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/exe.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/framebuffer.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/framebuffer.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/gmsknl.elf" beforeDir="false" afterPath="$PROJECT_DIR$/bin/gmsknl.elf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/int.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/int.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/memory.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/memory.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/mods/disk.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/mods/disk.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/mods/fat16.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/mods/fat16.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/mods/kb.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/mods/kb.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/mods/tty.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/mods/tty.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/proc.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/proc.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/virfs.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/virfs.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hda.img" beforeDir="false" afterPath="$PROJECT_DIR$/hda.img" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl/devman.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/devman.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/exe.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/exe.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/int.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/int.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/mods/disk.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/mods/disk.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/memory.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/memory.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl/mods/kb.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/mods/kb.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl/mods/tty.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/mods/tty.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl/proc.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/proc.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/sys.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/sys.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -199,7 +204,7 @@
       <workItem from="1728960595779" duration="6191000" />
       <workItem from="1730257277156" duration="10937000" />
       <workItem from="1730514163911" duration="21268000" />
-      <workItem from="1730629790740" duration="7396000" />
+      <workItem from="1730629790740" duration="9148000" />
     </task>
     <task id="LOCAL-00001" summary="重新整理了一下，改用clion开发">
       <option name="closed" value="true" />
@@ -481,7 +486,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730540461281</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="- 键盘驱动现在读写tty&#10;- 设置了初始化进程的std，fork的时候会继承&#10;- exit的实现,僵尸进程的实现&#10;- wait函数实现">
+      <option name="closed" value="true" />
+      <created>1730637363138</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1730637363138</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -505,7 +518,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="内存管理结构开始使用" />
     <MESSAGE value="内存管理结构升级完毕，未测试" />
     <MESSAGE value="添加了PCB,TSS的64位版本" />
     <MESSAGE value="将64位TSS加入了gdt并且加载" />
@@ -530,7 +542,8 @@
     <MESSAGE value="初步实现了devman接入vfs" />
     <MESSAGE value="完善了devman对/dev文件夹的初始化和rootfs的初始化" />
     <MESSAGE value="修改了vfs中的bug，把devman的/dev整合到了vfs里面，现在可以用系统调用操作/dev下的设备了" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改了vfs中的bug，把devman的/dev整合到了vfs里面，现在可以用系统调用操作/dev下的设备了" />
+    <MESSAGE value="- 键盘驱动现在读写tty&#10;- 设置了初始化进程的std，fork的时候会继承&#10;- exit的实现,僵尸进程的实现&#10;- wait函数实现" />
+    <option name="LAST_COMMIT_MESSAGE" value="- 键盘驱动现在读写tty&#10;- 设置了初始化进程的std，fork的时候会继承&#10;- exit的实现,僵尸进程的实现&#10;- wait函数实现" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -552,7 +565,7 @@
         </line-breakpoint>
         <line-breakpoint type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/knl/proc.c</url>
-          <line>800</line>
+          <line>793</line>
           <option name="timeStamp" value="90" />
         </line-breakpoint>
         <line-breakpoint type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
@@ -565,30 +578,35 @@
           <line>216</line>
           <option name="timeStamp" value="119" />
         </line-breakpoint>
-        <line-breakpoint type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/knl/mods/kb.c</url>
           <line>164</line>
           <option name="timeStamp" value="120" />
         </line-breakpoint>
         <line-breakpoint type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/knl/proc.c</url>
-          <line>912</line>
+          <line>905</line>
           <option name="timeStamp" value="128" />
         </line-breakpoint>
         <line-breakpoint type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/knl/proc.c</url>
-          <line>827</line>
+          <line>820</line>
           <option name="timeStamp" value="131" />
         </line-breakpoint>
         <line-breakpoint type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/knl/proc.c</url>
-          <line>211</line>
+          <line>204</line>
           <option name="timeStamp" value="132" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/knl/mods/kb.c</url>
           <line>237</line>
           <option name="timeStamp" value="145" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/com/str.c</url>
+          <line>85</line>
+          <option name="timeStamp" value="156" />
         </line-breakpoint>
         <breakpoint type="OCSymbolicBreakpointType">
           <properties>

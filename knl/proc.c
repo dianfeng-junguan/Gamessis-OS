@@ -105,19 +105,12 @@ int create_proc()
     extern struct dir_entry* dtty;
     //stdin stdout stderr
     //这里绕开了sys open，这样是为了尽量快
+    extern struct file ftty;
     addr_t filplate=vmalloc();
-    pz->openf[0]=(void*)filplate;
-    pz->openf[1]=(void*)(filplate+ sizeof(struct file));
-    pz->openf[2]=(void*)(filplate+ 2*sizeof(struct file));
-    pz->openf[0]->dentry=dtty;
-    pz->openf[1]->dentry=dtty;
-    pz->openf[2]->dentry=dtty;
-    pz->openf[0]->f_ops=&tty_fops;
-    pz->openf[1]->f_ops=&tty_fops;
-    pz->openf[2]->f_ops=&tty_fops;
-    pz->openf[0]->position=0;
-    pz->openf[1]->position=0;
-    pz->openf[2]->position=0;
+    pz->openf[0]=&ftty;
+    pz->openf[1]=&ftty;
+    pz->openf[2]=&ftty;
+
     return index;
 }
 int req_proc(){

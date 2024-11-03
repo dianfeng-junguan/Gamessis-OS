@@ -48,7 +48,7 @@ umount:
 run:
 	@sudo qemu-system-x86_64 -hda hda.img -m 2G -bios OVMF.fd
 debug:
-	@qemu-system-x86_64 -hda hda.img -m 2G -s -S -bios OVMF.fd
+	@qemu-system-x86_64 -hda hda.img -m 2G -s -S -bios OVMF.fd -serial stdio
 debs:
 	@qemu-system-x86_64 -hda hda.img -m 2G -s -S -bios OVMF.fd -serial stdio
 

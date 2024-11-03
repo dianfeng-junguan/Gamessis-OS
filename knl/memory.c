@@ -161,7 +161,7 @@ int vmfree(addr_t ptr)
 }
 void page_err(){
     asm("cli");
-    print("page err\n");
+    printf("page err\n");
     unsigned long err_code=0,l_addr=0;
     asm volatile("mov 0(%%rbp),%0":"=r"(err_code));
     asm volatile("mov %%cr2,%0":"=r"(l_addr));//试图访问的地址
@@ -193,11 +193,11 @@ void page_err(){
         //page level protection
     }
     p=err_code&2;
-    if(p)print("when writing\n");else //puts("when reading");
+    if(p)printf("when writing\n");else //puts("when reading");
     p=err_code&4;
-    if(!p)print("supervisor mode\n");else //puts("user mode");
+    if(!p)printf("supervisor mode\n");else //puts("user mode");
     p=err_code&16;
-    if(p)print("an instruction tries to fetch\n");
+    if(p)printf("an instruction tries to fetch\n");
     unsigned int addr=0;
     asm volatile("mov 8(%%rbp),%0":"=r"(addr));
     printf("occurred at %x(paddr), %x(laddr)\n",addr,l_addr);

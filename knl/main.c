@@ -168,10 +168,12 @@ void main(unsigned int magic,void* addr)
 //    extern device *dev_tree[];
 //    blk_dev* p=dev_tree[DEVTREE_BLKDEVI];
 //    mount_fs("fat16",p->par,vmalloc());
-
     while (1)
     {
-        char c= sys_analyse_key();
+        char c=-1;
+        sys_read(0,&c,1);
+        putchar(c);
+//        char c= sys_analyse_key();
 //        if(c!=-1){
 //            putchar(c);
 //        }

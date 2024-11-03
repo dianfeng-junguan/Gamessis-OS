@@ -205,7 +205,7 @@ int key_proc()
             break;
     }
     //发送到std
-    if(!scan1&FLAG_BREAK){
+    if(!(scan1&FLAG_BREAK)){
         char ch= to_ascii(scan1);
         unsigned long args[]={(unsigned long) &ch, 1};
         //写入stdin

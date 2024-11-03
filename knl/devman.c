@@ -60,6 +60,7 @@ void make_devf(struct dir_entry* d,struct index_node* i,char* name,struct dir_en
  * 这个/dev文件夹的dentry和inode等数据由devman管理，根文件系统切换时，这个文件夹会跟着挂载到新文件系统的根目录下。
  * */
 struct dir_entry* ddev=NULL,*dmnt,*dconsole,*dhd0,*dtty;
+struct file ftty;
 int init_devman()
 {
     //创建dev文件夹
@@ -97,6 +98,8 @@ int init_devman()
     struct index_node* itty=dtty+1;
     dtty->name=itty+1;
     make_devf(dtty,itty,"tty",ddev,&tty_fops);
+    //初始化一下
+    tty_fops.open(itty,&ftty);
 
 }
 //
