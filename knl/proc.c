@@ -12,10 +12,9 @@
 #include "sys/unistd.h"
 #include "syscall.h"
 #include "tty.h"
+#include "fcntl.h"
 
 struct process task[MAX_PROC_COUNT];
-pgroup pgs[MAX_PROC_COUNT];
-session ses[MAX_PROC_COUNT];
 struct process* current;
 TSS scene_saver;
 TSS *tss=0x108000;
@@ -27,17 +26,17 @@ void init_proc(){
     //task=(struct process*)get_global_var(TASK_PCBS_ADDR);//[MAX_TASKS];;
     for(int i=0;i<MAX_PROC_COUNT;i++){
         task[i].pid=-1;
-        task[i].stat=ENDED;
+        task[i].stat=TASK_EMPTY;
         task[i].parent_pid=-1;
     }
-    cur_proc=0;//no proc
+    cur_proc=0;//proc zero
     current=task;
     pidd=1;
-     //创建0号进程
+     //===============创建0号进程======================
     int zi=create_proc();
-    task[zi].stat=READY;
-    int xi= _LDT_IND(zi)*8;
-    zi=_TSS_IND(zi)*8;
+    task[zi].stat=TASK_READY;
+
+
     //asm volatile("lldt %0"::"m"(xi));
     //asm volatile("ltr %0"::"m"(zi));
     set_tss(0x400000,0x400000,0x400000,0x800000,0x800000,0x800000,0x800000,0x800000,0x800000,0x800000);
@@ -47,6 +46,7 @@ void init_proc(){
     wrmsr(0x174,0x8);
     //准备用于特权级转换(sysret，正在使用)
     wrmsr(0xc0000081,0x0020000800000000ul);
+
     comprintf("proc init set.\r\ntss.ist=0x%x\r\n",tss->ists[0]);
     //创建一个测试进程
 //    create_test_proc();
@@ -54,7 +54,7 @@ void init_proc(){
 void create_test_proc(){
 
     int index=req_proc();
-    task[index].stat=READY;
+    task[index].stat=TASK_READY;
     int currsp=0x9fc00-1;
     asm volatile("mov %%rsp,%0":"=m"(currsp));
     set_proc(0, 0, 0, 0, 0x10, 0x8, 0x10, 0x10, 0x10, 0x10,
@@ -93,6 +93,7 @@ void create_test_proc(){
 int create_proc()
 {
     int index=req_proc();
+    struct process *pz=&task[index];
     if(index==-1)return -1;
     int currsp=0x9fc00-1;
     asm volatile("mov %%rsp,%0":"=m"(currsp));
@@ -101,19 +102,34 @@ int create_proc()
     set_proc(0, 0, 0, 0, 0x10, 0x8, 0x10, 0x10, 0x10, 0x10,
              currsp, 0, 0, 0, (long)proc_zero, 0, index);
 //    task[index].tss.eip=(long)proc_zero;
-
+    extern struct dir_entry* dtty;
+    //stdin stdout stderr
+    //这里绕开了sys open，这样是为了尽量快
+    addr_t filplate=vmalloc();
+    pz->openf[0]=(void*)filplate;
+    pz->openf[1]=(void*)(filplate+ sizeof(struct file));
+    pz->openf[2]=(void*)(filplate+ 2*sizeof(struct file));
+    pz->openf[0]->dentry=dtty;
+    pz->openf[1]->dentry=dtty;
+    pz->openf[2]->dentry=dtty;
+    pz->openf[0]->f_ops=&tty_fops;
+    pz->openf[1]->f_ops=&tty_fops;
+    pz->openf[2]->f_ops=&tty_fops;
+    pz->openf[0]->position=0;
+    pz->openf[1]->position=0;
+    pz->openf[2]->position=0;
     return index;
 }
 int req_proc(){
     int num=0;
-    while(task[num].pid!=-1&&task[num].stat!=ENDED&&\
+    while(task[num].pid!=-1 && task[num].stat != TASK_EMPTY && \
     num<=MAX_PROC_COUNT){
         num++;
     }
     if(num>=MAX_PROC_COUNT)
         return -1;
     task[num].pid=pidd++;
-    task[num].stat=ENDED;
+    task[num].stat=TASK_ZOMBIE;
     task[num].utime=0;
     task[num].priority=0;
     return num;
@@ -174,7 +190,7 @@ void manage_proc(){
     if(cur_proc!=-1)
         task[cur_proc].utime++;
     if(cur_proc==-1||task[cur_proc].utime>MAX_UTIME||\
-    task[cur_proc].stat!=READY){
+    task[cur_proc].stat != TASK_READY){
         if(cur_proc!=-1)
             task[cur_proc].utime=0;
         //find
@@ -182,7 +198,7 @@ void manage_proc(){
         int times=0;
         //轮询，直到有一个符合条件
         while(times<10){
-            if(task[i].pid!=-1&&task[i].stat==READY&&i!=cur_proc){
+            if(task[i].pid!=-1 && task[i].stat == TASK_READY && i != cur_proc){
                 break;
             }
             i++;
@@ -193,8 +209,8 @@ void manage_proc(){
         }
         if(times==10)return;//超过十次尝试都没有，暂时不切换
         //switch
-        task[cur_proc].stat=READY;
-        task[i].stat=RUNNING;
+        task[cur_proc].stat=TASK_READY;
+        task[i].stat=TASK_RUNNING;
         switch_to(&task[cur_proc], &task[i]);
     }
     return;
@@ -389,7 +405,7 @@ void save_context(TSS *tss)
     SEG_W|SEG_PRESENT|SEG_R|SEG_NON_SYS_GATE|SEG_4KB_GRANUALITY,&task[index].ldt[2]);
     fill_desc(task[index].ldt,sizeof(task[index].ldt),SEG_SYS_LDT|SEG_PRESENT,\
     _LDT_IND(index)); 
-    task[index].stat=READY;
+    task[index].stat=TASK_READY;
     return index;
 } */
 //为指定进程申请新的内存，并返回这块内存的线性地址。
@@ -467,7 +483,7 @@ void proc_end()
     //asm volatile("mov %0,%%rsp"::"r"(task[0].tss.esp));
     del_proc(cur_proc);
     if(task[cur_proc].parent_pid!=-1){
-        task[task[cur_proc].parent_pid].stat=READY;
+        task[task[cur_proc].parent_pid].stat=TASK_READY;
         switch_proc_tss(task[cur_proc].parent_pid);
     }
     else
@@ -476,28 +492,34 @@ void proc_end()
 }
 void del_proc(int pnr)
 {
-    task[pnr].stat=ENDED;
-    task[pnr].pid=-1;
+    task[pnr].stat=TASK_ZOMBIE;
+//    task[pnr].pid=-1;
     //释放申请的页面
-    page_item *p;//task[pnr].tss.cr3;
-    p++;
-    for(;(*p&PAGE_PRESENT)!=0;p++)
-    {
-        page_item *tp=*p&0xfffff000;
-        for(int i=0;i<1024;i++)
-        {
-            unsigned int present=*tp&PAGE_PRESENT;
-            if(present)
-            {
-                free_page(*tp&0xfffff000);
-                //printf("freed page at %x.\n",*tp&0xfffff000);
-            }
-            tp++;
-        }
-        vmfree(tp);
-    }
+    release_mmap(&task[pnr]);
     //释放存放页目录的页面
-    vmfree(p);
+    vmfree(task[pnr].pml4);
+    //关闭打开的文件
+    for(int i=3;i<MAX_PROC_OPENF;i++){
+        if(task[pnr].openf[i]){
+            sys_close(i);
+        }
+    }
+    //三个std判断一下是否是会话leader，是的话再关闭
+    if(task[pnr].sid==task[pnr].pid){
+        //tty和console断联
+        sys_ioctl(0,TTY_DISCONNECT,0);
+        sys_close(0);
+        sys_close(1);
+        sys_close(2);
+        //然后,关闭所有前台进程组的进程
+        for(int i=0;i<MAX_TASKS;i++){
+            if(task[i].gpid==task[pnr].pid){
+                //TODO:发送SIGHUP信号使进程终结
+            }
+        }
+    }
+    //TODO 给子进程发送SIGHUP信号结束他们
+    //
     //从进程中解除cr3,tss和ldt
     //switch_proc_tss(task[pnr]);
 }
@@ -519,7 +541,7 @@ int exec_call(char * path,int priority)
 {
     int tski=exec(path, priority);
     if(tski==-1)return -1;
-    task[cur_proc].stat=SUSPENDED;
+    task[cur_proc].stat=TASK_SUSPENDED;
     
     task[tski].parent_pid=cur_proc;//设置父进程，这样进程结束后就能返回到父进程。
 
@@ -530,22 +552,23 @@ int exec_call(char * path,int priority)
     return 0;
 } */
 
-int add_proc_openf(struct index_node *entry)
-{
-    for(int i=0;i<MAX_PROC_OPENF;i++){
-        if(task[cur_proc].openf[i]==NULL)
-        {
-            task[cur_proc].openf[i]=entry;
-            return 0;
-        }
-    }
-    return -1;//full
-}
+//int add_proc_openf(struct index_node *entry)
+//{
+//    for(int i=0;i<MAX_PROC_OPENF;i++){
+//        if(task[cur_proc].openf[i]==NULL)
+//        {
+//            task[cur_proc].openf[i]=entry;
+//            return 0;
+//        }
+//    }
+//    return -1;//full
+//}
 /*
  * 进程结束。
  * */
 int sys_exit(int code)
 {
+    current->exit_code=code;
     del_proc(cur_proc);
     while(1)
         manage_proc();
@@ -624,7 +647,7 @@ int reg_proc(addr_t entry, struct index_node *cwd, struct index_node *exef)
     set_2mb_pde(stackb + 511, get_phyaddr(req_a_page()), PAGE_FOR_ALL|PAGE_RWX);
     task[i].regs.cr3=task[i].pml4;
 
-    task[i].stat=READY;
+    task[i].stat=TASK_READY;
     task[i].cwd=cwd;
     task[i].exef=exef;
 
@@ -834,13 +857,18 @@ int sys_fork(void){
     asm volatile("mov %%r10,%0"::"m"(r->rip));
 
     task[pid].tss=current->tss;
-    task[pid].stat=READY;
+    task[pid].stat=TASK_READY;
     task[pid].parent_pid=cur_proc;
+    //设置父子关系以及初始化子进程的的list节点
+    list_init(&task[pid].node);
+    task[pid].child_procs=NULL;
+    task[pid].node.data=&task[pid];
+    list_add(current->child_procs,&task[pid].node);
     //复制打开文件
     memcpy(task[pid].openf,current->openf,sizeof(struct file*)*MAX_PROC_OPENF);
     task[pid].utime=0;
     task[pid].mem_struct=current->mem_struct;
-    //TODO:根据是子进程还是父进程设置返回值的不同
+    //根据是子进程还是父进程设置返回值的不同
 
     //TODO:设置新堆栈
     //复制父进程的内存映射到子进程，然后重新映射并复制子进程的堆栈和数据段
@@ -905,6 +933,7 @@ void release_mmap(struct process* p){
                             for(int l=0;l<512;l++){
                                 if(pte[l]&PAGE_PRESENT){
                                     //释放申请的物理内存
+                                    //TODO:这里有一个问题：目前fork时候堆栈空间使用的是vmalloc内存，这样的话free_page是释放不了的。
                                     free_page(pte[l]&PAGE_4K_MASK);
                                 }
                             }
@@ -1012,7 +1041,7 @@ int tcsetpgrp(int fildes,pid_t pgid_id){
     int sid= getsid(0);//获取session id
     struct process* new_fgl=NULL;
     for (int i = 0; i <MAX_TASKS; ++i) {
-        if(task[i].stat==ENDED)continue;
+        if(task[i].stat == TASK_ZOMBIE||task[i].stat == TASK_EMPTY)continue;
         if(task[i].sid==sid){
             task[i].fg_pgid=pgid_id;
             if(task[i].pid==pgid_id){

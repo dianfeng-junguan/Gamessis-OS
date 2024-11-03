@@ -41,6 +41,14 @@ __attribute__((always_inline)) inline void list_add(struct List * entry,struct L
         list_add_to_behind(p,new);
     }
 }
+__attribute__((always_inline)) inline void list_drop(struct List * entry)
+{
+    //从链表中删除
+    if(entry->prev)
+        entry->prev->next=entry->next;
+    if(entry->next)
+        entry->next->prev=entry->prev;
+}
 
 struct Disk_Partition_Table_Entry
 {

@@ -4898,13 +4898,13 @@ long ioctl_dev(struct index_node * inode,struct file * filp,unsigned long cmd,un
   802f37:	e8 1e 9a 00 00       	call   80c95a <memcmp>
   802f3c:	85 c0                	test   eax,eax
   802f3e:	75 1a                	jne    802f5a <ioctl_dev+0xae>
-        return tty_do_req(inode,filp,cmd,arg);
+        return ioctl_tty(inode,filp,cmd,arg);
   802f40:	48 8b 4d d0          	mov    rcx,QWORD PTR [rbp-0x30]
   802f44:	48 8b 55 d8          	mov    rdx,QWORD PTR [rbp-0x28]
   802f48:	48 8b 75 e0          	mov    rsi,QWORD PTR [rbp-0x20]
   802f4c:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
   802f50:	48 89 c7             	mov    rdi,rax
-  802f53:	e8 83 96 00 00       	call   80c5db <tty_do_req>
+  802f53:	e8 83 96 00 00       	call   80c5db <ioctl_tty>
   802f58:	eb 36                	jmp    802f90 <ioctl_dev+0xe4>
     }else if(strcmp(name,"console")==0){
   802f5a:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
@@ -6234,7 +6234,7 @@ void init_proc(){
   803e8c:	48 69 c0 1c 03 00 00 	imul   rax,rax,0x31c
   803e93:	48 05 e0 84 40 00    	add    rax,0x4084e0
   803e99:	c7 00 ff ff ff ff    	mov    DWORD PTR [rax],0xffffffff
-        task[i].stat=ENDED;
+        task[i].stat=TASK_ZOMBIE;
   803e9f:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
   803ea2:	48 98                	cdqe   
   803ea4:	48 69 c0 1c 03 00 00 	imul   rax,rax,0x31c
@@ -6265,7 +6265,7 @@ void init_proc(){
   803ef8:	b8 00 00 00 00       	mov    eax,0x0
   803efd:	e8 ec 02 00 00       	call   8041ee <create_proc>
   803f02:	89 45 f8             	mov    DWORD PTR [rbp-0x8],eax
-    task[zi].stat=READY;
+    task[zi].stat=TASK_READY;
   803f05:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
   803f08:	48 98                	cdqe   
   803f0a:	48 69 c0 1c 03 00 00 	imul   rax,rax,0x31c
@@ -6342,7 +6342,7 @@ void create_test_proc(){
   803fe1:	b8 00 00 00 00       	mov    eax,0x0
   803fe6:	e8 86 02 00 00       	call   804271 <req_proc>
   803feb:	89 45 fc             	mov    DWORD PTR [rbp-0x4],eax
-    task[index].stat=READY;
+    task[index].stat=TASK_READY;
   803fee:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
   803ff1:	48 98                	cdqe   
   803ff3:	48 69 c0 1c 03 00 00 	imul   rax,rax,0x31c
@@ -6564,12 +6564,12 @@ int req_proc(){
   804276:	48 89 e5             	mov    rbp,rsp
     int num=0;
   804279:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
-    while(task[num].pid!=-1&&task[num].stat!=ENDED&&\
+    while(task[num].pid!=-1&&task[num].stat!=TASK_ZOMBIE&&\
   804280:	eb 04                	jmp    804286 <req_proc+0x15>
     num<=MAX_PROC_COUNT){
         num++;
   804282:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
-    while(task[num].pid!=-1&&task[num].stat!=ENDED&&\
+    while(task[num].pid!=-1&&task[num].stat!=TASK_ZOMBIE&&\
   804286:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
   804289:	48 98                	cdqe   
   80428b:	48 69 c0 1c 03 00 00 	imul   rax,rax,0x31c
@@ -6603,7 +6603,7 @@ int req_proc(){
   8042e1:	48 69 c0 1c 03 00 00 	imul   rax,rax,0x31c
   8042e8:	48 05 e0 84 40 00    	add    rax,0x4084e0
   8042ee:	89 10                	mov    DWORD PTR [rax],edx
-    task[num].stat=ENDED;
+    task[num].stat=TASK_ZOMBIE;
   8042f0:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
   8042f3:	48 98                	cdqe   
   8042f5:	48 69 c0 1c 03 00 00 	imul   rax,rax,0x31c
@@ -6814,7 +6814,7 @@ void manage_proc(){
   804563:	8b 00                	mov    eax,DWORD PTR [rax]
   804565:	83 f8 0a             	cmp    eax,0xa
   804568:	77 20                	ja     80458a <manage_proc+0x8b>
-    task[cur_proc].stat!=READY){
+    task[cur_proc].stat!=TASK_READY){
   80456a:	8b 05 fc 10 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc110fc]        # 41566c <cur_proc>
   804570:	48 98                	cdqe   
   804572:	48 69 c0 1c 03 00 00 	imul   rax,rax,0x31c
@@ -6843,7 +6843,7 @@ void manage_proc(){
         //轮询，直到有一个符合条件
         while(times<10){
   8045c3:	eb 52                	jmp    804617 <manage_proc+0x118>
-            if(task[i].pid!=-1&&task[i].stat==READY&&i!=cur_proc){
+            if(task[i].pid!=-1&&task[i].stat==TASK_READY&&i!=cur_proc){
   8045c5:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
   8045c8:	48 98                	cdqe   
   8045ca:	48 69 c0 1c 03 00 00 	imul   rax,rax,0x31c
@@ -6884,13 +6884,13 @@ void manage_proc(){
   804620:	83 7d f8 0a          	cmp    DWORD PTR [rbp-0x8],0xa
   804624:	74 69                	je     80468f <manage_proc+0x190>
         //switch
-        task[cur_proc].stat=READY;
+        task[cur_proc].stat=TASK_READY;
   804626:	8b 05 40 10 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc11040]        # 41566c <cur_proc>
   80462c:	48 98                	cdqe   
   80462e:	48 69 c0 1c 03 00 00 	imul   rax,rax,0x31c
   804635:	48 05 f8 84 40 00    	add    rax,0x4084f8
   80463b:	c7 00 01 00 00 00    	mov    DWORD PTR [rax],0x1
-        task[i].stat=RUNNING;
+        task[i].stat=TASK_RUNNING;
   804641:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
   804644:	48 98                	cdqe   
   804646:	48 69 c0 1c 03 00 00 	imul   rax,rax,0x31c
@@ -7025,7 +7025,7 @@ void save_context(TSS *tss)
   804790:	c3                   	ret    
 
 0000000000804791 <palloc>:
-    task[index].stat=READY;
+    task[index].stat=TASK_READY;
     return index;
 } */
 //为指定进程申请新的内存，并返回这块内存的线性地址。
@@ -7318,7 +7318,7 @@ void proc_end()
   804a93:	8b 00                	mov    eax,DWORD PTR [rax]
   804a95:	83 f8 ff             	cmp    eax,0xffffffff
   804a98:	74 4c                	je     804ae6 <proc_end+0x84>
-        task[task[cur_proc].parent_pid].stat=READY;
+        task[task[cur_proc].parent_pid].stat=TASK_READY;
   804a9a:	8b 05 cc 0b c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc10bcc]        # 41566c <cur_proc>
   804aa0:	48 98                	cdqe   
   804aa2:	48 69 c0 1c 03 00 00 	imul   rax,rax,0x31c
@@ -7358,7 +7358,7 @@ void del_proc(int pnr)
   804af8:	48 89 e5             	mov    rbp,rsp
   804afb:	48 83 ec 30          	sub    rsp,0x30
   804aff:	89 7d dc             	mov    DWORD PTR [rbp-0x24],edi
-    task[pnr].stat=ENDED;
+    task[pnr].stat=TASK_ZOMBIE;
   804b02:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
   804b05:	48 98                	cdqe   
   804b07:	48 69 c0 1c 03 00 00 	imul   rax,rax,0x31c
@@ -7687,7 +7687,7 @@ int reg_proc(addr_t entry, struct index_node *cwd, struct index_node *exef)
   804e6a:	48 05 20 87 40 00    	add    rax,0x408720
   804e70:	48 89 50 04          	mov    QWORD PTR [rax+0x4],rdx
 
-    task[i].stat=READY;
+    task[i].stat=TASK_READY;
   804e74:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
   804e77:	48 98                	cdqe   
   804e79:	48 69 c0 1c 03 00 00 	imul   rax,rax,0x31c
@@ -8475,7 +8475,7 @@ int sys_fork(void){
   805840:	48 89 4a 68          	mov    QWORD PTR [rdx+0x68],rcx
   805844:	8b 80 40 02 00 00    	mov    eax,DWORD PTR [rax+0x240]
   80584a:	89 42 70             	mov    DWORD PTR [rdx+0x70],eax
-    task[pid].stat=READY;
+    task[pid].stat=TASK_READY;
   80584d:	8b 45 cc             	mov    eax,DWORD PTR [rbp-0x34]
   805850:	48 98                	cdqe   
   805852:	48 69 c0 1c 03 00 00 	imul   rax,rax,0x31c
@@ -9454,7 +9454,7 @@ int tcsetpgrp(int fildes,pid_t pgid_id){
     for (int i = 0; i <MAX_TASKS; ++i) {
   8063b4:	c7 45 f4 00 00 00 00 	mov    DWORD PTR [rbp-0xc],0x0
   8063bb:	e9 85 00 00 00       	jmp    806445 <tcsetpgrp+0xcc>
-        if(task[i].stat==ENDED)continue;
+        if(task[i].stat==TASK_ZOMBIE)continue;
   8063c0:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
   8063c3:	48 98                	cdqe   
   8063c5:	48 69 c0 1c 03 00 00 	imul   rax,rax,0x31c
@@ -9495,7 +9495,7 @@ int tcsetpgrp(int fildes,pid_t pgid_id){
   806434:	48 05 e0 84 40 00    	add    rax,0x4084e0
   80643a:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
   80643e:	eb 01                	jmp    806441 <tcsetpgrp+0xc8>
-        if(task[i].stat==ENDED)continue;
+        if(task[i].stat==TASK_ZOMBIE)continue;
   806440:	90                   	nop
     for (int i = 0; i <MAX_TASKS; ++i) {
   806441:	83 45 f4 01          	add    DWORD PTR [rbp-0xc],0x1
@@ -10144,7 +10144,7 @@ int exec_call(char *path)
   806a5d:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
   806a60:	89 c7                	mov    edi,eax
   806a62:	e8 2b dc ff ff       	call   804692 <switch_proc_tss>
-    while(task[pi].stat!=ENDED);
+    while(task[pi].stat!=TASK_ZOMBIE);
   806a67:	90                   	nop
   806a68:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
   806a6b:	48 98                	cdqe   
@@ -14101,7 +14101,7 @@ int disk_int_handler_c()
     running_devman_req=NULL;
   809215:	48 c7 05 48 24 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc22448],0x0        # 42b668 <running_devman_req>
   80921c:	00 00 00 00 
-    //set_proc_stat(running_req->pid,READY);
+    //set_proc_stat(running_req->pid,TASK_READY);
     running_req=NULL;
   809220:	48 c7 05 35 24 c2 ff 	mov    QWORD PTR [rip+0xffffffffffc22435],0x0        # 42b660 <running_req>
   809227:	00 00 00 00 
@@ -14330,7 +14330,7 @@ int execute_request(){
     running_req->stat=REQ_STAT_WORKING;
   8094b4:	48 8b 05 a5 21 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc221a5]        # 42b660 <running_req>
   8094bb:	c7 40 1c 02 00 00 00 	mov    DWORD PTR [rax+0x1c],0x2
-    //set_proc_stat(running_req->pid,SUSPENDED);
+    //set_proc_stat(running_req->pid,TASK_SUSPENDED);
     int r=0;
   8094c2:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
     switch (running_req->func)
@@ -14723,7 +14723,7 @@ int read_disk(driver_args* args)
   809888:	48 8b 40 28          	mov    rax,QWORD PTR [rax+0x28]
   80988c:	c7 80 ac 00 00 00 00 	mov    DWORD PTR [rax+0xac],0x0
   809893:	00 00 00 
-    //set_proc_stat(running_req->pid,READY);
+    //set_proc_stat(running_req->pid,TASK_READY);
     running_req=NULL;
   809896:	48 c7 05 bf 1d c2 ff 	mov    QWORD PTR [rip+0xffffffffffc21dbf],0x0        # 42b660 <running_req>
   80989d:	00 00 00 00 
@@ -14763,7 +14763,7 @@ int write_disk(driver_args* args)
   8098f0:	48 8b 40 28          	mov    rax,QWORD PTR [rax+0x28]
   8098f4:	c7 80 ac 00 00 00 00 	mov    DWORD PTR [rax+0xac],0x0
   8098fb:	00 00 00 
-    //set_proc_stat(running_req->pid,READY);
+    //set_proc_stat(running_req->pid,TASK_READY);
     running_req=NULL;
   8098fe:	48 c7 05 57 1d c2 ff 	mov    QWORD PTR [rip+0xffffffffffc21d57],0x0        # 42b660 <running_req>
   809905:	00 00 00 00 
@@ -18850,7 +18850,7 @@ void DISK1_FAT32_FS_init()
 000000000080c311 <close_tty>:
 int stdd=0;
 struct file_operations tty_fops={
-        .open=init_tty, .close=close_tty,.write=write_tty,.read=read_tty,.ioctl=tty_do_req
+        .open=init_tty, .close=close_tty,.write=write_tty,.read=read_tty,.ioctl=ioctl_tty
 };
 
 long close_tty(struct index_node * inode,struct file * filp){
@@ -19115,12 +19115,12 @@ long write_tty(struct file * filp,char * buf,unsigned long count,long * position
   80c5d9:	c9                   	leave  
   80c5da:	c3                   	ret    
 
-000000000080c5db <tty_do_req>:
+000000000080c5db <ioctl_tty>:
  * TTY_CONNECT:尝试连接到dev/console,这样会成为controlling terminal,里面的数据才能输出到屏幕上，
  * 因为除了特殊指定的进程都会有一个自己的天tty。
  * 成功返回0。
  * */
-long tty_do_req(struct index_node * inode,struct file * filp,unsigned long cmd,unsigned long arg)
+long ioctl_tty(struct index_node * inode,struct file * filp,unsigned long cmd,unsigned long arg)
 {
   80c5db:	f3 0f 1e fa          	endbr64 
   80c5df:	55                   	push   rbp
@@ -19154,14 +19154,14 @@ long tty_do_req(struct index_node * inode,struct file * filp,unsigned long cmd,u
   80c632:	c7 45 d8 ff ff ff ff 	mov    DWORD PTR [rbp-0x28],0xffffffff
     switch (cmd)
   80c639:	48 83 7d b8 02       	cmp    QWORD PTR [rbp-0x48],0x2
-  80c63e:	0f 84 df 00 00 00    	je     80c723 <tty_do_req+0x148>
+  80c63e:	0f 84 df 00 00 00    	je     80c723 <ioctl_tty+0x148>
   80c644:	48 83 7d b8 02       	cmp    QWORD PTR [rbp-0x48],0x2
-  80c649:	0f 87 fb 00 00 00    	ja     80c74a <tty_do_req+0x16f>
+  80c649:	0f 87 fb 00 00 00    	ja     80c74a <ioctl_tty+0x16f>
   80c64f:	48 83 7d b8 00       	cmp    QWORD PTR [rbp-0x48],0x0
-  80c654:	74 6a                	je     80c6c0 <tty_do_req+0xe5>
+  80c654:	74 6a                	je     80c6c0 <ioctl_tty+0xe5>
   80c656:	48 83 7d b8 01       	cmp    QWORD PTR [rbp-0x48],0x1
-  80c65b:	0f 84 91 00 00 00    	je     80c6f2 <tty_do_req+0x117>
-  80c661:	e9 e4 00 00 00       	jmp    80c74a <tty_do_req+0x16f>
+  80c65b:	0f 84 91 00 00 00    	je     80c6f2 <ioctl_tty+0x117>
+  80c661:	e9 e4 00 00 00       	jmp    80c74a <ioctl_tty+0x16f>
     {
         case TTY_WSTDERR:
             while (i<count){
@@ -19171,7 +19171,7 @@ long tty_do_req(struct index_node * inode,struct file * filp,unsigned long cmd,u
   80c66d:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
   80c671:	8b 40 10             	mov    eax,DWORD PTR [rax+0x10]
   80c674:	39 c2                	cmp    edx,eax
-  80c676:	75 0b                	jne    80c683 <tty_do_req+0xa8>
+  80c676:	75 0b                	jne    80c683 <ioctl_tty+0xa8>
                     b->wptr=0;
   80c678:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
   80c67c:	c7 40 08 00 00 00 00 	mov    DWORD PTR [rax+0x8],0x0
@@ -19200,7 +19200,7 @@ long tty_do_req(struct index_node * inode,struct file * filp,unsigned long cmd,u
   80c6c0:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
   80c6c3:	48 98                	cdqe   
   80c6c5:	48 39 45 e0          	cmp    QWORD PTR [rbp-0x20],rax
-  80c6c9:	77 9b                	ja     80c666 <tty_do_req+0x8b>
+  80c6c9:	77 9b                	ja     80c666 <ioctl_tty+0x8b>
             }
             //刷新到framebuffer
             write_framebuffer(filp,b->data+saved_wptr,count,0);
@@ -19215,7 +19215,7 @@ long tty_do_req(struct index_node * inode,struct file * filp,unsigned long cmd,u
   80c6e8:	48 89 c7             	mov    rdi,rax
   80c6eb:	e8 e7 b2 ff ff       	call   8079d7 <write_framebuffer>
         break;
-  80c6f0:	eb 61                	jmp    80c753 <tty_do_req+0x178>
+  80c6f0:	eb 61                	jmp    80c753 <ioctl_tty+0x178>
         case TTY_CONNECT:
             fd=sys_open("dev/console",O_WRONLY|O_CREAT|O_EXCL);
   80c6f2:	be c1 00 00 00       	mov    esi,0xc1
@@ -19224,16 +19224,16 @@ long tty_do_req(struct index_node * inode,struct file * filp,unsigned long cmd,u
   80c701:	89 45 d8             	mov    DWORD PTR [rbp-0x28],eax
             if(fd==-1)return -1;
   80c704:	83 7d d8 ff          	cmp    DWORD PTR [rbp-0x28],0xffffffff
-  80c708:	75 09                	jne    80c713 <tty_do_req+0x138>
+  80c708:	75 09                	jne    80c713 <ioctl_tty+0x138>
   80c70a:	48 c7 c0 ff ff ff ff 	mov    rax,0xffffffffffffffff
-  80c711:	eb 45                	jmp    80c758 <tty_do_req+0x17d>
+  80c711:	eb 45                	jmp    80c758 <ioctl_tty+0x17d>
             ((tty_t*)filp->private_data)->console_fd=fd;
   80c713:	48 8b 45 c0          	mov    rax,QWORD PTR [rbp-0x40]
   80c717:	48 8b 40 20          	mov    rax,QWORD PTR [rax+0x20]
   80c71b:	8b 55 d8             	mov    edx,DWORD PTR [rbp-0x28]
   80c71e:	89 50 48             	mov    DWORD PTR [rax+0x48],edx
             break;
-  80c721:	eb 30                	jmp    80c753 <tty_do_req+0x178>
+  80c721:	eb 30                	jmp    80c753 <ioctl_tty+0x178>
         case TTY_DISCONNECT:
             fd=((tty_t*)filp->private_data)->console_fd;
   80c723:	48 8b 45 c0          	mov    rax,QWORD PTR [rbp-0x40]
@@ -19242,16 +19242,16 @@ long tty_do_req(struct index_node * inode,struct file * filp,unsigned long cmd,u
   80c72e:	89 45 d8             	mov    DWORD PTR [rbp-0x28],eax
             if(fd==-1)return -1;
   80c731:	83 7d d8 ff          	cmp    DWORD PTR [rbp-0x28],0xffffffff
-  80c735:	75 09                	jne    80c740 <tty_do_req+0x165>
+  80c735:	75 09                	jne    80c740 <ioctl_tty+0x165>
   80c737:	48 c7 c0 ff ff ff ff 	mov    rax,0xffffffffffffffff
-  80c73e:	eb 18                	jmp    80c758 <tty_do_req+0x17d>
+  80c73e:	eb 18                	jmp    80c758 <ioctl_tty+0x17d>
             sys_close(fd);
   80c740:	8b 45 d8             	mov    eax,DWORD PTR [rbp-0x28]
   80c743:	89 c7                	mov    edi,eax
   80c745:	e8 fd bf ff ff       	call   808747 <sys_close>
     default:return -1;
   80c74a:	48 c7 c0 ff ff ff ff 	mov    rax,0xffffffffffffffff
-  80c751:	eb 05                	jmp    80c758 <tty_do_req+0x17d>
+  80c751:	eb 05                	jmp    80c758 <ioctl_tty+0x17d>
     }
     return 0;
   80c753:	b8 00 00 00 00       	mov    eax,0x0

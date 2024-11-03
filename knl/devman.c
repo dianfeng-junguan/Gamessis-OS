@@ -18,7 +18,7 @@ device* dev_tree[]={NULL,NULL,NULL};
 
 driverfunc dev_funcs[]={
     [OPERATIONS_HD]=hd_do_req,
-    [OPERATIONS_TTY]=NULL,//tty_do_req,
+    [OPERATIONS_TTY]=NULL,//ioctl_tty,
     [OPERATIONS_KEYBOARD]=NULL,
     [OPERATIONS_MOUSE]=NULL
 };
@@ -59,7 +59,7 @@ void make_devf(struct dir_entry* d,struct index_node* i,char* name,struct dir_en
  * 创建/dev文件夹，添加必要的设备文件。
  * 这个/dev文件夹的dentry和inode等数据由devman管理，根文件系统切换时，这个文件夹会跟着挂载到新文件系统的根目录下。
  * */
-struct dir_entry* ddev=NULL,*dmnt;
+struct dir_entry* ddev=NULL,*dmnt,*dconsole,*dhd0,*dtty;
 int init_devman()
 {
     //创建dev文件夹
@@ -83,16 +83,20 @@ int init_devman()
 
     //创建几个设备文件
     //console-framebuffer.c
-    struct dir_entry* dconsole= (struct dir_entry *) vmalloc();
+    dconsole= (struct dir_entry *) vmalloc();
     struct index_node* iconsole=dconsole+1;
     dconsole->name=iconsole+1;
     make_devf(dconsole,iconsole,"console",ddev,&framebuffer_fops);
     //hd0-disk.c
-    struct dir_entry* dhd0= (struct dir_entry *) vmalloc();
+    dhd0= (struct dir_entry *) vmalloc();
     struct index_node* ihd0=dhd0+1;
     dhd0->name=ihd0+1;
     make_devf(dhd0,ihd0,"hd0",ddev,&hd_fops);
-
+    //tty-tty.c
+    dtty= (struct dir_entry *) vmalloc();
+    struct index_node* itty=dtty+1;
+    dtty->name=itty+1;
+    make_devf(dtty,itty,"tty",ddev,&tty_fops);
 
 }
 //
@@ -163,7 +167,7 @@ long ioctl_dev(struct index_node * inode,struct file * filp,unsigned long cmd,un
     if(p>=name)
         name=p+1;
     if(memcmp(name,"tty",3)==0){
-        return tty_do_req(inode,filp,cmd,arg);
+        return ioctl_tty(inode, filp, cmd, arg);
     }else if(strcmp(name,"console")==0){
         return ioctl_framebuffer(inode,filp,cmd,arg);
     }

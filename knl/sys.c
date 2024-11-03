@@ -258,6 +258,57 @@ unsigned long sys_vfork()
 	rusage reserved
 */
 
+unsigned long sys_wait(pid_t pid, int *stat_loc, int options){
+    struct process* waitee=NULL;
+    extern struct process task[];
+    if(!current->child_procs)
+        return -ECHILD;//没有子进程可以等
+    if(pid==-1){
+        //任意一个子进程
+        while (1) {
+            for(struct List* l=current->child_procs;l;l=l->next) {
+                struct process* p=l->data;
+                if(p->stat == TASK_ZOMBIE) {
+                    waitee=p;
+                    goto done;
+                }
+            }
+        }
+
+    }else if(pid==0) {
+        //等待任意一个和父进程同一个进程组的子进程
+        while (1) {
+            for(struct List* l=current->child_procs;l;l=l->next) {
+                struct process* p=l->data;
+                if(p->gpid==current->gpid&& p->stat == TASK_ZOMBIE) {
+                    waitee=p;
+                    goto done;
+                }
+            }
+        }
+    }else{
+        if(pid<0)pid=-pid;
+        //检查是不是本进程的子进程
+        for(int i=0;i<MAX_TASKS;i++){
+            if(task[i].pid==pid){
+                waitee=&task[i];
+                break;
+            }
+        }
+        if(waitee==NULL||waitee->parent_pid!=current->pid)
+            return -ECHILD;//没有这个进程或者不是子进程
+        //TODO 等待结束以及等待信号
+        while (waitee->stat != TASK_ZOMBIE);
+        *stat_loc=waitee->exit_code;
+    }
+    done:
+    //清除子进程
+    waitee->stat=TASK_EMPTY;
+    //从链表中删除，不再是子进程
+    list_drop(&waitee->node);
+    //TODO 被信号中断时返回-1
+    return waitee->pid;
+}
 unsigned long sys_wait4(unsigned long pid,int *status,int options,void *rusage)
 {
 //    long retval = 0;

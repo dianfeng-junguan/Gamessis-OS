@@ -18,4 +18,6 @@ add_executable(gms ${KNL} ${KNL_MODS} ${KNL_COMS}
         include/sys/unistd.h
         include/tty.h
         knl/mods/tty.c
+        include/sys/wait.h
+        knl/wait.c
 )

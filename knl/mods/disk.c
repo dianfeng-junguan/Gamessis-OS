@@ -81,7 +81,7 @@ int disk_int_handler_c()
     running_req->args->stat=REQ_STAT_EMPTY;
     running_devman_req->stat=REQ_STAT_DONE;
     running_devman_req=NULL;
-    //set_proc_stat(running_req->pid,READY);
+    //set_proc_stat(running_req->pid,TASK_READY);
     running_req=NULL;
     return 0;
 }
@@ -127,7 +127,7 @@ int execute_request(){
     running_req=&disk_reqs[head];
     head=(head+1)%MAX_DISK_REQUEST_COUNT;
     running_req->stat=REQ_STAT_WORKING;
-    //set_proc_stat(running_req->pid,SUSPENDED);
+    //set_proc_stat(running_req->pid,TASK_SUSPENDED);
     int r=0;
     switch (running_req->func)
     {
@@ -247,7 +247,7 @@ int read_disk(driver_args* args)
     
     running_req->stat=REQ_STAT_DONE;
     running_req->args->stat=REQ_STAT_EMPTY;
-    //set_proc_stat(running_req->pid,READY);
+    //set_proc_stat(running_req->pid,TASK_READY);
     running_req=NULL;
     return ret;
 }
@@ -257,7 +257,7 @@ int write_disk(driver_args* args)
     
     running_req->stat=REQ_STAT_DONE;
     running_req->args->stat=REQ_STAT_EMPTY;
-    //set_proc_stat(running_req->pid,READY);
+    //set_proc_stat(running_req->pid,TASK_READY);
     running_req=NULL;
     return ret;
 }

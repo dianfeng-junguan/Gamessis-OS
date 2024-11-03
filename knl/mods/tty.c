@@ -6,7 +6,7 @@
 
 int stdd=0;
 struct file_operations tty_fops={
-        .open=init_tty, .close=close_tty,.write=write_tty,.read=read_tty,.ioctl=tty_do_req
+        .open=init_tty, .close=close_tty,.write=write_tty,.read=read_tty,.ioctl=ioctl_tty
 };
 
 long close_tty(struct index_node * inode,struct file * filp){
@@ -76,9 +76,10 @@ long write_tty(struct file * filp,char * buf,unsigned long count,long * position
  * 因为除了特殊指定的进程都会有一个自己的天tty。
  * 成功返回0。
  * */
-long tty_do_req(struct index_node * inode,struct file * filp,unsigned long cmd,unsigned long arg)
+long ioctl_tty(struct index_node * inode, struct file * filp, unsigned long cmd, unsigned long arg)
 {
     stdbuf_t * b=&((tty_t*)filp->private_data)->stderr_buf;
+    stdbuf_t * ib=&((tty_t*)filp->private_data)->stdin_buf;
     int i=0;
     char* buf=*((char**)arg);
     unsigned long count=*((unsigned long*)(arg+8));
@@ -105,6 +106,13 @@ long tty_do_req(struct index_node * inode,struct file * filp,unsigned long cmd,u
             fd=((tty_t*)filp->private_data)->console_fd;
             if(fd==-1)return -1;
             sys_close(fd);
+        case TTY_WSTDIN:
+            while (i<count){
+                if(ib->wptr==ib->size)
+                    ib->wptr=0;
+                ib->data[ib->wptr]=buf[i++];
+                ib->wptr++;
+            }
     default:return -1;
     }
     return 0;

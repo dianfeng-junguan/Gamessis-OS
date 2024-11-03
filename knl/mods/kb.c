@@ -9,6 +9,8 @@
 #include "devman.h"
 #include "framebuffer.h"
 #include "log.h"
+#include "syscall.h"
+#include "tty.h"
 
 char key_buf[MAX_KEYBUF];
 kb_buf key_bufq={
@@ -201,6 +203,13 @@ int key_proc()
             break;
         default:
             break;
+    }
+    //发送到std
+    if(!scan1&FLAG_BREAK){
+        char ch= to_ascii(scan1);
+        unsigned long args[]={(unsigned long) &ch, 1};
+        //写入stdin
+        sys_ioctl(0,TTY_WSTDIN,(unsigned long)args);
     }
 //    if(scan1<=0x80&&ch!=0)
 //    {

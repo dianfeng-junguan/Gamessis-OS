@@ -237,6 +237,7 @@ int syscall(int a, int b, int c, int d, int e, int f)
         case SYSCALL_FORK:return sys_fork();
         case SYSCALL_EXECVE:return sys_execve(a,b);
         case SYSCALL_OPERATE_DEV:return sys_operate_dev(a,b,c);
+        case SYSCALL_WAIT:return sys_wait(a,b,c);
     }
     // __asm__ volatile("mov %0,%%eax\r\n mov %1,%%ebx\r\n mov %2,%%ecx\r\n mov %3,%%edx\r\n mov %4,%%esi\r\n mov %5,%%edi"\
     // ::"m"(func),"m"(a),"m"(b),"m"(c),"m"(d),"m"(e));

@@ -147,15 +147,12 @@ void main(unsigned int magic,void* addr)
     comprintf("\rgamessis os loaded.\r\n");
 	init_paging();
  	init_gdt();
-    init_proc();
     mount_rootfs();
     init_devman();
+    init_proc();
     sti();
     DISK1_FAT32_FS_init();
 
-    int fd= sys_open("/dev/console",O_WRONLY);
-    sys_write(fd,"try",4);
-    sys_close(fd);
     //自带驱动
     //init_tty();
     init_kb();

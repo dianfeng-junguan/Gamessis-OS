@@ -170,7 +170,7 @@ int exec_call(char *path)
     extern struct process task[];
     extern int cur_proc;
     switch_proc_tss(pi);
-    while(task[pi].stat!=ENDED);
+    while(task[pi].stat != TASK_ZOMBIE);
     return task[pi].exit_code;
 }
 int proc_start()
@@ -368,11 +368,16 @@ int load_pe(struct process *proc)
     task[cur_proc].mem_struct.stack_top=STACK_TOP;
 
 
+
     //完毕,调用入口函数
     //重定位完毕，准备调用DllMain
     typedef int (*Main)(int,void*);
     Main main=shell_addr;
-    task[cur_proc].exit_code=main(0,NULL);
+    int ecode=main(0,NULL);
+    do_syscall(SYSCALL_EXIT,ecode,0,0,0,0,0);
+    //
+    //不应该执行到这
+    while(1);
     return task[cur_proc].exit_code;
 }
 

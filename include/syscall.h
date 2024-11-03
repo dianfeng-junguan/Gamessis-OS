@@ -1,3 +1,5 @@
+#include "sys/types.h"
+
 #define SYSCALL_REG_DEV 0
 #define SYSCALL_DISPOSE_DEV 1
 #define SYSCALL_REG_DRV 2
@@ -27,6 +29,7 @@
 #define SYSCALL_OPERATE_DEV 26
 #define SYSCALL_FORK 27
 #define SYSCALL_EXECVE 28
+#define SYSCALL_WAIT 29
 #define SYSCALL_KB_READC 100
 
 
@@ -62,4 +65,5 @@ unsigned long sys_close(int fd);
 unsigned long sys_read(int fd,void * buf,long count);
 unsigned long sys_write(int fd,void * buf,long count);
 unsigned long sys_lseek(int filds,long offset,int whence);
+unsigned long sys_wait(pid_t pid, int *stat_loc, int options);
 int sys_ioctl(int fildes, int request, unsigned long args);

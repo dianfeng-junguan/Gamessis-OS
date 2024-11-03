@@ -7,10 +7,11 @@
 #pragma pack(1)
 #define MAX_PAGES_PROC 8
 #define MAX_TASKS 32
-#define RUNNING 0
-#define READY 1
-#define SUSPENDED 2
-#define ENDED 3
+#define TASK_EMPTY 0
+#define TASK_RUNNING 1
+#define TASK_READY 2
+#define TASK_SUSPENDED 3
+#define TASK_ZOMBIE 4
 #define MAX_PROC_COUNT 64
 #define MAX_UTIME 10
 #define MAX_PROC_OPENF 32
@@ -168,24 +169,21 @@ struct process{
     struct file *openf[MAX_PROC_OPENF];
     TSS tss;
     regs_t regs;
-    struct process* next;//一个进程组里面的下一个进程
+    struct List node;//本进程的节点
+    struct List *child_procs;//子进程
 }__attribute__((packed));//208 bytes
 #endif
-typedef struct _pgroup{
-    struct process* leader;
-    struct process* head;
-    struct _pgroup* next;//一个会话里面的下一个进程组
-}pgroup;//进程组
-typedef struct {
-    struct pgroup *foreground_group;
-    struct pgroup* head;
-}session;//会话
 typedef struct
 {
     unsigned int proc_end_addr;
     unsigned int argv;
     unsigned int argc;
 }proc_ret_stack;
+
+__attribute__((__always_inline__))inline int do_syscall(int func,int a1,int a2,int a3,int a4,int a5,int a6){
+        asm volatile(".byte 0x48\n"
+                 "syscall"::"a"(func),"D"(a1),"S"(a2),"d"(a3),"c"(a4),"r"(a5),"r"(a6));
+}
 
 void init_proc();
 int req_proc();

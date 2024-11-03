@@ -3,6 +3,7 @@
 #define TTY_WSTDERR 0
 #define TTY_CONNECT 1
 #define TTY_DISCONNECT 2
+#define TTY_WSTDIN 3
 #include "vfs.h"
 //
 typedef struct {
@@ -19,5 +20,6 @@ long init_tty(struct index_node * inode,struct file * filp);
 long close_tty(struct index_node * inode,struct file * filp);
 long read_tty(struct file * filp,char * buf,unsigned long count,long * position);
 long write_tty(struct file * filp,char * buf,unsigned long count,long * position);
-long tty_do_req(struct index_node * inode,struct file * filp,unsigned long cmd,unsigned long arg);
+long ioctl_tty(struct index_node * inode, struct file * filp, unsigned long cmd, unsigned long arg);
+extern struct file_operations tty_fops;
 
