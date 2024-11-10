@@ -9,7 +9,7 @@
 #include "kb.h"
 #include "framebuffer.h"
 
-gate *idt= (gate *) IDT_ADDR;
+gate *idt= (gate *) KNL_BASE+IDT_ADDR;
 extern int disk_int_handler();
 void init_int(){
     //asm volatile("sidt %0"::"m"(idt));
@@ -56,7 +56,7 @@ void init_int(){
 
 
     //设置IA32_LSTAR,为syscall做设置
-    wrmsr(0xc0000082, _syscall);
+    wrmsr(0xc0000082, _syscall+KNL_BASE);
     //设置IA32_FMASK,为syscall做设置
     wrmsr(0xc0000084, -1);
 }

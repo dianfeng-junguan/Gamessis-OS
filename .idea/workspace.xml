@@ -20,15 +20,31 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="把内核同时映射到了高地址空间">
+    <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="将内核移动到高地址">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/com.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/com.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/devman.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/devman.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/framebuffer.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/framebuffer.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/gdt.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/gdt.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/gmsknl.elf" beforeDir="false" afterPath="$PROJECT_DIR$/bin/gmsknl.elf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/setupa.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/setupa.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/int.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/int.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/log.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/log.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/memory.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/memory.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/mods/tty.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/mods/tty.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/proc.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/proc.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/virfs.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/virfs.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gdb.sh" beforeDir="false" afterPath="$PROJECT_DIR$/gdb.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hda.img" beforeDir="false" afterPath="$PROJECT_DIR$/hda.img" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/framebuffer.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/framebuffer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/memory.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/memory.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/page.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/page.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/setup.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl/setup.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/setup64.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl/setup64.s" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/framebuffer.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/framebuffer.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/gdt.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/gdt.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/int.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/int.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/memory.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/memory.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/proc.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/proc.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +112,7 @@
       <recent name="D:\Code\Comprehensive\OS\workspace\64\knl" />
     </key>
   </component>
-  <component name="RunManager" selected="远程调试.gdb">
+  <component name="RunManager" selected="复合.deb">
     <configuration name="gdb" type="CLion_Remote" version="1" remoteCommand="192.168.56.1:1234" symbolFile="$PROJECT_DIR$/bin/gmsknlm.elf" sysroot="">
       <debugger toolchainName="WSL" />
       <method v="2" />
@@ -110,6 +126,11 @@
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
+    </configuration>
+    <configuration name="deb" type="CompoundRunConfigurationType">
+      <toRun name="debug" type="MAKEFILE_TARGET_RUN_CONFIGURATION" />
+      <toRun name="gdb" type="CLion_Remote" />
+      <method v="2" />
     </configuration>
     <configuration name="com" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile">
       <makefile filename="D:\Code\Comprehensive\OS\workspace\64\Makefile" target="com" workingDirectory="" arguments="">
@@ -150,6 +171,7 @@
       <item itemvalue="Makefile 目标.com" />
       <item itemvalue="Makefile 目标.debug" />
       <item itemvalue="Shell Script.gdb" />
+      <item itemvalue="复合.deb" />
       <item itemvalue="远程调试.gdb" />
     </list>
   </component>
@@ -442,7 +464,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730205498533</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="将内核移动到高地址">
+      <option name="closed" value="true" />
+      <created>1731236722274</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1731236722274</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -466,7 +496,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="PDPTE 1GB页备份" />
     <MESSAGE value="修复了中断，把int gate改成trap gate就好了" />
     <MESSAGE value="恢复了键盘功能，硬盘功能" />
     <MESSAGE value="内存管理结构开始使用" />
@@ -491,7 +520,8 @@
     <MESSAGE value="完成了execve功能" />
     <MESSAGE value="修复了系统调用返回值丢失的问题" />
     <MESSAGE value="把内核同时映射到了高地址空间" />
-    <option name="LAST_COMMIT_MESSAGE" value="把内核同时映射到了高地址空间" />
+    <MESSAGE value="将内核移动到高地址" />
+    <option name="LAST_COMMIT_MESSAGE" value="将内核移动到高地址" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -504,7 +534,7 @@
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/knl/main.c</url>
           <line>23</line>
-          <option name="timeStamp" value="157" />
+          <option name="timeStamp" value="158" />
         </line-breakpoint>
         <breakpoint type="OCSymbolicBreakpointType">
           <properties>
@@ -547,6 +577,12 @@
             <option name="symbolPattern" value="general_protect" />
           </properties>
           <option name="timeStamp" value="148" />
+        </breakpoint>
+        <breakpoint enabled="true" type="OCSymbolicBreakpointType">
+          <properties>
+            <option name="symbolPattern" value="main" />
+          </properties>
+          <option name="timeStamp" value="159" />
         </breakpoint>
       </breakpoints>
       <default-breakpoints>

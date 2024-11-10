@@ -32,9 +32,9 @@ typedef struct
 #define PAGE_TABLE_ADDR 0x101000
 typedef unsigned int page_item;
 #else
-#define PML4_ADDR 0x101000
-#define PDPT_ADDR 0x102000
-#define PD_ADDR 0x103000
+#define PML4_ADDR 0xffff800000101000
+#define PDPT_ADDR 0xffff800000102000
+#define PD_ADDR 0xffff800000103000
 #define PML4E_SIZE 0x8000000000ul
 #define PDPTE_SIZE 0x40000000ul
 #define PDE_SIZE 0x200000
@@ -42,6 +42,7 @@ typedef unsigned int page_item;
 #define PAGE_2M_SIZE 0x200000
 #define PAGE_4K_MASK 0xfffffffff000ul
 #define PAGE_2M_MASK 0xfffffff00000ul
+#define KNL_BASE 0xffff800000000000ul
 ///向上对齐。
 #define PAGE_2M_ALIGN(addr) (((unsigned long) (addr) + PAGE_2M_SIZE - 1) &PAGE_2M_MASK)
 ///向上对齐。

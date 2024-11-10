@@ -2,7 +2,7 @@
 //专门处理页帧（显存缓冲区）的功能。
 #include <multiboot2.h>
 #include "vfs.h"
-#define FRAMEBUFFER_ADDR 0x40000000ul
+#define FRAMEBUFFER_ADDR 0xffff800040000000ul
 #define PSF1_FONT_MAGIC 0x0436
 struct psf1_header {
     unsigned short magic;     /* magic number for identification */

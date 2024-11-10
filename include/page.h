@@ -15,9 +15,9 @@
 #define PDPTE_1GB 0x80
 
 
-#define PAGE_INDEX_ADDR 0x1000
-#define PAGE_TABLE_ADDR 0x2000
-#define MEM_END 0xffffffff
+#define PAGE_INDEX_ADDR 0xffff800000001000ul
+#define PAGE_TABLE_ADDR 0xffff800000002000ul
+#define MEM_END 0xffffffffffffffff
 
-#define VMALLOC_BASE 0x20000
+#define VMALLOC_BASE 0xffff800000020000ul
 #define VMALLOC_PGN ((0xb8000-0x20000)/0x1000)

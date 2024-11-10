@@ -17,7 +17,7 @@
 struct process task[MAX_PROC_COUNT];
 struct process* current;
 TSS scene_saver;
-TSS *tss=0x108000;
+TSS *tss=0xffff800000108000ul;
 int cur_proc=0;
 int pidd=0;
 int palloc_paddr=0;
