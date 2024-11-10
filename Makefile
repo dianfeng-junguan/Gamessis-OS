@@ -18,6 +18,7 @@ knl:
 	@ld -T lds.lds -o bin/gmsknl.elf $(KNL_OFILES) $(MODS_OFILES) $(COM_OFILES)
 	@objdump -d bin/gmsknl.elf -j .entry -M intel > knl.s
 	@objdump -S -d bin/gmsknl.elf -M intel >> knl.s
+	@objcopy bin/gmsknl.elf bin/gmsknlm.elf --change-address=0xffff800000000000
 boot:
 	@gcc -w -e main -nostdlib \
         -fno-builtin -Wl,--subsystem,10 -o bin/boot.efi boot/boot.c \

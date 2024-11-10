@@ -103,6 +103,9 @@ set_paging:
     mov eax,0x101000
     mov dword [eax],0x102007
     mov dword [eax+4],0
+    mov eax,0x101800
+    mov dword [eax],0x102007
+    mov dword [eax+4],0
     ;PDPT
     mov eax,0x102000
     mov dword [eax],0x187;0x103007
