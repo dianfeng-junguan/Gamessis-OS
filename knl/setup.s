@@ -145,8 +145,9 @@ switch_cs:
     ;push MULTIBOOT2_HEADER_MAGIC
     ;mov esi,ebx
     ;mov edi,MULTIBOOT2_HEADER_MAGIC
-    mov eax,main
-    jmp dword 0x8:main
+extern init64
+    mov eax,init64
+    jmp dword 0x8:init64
     ;jmp dword 0x8:main
 STACK_AREA_END equ 0x9fc00-1
 section .pgtbl align=4096
