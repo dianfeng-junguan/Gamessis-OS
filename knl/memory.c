@@ -23,7 +23,8 @@ int mmap_t_i=0;
 
 stat_t mmap(addr_t pa,addr_t la,u32 attr)
 {
-    //从pml4中找到la所属的pml4项目，即属于第几个512GB
+    return smmap(pa,la,attr,current->pml4);
+   /* //从pml4中找到la所属的pml4项目，即属于第几个512GB
     page_item *pdptp= (page_item *) (pml4[la / PML4E_SIZE] & (~0xff));//指向的pdpt表
     //因为一个pml指向512gb内存，目前电脑还没有内存能达到这个大小，就不进行检查是否越界的判断
 
@@ -51,7 +52,7 @@ stat_t mmap(addr_t pa,addr_t la,u32 attr)
 
     //在pt中找到la指向的page
     pt[la % PDE_SIZE / PAGE_SIZE]=pa|attr;//映射
-    return NORMAL;
+    return NORMAL;*/
 }
 
 stat_t smmap(addr_t pa,addr_t la,u32 attr,page_item* pml4p)

@@ -37,7 +37,7 @@ void init_framebuffer()
     addr_t pp=framebuffer.common.framebuffer_addr;
     for (size_t i = 0; i < pgc; i++)
     {
-        mmap(pp,p,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL);
+        smmap(pp,p,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,PML4_ADDR);
         pp+=PAGE_SIZE;
         p+=PAGE_SIZE;
     }
@@ -45,13 +45,13 @@ void init_framebuffer()
     
 }
 void init_font(){
-    boot_font = (struct psf2_header*) _binary_res_font_psf_start;
+    boot_font = (struct psf2_header*) (_binary_res_font_psf_start+KNL_BASE);
 
     font_width_bytes = (boot_font->width + 7) / 8;
     font_width = font_width_bytes * 8;
     font_height = boot_font->height;
 
-    glyph_table = (u8*)_binary_res_font_psf_start+boot_font->header_size;
+    glyph_table = (u8*)(_binary_res_font_psf_start+KNL_BASE)+boot_font->header_size;
     glyph_nr = boot_font->glyph_nr;
     bytes_per_glyph = boot_font->bytes_per_glyph;
 
