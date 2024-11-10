@@ -24,6 +24,7 @@ void main(unsigned int magic,void* addr)
     struct multiboot_header* mbi=0ul;
     mbi=(struct multiboot_header*)addr;
     init_logging();
+    init_memory();
     if(magic!=MULTIBOOT2_HEADER_MAGIC)//0x1e000
     {
         //printf("warning:multiboot2 magic does not match.\n");
@@ -40,7 +41,62 @@ void main(unsigned int magic,void* addr)
 		 tag = (struct multiboot_tag *)((u8 *)tag + ((tag->size + 7) & ~7)))
 	{
 		//printf("Tag 0x%x, Size 0x%x\n", tag->type, tag->size);
-		switch (tag->type)
+        if(tag->type==MULTIBOOT_TAG_TYPE_BASIC_MEMINFO)
+            set_high_mem_base(((struct multiboot_tag_basic_meminfo *)tag)->mem_lower);
+        else if(tag->type==MULTIBOOT_TAG_TYPE_MMAP)
+            for (multiboot_memory_map_t * mmap = ((struct multiboot_tag_mmap *)tag)->entries;
+                 (multiboot_uint8_t *)mmap < (multiboot_uint8_t *)tag + tag->size;
+                 mmap = (multiboot_memory_map_t *)((unsigned long)mmap + ((struct multiboot_tag_mmap *)tag)->entry_size))
+            {
+                set_mem_area(mmap->addr,mmap->len,mmap->type);
+            }
+        else if (MULTIBOOT_TAG_TYPE_FRAMEBUFFER){
+
+            multiboot_uint32_t color;
+            unsigned i;
+            struct multiboot_tag_framebuffer *tagfb = (struct multiboot_tag_framebuffer *)tag;
+            void *fb = (void *) FRAMEBUFFER_ADDR;
+            set_framebuffer(*tagfb);
+
+            init_framebuffer();
+            switch (tagfb->common.framebuffer_type)
+            {
+                case MULTIBOOT_FRAMEBUFFER_TYPE_INDEXED:
+                {
+                    unsigned best_distance, distance;
+                    struct multiboot_color *palette;
+
+                    palette = tagfb->framebuffer_palette;
+
+                    color = 0;
+                    best_distance = 4 * 256 * 256;
+
+                    for (i = 0; i < tagfb->framebuffer_palette_num_colors; i++)
+                    {
+                        distance = (0xff - palette[i].blue) * (0xff - palette[i].blue) + palette[i].red * palette[i].red + palette[i].green * palette[i].green;
+                        if (distance < best_distance)
+                        {
+                            color = i;
+                            best_distance = distance;
+                        }
+                    }
+                }
+                    break;
+
+                case MULTIBOOT_FRAMEBUFFER_TYPE_RGB:
+                    color = ((1 << tagfb->framebuffer_blue_mask_size) - 1) << tagfb->framebuffer_blue_field_position;
+                    break;
+
+                case MULTIBOOT_FRAMEBUFFER_TYPE_EGA_TEXT:
+                    color = '\\' | 0x0100;
+                    break;
+
+                default:
+                    color = 0xffffffff;
+                    break;
+            }
+        }
+		/*switch (tag->type)
 		{
 		case MULTIBOOT_TAG_TYPE_CMDLINE:
 			//printf("Command line = %s\n", ((struct multiboot_tag_string *)tag)->string);
@@ -129,7 +185,7 @@ void main(unsigned int magic,void* addr)
 
 			break;
 		}
-		}
+		}*/
 	}
 	tag = (struct multiboot_tag *)((multiboot_uint8_t *)tag + ((tag->size + 7) & ~7));
 	//printf("Total mbi size 0x%x\n", (unsigned)tag - addr);
@@ -142,7 +198,6 @@ void main(unsigned int magic,void* addr)
     init_int();
     print("int loaded.\n");
 //    set_tss(0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000);
-    init_memory();
     init_com(PORT_COM1);
     comprintf("\rgamessis os loaded.\r\n");
 	init_paging();

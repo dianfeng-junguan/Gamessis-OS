@@ -58,8 +58,18 @@ stat_t mmap(addr_t pa,addr_t la,u32 attr)
 stat_t smmap(addr_t pa,addr_t la,u32 attr,page_item* pml4p)
 {
     //从pml4中找到la所属的pml4项目，即属于第几个512GB
+    //canonical 高地址判断
+    if(la>0x7ffffffffffful){
+        la&=~0xffff000000000000ul;
+    }
     page_item *pdptp= (page_item *) (pml4p[la / PML4E_SIZE] & (~0xff));//指向的pdpt表
-    //因为一个pml指向512gb内存，目前电脑还没有内存能达到这个大小，就不进行检查是否越界的判断
+    int pml4i=la / PML4E_SIZE;
+    if(!((unsigned long long)pdptp&PAGE_PRESENT))
+    {
+        pdptp=(page_item*)vmalloc();
+        memset(pdptp,0,4096);
+        pml4[pml4i]=(addr_t)pdptp|attr;
+    }
 
     //在这个512GB（一张pdpt表）中找到la所属的pdpt项目，找到指向的pd
     int pdpti=la%PML4E_SIZE/PDPTE_SIZE;
