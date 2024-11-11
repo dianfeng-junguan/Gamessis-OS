@@ -19,5 +19,6 @@
 #define PAGE_TABLE_ADDR 0xffff800000002000ul
 #define MEM_END 0xffffffffffffffff
 
-#define VMALLOC_BASE 0xffff800000020000ul
-#define VMALLOC_PGN ((0xb8000-0x20000)/0x1000)
+#define VMALLOC_BASE (0xffff800000000000ul+0x2000000ul)
+#define VMALLOC_PGN (4096)
+extern int kmalloc_entry_num,kmalloc_pgc;

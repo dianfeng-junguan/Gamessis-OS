@@ -184,7 +184,7 @@ long read_framebuffer(struct file * filp,char * buf,unsigned long count,long * p
 
 }
 long write_framebuffer(struct file * filp,char * buf,unsigned long count,long * position){
-    char *tmp= (char*)vmalloc();
+    char *tmp= (char*) kmalloc();
     int c=count/(PAGE_4K_SIZE-1),p=0;
     //一块一块输出
     for(int i=0;i<(c?c:1);i++){
@@ -193,7 +193,7 @@ long write_framebuffer(struct file * filp,char * buf,unsigned long count,long * 
         print(tmp);
         p+=PAGE_4K_SIZE-1;
     }
-    vmfree(tmp);
+    kmfree(tmp);
     return 0;
 }
 long ioctl_framebuffer(struct index_node * inode,struct file * filp,unsigned long cmd,unsigned long arg){

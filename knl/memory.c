@@ -15,8 +15,9 @@ page_item *page_table=PAGE_TABLE_ADDR;
 page_item* pml4=PML4_ADDR;
 page_item* pdpt=PDPT_ADDR;
 page_item* pd=PD_ADDR;
-unsigned int vmalloc_map[VMALLOC_PGN/32]={0};
+unsigned int *vmalloc_map=VMALLOC_BASE;//[VMALLOC_PGN/32]={0};
 mem_t mmap_struct[MAX_MEM_STRUCT];
+int kmalloc_entry_num=VMALLOC_PGN>>5,kmalloc_pgc=VMALLOC_PGN;
 //以kb为单位
 int high_mem_base=1024;
 int mmap_t_i=0;
@@ -62,14 +63,16 @@ stat_t smmap(addr_t pa,addr_t la,u32 attr,page_item* pml4p)
     if(la>0x7ffffffffffful){
         la&=~0xffff000000000000ul;
     }
-    page_item *pdptp= (page_item *) (pml4p[la / PML4E_SIZE] & (~0xff));//指向的pdpt表
+    page_item *pdptp= (page_item *) (pml4p[la / PML4E_SIZE]);//指向的pdpt表
     int pml4i=la / PML4E_SIZE;
     if(!((unsigned long long)pdptp&PAGE_PRESENT))
     {
-        pdptp=(page_item*)vmalloc();
+        pdptp=(page_item*) kmalloc();
         memset(pdptp,0,4096);
-        pml4[pml4i]=(addr_t)pdptp|attr;
+        //这里使用了狡猾的技巧：kmalloc的内存-KNL_BASE直接就是实际的物理地址
+        pml4[pml4i]=((addr_t)pdptp&~KNL_BASE)|attr;
     }
+    pdptp=(page_item*)(((addr_t)pdptp&~0xff)|KNL_BASE);
 
     //在这个512GB（一张pdpt表）中找到la所属的pdpt项目，找到指向的pd
     int pdpti=la%PML4E_SIZE/PDPTE_SIZE;
@@ -77,24 +80,24 @@ stat_t smmap(addr_t pa,addr_t la,u32 attr,page_item* pml4p)
     //检查pdptp是否被占用
     if(!((unsigned long long)pdp&PAGE_PRESENT))
     {
-        pdp=(page_item*)vmalloc();
+        pdp=(page_item*) kmalloc();
         memset(pdp,0,4096);
-        pdptp[pdpti]=(addr_t)pdp|attr;
+        pdptp[pdpti]=((addr_t)pdp&~KNL_BASE)|attr;
     }
-    pdp=(page_item*)((addr_t)pdp&~0xff);
+    pdp=(page_item*)(((addr_t)(pdp)&~0xff)|KNL_BASE);
 
     //在pd中找到la指向的pt
     page_item* pt=(page_item*)pdp[la % PDPTE_SIZE / PDE_SIZE];
     if(!((unsigned long long)pt & PAGE_PRESENT))
     {
-        pt=(page_item*)vmalloc();
+        pt=(page_item*) kmalloc();
         memset(pt,0,4096);
-        pdp[la%PDPTE_SIZE/PDE_SIZE]= (addr_t)pt | attr;
+        pdp[la%PDPTE_SIZE/PDE_SIZE]= ((addr_t)pt&~KNL_BASE) | attr;
     }
-    pt=(page_item*)((addr_t)pt & ~0xff);
+    pt=(page_item*)(((addr_t)pt & ~0xff)|KNL_BASE);
 
     //在pt中找到la指向的page
-    pt[la % PDE_SIZE / PAGE_SIZE]=pa|attr;//映射
+    pt[la % PDE_SIZE / PAGE_4K_SIZE]=pa|attr;//映射
     return NORMAL;
 }
 
@@ -148,7 +151,7 @@ void set_mem_area(unsigned long base, unsigned long len, unsigned long type)
     mmap_struct[mmap_t_i].len=len;
     mmap_struct[mmap_t_i++].type=type;
 }
-addr_t vmalloc()
+addr_t kmalloc()
 {
     for(int i=0;i<VMALLOC_PGN/32;i++)
     {
@@ -162,8 +165,40 @@ addr_t vmalloc()
         }
     }
 }
+addr_t kmallocat(addr_t addr,int pgc)
+{
+    int pi=(addr-VMALLOC_BASE)/PAGE_4K_SIZE;
+    if(addr==0){
+        int l=0,p=0;
+        for(int i=0;i<kmalloc_pgc;i++){
+            if(!(vmalloc_map[i/32]&(1u<<(i%32)))){
+                if(l==0)
+                    p=i;//开头空页
+                l++;
+            } else
+                l=0;
+            if(l==pgc)break;
+        }
+        if(l<pgc)return -1;
+        //开始占用
+        for(int i=0;i<pgc;i++){
+            vmalloc_map[(p+i)/32]|=1u<<((p+i)%32);
+        }
+        return VMALLOC_BASE+PAGE_4K_SIZE*p;
+    }
+    for(int i=0;i<pgc;i++){
+        if(vmalloc_map[(pi+i)/32]&(1<<((pi+i)%32)))
+            return -1;
+    }
+    //
+    for(int i=0;i<pgc;i++){
+        vmalloc_map[(pi+i)]|=(1<<((pi+i)%32));
+    }
+    return addr;
 
-int vmfree(addr_t ptr)
+}
+
+int kmfree(addr_t ptr)
 {
     int num=ptr/PAGE_SIZE;
     int n=num/32;
@@ -233,10 +268,36 @@ void init_memory()
     //获取内存大小
     size_t mem_size=mmap_struct[mmap_t_i-1].base+mmap_struct[mmap_t_i-1].len;
     //计算出所需内存页数量
-    int pgc=mem_size/PAGE_SIZE;
+    /*
+     * 注：物理内存的一半会分给内核，所以除以2，内核空间page map不表示。
+     * 前半部分是计算内存大小使多少个页，在位图中，一页表示为一位，所以除以后面部分，
+     * 即一页位图可以有多少位。
+     * */
+    int pgc=(mem_size/2/PAGE_4K_SIZE)/(PAGE_4K_SIZE*8);
     //计算出位图所需的字节数
-    int pg_bytes=pgc/32;
-    page_map=(unsigned int*)PAGE_4K_ALIGN(0xc00000);
+    int pg_bytes=pgc>>5;//=/32
+    //初始化vmalloc内存位图
+    //计算位图需要多少个int
+    size_t vmec= (mem_size/2-0x1000000)/PAGE_4K_SIZE/32;//去掉内核代码16M
+    size_t vmms=vmec*4/PAGE_4K_SIZE;//位图自己需要多少页
+    comprintf("tot memsize:0x%x,kmalloc pages count:%d,kmalloc bitmap taking 0x%d pages\n", mem_size,vmec,vmms);
+    if(vmec*4%PAGE_4K_SIZE)
+        vmms++;
+    for(int i=0;i<vmec;i++){
+        vmalloc_map[i]=0;
+    }
+    //位图占用前几页
+    for(int i=0,j=0;j*32+i<vmms;i++)
+    {
+        if(i==32)
+        {
+            i=0;
+            j++;
+        }
+        vmalloc_map[j]|=1u<<i;
+    }
+    //kmalloc连续的内存
+    page_map=kmallocat(0,pgc);//(unsigned int*)PAGE_4K_ALIGN(0xc00000);
     int* p=page_map;
     addr_t curp=0;
     for(int i=0;i<mmap_t_i;i++){
@@ -247,11 +308,33 @@ void init_memory()
             *(p++)=cont;
         }
     }
-
-    //低16M空间直接被内核占用
+    /*//低16M空间直接被内核占用
     for(int i=0;i<128;i++){
         page_map[i]=0xffffffff;
+    }*/
+    //然后把1gb的pdpt改成许多个2MB页（4KB的话太多了），然后把映射区设置成4KB页，这样之后可以使用映射区
+    //这里不能用smmap
+    /*page_item *pd=kmalloc();//之后pdpt的第一项就会指向这里。
+    memset(pd,0,PAGE_4K_SIZE);
+    addr_t pdpm=(addr_t)pd-KNL_BASE;
+    //上面用了一个不得已的措施：利用高地址前1G实际对应物理内存低1G，所以直接减掉高地址基地址获得对应物理地址。
+    //理想情况下，这个东西以后不会动
+    for(int i=0;i<512;i++){
+        set_2mb_pde(pd+i,i*PAGE_2M_SIZE,PAGE_PRESENT|PAGE_RWX);
     }
+    //设置索引区
+    int mapai=(MAPPING_AREA-KNL_BASE)/PAGE_2M_SIZE;//映射区开始处对应索引
+    for(int i=0;i<MAPPING_AREA_SIZE/PAGE_2M_SIZE;i++){
+        page_item *pt=kmalloc();
+        addr_t ptpm=(addr_t)pt-KNL_BASE;
+        for(int j=0;j<512;j++){
+            set_page_item(pt+j,MAPPING_AREA-KNL_BASE+j*PAGE_4K_SIZE,PAGE_PRESENT|PAGE_RWX);
+        }
+        pd[i+mapai]=ptpm|PAGE_PRESENT|PAGE_RWX;
+    }
+    page_item *pdpt=(addr_t)pml4[256]&PAGE_4K_MASK+KNL_BASE;
+    pdpt[0]=pdpm|PAGE_PRESENT|PAGE_RWX;*/
+
 }
 /*
 page_map存储方式:
@@ -272,6 +355,9 @@ addr_t req_a_page(){
     }
 }
 
+void * pmalloc(){
+    return (void*)get_phyaddr(req_a_page());
+}
 int free_page(char *paddr){
     int num=(int)paddr/4096;
     int n=num/32;

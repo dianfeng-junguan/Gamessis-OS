@@ -31,10 +31,10 @@ struct dir_entry * path_walk(char * name,unsigned long flags)
             name++;
         tmpnamelen = name - tmpname;
 
-        path = (struct dir_entry *)vmalloc(sizeof(struct dir_entry),0);
+        path = (struct dir_entry *) kmalloc(sizeof(struct dir_entry), 0);
         memset(path,0,sizeof(struct dir_entry));
 
-        path->name = vmalloc();
+        path->name = kmalloc();
         memset(path->name,0,tmpnamelen+1);
         memcpy(path->name,tmpname,tmpnamelen);
         path->name_length = tmpnamelen;
@@ -43,8 +43,8 @@ struct dir_entry * path_walk(char * name,unsigned long flags)
         if(path == NULL)
         {
             printf("can not find file or dir:%s\n",path->name);
-            vmfree(path->name);
-            vmfree(path);
+            kmfree(path->name);
+            kmfree(path);
             return NULL;
         }
 
@@ -143,19 +143,19 @@ struct dir_entry* root_lookup(struct index_node * parent_inode,struct dir_entry 
     while (p){
         struct dir_entry* dp=p->data;
         if(strcmp(dp->name,dest_dentry->name)==0){
-            vmfree(dest_dentry);
+            kmfree(dest_dentry);
             return dp;
         }
         p=p->next;
     }
-    vmfree(dest_dentry);
+    kmfree(dest_dentry);
     return NULL;
 }
 struct index_node_operations root_iops={
     .lookup=root_lookup
 };
 void mount_rootfs(){
-    root_sb=(struct super_block*)vmalloc();
+    root_sb=(struct super_block*) kmalloc();
     root_sb->root=root_sb+1;//紧凑跟在后面
     root_sb->sb_ops=NULL;
     struct index_node* ir=root_sb->root+1;

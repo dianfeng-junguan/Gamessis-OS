@@ -43,6 +43,8 @@ typedef unsigned int page_item;
 #define PAGE_4K_MASK 0xfffffffff000ul
 #define PAGE_2M_MASK 0xfffffff00000ul
 #define KNL_BASE 0xffff800000000000ul
+#define MAPPING_AREA (KNL_BASE+0x1000000ul)
+#define MAPPING_AREA_SIZE (0x1000000ul)
 ///向上对齐。
 #define PAGE_2M_ALIGN(addr) (((unsigned long) (addr) + PAGE_2M_SIZE - 1) &PAGE_2M_MASK)
 ///向上对齐。
@@ -53,9 +55,11 @@ typedef unsigned long long page_item;
 void init_memory();
 void set_mem_area(unsigned long base, unsigned long len, unsigned long type);
 void set_high_mem_base(int base);
-//申请一页内存，返回内存地址。
+//申请一页内存，返回内存页的编号。
 addr_t req_a_page();
 addr_t req_page_at(addr_t base,int pgn);
+//申请一页空闲的物理内存，返回的是物理地址。
+void * pmalloc();
 
 int free_page(char *paddr);
 int free_pages_at(int base,int pgn);
@@ -78,8 +82,8 @@ stat_t mdemap(u64 la);
 
 void page_err();
 //vmalloc区部分
-addr_t vmalloc();
-int vmfree(addr_t ptr);
+addr_t kmalloc();
+int kmfree(addr_t ptr);
 int chk_vm(int base, int pgn);
 
 int init_paging();

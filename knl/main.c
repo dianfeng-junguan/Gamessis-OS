@@ -24,7 +24,6 @@ void main(unsigned int magic,void* addr)
     struct multiboot_header* mbi=0ul;
     mbi=(struct multiboot_header*)addr;
     init_logging();
-    init_memory();
     if(magic!=MULTIBOOT2_HEADER_MAGIC)//0x1e000
     {
         //printf("warning:multiboot2 magic does not match.\n");
@@ -43,14 +42,17 @@ void main(unsigned int magic,void* addr)
 		//printf("Tag 0x%x, Size 0x%x\n", tag->type, tag->size);
         if(tag->type==MULTIBOOT_TAG_TYPE_BASIC_MEMINFO)
             set_high_mem_base(((struct multiboot_tag_basic_meminfo *)tag)->mem_lower);
-        else if(tag->type==MULTIBOOT_TAG_TYPE_MMAP)
+        else if(tag->type==MULTIBOOT_TAG_TYPE_MMAP){
+
             for (multiboot_memory_map_t * mmap = ((struct multiboot_tag_mmap *)tag)->entries;
                  (multiboot_uint8_t *)mmap < (multiboot_uint8_t *)tag + tag->size;
                  mmap = (multiboot_memory_map_t *)((unsigned long)mmap + ((struct multiboot_tag_mmap *)tag)->entry_size))
             {
                 set_mem_area(mmap->addr,mmap->len,mmap->type);
             }
-        else if (MULTIBOOT_TAG_TYPE_FRAMEBUFFER){
+
+        }
+        else if (tag->type==MULTIBOOT_TAG_TYPE_FRAMEBUFFER){
 
             multiboot_uint32_t color;
             unsigned i;
@@ -58,7 +60,6 @@ void main(unsigned int magic,void* addr)
             void *fb = (void *) FRAMEBUFFER_ADDR;
             set_framebuffer(*tagfb);
 
-            init_framebuffer();
             switch (tagfb->common.framebuffer_type)
             {
                 case MULTIBOOT_FRAMEBUFFER_TYPE_INDEXED:
@@ -188,6 +189,11 @@ void main(unsigned int magic,void* addr)
 		}*/
 	}
 	tag = (struct multiboot_tag *)((multiboot_uint8_t *)tag + ((tag->size + 7) & ~7));
+    //先初始化串口，保证输出最基本的调试信息
+    init_com(PORT_COM1);
+    comprintf("\rgamessis os loaded.\r\n");
+    init_memory();
+    init_framebuffer();
 	//printf("Total mbi size 0x%x\n", (unsigned)tag - addr);
 	char disk_count=*(char*)0x475;
 	//printf("disk count:%d\n",disk_count);
@@ -198,8 +204,6 @@ void main(unsigned int magic,void* addr)
     init_int();
     print("int loaded.\n");
 //    set_tss(0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000);
-    init_com(PORT_COM1);
-    comprintf("\rgamessis os loaded.\r\n");
 	init_paging();
  	init_gdt();
     mount_rootfs();

@@ -64,7 +64,7 @@ struct file ftty;
 int init_devman()
 {
     //创建dev文件夹
-    ddev=(struct dir_entry*)vmalloc();
+    ddev=(struct dir_entry*) kmalloc();
     struct index_node* idev=ddev+1;
     ddev->name=idev+1;
     make_dentry(ddev,"dev",3,root_sb->root,root_sb->root->dir_ops);
@@ -73,7 +73,7 @@ int init_devman()
     idev->private_index_info=ddev;
 
     //创建mnt文件夹
-    dmnt=(struct dir_entry*)vmalloc();
+    dmnt=(struct dir_entry*) kmalloc();
     struct index_node* imnt=dmnt+1;
     dmnt->name=imnt+1;
     make_dentry(dmnt,"mnt",3,root_sb->root,root_sb->root->dir_ops);
@@ -84,17 +84,17 @@ int init_devman()
 
     //创建几个设备文件
     //console-framebuffer.c
-    dconsole= (struct dir_entry *) vmalloc();
+    dconsole= (struct dir_entry *) kmalloc();
     struct index_node* iconsole=dconsole+1;
     dconsole->name=iconsole+1;
     make_devf(dconsole,iconsole,"console",ddev,&framebuffer_fops);
     //hd0-disk.c
-    dhd0= (struct dir_entry *) vmalloc();
+    dhd0= (struct dir_entry *) kmalloc();
     struct index_node* ihd0=dhd0+1;
     dhd0->name=ihd0+1;
     make_devf(dhd0,ihd0,"hd0",ddev,&hd_fops);
     //tty-tty.c
-    dtty= (struct dir_entry *) vmalloc();
+    dtty= (struct dir_entry *) kmalloc();
     struct index_node* itty=dtty+1;
     dtty->name=itty+1;
     make_devf(dtty,itty,"tty",ddev,&tty_fops);

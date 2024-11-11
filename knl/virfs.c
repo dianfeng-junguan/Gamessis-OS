@@ -230,7 +230,7 @@ int brelse(buffer_head* bh)
     if(bh->b_count==0)return -1;
     bh->b_count--;
     if(bh->b_count==0)
-        vmfree(bh->b_data);
+        kmfree(bh->b_data);
     return 0;
 }
 //从设备中读取指定设备的指定块并返回缓冲区
@@ -341,7 +341,7 @@ buffer_head* get_buf(int dev,int block)
             }
             buffer_heads[i].b_count++;
             //给buffer分配一个实际的缓冲区
-            buffer_heads[i].b_data=vmalloc();
+            buffer_heads[i].b_data= kmalloc();
             return &buffer_heads[i];
         }
     }
@@ -360,7 +360,7 @@ int scan_dev(int dev)
 //    device *blkdev=get_dev(dev);
 //    buffer_head* bh=bread(dev,0);
 //    if(!bh)return -1;
-    char* buf=vmalloc();
+    char* buf= kmalloc();
     int r=request(DISK_MAJOR_MAJOR,DISK_CMD_READ,0,1,buf);
     chk_result(r);
 

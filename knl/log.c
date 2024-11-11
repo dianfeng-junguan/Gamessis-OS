@@ -86,14 +86,14 @@ void printf (const char *format,...)
 {
     if(strlen(format)>=1024)
         return;//一次性输出不了太长
-    char* tmp=(char*)vmalloc();
+    char* tmp=(char*) kmalloc();
     va_list vargs;
     va_start(vargs,format);
     sprintf(tmp,format,vargs);
     va_end(vargs);
     print(tmp);
     comprintf(tmp);
-    vmfree(tmp);
+    kmfree(tmp);
 //    char **arg = (char **) &format;
 //    char c;
 //    char buf[20];

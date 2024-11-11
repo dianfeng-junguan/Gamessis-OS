@@ -34,19 +34,19 @@ unsigned long sys_open(char *filename,int flags)
     int i;
 
 //	printf("sys_open\n");
-    path = (char *)vmalloc();
+    path = (char *) kmalloc();
     if(path == NULL)
         return -ENOMEM;
     memset(path,0,PAGE_4K_SIZE);
     pathlen = strlen(filename);
     if(pathlen <= 0)
     {
-        vmfree(path);
+        kmfree(path);
         return -EFAULT;
     }
     else if(pathlen >= PAGE_4K_SIZE)
     {
-        vmfree(path);
+        kmfree(path);
         return -ENAMETOOLONG;
     }
     strcpy(path,filename);
@@ -65,7 +65,7 @@ unsigned long sys_open(char *filename,int flags)
         if(parent==NULL)
             return -ENOENT;//上级目录也不在
         //创建新的文件
-        dentry=(struct dir_entry*)vmalloc();
+        dentry=(struct dir_entry*) kmalloc();
         list_init(&dentry->subdirs_list);
         list_init(&dentry->child_node);
         dentry->child_node.data=dentry;
@@ -80,14 +80,14 @@ unsigned long sys_open(char *filename,int flags)
         //这样的创建文件只能创建普通文件，设备文件要通过devman创建
         dentry->dir_inode->attribute=FS_ATTR_FILE;
     }
-    vmfree(path);
+    kmfree(path);
 
     if((flags & O_DIRECTORY) && (dentry->dir_inode->attribute != FS_ATTR_DIR))
         return -ENOTDIR;
     if(!(flags & O_DIRECTORY) && (dentry->dir_inode->attribute == FS_ATTR_DIR))
         return -EISDIR;
 
-    filp = (struct file *)vmalloc();
+    filp = (struct file *) kmalloc();
     memset(filp,0,sizeof(struct file));
     filp->dentry = dentry;
     filp->mode = flags;
@@ -102,7 +102,7 @@ unsigned long sys_open(char *filename,int flags)
         error = filp->f_ops->open(dentry->dir_inode,filp);
     if(error != 1)
     {
-        vmfree(filp);
+        kmfree(filp);
         return -EFAULT;
     }
 
@@ -124,7 +124,7 @@ unsigned long sys_open(char *filename,int flags)
         }
     if(i == MAX_TASKS)
     {
-        vmfree(filp);
+        kmfree(filp);
         //// reclaim struct index_node & struct dir_entry
         return -EMFILE;
     }
@@ -145,7 +145,7 @@ unsigned long sys_close(int fd)
     if(filp->f_ops && filp->f_ops->close)
         filp->f_ops->close(filp->dentry->dir_inode,filp);
 
-    vmfree(filp);
+    kmfree(filp);
     current->openf[fd] = NULL;
 
     return 0;
@@ -393,7 +393,7 @@ unsigned long sys_chdir(char *filename)
     struct dir_entry * dentry = NULL;
 
     printf("sys_chdir\n");
-    path = (char *)vmalloc();
+    path = (char *) kmalloc();
 
     if(path == NULL)
         return -ENOMEM;
@@ -401,18 +401,18 @@ unsigned long sys_chdir(char *filename)
     pathlen = strlen(filename);
     if(pathlen <= 0)
     {
-        vmfree(path);
+        kmfree(path);
         return -EFAULT;
     }
     else if(pathlen >= PAGE_4K_SIZE)
     {
-        vmfree(path);
+        kmfree(path);
         return -ENAMETOOLONG;
     }
     strcpy(filename,path);
 
     dentry = path_walk(path,0);
-    vmfree(path);
+    kmfree(path);
 
     if(dentry == NULL)
         return -ENOENT;

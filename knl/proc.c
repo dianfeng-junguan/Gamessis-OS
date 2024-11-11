@@ -106,7 +106,7 @@ int create_proc()
     //stdin stdout stderr
     //这里绕开了sys open，这样是为了尽量快
     extern struct file ftty;
-    addr_t filplate=vmalloc();
+    addr_t filplate= kmalloc();
     pz->openf[0]=&ftty;
     pz->openf[1]=&ftty;
     pz->openf[2]=&ftty;
@@ -490,7 +490,7 @@ void del_proc(int pnr)
     //释放申请的页面
     release_mmap(&task[pnr]);
     //释放存放页目录的页面
-    vmfree(task[pnr].pml4);
+    kmfree(task[pnr].pml4);
     //关闭打开的文件
     for(int i=3;i<MAX_PROC_OPENF;i++){
         if(task[pnr].openf[i]){
@@ -628,14 +628,14 @@ int reg_proc(addr_t entry, struct index_node *cwd, struct index_node *exef)
     //栈顶设置在了4G处
     set_proc(0, 0, 0, 0, DS_USER, CS_USER, DS_USER, DS_USER\
 , DS_USER, DS_USER, STACK_TOP, 0, 0, 0, entry, 0, i);
-    task[i].pml4=vmalloc();
-    task[i].pml4[0]=vmalloc();
+    task[i].pml4= kmalloc();
+    task[i].pml4[0]= kmalloc();
     unsigned long *pdpt=task[i].pml4;
     //pdpt第一项(0-1GB)设置为内核空间，这样才能访问中断
     set_1gb_pdpt(pdpt,0,PAGE_PRESENT|PAGE_RWX);
 
     //申请一项pd,里面申请一2mb页用于堆栈
-    addr_t *stackb=vmalloc();
+    addr_t *stackb= kmalloc();
     pdpt[3]=(unsigned long)stackb|PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX;//3-4G分配栈空间
     set_2mb_pde(stackb + 511, get_phyaddr(req_a_page()), PAGE_FOR_ALL|PAGE_RWX);
     task[i].regs.cr3=task[i].pml4;
@@ -875,7 +875,7 @@ int sys_fork(void){
      * */
     addr_t stk=task[pid].mem_struct.stack_top-PAGE_4K_SIZE;
     for(;stk>=task[pid].mem_struct.stack_bottom;stk-=PAGE_4K_SIZE){
-        addr_t new_stkpg=vmalloc();
+        addr_t new_stkpg= kmalloc();
         memcpy(new_stkpg,stk,PAGE_4K_SIZE);//把当前进程的栈空间复制到新栈里面
         //把新的页面映射到进程页表里
         smmap(new_stkpg,stk,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,task[pid].pml4);
@@ -884,7 +884,7 @@ int sys_fork(void){
     addr_t intstk=INT_STACK_TOP-PAGE_4K_SIZE;
     int f=1;
     for(;intstk>=INT_STACK_BASE;intstk-=PAGE_4K_SIZE){
-        addr_t new_stkpg=vmalloc();
+        addr_t new_stkpg= kmalloc();
         memcpy(new_stkpg,intstk,PAGE_4K_SIZE);//把当前进程的栈空间复制到新栈里面
         if(f){
             f=0;
@@ -897,7 +897,7 @@ int sys_fork(void){
     //堆
     addr_t hp=task[pid].mem_struct.heap_top-PAGE_4K_SIZE;
     for(;hp>=task[pid].mem_struct.heap_base;hp-=PAGE_4K_SIZE){
-        addr_t new_hppg=vmalloc();
+        addr_t new_hppg= kmalloc();
         memcpy(new_hppg,hp,PAGE_4K_SIZE);//把当前进程的栈空间复制到新栈里面
         //把新的页面映射到进程页表里
         smmap(new_hppg,hp,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,task[pid].pml4);
@@ -931,24 +931,24 @@ void release_mmap(struct process* p){
                                 }
                             }
                             //里面的项释放完了，这一项指向的vmalloc内存可以释放了
-                            vmfree(pde[k]&PAGE_4K_MASK);
+                            kmfree(pde[k] & PAGE_4K_MASK);
                         }else if((pde[k]&PAGE_PRESENT)&&(pde[k]&PDE_4MB)){
                             //释放2MB页
                             free_pages_at(pde[k]&PAGE_4K_MASK,512);
                         }
                     }
                     //这一页pde的内容释放完了，这一项指向的vmalloc可以释放了
-                    vmfree(pdpte[j]&PAGE_4K_MASK);
+                    kmfree(pdpte[j] & PAGE_4K_MASK);
                 }//1GB先不写，目前还没有初始化之后动态申请1GB页的
 
             }
             //这一页pdpte的内容释放完了，这一项指向的vmalloc可以释放了
-            vmfree(pml4e[i]&PAGE_4K_MASK);
+            kmfree(pml4e[i] & PAGE_4K_MASK);
         }
     }
 }
 void copy_mmap(struct process* from, struct process *to){
-    page_item * pml4p=vmalloc();
+    page_item * pml4p= kmalloc();
     memcpy(pml4p,from->regs.cr3,PAGE_4K_SIZE);//复制pml4
     to->regs.cr3=pml4p;
     to->pml4=pml4p;
@@ -959,21 +959,21 @@ void copy_mmap(struct process* from, struct process *to){
     {
         if(pml4e[i]&PAGE_PRESENT){
             addr_t old_data=pml4e[i];//旧的数据，里面保存了属性和要拷贝的数据的地址
-            pml4e[i]=vmalloc()|(old_data&~PAGE_4K_MASK);
+            pml4e[i]= kmalloc() | (old_data & ~PAGE_4K_MASK);
             memcpy(pml4e[i]&PAGE_4K_MASK,old_data&PAGE_4K_MASK,PAGE_4K_SIZE);//把老的数据拷贝到新的页面里
             page_item *pdpte=pml4e[i]&PAGE_4K_MASK;
             for(int j=0;j<512;j++)
             {
                 if(pdpte[j]&PAGE_PRESENT&&!(pdpte[j]&PDPTE_1GB)){
                     addr_t old_data2=pdpte[j];//旧的数据，里面保存了属性和要拷贝的数据的地址
-                    pdpte[j]=vmalloc()|(old_data2&~PAGE_4K_MASK);
+                    pdpte[j]= kmalloc() | (old_data2 & ~PAGE_4K_MASK);
                     memcpy(pdpte[j]&PAGE_4K_MASK,old_data2&PAGE_4K_MASK,PAGE_4K_SIZE);//把老的数据拷贝到新的页面里
                     page_item *pde=pdpte[j]&PAGE_4K_MASK;
                     for(int k=0;k<512;k++)
                     {
                         if(pde[k]&PAGE_PRESENT&&!(pde[k]&PDE_4MB)){
                             addr_t old_data3=pde[k];//旧的数据，里面保存了属性和要拷贝的数据的地址
-                            pde[k]=vmalloc()|(old_data3&~PAGE_4K_MASK);
+                            pde[k]= kmalloc() | (old_data3 & ~PAGE_4K_MASK);
                             memcpy(pde[k]&PAGE_4K_MASK,old_data3&PAGE_4K_MASK,PAGE_4K_SIZE);//把老的数据拷贝到新的页面里
                         }
                     }

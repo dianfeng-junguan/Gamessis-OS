@@ -17,15 +17,16 @@ knl:
 	@bash knl.sh
 	@objcopy -O elf64-x86-64 -B i386 -I binary res/font.psf bin/font.o
 	@ld -T lds.lds -o bin/gmsknl.elf $(KNL_OFILES) $(MODS_OFILES) $(COM_OFILES)
+	@cp bin/gmsknl.elf bin/gmsknlm.elf
 	@objcopy bin/gmsknl.elf bin/gmsknl.elf  --change-section-vma .bss+0xffff800000000000 \
   --change-section-vma .text+0xffff800000000000 --change-section-vma .data+0xffff800000000000\
   --change-section-vma .rodata+0xffff800000000000 --change-section-vma .eh_frame+0xffff800000000000
 	@#python $(PH_MODIFIER) bin/gmsknl.elf
 	@objdump -d bin/gmsknl.elf -j .entry -M intel > knl.s
 	@objdump -l -S -d bin/gmsknl.elf -M intel >> knl.s
-	@objcopy bin/gmsknl.elf bin/gmsknlm.elf --change-section-address .bss+0xffff800000000000 \
-                                              --change-section-address .text+0xffff800000000000 --change-section-address .data+0xffff800000000000\
-                                              --change-section-address .rodata+0xffff800000000000 --change-section-address .eh_frame+0xffff800000000000
+	#@objcopy bin/gmsknl.elf bin/gmsknlm.elf #--change-section-lma .bss+0xffff800000000000 \
+#                                              --change-section-lma .text+0xffff800000000000 --change-section-lma .data+0xffff800000000000\
+#                                              --change-section-lma .rodata+0xffff800000000000 --change-section-lma .eh_frame+0xffff800000000000
 boot:
 	@gcc -w -e main -nostdlib \
         -fno-builtin -Wl,--subsystem,10 -o bin/boot.efi boot/boot.c \

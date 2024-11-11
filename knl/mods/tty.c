@@ -13,20 +13,20 @@ long close_tty(struct index_node * inode,struct file * filp){
     stdbuf_t * bi=&((tty_t*)filp->private_data)->stdin_buf;
     stdbuf_t * bo=&((tty_t*)filp->private_data)->stdout_buf;
     stdbuf_t * be=&((tty_t*)filp->private_data)->stderr_buf;
-    vmfree((addr_t)bi);
-    vmfree((addr_t)bo);
-    vmfree((addr_t)be);
-    vmfree((addr_t)filp->private_data);
+    kmfree((addr_t) bi);
+    kmfree((addr_t) bo);
+    kmfree((addr_t) be);
+    kmfree((addr_t) filp->private_data);
     return 0;
 }
 //打开文件
 long init_tty(struct index_node * inode,struct file * filp)
 {
-    tty_t *ntty=(tty_t*)vmalloc();
+    tty_t *ntty=(tty_t*) kmalloc();
     //创建三个缓冲区
-    ntty->stdin_buf.data= (char*)vmalloc();
-    ntty->stdout_buf.data=(char*)vmalloc();
-    ntty->stderr_buf.data=(char*)vmalloc();
+    ntty->stdin_buf.data= (char*) kmalloc();
+    ntty->stdout_buf.data=(char*) kmalloc();
+    ntty->stderr_buf.data=(char*) kmalloc();
     ntty->stdin_buf. wptr= 0;
     ntty->stdout_buf.wptr= 0;
     ntty->stderr_buf.wptr= 0;

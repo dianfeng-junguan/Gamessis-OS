@@ -7,7 +7,7 @@
 #include "str.h"
 #include "memory.h"
 
-
+char combuf[1024];
 void init_com(int base_port){
     /* disable all interrupts */
     outb(base_port + COM_REG_IER, 0x00);
@@ -58,11 +58,41 @@ void com_puts(char* s,int com_port){
         com_putchar(*s,com_port);
     }
 }
-void comprintf(char* fmt,va_list args){
+
+void comprintf(char* fmt,...){
     if(strlen(fmt)>=1024)
         return;//一次性输出不了太长
-    char* tmp=(char*)vmalloc();
-    sprintf(tmp,fmt,args);
+    //这里不使用kmalloc
+    char* tmp=combuf;
+    //count num of args
+    char *pstr=fmt;
+    char *prev=fmt;
+
+    va_list vargs;
+    va_start(vargs,fmt);
+    pstr=fmt;
+    for(;*pstr!='\0';pstr++){
+        if(*pstr=='%'&&*(pstr+1)!='\0'){
+            pstr++;
+            if(*pstr=='x'){
+                int v=va_arg(vargs,int);
+                sprint_hex(tmp,v);
+            }else if(*pstr=='s'){
+                char* v=va_arg(vargs,char*);
+                sprintn(tmp,v);
+            }else if(*pstr=='d'){
+                char* v=va_arg(vargs,char*);
+                sprint_decimal(tmp,v);
+            }else if(*pstr=='c'){
+                char v=va_arg(vargs,char);
+                sprintchar(tmp,v);
+            }else{
+                sprintchar(tmp,*pstr);
+            }
+        }else{
+            sprintchar(tmp,*pstr);
+        }
+    }
+    va_end(vargs);
     com_puts(tmp,PORT_COM1);
-    vmfree(tmp);
 }

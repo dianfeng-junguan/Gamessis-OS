@@ -20,19 +20,37 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="修改framebuffer暂存">
+    <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="基本完成了移动到高地址">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/com.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/com.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/devman.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/devman.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/framebuffer.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/framebuffer.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/gmsknl.elf" beforeDir="false" afterPath="$PROJECT_DIR$/bin/gmsknl.elf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/int.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/int.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/log.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/log.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/main.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/memory.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/memory.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/mods/tty.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/mods/tty.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/proc.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/proc.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/virfs.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/virfs.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gdb.sh" beforeDir="false" afterPath="$PROJECT_DIR$/gdb.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hda.img" beforeDir="false" afterPath="$PROJECT_DIR$/hda.img" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/memory.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/memory.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/page.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/page.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl.s" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/com.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/com.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/devman.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/devman.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl/framebuffer.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/framebuffer.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/log.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/log.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/main.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl/memory.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/memory.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/mods/fat32.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/mods/fat32.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/mods/tty.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/mods/tty.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/proc.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/proc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/sys.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/sys.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/vfs.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/vfs.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/virfs.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/virfs.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,6 +73,9 @@
   <component name="Make.Settings">
     <option name="path" value="E:\Mingw\bin\mingw32-make.exe" />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectApplicationVersion">
     <option name="ide" value="CLion" />
     <option name="majorVersion" value="2023" />
@@ -69,28 +90,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "to64",
-    "last_opened_file_path": "D:/Code/Comprehensive/OS/workspace/64/include",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "settings.editor.splitter.proportion": "0.20875764",
-    "structure.view.defaults.are.configured": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;to64&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Code/Comprehensive/OS/workspace/64/include&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;settings.editor.splitter.proportion&quot;: &quot;0.20875764&quot;,
+    &quot;structure.view.defaults.are.configured&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Code\Comprehensive\OS\workspace\64\include" />
@@ -104,11 +125,6 @@
     <configuration name="gdb" type="CLion_Remote" version="1" remoteCommand="192.168.56.1:1234" symbolFile="$PROJECT_DIR$/bin/gmsknlm.elf" sysroot="">
       <debugger toolchainName="WSL" />
       <method v="2" />
-    </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
     </configuration>
     <configuration name="gms" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="gms" TARGET_NAME="gms" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="gms" RUN_TARGET_NAME="gms">
       <method v="2">
@@ -195,6 +211,7 @@
       <workItem from="1728960595779" duration="6952000" />
       <workItem from="1729241753440" duration="748000" />
       <workItem from="1730203184689" duration="4173000" />
+      <workItem from="1731311036067" duration="11916000" />
     </task>
     <task id="LOCAL-00001" summary="重新整理了一下，改用clion开发">
       <option name="closed" value="true" />
@@ -476,7 +493,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731238613930</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="基本完成了移动到高地址">
+      <option name="closed" value="true" />
+      <created>1731248097202</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1731248097202</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -500,7 +525,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="内存管理结构开始使用" />
     <MESSAGE value="内存管理结构升级完毕，未测试" />
     <MESSAGE value="添加了PCB,TSS的64位版本" />
     <MESSAGE value="将64位TSS加入了gdt并且加载" />
@@ -525,7 +549,8 @@
     <MESSAGE value="将内核移动到高地址" />
     <MESSAGE value="将变量的内容更改到高内存" />
     <MESSAGE value="修改framebuffer暂存" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改framebuffer暂存" />
+    <MESSAGE value="基本完成了移动到高地址" />
+    <option name="LAST_COMMIT_MESSAGE" value="基本完成了移动到高地址" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
