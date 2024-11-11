@@ -39,7 +39,9 @@ void init_proc(){
 
     //asm volatile("lldt %0"::"m"(xi));
     //asm volatile("ltr %0"::"m"(zi));
-    set_tss(0x400000,0x400000,0x400000,0x800000,0x800000,0x800000,0x800000,0x800000,0x800000,0x800000);
+    set_tss(0x400000+KNL_BASE,0x400000+KNL_BASE,0x400000+KNL_BASE\
+    ,0x800000+KNL_BASE,0x800000+KNL_BASE,0x800000+KNL_BASE,0x800000+KNL_BASE\
+    ,0x800000+KNL_BASE,0x800000+KNL_BASE,0x800000+KNL_BASE);
     //IA32_INTERRUPT_SSP_TABLE_ADDR，准备IST
     wrmsr(0x6a8,tss->rsvd2);
     //把内核代码段选择子写到MSR寄存器中准备用于特权级转换(sysexit，现在没用)
@@ -47,7 +49,7 @@ void init_proc(){
     //准备用于特权级转换(sysret，正在使用)
     wrmsr(0xc0000081,0x0020000800000000ul);
 
-    comprintf("proc init set.\r\ntss.ist=0x%x\r\n",tss->ists[0]);
+    comprintf("proc init set.\r\ntss.ist=0x%p\r\n",tss->ists[0]);
     //创建一个测试进程
 //    create_test_proc();
 }

@@ -20,37 +20,20 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="基本完成了移动到高地址">
+    <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="1.修复了内存映射smmap中的bug,并使之适应高地址;&#10;2.动态分配page_map和kmalloc_map">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/com.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/com.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/devman.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/devman.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/framebuffer.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/framebuffer.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/gmsknl.elf" beforeDir="false" afterPath="$PROJECT_DIR$/bin/gmsknl.elf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/int.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/int.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/log.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/log.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/main.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/memory.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/memory.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/mods/tty.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/mods/tty.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/proc.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/proc.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/virfs.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/virfs.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gdb.sh" beforeDir="false" afterPath="$PROJECT_DIR$/gdb.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/com/str.c" beforeDir="false" afterPath="$PROJECT_DIR$/com/str.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hda.img" beforeDir="false" afterPath="$PROJECT_DIR$/hda.img" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/memory.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/memory.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/page.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/page.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/str.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/str.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl/com.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/com.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/devman.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/devman.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/framebuffer.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/framebuffer.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/log.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/log.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/memory.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/memory.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/mods/fat32.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/mods/fat32.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/mods/tty.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/mods/tty.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/int.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/int.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl/proc.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/proc.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/sys.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/sys.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/vfs.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/vfs.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/virfs.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/virfs.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -211,7 +194,7 @@
       <workItem from="1728960595779" duration="6952000" />
       <workItem from="1729241753440" duration="748000" />
       <workItem from="1730203184689" duration="4173000" />
-      <workItem from="1731311036067" duration="11916000" />
+      <workItem from="1731311036067" duration="13511000" />
     </task>
     <task id="LOCAL-00001" summary="重新整理了一下，改用clion开发">
       <option name="closed" value="true" />
@@ -501,7 +484,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731248097202</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="1.修复了内存映射smmap中的bug,并使之适应高地址;&#10;2.动态分配page_map和kmalloc_map">
+      <option name="closed" value="true" />
+      <created>1731327599872</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1731327599872</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -525,7 +516,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="内存管理结构升级完毕，未测试" />
     <MESSAGE value="添加了PCB,TSS的64位版本" />
     <MESSAGE value="将64位TSS加入了gdt并且加载" />
     <MESSAGE value="实现了64位下的进程切换，但是好像切换了一次后就没出发时钟中断了" />
@@ -550,7 +540,8 @@
     <MESSAGE value="将变量的内容更改到高内存" />
     <MESSAGE value="修改framebuffer暂存" />
     <MESSAGE value="基本完成了移动到高地址" />
-    <option name="LAST_COMMIT_MESSAGE" value="基本完成了移动到高地址" />
+    <MESSAGE value="1.修复了内存映射smmap中的bug,并使之适应高地址;&#10;2.动态分配page_map和kmalloc_map" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.修复了内存映射smmap中的bug,并使之适应高地址;&#10;2.动态分配page_map和kmalloc_map" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -6,6 +6,7 @@
 #include "int.h"
 #include "str.h"
 #include "memory.h"
+#include "mem.h"
 
 char combuf[1024];
 void init_com(int base_port){
@@ -64,6 +65,7 @@ void comprintf(char* fmt,...){
         return;//一次性输出不了太长
     //这里不使用kmalloc
     char* tmp=combuf;
+    memset(tmp,0, sizeof(combuf));
     //count num of args
     char *pstr=fmt;
     char *prev=fmt;
@@ -86,9 +88,12 @@ void comprintf(char* fmt,...){
             }else if(*pstr=='c'){
                 char v=va_arg(vargs,char);
                 sprintchar(tmp,v);
+            }else if(*pstr=='p') {
+                int v=va_arg(vargs,addr_t);
+                sprint_hex(tmp,v);
             }else{
-                sprintchar(tmp,*pstr);
-            }
+                    sprintchar(tmp,*pstr);
+                }
         }else{
             sprintchar(tmp,*pstr);
         }

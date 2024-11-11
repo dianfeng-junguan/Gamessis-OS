@@ -115,9 +115,9 @@ void sprint_decimal(char *dist,int c)
         sprintchar(dist,st[--p]);
     }
 }
-void sprint_hex(char *dist,unsigned int c)
+void sprint_hex(char *dist,unsigned long c)
 {
-    unsigned char st[10];
+    unsigned char st[17];
     int p=0;
     while(p<10){
         unsigned char a=c%16;
