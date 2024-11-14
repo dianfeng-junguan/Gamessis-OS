@@ -4,7 +4,7 @@ BOOT = boot.efi
 KNL_OFILES = bin/setupa.o bin/int.o bin/main.o bin/log.o \
 			bin/memory.o bin/virfs.o bin/devman.o bin/proc.o bin/inta.o \
 			bin/gdt.o bin/gdta.o bin/clock.o bin/clocka.o bin/exe.o \
-			bin/syscalla.o bin/framebuffer.o bin/vfs.o bin/sys.o bin/setup64a.o
+			bin/syscalla.o bin/framebuffer.o bin/vfs.o bin/sys.o bin/setup64a.o bin/reloc.o
 MODS_OFILES = bin/mods/kb.o bin/mods/disk.o bin/mods/diska.o bin/mods/fat32.o \
 				bin/mods/tty.o bin/com.o
 COM_OFILES = bin/mem.o bin/str.o bin/types.o bin/proca.o bin/font.o
@@ -16,11 +16,13 @@ k:
 knl:
 	@bash knl.sh
 	@objcopy -O elf64-x86-64 -B i386 -I binary res/font.psf bin/font.o
-	@ld -T lds.lds -o bin/gmsknl.elf $(KNL_OFILES) $(MODS_OFILES) $(COM_OFILES)
+	@ld -T lds.lds -o bin/gmsknl.elf $(KNL_OFILES) $(MODS_OFILES) $(COM_OFILES) --emit-relocs
+	@#python reloccheat.py bin/gmsknl.elf
 	@cp bin/gmsknl.elf bin/gmsknlm.elf
-	@objcopy bin/gmsknl.elf bin/gmsknl.elf  --change-section-vma .bss+0xffff800000000000 \
-  --change-section-vma .text+0xffff800000000000 --change-section-vma .data+0xffff800000000000\
-  --change-section-vma .rodata+0xffff800000000000 --change-section-vma .eh_frame+0xffff800000000000
+	@#objcopy bin/gmsknl.elf bin/gmsknl.elf
+#--change-section-vma .bss+0xffff800000000000 \
+#  --change-section-vma .text+0xffff800000000000 --change-section-vma .data+0xffff800000000000\
+#  --change-section-vma .rodata+0xffff800000000000 --change-section-vma .eh_frame+0xffff800000000000
 	@#python $(PH_MODIFIER) bin/gmsknl.elf
 	@objdump -d bin/gmsknl.elf -j .entry -M intel > knl.s
 	@objdump -l -S -d bin/gmsknl.elf -M intel >> knl.s
@@ -54,9 +56,13 @@ mount:
 	@sudo mount hd.img /mnt
 umount:
 	@sudo umount /mnt
-run:
+refi:
 	@sudo qemu-system-x86_64 -hda hda.img -m 2G -bios OVMF.fd
+run:
+	@sudo qemu-system-x86_64 -hda hda.img -m 2G
 debug:
+	@qemu-system-x86_64 -hda hda.img -m 2G -s -S -serial stdio
+debug-efi:
 	@qemu-system-x86_64 -hda hda.img -m 2G -s -S -bios OVMF.fd -serial stdio
 debs:
 	@qemu-system-x86_64 -hda hda.img -m 2G -s -S -bios OVMF.fd -serial stdio
@@ -88,8 +94,8 @@ imgmkfs:
 	@sudo mkfs.fat -F 32 /dev/nbd0p1
 	@sudo mkfs.fat -F 32 /dev/nbd0p2
 imgmnt:
-	@sudo mount /dev/nbd0p2 /mnt   
-	@sudo mount /dev/nbd0p1 /mnt/boot
+	@sudo mount /dev/nbd0p3 /mnt
+	@sudo mount /dev/nbd0p2 /mnt/boot
 imgmntf:
 	@sudo mount /dev/nbd0p2 /mnt
 	@sudo mkdir /mnt/boot   

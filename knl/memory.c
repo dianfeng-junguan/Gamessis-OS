@@ -16,6 +16,7 @@ page_item* pml4=PML4_ADDR;
 page_item* pdpt=PDPT_ADDR;
 page_item* pd=PD_ADDR;
 unsigned int *vmalloc_map=VMALLOC_BASE;//[VMALLOC_PGN/32]={0};
+addr_t usr_mem_pa=0;
 mem_t mmap_struct[MAX_MEM_STRUCT];
 int kmalloc_entry_num=VMALLOC_PGN>>5,kmalloc_pgc=VMALLOC_PGN;
 //以kb为单位
@@ -308,6 +309,8 @@ void init_memory()
             *(p++)=cont;
         }
     }
+
+    usr_mem_pa=mem_size/2;
     /*//低16M空间直接被内核占用
     for(int i=0;i<128;i++){
         page_map[i]=0xffffffff;
@@ -356,7 +359,7 @@ addr_t req_a_page(){
 }
 
 void * pmalloc(){
-    return (void*)get_phyaddr(req_a_page());
+    return (void*)(get_phyaddr(req_a_page())+usr_mem_pa);
 }
 int free_page(char *paddr){
     int num=(int)paddr/4096;

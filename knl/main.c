@@ -16,6 +16,8 @@
 #include "com.h"
 #include "syscall.h"
 #include "fcntl.h"
+#include "exe.h"
+#include "reloc.h"
 
 int manage_proc_lock=1;
 void main(unsigned int magic,void* addr)
@@ -32,6 +34,9 @@ void main(unsigned int magic,void* addr)
     //获取tags
     struct multiboot_tag *tag;
 
+    //先初始化串口，保证输出最基本的调试信息
+    init_com(PORT_COM1);
+    comprintf("\rgamessis os loaded.\r\n");
 	unsigned size;
     size = *(unsigned long*)addr;
 //    //printf("Announced mbi size 0x%x\n", size);
@@ -96,6 +101,11 @@ void main(unsigned int magic,void* addr)
                     color = 0xffffffff;
                     break;
             }
+        } else if(tag->type==MULTIBOOT_TAG_TYPE_ELF_SECTIONS){
+            comprintf("found elf section tag.\n");
+            struct multiboot_tag_elf_sections* sh=tag;
+            do_reloc(sh);
+
         }
 		/*switch (tag->type)
 		{
@@ -189,9 +199,6 @@ void main(unsigned int magic,void* addr)
 		}*/
 	}
 	tag = (struct multiboot_tag *)((multiboot_uint8_t *)tag + ((tag->size + 7) & ~7));
-    //先初始化串口，保证输出最基本的调试信息
-    init_com(PORT_COM1);
-    comprintf("\rgamessis os loaded.\r\n");
     init_memory();
     init_framebuffer();
 	//printf("Total mbi size 0x%x\n", (unsigned)tag - addr);
@@ -219,7 +226,9 @@ void main(unsigned int magic,void* addr)
 
 
     manage_proc_lock=0;
-
+    if(sys_fork()==0){
+        sys_execve("/mnt/test.exe",NULL);
+    }
 
 //	init_vfs();
 //    init_fat16();

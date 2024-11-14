@@ -39,9 +39,9 @@ struct i387_struct
 #define HEAP_BASE 0x1000000
 #define HEAP_MAXTOP 0x1f00000
 #define CHUNK_SIZE 0x1000
-#define INT_STACK_TOP 0x800000
-#define INT_STACK_BASE 0x7ff000
-#define STACK_TOP 0x0000fffffffff000ul
+#define INT_STACK_TOP (0xffff800000000000ul+0x800000)
+#define INT_STACK_BASE (0xffff800000000000ul+0x7ff000)
+#define STACK_TOP 0x00007ffffffff000ul
 //堆空间
 typedef struct _chunk_header_{
     int pgn;    //占用页面数量
@@ -210,7 +210,7 @@ int sys_free(int ptr);
 //创建一个进程，返回进程在task数组中的index
 int create_zero();
 //创建一个零号进程为默认值的进程。
-int create_proc();
+int init_proc0();
 //void fill_desc(u32 addr,u32 limit,u32 attr,unsigned long long* des);
 void switch_proc(int pnr);
 void switch_to_ia32(TSS *tss);

@@ -38,6 +38,7 @@ SECTIONS {
     {
         *(.tss)
     }
+    KNL_BASE = 0xffff800000000000;
     . = 4M;
     .bss :
     {

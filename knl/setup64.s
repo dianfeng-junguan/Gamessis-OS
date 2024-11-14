@@ -1,5 +1,5 @@
 global init64
-extern main
+extern main,do_reloc
 [bits 64]
 init64:
 ;移动栈指针到高地址

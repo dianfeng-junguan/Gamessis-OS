@@ -68,9 +68,10 @@ void set_gate(u8 index,addr_t offset,u16 selector,u16 attr)
     idt[index].attr=attr;
     idt[index].selector=selector;
 #else
+    offset|=KNL_BASE;//中断必须在内核空间
     idt[index].offset_low=offset&0xffff;
     idt[index].offset_mid=(offset>>16)&0xffff;
-    idt[index].offset_high=(offset>>32)&0x0000ffff;
+    idt[index].offset_high=(offset>>32);//0x0000ffff;
     idt[index].attr=attr|1;//1是ist索引
     idt[index].selector=selector;
     idt[index].rsvd=0;

@@ -14,7 +14,8 @@
 #include "tty.h"
 #include "fcntl.h"
 
-struct process task[MAX_PROC_COUNT];
+
+struct process *task=0;//[MAX_PROC_COUNT];
 struct process* current;
 TSS scene_saver;
 TSS *tss=0xffff800000108000ul;
@@ -24,6 +25,7 @@ int palloc_paddr=0;
 static pid_t sidd=0;
 void init_proc(){
     //task=(struct process*)get_global_var(TASK_PCBS_ADDR);//[MAX_TASKS];;
+    task=(struct process*)kmallocat(0,13);
     for(int i=0;i<MAX_PROC_COUNT;i++){
         task[i].pid=-1;
         task[i].stat=TASK_EMPTY;
@@ -33,7 +35,7 @@ void init_proc(){
     current=task;
     pidd=1;
      //===============创建0号进程======================
-    int zi=create_proc();
+    int zi= init_proc0();
     task[zi].stat=TASK_READY;
 
 
@@ -92,28 +94,38 @@ void create_test_proc(){
     str->es=0x2b;
 
 }
-int create_proc()
+int init_proc0()
 {
-    int index=req_proc();
-    struct process *pz=&task[index];
-    if(index==-1)return -1;
-    int currsp=0x9fc00-1;
-    asm volatile("mov %%rsp,%0":"=m"(currsp));
+
+    task[0].pid=pidd++;
+    task[0].stat=TASK_ZOMBIE;
+    task[0].utime=0;
+    task[0].priority=0;
+
+    struct process *pz=task;
+    addr_t currsp=KNL_BASE+0x400000;
+//    asm volatile("mov %%rsp,%0"::"m"(currsp));
     //默认DPL=3
     //set_proc(0,0,0,0,0x23,0x1b,0x23,0x23,0x23,0x23,curesp,0,0,0,0,index);
     set_proc(0, 0, 0, 0, 0x10, 0x8, 0x10, 0x10, 0x10, 0x10,
-             currsp, 0, 0, 0, (long)proc_zero, 0, index);
+             currsp, 0, 0, 0, (long)proc_zero, 0, 0);
 //    task[index].tss.eip=(long)proc_zero;
     extern struct dir_entry* dtty;
     //stdin stdout stderr
     //这里绕开了sys open，这样是为了尽量快
     extern struct file ftty;
-    addr_t filplate= kmalloc();
-    pz->openf[0]=&ftty;
-    pz->openf[1]=&ftty;
-    pz->openf[2]=&ftty;
+    //不知道为什么，这里就是没法加上高地址
+    pz->openf[0]=(struct file*)((addr_t)&ftty|KNL_BASE);
+    pz->openf[1]=(struct file*)((addr_t)&ftty|KNL_BASE);
+    pz->openf[2]=(struct file*)((addr_t)&ftty|KNL_BASE);
 
-    return index;
+    pz->mem_struct.stack_top=STACK_TOP;
+    pz->mem_struct.stack_bottom=STACK_TOP-CHUNK_SIZE;
+    pz->mem_struct.heap_top=HEAP_BASE+CHUNK_SIZE;
+    pz->mem_struct.heap_base=HEAP_BASE;
+
+
+    return 0;
 }
 int req_proc(){
     int num=0;
@@ -773,8 +785,9 @@ int sys_free(int ptr)
 void switch_to(struct process *from, struct process *to) {
     cur_proc=to-task;
     current=&task[cur_proc];
+    addr_t pml4n=((addr_t )to->pml4)&~KNL_BASE;//cr3需要物理地址
     asm volatile("mov %0,%%rax\n"
-                 "mov %%rax,%%cr3\n":"=m"(to->pml4));
+                 "mov %%rax,%%cr3\n":"=m"(pml4n));
     asm volatile("mov %%rsp,%0\r\n"
                  "lea done(%%rip),%%rax\r\n"
                  "mov %%rax,%1\r\n"
@@ -870,15 +883,13 @@ int sys_fork(void){
     copy_mmap(current,&task[pid]);
     //复制完毕，开始更改堆栈
     //栈
-    /*
-     * 这里使用vmalloc是一个权宜之策。
-     * 本来是分配用户空间内存的，但是这样的话当前进程内存空间下就访问不到这个新申请的内存了（除非mmap一下），
-     * 方便以前先用vmalloc。
-     * */
+    //首先获取物理内存，然后临时映射到一个地方，然后拷贝数据，再解除映射，再映射到目标进程的页表。
     addr_t stk=task[pid].mem_struct.stack_top-PAGE_4K_SIZE;
+    addr_t tmpla=KNL_BASE+0x80000000;
     for(;stk>=task[pid].mem_struct.stack_bottom;stk-=PAGE_4K_SIZE){
-        addr_t new_stkpg= kmalloc();
-        memcpy(new_stkpg,stk,PAGE_4K_SIZE);//把当前进程的栈空间复制到新栈里面
+        addr_t new_stkpg= pmalloc();
+        smmap(new_stkpg,tmpla,PAGE_PRESENT|PAGE_RWX,current->pml4);
+        memcpy(tmpla,stk,PAGE_4K_SIZE);//把当前进程的栈空间复制到新栈里面
         //把新的页面映射到进程页表里
         smmap(new_stkpg,stk,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,task[pid].pml4);
     }
@@ -886,8 +897,9 @@ int sys_fork(void){
     addr_t intstk=INT_STACK_TOP-PAGE_4K_SIZE;
     int f=1;
     for(;intstk>=INT_STACK_BASE;intstk-=PAGE_4K_SIZE){
-        addr_t new_stkpg= kmalloc();
-        memcpy(new_stkpg,intstk,PAGE_4K_SIZE);//把当前进程的栈空间复制到新栈里面
+        addr_t new_stkpg= pmalloc();
+        smmap(new_stkpg,tmpla,PAGE_PRESENT|PAGE_RWX,current->pml4);
+        memcpy(tmpla,intstk,PAGE_4K_SIZE);//把当前进程的栈空间复制到新栈里面
         if(f){
             f=0;
             addr_t *raxp=new_stkpg+PAGE_4K_SIZE-56;//指向中断堆栈，里面存着rax的值
@@ -899,11 +911,13 @@ int sys_fork(void){
     //堆
     addr_t hp=task[pid].mem_struct.heap_top-PAGE_4K_SIZE;
     for(;hp>=task[pid].mem_struct.heap_base;hp-=PAGE_4K_SIZE){
-        addr_t new_hppg= kmalloc();
-        memcpy(new_hppg,hp,PAGE_4K_SIZE);//把当前进程的栈空间复制到新栈里面
+        addr_t new_hppg= pmalloc();
+        smmap(new_hppg,tmpla,PAGE_PRESENT|PAGE_RWX,current->pml4);
+        memcpy(tmpla,hp,PAGE_4K_SIZE);//把当前进程的栈空间复制到新栈里面
         //把新的页面映射到进程页表里
         smmap(new_hppg,hp,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,task[pid].pml4);
     }
+    smmap(0,tmpla,0,current->pml4);//解除映射
     //父进程运行到这里
     return pid;
 }
@@ -951,7 +965,7 @@ void release_mmap(struct process* p){
 }
 void copy_mmap(struct process* from, struct process *to){
     page_item * pml4p= kmalloc();
-    memcpy(pml4p,from->regs.cr3,PAGE_4K_SIZE);//复制pml4
+    memcpy(pml4p, (unsigned char *) ((addr_t) from->pml4 | KNL_BASE), PAGE_4K_SIZE);//复制pml4
     to->regs.cr3=pml4p;
     to->pml4=pml4p;
     //复制pdpt
@@ -962,21 +976,21 @@ void copy_mmap(struct process* from, struct process *to){
         if(pml4e[i]&PAGE_PRESENT){
             addr_t old_data=pml4e[i];//旧的数据，里面保存了属性和要拷贝的数据的地址
             pml4e[i]= kmalloc() | (old_data & ~PAGE_4K_MASK);
-            memcpy(pml4e[i]&PAGE_4K_MASK,old_data&PAGE_4K_MASK,PAGE_4K_SIZE);//把老的数据拷贝到新的页面里
+            memcpy(pml4e[i]&PAGE_4K_MASK,old_data&PAGE_4K_MASK|KNL_BASE,PAGE_4K_SIZE);//把老的数据拷贝到新的页面里
             page_item *pdpte=pml4e[i]&PAGE_4K_MASK;
             for(int j=0;j<512;j++)
             {
                 if(pdpte[j]&PAGE_PRESENT&&!(pdpte[j]&PDPTE_1GB)){
                     addr_t old_data2=pdpte[j];//旧的数据，里面保存了属性和要拷贝的数据的地址
                     pdpte[j]= kmalloc() | (old_data2 & ~PAGE_4K_MASK);
-                    memcpy(pdpte[j]&PAGE_4K_MASK,old_data2&PAGE_4K_MASK,PAGE_4K_SIZE);//把老的数据拷贝到新的页面里
+                    memcpy(pdpte[j]&PAGE_4K_MASK,old_data2&PAGE_4K_MASK|KNL_BASE,PAGE_4K_SIZE);//把老的数据拷贝到新的页面里
                     page_item *pde=pdpte[j]&PAGE_4K_MASK;
                     for(int k=0;k<512;k++)
                     {
                         if(pde[k]&PAGE_PRESENT&&!(pde[k]&PDE_4MB)){
                             addr_t old_data3=pde[k];//旧的数据，里面保存了属性和要拷贝的数据的地址
                             pde[k]= kmalloc() | (old_data3 & ~PAGE_4K_MASK);
-                            memcpy(pde[k]&PAGE_4K_MASK,old_data3&PAGE_4K_MASK,PAGE_4K_SIZE);//把老的数据拷贝到新的页面里
+                            memcpy(pde[k]&PAGE_4K_MASK,old_data3&PAGE_4K_MASK|KNL_BASE,PAGE_4K_SIZE);//把老的数据拷贝到新的页面里
                         }
                     }
                 }

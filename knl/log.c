@@ -89,7 +89,29 @@ void printf (const char *format,...)
     char* tmp=(char*) kmalloc();
     va_list vargs;
     va_start(vargs,format);
-    sprintf(tmp,format,vargs);
+    char *pstr=format;
+    for(;*pstr!='\0';pstr++){
+        if(*pstr=='%'&&*(pstr+1)!='\0'){
+            pstr++;
+            if(*pstr=='x'){
+                int v=va_arg(vargs,int);
+                sprint_hex(tmp,v);
+            }else if(*pstr=='s'){
+                char* v=va_arg(vargs,char*);
+                sprintn(tmp,v);
+            }else if(*pstr=='d'){
+                char* v=va_arg(vargs,char*);
+                sprint_decimal(tmp,v);
+            }else if(*pstr=='c'){
+                char v=va_arg(vargs,char);
+                sprintchar(tmp,v);
+            }else{
+                sprintchar(tmp,*pstr);
+            }
+        }else{
+            sprintchar(tmp,*pstr);
+        }
+    }
     va_end(vargs);
     print(tmp);
     comprintf(tmp);

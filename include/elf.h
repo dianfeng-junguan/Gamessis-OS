@@ -7,6 +7,11 @@
 #pragma pack(1)
 typedef unsigned int Elf32_Addr,Elf32_Off,Elf32_Word;
 typedef unsigned short Elf32_Half;
+#define R_X86_64_PLT32 4
+#define R_X86_64_32 10
+#define R_X86_64_32S 11
+#define R_X86_64_64 1
+#define R_X86_64_PC32 2
 #define EI_NIDENT 16
 /* These constants define the different elf file types */
 #define ET_NONE   0
@@ -69,6 +74,21 @@ struct Elf32_Shdr              //共40个字节    //Shdl表示Section header
     Elf32_Word sh_addralign;   //字节对齐
     Elf32_Word sh_entsize;
 };
+typedef unsigned long Elf64_Word;
+typedef unsigned long Elf64_Addr,Elf64_Off;
+struct Elf64_Shdr              //共40个字节    //Shdl表示Section header
+{
+    Elf64_Word sh_name;        //所指向Section的名字，如".text"、".data"、".bss"等
+    Elf64_Word sh_type;        //所指向Section的类型，如：符号表、字符串表等
+    Elf64_Word sh_flags;
+    Elf64_Addr sh_addr;
+    Elf64_Off sh_offset;       //所指向Section在ELF文件中的偏移量
+    Elf64_Word sh_size;        //所指向Section的size
+    Elf64_Word sh_link;        //和其关联的Section头的下标索引
+    Elf64_Word sh_info;
+    Elf64_Word sh_addralign;   //字节对齐
+    Elf64_Word sh_entsize;
+};
 struct Elf32_phdr            //32个字节    //phdr表示Program header
 {
     Elf32_Word p_type;       //如PT_LOAD表示，对应Segment可被加载到内存中
@@ -101,6 +121,18 @@ enum{
     PT_HIPROC,
     PT_GNU_STACK
 };
+typedef struct
+{
+    Elf64_Addr  r_offset;       /* Address */
+    Elf64_Word  r_info;         /* Relocation type and symbol index */
+} Elf64_Rel;
+
+typedef struct
+{
+    Elf64_Addr  r_offset;       /* Address */
+    unsigned long long r_info;         /* Relocation type and symbol index */
+    long long r_addend;       /* Addend */
+} Elf64_Rela;
 #define EM_NONE		  0	/* No machine */
 #define EM_M32		  1	/* AT&T WE 32100 */
 #define EM_SPARC	  2	/* SUN SPARC */

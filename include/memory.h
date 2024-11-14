@@ -40,8 +40,8 @@ typedef unsigned int page_item;
 #define PDE_SIZE 0x200000
 #define PAGE_4K_SIZE 0x1000
 #define PAGE_2M_SIZE 0x200000
-#define PAGE_4K_MASK 0xfffffffff000ul
-#define PAGE_2M_MASK 0xfffffff00000ul
+#define PAGE_4K_MASK 0xfffffffffffff000ul
+#define PAGE_2M_MASK 0xfffffffffff00000ul
 #define KNL_BASE 0xffff800000000000ul
 #define MAPPING_AREA (KNL_BASE+0x1000000ul)
 #define MAPPING_AREA_SIZE (0x1000000ul)
@@ -83,7 +83,9 @@ stat_t mdemap(u64 la);
 void page_err();
 //vmalloc区部分
 addr_t kmalloc();
+addr_t kmallocat(addr_t addr,int pgc);
 int kmfree(addr_t ptr);
 int chk_vm(int base, int pgn);
 
 int init_paging();
+extern addr_t usr_mem_pa;

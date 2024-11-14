@@ -20,4 +20,6 @@ add_executable(gms ${KNL} ${KNL_MODS} ${KNL_COMS}
         knl/mods/tty.c
         include/sys/wait.h
         knl/wait.c
+        knl/reloc.c
+        include/reloc.h
 )
