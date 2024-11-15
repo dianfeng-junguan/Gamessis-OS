@@ -4,9 +4,9 @@ ENTRY(main)
 
 SECTIONS {
     . = 1M;
-    _knl_start = . ;
     KNL_BASE = 0xffff800000000000;
     . = KNL_BASE + 4M;
+    _knl_start = . ;
     .bss :
     {
         kstack = .;

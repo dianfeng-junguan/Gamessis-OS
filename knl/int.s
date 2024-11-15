@@ -65,7 +65,8 @@ turn_on_int:
 	;mov si,idtptr
 	;mov eax,[IDT_ADDR]
 	;mov dword [si+4],eax
-	mov rax,0xffff800000107000
+
+	mov rax,0x0000000000107000
 	lidt [rax]
 	nop
 	nop
@@ -90,11 +91,3 @@ report_back_trace_of_err:
 	ret
 bt_msg:
 	db "error occurs at:%x",'\n',0
-section .idt align=4096
-idt:
-    resq 512
-idt_end:
-section .idtptr
-idtptr:
-	dw idt_end-idt
-	dq 0x106000

@@ -184,3 +184,12 @@ gdtptr:
 section .tss align=4096
 tss:
     resd 27
+
+section .idt align=4096
+idt:
+    resq 512
+idt_end:
+section .idtptr
+idtptr:
+	dw idt_end-idt
+	dq 0x106000
