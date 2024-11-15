@@ -147,6 +147,7 @@ switch_cs:
     ;push MULTIBOOT2_HEADER_MAGIC
     ;mov esi,ebx
     ;mov edi,MULTIBOOT2_HEADER_MAGIC
+
 extern init64
     mov eax,init64
     jmp dword 0x8:init64
@@ -192,4 +193,4 @@ idt_end:
 section .idtptr
 idtptr:
 	dw idt_end-idt
-	dq 0x106000
+	dq 0xffff800000106000

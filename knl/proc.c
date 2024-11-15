@@ -115,9 +115,9 @@ int init_proc0()
     //这里绕开了sys open，这样是为了尽量快
     extern struct file ftty;
     //不知道为什么，这里就是没法加上高地址
-    pz->openf[0]=(struct file*)((addr_t)&ftty|KNL_BASE);
-    pz->openf[1]=(struct file*)((addr_t)&ftty|KNL_BASE);
-    pz->openf[2]=(struct file*)((addr_t)&ftty|KNL_BASE);
+    pz->openf[0]=(struct file*)&ftty;
+    pz->openf[1]=(struct file*)&ftty;
+    pz->openf[2]=(struct file*)&ftty;
 
     pz->mem_struct.stack_top=STACK_TOP;
     pz->mem_struct.stack_bottom=STACK_TOP-CHUNK_SIZE;
@@ -926,12 +926,11 @@ void release_mmap(struct process* p){
     page_item * pml4p=p->pml4;
     //复制pdpt
     page_item *pml4e= pml4p;
-    for(int i=0;i<512;i++)
+    for(int i=0;i<256;i++)//高地址不释放（内核空间）
     {
         if(pml4e[i]&PAGE_PRESENT){
             page_item *pdpte=pml4e[i]&PAGE_4K_MASK;
-            int j=i==0?1:0;//低1GB的空间不释放（内核空间）
-            for(;j<512;j++)
+            for(int j=0;j<512;j++)
             {
                 if(pdpte[j]&PAGE_PRESENT&&!(pdpte[j]&PDPTE_1GB)){
                     page_item *pde=pdpte[j]&PAGE_4K_MASK;

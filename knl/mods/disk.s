@@ -9,7 +9,7 @@ disk_int_handler:
     iretq
 read_disk_asm:
     push rbp
-    mov ebp,esp
+    mov rbp,rsp
     mov dx,0x1f7
 ;.not_ready1:
     ;nop ;nop相当于稍息 hlt相当于睡觉
@@ -19,10 +19,10 @@ read_disk_asm:
     ;jne .not_ready1 ;若未准备好，则继续判断。
 
     xor ecx,ecx
-    mov eax,[esp+8];lba
-    mov ecx,[esp+12];counts(actually only data in cl are valid)
-    mov ebx,[esp+16];mem_addr
-    mov esi,eax;start LBA
+    mov rax,rdi;lba
+    mov rcx,rsi;counts(actually only data in cl are valid)
+    mov rbx,rdx;mem_addr
+    mov rsi,rax;start LBA
     mov dx,0x1f2;设置读取的扇区数
     mov al,cl
     out dx,al
@@ -66,36 +66,32 @@ read_disk_asm:
     ;pop ebx
     mov di,dx
 
-    mov eax,ecx
-    mov cx,256;每次读取2byte，所以要读取512/2*cl次
-    mul cx
-    mov ecx,eax
+    shl rcx,8;每次读取2byte，所以要读取256*cl次
 
     mov dx,0x1f0
 .read:
     in ax,dx
-    mov word [ebx],ax
-    add ebx,2
+    mov word [rbx],ax
+    add rbx,2
     loop .read
     
     leave
-    mov eax,0
+    mov rax,0
     ret
 .err_disk_reading:
     mov dx,0x1f1
-    xor eax,eax
+    xor rax,rax
     in ax,dx;ax=0xffff
     ;pop ebx
-    mov esp,ebp
-    pop rbp
+    leave
     ret
 write_disk_asm:
     push rbp
-    mov ebp,esp
+    mov rbp,rsp
 
-    mov eax,[esp+8];lba
-    mov ecx,[esp+12];sector_num(actually only data in cl are valid)
-    mov ebx,[esp+16];mem_ptr
+    mov rax,rdi;lba
+    mov rcx,rsi;sector_num(actually only data in cl are valid)
+    mov rbx,rdx;mem_ptr
 
     push rax
     ;第2步：设置要写入的扇区数
@@ -136,18 +132,14 @@ write_disk_asm:
     jne .not_ready2 ;若未准备好，则继续判断。
     ;第7步：向0x1f0端口写数据
 
-    mov eax,ecx
-    mov cx,256;每次读取2byte，所以要读取512/2*cl次
-    mul cx
-    mov ecx,eax
+    shl rcx,8
 
     mov dx,0x1f0
 .go_on_write:
-    mov ax,[ebx]
+    mov ax,[rbx]
     out dx,ax
     add ebx,2
     loop .go_on_write
 
-    mov esp,ebp
-    pop rbp
+    leave
     ret

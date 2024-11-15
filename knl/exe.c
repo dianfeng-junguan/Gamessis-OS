@@ -9,6 +9,8 @@
 #include "str.h"
 #include "fcntl.h"
 #include "errno.h"
+#include "elf.h"
+#include "memory.h"
 
 DLL dlls[MAX_DLLS];
 Module modules[MAX_MODULES];
@@ -134,33 +136,38 @@ int execute(char *path, char **argv)
     return pi;
 }
 
-int sys_execve(char *path,char **argv){
+int sys_execve(char *path, int argc, char **argv) {
     int fno=-1,cwd_fno=-1;
     if((fno=sys_open(path, O_EXEC)) <0)return -ENOENT;
-    //
-//    char *p=path;
-//    for(;*p!='\0';p++);
-//    for(;*p!='/'&&p>path;p--);
-//    if(p>path)
-//    {
-//        *p='\0';
-//        if((cwd_fno=sys_open(path, O_DIRECTORY)) <0)return -1;
-//        *p='/';
-//    }
-    extern struct file opened[];
-    extern struct process task[];
-    if(sys_close(current->exef-opened)<0)return -1;
 
-    void *retp= load_pe;
-    current->exef=&opened[fno];//改变执行文件
     //重新设置进程数据
     //清空原来的页表
     release_mmap(current);
     current->regs.rsp=STACK_TOP;//清空栈
     extern TSS* tss;
-    //sysret直接返回到load_pe加载新程序，然后直接开始运行新程序的main
-    stack_store_regs *rs=tss->ists[0]- sizeof(stack_store_regs);
-    rs->rcx=retp;
+
+    current->exef=current->openf[fno];//改变执行文件
+    addr_t entry= load_elf(current->exef);
+    extern struct file opened[];
+    extern struct process task[];
+    if(sys_close(current->exef-opened)<0)return -1;
+
+    //sysret直接返回到新程序的main
+    void *retp= (void *) entry;
+    stack_store_regs *rs= (stack_store_regs *) (tss->ists[0] - sizeof(stack_store_regs));
+    rs->rcx= (unsigned long) retp;
+    //第一个参数argc
+    rs->rsi=argc;
+    //第二个参数argv需要把内容从内核空间拷贝到用户堆里面
+    char* p= (char *) current->mem_struct.heap_base;
+    for(int i=0;i<argc;i++){
+        strcpy(p,argv[i]);
+        p+= strlen(argv[i])+1;
+    }
+    rs->rdi=current->mem_struct.heap_base;
+    //以下部分是临时测试代码
+    int (*pmain)(int argc,char **argv)=(int (*)(int, char **)) entry;
+    pmain(argc, (char **) rs->rdi);
     return 0;
 }
 int exec_call(char *path)
@@ -448,4 +455,64 @@ int sys_insmod(char *path)
 int sys_rmmod(char *name)
 {
 
+}
+//切换进程前,在execve系统调用中
+addr_t load_elf(struct file *elf) {
+    // 读取文件头
+
+    addr_t tmpla=KNL_BASE+0x80000000;
+    //读取文件头，当前就是要加载程序的进程，所以不用搞临时映射
+    addr_t pma= (addr_t) pmalloc();
+    smmap(pma , 0x400000, PAGE_PRESENT | PAGE_RWX | PAGE_FOR_ALL, current->pml4);
+    elf->position=0;
+    //读取文件头
+    elf->f_ops->read(elf, (char *) 0x400000, PAGE_4K_SIZE, &elf->position);
+
+    unsigned long bin= (unsigned long) 0x400000;
+    Elf64_Ehdr *ehdr=(Elf64_Phdr*)bin;
+    u16 entn=ehdr->e_phnum;
+    u16 ents=ehdr->e_phentsize;
+    struct Elf64_Shdr* sh= (struct Elf64_Shdr *) (bin + ehdr->e_shoff);
+    Elf64_Phdr *ph= (Elf64_Phdr *) (bin + ehdr->e_phoff);
+    for(int i=0;i<entn;i++){
+        //加载节
+        if((ph->p_type|PT_LOAD)!=0){
+            unsigned long off=ph->p_offset;
+            unsigned long fs=ph->p_filesz;
+            char* vptr= (char *) ph->p_vaddr;
+            elf->position=off;
+
+            //先映射好内存
+            int attr=PAGE_PRESENT|PAGE_FOR_ALL;
+            if((ph->p_flags|PF_X)!=0||(ph->p_flags|PF_W)!=0)
+                attr|=PAGE_RWX;
+            int pgc=fs/PAGE_4K_SIZE;
+            if(!pgc)pgc=1;
+            for(int j=0;j<pgc;j++){
+                smmap((addr_t) pmalloc(), (addr_t) (vptr + j * PAGE_4K_SIZE), attr, current->pml4);
+            }
+            //读取
+            elf->f_ops->read(elf,vptr,fs,&elf->position);
+
+        }
+        ph++;
+    }
+    //初始化堆
+    chunk_header hdrtmp={
+            .alloc=0,
+            .next=NULL,
+            .pgn=0,
+            .prev=NULL
+    };
+    //空堆
+    //分配堆
+    smmap((addr_t) pmalloc(), HEAP_BASE, PAGE_PRESENT | PAGE_FOR_ALL | PAGE_RWX, current->pml4);
+    memset((unsigned char *) HEAP_BASE, 0, CHUNK_SIZE);
+    current->mem_struct.heap_base=HEAP_BASE;
+    current->mem_struct.heap_top=HEAP_BASE+CHUNK_SIZE;
+    //设置栈
+    current->mem_struct.stack_top=STACK_TOP;
+    addr_t entry=ehdr->e_entry;
+    //从系统调用返回
+    return entry;
 }

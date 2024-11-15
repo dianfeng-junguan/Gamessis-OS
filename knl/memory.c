@@ -18,7 +18,7 @@ page_item* pd=PD_ADDR;
 unsigned int *vmalloc_map=VMALLOC_BASE;//[VMALLOC_PGN/32]={0};
 addr_t usr_mem_pa=0;
 mem_t mmap_struct[MAX_MEM_STRUCT];
-int kmalloc_entry_num=VMALLOC_PGN>>5,kmalloc_pgc=VMALLOC_PGN;
+int kmalloc_entry_num=VMALLOC_PGN>>5,kmalloc_pgc=VMALLOC_PGN,pmalloc_entc=0;
 //以kb为单位
 int high_mem_base=1024;
 int mmap_t_i=0;
@@ -139,7 +139,8 @@ int init_paging()
     //设置第一项pdpte，也就是内核空间
 //    set_1gb_pdpt(pdpt,0,PAGE_RWX);//设置PDPT0x40000000ul
 //    set_page_item(pdpt+1,PD_ADDR,PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX);
-
+    //把低512GB的空间取消映射，留给用户
+    pml4[0]=0;
     #endif
 }
 void set_high_mem_base(int base)
@@ -151,7 +152,7 @@ void set_mem_area(unsigned long base, unsigned long len, unsigned long type)
     mmap_struct[mmap_t_i].base=base;
     mmap_struct[mmap_t_i].len=len;
     mmap_struct[mmap_t_i++].type=type;
-    comprintf("mem info:base=0x%x,len=0x%x,type=%d\n",base,len,type);
+    comprintf("mem info:base=0x%l,len=0x%l,type=%d\n",base,len,type);
 }
 addr_t kmalloc()
 {
@@ -267,22 +268,29 @@ void page_err(){
 void init_memory()
 {
     extern addr_t _knl_end,_knl_start;//lds中声明的内核的结尾地址，放置位图
-    //获取内存大小
-    size_t mem_size=mmap_struct[mmap_t_i-1].base+mmap_struct[mmap_t_i-1].len;
+    //获取可用内存大小mem_size
+    size_t tot_mem_size=mmap_struct[mmap_t_i-1].base+mmap_struct[mmap_t_i-1].len,mem_size=0;
+    for(int i=0;i<mmap_t_i;i++)
+    {
+        if(mmap_struct[i].type==MULTIBOOT_MEMORY_AVAILABLE)
+            mem_size+=mmap_struct[i].len;
+    }
+    usr_mem_pa=PAGE_4K_ALIGN(mem_size/2);
     //计算出所需内存页数量
     /*
-     * 注：物理内存的一半会分给内核，所以除以2，内核空间page map不表示。
+     * 注：物理内存的一半会分给内核。
      * 前半部分是计算内存大小使多少个页，在位图中，一页表示为一位，所以除以后面部分，
      * 即一页位图可以有多少位。
      * */
-    int pgc=(mem_size/2/PAGE_4K_SIZE)/(PAGE_4K_SIZE*8);
+    pmalloc_entc= tot_mem_size / PAGE_4K_SIZE/32;
+    int pgc=(tot_mem_size/PAGE_4K_SIZE)/(PAGE_4K_SIZE*8);
     //计算出位图所需的字节数
     int pg_bytes=pgc>>5;//=/32
     //初始化vmalloc内存位图
     //计算位图需要多少个int
     size_t vmec= (mem_size/2-0x1000000)/PAGE_4K_SIZE/32;//去掉内核代码16M
     size_t vmms=vmec*4/PAGE_4K_SIZE;//位图自己需要多少页
-    comprintf("tot memsize:0x%x,kmalloc pages count:%d,kmalloc bitmap taking 0x%d pages\n", mem_size,vmec,vmms);
+    comprintf("tot memsize:0x%l,available size 0x%l,kmalloc pages count:%d,kmalloc bitmap taking 0x%d pages\n", tot_mem_size,mem_size,vmec,vmms);
     if(vmec*4%PAGE_4K_SIZE)
         vmms++;
     for(int i=0;i<vmec;i++){
@@ -302,16 +310,21 @@ void init_memory()
     page_map=kmallocat(0,pgc);//(unsigned int*)PAGE_4K_ALIGN(0xc00000);
     int* p=page_map;
     addr_t curp=0;
+    //不能使用的内存提前占用掉
     for(int i=0;i<mmap_t_i;i++){
-        int cont=0;
-        if(mmap_struct[i].type!=MULTIBOOT_MEMORY_AVAILABLE)
-            cont=-1;
-        for(int j=0;j<PAGE_4K_ALIGN(mmap_struct[i].len)/PAGE_4K_SIZE/32;j++){
-            *(p++)=cont;
+        if(mmap_struct[i].type==MULTIBOOT_MEMORY_AVAILABLE)
+            continue;
+        int b=(mmap_struct[i].base-usr_mem_pa)/PAGE_4K_SIZE;
+        int l=mmap_struct[i].len/PAGE_4K_SIZE;
+        for(int j=0;j<l;j++){
+            p[b+j/32]|=1u<<(j%32);
         }
     }
+    //低1gb提前占用掉 knl
+    for(int j=0;j<0x2000;j++){
+        page_map[j]=-1;
+    }
 
-    usr_mem_pa=mem_size/2;
     /*//低16M空间直接被内核占用
     for(int i=0;i<128;i++){
         page_map[i]=0xffffffff;
@@ -346,21 +359,26 @@ page_map存储方式:
 little end
 */
 addr_t req_a_page(){
-    for(int i=0;i<PAGE_BITMAP_NR;i++){
+    for(int i=0; i < pmalloc_entc; i++){
         for(int j=0;j<32;j++){
             unsigned int bit=page_map[i]&(1<<j);
-            if((i*32+j)*4096>=0x100000&&!bit)
+            if((i*32+j)*4096>=0x100000&&(bit==0u))
             {
+                comprintf("req_a_page:before:page_map[%d]=0x%x,",i,page_map[i]);
                 page_map[i]=page_map[i]|(1<<j);
+                comprintf("now = 0x%x",page_map[i]);
                 return i*32+j;//num of page
 
             }
         }
     }
+    return -1;
 }
 
 void * pmalloc(){
-    return (void*)(get_phyaddr(req_a_page())+usr_mem_pa);
+    void *ret=(void*)(get_phyaddr(req_a_page()));
+    comprintf("pmalloc():%l\n",ret);
+    return ret;
 }
 int free_page(char *paddr){
     int num=(int)paddr/4096;

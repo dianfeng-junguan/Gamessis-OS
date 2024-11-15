@@ -20,13 +20,50 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="缓存">
+    <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="原来为了高地址妥协性更改但实际不需改的代码改回">
+      <change afterPath="$PROJECT_DIR$/include/ramfs.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/knl/ramfs.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/test.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/test.mk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/clock.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/clock.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/com.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/com.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/devman.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/devman.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/exe.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/exe.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/gmsknl.elf" beforeDir="false" afterPath="$PROJECT_DIR$/bin/gmsknl.elf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/int.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/int.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/memory.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/memory.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/mods/disk.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/mods/disk.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/mods/diska.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/mods/diska.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/proc.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/proc.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/setupa.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/setupa.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/str.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/str.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/virfs.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/virfs.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/build.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/build.ninja" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/com/str.c" beforeDir="false" afterPath="$PROJECT_DIR$/com/str.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gdb.sh" beforeDir="false" afterPath="$PROJECT_DIR$/gdb.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hda.img" beforeDir="false" afterPath="$PROJECT_DIR$/hda.img" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/disk.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/disk.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/elf.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/elf.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/exe.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/exe.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/page.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/page.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/proc.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/proc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl.sh" beforeDir="false" afterPath="$PROJECT_DIR$/knl.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/com.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/com.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/exe.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/exe.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/int.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/int.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/memory.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/memory.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/mods/disk.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/mods/disk.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/mods/disk.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl/mods/disk.s" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/mods/fat32.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/mods/fat32.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/proc.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/proc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loader/reloc.c" beforeDir="false" afterPath="$PROJECT_DIR$/loader/reloc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loader/setup.s" beforeDir="false" afterPath="$PROJECT_DIR$/loader/setup.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/loader/setup64.s" beforeDir="false" afterPath="$PROJECT_DIR$/loader/setup64.s" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -104,11 +141,17 @@
       <recent name="D:\Code\Comprehensive\OS\workspace\64\knl\mods" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Code\Comprehensive\OS\workspace\64\include" />
       <recent name="D:\Code\Comprehensive\OS\workspace\64\loader" />
       <recent name="D:\Code\Comprehensive\OS\workspace\64\knl" />
     </key>
   </component>
   <component name="RunManager" selected="远程调试.gdb">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="gdb" type="CLion_Remote" version="1" remoteCommand="192.168.56.1:1234" symbolFile="$PROJECT_DIR$/bin/gmsknl.elf" sysroot="">
       <debugger toolchainName="WSL" />
       <method v="2" />
@@ -536,7 +579,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731660229746</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="原来为了高地址妥协性更改但实际不需改的代码改回">
+      <option name="closed" value="true" />
+      <created>1731660464127</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1731660464127</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -560,7 +611,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="使用sysret，实现了特权级切换，正确地切换了cs，ds" />
     <MESSAGE value="完善了一下ret_sys_call的堆栈" />
     <MESSAGE value="借用了别人的vfs和fat32，成功整合进去了" />
     <MESSAGE value="." />
@@ -585,7 +635,8 @@
     <MESSAGE value="暂存" />
     <MESSAGE value="通过将内核作为loader的一个数据段变量，成功加载已经设置为高地址的内核到高地址运行" />
     <MESSAGE value="缓存" />
-    <option name="LAST_COMMIT_MESSAGE" value="缓存" />
+    <MESSAGE value="原来为了高地址妥协性更改但实际不需改的代码改回" />
+    <option name="LAST_COMMIT_MESSAGE" value="原来为了高地址妥协性更改但实际不需改的代码改回" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

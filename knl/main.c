@@ -17,6 +17,7 @@
 #include "syscall.h"
 #include "fcntl.h"
 #include "exe.h"
+#include "ramfs.h"
 
 int manage_proc_lock=1;
 void main(unsigned int magic,void* addr)
@@ -153,8 +154,8 @@ void main(unsigned int magic,void* addr)
     mount_rootfs();
     init_devman();
     init_proc();
-    sti();
-    DISK1_FAT32_FS_init();
+    init_ramfs();
+//    DISK1_FAT32_FS_init();
 
     //自带驱动
     //init_tty();
@@ -163,9 +164,11 @@ void main(unsigned int magic,void* addr)
 
 
     manage_proc_lock=0;
-    if(sys_fork()==0){
-        sys_execve("/mnt/test.exe",NULL);
-    }
+    char *argv[]={"/mnt/test.exe","gamessis os"};
+    sys_execve("/mnt/test.exe", 2, &argv[0]);
+    sti();
+//    if(sys_fork()==0){
+//    }
 
 //	init_vfs();
 //    init_fat16();

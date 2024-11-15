@@ -236,7 +236,7 @@ int syscall(int a, int b, int c, int d, int e, int f)
         case SYSCALL_KB_READC:return sys_analyse_key();
         case SYSCALL_FIND_DEV:return sys_find_dev(a);
         case SYSCALL_FORK:return sys_fork();
-        case SYSCALL_EXECVE:return sys_execve(a,b);
+        case SYSCALL_EXECVE:return sys_execve(a, 0, b);
         case SYSCALL_OPERATE_DEV:return sys_operate_dev(a,b,c);
         case SYSCALL_WAIT:return sys_wait(a,b,c);
     }

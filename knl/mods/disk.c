@@ -241,23 +241,30 @@ int async_write_disk(int disk,unsigned int lba, int sec_n, char* mem_ptr)
     //         outw(port,*p++);
     return 0;
 }
-int read_disk(driver_args* args)
+int read_disk(int disk, int lba, int secn, char *dest)
 {
-    int ret=read_disk_asm(args->lba,args->sec_c,args->dist_addr);
-    
-    running_req->stat=REQ_STAT_DONE;
-    running_req->args->stat=REQ_STAT_EMPTY;
+    request(disk,DISKREQ_READ,lba,secn,dest);
+    int ret=read_disk_asm(lba,secn,dest);
+//    chk_result(ret);
+    if(running_req){
+
+        running_req->stat=REQ_STAT_DONE;
+        running_req->args->stat=REQ_STAT_EMPTY;
+    }
     //set_proc_stat(running_req->pid,TASK_READY);
     running_req=NULL;
     return ret;
 }
-int write_disk(driver_args* args)
+int write_disk(int disk, int lba, int secn, char *src)
 {
-    int ret=write_disk_asm(args->lba,args->sec_c,args->src_addr);
-    
-    running_req->stat=REQ_STAT_DONE;
-    running_req->args->stat=REQ_STAT_EMPTY;
-    //set_proc_stat(running_req->pid,TASK_READY);
+    request(disk,DISKREQ_WRITE,lba,secn,src);
+    int ret=write_disk_asm(lba,secn,src);
+//    chk_result(ret);
+    if(running_req){
+
+        running_req->stat=REQ_STAT_DONE;
+        running_req->args->stat=REQ_STAT_EMPTY;
+    }
     running_req=NULL;
     return ret;
 }
@@ -268,6 +275,13 @@ int chk_result(int r)
         return 1;
     comprintf("disk err\n");
     return 0;
+}
+int await_diskreq(){
+    while (running_req->stat!=REQ_STAT_DONE);
+    if(running_req->result==DISK_CHK_OK)
+        return 1;
+    return 0;
+
 }
 int disk_existent(int disk)
 {

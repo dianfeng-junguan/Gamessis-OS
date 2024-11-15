@@ -50,14 +50,14 @@ typedef struct _chunk_header_{
     struct _chunk_header_* prev;   //上一个存储头地址
 }chunk_header;
 typedef struct _procm_{
-    int heap_base;
-    int heap_top;
-    int stack_bottom;
-    int stack_top;
-    int text_base;
-    int text_top;
-    int data_base;
-    int data_top;
+    addr_t heap_base;
+    addr_t heap_top;
+    addr_t stack_bottom;
+    addr_t stack_top;
+    addr_t text_base;
+    addr_t text_top;
+    addr_t data_base;
+    addr_t data_top;
 }proc_mem_arr;
 typedef struct
 {

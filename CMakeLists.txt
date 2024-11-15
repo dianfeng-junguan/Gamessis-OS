@@ -22,4 +22,7 @@ add_executable(gms ${KNL} ${KNL_MODS} ${KNL_COMS}
         knl/wait.c
         loader/reloc.c
         include/reloc.h
+        test/test.c
+        knl/ramfs.c
+        include/ramfs.h
 )

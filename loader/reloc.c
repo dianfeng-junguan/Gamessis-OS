@@ -18,7 +18,7 @@ void do_reloc(unsigned int magic,void* addr) {
     Elf64_Phdr *ph=bin+ehdr->e_phoff;
     for(int i=0;i<entn;i++){
         //加载节
-        if(ph->p_flags|PT_LOAD){
+        if((ph->p_type|PT_LOAD)!=0){
             unsigned long off=ph->p_offset;
             unsigned long fs=ph->p_filesz;
             char* vptr= (char *) ph->p_vaddr;

@@ -21,4 +21,4 @@
 
 #define VMALLOC_BASE (0xffff800000000000ul+0x2000000ul)
 #define VMALLOC_PGN (4096)
-extern int kmalloc_entry_num,kmalloc_pgc;
+extern int kmalloc_entry_num,kmalloc_pgc,pmalloc_entc;

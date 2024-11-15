@@ -40,11 +40,12 @@ typedef struct{
 int init_disk();
 int read_disk_asm(int lba,int sec_n,char* mem_addr);
 int write_disk_asm(int lba, int sec_n, char* mem_ptr);
-int read_disk(driver_args* args);
-int write_disk(driver_args* args);
+int read_disk(int disk, int lba, int secn, char *dest);
+int write_disk(int disk, int lba, int secn, char *src);
 int async_read_disk(int disk,unsigned int lba,int sec_n,char* mem_addr);
 int async_write_disk(int disk,unsigned int lba, int sec_n, char* mem_ptr);
 int async_check_disk(int disk);
+int async_reset_disk(int disk);
 int disk_int_handler();
 int disk_int_handler_c();
 int request(int disk,int func,int lba,int secn,char *buf);
@@ -59,5 +60,6 @@ int hd_do_req(driver_args *args);
 //counts:扇区数
 int dllmain(void*,int,void*);
 int chk_result(int r);
+int await_diskreq();
 extern struct file_operations hd_fops;
 #endif

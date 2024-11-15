@@ -146,6 +146,9 @@ struct Elf32_sym                //
 #define PT_NOTE 4
 #define PT_SHLIB 5
 #define PT_PHDR 6
+#define PF_X 1
+#define PF_W 2
+#define PF_R 4
 typedef struct
 {
     Elf64_Addr  r_offset;       /* Address */

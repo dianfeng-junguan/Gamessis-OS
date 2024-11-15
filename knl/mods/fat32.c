@@ -852,14 +852,16 @@ void DISK1_FAT32_FS_init()
 	register_filesystem(&FAT32_fs_type);
 	
 	memset(buf,0,512);
-	int r=request(DISK_MAJOR_MAJOR,DISKREQ_READ,0x0,1,(unsigned char *)buf);
-    chk_result(r);
+
+    read_disk(DISK_MAJOR_MAJOR, 0, 1, buf);/*rint r= equest(DISK_MAJOR_MAJOR,DISKREQ_READ,0x0,1,(unsigned char *)buf);
+    chk_result(r);*/
     DPT = *(struct Disk_Partition_Table *)buf;
 	printf("DPTE[0] start_LBA:%x\ttype:%x\n",DPT.DPTE[0].start_LBA,DPT.DPTE[0].type);
 
 	memset(buf,0,512);
-	int r1=request(DISK_MAJOR_MAJOR,DISKREQ_READ,DPT.DPTE[0].start_LBA,1,(unsigned char *)buf);
-    chk_result(r1);
+    read_disk(DISK_MAJOR_MAJOR, DPT.DPTE[0].start_LBA, 1, buf);
+	/*int r1=request(DISK_MAJOR_MAJOR,DISKREQ_READ,DPT.DPTE[0].start_LBA,1,(unsigned char *)buf);
+    chk_result(r1);*/
 
     //挂载新文件系统到/mnt
 	struct super_block *fat32_sb= mount_fs("FAT32",&DPT.DPTE[0],buf);	//not dev node

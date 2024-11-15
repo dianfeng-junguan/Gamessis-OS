@@ -14,7 +14,7 @@ typedef struct
  * */
 int execute(char *path, char **argv);
 //从新文件加载程序代替现有进程的程序映像。
-int sys_execve(char *path,char **argv);
+int sys_execve(char *path, int argc, char **argv);
 /*
  * 立即调用一个程序（会阻塞当前进程）
  * */
@@ -38,7 +38,7 @@ int lookup_pgind(int vma,int* pgind);
 
 
 int load_pe(struct process *proc);
-int load_elf(struct process *proc);
+addr_t load_elf(struct file *elf);
 
 int proc_start();
 
