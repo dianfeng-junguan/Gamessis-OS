@@ -59,7 +59,6 @@ STACK_AREA_OFFSET equ 0x2c00-1
 
 global gdtptr
 global init32
-
 [bits 32]
 init32:
     ;开始准备64位

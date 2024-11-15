@@ -20,14 +20,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="修复了中断，现在内核可以完整地在高地址运行。">
-      <change afterPath="$PROJECT_DIR$/include/reloc.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/knl/reloc.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loader/setup.s" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loader/setup64.s" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reloccheat.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/64.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/64.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="暂存">
+      <change afterPath="$PROJECT_DIR$/knl.lds" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loader/loader.lds" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loader/loader.mk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
@@ -39,29 +35,37 @@
       <change beforePath="$PROJECT_DIR$/bin/gdt.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/gdt.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/gmsknl.elf" beforeDir="false" afterPath="$PROJECT_DIR$/bin/gmsknl.elf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/int.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/int.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/inta.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/inta.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/log.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/log.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/main.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/mem.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/mem.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/memory.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/memory.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/mods/disk.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/mods/disk.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/mods/fat16.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/mods/fat16.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/mods/kb.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/mods/kb.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/mods/tty.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/mods/tty.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/proc.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/proc.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/proca.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/proca.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/setupa.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/setupa.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/str.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/str.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/syscall.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/syscall.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/types.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/types.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/virfs.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/virfs.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/build.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/build.ninja" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gdb.sh" beforeDir="false" afterPath="$PROJECT_DIR$/gdb.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hda.img" beforeDir="false" afterPath="$PROJECT_DIR$/hda.img" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/elf.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/elf.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/memory.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/memory.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/proc.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/proc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/reloc.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/reloc.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl.sh" beforeDir="false" afterPath="$PROJECT_DIR$/knl.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/int.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/int.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/log.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/log.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/int.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl/int.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/knl/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/memory.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/memory.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/proc.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/proc.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/setup64.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl/setup64.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lds.lds" beforeDir="false" afterPath="$PROJECT_DIR$/lds.lds" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/proc.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl/proc.s" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/reloc.c" beforeDir="false" afterPath="$PROJECT_DIR$/loader/reloc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/setup.s" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/knl/setup64.s" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loader/setup.s" beforeDir="false" afterPath="$PROJECT_DIR$/loader/setup.s" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loader/setup64.s" beforeDir="false" afterPath="$PROJECT_DIR$/loader/setup64.s" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +86,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="himem" />
+        <entry key="$PROJECT_DIR$" value="to64" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -108,35 +112,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "to64",
-    "last_opened_file_path": "D:/Code/Comprehensive/OS/workspace/64/loader",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "settings.editor.splitter.proportion": "0.20875764",
-    "structure.view.defaults.are.configured": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;loader&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Code/Comprehensive/OS/workspace/64&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;settings.editor.splitter.proportion&quot;: &quot;0.20875764&quot;,
+    &quot;structure.view.defaults.are.configured&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Code\Comprehensive\OS\workspace\64" />
       <recent name="D:\Code\Comprehensive\OS\workspace\64\loader" />
       <recent name="D:\Code\Comprehensive\OS\workspace\64\include" />
       <recent name="D:\Code\Comprehensive\OS\workspace\64\knl\mods" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Code\Comprehensive\OS\workspace\64\loader" />
       <recent name="D:\Code\Comprehensive\OS\workspace\64\knl" />
     </key>
   </component>
@@ -144,6 +150,11 @@
     <configuration name="gdb" type="CLion_Remote" version="1" remoteCommand="192.168.56.1:1234" symbolFile="$PROJECT_DIR$/bin/gmsknlm.elf" sysroot="">
       <debugger toolchainName="WSL" />
       <method v="2" />
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
     </configuration>
     <configuration name="gms" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="gms" TARGET_NAME="gms" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="gms" RUN_TARGET_NAME="gms">
       <method v="2">
@@ -236,7 +247,8 @@
       <workItem from="1731487495418" duration="2000" />
       <workItem from="1731502273571" duration="3938000" />
       <workItem from="1731571608304" duration="4488000" />
-      <workItem from="1731577948148" duration="9735000" />
+      <workItem from="1731577948148" duration="12470000" />
+      <workItem from="1731648584866" duration="2543000" />
     </task>
     <task id="LOCAL-00001" summary="重新整理了一下，改用clion开发">
       <option name="closed" value="true" />
@@ -542,7 +554,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731329182120</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="暂存">
+      <option name="closed" value="true" />
+      <created>1731591509937</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1731591509937</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -566,7 +586,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="将64位TSS加入了gdt并且加载" />
     <MESSAGE value="实现了64位下的进程切换，但是好像切换了一次后就没出发时钟中断了" />
     <MESSAGE value="使用sysret，实现了特权级切换" />
     <MESSAGE value="使用sysret，实现了特权级切换，正确地切换了cs，ds" />
@@ -591,7 +610,8 @@
     <MESSAGE value="基本完成了移动到高地址" />
     <MESSAGE value="1.修复了内存映射smmap中的bug,并使之适应高地址;&#10;2.动态分配page_map和kmalloc_map" />
     <MESSAGE value="修复了中断，现在内核可以完整地在高地址运行。" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复了中断，现在内核可以完整地在高地址运行。" />
+    <MESSAGE value="暂存" />
+    <option name="LAST_COMMIT_MESSAGE" value="暂存" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -603,18 +623,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/knl/main.c</url>
-          <line>25</line>
+          <line>24</line>
           <option name="timeStamp" value="158" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/knl/main.c</url>
-          <line>106</line>
-          <option name="timeStamp" value="160" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/knl/reloc.c</url>
-          <line>15</line>
-          <option name="timeStamp" value="161" />
         </line-breakpoint>
         <breakpoint type="OCSymbolicBreakpointType">
           <properties>

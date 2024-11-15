@@ -44,7 +44,28 @@ typedef unsigned short Elf32_Half;
 #define SHF_ALLOC	0x2
 #define SHF_EXECINSTR	0x4
 #define SHF_MASKPROC	0xf0000000
+typedef unsigned long long Elf64_Addr,Elf64_Off;
+typedef unsigned long Elf64_Xword;
+typedef unsigned int Elf64_Word;
 
+#define EI_NIDENT 16
+
+typedef struct {
+    unsigned char e_ident[EI_NIDENT];  // 最开头是16个字节的e_ident, 其中包含用以表示ELF文件的字符，以及其他一些与机器无关的信息。开头的4个字节值固定不变，为0x7f和ELF三个字符。
+    unsigned short      e_type;  // 该文件的类型 2字节
+    unsigned short      e_machine;  // 该程序需要的体系架构 2字节
+    unsigned int      e_version;  // 文件的版本 4字节
+    Elf64_Addr   e_entry;  // 程序的入口地址 8字节
+    Elf64_Off      e_phoff;  // Program header table 在文件中的偏移量 8字节
+    Elf64_Off      e_shoff;  // Section header table 在文件中的偏移量 8字节
+    unsigned int      e_flags;  // 对IA32而言，此项为0。 4字节
+    unsigned short      e_ehsize;  // 表示ELF header大小 2字节
+    unsigned short      e_phentsize;  // 表示Program header table中每一个条目的大小 2字节
+    unsigned short      e_phnum;  // 表示Program header table中有多少个条目 2字节
+    unsigned short      e_shentsize;  // 表示Section header table中的每一个条目的大小 2字节
+    unsigned short      e_shnum;  // 表示Section header table中有多少个条目 2字节
+    unsigned short      e_shstrndx;  // 包含节名称的字符串是第几个节 2字节
+} Elf64_Ehdr;
 typedef struct elf32_hdr{
     unsigned char	e_ident[EI_NIDENT /* 16 */];  /* ELF魔法数字 Magic */
     Elf32_Half/* unsigned short */	 e_type;     /* ELF文件类型 */
@@ -74,8 +95,6 @@ struct Elf32_Shdr              //共40个字节    //Shdl表示Section header
     Elf32_Word sh_addralign;   //字节对齐
     Elf32_Word sh_entsize;
 };
-typedef unsigned long Elf64_Word;
-typedef unsigned long Elf64_Addr,Elf64_Off;
 struct Elf64_Shdr              //共40个字节    //Shdl表示Section header
 {
     Elf64_Word sh_name;        //所指向Section的名字，如".text"、".data"、".bss"等
@@ -100,6 +119,17 @@ struct Elf32_phdr            //32个字节    //phdr表示Program header
     Elf32_Word p_flage;      //读、写、执行权限
     Elf32_Word p_align;      //字节对齐，p_vaddr和p_paddr对p_align取模后为0
 };
+typedef struct elf64_phdr {
+    Elf64_Word p_type;
+    Elf64_Word p_flags;
+    Elf64_Off p_offset;
+    Elf64_Addr p_vaddr;
+    Elf64_Addr p_paddr;
+    Elf64_Xword p_filesz;
+    Elf64_Xword p_memsz;
+    Elf64_Xword p_align;
+} Elf64_Phdr;
+
 struct Elf32_sym                //
 {
     Elf32_Word st_name;         //符号的名字
@@ -109,18 +139,13 @@ struct Elf32_sym                //
     unsigned char st_other;
     Elf32_Half st_shndx;        //该符号的值在哪个Section下存储
 };
-enum{
-    PT_NULL=0,
-    PT_LOAD,
-    PT_DYNAMIC,
-    PT_INTERP,
-    PT_NOTE,
-    PT_SHLIB,
-    PT_PHDR,
-    PT_LOPROC,
-    PT_HIPROC,
-    PT_GNU_STACK
-};
+#define PT_NULL 0
+#define PT_LOAD 1
+#define PT_DYNAMIC 2
+#define PT_INTERP 3
+#define PT_NOTE 4
+#define PT_SHLIB 5
+#define PT_PHDR 6
 typedef struct
 {
     Elf64_Addr  r_offset;       /* Address */

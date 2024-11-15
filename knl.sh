@@ -1,5 +1,5 @@
 cargs="-w -g -fno-pie -fno-pic -nostdlib -fno-stack-protector -nostartfiles \
--I include -m64 -O0 -fno-strict-aliasing -mcmodel=large"
+-I include -m64 -O0 -fno-strict-aliasing -mcmodel=large -fPIC"
 for f in $(find knl|grep -E *[.]c$)
 do
     final=${f#*/}

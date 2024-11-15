@@ -5,5 +5,5 @@
 #ifndef GMS_RELOC_H
 #define GMS_RELOC_H
 #include "multiboot2.h"
-void do_reloc(struct multiboot_tag_elf_sections *shtag);
+void do_reloc(unsigned int magic,void* addr);
 #endif //GMS_RELOC_H
