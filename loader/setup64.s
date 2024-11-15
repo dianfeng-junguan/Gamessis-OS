@@ -1,5 +1,5 @@
 global init64
-extern main,do_reloc
+extern do_reloc
 [bits 64]
 init64:
 ;移动栈指针到高地址
@@ -7,6 +7,7 @@ init64:
     shl rax,32
     add rsp,rax
     add rbp,rax
-    add rax,main
+    xor rax,rax
+    mov rax,do_reloc
     push rax
     ret
