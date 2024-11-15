@@ -151,6 +151,7 @@ void set_mem_area(unsigned long base, unsigned long len, unsigned long type)
     mmap_struct[mmap_t_i].base=base;
     mmap_struct[mmap_t_i].len=len;
     mmap_struct[mmap_t_i++].type=type;
+    comprintf("mem info:base=0x%x,len=0x%x,type=%d\n",base,len,type);
 }
 addr_t kmalloc()
 {
@@ -250,11 +251,11 @@ void page_err(){
     printf("occurred at %x(paddr), %x(laddr)\n",addr,l_addr);
     extern int cur_proc;
     extern struct process *task;
-    if(task[cur_proc].pid==1)//系统进程
+    /*if(task[cur_proc].pid==1)//系统进程
     {
         printf("sys died. please reboot.\n");
         asm volatile("jmp .");
-    }
+    }*/
     //杀死问题进程
 //    del_proc(cur_proc);
     // printf("killed the problem process.\n");

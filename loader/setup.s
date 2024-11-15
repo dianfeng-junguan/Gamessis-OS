@@ -59,7 +59,6 @@ STACK_AREA_OFFSET equ 0x2c00-1
 
 global gdtptr
 global init32
-
 [bits 32]
 init32:
     ;开始准备64位
@@ -185,3 +184,12 @@ gdtptr:
 section .tss align=4096
 tss:
     resd 27
+
+section .idt align=4096
+idt:
+    resq 512
+idt_end:
+section .idtptr
+idtptr:
+	dw idt_end-idt
+	dq 0x106000
