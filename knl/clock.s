@@ -1,4 +1,5 @@
 global clock
+global clock_ret
 extern eoi
 extern clock_c
 extern print
@@ -38,7 +39,7 @@ clock:
 	out 0xa0,al
 	out 0x20,al
     call clock_c
-
+clock_ret:
     pop rax
     mov ds,ax
     pop rax

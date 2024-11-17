@@ -1,4 +1,5 @@
 global _syscall
+global _syscall_sysret
 extern read_disk
 extern write_disk
 extern eoi
@@ -25,8 +26,16 @@ _syscall:
     mov rbp,0xffff800000108000
     ;切换堆栈
     mov qword [rbp+20],rsp
-    mov rsp,qword [rbp+4]
+    mov rsp,qword [rbp+36]
 
+    ;这部分是为了填上上下文的int部分，是给fork的新进程使用的，
+    ;syscall会直接忽略这部分。
+    push 0x2b
+    push rsp
+    pushf
+    push 0x33
+    push rcx
+;syscall上下文
     push rax
     push rbx
     push rcx
@@ -67,12 +76,12 @@ _syscall:
     pop rdi
 
     call syscall
-
+_syscall_sysret:
     xchg r10,rcx
     pop rcx
     pop r11
 
-    mov qword [rsp+15*8],rax;存储好返回值
+    ;mov qword [rsp+15*8],rax;存储好返回值
     pop rax
     mov ds,ax
     pop rax
@@ -92,9 +101,12 @@ _syscall:
     pop rdx
     pop rcx
     pop rbx
-    pop rax
+    ;rax不用恢复：里面存储了系统调用的返回值。
+    add rsp,8
+    ;pop rax
 
-    mov qword [rbp+4],rsp
+    ;不用把rsp的值放回到tss.rsp0
+    ;mov qword [rbp+4],rsp
     mov rsp,[rbp+20]
     pop rbp
 

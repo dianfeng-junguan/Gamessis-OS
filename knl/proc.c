@@ -13,6 +13,7 @@
 #include "syscall.h"
 #include "tty.h"
 #include "fcntl.h"
+#include "clock.h"
 
 
 struct process *task=0;//[MAX_PROC_COUNT];
@@ -99,17 +100,14 @@ int init_proc0()
 {
 
     task[0].pid=pidd++;
-    task[0].stat=TASK_ZOMBIE;
+    task[0].stat=TASK_RUNNING;
     task[0].utime=0;
     task[0].priority=0;
 
     struct process *pz=task;
-    addr_t currsp=KNL_BASE+0x400000;
-//    asm volatile("mov %%rsp,%0"::"m"(currsp));
-    //默认DPL=3
-    //set_proc(0,0,0,0,0x23,0x1b,0x23,0x23,0x23,0x23,curesp,0,0,0,0,index);
-    set_proc(0, 0, 0, 0, 0x10, 0x8, 0x10, 0x10, 0x10, 0x10,
-             currsp, 0, 0, 0, (long)proc_zero, 0, 0);
+    // addr_t currsp=KNL_BASE+0x400000;
+    // set_proc(0, 0, 0, 0, 0x10, 0x8, 0x10, 0x10, 0x10, 0x10,
+    //          currsp, 0, 0, 0, (long)proc_zero, 0, 0);
 //    task[index].tss.eip=(long)proc_zero;
     extern struct dir_entry* dtty;
     //stdin stdout stderr
@@ -126,6 +124,19 @@ int init_proc0()
     memcpy(&pz->tss,tss, sizeof(TSS));
 
     pz->child_procs=NULL;
+
+    //这个是进程切换的时候要读取的值
+    pz->regs.cr3=PML4_ADDR&~KNL_BASE;
+    pz->pml4=PML4_ADDR;
+    pz->cwd=root_sb->root;
+    pz->exef=NULL;
+    list_init(&pz->node);
+    pz->node.data=pz;
+    
+    pz->gpid=pz->pid;
+    pz->sid=pz->pid;
+    pz->fg_pgid=pz->pid;
+    pz->in_bgpg=0;
     return 0;
 }
 int req_proc(){
@@ -786,9 +797,9 @@ int sys_free(int ptr)
 void switch_to(struct process *from, struct process *to) {
     cur_proc=to-task;
     current=&task[cur_proc];
-    addr_t pml4n=((addr_t )to->pml4)&~KNL_BASE;//cr3需要物理地址
+    //cr3需要物理地址,regs.cr3里面填的就是物理地址
     asm volatile("mov %0,%%rax\n"
-                 "mov %%rax,%%cr3\n":"=m"(pml4n));
+                 "mov %%rax,%%cr3\n":"=m"(to->regs.cr3));
     asm volatile("mov %%rsp,%0\r\n"
                  "lea done(%%rip),%%rax\r\n"
                  "mov %%rax,%1\r\n"
@@ -805,8 +816,8 @@ void switch_to(struct process *from, struct process *to) {
 
 }
 void __switch_to(struct process *from, struct process *to) {
-    set_tss(to->tss.rsp0,tss->rsp1,tss->rsp2,tss->ists[0],tss->ists[1],
-            tss->ists[2],tss->ists[3],tss->ists[4],tss->ists[5],tss->ists[6]);
+    set_tss(to->tss.rsp0,to->tss.rsp1,to->tss.rsp2,to->tss.ists[0],to->tss.ists[1],
+            to->tss.ists[2],to->tss.ists[3],to->tss.ists[4],to->tss.ists[5],to->tss.ists[6]);
     asm volatile("mov %%fs,%0\r\n"
                  "mov %%gs,%1\r\n"
                  "mov %2,%%fs\r\n"
@@ -835,41 +846,19 @@ int fork_child_ret(){
 
 int sys_fork(void){
     int pid=req_proc();
+    int pids=task[pid].pid;
     if(pid==-1)return -1;
-    task[pid].regs=current->regs;
-    //使得子程序处于刚调用完系统调用的状态
-    task[pid].regs.rip=ret_normal_proc;
-    task[pid].regs.rsp-=sizeof(stack_store_regs);
-    task[pid].sid=current->sid;
-    task[pid].gpid=current->gpid;
-    task[pid].tss=current->tss;
-    stack_store_regs *r=task[pid].regs.rsp;
-    r->rax=0;
-    r->ds=DS_USER;
-    r->ss=DS_USER;
-    r->es=DS_USER;
-    r->rax=task[pid].regs.rax;
-    r->rbx=task[pid].regs.rbx;
-    r->rcx=task[pid].regs.rcx;
-    r->rdx=task[pid].regs.rdx;
-    r->rsi=task[pid].regs.rsi;
-    r->rdi=task[pid].regs.rdi;
-
-    r->r8 =task[pid].regs.r8 ;
-    r->r9 =task[pid].regs.r9 ;
-    r->r10=task[pid].regs.r10;
-    r->r11=task[pid].regs.r11;
-    r->r12=task[pid].regs.r12;
-    r->r13=task[pid].regs.r13;
-    r->r14=task[pid].regs.r14;
-    r->r15=task[pid].regs.r15;
+    //首先完全复制
+    task[pid]=*current;
+    task[pid].pid=pids;
+    
 
 //    asm volatile("mov %%r10,%0"::"m"(r->rip));
-    r->rip=current->regs.rip;
+    // r->rip=current->regs.rip;
 
-    memcpy(&task[pid].tss,tss, sizeof(TSS));
+    // memcpy(&task[pid].tss,tss, sizeof(TSS));
     task[pid].stat=TASK_READY;
-    task[pid].parent_pid=cur_proc;
+    task[pid].parent_pid=current->pid;
     //设置父子关系以及初始化子进程的的list节点
     list_init(&task[pid].node);
     task[pid].child_procs=NULL;
@@ -878,15 +867,12 @@ int sys_fork(void){
         current->child_procs=&task[pid].node;
     else
         list_add(current->child_procs,&task[pid].node);
-    //复制打开文件
-    memcpy(task[pid].openf,current->openf,sizeof(struct file*)*MAX_PROC_OPENF);
-    task[pid].utime=0;
-    task[pid].mem_struct=current->mem_struct;
-    //根据是子进程还是父进程设置返回值的不同
 
-    //TODO:设置新堆栈
+    task[pid].utime=0;
+
     //复制父进程的内存映射到子进程，然后重新映射并复制子进程的堆栈和数据段
     copy_mmap(current,&task[pid]);
+    
     //复制完毕，开始更改堆栈
     //栈
     //首先获取物理内存，然后临时映射到一个地方，然后拷贝数据，再解除映射，再映射到目标进程的页表。
@@ -896,6 +882,7 @@ int sys_fork(void){
         addr_t new_stkpg= pmalloc();
         smmap(new_stkpg,tmpla,PAGE_PRESENT|PAGE_RWX,current->pml4);
         memcpy(tmpla,stk,PAGE_4K_SIZE);//把当前进程的栈空间复制到新栈里面
+        
         //把新的页面映射到进程页表里
         smmap(new_stkpg,stk,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,task[pid].pml4);
     }
@@ -908,22 +895,25 @@ int sys_fork(void){
         smmap(new_stkpg,stk,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,task[pid].pml4);
         //给新进程分配一页栈
         task[pid].mem_struct.stack_bottom=stk;
+        //给这页新的栈填上恢复上下文需要的内容
+        
     }
     //中断使用的栈空间
-    /*addr_t intstk=INT_STACK_TOP-PAGE_4K_SIZE;
-    int f=1;
-    for(;intstk>=INT_STACK_BASE;intstk-=PAGE_4K_SIZE){
-        addr_t new_stkpg= pmalloc();
-        smmap(new_stkpg,tmpla,PAGE_PRESENT|PAGE_RWX,current->pml4);
-        memcpy(tmpla,intstk,PAGE_4K_SIZE);//把当前进程的栈空间复制到新栈里面
-        if(f){
-            f=0;
-            addr_t *raxp=new_stkpg+PAGE_4K_SIZE-56;//指向中断堆栈，里面存着rax的值
-            *raxp=0;//这样进程切换到子进程的done标签，从时钟中断返回弹出堆栈的时候rax弹出来的就是0，成为返回值。
-        }
-        //把新的页面映射到进程页表里
-        smmap(new_stkpg,intstk,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,task[pid].pml4);
-    }*/
+    //ist一页就够
+    addr_t new_stkpg= kmalloc();
+    memcpy(new_stkpg,current->tss.ists[0]-PAGE_4K_SIZE,PAGE_4K_SIZE);//把当前进程的栈空间复制到新栈里面
+    stack_store_regs* ctx_dup=new_stkpg+PAGE_4K_SIZE-sizeof(stack_store_regs);//拷贝的上下文
+    ctx_dup->rax=0;//这样进程切换到子进程的done标签，从时钟中断返回弹出堆栈的时候rax弹出来的就是0，成为返回值。
+    task[pid].regs.rip=clock_ret;
+    task[pid].regs.rsp=ctx_dup;
+    task[pid].tss.ists[0]=new_stkpg;
+    task[pid].tss.ists[1]=new_stkpg;
+    task[pid].tss.ists[2]=new_stkpg;
+    task[pid].tss.ists[3]=new_stkpg;
+    task[pid].tss.ists[4]=new_stkpg;
+    task[pid].tss.ists[5]=new_stkpg;
+    task[pid].tss.ists[6]=new_stkpg;
+
     //堆
     addr_t hp=task[pid].mem_struct.heap_top-PAGE_4K_SIZE;
     for(;hp>=task[pid].mem_struct.heap_base;hp-=PAGE_4K_SIZE){
@@ -934,6 +924,9 @@ int sys_fork(void){
         smmap(new_hppg,hp,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,task[pid].pml4);
     }
     smmap(0,tmpla,0,current->pml4);//解除映射
+    
+
+
     //如果父进程没有堆，不开辟。留给load_xx函数。
     //父进程运行到这里
     return pid;

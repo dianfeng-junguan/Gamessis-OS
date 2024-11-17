@@ -59,6 +59,13 @@ typedef struct _procm_{
     addr_t data_base;
     addr_t data_top;
 }proc_mem_arr;
+/* 
+进程发生系统调用的时候保存在堆栈的上下文会拷贝到这里（cr3,errcode,rsp,rip是常用的，rsp,rip,cr3会在进程切换的时候用到），只是为了方便访问，而且
+除了cr3,errcode,rsp,rip，其他的寄存器，修改是不会影响syscall恢复上下文的，因为上下文的恢复只依赖栈。
+除了系统调用函数，不要使用上面特别提到的几个寄存器之外的寄存器的值，一般都是过时的值。
+系统调用不会恢复rax的值。
+注意：regs.cr3里面存储的是cr3的值，也就是pml4的物理地址，而proc.pml4存储的是pml4的虚拟地址。
+ */
 typedef struct
 {
     long cr3;
@@ -78,7 +85,7 @@ typedef struct
     long r8,r9,r10,r11,r12,r13,r14,r15;
     long errcode;
 }regs_t;
-//在始终中断发生的时候，对栈里面保存现场用的入栈数据。此结构体用于创建进程时方便构建一个这样的现场。
+//在时钟中断和系统调用发生的时候，对栈里面保存现场用的入栈数据。此结构体还用于创建进程时方便构建一个这样的现场。
 typedef struct {
     unsigned long ds,es,r15,r14,r13,r12,r11,r10,r9,r8;
     unsigned long rsi,rdi,rdx,rcx,rbx,rax;
@@ -183,6 +190,7 @@ typedef struct
 __attribute__((__always_inline__))inline int do_syscall(long func,long a1,long a2,long a3,long a4,long a5,long a6){
         asm volatile(".byte 0x48\n"
                  "syscall"::"a"(func),"D"(a1),"S"(a2),"d"(a3),"c"(a4),"r"(a5),"r"(a6));
+        return func;
 }
 
 void init_proc();
@@ -234,6 +242,7 @@ void create_test_proc();
 
 void ret_sys_call();
 void ret_normal_proc();
+void _syscall_sysret();
 int sys_fork(void);
 
 void copy_mmap(struct process* from, struct process *to);
