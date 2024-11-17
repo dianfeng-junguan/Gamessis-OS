@@ -180,7 +180,7 @@ typedef struct
     unsigned int argc;
 }proc_ret_stack;
 
-__attribute__((__always_inline__))inline int do_syscall(int func,int a1,int a2,int a3,int a4,int a5,int a6){
+__attribute__((__always_inline__))inline int do_syscall(long func,long a1,long a2,long a3,long a4,long a5,long a6){
         asm volatile(".byte 0x48\n"
                  "syscall"::"a"(func),"D"(a1),"S"(a2),"d"(a3),"c"(a4),"r"(a5),"r"(a6));
 }
@@ -216,6 +216,7 @@ void switch_proc(int pnr);
 void switch_to_ia32(TSS *tss);
 void switch_to(struct process *from, struct process *to);
 void __switch_to(struct process *from, struct process *to);
+void move_to_user_mode();
 
 void save_context(TSS *tss);
 //用来保存rsp到当前proc.regs

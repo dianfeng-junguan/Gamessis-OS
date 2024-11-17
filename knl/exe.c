@@ -166,8 +166,8 @@ int sys_execve(char *path, int argc, char **argv) {
     }
     rs->rdi=current->mem_struct.heap_base;
     //以下部分是临时测试代码
-    int (*pmain)(int argc,char **argv)=(int (*)(int, char **)) entry;
-    pmain(argc, (char **) rs->rdi);
+//    int (*pmain)(int argc,char **argv)=(int (*)(int, char **)) entry;
+//    pmain(argc, (char **) rs->rdi);
     return 0;
 }
 int exec_call(char *path)
@@ -489,7 +489,9 @@ addr_t load_elf(struct file *elf) {
             int pgc=fs/PAGE_4K_SIZE;
             if(!pgc)pgc=1;
             for(int j=0;j<pgc;j++){
-                smmap((addr_t) pmalloc(), (addr_t) (vptr + j * PAGE_4K_SIZE), attr, current->pml4);
+                addr_t dest=(addr_t) (vptr + j * PAGE_4K_SIZE);
+                if(dest==0x400000)continue;
+                smmap((addr_t) pmalloc(), dest, attr, current->pml4);
             }
             //读取
             elf->f_ops->read(elf,vptr,fs,&elf->position);

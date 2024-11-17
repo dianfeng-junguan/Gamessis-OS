@@ -6,6 +6,7 @@ extern request
 extern puts
 extern del_proc
 extern syscall
+extern current
 REQ_READ_DISK       EQU 0
 REQ_WRITE_DISK      EQU 1
 REQ_SYNC_READ_DISK  EQU 2
@@ -19,9 +20,9 @@ REQ_EXEC            EQU 10
 REQ_DEL_PROC        EQU 11
 REQ_FETCH_KBBUF     EQU 12
 _syscall:
-
+    cli
     push rbp
-    mov rbp,0x108000
+    mov rbp,0xffff800000108000
     ;切换堆栈
     mov qword [rbp+20],rsp
     mov rsp,qword [rbp+4]
@@ -58,6 +59,12 @@ _syscall:
 
     ;r10里面存放着第四个参数
     xchg rcx,r10
+    ;把返回地址存到pcb(regs.rip)
+    push rdi
+    mov rdi,current
+    mov rdi,[rdi]
+    mov qword [rdi+0x26c],r10
+    pop rdi
 
     call syscall
 

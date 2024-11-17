@@ -70,7 +70,7 @@ long read_ramfs(struct file * filp,char * buf,unsigned long count,long * positio
     int len= (char*)_binary_bin_test_elf_end - (char*)_binary_bin_test_elf_start - *position;
     if(len>count)len=count;
     for(int i=0;i<len;i++){
-        *(buf++)=_binary_bin_test_elf_start[i + *position];
+        buf[i]=_binary_bin_test_elf_start[i + *position];
     }
     *position+=len;
     return 0;

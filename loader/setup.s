@@ -176,7 +176,7 @@ gdt64:
     dq  0x00cf92000000ffff   ; 内核态数据段32
     ;0x106000, 108 bytes
     dq  0x009089108000006c  ;tss
-    dq 0
+    dq 0xffff8000
 gdt_end:
 section .gdtptr
 gdtptr:

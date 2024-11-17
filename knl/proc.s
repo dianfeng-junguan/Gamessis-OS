@@ -1,6 +1,7 @@
 global create_zero
 ;global fill_desc
 global switch_proc_asm
+global move_to_user_mode
 extern req_proc
 extern set_proc
 global test_create_proc_asm
@@ -215,4 +216,17 @@ ret_normal_proc:
     pop rcx
     pop rbx
     pop rax
+    ret
+move_to_user_mode:
+    mov rcx,.result
+    pushf
+    pop r11
+    db 0x48
+    sysret
+.result:
+    mov rax,0x2b
+    mov es,ax
+    mov ds,ax
+    mov fs,ax
+    mov gs,ax
     ret

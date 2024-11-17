@@ -11,6 +11,7 @@ MODS_OFILES = bin/mods/kb.o bin/mods/disk.o bin/mods/diska.o bin/mods/fat32.o \
 				bin/mods/tty.o bin/com.o bin/test.o
 COM_OFILES = bin/mem.o bin/str.o bin/types.o bin/proca.o bin/font.o
 PH_MODIFIER = /mnt/d/Code/Python/elfph/elf.py
+QEMU_LOG = -d int,cpu_reset -D log.txt
 all:
 	make knl
 	make loader
@@ -31,7 +32,7 @@ knl:
 #  --change-section-vma .rodata+0xffff800000000000 --change-section-vma .eh_frame+0xffff800000000000
 	@#python $(PH_MODIFIER) bin/gmsknl.elf
 	#@objdump -d bin/gmsknl.elf -j .entry -M intel > knl.s
-	@objdump -l -S -d bin/gmsknl.elf -M intel >> knl.s
+	@objdump -l -S -d bin/gmsknl.elf -M intel > knl.s
 	#@objcopy bin/gmsknl.elf bin/gmsknlm.elf #--change-section-lma .bss+0xffff800000000000 \
 #                                              --change-section-lma .text+0xffff800000000000 --change-section-lma .data+0xffff800000000000\
 #                                              --change-section-lma .rodata+0xffff800000000000 --change-section-lma .eh_frame+0xffff800000000000
@@ -65,11 +66,13 @@ umount:
 refi:
 	@sudo qemu-system-x86_64 -hda hda.img -m 2G -bios OVMF.fd
 run:
-	@sudo qemu-system-x86_64 -hda hda.img -m 2G
-debug:
+	@rm log.txt -f
+	@sudo qemu-system-x86_64 -hda hda.img -m 2G -bios OVMF.fd $(QEMU_LOG)
+debug_bios:
 	@qemu-system-x86_64 -hda hda.img -m 2G -s -S -serial stdio
-debug-efi:
-	@qemu-system-x86_64 -hda hda.img -m 2G -s -S -bios OVMF.fd -serial stdio
+debug:
+	@rm log.txt -f
+	@qemu-system-x86_64 -hda hda.img -m 2G -s -S -bios OVMF.fd -serial stdio $(QEMU_LOG)
 debs:
 	@qemu-system-x86_64 -hda hda.img -m 2G -s -S -bios OVMF.fd -serial stdio
 
@@ -100,8 +103,8 @@ imgmkfs:
 	@sudo mkfs.fat -F 32 /dev/nbd0p1
 	@sudo mkfs.fat -F 32 /dev/nbd0p2
 imgmnt:
-	@sudo mount /dev/nbd0p3 /mnt
-	@sudo mount /dev/nbd0p2 /mnt/boot
+	@sudo mount /dev/nbd0p2 /mnt
+	@sudo mount /dev/nbd0p1 /mnt/boot
 imgmntf:
 	@sudo mount /dev/nbd0p2 /mnt
 	@sudo mkdir /mnt/boot   

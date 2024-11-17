@@ -94,7 +94,6 @@ void main(unsigned int magic,void* addr)
 			void *fb = (void *) FRAMEBUFFER_ADDR;
 			set_framebuffer(*tagfb);
 
-            init_framebuffer();
 			switch (tagfb->common.framebuffer_type)
 			{
 			case MULTIBOOT_FRAMEBUFFER_TYPE_INDEXED:
@@ -161,12 +160,15 @@ void main(unsigned int magic,void* addr)
     //init_tty();
     init_kb();
 //    init_disk();
-
-
-    manage_proc_lock=0;
-    char *argv[]={"/mnt/test.exe","gamessis os"};
-    sys_execve("/mnt/test.exe", 2, &argv[0]);
     sti();
+    manage_proc_lock=0;
+
+
+    move_to_user_mode();
+    if(do_syscall(SYSCALL_FORK,0,0,0,0,0,0)==0){
+        char *argv[]={"/mnt/test.exe","gamessis os"};
+        do_syscall(SYSCALL_EXECVE, (long) "/mnt/test.exe", 2, (long) &argv[0], 0, 0, 0);
+    }
 //    if(sys_fork()==0){
 //    }
 
@@ -178,9 +180,9 @@ void main(unsigned int magic,void* addr)
 //    mount_fs("fat16",p->par,vmalloc());
     while (1)
     {
-        char c=-1;
+        /*char c=-1;
         sys_read(0,&c,1);
-        putchar(c);
+        putchar(c);*/
 //        char c= sys_analyse_key();
 //        if(c!=-1){
 //            putchar(c);

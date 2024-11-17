@@ -11,7 +11,7 @@
 #define PAGE_INDEX_SIZE 0x200000
 #define PAGE_SIZE 0x1000
 //64位独有
-#define PDE_4MB 0X80
+#define PDE_2MB 0X80
 #define PDPTE_1GB 0x80
 
 

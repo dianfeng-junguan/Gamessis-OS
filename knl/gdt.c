@@ -1,6 +1,7 @@
 #include "gdt.h"
 #include "int.h"
 #include "memory.h"
+#include "proc.h"
 
 descriptor *gdt=GDT_ADDR+KNL_BASE;
 extern char *gdtptr;

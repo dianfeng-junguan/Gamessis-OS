@@ -1,0 +1,74 @@
+<changelist name="在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1" date="1731235338524" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/shelved.patch" />
+  <option name="DESCRIPTION" value="在进行签出之前于 2024/11/10 18:41 取消提交了更改 [更改]" />
+  <binary>
+    <option name="BEFORE_PATH" value="hda.img" />
+    <option name="AFTER_PATH" value="hda.img" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/hda.img" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/log.o" />
+    <option name="AFTER_PATH" value="bin/log.o" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/log.o" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/com.o" />
+    <option name="AFTER_PATH" value="bin/com.o" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/com.o" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/memory.o" />
+    <option name="AFTER_PATH" value="bin/memory.o" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/memory.o" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/gmsknl.elf" />
+    <option name="AFTER_PATH" value="bin/gmsknl.elf" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/gmsknl.elf" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/mods/fat16.o" />
+    <option name="AFTER_PATH" value="bin/mods/fat16.o" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/fat16.o" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/exe.o" />
+    <option name="AFTER_PATH" value="bin/exe.o" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/exe.o" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/devman.o" />
+    <option name="AFTER_PATH" value="bin/devman.o" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/devman.o" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/main.o" />
+    <option name="AFTER_PATH" value="bin/main.o" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/main.o" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/proc.o" />
+    <option name="AFTER_PATH" value="bin/proc.o" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/proc.o" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/setupa.o" />
+    <option name="AFTER_PATH" value="bin/setupa.o" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/setupa.o" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/virfs.o" />
+    <option name="AFTER_PATH" value="bin/virfs.o" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/virfs.o" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/mods/kb.o" />
+    <option name="AFTER_PATH" value="bin/mods/kb.o" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/kb.o" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/mods/disk.o" />
+    <option name="AFTER_PATH" value="bin/mods/disk.o" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/disk.o" />
+  </binary>
+</changelist>
