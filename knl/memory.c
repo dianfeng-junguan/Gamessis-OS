@@ -70,7 +70,7 @@ stat_t smmap(addr_t pa,addr_t la,u32 attr,page_item* pml4p)
         pdptp=(page_item*) kmalloc();
         memset(pdptp,0,4096);
         //这里使用了狡猾的技巧：kmalloc的内存-KNL_BASE直接就是实际的物理地址
-        pml4[pml4i]=((addr_t)pdptp&~KNL_BASE)|attr;
+        pml4p[pml4i]=((addr_t)pdptp&~KNL_BASE)|attr;
     }
     pdptp=(page_item*)(((addr_t)pdptp&~0xff)|KNL_BASE);
 
@@ -401,6 +401,7 @@ int check_page(int num){
  * 获得这个页对应的物理内存地址
  * */
 int get_phyaddr(int num){
+    if(num==-1)return -1;
     return num*0x1000;
 }
 

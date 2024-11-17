@@ -57,7 +57,7 @@
 
 #define	SYSTEM_REBOOT	(1UL << 0)
 #define	SYSTEM_POWEROFF	(1UL << 1)
-int syscall(int a, int b, int c, int d, int e, int f);
+int syscall(long a, long b, long c, long d, long e, long f);
 int exec(char *path);
 
 unsigned long sys_open(char *filename,int flags);

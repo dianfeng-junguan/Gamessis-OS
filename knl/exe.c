@@ -143,14 +143,17 @@ int sys_execve(char *path, int argc, char **argv) {
     //重新设置进程数据
     //清空原来的页表
     release_mmap(current);
-    current->regs.rsp=STACK_TOP;//清空栈
+    // current->regs.rsp=STACK_TOP;//清空栈
     extern TSS* tss;
 
     current->exef=current->openf[fno];//改变执行文件
     addr_t entry= load_elf(current->exef);
-    extern struct file opened[];
-    extern struct process task[];
-    if(sys_close(current->exef-opened)<0)return -1;
+    if(entry==-1)
+    {
+        comprintf("failed execve, errcode:%d\n",current->regs.errcode);
+        return -1;
+    }
+    if(sys_close(fno)<0)return -1;
 
     //sysret直接返回到新程序的main
     void *retp= (void *) entry;
@@ -463,6 +466,11 @@ addr_t load_elf(struct file *elf) {
     addr_t tmpla=KNL_BASE+0x80000000;
     //读取文件头，当前就是要加载程序的进程，所以不用搞临时映射
     addr_t pma= (addr_t) pmalloc();
+    if(pma==-1)
+    {
+        current->regs.errcode=-ENOMEM;
+        return -1;
+    }
     smmap(pma , 0x400000, PAGE_PRESENT | PAGE_RWX | PAGE_FOR_ALL, current->pml4);
     elf->position=0;
     //读取文件头
@@ -491,7 +499,13 @@ addr_t load_elf(struct file *elf) {
             for(int j=0;j<pgc;j++){
                 addr_t dest=(addr_t) (vptr + j * PAGE_4K_SIZE);
                 if(dest==0x400000)continue;
-                smmap((addr_t) pmalloc(), dest, attr, current->pml4);
+                addr_t lma=pmalloc();
+                if(lma==-1)
+                {
+                    current->regs.errcode=-ENOMEM;
+                    return -1;
+                }
+                smmap(lma , dest, attr, current->pml4);
             }
             //读取
             elf->f_ops->read(elf,vptr,fs,&elf->position);
@@ -508,7 +522,13 @@ addr_t load_elf(struct file *elf) {
     };
     //空堆
     //分配堆
-    smmap((addr_t) pmalloc(), HEAP_BASE, PAGE_PRESENT | PAGE_FOR_ALL | PAGE_RWX, current->pml4);
+    addr_t lma=pmalloc();
+    if(lma==-1)
+    {
+        current->regs.errcode=-ENOMEM;
+        return -1;
+    }
+    smmap(lma, HEAP_BASE, PAGE_PRESENT | PAGE_FOR_ALL | PAGE_RWX, current->pml4);
     memset((unsigned char *) HEAP_BASE, 0, CHUNK_SIZE);
     current->mem_struct.heap_base=HEAP_BASE;
     current->mem_struct.heap_top=HEAP_BASE+CHUNK_SIZE;

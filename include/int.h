@@ -106,7 +106,7 @@ func_num,char *str
 12:
 func,count,char *dist
  */
-int syscall(int a, int b, int c, int d, int e, int f);
+int syscall(long a, long b, long c, long d, long e, long f);
 void* _syscall(int func_num,...);
 
 

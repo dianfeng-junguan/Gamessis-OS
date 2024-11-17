@@ -3,7 +3,7 @@
 //
 #include "syscall.h"
 
-int syscall(int a, int b, int c, int d, int e, int f)
+int syscall(long a, long b, long c, long d, long e, long f)
 {
     asm volatile(
             "mov %0,%%eax\r\n"\

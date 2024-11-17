@@ -190,7 +190,9 @@ typedef struct
 __attribute__((__always_inline__))inline int do_syscall(long func,long a1,long a2,long a3,long a4,long a5,long a6){
         asm volatile(".byte 0x48\n"
                  "syscall"::"a"(func),"D"(a1),"S"(a2),"d"(a3),"c"(a4),"r"(a5),"r"(a6));
-        return func;
+        long ret=0;
+        asm volatile("mov %%rax,%0"::"m"(ret));
+        return ret;
 }
 
 void init_proc();

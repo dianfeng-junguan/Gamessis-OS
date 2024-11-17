@@ -906,13 +906,13 @@ int sys_fork(void){
     ctx_dup->rax=0;//这样进程切换到子进程的done标签，从时钟中断返回弹出堆栈的时候rax弹出来的就是0，成为返回值。
     task[pid].regs.rip=clock_ret;
     task[pid].regs.rsp=ctx_dup;
-    task[pid].tss.ists[0]=new_stkpg;
-    task[pid].tss.ists[1]=new_stkpg;
-    task[pid].tss.ists[2]=new_stkpg;
-    task[pid].tss.ists[3]=new_stkpg;
-    task[pid].tss.ists[4]=new_stkpg;
-    task[pid].tss.ists[5]=new_stkpg;
-    task[pid].tss.ists[6]=new_stkpg;
+    task[pid].tss.ists[0]=new_stkpg+PAGE_4K_SIZE;
+    task[pid].tss.ists[1]=new_stkpg+PAGE_4K_SIZE;
+    task[pid].tss.ists[2]=new_stkpg+PAGE_4K_SIZE;
+    task[pid].tss.ists[3]=new_stkpg+PAGE_4K_SIZE;
+    task[pid].tss.ists[4]=new_stkpg+PAGE_4K_SIZE;
+    task[pid].tss.ists[5]=new_stkpg+PAGE_4K_SIZE;
+    task[pid].tss.ists[6]=new_stkpg+PAGE_4K_SIZE;
 
     //堆
     addr_t hp=task[pid].mem_struct.heap_top-PAGE_4K_SIZE;
@@ -939,15 +939,15 @@ void release_mmap(struct process* p){
     for(int i=0;i<256;i++)//高地址不释放（内核空间）
     {
         if(pml4e[i]&PAGE_PRESENT){
-            page_item *pdpte=pml4e[i]&PAGE_4K_MASK;
+            page_item *pdpte=pml4e[i]&PAGE_4K_MASK|KNL_BASE;
             for(int j=0;j<512;j++)
             {
                 if(pdpte[j]&PAGE_PRESENT&&!(pdpte[j]&PDPTE_1GB)){
-                    page_item *pde=pdpte[j]&PAGE_4K_MASK;
+                    page_item *pde=pdpte[j]&PAGE_4K_MASK|KNL_BASE;
                     for(int k=0;k<512;k++)
                     {
                         if(pde[k]&PAGE_PRESENT&&!(pde[k] & PDE_2MB)){
-                            page_item *pte=pde[k]&PAGE_4K_MASK;
+                            page_item *pte=pde[k]&PAGE_4K_MASK|KNL_BASE;
                             for(int l=0;l<512;l++){
                                 if(pte[l]&PAGE_PRESENT){
                                     //释放申请的物理内存
@@ -956,19 +956,19 @@ void release_mmap(struct process* p){
                                 }
                             }
                             //里面的项释放完了，这一项指向的vmalloc内存可以释放了
-                            kmfree(pde[k] & PAGE_4K_MASK);
+                            kmfree(pde[k] & PAGE_4K_MASK|KNL_BASE);
                         }else if((pde[k]&PAGE_PRESENT)&&(pde[k] & PDE_2MB)){
                             //释放2MB页
                             free_pages_at(pde[k]&PAGE_4K_MASK,512);
                         }
                     }
                     //这一页pde的内容释放完了，这一项指向的vmalloc可以释放了
-                    kmfree(pdpte[j] & PAGE_4K_MASK);
+                    kmfree(pdpte[j] & PAGE_4K_MASK|KNL_BASE);
                 }//1GB先不写，目前还没有初始化之后动态申请1GB页的
 
             }
             //这一页pdpte的内容释放完了，这一项指向的vmalloc可以释放了
-            kmfree(pml4e[i] & PAGE_4K_MASK);
+            kmfree(pml4e[i] & PAGE_4K_MASK|KNL_BASE);
         }
     }
 }

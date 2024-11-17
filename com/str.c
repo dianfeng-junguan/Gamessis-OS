@@ -119,7 +119,7 @@ void sprint_hex(char *dist,unsigned long c)
 {
     unsigned char st[22];
     int p=0;
-    while(p<10){
+    while(p<22){
         unsigned char a=c%16;
         if(a>9)a+='a'-10;
         else a+='0';

@@ -203,7 +203,7 @@ syscall need rcx(rip) r11(rflags)
 xchg rcx to r10
 
 */
-int syscall(int a, int b, int c, int d, int e, int f)
+int syscall(long a, long b, long c, long d, long e, long f)
 {
     unsigned long num;
     asm volatile("":"=a"(num));//这样rax中存的参数就到这了
@@ -236,7 +236,7 @@ int syscall(int a, int b, int c, int d, int e, int f)
         case SYSCALL_KB_READC:return sys_analyse_key();
         case SYSCALL_FIND_DEV:return sys_find_dev(a);
         case SYSCALL_FORK:return sys_fork();
-        case SYSCALL_EXECVE:return sys_execve(a, 0, b);
+        case SYSCALL_EXECVE:return sys_execve(a, b, c);
         case SYSCALL_OPERATE_DEV:return sys_operate_dev(a,b,c);
         case SYSCALL_WAIT:return sys_wait(a,b,c);
     }
