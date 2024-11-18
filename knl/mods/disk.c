@@ -5,6 +5,7 @@
 #include "syscall.h"
 #include "virfs.h"
 #include <log.h>
+#include <blk_dev.h>
 #define NULL ((void*)0)
 struct file_operations hd_fops={
     //TODO:hd规范化
@@ -13,22 +14,18 @@ disk_req disk_reqs[MAX_DISK_REQUEST_COUNT];
 disk_req *running_req=NULL;
 driver_args *running_devman_req=NULL;
 static int head=0,tail=0;
-int disk_drvi=0,disk_devi=0;
-device dev_disk={
-       .type=DEV_TYPE_BLKDEV,
-       .flag=DEV_FLAG_USED
+struct blk_dev bd_hd={
+    .do_request=hd_do_req
 };
-driver drv_disk={
-        .read=async_read_disk,
-        .write=async_write_disk
-};
-int disks[4];//四块硬盘的dev号
+int dev_hd=-1;
 int init_disk()
 {
+    if((dev_hd= reg_blkdev(&bd_hd))<0)
+        return -1;
     //disk_devi= reg_device(&dev_disk);
     //disk_drvi= reg_driver(&drv_disk);
     //dev_disk.drv=&drv_disk;
-    hd_iterate();
+    // hd_iterate();
     return 0;
 }
 
@@ -83,6 +80,7 @@ int disk_int_handler_c()
     running_devman_req=NULL;
     //set_proc_stat(running_req->pid,TASK_READY);
     running_req=NULL;
+    end_request(dev_hd);
     return 0;
 }
 int check_dreq_stat(int req_id)
@@ -307,7 +305,7 @@ int disk_existent(int disk)
     }
     return 0;
 }
-int hd_iterate()
+/* int hd_iterate()
 {
     char *name;
     
@@ -355,7 +353,7 @@ int hd_iterate()
         }
 
     }
-}
+} */
 
 int async_check_disk(int disk)
 {
@@ -385,24 +383,23 @@ int async_check_disk(int disk)
 }
 
 //接口函数：负责接收VFS的请求然后执行
-int hd_do_req(driver_args *args)
+int hd_do_req(struct request* req)
 {
-    int diski=0;
-    for(;disks[diski]!=args->dev;diski++);
-    switch (args->cmd)
+    int diski=BLKDEV_MINOR(req->dev);
+    // for(;disks[diski]!=args->dev;diski++);
+
+    switch (req->cmd)
     {
-    case DRVF_READ:
-        request(diski,DISKREQ_READ,args->lba,args->sec_c,args->dist_addr);
+    case BLKDEV_REQ_READ:
+        async_read_disk(diski,req->sector,req->nr_sectors,req->buffer);
         break;
-    case DRVF_WRITE:
-        request(diski,DISKREQ_WRITE,args->lba,args->sec_c,args->src_addr);
+    case BLKDEV_REQ_WRITE:
+        async_write_disk(diski,req->sector,req->nr_sectors,req->buffer);
         break;
     case DRVF_CHK:
-        request(diski,DISKREQ_CHECK,args->lba,args->sec_c,args->dist_addr);
+        async_check_disk(diski);
         break;
     default:return -1;
     }
-    args->stat=REQ_STAT_WORKING;
-    running_devman_req=args;
     return 0;
 }

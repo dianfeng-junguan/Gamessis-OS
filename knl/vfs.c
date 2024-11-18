@@ -158,6 +158,7 @@ void mount_rootfs(){
     root_sb=(struct super_block*) kmalloc();
     root_sb->root=root_sb+1;//紧凑跟在后面
     root_sb->sb_ops=NULL;
+    
     struct index_node* ir=root_sb->root+1;
     root_sb->root->dir_inode=ir;
     ir->sb=root_sb;

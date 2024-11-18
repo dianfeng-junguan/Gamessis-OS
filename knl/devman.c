@@ -18,7 +18,7 @@ driver_args reqs[NR_REQS];
 device* dev_tree[]={NULL,NULL,NULL};
 
 driverfunc dev_funcs[]={
-    [OPERATIONS_HD]=hd_do_req,
+    [OPERATIONS_HD]=NULL,//hd_do_req,
     [OPERATIONS_TTY]=NULL,//ioctl_tty,
     [OPERATIONS_KEYBOARD]=NULL,
     [OPERATIONS_MOUSE]=NULL
@@ -406,7 +406,7 @@ int do_req()
             {
                 p->running_req=p->waiting_reqs;
                 p->waiting_reqs=p->waiting_reqs->next;//取出一个
-                dev_funcs[p->operi](p->running_req);
+                // dev_funcs[p->operi](p->running_req);
             }
             //如果还在运行（DONE的状态不能直接覆盖，因为里面的运行结果可能还没被拿走）
         }

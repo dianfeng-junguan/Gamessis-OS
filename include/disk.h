@@ -55,7 +55,7 @@ int check_dreq_stat(int req_id);
 int hd_iterate();
 
 //接口函数：负责接收VFS的请求然后执行
-int hd_do_req(driver_args *args);
+int hd_do_req(struct request* req);
 
 //counts:扇区数
 int dllmain(void*,int,void*);
