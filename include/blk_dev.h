@@ -59,3 +59,5 @@ int make_request(int dev,int cmd,unsigned long sector, unsigned long count,char 
 
 extern struct blk_dev blk_devs[MAX_BLKDEVS];
 extern struct request requests[MAX_REQUESTS];
+extern struct blk_dev bd_ramdisk;
+extern int dev_ramdisk;

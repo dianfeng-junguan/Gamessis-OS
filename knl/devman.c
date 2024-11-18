@@ -10,6 +10,7 @@
 #include "mem.h"
 #include "framebuffer.h"
 #include "log.h"
+#include <blk_buf.h>
 
 device devs[MAX_DEVICES]={0};
 driver drvs[MAX_DRIVERS]={0};
@@ -24,7 +25,7 @@ driverfunc dev_funcs[]={
 };
 static int rhead=0,rtail=0;
 static int dev_dfd=-1;
-struct file_operations dev_dir_fops={
+struct file_operations devfs_fops={
     .open=open_dev,.close=close_dev,.ioctl=ioctl_dev,.read=read_dev,.write=write_dev
 };
 struct dir_entry_operations dev_dir_dops={
@@ -61,7 +62,7 @@ void make_devf(struct dir_entry* d,struct index_node* i,char* name,struct dir_en
  * */
 struct dir_entry* ddev=NULL,*dmnt,*dconsole,*dhd0,*dtty,*dramdisk;
 struct file ftty;
-int init_devman()
+int init_devfs()
 {
     //创建dev文件夹
     ddev=(struct dir_entry*) kmalloc();
@@ -87,17 +88,17 @@ int init_devman()
     dconsole= (struct dir_entry *) kmalloc();
     struct index_node* iconsole=dconsole+1;
     dconsole->name=iconsole+1;
-    make_devf(dconsole,iconsole,"console",ddev,&framebuffer_fops);
+    make_devf(dconsole,iconsole,"console",ddev,&devfs_fops);
     //hd0-disk.c
     dhd0= (struct dir_entry *) kmalloc();
     struct index_node* ihd0=dhd0+1;
     dhd0->name=ihd0+1;
-    make_devf(dhd0,ihd0,"hd0",ddev,&hd_fops);
+    make_devf(dhd0,ihd0,"hd0",ddev,&devfs_fops);
     //tty-tty.c
     dtty= (struct dir_entry *) kmalloc();
     struct index_node* itty=dtty+1;
     dtty->name=itty+1;
-    make_devf(dtty,itty,"tty",ddev,&tty_fops);
+    make_devf(dtty,itty,"tty",ddev,&devfs_fops);
     //初始化一下
     tty_fops.open(itty,&ftty);
 
@@ -105,7 +106,7 @@ int init_devman()
     dramdisk= (struct dir_entry *) kmalloc();
     struct index_node* iramdisk=dramdisk+1;
     dramdisk->name=iramdisk+1;
-    make_devf(dramdisk,iramdisk,"ram",ddev,&tty_fops);
+    make_devf(dramdisk,iramdisk,"ram",ddev,&devfs_fops);
 
 }
 //
@@ -140,10 +141,10 @@ long close_dev(struct index_node * inode,struct file * filp){
 }
 long read_dev(struct file * filp,char * buf,unsigned long count,long * position){
     //判断是不是块设备文件
-    struct index_node* idev=filp->dentry->dir_inode;
-    if(IS_BLKDEV(idev->dev)){
+    struct index_node* i_dev=filp->dentry->dir_inode;
+    if(IS_BLKDEV(i_dev->dev)){
         //这里需要调用缓冲区层的函数读取块设备
-        return 1;
+        return blkdev_read(i_dev->dev,*position,count,buf);
     }
     
     //查看文件名
@@ -165,7 +166,7 @@ long write_dev(struct file * filp,char * buf,unsigned long count,long * position
     struct index_node* idev=filp->dentry->dir_inode;
     if(IS_BLKDEV(idev->dev)){
         //这里需要调用缓冲区层的函数写块设备
-        return 1;
+        return blkdev_write(idev->dev,*position,count,buf);
     }
 
     //查看文件名

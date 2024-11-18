@@ -30,6 +30,7 @@
         "stdlib.h": "c",
         "blk_dev.h": "c",
         "ramfs.h": "c",
-        "blk_buf.h": "c"
+        "blk_buf.h": "c",
+        "ramdisk.h": "c"
     }
 }

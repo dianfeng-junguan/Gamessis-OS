@@ -19,24 +19,22 @@ buffer_head *bget(){
     //errno = -ENOBUF
     return NULL;
 }
-//从指定的块设备中读取一块数据，然后返回这块数据。
-buffer_head* bread(int dev,int blkn){
-    if(!blk_devs[BLKDEV_MAJOR(dev)].do_request)
-        return NULL;
+
+buffer_head *get_block(int dev,int blocknr){
     buffer_head *bh=l_blk_bh_heads[BLKDEV_MAJOR(dev)];
     if(!bh){
         //这个设备没有任何的缓冲区
         bh=bget();
         bh->dev=dev;
-        bh->blocknr=blkn;
+        bh->blocknr=blocknr;
         if(!bh){
             //errno=-ENOBUFS
             return NULL;
         }
         l_blk_bh_heads[BLKDEV_MAJOR(dev)]=bh;
     }else{
-        for(;bh->next&&bh->blocknr!=blkn;bh=bh->next);
-        if(bh->blocknr!=blkn)
+        for(;bh->next&&bh->blocknr!=blocknr;bh=bh->next);
+        if(bh->blocknr!=blocknr)
         {
             //这块数据没有缓冲
             //这个时候肯定处于链表最后一个了
@@ -45,11 +43,20 @@ buffer_head* bread(int dev,int blkn){
             bhn->prev=bh;
             bh=bhn;
             bh->dev=dev;
-            bh->blocknr=blkn;
+            bh->blocknr=blocknr;
         }
     }
     //TODO 等待缓冲解锁
     bh->count++;
+    return bh;
+}
+//从指定的块设备中读取一块数据，然后返回这块数据。
+buffer_head* bread(int dev,int blkn){
+    if(!blk_devs[BLKDEV_MAJOR(dev)].do_request)
+        return NULL;
+    buffer_head *bh=get_block(dev,blkn);
+    if(!bh)
+        return NULL;
     if(bh->uptodate)
         return bh;//数据没变，可以直接返回
     //这里的疑点是，可以直接返回吗？
@@ -128,6 +135,30 @@ int blkdev_read(int dev,off_t offset, size_t count, char *buf){
     return 1;
 }
 
+int blkdev_write(int dev,off_t offset, size_t count, char *buf){
+    int n=TO_BLKN(count);
+    off_t blkn=BLOCK_FLOOR(offset);
+    off_t first_off=offset%BLOCK_SIZE;
+    char* p=buf;
+    size_t mod_count=count%BLOCK_SIZE;
+    int len=BLOCK_SIZE-first_off;
+    for(int i=0;i<n;i++){
+        buffer_head *bh=get_block(dev,blkn);
+        if(!bh)
+            return -ENOBUFS;//buffer不够了
+        if(i==n-1)
+            len=mod_count;
+        else if(i==2)
+            len=BLOCK_SIZE;
+        memcpy(bh->data+first_off,p,len);
+        brelse(bh);
+        blkn++;
+        p+=BLOCK_SIZE;
+        first_off=0;
+    }
+    return 1;
+
+}
 int brelse(buffer_head *bh){
     if(bh->dev==-1||!blk_devs[bh->dev].do_request)
         return -ENODEV;

@@ -17,6 +17,7 @@
 #include "syscall.h"
 #include "fcntl.h"
 #include "exe.h"
+#include "ramdisk.h"
 #include "ramfs.h"
 
 int manage_proc_lock=1;
@@ -151,9 +152,10 @@ void main(unsigned int magic,void* addr)
 	init_paging();
  	init_gdt();
     mount_rootfs();
-    init_devman();
+    init_devfs();
     init_proc();
-    init_ramfs();
+    init_ramdisk();
+	init_ramfs();
 //    DISK1_FAT32_FS_init();
 
     //自带驱动

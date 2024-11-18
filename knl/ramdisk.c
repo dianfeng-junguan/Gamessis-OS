@@ -14,6 +14,7 @@
 extern char _binary_bin_test_elf_start[],_binary_bin_test_elf_end[];
 char* ramdisk_base;
 long ramdisk_size;
+int dev_ramdisk=-1;
 struct blk_dev bd_ramdisk={
     .do_request=ramdisk_do_req
 };
@@ -47,7 +48,7 @@ void init_ramdisk(){
         return;
     }
     ramdisk_size=PAGE_4K_SIZE*100;
-    if(reg_blkdev(&bd_ramdisk)<0){
+    if((dev_ramdisk=reg_blkdev(&bd_ramdisk))<0){
         comprintf("no place for more blkdev.\n");
         return;
     }

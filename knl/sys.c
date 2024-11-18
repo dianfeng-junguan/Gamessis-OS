@@ -93,8 +93,8 @@ unsigned long sys_open(char *filename,int flags)
     filp->mode = flags;
 
     if(dentry->dir_inode->attribute & FS_ATTR_DEVICE){
-        extern struct file_operations dev_dir_fops;
-        filp->f_ops = &dev_dir_fops;	//////	find device file operation function
+        extern struct file_operations devfs_fops;
+        filp->f_ops = &devfs_fops;	//////	find device file operation function
     }
     else
         filp->f_ops = dentry->dir_inode->f_ops;

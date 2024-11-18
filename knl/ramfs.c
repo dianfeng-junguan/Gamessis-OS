@@ -10,10 +10,9 @@
 
 /*
  * 这部分主要是测试用，之后也可能用上（如果之后设计了initrd之类的话）
+这部分就不要求调用块设备借口了，这个纯粹是快速测试用的，之后会用fat之类的正规文件系统读取ramdisk
  * */
 extern char _binary_bin_test_elf_start[],_binary_bin_test_elf_end[];
-char* ramdisk_base;
-long ramdisk_size;
 struct super_block ramfs_sb;
 struct file_operations ramfs_fops={
         .open=open_ramfs,.close=close_ramfs,.read=read_ramfs,.write=write_ramfs,.ioctl=ioctl_ramfs
@@ -26,18 +25,14 @@ struct index_node_operations ramfs_iops={
 };
 struct index_node* test;
 void init_ramfs(){
-    //挂载新文件系统到/mnt
-    ramdisk_base= (char *) kmallocat(0, 100);
-    if(ramdisk_base==-1){
-        comprintf("failed to init ramfs.\n");
-        return;
-    }
-    ramdisk_size=PAGE_4K_SIZE*100;
+    //挂载新文件系统到/mnt,设备为/dev/ram
 
     ramfs_sb.sb_ops=&ramfs_fops;
     ramfs_sb.root=dmnt;
+    ramfs_sb.p_dev=&bd_ramdisk;
+    ramfs_sb.dev=dev_ramdisk;
     //解压img里面的test程序
-    memcpy(ramdisk_base, _binary_bin_test_elf_start, (char*)_binary_bin_test_elf_end - (char*)_binary_bin_test_elf_start);
+    // memcpy(ramdisk_base, _binary_bin_test_elf_start, (char*)_binary_bin_test_elf_end - (char*)_binary_bin_test_elf_start);
     test= (struct index_node *) kmalloc();
     test->f_ops=&ramfs_fops;
     test->file_size= (char*)_binary_bin_test_elf_end - (char*)_binary_bin_test_elf_start;
@@ -45,7 +40,7 @@ void init_ramfs(){
     test->attribute=FS_ATTR_FILE;
     test->inode_ops=&ramfs_iops;
     //设置一下dmnt的inode的操作，查找的时候会用到
-    dmnt->dir_inode->inode_ops=&ramfs_iops;
+    // dmnt->dir_inode->inode_ops=&ramfs_iops;
 }
 
 long create_inode_ramfs(struct index_node * inode,struct dir_entry * dentry,int mode){}
@@ -67,6 +62,7 @@ long close_ramfs(struct index_node * inode,struct file * filp){
 }
 //注意一下:position是指针
 long read_ramfs(struct file * filp,char * buf,unsigned long count,long * position){
+    
     int len= (char*)_binary_bin_test_elf_end - (char*)_binary_bin_test_elf_start - *position;
     if(len>count)len=count;
     for(int i=0;i<len;i++){
