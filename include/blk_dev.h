@@ -37,7 +37,9 @@ struct blk_dev
 #define TO_SECN(n) (n/512+n%512>0?1:0)
 __attribute__((always_inline)) void inline end_request(int dev){
     //
-    blk_devs[BLKDEV_MAJOR(dev)].current_request=blk_devs[BLKDEV_MAJOR(dev)].current_request->next;
+    int major=BLKDEV_MAJOR(dev);
+    blk_devs[major].current_request->dev=-1;
+    blk_devs[major].current_request=blk_devs[major].current_request->next;
 }
 /*
 @brief 注册块设备，返回一个设备类号。

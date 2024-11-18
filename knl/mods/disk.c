@@ -7,6 +7,7 @@
 #include <log.h>
 #include <blk_dev.h>
 #define NULL ((void*)0)
+struct request* r_running=NULL;
 struct file_operations hd_fops={
     //TODO:hd规范化
 };
@@ -17,7 +18,7 @@ static int head=0,tail=0;
 struct blk_dev bd_hd={
     .do_request=hd_do_req
 };
-int dev_hd=-1;
+int dev_hd=-1,last_chk_res=0;
 int init_disk()
 {
     if((dev_hd= reg_blkdev(&bd_hd))<0)
@@ -31,123 +32,49 @@ int init_disk()
 
 int disk_int_handler_c()
 {
-    if(running_req==NULL)
+    if(r_running==NULL)
     {
-        //printf("err:null running dreq\n");
+        comprintf("err:null running dreq\n");
         return 1;//同步读写硬盘
     }
-    short *p=running_req->buf;
+    short *p=r_running->buffer;
     int port=PORT_DISK_MAJOR;
-    if(running_req->disk==DISK_SLAVE_MAJOR||\
-    running_req->disk==DISK_SLAVE_SLAVE)
+    if(BLKDEV_MINOR(r_running->dev)==DISK_SLAVE_MAJOR||\
+    BLKDEV_MINOR(r_running->dev)==DISK_SLAVE_SLAVE)
         port=PORT_DISK_SLAVE;
-    if(running_req->func==DISKREQ_READ)
+    if(r_running->cmd==BLKDEV_REQ_READ)
     {
         ////printf("sys_read dist:%x\n",p);
         //读取
-        for(int i=0;i<running_req->sec_n*256;i++)
+        for(int i=0;i<r_running->nr_sectors*256;i++)
         {
             *p++=inw(port);
         }
-        running_req->result=DISK_CHK_OK;
-    }else if(running_req->func==DISKREQ_WRITE)
+    }else if(r_running->cmd==BLKDEV_REQ_WRITE)
     {
-        for(int i=0;i<running_req->sec_n*256;i++)
+        for(int i=0;i<r_running->nr_sectors*256;i++)
             outw(port,*p++);
-        running_req->result=DISK_CHK_OK;
-    }else if(running_req->func==DISKREQ_CHECK)
+    }else if(r_running->cmd==DISKREQ_CHECK)
     {
         char stat=inb(port+7);
         short dat=inw(port);
         if(1)
         {
-            running_req->result=DISK_CHK_OK;
+            last_chk_res=DISK_CHK_OK;
         }else
         {
             char err=inb(port+1);//错误原因
             printf("checking disk err:%x\nresetting hd\n",err);
-            running_req->result=DISK_CHK_ERR;
-            request(running_req->disk,DISKREQ_RESET,0,0,0);
+            last_chk_res=DISK_CHK_ERR;
         }
-    }else if(running_req->func==DISKREQ_RESET)
+    }else if(r_running->cmd==DISKREQ_RESET)
     {
         int stat=inb(port+7);
         printf("reset disk done.\nstat now:%x\n",stat);
     }
-    running_req->stat=REQ_STAT_DONE;
-    running_req->args->stat=REQ_STAT_EMPTY;
-    running_devman_req->stat=REQ_STAT_DONE;
-    running_devman_req=NULL;
-    //set_proc_stat(running_req->pid,TASK_READY);
-    running_req=NULL;
+    
+    r_running=NULL;
     end_request(dev_hd);
-    return 0;
-}
-int check_dreq_stat(int req_id)
-{
-    return disk_reqs[req_id].stat;
-}
-int request(int disk,int func,int lba,int secn,char *buf){
-    if((tail+1)%MAX_DISK_REQUEST_COUNT==head)
-    {
-        return -1;
-    }
-    disk_reqs[tail].disk=disk;
-    disk_reqs[tail].func=func;
-    disk_reqs[tail].lba=lba;
-    disk_reqs[tail].sec_n=secn;
-    disk_reqs[tail].stat=REQ_STAT_READY;
-    disk_reqs[tail].buf=buf;
-    int r=tail;
-    tail=(tail+1)%MAX_DISK_REQUEST_COUNT;
-    return r;
-}
-int execute_request(){
-    //查看是否有已经在运行的请求
-    if(running_req!=NULL)
-    {
-        running_req->time++;
-        if(running_req->func!=DISKREQ_CHECK)
-            return 2;
-        if(running_req->time>MAX_DISK_CHKTIME)
-        {
-            //检测硬盘超时，视为没有硬盘连接
-            running_req->result=DISK_CHK_ERR;
-            running_req->stat=REQ_STAT_DONE;
-            running_req=NULL;
-        }else
-        {
-            //未到时间继续等待
-            return 2;
-        }
-    }
-    if(head==tail)return 1;//检查是否为空
-    running_req=&disk_reqs[head];
-    head=(head+1)%MAX_DISK_REQUEST_COUNT;
-    running_req->stat=REQ_STAT_WORKING;
-    //set_proc_stat(running_req->pid,TASK_SUSPENDED);
-    int r=0;
-    switch (running_req->func)
-    {
-    case DISKREQ_READ:
-        r=async_read_disk(running_req->disk,\
-        running_req->lba,running_req->sec_n,running_req->buf);
-        break;
-    case DISKREQ_WRITE:
-        r=async_write_disk(running_req->disk,\
-         running_req->lba,running_req->sec_n,running_req->buf);
-        //write_disk(running_req->lba,running_req->sec_n,running_req->buf);
-        break;
-    case DISKREQ_CHECK:
-        r=async_check_disk(running_req->disk);
-        break;
-    case DISKREQ_RESET:
-        r=async_reset_disk(running_req->disk);
-        break;
-    default:
-        break;
-    }
-    if(r==-1)return -1;
     return 0;
 }
 int async_reset_disk(int disk)
@@ -266,94 +193,7 @@ int write_disk(int disk, int lba, int secn, char *src)
     running_req=NULL;
     return ret;
 }
-int chk_result(int r)
-{
-    while(disk_reqs[r].stat!=REQ_STAT_DONE);
-    if(disk_reqs[r].result==DISK_CHK_OK)
-        return 1;
-    comprintf("disk err\n");
-    return 0;
-}
-int await_diskreq(){
-    while (running_req->stat!=REQ_STAT_DONE);
-    if(running_req->result==DISK_CHK_OK)
-        return 1;
-    return 0;
 
-}
-int disk_existent(int disk)
-{
-    switch (disk)
-    {
-    case DISK_MAJOR_MAJOR:
-        return sys_find_dev("hd0")!=-1;
-        break;
-    
-    case DISK_MAJOR_SLAVE:
-        return sys_find_dev("hd1")!=-1;
-        break;
-        
-    case DISK_SLAVE_MAJOR:
-        return sys_find_dev("hd2")!=-1;
-        break;
-        
-    case DISK_SLAVE_SLAVE:
-        return sys_find_dev("hd3")!=-1;
-        break;
-    default:
-        break;
-    }
-    return 0;
-}
-/* int hd_iterate()
-{
-    char *name;
-    
-    int r[4];
-    r[0]=request(DISK_MAJOR_MAJOR,DISKREQ_CHECK,0,1,0);
-    r[1]=request(DISK_MAJOR_SLAVE,DISKREQ_CHECK,0,1,0);
-    r[2]=request(DISK_SLAVE_MAJOR,DISKREQ_CHECK,0,1,0);
-    r[3]=request(DISK_SLAVE_SLAVE,DISKREQ_CHECK,0,1,0);
-    for(int i=0;i<1;i++)
-    {
-        int disk;
-        switch (i)
-        {
-        case 0:disk=DISK_MAJOR_MAJOR;break;
-        case 1:disk=DISK_MAJOR_SLAVE;break;
-        case 2:disk=DISK_SLAVE_MAJOR;break;
-        case 3:disk=DISK_SLAVE_SLAVE;break;
-        default:
-            return -1;
-            break;
-        }
-        if(chk_result(r[i]))//&&!disk_existent(disk)
-        {
-            printf("disk %d checked.\n",i);
-            //新硬盘
-            device hd={
-                .type=DEV_TYPE_BLKDEV,
-                .stype=DEV_STYPE_HD,
-                .slave_dev=disk,
-                .start_port=i<2?PORT_DISK_MAJOR:PORT_DISK_SLAVE
-            };
-            disks[i]=reg_device(&hd);
-        }else if(!chk_result(r[i]))//&&disk_existent(disk)
-        {
-            switch (i)
-            {
-            case 0:name="hd0";break;
-            case 1:name="hd1";break;
-            case 2:name="hd2";break;
-            case 3:name="hd3";break;
-            }
-            //有硬盘被卸载了
-            int devi=sys_find_dev(name);
-            dispose_device(get_dev(devi));
-        }
-
-    }
-} */
 
 int async_check_disk(int disk)
 {
