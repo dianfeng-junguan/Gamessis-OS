@@ -17,12 +17,14 @@
 #define MAX_PROC_OPENF 32
 #include "gdt.h"
 #include "typename.h"
+#include <sys/types.h>
 #include "vfs.h"
 
 #define CS_USER 0x30
 #define DS_USER 0x28
 #define _TSS_IND(n) (n*2+5)
 #define _LDT_IND(n) (n*2+6)
+
 // 下面是数学协处理器使用的结构，主要用于保存进程切换时i387 的执行状态信息。
 struct i387_struct
 {
@@ -242,12 +244,62 @@ void set_tss(u64 rsp0,u64 rsp1,u64 rsp2,u64 ist0,u64 ist1,u64 ist2,u64 ist3,u64 
 void create_test_proc();
 
 
-void ret_sys_call();
-void ret_normal_proc();
+// void ret_sys_call();
+// void ret_normal_proc();
 void _syscall_sysret();
 int sys_fork(void);
 
 void copy_mmap(struct process* from, struct process *to);
 void release_mmap(struct process* p);
+
+
+/*
+ * real id, effective id, saved effective id:
+ * real id是指进程的真正执行者的id，effective id是指权限检查的时候使用的id（有时非root用户需要用root权限才能运行一些程序），
+ * saved ~是effective id的缓存。非root用户只能把effective id设置成real id和saved中的一个。
+ * 本质上，这三个id都是用户组id，不是进程组id。
+ * */
+/*
+ * If the process has appropriate privileges, setgid() sets the real group ID, effective group ID
+ * and the saved set-group-ID  to gid.
+ * If the process does not have appropriate privileges, but gid is equal to the real group ID  or the
+ * saved set-group-ID,  setgid() function sets the effective group ID to gid; the real group ID  and
+ * saved set-group-ID  remain unchanged.
+ * Any supplementary group IDs of the calling process remain unchanged.
+ * */
+pid_t setgid(gid_t gid);
+//获取real group id。
+pid_t getgid(void);
+
+//============进程组===============
+
+//获取当前进程的进程组号。
+pid_t sys_getpgrp(void);
+//获取指定进程的进程组号。
+int sys_getpgid(pid_t pid,gid_t gid);
+/*
+ * 将pid对应的进程划归到gid进程组。
+ * session leader的进程组id不会改变。
+ * pid=0时，进程为当前进程。gid为0时，当前进程组id被使用。
+ * */
+int sys_setpgid(pid_t pid,gid_t gid);
+/*
+ * The setsid() function creates a new session, if the calling process is not a process group leader.
+ * Upon return the calling process will be the session leader of this new session, will be the process
+ * group leader of a new process group, and will have no controlling terminal. The process group ID of
+ * the calling process will be set equal to the process ID of the calling process. The calling process
+ * will be the only process in the new process group and the only process in the new session.
+ * */
+pid_t sys_setsid(void);
+//获取pid进程的session号。0代表当前进程。
+pid_t sys_getsid(pid_t pid);
+//更改当前的会话中的foreground process group id。
+//fildes是当前会话的当前controlling terminal的文件描述符(tty描述符)，
+//必须是属于当前进程的，也就是说当前进程必须是会话leader。
+int sys_tcsetpgrp(int fildes,pid_t pgid_id);
+//获取fildes对应的会话的foreground process group id。
+//fildes是当前会话的当前controlling terminal的文件描述符(tty描述符)
+pid_t sys_tcgetpgrp(int fildes);
+
 extern struct process* current;
 #endif //SRC_PROC_H

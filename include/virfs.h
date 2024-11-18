@@ -20,6 +20,7 @@
 #define MAX_SUPERBLOCKS 26
 #define MAX_FS 32
 #define BLOCK_SIZE 512
+#define SECTOR_SIZE 512
 typedef char buffer_block[BLOCK_SIZE];	// 块缓冲区。
 #define NR_BUFFERHEADS 32
 

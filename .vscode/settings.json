@@ -25,6 +25,11 @@
         "disk.h": "c",
         "tty.h": "c",
         "log.h": "c",
-        "framebuffer.h": "c"
+        "framebuffer.h": "c",
+        "unistd.h": "c",
+        "stdlib.h": "c",
+        "blk_dev.h": "c",
+        "ramfs.h": "c",
+        "blk_buf.h": "c"
     }
 }

@@ -21,37 +21,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0dcc87d6-35c6-4e88-a1f0-2c1f4e33ddb9" name="更改" comment="构建了ramfs,ramdisk，用其测试execve证明正确。">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/_2024_11_10_18_41____1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/_2024_11_10_18_56____.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/com.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/devman.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/disk.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/exe.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/fat16.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/gmsknl.elf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/hda.img" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/kb.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/log.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/main.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/memory.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/proc.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/setupa.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_41_取消提交了更改_[更改]1/virfs.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在进行签出之前于_2024_11_10_18_56_取消提交了更改_[更改]/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/exe.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/exe.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gdt.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/gdt.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gmsknl.elf" beforeDir="false" afterPath="$PROJECT_DIR$/bin/gmsknl.elf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/int.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/int.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/inta.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/inta.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/main.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/memory.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/memory.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/proc.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/proc.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/proca.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/proca.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/setupa.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/setupa.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/syscalla.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/syscalla.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/virfs.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/virfs.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gdb.sh" beforeDir="false" afterPath="$PROJECT_DIR$/gdb.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hda.img" beforeDir="false" afterPath="$PROJECT_DIR$/hda.img" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/int.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/int.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/page.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/page.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/proc.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/proc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/exe.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/exe.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/gdt.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/gdt.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/int.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl/int.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/memory.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/memory.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/proc.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/proc.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/proc.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl/proc.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/ramfs.c" beforeDir="false" afterPath="$PROJECT_DIR$/knl/ramfs.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knl/syscall.s" beforeDir="false" afterPath="$PROJECT_DIR$/knl/syscall.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loader/setup.s" beforeDir="false" afterPath="$PROJECT_DIR$/loader/setup.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/test.mk" beforeDir="false" afterPath="$PROJECT_DIR$/test/test.mk" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -234,6 +222,7 @@
       <workItem from="1731657341702" duration="2487000" />
       <workItem from="1731745267612" duration="11711000" />
       <workItem from="1731762342175" duration="3808000" />
+      <workItem from="1731843057020" duration="75000" />
     </task>
     <task id="LOCAL-00001" summary="重新整理了一下，改用clion开发">
       <option name="closed" value="true" />

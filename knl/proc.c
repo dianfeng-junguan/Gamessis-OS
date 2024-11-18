@@ -9,7 +9,6 @@
 #include "mem.h"
 #include "log.h"
 #include "kb.h"
-#include "sys/unistd.h"
 #include "syscall.h"
 #include "tty.h"
 #include "fcntl.h"
@@ -64,7 +63,7 @@ void create_test_proc(){
     int currsp=0x9fc00-1;
     asm volatile("mov %%rsp,%0":"=m"(currsp));
     set_proc(0, 0, 0, 0, 0x10, 0x8, 0x10, 0x10, 0x10, 0x10,
-             0x7e00- sizeof(stack_store_regs), 0, 0, 0, (long)ret_sys_call, 0, index);
+             0x7e00- sizeof(stack_store_regs), 0, 0, 0, (long)_syscall_sysret, 0, index);
     task[index].tss.rsp0=0x400000;
     task[index].mem_struct.stack_top=0x7e00;
     task[index].mem_struct.stack_bottom=0x6e00;
@@ -1014,11 +1013,11 @@ void copy_mmap(struct process* from, struct process *to){
     }
 }
 
-pid_t getpgrp(void){
+pid_t sys_getpgrp(void){
     return current->gpid;
 }
 
-int getpgid(pid_t pid,gid_t gid){
+int sys_getpgid(pid_t pid,gid_t gid){
     if(pid==0)
         return current->gpid;
     for (int i = 0; i <MAX_TASKS; ++i) {
@@ -1027,7 +1026,7 @@ int getpgid(pid_t pid,gid_t gid){
     }
     return -1;
 }
-int setpgid(pid_t pid,gid_t gid){
+int sys_setpgid(pid_t pid,gid_t gid){
     if(pid==0)
     {
         if(current->sid==current->pid)
@@ -1047,10 +1046,10 @@ int setpgid(pid_t pid,gid_t gid){
     return -1;
 }
 
-pid_t setsid(void){
+pid_t sys_setsid(void){
     current->sid=current->pid;
 }
-pid_t getsid(pid_t pid){
+pid_t sys_getsid(pid_t pid){
     if(pid==0)
         return current->sid;
     for (int i = 0; i <MAX_TASKS; ++i) {
@@ -1059,10 +1058,10 @@ pid_t getsid(pid_t pid){
     }
     return -1;
 }
-int tcsetpgrp(int fildes,pid_t pgid_id){
+int sys_tcsetpgrp(int fildes,pid_t pgid_id){
     //当前controlling terminal断联
     sys_ioctl(fildes,TTY_DISCONNECT,0);
-    int sid= getsid(0);//获取session id
+    int sid= sys_getsid(0);//获取session id
     struct process* new_fgl=NULL;
     for (int i = 0; i <MAX_TASKS; ++i) {
         if(task[i].stat == TASK_ZOMBIE||task[i].stat == TASK_EMPTY)continue;
@@ -1078,7 +1077,7 @@ int tcsetpgrp(int fildes,pid_t pgid_id){
     new_fgl->openf[new_fgl->tty_fd]->f_ops->ioctl(new_fgl->openf[fildes]->dentry->dir_inode,new_fgl->openf[fildes]\
     ,TTY_CONNECT,0);
 }
-pid_t tcgetpgrp(int fildes){
+pid_t sys_tcgetpgrp(int fildes){
     return current->fg_pgid;
 }
 //===============

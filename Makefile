@@ -3,10 +3,12 @@ CUARGS = -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=la
 BOOT = boot.efi
 include loader/loader.mk
 include test/test.mk
+include usrlib/lib.mk
 KNL_OFILES = bin/int.o bin/main.o bin/log.o \
 			bin/memory.o bin/virfs.o bin/devman.o bin/proc.o bin/inta.o \
 			bin/gdt.o bin/gdta.o bin/clock.o bin/clocka.o bin/exe.o \
-			bin/syscalla.o bin/framebuffer.o bin/vfs.o bin/sys.o bin/ramfs.o
+			bin/syscalla.o bin/framebuffer.o bin/vfs.o bin/sys.o bin/ramfs.o bin/ramdisk.o \
+			bin/blk_dev.o bin blk_buf.o
 MODS_OFILES = bin/mods/kb.o bin/mods/disk.o bin/mods/diska.o bin/mods/fat32.o \
 				bin/mods/tty.o bin/com.o bin/test.o
 COM_OFILES = bin/mem.o bin/str.o bin/types.o bin/proca.o bin/font.o

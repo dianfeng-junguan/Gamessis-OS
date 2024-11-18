@@ -6,7 +6,7 @@
 #define GMS_VFS_H
 
 #include "typename.h"
-
+#include <blk_dev.h>
 struct List
 {
     struct List * prev;
@@ -94,6 +94,9 @@ struct super_block
 
     struct super_block_operations * sb_ops;
 
+    int dev;//设备号
+    
+    struct blk_dev* p_dev;
     void * private_sb_info;
 };
 
@@ -102,7 +105,7 @@ struct index_node
     unsigned long file_size;
     unsigned long blocks;
     unsigned long attribute;
-
+    int dev;
     struct super_block * sb;
 
     struct file_operations * f_ops;

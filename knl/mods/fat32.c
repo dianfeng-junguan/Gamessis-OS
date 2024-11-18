@@ -1,4 +1,5 @@
 #include "fat32.h"
+#include <blk_buf.h>
 #include "disk.h"
 #include "log.h"
 #include "vfs.h"
@@ -853,13 +854,15 @@ void DISK1_FAT32_FS_init()
 	
 	memset(buf,0,512);
 
-    read_disk(DISK_MAJOR_MAJOR, 0, 1, buf);/*rint r= equest(DISK_MAJOR_MAJOR,DISKREQ_READ,0x0,1,(unsigned char *)buf);
-    chk_result(r);*/
+	blkdev_read(root_sb->dev,0,512,buf);
+    // read_disk(DISK_MAJOR_MAJOR, 0, 1, buf);/*rint r= equest(DISK_MAJOR_MAJOR,DISKREQ_READ,0x0,1,(unsigned char *)buf);
+    // chk_result(r);
     DPT = *(struct Disk_Partition_Table *)buf;
 	printf("DPTE[0] start_LBA:%x\ttype:%x\n",DPT.DPTE[0].start_LBA,DPT.DPTE[0].type);
 
 	memset(buf,0,512);
-    read_disk(DISK_MAJOR_MAJOR, DPT.DPTE[0].start_LBA, 1, buf);
+	blkdev_read(root_sb->dev,DPT.DPTE[0].start_LBA*512,512,buf);
+    // read_disk(DISK_MAJOR_MAJOR, DPT.DPTE[0].start_LBA, 1, buf);
 	/*int r1=request(DISK_MAJOR_MAJOR,DISKREQ_READ,DPT.DPTE[0].start_LBA,1,(unsigned char *)buf);
     chk_result(r1);*/
 

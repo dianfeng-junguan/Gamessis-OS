@@ -2,6 +2,8 @@
 #include "devdrv.h"
 #include "vfs.h"
 #define NR_REQS 32
+#define IS_BLKDEV(dev) (dev&0x100==0)
+#define IS_CHRDEV(dev) (dev&0x100!=0)
 int init_devman();
 int reg_device(device *dev);
 int reg_driver(driver *drv);

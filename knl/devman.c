@@ -59,7 +59,7 @@ void make_devf(struct dir_entry* d,struct index_node* i,char* name,struct dir_en
  * 创建/dev文件夹，添加必要的设备文件。
  * 这个/dev文件夹的dentry和inode等数据由devman管理，根文件系统切换时，这个文件夹会跟着挂载到新文件系统的根目录下。
  * */
-struct dir_entry* ddev=NULL,*dmnt,*dconsole,*dhd0,*dtty;
+struct dir_entry* ddev=NULL,*dmnt,*dconsole,*dhd0,*dtty,*dramdisk;
 struct file ftty;
 int init_devman()
 {
@@ -101,6 +101,12 @@ int init_devman()
     //初始化一下
     tty_fops.open(itty,&ftty);
 
+    //ramdisk- ramdisk.c
+    dramdisk= (struct dir_entry *) kmalloc();
+    struct index_node* iramdisk=dramdisk+1;
+    dramdisk->name=iramdisk+1;
+    make_devf(dramdisk,iramdisk,"ram",ddev,&tty_fops);
+
 }
 //
 long open_dev(struct index_node * inode,struct file * filp){
@@ -133,6 +139,13 @@ long close_dev(struct index_node * inode,struct file * filp){
 
 }
 long read_dev(struct file * filp,char * buf,unsigned long count,long * position){
+    //判断是不是块设备文件
+    struct index_node* idev=filp->dentry->dir_inode;
+    if(IS_BLKDEV(idev->dev)){
+        //这里需要调用缓冲区层的函数读取块设备
+        return 1;
+    }
+    
     //查看文件名
     char* name=filp->dentry->name;
     char* p=name+ strlen(name)-1;
@@ -148,6 +161,13 @@ long read_dev(struct file * filp,char * buf,unsigned long count,long * position)
 
 }
 long write_dev(struct file * filp,char * buf,unsigned long count,long * position){
+    //判断是不是块设备文件
+    struct index_node* idev=filp->dentry->dir_inode;
+    if(IS_BLKDEV(idev->dev)){
+        //这里需要调用缓冲区层的函数写块设备
+        return 1;
+    }
+
     //查看文件名
     char* name=filp->dentry->name;
     char* p=name+ strlen(name)-1;
@@ -163,6 +183,12 @@ long write_dev(struct file * filp,char * buf,unsigned long count,long * position
 
 }
 long ioctl_dev(struct index_node * inode,struct file * filp,unsigned long cmd,unsigned long arg){
+    //判断是不是块设备文件
+    struct index_node* idev=filp->dentry->dir_inode;
+    if(IS_BLKDEV(idev->dev)){
+        //这里需要调用缓冲区层的函数ioctl块设备
+        return 1;
+    }
     //查看文件名
     char* name=filp->dentry->name;
     char* p=name+ strlen(name)-1;
