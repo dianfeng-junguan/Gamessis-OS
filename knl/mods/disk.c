@@ -227,6 +227,7 @@ int async_check_disk(int disk)
 //接口函数：负责接收VFS的请求然后执行
 int hd_do_req(struct request* req)
 {
+    start_request(req->dev);
     if(!req)
         return -1;
     int diski=BLKDEV_MINOR(req->dev);

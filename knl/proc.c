@@ -844,19 +844,20 @@ int fork_child_ret(){
 }
 
 int sys_fork(void){
+    cli();
     int pid=req_proc();
     int pids=task[pid].pid;
     if(pid==-1)return -1;
     //首先完全复制
     task[pid]=*current;
     task[pid].pid=pids;
+    task[pid].stat=TASK_ZOMBIE;
     
 
 //    asm volatile("mov %%r10,%0"::"m"(r->rip));
     // r->rip=current->regs.rip;
 
     // memcpy(&task[pid].tss,tss, sizeof(TSS));
-    task[pid].stat=TASK_READY;
     task[pid].parent_pid=current->pid;
     //设置父子关系以及初始化子进程的的list节点
     list_init(&task[pid].node);
@@ -923,9 +924,10 @@ int sys_fork(void){
         smmap(new_hppg,hp,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,task[pid].pml4);
     }
     smmap(0,tmpla,0,current->pml4);//解除映射
+    task[pid].stat=TASK_READY;
     
 
-
+    sti();
     //如果父进程没有堆，不开辟。留给load_xx函数。
     //父进程运行到这里
     return pid;

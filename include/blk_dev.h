@@ -41,6 +41,9 @@ __attribute__((always_inline)) void inline end_request(int dev){
     blk_devs[major].current_request->dev=-1;
     blk_devs[major].current_request=blk_devs[major].current_request->next;
 }
+__attribute__((__always_inline__))inline void start_request(int dev){
+    wait_on_req(blk_devs[BLKDEV_MAJOR(dev)].current_request->waiting);
+}
 /*
 @brief 注册块设备，返回一个设备类号。
 设备类号就是给一类相同操作的设备的编号。该类别下每个具体的设备还会有一个设备编号，二者合在一起就是设备号。

@@ -19,6 +19,7 @@ struct blk_dev bd_ramdisk={
     .do_request=ramdisk_do_req
 };
 void ramdisk_do_req(struct request* req){
+    start_request(req->dev);
     if(!req)
         return;
     switch (req->cmd)

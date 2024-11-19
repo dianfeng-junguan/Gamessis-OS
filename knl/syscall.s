@@ -21,7 +21,7 @@ REQ_EXEC            EQU 10
 REQ_DEL_PROC        EQU 11
 REQ_FETCH_KBBUF     EQU 12
 _syscall:
-    cli
+    ; cli 有的需要cli有的不需要
     push rbp
     mov rbp,0xffff800000108000
     ;切换堆栈

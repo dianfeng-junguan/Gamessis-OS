@@ -196,6 +196,14 @@ __attribute__((__always_inline__))inline int do_syscall(long func,long a1,long a
         asm volatile("mov %%rax,%0"::"m"(ret));
         return ret;
 }
+__attribute__((__always_inline__))inline void wait_on_req(struct process* p){
+        if(p->stat==TASK_READY||p->stat==TASK_RUNNING)
+            p->stat=TASK_SUSPENDED;
+}
+__attribute__((__always_inline__))inline void wake_up(struct process* p){
+        if(p->stat==TASK_SUSPENDED)
+            p->stat=TASK_READY;
+}
 
 void init_proc();
 int req_proc();

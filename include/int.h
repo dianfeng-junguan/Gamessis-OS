@@ -16,6 +16,7 @@
 #define SYSCALL_REG_DRIVER 25
 
 #define sti() asm volatile("sti");
+#define cli() asm volatile("cli");
 #include "typename.h"
 
 void wrmsr(unsigned long address,unsigned long value);
