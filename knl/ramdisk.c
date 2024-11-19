@@ -19,6 +19,8 @@ struct blk_dev bd_ramdisk={
     .do_request=ramdisk_do_req
 };
 void ramdisk_do_req(struct request* req){
+    if(!req)
+        return;
     switch (req->cmd)
     {
     case BLKDEV_REQ_READ:
@@ -39,6 +41,7 @@ void ramdisk_do_req(struct request* req){
         break;
     }
     end_request(req->dev);
+    ramdisk_do_req(blk_devs[dev_ramdisk].current_request);
 }
 void init_ramdisk(){
     //初始化ramdisk，在/dev下创建一个ram

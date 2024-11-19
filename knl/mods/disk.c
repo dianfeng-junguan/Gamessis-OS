@@ -75,6 +75,8 @@ int disk_int_handler_c()
     
     r_running=NULL;
     end_request(dev_hd);
+    //执行下一个请求
+    hd_do_req(blk_devs[dev_hd].current_request);
     return 0;
 }
 int async_reset_disk(int disk)
@@ -225,6 +227,8 @@ int async_check_disk(int disk)
 //接口函数：负责接收VFS的请求然后执行
 int hd_do_req(struct request* req)
 {
+    if(!req)
+        return -1;
     int diski=BLKDEV_MINOR(req->dev);
     // for(;disks[diski]!=args->dev;diski++);
 
