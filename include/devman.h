@@ -1,26 +1,31 @@
 #pragma once
-#include "devdrv.h"
+// #include "devdrv.h"
 #include "vfs.h"
 #define NR_REQS 32
 #define IS_BLKDEV(dev) (dev&0x100==0)
 #define IS_CHRDEV(dev) (dev&0x100!=0)
+#define REQ_STAT_EMPTY 0	
+#define	REQ_STAT_READY 1
+#define REQ_STAT_WORKING 2
+#define REQ_STAT_DONE 3
+#define REQ_STAT_ERR 4	
 int init_devfs();
-int reg_device(device *dev);
-int reg_driver(driver *drv);
+// int reg_device(device *dev);
+// int reg_driver(driver *drv);
 int dispose_device(int dev);
-int dispose_driver(driver *drv);
+// int dispose_driver(driver *drv);
 
-device *get_dev(int devi);
-driver *get_drv(int drvi);
+// device *get_dev(int devi);
+// driver *get_drv(int drvi);
 
 int load_driver(char *path);
 
 int sys_find_dev(char *name);
-int call_drv_func(int drv_n,int func_n,driver_args* args);
-int sys_operate_dev(char *name,int func,driver_args* args);
+// int call_drv_func(int drv_n,int func_n,driver_args* args);
+// int sys_operate_dev(char *name,int func,driver_args* args);
 //发送一个操作设备的申请
-int make_request(driver_args* args);
-void wait_on_req(int reqi);
+// int make_request(driver_args* args);
+// void wait_on_req(int reqi);
 void clear_req(int reqi);
 //取出一个申请并且执行
 int do_req();

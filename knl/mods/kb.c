@@ -5,7 +5,7 @@
 #include "kb.h"
 #include "typename.h"
 #include "int.h"
-#include "devdrv.h"
+// #include "devdrv.h"
 #include "devman.h"
 #include "framebuffer.h"
 #include "log.h"
@@ -18,16 +18,6 @@ kb_buf key_bufq={
         .head=0,
         .tail=0,
         .size=MAX_KEYBUF
-};
-const driver drv_keyboard={
-        .inthandler=key_proc,
-        .open=init_kb
-
-};
-const device dev_keyboard={
-        .flag=DEV_FLAG_USED,
-        .drv=&drv_keyboard,
-        .type=DEV_TYPE_CHRDEV
 };
 
 char key_stat[13];//位图
@@ -155,8 +145,6 @@ char to_ascii(char scan_code)
 }
 int init_kb()
 {
-    reg_device(&dev_keyboard);
-    reg_driver(&drv_keyboard);
 }
 int key_proc()
 {

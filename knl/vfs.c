@@ -8,6 +8,7 @@
 #include "log.h"
 #include "mem.h"
 #include "str.h"
+#include <ramdisk.h>
 
 struct dir_entry * path_walk(char * name,unsigned long flags)
 {
@@ -154,7 +155,7 @@ struct dir_entry* root_lookup(struct index_node * parent_inode,struct dir_entry 
 struct index_node_operations root_iops={
     .lookup=root_lookup
 };
-void mount_rootfs(){
+void init_rootfs(){
     root_sb=(struct super_block*) kmalloc();
     root_sb->root=root_sb+1;//紧凑跟在后面
     root_sb->sb_ops=NULL;
@@ -175,5 +176,7 @@ void mount_rootfs(){
     list_init(&root_sb->root->subdirs_list);
     list_init(&root_sb->root->child_node);
 
+    root_sb->dev=dev_ramdisk<<8;
+    root_sb->p_dev=&bd_ramdisk;
 }
 

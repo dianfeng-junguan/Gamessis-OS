@@ -1,5 +1,6 @@
 #include "fat32.h"
 #include <blk_buf.h>
+#include <blk_dev.h>
 #include "disk.h"
 #include "log.h"
 #include "vfs.h"
@@ -8,12 +9,13 @@
 #include "memory.h"
 #include "proc.h"
 #include "devman.h"
+#include <sys/unistd.h>
 
 unsigned int DISK1_FAT32_read_FAT_Entry(struct FAT32_sb_info * fsbi,unsigned int fat_entry)
 {
 	unsigned int *buf;
 	buffer_head *bh=bread(root_sb->dev,fsbi->FAT1_firstsector + (fat_entry >> 7));
-	buf=bh->b_data;
+	buf=bh->data;
     printf("DISK1_FAT32_read_FAT_Entry fat_entry:%x,%#010x\n",fat_entry,buf[fat_entry & 0x7f]);
 	brelse(bh);
 	return buf[fat_entry & 0x7f] & 0x0fffffff;
@@ -26,7 +28,7 @@ unsigned long DISK1_FAT32_write_FAT_Entry(struct FAT32_sb_info * fsbi,unsigned i
 	int i;
 
 	buffer_head *bh=bread(root_sb->dev,fsbi->FAT1_firstsector + (fat_entry >> 7));
-	buf=bh->b_data;
+	buf=bh->data;
     buf[fat_entry & 0x7f] = (buf[fat_entry & 0x7f] & 0xf0000000) | (value & 0x0fffffff);
 
 	for(i = 0;i < fsbi->NumFATs;i++){

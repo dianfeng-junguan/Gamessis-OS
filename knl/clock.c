@@ -8,8 +8,6 @@ extern int cur_proc;
 extern struct process *task;
 void clock_c(){
     //refresh_wnds();
-    execute_request();
-    do_req();
     if(!manage_proc_lock)
     {
         manage_proc();

@@ -23,7 +23,7 @@
 #define VIDEO_GRAPHICS 2
 #define SCREEN_W 80
 #define SCREEN_H 25
-#include "devdrv.h"
+#include "devdrv.h.bak"
 //以下是文字模式使用的函数
 int read_tty(driver_args * args);
 int write_tty(driver_args * args);

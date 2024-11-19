@@ -6,6 +6,9 @@
 #define GMS_UNISTD_H
 
 #include "sys/types.h"
+#define SEEK_SET 0
+#define SEEK_END 1
+#define SEEK_CUR 2
 /*
  * real id, effective id, saved effective id:
  * real id是指进程的真正执行者的id，effective id是指权限检查的时候使用的id（有时非root用户需要用root权限才能运行一些程序），

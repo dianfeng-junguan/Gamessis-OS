@@ -1,18 +1,19 @@
 //
 // Created by Oniar_Pie on 2024/11/15.
 //
-
+#include <ramdisk.h>
 #include "ramfs.h"
 #include "devman.h"
 #include "memory.h"
 #include "log.h"
 #include "mem.h"
+#include <blk_buf.h>
 
 /*
  * 这部分主要是测试用，之后也可能用上（如果之后设计了initrd之类的话）
 这部分就不要求调用块设备借口了，这个纯粹是快速测试用的，之后会用fat之类的正规文件系统读取ramdisk
  * */
-extern char _binary_bin_test_elf_start[],_binary_bin_test_elf_end[];
+// extern char _binary_bin_test_elf_start[],_binary_bin_test_elf_end[];
 struct super_block ramfs_sb;
 struct file_operations ramfs_fops={
         .open=open_ramfs,.close=close_ramfs,.read=read_ramfs,.write=write_ramfs,.ioctl=ioctl_ramfs
@@ -33,12 +34,12 @@ void init_ramfs(){
     ramfs_sb.dev=dev_ramdisk;
     //解压img里面的test程序
     // memcpy(ramdisk_base, _binary_bin_test_elf_start, (char*)_binary_bin_test_elf_end - (char*)_binary_bin_test_elf_start);
-    test= (struct index_node *) kmalloc();
-    test->f_ops=&ramfs_fops;
-    test->file_size= (char*)_binary_bin_test_elf_end - (char*)_binary_bin_test_elf_start;
-    test->sb=&ramfs_sb;
-    test->attribute=FS_ATTR_FILE;
-    test->inode_ops=&ramfs_iops;
+    // test= (struct index_node *) kmalloc();
+    // test->f_ops=&ramfs_fops;
+    // test->file_size= (char*)_binary_bin_test_elf_end - (char*)_binary_bin_test_elf_start;
+    // test->sb=&ramfs_sb;
+    // test->attribute=FS_ATTR_FILE;
+    // test->inode_ops=&ramfs_iops;
     //设置一下dmnt的inode的操作，查找的时候会用到
     // dmnt->dir_inode->inode_ops=&ramfs_iops;
 }
@@ -62,13 +63,13 @@ long close_ramfs(struct index_node * inode,struct file * filp){
 }
 //注意一下:position是指针
 long read_ramfs(struct file * filp,char * buf,unsigned long count,long * position){
-    
-    int len= (char*)_binary_bin_test_elf_end - (char*)_binary_bin_test_elf_start - *position;
+    blkdev_read(filp->dentry->dir_inode->dev,*position,count,buf);
+    /* int len= (char*)_binary_bin_test_elf_end - (char*)_binary_bin_test_elf_start - *position;
     if(len>count)len=count;
     for(int i=0;i<len;i++){
         buf[i]=_binary_bin_test_elf_start[i + *position];
     }
-    *position+=len;
+    *position+=len; */
     return 0;
 }
 long write_ramfs(struct file * filp,char * buf,unsigned long count,long * position){

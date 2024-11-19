@@ -22,8 +22,9 @@
 #define DISK_CHK_OK 1
 #define DISK_CHK_ERR 2
 #define MAX_DISK_CHKTIME 10
-#include "devdrv.h"
+// #include "devdrv.h"
 #include "vfs.h"
+#include <blk_dev.h>
 
 typedef struct{
     int func;	//调用功能号
@@ -35,7 +36,7 @@ typedef struct{
     int stat;	//请求状态
     int result; //检查磁盘结果
     int time;   //请求使用的时间（用来检查是否超时）
-    driver_args *args; //参数
+    // driver_args *args; //参数
 }disk_req;
 int init_disk();
 int read_disk_asm(int lba,int sec_n,char* mem_addr);

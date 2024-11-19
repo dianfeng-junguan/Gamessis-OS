@@ -12,17 +12,6 @@
 #include "log.h"
 #include <blk_buf.h>
 
-device devs[MAX_DEVICES]={0};
-driver drvs[MAX_DRIVERS]={0};
-driver_args reqs[NR_REQS];
-device* dev_tree[]={NULL,NULL,NULL};
-
-driverfunc dev_funcs[]={
-    [OPERATIONS_HD]=NULL,//hd_do_req,
-    [OPERATIONS_TTY]=NULL,//ioctl_tty,
-    [OPERATIONS_KEYBOARD]=NULL,
-    [OPERATIONS_MOUSE]=NULL
-};
 static int rhead=0,rtail=0;
 static int dev_dfd=-1;
 struct file_operations devfs_fops={
@@ -43,7 +32,7 @@ void make_dentry(struct dir_entry* d,char* name,int namelen,struct dir_entry* pa
     d->parent=parent;
     list_add(&parent->subdirs_list,&d->child_node);
 }
-void make_inode(struct index_node* i,struct index_node_operations* iops,struct file_operations* fops,unsigned long attr,super_block* sb){
+void make_inode(struct index_node* i,struct index_node_operations* iops,struct file_operations* fops,unsigned long attr,struct super_block* sb){
     i->f_ops=fops;
     i->attribute=attr;
     i->sb=sb;
@@ -208,7 +197,7 @@ int load_driver(char *path)
 {
     
 }
-
+/* 
 int reg_device(device* dev)
 {
     //TODO:查重
@@ -329,7 +318,7 @@ int call_drv_func(int drv_n,int func_n,driver_args *args)
 {
     if(drvs[drv_n].flag==DRV_FLAG_EMPTY)return -1;
     /*driverfunc f=drvs[drv_n].func_thunk[func_n];
-    return f(args);*/
+    return f(args);
     switch (func_n) {
         case DRVF_OPEN :return drvs[drv_n].open(args);
         case DRVF_CLOSE:return drvs[drv_n].close(args);
@@ -423,4 +412,4 @@ void wait_on_req(int reqi)
 void clear_req(int reqi)
 {
     reqs[reqi].stat=REQ_STAT_EMPTY;
-}
+} */

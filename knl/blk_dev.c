@@ -11,19 +11,19 @@ int reg_blkdev(struct blk_dev* dev){
     }
     return -ENOMEM;
 }
-int unreg_blkdev(int dev){
+int unreg_blkdev(unsigned short dev){
     if(blk_devs[dev].current_request)
         return -EBUSY;//设备还有没完成的请求
     blk_devs[dev].do_request=0;//清除
 }
-int make_request(int dev,int cmd,unsigned long sector, unsigned long count,char * buffer){
-    struct blk_dev* d=&blk_devs[dev];
+int make_request(unsigned short dev,int cmd,unsigned long sector, unsigned long count,char * buffer){
+    struct blk_dev* d=&blk_devs[BLKDEV_MAJOR(dev)];
     if(!d->do_request)
         return -ENODEV;//没有这个设备
     //找一个空的请求
     struct request* req=NULL;
     for(int i=0;i<MAX_REQUESTS;i++){
-        if(requests[i].dev==-1){
+        if(requests[i].dev==(unsigned short)-1){
             req=requests+i;
             break;
         }

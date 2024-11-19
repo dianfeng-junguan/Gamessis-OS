@@ -9,7 +9,6 @@
 #include <mem.h>
 #include <vfs.h>
 
-#include <text_console.h>
 #include <disk.h>
 #include <fat32.h>
 #include <kb.h>
@@ -151,12 +150,17 @@ void main(unsigned int magic,void* addr)
 //    set_tss(0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000);
 	init_paging();
  	init_gdt();
-    mount_rootfs();
-    init_devfs();
-    init_proc();
+
+	init_blkdev();
+	init_blkbuf();
+	// init_disk();
     init_ramdisk();
-	init_ramfs();
-//    DISK1_FAT32_FS_init();
+    init_rootfs();
+    init_devfs();
+
+    init_proc();
+	// init_ramfs();
+  	DISK1_FAT32_FS_init();
 
     //自带驱动
     //init_tty();

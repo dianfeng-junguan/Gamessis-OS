@@ -26,10 +26,10 @@ typedef struct _buffer_head
 //获得一块空闲的buffer head
 buffer_head *bget();
 //获取指定设备指定数据的缓存
-buffer_head *get_block(int dev,int blocknr);
+buffer_head *get_block(unsigned short dev,int blocknr);
 //从指定的块设备中读取一块数据，然后返回这块数据。
 //@param dev 完整的设备号，包括大类号和编号
-buffer_head* bread(int dev,int blkn);
+buffer_head* bread(unsigned short dev,int blkn);
 /*
 向缓冲区写入数据。注意缓冲区的大小固定BLOCK_SIZE。
 这会使得dirty置位。
@@ -50,8 +50,10 @@ int brelse(buffer_head *bh);
 /*
 bread的更高级封装，可以不以块为单位读取到buf。
 */
-int blkdev_read(int dev,off_t offset, size_t count, char *buf);
+int blkdev_read(unsigned short dev,off_t offset, size_t count, char *buf);
 /*
 bwrite的更高级封装。
 */
-int blkdev_write(int dev,off_t offset, size_t count, char *buf);
+int blkdev_write(unsigned short dev,off_t offset, size_t count, char *buf);
+
+void init_blkbuf();

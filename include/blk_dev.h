@@ -5,7 +5,7 @@
 #include <proc.h>
 struct request
 {
-  int dev;			/* -1 if no request */// 使用的设备号。
+  unsigned short dev;			/* -1 if no request */// 使用的设备号。
   int cmd;			/* READ or WRITE */// 命令(READ 或WRITE)。
   int errors;			//操作时产生的错误次数。
   unsigned long sector;		// 起始扇区。(1 块=2 扇区)
@@ -35,15 +35,6 @@ struct blk_dev
 #define SECTOR_SIZE 512
 #define TO_BLKN(n) (n/4096+n%4096>0?1:0)
 #define TO_SECN(n) (n/512+n%512>0?1:0)
-__attribute__((always_inline)) void inline end_request(int dev){
-    //
-    int major=BLKDEV_MAJOR(dev);
-    blk_devs[major].current_request->dev=-1;
-    blk_devs[major].current_request=blk_devs[major].current_request->next;
-}
-__attribute__((__always_inline__))inline void start_request(int dev){
-    wait_on_req(blk_devs[BLKDEV_MAJOR(dev)].current_request->waiting);
-}
 /*
 @brief 注册块设备，返回一个设备类号。
 设备类号就是给一类相同操作的设备的编号。该类别下每个具体的设备还会有一个设备编号，二者合在一起就是设备号。
@@ -51,18 +42,29 @@ __attribute__((__always_inline__))inline void start_request(int dev){
 */
 int reg_blkdev(struct blk_dev* dev);
 /*
-@param dev 设备号。
+@param dev 设备类号。
 
 */
-int unreg_blkdev(int dev);
+int unreg_blkdev(unsigned short dev);
 /*
 @brief 向设备发送一个请求。这会导致该进程暂停，直到相应的设备的处理函数解冻进程。
 @param cmd 命令。抽象层只定义了read和write，但是具体的设备可能还会定义其他功能。
 */
-int make_request(int dev,int cmd,unsigned long sector, unsigned long count,char * buffer);
+int make_request(unsigned short dev,int cmd,unsigned long sector, unsigned long count,char * buffer);
 
 
+void init_blkdev(void);
 extern struct blk_dev blk_devs[MAX_BLKDEVS];
 extern struct request requests[MAX_REQUESTS];
 extern struct blk_dev bd_ramdisk;
 extern int dev_ramdisk;
+
+__attribute__((always_inline)) void inline end_request(unsigned short dev){
+    //
+    int major=BLKDEV_MAJOR(dev);
+    blk_devs[major].current_request->dev=-1;
+    blk_devs[major].current_request=blk_devs[major].current_request->next;
+}
+__attribute__((__always_inline__))inline void start_request(unsigned short dev){
+    wait_on_req(blk_devs[BLKDEV_MAJOR(dev)].current_request->waiting);
+}

@@ -130,10 +130,10 @@ int execute(char *path, char **argv)
         if((cwd_fno=sys_open(path, O_DIRECTORY)) <0)return -1;
         *p='/';
     }
-    extern struct file opened[];
+    // extern struct file opened[];
     extern struct process task[];
-    int pi= reg_proc(proc_start, &opened[cwd_fno], &opened[fno]);
-    return pi;
+    // int pi= reg_proc(proc_start, &opened[cwd_fno], &opened[fno]);
+    return 0;
 }
 
 int sys_execve(char *path, int argc, char **argv) {

@@ -6,10 +6,15 @@
 buffer_head l_buffer_heads[MAX_BUFFERHEADS];
 //这个存储的是各个块设备映射的缓冲区链表中的头
 buffer_head* l_blk_bh_heads[MAX_BLKDEVS];
-
+void init_blkbuf(){
+    for(int i=0;i<MAX_BUFFERHEADS;i++){
+        l_buffer_heads[i].dev=-1;
+        l_blk_bh_heads[i]=NULL;
+    }
+}
 buffer_head *bget(){
     for(int i=0;i<MAX_BUFFERHEADS;i++){
-        if(l_buffer_heads[i].dev==-1)
+        if(l_buffer_heads[i].dev==(unsigned short)-1)
         {
             l_buffer_heads[i].data=kmalloc();
             l_buffer_heads[i].count=0;
@@ -20,17 +25,17 @@ buffer_head *bget(){
     return NULL;
 }
 
-buffer_head *get_block(int dev,int blocknr){
+buffer_head *get_block(unsigned short dev,int blocknr){
     buffer_head *bh=l_blk_bh_heads[BLKDEV_MAJOR(dev)];
     if(!bh){
         //这个设备没有任何的缓冲区
         bh=bget();
-        bh->dev=dev;
-        bh->blocknr=blocknr;
         if(!bh){
             //errno=-ENOBUFS
             return NULL;
         }
+        bh->dev=dev;
+        bh->blocknr=blocknr;
         l_blk_bh_heads[BLKDEV_MAJOR(dev)]=bh;
     }else{
         for(;bh->next&&bh->blocknr!=blocknr;bh=bh->next);
@@ -51,7 +56,7 @@ buffer_head *get_block(int dev,int blocknr){
     return bh;
 }
 //从指定的块设备中读取一块数据，然后返回这块数据。
-buffer_head* bread(int dev,int blkn){
+buffer_head* bread(unsigned short dev,int blkn){
     if(!blk_devs[BLKDEV_MAJOR(dev)].do_request)
         return NULL;
     buffer_head *bh=get_block(dev,blkn);
@@ -111,7 +116,7 @@ int bupdate(buffer_head *bh){
 /*
 bread的更高级封装，可以不以块为单位读取到buf。
 */
-int blkdev_read(int dev,off_t offset, size_t count, char *buf){
+int blkdev_read(unsigned short dev,off_t offset, size_t count, char *buf){
     int n=TO_BLKN(count);
     off_t blkn=BLOCK_FLOOR(offset);
     off_t first_off=offset%BLOCK_SIZE;
@@ -135,7 +140,7 @@ int blkdev_read(int dev,off_t offset, size_t count, char *buf){
     return 1;
 }
 
-int blkdev_write(int dev,off_t offset, size_t count, char *buf){
+int blkdev_write(unsigned short dev,off_t offset, size_t count, char *buf){
     int n=TO_BLKN(count);
     off_t blkn=BLOCK_FLOOR(offset);
     off_t first_off=offset%BLOCK_SIZE;
@@ -160,7 +165,7 @@ int blkdev_write(int dev,off_t offset, size_t count, char *buf){
 
 }
 int brelse(buffer_head *bh){
-    if(bh->dev==-1||!blk_devs[bh->dev].do_request)
+    if(bh->dev==(unsigned short)-1||!blk_devs[BLKDEV_MAJOR(bh->dev)].do_request)
         return -ENODEV;
     if(bh->dirt)
         bflush(bh);

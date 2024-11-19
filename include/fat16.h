@@ -1,7 +1,7 @@
 #pragma once
 #define MAX_FILES_PER_DIR 512
 #define FAT_EOF 0xfff7
-#include "devdrv.h"
+#include <devman.h>
 typedef struct 
 {
     /* data */
@@ -42,17 +42,17 @@ typedef struct
 }__attribute__((packed)) dir_entry;
 //驱动接口函数
 //文件操作函数
-int load(driver_args *arg);
-int ls(driver_args *arg);
-int mkdir(driver_args *arg);
-int touch(driver_args *arg);
-int rm(driver_args *arg);
-int cd(driver_args *arg);
-int read_file(driver_args *arg);
-int write_file(driver_args *arg);
+// int load(driver_args *arg);
+// int ls(driver_args *arg);
+// int mkdir(driver_args *arg);
+// int touch(driver_args *arg);
+// int rm(driver_args *arg);
+// int cd(driver_args *arg);
+// int read_file(driver_args *arg);
+// int write_file(driver_args *arg);
 //按照路径递归查找文件
 //char *name,dir_entry* entry,dir_entry dir
-int get_entry(driver_args* args);
+// int get_entry(driver_args* args);
 int find(char *name);
 
 //内存操作函数

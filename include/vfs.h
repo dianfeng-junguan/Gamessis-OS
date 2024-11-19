@@ -6,7 +6,7 @@
 #define GMS_VFS_H
 
 #include "typename.h"
-#include <blk_dev.h>
+// #include <blk_dev.h>
 struct List
 {
     struct List * prev;
@@ -26,7 +26,7 @@ __attribute__((always_inline)) inline void list_add_to_behind(struct List * entr
     new->prev = entry;
     if(new->next)
         new->next->prev = new;
-    entry->next = new;
+    // entry->next = new;
 }
 __attribute__((always_inline)) inline void list_add(struct List * entry,struct List * new)	////add to the tail of the link
 {
@@ -94,7 +94,7 @@ struct super_block
 
     struct super_block_operations * sb_ops;
 
-    int dev;//设备号
+    unsigned short dev;//设备号
     
     struct blk_dev* p_dev;
     void * private_sb_info;
@@ -105,7 +105,7 @@ struct index_node
     unsigned long file_size;
     unsigned long blocks;
     unsigned long attribute;
-    int dev;
+    unsigned short dev;
     struct super_block * sb;
 
     struct file_operations * f_ops;
@@ -189,5 +189,5 @@ int fill_dentry(void *buf,char *name, long namelen,long type,long offset);
 extern struct super_block * root_sb;
 
 //挂载临时根文件系统，用于初始化/dev等文件夹。
-void mount_rootfs();
+void init_rootfs();
 #endif //GMS_VFS_H

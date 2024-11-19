@@ -3,7 +3,6 @@
 #include "devman.h"
 #include "proc.h"
 #include "memory.h"
-#include "virfs.h"
 #include "exe.h"
 #include "syscall.h"
 #include "kb.h"
@@ -209,11 +208,11 @@ int syscall(long a, long b, long c, long d, long e, long f)
     asm volatile("":"=a"(num));//这样rax中存的参数就到这了
     switch (num)
     {
-        case 0:return reg_device(a);
-        case 1:return dispose_device(a);
-        case 2:return reg_driver(a);
-        case 3:return dispose_driver(a);
-        case 4:return call_drv_func(a,b,c);
+        // case 0:return reg_device(a);
+        // case 1:return dispose_device(a);
+        // case 2:return reg_driver(a);
+        // case 3:return dispose_driver(a);
+        // case 4:return call_drv_func(a,b,c);
         case 5:return req_page_at(a,b);
         case 6:return free_page(a);
         case 7:return reg_proc(a, b, c);
@@ -224,20 +223,20 @@ int syscall(long a, long b, long c, long d, long e, long f)
         case 13:return sys_read(a,b,c);
         case 14:return sys_write(a,b,c);
         case 15:return sys_lseek(a,b,c);
-        case 16:return sys_tell(a);
-        case 17:return reg_vol(a,b,c);
-        case 18:return free_vol(a);
+        // case 16:return sys_tell(a);
+        // case 17:return reg_vol(a,b,c);
+        // case 18:return free_vol(a);
         case 19:return execute(a, NULL);
         case SYSCALL_EXIT:return sys_exit(a);
         case SYSCALL_CALL:return exec_call(a);
-        case SYSCALL_MKFIFO:return sys_mkfifo(a);
+        // case SYSCALL_MKFIFO:return sys_mkfifo(a);
         case SYSCALL_MALLOC:return sys_malloc(a);
         case SYSCALL_FREE:return sys_free(a);
         case SYSCALL_KB_READC:return sys_analyse_key();
-        case SYSCALL_FIND_DEV:return sys_find_dev(a);
+        // case SYSCALL_FIND_DEV:return sys_find_dev(a);
         case SYSCALL_FORK:return sys_fork();
         case SYSCALL_EXECVE:return sys_execve(a, b, c);
-        case SYSCALL_OPERATE_DEV:return sys_operate_dev(a,b,c);
+        // case SYSCALL_OPERATE_DEV:return sys_operate_dev(a,b,c);
         case SYSCALL_WAIT:return sys_wait(a,b,c);
     }
     // __asm__ volatile("mov %0,%%eax\r\n mov %1,%%ebx\r\n mov %2,%%ecx\r\n mov %3,%%edx\r\n mov %4,%%esi\r\n mov %5,%%edi"\

@@ -1,9 +1,7 @@
 #include "disk.h"
-#include "devdrv.h"
 #include "int.h"
 #include "devman.h"
 #include "syscall.h"
-#include "virfs.h"
 #include <log.h>
 #include <blk_dev.h>
 #define NULL ((void*)0)
@@ -13,7 +11,6 @@ struct file_operations hd_fops={
 };
 disk_req disk_reqs[MAX_DISK_REQUEST_COUNT];
 disk_req *running_req=NULL;
-driver_args *running_devman_req=NULL;
 static int head=0,tail=0;
 struct blk_dev bd_hd={
     .do_request=hd_do_req
@@ -170,13 +167,13 @@ int async_write_disk(int disk,unsigned int lba, int sec_n, char* mem_ptr)
 }
 int read_disk(int disk, int lba, int secn, char *dest)
 {
-    request(disk,DISKREQ_READ,lba,secn,dest);
+    // request(disk,DISKREQ_READ,lba,secn,dest);
     int ret=read_disk_asm(lba,secn,dest);
 //    chk_result(ret);
     if(running_req){
 
-        running_req->stat=REQ_STAT_DONE;
-        running_req->args->stat=REQ_STAT_EMPTY;
+        // running_req->stat=REQ_STAT_DONE;
+        // running_req->args->stat=REQ_STAT_EMPTY;
     }
     //set_proc_stat(running_req->pid,TASK_READY);
     running_req=NULL;
@@ -184,13 +181,13 @@ int read_disk(int disk, int lba, int secn, char *dest)
 }
 int write_disk(int disk, int lba, int secn, char *src)
 {
-    request(disk,DISKREQ_WRITE,lba,secn,src);
+    // request(disk,DISKREQ_WRITE,lba,secn,src);
     int ret=write_disk_asm(lba,secn,src);
 //    chk_result(ret);
     if(running_req){
 
-        running_req->stat=REQ_STAT_DONE;
-        running_req->args->stat=REQ_STAT_EMPTY;
+        // running_req->stat=REQ_STAT_DONE;
+        // running_req->args->stat=REQ_STAT_EMPTY;
     }
     running_req=NULL;
     return ret;
@@ -227,9 +224,9 @@ int async_check_disk(int disk)
 //接口函数：负责接收VFS的请求然后执行
 int hd_do_req(struct request* req)
 {
-    start_request(req->dev);
     if(!req)
         return -1;
+    start_request(req->dev);
     int diski=BLKDEV_MINOR(req->dev);
     // for(;disks[diski]!=args->dev;diski++);
 

@@ -4,6 +4,7 @@
 
 #ifndef SRC_PROC_H
 #define SRC_PROC_H
+#pragma once
 #pragma pack(1)
 #define MAX_PAGES_PROC 8
 #define MAX_TASKS 32
@@ -207,7 +208,7 @@ __attribute__((__always_inline__))inline void wake_up(struct process* p){
 
 void init_proc();
 int req_proc();
-int reg_proc(addr_t entry, struct index_node *cwd, struct index_node *exef);
+// int reg_proc(addr_t entry, struct index_node *cwd, struct index_node *exef);
 void set_proc(long rax, long rbx, long rcx, long rdx, long es, long cs, long ss, long ds, long fs, long gs, long rsp,
               long rbp, long rsi, long rdi, long rip, long rflags, int proc_nr);
 void manage_proc();
@@ -219,7 +220,7 @@ int set_proc_stat(int pid,int stat);
 //内核将dll加载到指定地方
 int load_dll_at(char *path,int addr);
 
-int add_proc_openf(struct index_node *entry);
+// int add_proc_openf(struct index_node *entry);
 
 int sys_exit(int code);
 
