@@ -4,8 +4,8 @@
             "name": "Win32",
             "includePath": [
                 "${default}",
-                "include",
-                "usrlib/include"
+                "${workspaceFolder}/include",
+                "${workspaceFolder}/usrlib/include"
             ],
             "defines": [
                 "_DEBUG",

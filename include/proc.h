@@ -260,7 +260,11 @@ int sys_fork(void);
 
 void copy_mmap(struct process* from, struct process *to);
 void release_mmap(struct process* p);
-
+/// @brief 检查当前内存空间一块虚拟内存是否已经被映射。
+/// @param base 基地址
+/// @param mem_size 大小（字节）
+/// @return 布尔值，为真为可用，假为被占用。
+int chk_mmap(off_t base, size_t mem_size);
 
 /*
  * real id, effective id, saved effective id:

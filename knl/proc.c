@@ -1001,7 +1001,7 @@ void copy_mmap(struct process* from, struct process *to){
             page_item *pde= (page_item *) m3;
             for(int k=0;k<512;k++)
             {
-                if((pde[j]&PAGE_PRESENT)==0||(pde[j]&PDE_2MB)!=0)
+                if((pde[k]&PAGE_PRESENT)==0||(pde[k]&PDE_2MB)!=0)
                     continue;
                 addr_t old_data3=pde[k];//旧的数据，里面保存了属性和要拷贝的数据的地址
                 addr_t m2=kmalloc();
@@ -1015,6 +1015,56 @@ void copy_mmap(struct process* from, struct process *to){
     }
 }
 
+int chk_mmap(off_t base, size_t mem_size){
+    size_t nr_pte;
+    size_t ndx_pml4=0,ndx_pdpt=0,ndx_pd=0,ndx_pt=0;
+    page_item *pml4e= current->pml4;
+    nr_pte=  (mem_size-1+PAGE_4K_SIZE)/PAGE_4K_SIZE;
+    ndx_pt=  base/PAGE_4K_SIZE;
+    ndx_pd=  ndx_pt/512%512;
+    ndx_pdpt=ndx_pd/512%512;
+    ndx_pml4=ndx_pdpt/512%512;
+    while (nr_pte)
+    {
+        if(ndx_pdpt==512){
+            ndx_pml4++;
+            ndx_pdpt=0;
+        }
+        if(pml4e[ndx_pml4]%PAGE_PRESENT==0){
+            ndx_pml4++;
+            ndx_pdpt=0;
+            continue;
+        }
+        unsigned long *pdpt=pml4e[ndx_pml4]&~0xfff|KNL_BASE;
+        if(ndx_pd==512){
+            ndx_pdpt++;
+            ndx_pd=0;
+        }
+        if(pdpt[ndx_pdpt]&PAGE_PRESENT==0){
+            ndx_pdpt++;
+            ndx_pd=0;
+            continue;
+        }
+        if(pdpt[ndx_pdpt]&PDPTE_1GB)return 0;
+        unsigned long* pd=pdpt[ndx_pdpt]&~0xfff|KNL_BASE;
+        if(ndx_pt==512){
+            ndx_pd++;
+            ndx_pt=0;
+        }
+        if(pd[ndx_pd]&PAGE_PRESENT==0){
+            ndx_pd++;
+            ndx_pt=0;
+            continue;
+        }
+        if(pd[ndx_pd]&PDE_2MB)return 0;
+        unsigned long* pt=pd[ndx_pd]&~0xfff|KNL_BASE;
+        if(pt[ndx_pt]&PAGE_PRESENT)return 0;
+        ndx_pt++;
+        nr_pte--;
+    }
+    
+    return 1;
+}
 pid_t sys_getpgrp(void){
     return current->gpid;
 }

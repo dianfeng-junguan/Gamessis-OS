@@ -12,6 +12,12 @@ typedef unsigned short Elf32_Half;
 #define R_X86_64_32S 11
 #define R_X86_64_64 1
 #define R_X86_64_PC32 2
+#define R_X86_64_RELATIVE 8
+#define R_X86_64_GLOB_DAT 6
+#define R_X86_64_JUMP_SLOT 7
+#define R_X86_64_GOTOFF 9
+#define R_X86_64_GOTPC 10
+#define R_X86_64_GOT32 3
 #define EI_NIDENT 16
 /* These constants define the different elf file types */
 #define ET_NONE   0
@@ -39,6 +45,7 @@ typedef unsigned short Elf32_Half;
 #define SHT_LOUSER	0x80000000
 #define SHT_HIUSER	0xffffffff
 
+#define SHN_COMMON 0xfff2
 /* sh_flags */
 #define SHF_WRITE	0x1
 #define SHF_ALLOC	0x2
@@ -47,6 +54,7 @@ typedef unsigned short Elf32_Half;
 typedef unsigned long long Elf64_Addr,Elf64_Off;
 typedef unsigned long Elf64_Xword;
 typedef unsigned int Elf64_Word;
+typedef unsigned short Elf64_Half;
 
 #define EI_NIDENT 16
 
@@ -129,6 +137,37 @@ typedef struct elf64_phdr {
     Elf64_Xword p_memsz;
     Elf64_Xword p_align;
 } Elf64_Phdr;
+/* 
+typedef struct {
+        Elf32_Sword d_tag;
+        union {
+                Elf32_Word      d_val;
+                Elf32_Addr      d_ptr;
+                Elf32_Off       d_off;
+        } d_un;
+} Elf32_Dyn;//32位程序 */
+#define DT_NULL 0
+#define DT_NEEDED 1
+#define DT_STRTAB 5
+#define DT_FLAGS 30
+#define DT_PLTGOT 3
+#define DT_SYMTAB 6
+#define DT_RELSZ 18
+#define DT_RELASZ 8
+#define DT_REL  17
+#define DT_RELA 7
+#define DT_RELENT 19
+#define DT_RELAENT 9
+#define ELF64_R_SYM(i)((i) >> 32)
+#define ELF64_R_TYPE(i)((i) & 0xffffffffL)
+#define ELF64_R_INFO(s, t)(((s) << 32) + ((t) & 0xffffffffL))
+typedef struct {
+        Elf64_Xword d_tag;
+        union {
+                Elf64_Xword     d_val;
+                Elf64_Addr      d_ptr;
+        } d_un;
+} Elf64_Dyn;
 
 struct Elf32_sym                //
 {
@@ -138,6 +177,15 @@ struct Elf32_sym                //
     unsigned char st_info;      //低四位表示符号的作用范围（全局或局部），高四位表示符号的类型（变量、函数等）
     unsigned char st_other;
     Elf32_Half st_shndx;        //该符号的值在哪个Section下存储
+};
+struct Elf64_Sym                //
+{
+    Elf64_Word st_name;         //符号的名字
+    Elf64_Addr st_value;        //符号相对于其所在Section偏移的相对地址
+    Elf64_Word st_size;         //符号的size
+    unsigned char st_info;      //低四位表示符号的作用范围（全局或局部），高四位表示符号的类型（变量、函数等）
+    unsigned char st_other;
+    Elf64_Half st_shndx;        //该符号的值在哪个Section下存储
 };
 #define PT_NULL 0
 #define PT_LOAD 1

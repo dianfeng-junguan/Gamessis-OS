@@ -83,9 +83,8 @@
 				22,
 				23,
 				24,
-				25,
-				34,
-				36
+				33,
+				35
 			]
 		}
 	],
@@ -147,15 +146,15 @@
 				22,
 				23,
 				24,
-				25,
-				34,
-				36
+				33,
+				35
 			]
 		},
 		{
 			"name" : "Header Files",
 			"sourceIndexes" : 
 			[
+				25,
 				26,
 				27,
 				28,
@@ -163,14 +162,25 @@
 				30,
 				31,
 				32,
-				33,
-				35,
-				37
+				34,
+				36
 			]
 		}
 	],
 	"sources" : 
 	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "knl/blk_buf.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "knl/blk_dev.c",
+			"sourceGroupIndex" : 0
+		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
@@ -240,6 +250,12 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
+			"path" : "knl/ramdisk.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
 			"path" : "knl/ramfs.c",
 			"sourceGroupIndex" : 0
 		},
@@ -258,25 +274,7 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "knl/virfs.c",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "knl/wait.c",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
 			"path" : "knl/mods/disk.c",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "knl/mods/fat16.c",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -289,12 +287,6 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "knl/mods/kb.c",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "knl/mods/text_console.c",
 			"sourceGroupIndex" : 0
 		},
 		{

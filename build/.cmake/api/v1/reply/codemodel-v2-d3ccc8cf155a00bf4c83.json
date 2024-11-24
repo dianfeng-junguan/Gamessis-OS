@@ -6,7 +6,6 @@
 			[
 				{
 					"build" : ".",
-					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.1"
@@ -39,7 +38,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "gms::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-gms-Debug-b48b77c533a9e64fc648.json",
+					"jsonFile" : "target-gms-Debug-6302e99d3c6e5c5374ee.json",
 					"name" : "gms",
 					"projectIndex" : 0
 				}
@@ -49,12 +48,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "D:/Code/Comprehensive/OS/workspace/64/cmake-build-debug",
+		"build" : "D:/Code/Comprehensive/OS/workspace/64/build",
 		"source" : "D:/Code/Comprehensive/OS/workspace/64"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 5
+		"minor" : 2
 	}
 }
