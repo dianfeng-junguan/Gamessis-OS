@@ -77,16 +77,20 @@ int init_devfs()
     dconsole= (struct dir_entry *) kmalloc();
     struct index_node* iconsole=dconsole+1;
     dconsole->name=iconsole+1;
+    iconsole->dev=0x10000;
     make_devf(dconsole,iconsole,"console",ddev,&devfs_fops);
     //hd0-disk.c
     dhd0= (struct dir_entry *) kmalloc();
     struct index_node* ihd0=dhd0+1;
     dhd0->name=ihd0+1;
+    extern int dev_hd;
+    ihd0->dev=dev_hd<<8;
     make_devf(dhd0,ihd0,"hd0",ddev,&devfs_fops);
     //tty-tty.c
     dtty= (struct dir_entry *) kmalloc();
     struct index_node* itty=dtty+1;
     dtty->name=itty+1;
+    itty->dev|=0x10000;
     make_devf(dtty,itty,"tty",ddev,&devfs_fops);
     //初始化一下
     tty_fops.open(itty,&ftty);
@@ -95,6 +99,7 @@ int init_devfs()
     dramdisk= (struct dir_entry *) kmalloc();
     struct index_node* iramdisk=dramdisk+1;
     dramdisk->name=iramdisk+1;
+    iramdisk->dev=dev_ramdisk<<8;
     make_devf(dramdisk,iramdisk,"ram",ddev,&devfs_fops);
 
 }

@@ -2,8 +2,8 @@
 // #include "devdrv.h"
 #include "vfs.h"
 #define NR_REQS 32
-#define IS_BLKDEV(dev) (dev&0x100==0)
-#define IS_CHRDEV(dev) (dev&0x100!=0)
+#define IS_BLKDEV(dev) (dev&0x10000==0)
+#define IS_CHRDEV(dev) (dev&0x10000!=0)
 #define REQ_STAT_EMPTY 0	
 #define	REQ_STAT_READY 1
 #define REQ_STAT_WORKING 2
