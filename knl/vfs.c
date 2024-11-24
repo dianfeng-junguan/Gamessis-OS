@@ -43,9 +43,9 @@ struct dir_entry * path_walk(char * name,unsigned long flags)
         path=parent->dir_inode->inode_ops->lookup(parent->dir_inode,path);
         if(path == NULL)
         {
-            printf("can not find file or dir:%s\n",path->name);
-            kmfree(path->name);
-            kmfree(path);
+            printf("can not find file or dir:%s\n",name);
+            // kmfree(path->name);
+            // kmfree(path);
             return NULL;
         }
 

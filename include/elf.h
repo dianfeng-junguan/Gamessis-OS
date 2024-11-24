@@ -378,5 +378,6 @@ typedef struct
 
 
 
+#pragma pack()
 //可执行文件中Program头表是必须的，可重定向文件（.o）中Section头表是必须的，共享目标文件（.so）中两者都是必须的
 #endif //GMS_KNL_ELF_H

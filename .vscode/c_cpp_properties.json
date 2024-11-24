@@ -4,11 +4,11 @@
             "name": "Win32",
             "includePath": [
                 "${default}",
+                "${workspaceFolder}/include",
+                "${workspaceFolder}/usrlib/include",
                 "D:/Code/Comprehensive/轻量级libc/back/libc/include",
                 "D:/Code/Comprehensive/轻量级libc/back/libc/printf/src",
-                "D:/Code/Comprehensive/轻量级libc/back/libc/arch/x86_64/include",
-                "${workspaceFolder}/include",
-                "${workspaceFolder}/usrlib/include"
+                "D:/Code/Comprehensive/轻量级libc/back/libc/arch/x86_64/include"
             ],
             "defines": [
                 "_DEBUG",

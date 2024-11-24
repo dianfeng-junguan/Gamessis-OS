@@ -59,3 +59,4 @@ int init_gdt();
 void fill_desc(u64 base, u64 limit, u16 attr, u32 index);
 void fill_gate(u32 index,u32 offset,u16 selector,u16 attr);
 void fill_ldt_desc(u32 base, u32 limit,u16 attr,descriptor *desc);
+#pragma pack()

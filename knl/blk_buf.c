@@ -172,8 +172,10 @@ int brelse(buffer_head *bh){
     bh->count--;
     if(bh->count==0)
     {
-        bh->prev->next=bh->next;
-        bh->next->prev=bh->prev;
+        if(bh->prev)
+            bh->prev->next=bh->next;
+        if(bh->next)
+            bh->next->prev=bh->prev;
         bh->dev=-1;
         kmfree(bh->data);
     }

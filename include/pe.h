@@ -222,3 +222,4 @@ typedef struct{
 #define MAX_DLLS 256
 #define DLL_STAT_EMPTY 0
 #define DLL_STAT_LOADED 1
+#pragma pack()

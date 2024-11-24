@@ -172,8 +172,8 @@ void main(unsigned int magic,void* addr)
 
     move_to_user_mode();
     if(do_syscall(SYSCALL_FORK,0,0,0,0,0,0)==0){
-        char *argv[]={"/mnt/test.exe","gamessis os"};
-        do_syscall(SYSCALL_EXECVE, (long) "/mnt/test.exe", 2, (long) &argv[0], 0, 0, 0);
+        char *argv[]={"/mnt/test.elf","gamessis os"};
+        do_syscall(SYSCALL_EXECVE, (long) "/mnt/test.elf", 2, (long) &argv[0], 0, 0, 0);
     }
 //    if(sys_fork()==0){
 //    }

@@ -157,7 +157,7 @@ typedef struct
     u64 rsvd3;
     u32 rsvd4;
     u32 io_map_base;
-}TSS;
+}__attribute__((packed)) TSS;
 struct process{
     unsigned int pid,gpid,sid,fg_pgid;//fg_gid是foreground process group id
     int in_bgpg;//是否在background process group id
@@ -310,4 +310,5 @@ int sys_tcsetpgrp(int fildes,pid_t pgid_id);
 pid_t sys_tcgetpgrp(int fildes);
 
 extern struct process* current;
+#pragma pack()
 #endif //SRC_PROC_H

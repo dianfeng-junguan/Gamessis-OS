@@ -360,9 +360,9 @@ addr_t req_a_page(){
             unsigned int bit=page_map[i]&(1<<j);
             if((i*32+j)*4096>=0x100000&&(bit==0u))
             {
-                comprintf("req_a_page:before:page_map[%d]=0x%x,",i,page_map[i]);
+                // comprintf("req_a_page:before:page_map[%d]=0x%x,",i,page_map[i]);
                 page_map[i]=page_map[i]|(1<<j);
-                comprintf("now = 0x%x",page_map[i]);
+                // comprintf("now = 0x%x",page_map[i]);
                 return i*32+j;//num of page
 
             }
@@ -373,7 +373,7 @@ addr_t req_a_page(){
 
 void * pmalloc(){
     void *ret=(void*)(get_phyaddr(req_a_page()));
-    comprintf("pmalloc():%l\n",ret);
+    // comprintf("pmalloc():%l\n",ret);
     return ret;
 }
 int free_page(char *paddr){

@@ -6,8 +6,7 @@
 #include "exe.h"
 #include "syscall.h"
 #include "kb.h"
-#include "framebuffer.h"
-
+#pragma pack(1)
 gate *idt= (gate *) (KNL_BASE+IDT_ADDR);
 extern int disk_int_handler();
 void init_int(){
@@ -62,10 +61,10 @@ void init_int(){
 void set_gate(u8 index,addr_t offset,u16 selector,u16 attr)
 {
 #ifdef IA32
-    idt[index].offset_low=offset&0xffffu;
+    /* idt[index].offset_low=offset&0xffffu;
     idt[index].offset_high=(offset>>16)&0xffffu;
     idt[index].attr=attr;
-    idt[index].selector=selector;
+    idt[index].selector=selector; */
 #else
     offset|=KNL_BASE;//中断必须在内核空间
     idt[index].offset_low=offset&0xffff;

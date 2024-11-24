@@ -7,7 +7,6 @@
 #include "errno.h"
 #include "mem.h"
 #include "memory.h"
-#include "proc.h"
 #include "devman.h"
 #include <sys/unistd.h>
 
