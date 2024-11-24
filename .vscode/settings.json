@@ -34,7 +34,12 @@
         "ramdisk.h": "c",
         "*.bak": "cpp",
         "dl.h": "c",
-        "mman.h": "c"
+        "mman.h": "c",
+        "stddef.h": "c",
+        "stdio.h": "c",
+        "stdint.h": "c",
+        "wctype.h": "c",
+        "stdarg.h": "c"
     },
     "C_Cpp.default.compilerPath": "E:\\Mingw\\bin\\gcc.exe"
 }
