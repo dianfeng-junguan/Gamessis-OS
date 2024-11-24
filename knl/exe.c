@@ -545,7 +545,7 @@ ready:
             //load dl
             //
             if(current->dl)break;
-            int fd=sys_open("/mnt/bin/dl.so",O_EXEC);
+            int fd=sys_open("/mnt/dl.so",O_EXEC);
             kmfree(tmpla);
             kmfree(shla);
             current->dl=fd;

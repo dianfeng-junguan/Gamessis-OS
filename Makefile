@@ -26,11 +26,11 @@ k:
 knl:
 	@bash knl.sh
 	@objcopy -O elf64-x86-64 -B i386 -I binary res/font.psf bin/font.o
+	objcopy rd.img bin/rd.o -B i386 -O elf64-x86-64 -I binary
 	@ld -T knl.lds -o bin/gmsknl.elf $(KNL_OFILES) $(MODS_OFILES) $(COM_OFILES) --emit-relocs
 	@#python reloccheat.py bin/gmsknl.elf
 	@cp bin/gmsknl.elf bin/gmsknlm.elf
 	@objcopy bin/gmsknl.elf -I binary -O elf64-x86-64 bin/gmsknl.o -B i386
-	objcopy bin/rd.tar bin/rd.o -B i386 -O elf64-x86-64 -I binary
 	@#python $(PH_MODIFIER) bin/gmsknl.elf
 	#@objdump -d bin/gmsknl.elf -j .entry -M intel > knl.s
 	@objdump -l -S -d bin/gmsknl.elf -M intel > knl.s

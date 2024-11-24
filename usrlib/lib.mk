@@ -1,5 +1,5 @@
 .PHONY: libc
-LIBC_CARGS = -I include -w
+LIBC_CARGS = -I include -w -nostdlib -nostdinc -nostartfiles -nodefaultlibs -fno-stack-protector
 libc:
 	gcc -c usrlib/unistd.c -o bin/libc/unistd.o $(LIBC_CARGS)
 	gcc -c usrlib/stdlib.c -o bin/libc/stdlib.o $(LIBC_CARGS)

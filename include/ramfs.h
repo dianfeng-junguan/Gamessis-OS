@@ -4,6 +4,7 @@
 #ifndef GMS_RAMFS_H
 #define GMS_RAMFS_H
 #include "vfs.h"
+
 void init_ramfs();
 long open_ramfs(struct index_node * inode,struct file * filp);
 long close_ramfs(struct index_node * inode,struct file * filp);
