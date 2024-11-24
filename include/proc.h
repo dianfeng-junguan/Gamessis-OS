@@ -181,6 +181,7 @@ struct process{
     regs_t regs;
     struct List node;//本进程的节点
     struct List *child_procs;//子进程
+    int dl;//是否加载了dl
 }__attribute__((packed));//208 bytes
 #endif
 typedef struct
@@ -190,13 +191,6 @@ typedef struct
     unsigned int argc;
 }proc_ret_stack;
 
-__attribute__((__always_inline__))inline int do_syscall(long func,long a1,long a2,long a3,long a4,long a5,long a6){
-        asm volatile(".byte 0x48\n"
-                 "syscall"::"a"(func),"D"(a1),"S"(a2),"d"(a3),"c"(a4),"r"(a5),"r"(a6));
-        long ret=0;
-        asm volatile("mov %%rax,%0"::"m"(ret));
-        return ret;
-}
 __attribute__((__always_inline__))inline void wait_on_req(struct process* p){
         if(p->stat==TASK_READY||p->stat==TASK_RUNNING)
             p->stat=TASK_SUSPENDED;
@@ -205,6 +199,7 @@ __attribute__((__always_inline__))inline void wake_up(struct process* p){
         if(p->stat==TASK_SUSPENDED)
             p->stat=TASK_READY;
 }
+void set_errno(int errno);
 
 void init_proc();
 int req_proc();
@@ -225,7 +220,7 @@ int load_dll_at(char *path,int addr);
 int sys_exit(int code);
 
 
-void * sys_malloc(int size);
+void * sys_malloc(size_t size);
 int sys_free(int ptr);
 //弃用区=========================================
 //创建一个进程，返回进程在task数组中的index

@@ -726,9 +726,24 @@ int reg_proc(addr_t entry, struct index_node *cwd, struct index_node *exef)
     int *pptr=pstack;*/
 }
 
-void * sys_malloc(int size)
+void * sys_malloc(size_t size)
 {
-    //
+    /* //
+    size_t new_heaptop=current->mem_struct.heap_top+size;
+    size_t npgc=PAGE_4K_ALIGN(new_heaptop-current->mem_struct.heap_base)/PAGE_4K_SIZE;
+    size_t opgc=PAGE_4K_ALIGN(current->mem_struct.heap_top-current->mem_struct.heap_base)/PAGE_4K_SIZE;
+    off_t htop=PAGE_4K_ALIGN(current->mem_struct.heap_top);
+    while (npgc>opgc)
+    {
+        smmap(pmalloc(),htop,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,current->pml4);
+        htop=PAGE_4K_ALIGN(htop+1);
+        opgc++;
+    }
+    void *data=current->mem_struct.heap_top;
+    current->mem_struct.heap_top=new_heaptop;
+    return data; */
+    
+
     int n=size/CHUNK_SIZE+size%CHUNK_SIZE?1:0;
     chunk_header *hp=(chunk_header*)task[cur_proc].mem_struct.heap_base;
     while (hp->next!=NULL&&hp->alloc==0&&hp->pgn>=n)
@@ -1137,4 +1152,7 @@ pid_t sys_tcgetpgrp(int fildes){
 int sys_ioctl(int fildes, int request, unsigned long args){
     current->openf[fildes]->f_ops->ioctl(current->openf[fildes]->dentry->dir_inode,current->openf[fildes]\
     ,request,args);
+}
+void set_errno(int errno){
+    current->regs.errcode=errno;
 }

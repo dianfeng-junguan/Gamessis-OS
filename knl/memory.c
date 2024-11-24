@@ -101,10 +101,7 @@ stat_t smmap(addr_t pa,addr_t la,u32 attr,page_item* pml4p)
     return NORMAL;
 }
 
-stat_t mdemap(addr_t la)
-{
-    return mmap(0l,la,0);
-}
+
 int init_paging()
 {
     /*

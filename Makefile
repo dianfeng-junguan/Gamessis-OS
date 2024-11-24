@@ -4,6 +4,7 @@ BOOT = boot.efi
 include loader/loader.mk
 include test/test.mk
 include usrlib/lib.mk
+include dl/dl.mk
 KNL_OFILES = bin/int.o bin/main.o bin/log.o \
 			bin/memory.o bin/devman.o bin/proc.o bin/inta.o \
 			bin/gdt.o bin/gdta.o bin/clock.o bin/clocka.o bin/exe.o \
@@ -29,9 +30,7 @@ knl:
 	@#python reloccheat.py bin/gmsknl.elf
 	@cp bin/gmsknl.elf bin/gmsknlm.elf
 	@objcopy bin/gmsknl.elf -I binary -O elf64-x86-64 bin/gmsknl.o -B i386
-#--change-section-vma .bss+0xffff800000000000 \
-#  --change-section-vma .text+0xffff800000000000 --change-section-vma .data+0xffff800000000000\
-#  --change-section-vma .rodata+0xffff800000000000 --change-section-vma .eh_frame+0xffff800000000000
+	objcopy bin/rd.tar bin/rd.o -B i386 -O elf64-x86-64 -I binary
 	@#python $(PH_MODIFIER) bin/gmsknl.elf
 	#@objdump -d bin/gmsknl.elf -j .entry -M intel > knl.s
 	@objdump -l -S -d bin/gmsknl.elf -M intel > knl.s

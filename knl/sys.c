@@ -14,6 +14,7 @@
 #include "exe.h"
 #include "syscall.h"
 #include "int.h"
+#include <sys/mman.h>
 
 
 unsigned long sys_putstring(char *string)
@@ -436,6 +437,50 @@ unsigned long sys_getdents(int fd, void * dirent, long count)
     if(filp->f_ops && filp->f_ops->readdir)
         ret = filp->f_ops->readdir(filp,dirent,&fill_dentry);
     return ret;
+}
+
+void *sys_mmap(void *addr, size_t len, int prot, int flags,int fildes, off_t off){
+    int attr=PAGE_PRESENT|PAGE_FOR_ALL;
+    if((prot|PROT_WRITE)||(prot|PROT_EXEC))
+        attr|=PAGE_RWX;
+    if(addr){
+        if(chk_mmap(addr,len)){
+            int pgc=(len-1+PAGE_4K_SIZE)/PAGE_4K_SIZE;
+            for(int i=0;i<pgc;i++){
+                smmap(pmalloc(),addr+i*PAGE_4K_SIZE,attr,current->pml4);
+
+            }
+            goto sync_f;
+        }
+        if(flags|MAP_FIXED){
+            set_errno(-ENOMEM);
+            return MAP_FAILED;
+        }
+    }
+    //寻找一块空的虚拟内存
+    while (!chk_mmap(addr,len))
+    {
+        addr+=PAGE_4K_SIZE;
+        if(addr>=KNL_BASE){
+            set_errno(-ENOMEM);
+            return MAP_FAILED;
+        }
+    }
+    int pgc=(len-1+PAGE_4K_SIZE)/PAGE_4K_SIZE;
+    for(int i=0;i<pgc;i++){
+        smmap(pmalloc(),addr+i*PAGE_4K_SIZE,attr,current->pml4);
+    }
+sync_f:
+    if(flags|MAP_ANNONYMOUS){
+        //不需要映射到文件，匿名映射
+        return addr;
+    }
+    //根据需要是否同步文件内容
+    //目前先一致读取
+    sys_lseek(fildes,off,SEEK_SET);
+    sys_read(fildes,addr,len);
+    return addr;
+    
 }
 
 

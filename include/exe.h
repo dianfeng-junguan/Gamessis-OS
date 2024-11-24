@@ -49,7 +49,7 @@ int load_pe(struct process *proc);
 加载elf可执行文件。
 当elf没有依赖动态库的时候，返回elf的入口地址；当有的时候，则返回0；加载失败返回-1。
 */
-addr_t load_elf(struct file *elf);
+off_t load_elf(struct file *elf);
 
 int proc_start();
 

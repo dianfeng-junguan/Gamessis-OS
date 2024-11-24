@@ -32,7 +32,9 @@
         "ramfs.h": "c",
         "blk_buf.h": "c",
         "ramdisk.h": "c",
-        "*.bak": "cpp"
+        "*.bak": "cpp",
+        "dl.h": "c",
+        "mman.h": "c"
     },
     "C_Cpp.default.compilerPath": "E:\\Mingw\\bin\\gcc.exe"
 }

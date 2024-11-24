@@ -238,6 +238,7 @@ int syscall(long a, long b, long c, long d, long e, long f)
         case SYSCALL_EXECVE:return sys_execve(a, b, c);
         // case SYSCALL_OPERATE_DEV:return sys_operate_dev(a,b,c);
         case SYSCALL_WAIT:return sys_wait(a,b,c);
+        case SYSCALL_MMAP:return sys_mmap(a,b,c,d,e,f);
     }
     // __asm__ volatile("mov %0,%%eax\r\n mov %1,%%ebx\r\n mov %2,%%ecx\r\n mov %3,%%edx\r\n mov %4,%%esi\r\n mov %5,%%edi"\
     // ::"m"(func),"m"(a),"m"(b),"m"(c),"m"(d),"m"(e));

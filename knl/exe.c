@@ -147,7 +147,7 @@ int sys_execve(char *path, int argc, char **argv) {
     extern TSS* tss;
 
     current->exef=current->openf[fno];//改变执行文件
-    addr_t entry= load_elf(current->exef);
+    off_t entry= load_elf(current->exef);
     if(entry==-1)
     {
         comprintf("failed execve, errcode:%d\n",current->regs.errcode);
@@ -160,14 +160,25 @@ int sys_execve(char *path, int argc, char **argv) {
     stack_store_regs *rs= (stack_store_regs *) (tss->ists[0] - sizeof(stack_store_regs));
     rs->r10= (unsigned long) retp;//返回地址已经xchg到r10
     //第二个参数argv需要把内容从内核空间拷贝到用户堆里面
-    char* p= (char *) current->mem_struct.heap_base;
+    size_t arglen=0;
+    for(int i=0;i<argc;i++){
+        arglen+= strlen(argv[i])+1;
+    }
+    char* p= sys_malloc(arglen),pp=p;
     for(int i=0;i<argc;i++){
         strcpy(p,argv[i]);
-        p+= strlen(argv[i])+1;
+        p+=strlen(argv[i])+1;
     }
+    
     //第一个参数argc
-    rs->rsi=argc;
-    rs->rdi=current->mem_struct.heap_base;
+    if(current->dl){
+        rs->rsi=current->dl;
+        rs->rdi=argc;
+        rs->rdx=pp;
+    }else{
+        rs->rsi=argc;
+        rs->rdi=pp;
+    }
     
     //以下部分是临时测试代码
 //    int (*pmain)(int argc,char **argv)=(int (*)(int, char **)) entry;
@@ -213,7 +224,7 @@ int load_pe(struct process *proc)
     sys_read(exefno, &tnth, sizeof(tnth));
 
     //是否需要移动base(先不检查)
-    addr_t nbase=tnth.OptionalHeader.ImageBase;
+    off_t nbase=tnth.OptionalHeader.ImageBase;
     int pgn=tnth.OptionalHeader.SizeOfImage/PAGE_SIZE;
     //use_pgm_ava检查在页表中这个范围是否可用，可用就使用
 //    while(1)
@@ -223,7 +234,7 @@ int load_pe(struct process *proc)
 //        int pdpti=nbase/0x40000000;
 //        int pdei=nbase%0x40000000/PAGE_INDEX_SIZE;
 //        int ptei=nbase%PAGE_INDEX_SIZE/PAGE_SIZE;
-//        addr_t *pdpt=(proc->pml4[0]&~0xffful);
+//        off_t *pdpt=(proc->pml4[0]&~0xffful);
 //
 //        for(int i=0;i<pgn;i++)
 //        {
@@ -250,7 +261,7 @@ int load_pe(struct process *proc)
     int prog_size=nth->OptionalHeader.SizeOfImage;
     int page_count=prog_size/4096;
 
-    addr_t shell_addr=nth->OptionalHeader.AddressOfEntryPoint+nbase;
+    off_t shell_addr=nth->OptionalHeader.AddressOfEntryPoint+nbase;
     int page_index_item_count=page_count/1024+page_count%1024==0?0:1;
     int start_pgind_item=shell_addr/PAGE_INDEX_SIZE;
 
@@ -460,16 +471,25 @@ int sys_rmmod(char *name)
 {
 
 }
+off_t new_load_elf(struct file* elf){
+    //读取文件头
+    //if ET_DYN
+    //load dl
+    //else
+    // load elf
+}
 //切换进程前,在execve系统调用中
-addr_t load_elf(struct file *elf) {
+off_t load_elf(struct file *elf) {
     // 读取文件头
     struct file* elf_storage=elf;
-    addr_t tmpla=kmalloc();
+    off_t tmpla=kmalloc();
+    off_t shla=kmalloc();
     if(tmpla==-1)
     {
         current->regs.errcode=-ENOMEM;
         return -1;
     }
+ready:
     elf->position=0;
     //读取文件头
     elf->f_ops->read(elf, (char *) tmpla, PAGE_4K_SIZE, &elf->position);
@@ -477,7 +497,6 @@ addr_t load_elf(struct file *elf) {
     Elf64_Ehdr *ehdr=(Elf64_Phdr*)tmpla;
     u16 entn=ehdr->e_phnum;
     u16 ents=ehdr->e_phentsize;
-    addr_t shla=kmalloc();
     elf->position=ehdr->e_shoff;
     elf->f_ops->read(elf,(char*)shla,ehdr->e_shnum*ehdr->e_shentsize,&elf->position);
     struct Elf64_Shdr* sh= (struct Elf64_Shdr *) (shla);
@@ -487,7 +506,7 @@ addr_t load_elf(struct file *elf) {
     off_t base=ph->p_vaddr,offset=0;
     int reloc_flag=0;
     //判断是否为DYN
-    if(ehdr->e_type==ET_DYN){
+    /* if(ehdr->e_type==ET_DYN){
         reloc_flag=1;
         for(int i=0;i<ehdr->e_phnum;i++){
             tot_sz+=ph[i].p_memsz;
@@ -497,16 +516,16 @@ addr_t load_elf(struct file *elf) {
         /*
         似乎有的系统支持单个段的重定位。但是这样在有些重定位方式下，尤其是跨段的相对地址调用来说，这会带来大难度，
         所以这里先整体移动。
-        */
+        
         if(!chk_mmap(base,tot_sz)){
             //原来的地方已经被映射
             //需要重定位
             //找到另一块大小符合的连续虚拟内存，然后返回首地址（不映射，下面手动映射）
             reloc_flag=2;
-            addr_t new_base=find_free_vm(tot_sz);
+            off_t new_base=find_free_vm(tot_sz);
             offset=new_base-base;
         }
-    }
+    } */
     
 
     module* mod=0;
@@ -518,6 +537,20 @@ addr_t load_elf(struct file *elf) {
             modules[i].base=base;
             mod=modules+i;
             break;
+        }
+    }
+    for(int i=0;i<entn;i++){
+        
+        if((ph[i].p_type|PT_INTERP)!=0){
+            //load dl
+            //
+            if(current->dl)break;
+            int fd=sys_open("/mnt/bin/dl.so",O_EXEC);
+            kmfree(tmpla);
+            kmfree(shla);
+            current->dl=fd;
+            elf=current->openf[fd];
+            goto ready;
         }
     }
     for(int i=0;i<entn;i++){
@@ -537,8 +570,8 @@ addr_t load_elf(struct file *elf) {
                 attr|=PAGE_RWX;
             int pgc=(ms-1+PAGE_4K_SIZE)/PAGE_4K_SIZE;
             for(int j=0;j<pgc;j++){
-                addr_t dest=(addr_t) (vptr + j * PAGE_4K_SIZE);
-                addr_t lma=pmalloc();
+                off_t dest=(off_t) (vptr + j * PAGE_4K_SIZE);
+                off_t lma=pmalloc();
                 if(lma==-1)
                 {
                     current->regs.errcode=-ENOMEM;
@@ -554,7 +587,7 @@ addr_t load_elf(struct file *elf) {
     }
     //找dynamic段
     struct Elf64_Shdr *dynamic=NULL;
-    addr_t* got=NULL;
+    off_t* got=NULL;
     for(int i=0;i<ehdr->e_shnum;i++){
         if(sh[i].sh_type==SHT_DYNAMIC)
             dynamic=sh+i;
@@ -644,7 +677,7 @@ is_rel_prepared:
     };
     //空堆
     //分配堆
-    addr_t lma=pmalloc();
+    off_t lma=pmalloc();
     if(lma==-1)
     {
         current->regs.errcode=-ENOMEM;
@@ -654,9 +687,10 @@ is_rel_prepared:
     memset((unsigned char *) HEAP_BASE, 0, CHUNK_SIZE);
     current->mem_struct.heap_base=HEAP_BASE;
     current->mem_struct.heap_top=HEAP_BASE+CHUNK_SIZE;
+    memcpy((chunk_header*)HEAP_BASE,&hdrtmp,sizeof(hdrtmp));
     //设置栈
     current->mem_struct.stack_top=STACK_TOP;
-    addr_t entry=0;
+    off_t entry=0;
     entry=ehdr->e_entry;
     kmfree(tmpla);
     kmfree(shla);
@@ -670,8 +704,8 @@ id_t get_modid(void){
 void dl_runtime_resolve(){
     //获取modid
     unsigned long modid,rel_offset;
-    asm volatile("mov $8(%%rsp),%0 \n"::"m"(modid));
-    asm volatile("mov $16(%%rsp),%0 \n"::"m"(rel_offset));
+    asm volatile("push %%rax\n mov 8(%%rsp),%%rax\n mov %%rax,%0":"=m"(modid));
+    asm volatile("push %%rax\n mov 16(%%rsp),%%rax\n mov %%rax,%0":"=m"(rel_offset));
     Elf64_Rel* rel=rel_offset;
     int symi=ELF64_R_SYM(rel->r_info),type=ELF64_R_TYPE(rel->r_info);
     off_t sym_off=get_sym_addr(modid,symi);
@@ -704,7 +738,7 @@ void dl_runtime_resolve(){
     }
     //重定位完毕，直接返回到目标地址
 
-    asm volatile("mov %0,(%%rsp)":"=m"(*v_rel));
+    asm volatile("mov %0,%%rax\n mov %%rax,0(%%rsp)"::"m"(*v_rel));
 }
 off_t get_sym_addr(unsigned long modid,unsigned long symi){
     struct Elf64_Sym *sym=modules[modid].p_symbol;
