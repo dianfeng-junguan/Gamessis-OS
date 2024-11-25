@@ -11,6 +11,7 @@
 #include "framebuffer.h"
 #include "log.h"
 #include <blk_buf.h>
+#include <vfs.h>
 
 static int rhead=0,rtail=0;
 static int dev_dfd=-1;
@@ -39,18 +40,63 @@ void make_inode(struct index_node* i,struct index_node_operations* iops,struct f
     i->file_size=0;
     i->inode_ops=iops;
 }
-void make_devf(struct dir_entry* d,struct index_node* i,char* name,struct dir_entry* ddev,struct file_operations* fops){
-    make_dentry(d,name, strlen(name),root_sb->root,&dev_dir_dops);
-    d->dir_inode=i;
-    make_inode(i,ddev->dir_inode->inode_ops,fops,FS_ATTR_DEVICE,root_sb);
-    list_add(&ddev->subdirs_list,&d->child_node);//添加到/dev下
-}
 /*
  * 创建/dev文件夹，添加必要的设备文件。
  * 这个/dev文件夹的dentry和inode等数据由devman管理，根文件系统切换时，这个文件夹会跟着挂载到新文件系统的根目录下。
  * */
+void make_devf(struct dir_entry* d,struct index_node* i,char* name,struct dir_entry* dir_dev,struct file_operations* fops){
+    make_dentry(d,name, strlen(name),dir_dev,&dev_dir_dops);
+    d->dir_inode=i;
+    make_inode(i,dir_dev->dir_inode->inode_ops,fops,FS_ATTR_DEVICE,root_sb);
+    // list_add(&dir_dev->subdirs_list,&d->child_node);//添加到/dev下
+}
+struct super_block* devfs_read_superblock(struct Disk_Partition_Table_Entry *PDTE,void *buf){
+    struct super_block* sb=kmalloc();
+    sb->dev=0;//不存在具体的存储设备
+    sb->p_dev=0;
+    sb->root=sb+1;
+    sb->sb_ops=&devfs_sops;
+
+    sb->root->dir_inode=sb->root+1;
+    sb->root->dir_ops=&devfs_dops;
+    list_init(&sb->root->child_node);
+    list_init(&sb->root->subdirs_list);
+    sb->root->name="dev";
+    sb->root->name_length=3;
+
+    sb->root->dir_inode->dev=0;
+    sb->root->dir_inode->inode_ops=&devfs_iops;
+    sb->root->dir_inode->sb=sb;
+    sb->root->dir_inode->file_size=0;
+    sb->root->dir_inode->f_ops=&devfs_fops;
+    sb->root->dir_inode->blocks=0;
+    sb->root->dir_inode->attribute|=FS_ATTR_DIR;
+    sb->root->dir_inode->private_index_info=0;
+
+    return sb;
+}
+struct dir_entry* devfs_lookup(struct index_node* parent_inode,struct dir_entry* dest_dentry){
+    //TODO 待完成
+}
+struct dir_entry_operations devfs_dops={
+    //TODO 待完成
+    
+};
+struct index_node_operations devfs_iops={
+    .lookup=devfs_lookup
+    //TODO 待完成
+};
+struct super_block_operations devfs_sops={
+    //TODO 待完成
+    
+};
 struct dir_entry* ddev=NULL,*dmnt,*dconsole,*dhd0,*dtty,*dramdisk;
 struct file ftty;
+struct file_system_type fs_devfs={
+    .name="devfs",
+    .next=0,
+    .read_superblock=devfs_read_superblock
+};
 int init_devfs()
 {
     //创建dev文件夹
@@ -71,27 +117,33 @@ int init_devfs()
     make_inode(imnt,root_sb->root->dir_inode->inode_ops,root_sb->root->dir_inode->f_ops,FS_ATTR_DIR,root_sb);
     imnt->private_index_info=dmnt;
 
+    register_filesystem(&fs_devfs);
+    struct super_block *sb_devfs=mount_fs("devfs",0,0);
+    mount_fs_on(ddev,&fs_devfs);
+    
+    struct dir_entry* rt_devfs=sb_devfs->root;
 
+    
     //创建几个设备文件
     //console-framebuffer.c
     dconsole= (struct dir_entry *) kmalloc();
     struct index_node* iconsole=dconsole+1;
     dconsole->name=iconsole+1;
     iconsole->dev=0x10000;
-    make_devf(dconsole,iconsole,"console",ddev,&devfs_fops);
+    make_devf(dconsole,iconsole,"console",rt_devfs,&devfs_fops);
     //hd0-disk.c
     dhd0= (struct dir_entry *) kmalloc();
     struct index_node* ihd0=dhd0+1;
     dhd0->name=ihd0+1;
     extern int dev_hd;
     ihd0->dev=dev_hd<<8;
-    make_devf(dhd0,ihd0,"hd0",ddev,&devfs_fops);
+    make_devf(dhd0,ihd0,"hd0",rt_devfs,&devfs_fops);
     //tty-tty.c
     dtty= (struct dir_entry *) kmalloc();
     struct index_node* itty=dtty+1;
     dtty->name=itty+1;
     itty->dev|=0x10000;
-    make_devf(dtty,itty,"tty",ddev,&devfs_fops);
+    make_devf(dtty,itty,"tty",rt_devfs,&devfs_fops);
     //初始化一下
     tty_fops.open(itty,&ftty);
 
@@ -100,7 +152,7 @@ int init_devfs()
     struct index_node* iramdisk=dramdisk+1;
     dramdisk->name=iramdisk+1;
     iramdisk->dev=dev_ramdisk<<8;
-    make_devf(dramdisk,iramdisk,"ram",ddev,&devfs_fops);
+    make_devf(dramdisk,iramdisk,"ram",rt_devfs,&devfs_fops);
 
 }
 //

@@ -78,7 +78,9 @@ void segment_notexist();
 void stackseg_overbound();
 void general_protect();
 void coprocessor_err();
-void report_back_trace_of_err();
+
+/// @brief 在错误发生时，输出函数调用堆栈。
+void backtrace();
 /* 
 调用系统中断，所有内核的重要功能基本都在这。
 参数；

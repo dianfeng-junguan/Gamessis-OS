@@ -144,7 +144,7 @@ long FAT32_write(struct file * filp,char * buf,unsigned long count,long * positi
 	long flags = 0;
 	int index = *position / fsbi->bytes_per_cluster;
 	long offset = *position % fsbi->bytes_per_cluster;
-	char * buffer = (char *) kmalloc(fsbi->bytes_per_cluster, 0);
+	char * buffer = (char *) kmallocat(0,TO_MPGN(fsbi->bytes_per_cluster));
 
 	if(!cluster)
 	{
@@ -289,7 +289,7 @@ long FAT32_readdir(struct file * filp,void * dirent,filldir_t filler)
 	struct FAT32_Directory * tmpdentry = NULL;
 	struct FAT32_LongDirectory * tmpldentry = NULL;
 
-	buf = kmalloc(fsbi->bytes_per_cluster, 0);
+	buf = kmallocat(0,TO_MPGN(fsbi->bytes_per_cluster));
 
 	cluster = finode->first_cluster;
 
@@ -338,7 +338,7 @@ next_cluster:
 				tmpldentry --;
 			}
 
-			name = kmalloc(j * 13 + 1, 0);
+			name = kmallocat(0,TO_MPGN(j * 13 + 1));
 			memset(name,0,j*13+1);
 			tmpldentry = (struct FAT32_LongDirectory *)tmpdentry-1;
 
@@ -359,7 +359,7 @@ next_cluster:
 			goto find_lookup_success;
 		}
 
-		name = kmalloc(15, 0);
+		name = kmallocat(0,TO_MPGN(15));
 		memset(name,0,15);
 		//short file/dir base name compare
 		for(x=0;x<8;x++)
@@ -436,14 +436,14 @@ struct dir_entry * FAT32_lookup(struct index_node * parent_inode,struct dir_entr
 	struct FAT32_LongDirectory * tmpldentry = NULL;
 	struct index_node * p = NULL;
 
-	buf = kmalloc(fsbi->bytes_per_cluster, 0);
+	buf = kmallocat(0,TO_MPGN(fsbi->bytes_per_cluster));
 
 	cluster = finode->first_cluster;
 
 next_cluster:
 	sector = fsbi->Data_firstsector + (cluster - 2) * fsbi->sector_per_cluster;
 	printf("lookup cluster:0x%x,sector:0x%x\r\n",cluster,sector);
-    if(blkdev_read(root_sb->dev,sector*SECTOR_SIZE,fsbi->sector_per_cluster*SECTOR_SIZE,buf)<0)
+    if(blkdev_read(parent_inode->dev,sector*SECTOR_SIZE,fsbi->sector_per_cluster*SECTOR_SIZE,buf)<0)
 	{
 		printf("FAT32 FS(lookup) read disk ERROR!!!!!!!!!!\n");
         kmfree(buf);
@@ -627,7 +627,7 @@ continue_cmp_fail:;
 	return NULL;
 
 find_lookup_success:
-	p = (struct index_node *) kmalloc(sizeof(struct index_node), 0);
+	p = (struct index_node *) kmallocat(0,TO_MPGN(sizeof(struct index_node)));
 	memset(p,0,sizeof(struct index_node));
 	p->file_size = tmpdentry->DIR_FileSize;
 	p->blocks = (p->file_size + fsbi->bytes_per_cluster - 1)/fsbi->bytes_per_sector;
@@ -636,7 +636,7 @@ find_lookup_success:
 	p->f_ops = &FAT32_file_ops;
 	p->inode_ops = &FAT32_inode_ops;
 
-	p->private_index_info = (struct FAT32_inode_info *) kmalloc(sizeof(struct FAT32_inode_info), 0);
+	p->private_index_info = (struct FAT32_inode_info *) kmallocat(0,TO_MPGN(sizeof(struct FAT32_inode_info)));
 	memset(p->private_index_info,0,sizeof(struct FAT32_inode_info));
 	finode = p->private_index_info;
 
@@ -729,7 +729,7 @@ void fat32_write_inode(struct index_node * inode)
 	}
 
 	sector = fsbi->Data_firstsector + (finode->dentry_location - 2) * fsbi->sector_per_cluster;
-	buf = (struct FAT32_Directory *) kmalloc(fsbi->bytes_per_cluster, 0);
+	buf = (struct FAT32_Directory *) kmallocat(0,TO_MPGN(fsbi->bytes_per_cluster));
 	memset(buf,0,fsbi->bytes_per_cluster);
 	blkdev_read(inode->dev,sector*SECTOR_SIZE,fsbi->sector_per_cluster*SECTOR_SIZE,buf);
     fdentry = buf+finode->dentry_position;
@@ -759,11 +759,11 @@ struct super_block * fat32_read_superblock(struct Disk_Partition_Table_Entry * D
 	struct FAT32_sb_info * fsbi = NULL;
 
 	////super block
-	sbp = (struct super_block *) kmalloc(sizeof(struct super_block), 0);
+	sbp = (struct super_block *) kmallocat(0,TO_MPGN(sizeof(struct super_block)));
 	memset(sbp,0,sizeof(struct super_block));
 
 	sbp->sb_ops = &FAT32_sb_ops;
-	sbp->private_sb_info = (struct FAT32_sb_info *) kmalloc(sizeof(struct FAT32_sb_info), 0);
+	sbp->private_sb_info = (struct FAT32_sb_info *) kmallocat(0,TO_MPGN(sizeof(struct FAT32_sb_info)));
 	memset(sbp->private_sb_info,0,sizeof(struct FAT32_sb_info));
 
 	////fat32 boot sector
@@ -784,25 +784,25 @@ struct super_block * fat32_read_superblock(struct Disk_Partition_Table_Entry * D
 	printf("FAT32 Boot Sector\n\tBPB_FSInfo:%x\n\tBPB_BkBootSec:%x\n\tBPB_TotSec32:%x\n",fbs->BPB_FSInfo,fbs->BPB_BkBootSec,fbs->BPB_TotSec32);
 	
 	////fat32 fsinfo sector
-	fsbi->fat_fsinfo = (struct FAT32_FSInfo *) kmalloc(sizeof(struct FAT32_FSInfo), 0);
+	fsbi->fat_fsinfo = (struct FAT32_FSInfo *) kmallocat(0,TO_MPGN(sizeof(struct FAT32_FSInfo)));
 	memset(fsbi->fat_fsinfo,0,512);
 	blkdev_read(root_sb->dev,(DPTE->start_LBA + fbs->BPB_FSInfo)*SECTOR_SIZE,SECTOR_SIZE,(unsigned char *)fsbi->fat_fsinfo);
 	printf("FAT32 FSInfo\n\tFSI_LeadSig:%x\n\tFSI_StrucSig:%x\n\tFSI_Free_Count:%x\n",fsbi->fat_fsinfo->FSI_LeadSig,fsbi->fat_fsinfo->FSI_StrucSig,fsbi->fat_fsinfo->FSI_Free_Count);
 	
 	////directory entry
-	sbp->root = (struct dir_entry *) kmalloc(sizeof(struct dir_entry), 0);
+	sbp->root = (struct dir_entry *) kmallocat(0,TO_MPGN(sizeof(struct dir_entry)));
 	memset(sbp->root,0,sizeof(struct dir_entry));
 
 	list_init(&sbp->root->child_node);
 	list_init(&sbp->root->subdirs_list);
 	sbp->root->parent = sbp->root;
 	sbp->root->dir_ops = &FAT32_dentry_ops;
-	sbp->root->name = (char *) kmalloc(2, 0);
+	sbp->root->name = (char *) kmallocat(0,TO_MPGN(2));
 	sbp->root->name[0] = '/';
 	sbp->root->name_length = 1;
 
 	////index node
-	sbp->root->dir_inode = (struct index_node *) kmalloc(sizeof(struct index_node), 0);
+	sbp->root->dir_inode = (struct index_node *) kmallocat(0,TO_MPGN(sizeof(struct index_node)));
 	memset(sbp->root->dir_inode,0,sizeof(struct index_node));
 	sbp->root->dir_inode->inode_ops = &FAT32_inode_ops;
 	sbp->root->dir_inode->f_ops = &FAT32_file_ops;
@@ -812,7 +812,7 @@ struct super_block * fat32_read_superblock(struct Disk_Partition_Table_Entry * D
 	sbp->root->dir_inode->sb = sbp;
 
 	////fat32 root inode
-	sbp->root->dir_inode->private_index_info = (struct FAT32_inode_info *) kmalloc(sizeof(struct FAT32_inode_info), 0);
+	sbp->root->dir_inode->private_index_info = (struct FAT32_inode_info *) kmallocat(0,TO_MPGN(sizeof(struct FAT32_inode_info)));
 	memset(sbp->root->dir_inode->private_index_info,0,sizeof(struct FAT32_inode_info));
 	finode = (struct FAT32_inode_info *)sbp->root->dir_inode->private_index_info;
 	finode->first_cluster = fbs->BPB_RootClus;
@@ -857,8 +857,7 @@ void DISK1_FAT32_FS_init()
 
     //挂载新文件系统到/mnt
 	struct super_block *fat32_sb= mount_fs("FAT32",&DPT.DPTE[0],buf);	//not dev node
-    fat32_sb->root=dmnt;
-//    list_add_to_behind(&root_sb->root->subdirs_list,ddev);//把dev文件夹挂到新的rfs下
+	mount_fs_on(dmnt,fat32_sb);//挂载到/mnt上
 }
 
 

@@ -500,7 +500,6 @@ ready:
     elf->position=ehdr->e_shoff;
     elf->f_ops->read(elf,(char*)shla,ehdr->e_shnum*ehdr->e_shentsize,&elf->position);
     struct Elf64_Shdr* sh= (struct Elf64_Shdr *) (shla);
-    //TODO  加载shdr表
     Elf64_Phdr *ph= (Elf64_Phdr *) (tmpla + ehdr->e_phoff);
     size_t tot_sz=0;
     off_t base=ph->p_vaddr,offset=0;

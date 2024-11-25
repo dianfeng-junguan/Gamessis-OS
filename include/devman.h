@@ -10,6 +10,7 @@
 #define REQ_STAT_DONE 3
 #define REQ_STAT_ERR 4	
 int init_devfs();
+struct super_block* devfs_read_superblock(struct Disk_Partition_Table_Entry *PDTE,void *buf);
 // int reg_device(device *dev);
 // int reg_driver(driver *drv);
 int dispose_device(int dev);

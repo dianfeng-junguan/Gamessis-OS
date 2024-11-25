@@ -33,8 +33,9 @@ struct blk_dev
 #define MAX_REQUESTS 64
 #define BLOCK_SIZE 4096
 #define SECTOR_SIZE 512
-#define TO_BLKN(n) (n/4096+n%4096>0?1:0)
-#define TO_SECN(n) (n/512+n%512>0?1:0)
+#define TO_BLKN(n) ((n+4095)/4096)
+#define TO_MPGN(n) ((n+4095)/4096)
+#define TO_SECN(n) ((n+511)/512)
 /*
 @brief 注册块设备，返回一个设备类号。
 设备类号就是给一类相同操作的设备的编号。该类别下每个具体的设备还会有一个设备编号，二者合在一起就是设备号。

@@ -116,7 +116,7 @@ void bounds(){
 void undefined_operator(){
     //puts("undef operator");
     eoi();
-    report_back_trace_of_err();
+    backtrace();
     __asm__ volatile ("jmp .\r\n leave \r\n iretq");
 }
 void coprocessor_notexist(){
@@ -247,4 +247,8 @@ int syscall(long a, long b, long c, long d, long e, long f)
 void wrmsr(unsigned long address,unsigned long value)
 {
     __asm__ __volatile__	("wrmsr	\n\t"::"d"(value >> 32),"a"(value & 0xffffffff),"c"(address):"memory");
+}
+
+void backtrace(){
+    
 }

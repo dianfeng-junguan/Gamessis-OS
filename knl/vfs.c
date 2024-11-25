@@ -9,6 +9,7 @@
 #include "mem.h"
 #include "str.h"
 #include <ramdisk.h>
+mount_point mp_mount_points[MAX_MOUNTPOINTS];
 
 struct dir_entry * path_walk(char * name,unsigned long flags)
 {
@@ -31,30 +32,48 @@ struct dir_entry * path_walk(char * name,unsigned long flags)
         while(*name && (*name != '/'))
             name++;
         tmpnamelen = name - tmpname;
-
-        path = (struct dir_entry *) kmalloc(sizeof(struct dir_entry), 0);
-        memset(path,0,sizeof(struct dir_entry));
-
-        path->name = kmalloc();
-        memset(path->name,0,tmpnamelen+1);
-        memcpy(path->name,tmpname,tmpnamelen);
-        path->name_length = tmpnamelen;
-
-        path=parent->dir_inode->inode_ops->lookup(parent->dir_inode,path);
-        if(path == NULL)
+        //先在缓存中寻找已有的dentry
+        //寻找名字为tmpname的dentry
+        struct List* lp=parent->subdirs_list.next;
+        while (lp)
         {
-            printf("can not find file or dir:%s\n",name);
-            // kmfree(path->name);
-            // kmfree(path);
-            return NULL;
+            path=lp->data;
+            if(memcmp(tmpname,path->name,tmpnamelen)==0){
+                break;
+            }
+            lp=&path->child_node;
+            lp=lp->next;
         }
+        if(!lp){
+            //缓存中没有，再读取介质
+            path = (struct dir_entry *) kmalloc(sizeof(struct dir_entry), 0);
+            memset(path,0,sizeof(struct dir_entry));
 
+            path->name = kmalloc();
+            memset(path->name,0,tmpnamelen+1);
+            memcpy(path->name,tmpname,tmpnamelen);
+            path->name_length = tmpnamelen;
+
+            path=parent->dir_inode->inode_ops->lookup(parent->dir_inode,path);
+        
+            if(path == NULL)
+            {
+                printf("can not find file or dir:%s\n",name);
+                // kmfree(path->name);
+                // kmfree(path);
+                return NULL;
+            }
 //        list_init(&path->child_node);
 //        list_init(&path->subdirs_list);
-        path->parent = parent;
-        //list_add会查重，如果链表里面已经有了data指针值相同的项，就不添加。
-        //对于/dev这样的文件夹，lookup返回的就是链表里的dentry，data会一样
-        list_add(&parent->subdirs_list,&path->child_node);
+            path->parent = parent;
+            //list_add会查重，如果链表里面已经有了data指针值相同的项，就不添加。
+            //不过这里已经是缓存中没有找到dentry的情况了，一般不会出现data一样。
+            list_add(&parent->subdirs_list,&path->child_node);
+
+        }
+        
+        
+
 
         if(!*name)
             goto last_component;
@@ -62,7 +81,11 @@ struct dir_entry * path_walk(char * name,unsigned long flags)
             name++;
         if(!*name)
             goto last_slash;
-
+        if(path->mount_point)
+        {
+            //有挂载点，则进入挂载文件系统的文件树
+            path=path->mount_point->sb->root;
+        }
         parent = path;
     }
 
@@ -107,7 +130,25 @@ struct super_block* mount_fs(char * name,struct Disk_Partition_Table_Entry * DPT
         }
     return 0;
 }
-
+int mount_fs_on(struct dir_entry *d_to_mount,struct super_block* fs){
+    for(int i=0;i<MAX_MOUNTPOINTS;i++){
+        if(!mp_mount_points[i].sb){
+            mp_mount_points[i].sb=fs;
+            mp_mount_points[i].dmount_point=d_to_mount;
+            d_to_mount->mount_point=mp_mount_points+i;
+            return 1;
+        }
+    }
+    return -ENOMEM;
+}
+int umount_fs(struct dir_entry* d_mp){
+    if(d_mp->mount_point){
+        d_mp->mount_point->dmount_point=0;
+        d_mp->mount_point->sb=0;
+        return 1;
+    }
+    return -ENOENT;
+}
 unsigned long register_filesystem(struct file_system_type * fs)
 {
     struct file_system_type * p = NULL;
@@ -175,6 +216,7 @@ void init_rootfs(){
     root_sb->root->parent=root_sb->root;
     list_init(&root_sb->root->subdirs_list);
     list_init(&root_sb->root->child_node);
+    root_sb->root->child_node.data=root_sb->root;
 
     root_sb->dev=dev_ramdisk<<8;
     root_sb->p_dev=&bd_ramdisk;

@@ -6,6 +6,7 @@
 #define GMS_VFS_H
 
 #include "typename.h"
+#define MAX_MOUNTPOINTS 24
 // #include <blk_dev.h>
 struct List
 {
@@ -26,20 +27,16 @@ __attribute__((always_inline)) inline void list_add_to_behind(struct List * entr
     new->prev = entry;
     if(new->next)
         new->next->prev = new;
-    // entry->next = new;
+    entry->next = new;
 }
 __attribute__((always_inline)) inline void list_add(struct List * entry,struct List * new)	////add to the tail of the link
 {
-    if(entry->next==NULL)
-        list_add_to_behind(entry,new);
-    else{
-        struct List* p=entry;
-        for(;p->next&&p->next!=p;p=p->next){
-            if(p->data==new->data)
-                return;
-        }
-        list_add_to_behind(p,new);
+    struct List* p=entry;
+    for(;p->next&&p->next!=p;p=p->next){
+        if(p->data==new->data)
+            return;
     }
+    list_add_to_behind(p,new);
 }
 __attribute__((always_inline)) inline void list_drop(struct List * entry)
 {
@@ -78,7 +75,20 @@ struct file_system_type
     struct super_block * (*read_superblock)(struct Disk_Partition_Table_Entry * DPTE,void * buf);
     struct file_system_type * next;
 };
+typedef struct _mount_point
+{
+    struct super_block* sb;//文件系统超级块
+    struct dir_entry* dmount_point;//被挂载到的dentry。
+}mount_point;
 
+/// @brief 将文件系统实例挂载到文件夹上。此举将会创建mount point 数据结构。
+/// @param d_to_mount 将要挂载到的文件夹
+/// @param fs 被挂载的文件系统超级块
+int mount_fs_on(struct dir_entry *d_to_mount,struct super_block* fs);
+/// @brief 卸载挂载点。
+/// @param d_mp 被挂载的目录。
+/// @return 错误码，成功为1
+int umount_fs(struct dir_entry* d_mp);
 struct super_block * mount_fs(char * name,struct Disk_Partition_Table_Entry * DPTE,void * buf);
 unsigned long register_filesystem(struct file_system_type * fs);
 unsigned long unregister_filesystem(struct file_system_type * fs);
@@ -127,6 +137,8 @@ struct dir_entry
 
     struct index_node * dir_inode;
     struct dir_entry * parent;
+
+    mount_point *mount_point;
 
     struct dir_entry_operations * dir_ops;
 };

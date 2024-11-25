@@ -41,7 +41,11 @@
         "wctype.h": "c",
         "stdarg.h": "c",
         "mem.h": "c",
-        "fat32.h": "c"
+        "fat32.h": "c",
+        "dirent.h": "c",
+        "bitset": "c",
+        "chrono": "c",
+        "algorithm": "c"
     },
     "C_Cpp.default.compilerPath": "E:\\Mingw\\bin\\gcc.exe"
 }

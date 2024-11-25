@@ -967,7 +967,6 @@ void release_mmap(struct process* p){
                             for(int l=0;l<512;l++){
                                 if(pte[l]&PAGE_PRESENT){
                                     //释放申请的物理内存
-                                    //TODO:这里有一个问题：目前fork时候堆栈空间使用的是vmalloc内存，这样的话free_page是释放不了的。
                                     free_page(pte[l]&PAGE_4K_MASK);
                                 }
                             }

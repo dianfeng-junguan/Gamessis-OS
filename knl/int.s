@@ -4,7 +4,6 @@ global inw
 global eoi
 global turn_on_int
 global io_delay
-global report_back_trace_of_err
 extern print
 extern printn
 extern print_hex
@@ -74,7 +73,7 @@ turn_on_int:
 	nop
 	ret
 extern printf
-report_back_trace_of_err:
+_report_back_trace_of_err:
 	;assume happening under a int called
 	;in the stack:
 	;top:
