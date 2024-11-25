@@ -50,6 +50,21 @@ void make_devf(struct dir_entry* d,struct index_node* i,char* name,struct dir_en
     make_inode(i,dir_dev->dir_inode->inode_ops,fops,FS_ATTR_DEVICE,root_sb);
     // list_add(&dir_dev->subdirs_list,&d->child_node);//添加到/dev下
 }
+struct dir_entry* devfs_lookup(struct index_node* parent_inode,struct dir_entry* dest_dentry){
+    //TODO 待完成
+}
+struct dir_entry_operations devfs_dops={
+    //TODO 待完成
+    
+};
+struct index_node_operations devfs_iops={
+    .lookup=devfs_lookup
+    //TODO 待完成
+};
+struct super_block_operations devfs_sops={
+    //TODO 待完成
+    
+};
 struct super_block* devfs_read_superblock(struct Disk_Partition_Table_Entry *PDTE,void *buf){
     struct super_block* sb=kmalloc();
     sb->dev=0;//不存在具体的存储设备
@@ -75,21 +90,6 @@ struct super_block* devfs_read_superblock(struct Disk_Partition_Table_Entry *PDT
 
     return sb;
 }
-struct dir_entry* devfs_lookup(struct index_node* parent_inode,struct dir_entry* dest_dentry){
-    //TODO 待完成
-}
-struct dir_entry_operations devfs_dops={
-    //TODO 待完成
-    
-};
-struct index_node_operations devfs_iops={
-    .lookup=devfs_lookup
-    //TODO 待完成
-};
-struct super_block_operations devfs_sops={
-    //TODO 待完成
-    
-};
 struct dir_entry* ddev=NULL,*dmnt,*dconsole,*dhd0,*dtty,*dramdisk;
 struct file ftty;
 struct file_system_type fs_devfs={

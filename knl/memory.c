@@ -208,9 +208,14 @@ void page_err(){
     asm("cli");
     printf("page err\n");
     unsigned long err_code=0,l_addr=0;
-    asm volatile("mov 0(%%rbp),%0":"=r"(err_code));
+    asm volatile("mov 8(%%rbp),%0":"=r"(err_code));
     asm volatile("mov %%cr2,%0":"=r"(l_addr));//试图访问的地址
     int p=err_code&1;
+    
+    off_t *stk=0;
+    asm volatile("mov %%rbp,%0":"=m"(stk));
+    stk-=2;
+    backtrace(stk);
 
     if(!p)
     {

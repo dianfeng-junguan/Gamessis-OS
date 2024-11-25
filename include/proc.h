@@ -233,8 +233,9 @@ void switch_to_ia32(TSS *tss);
 void switch_to(struct process *from, struct process *to);
 void __switch_to(struct process *from, struct process *to);
 void move_to_user_mode();
-
-void save_context(TSS *tss);
+/// @brief 保存上下文。只能在中断条件下使用。
+void save_context();
+void save_context_c(void* ctx,void* int_stk);
 //用来保存rsp到当前proc.regs
 void save_rsp();
 void proc_zero();

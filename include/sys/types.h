@@ -19,7 +19,7 @@ typedef int ino_t;
 
 typedef int pid_t;
 typedef int mode_t;
-typedef int off_t;
+typedef unsigned long long off_t;
 typedef int uid_t;
 typedef int nlink_t;
 typedef unsigned long size_t,useconds_t;

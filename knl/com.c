@@ -80,7 +80,7 @@ void comprintf(char* fmt,...){
                 int v=va_arg(vargs,int);
                 sprint_hex(tmp,v);
             }if(*pstr=='l'){
-                int v=va_arg(vargs,unsigned long long);
+                unsigned long long v=va_arg(vargs,unsigned long long);
                 sprint_hex(tmp,v);
             }else if(*pstr=='s'){
                 char* v=va_arg(vargs,char*);

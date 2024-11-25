@@ -255,18 +255,11 @@ void switch_proc(int pnr){
     //asm volatile("push %0":"=r"(task[pnr].tss.eip));
     //switch_proc_asm(pnr*8+0x8*3);
 }
-void save_context(TSS *tss)
+void save_context_c(void* ctx,void *int_stk)
 {
-//    tss->eip=scene_saver.eip;
-//    tss->eax=scene_saver.eax;
-//    tss->ebx=scene_saver.ebx;
-//    tss->ecx=scene_saver.ecx;
-//    tss->edx=scene_saver.edx;
-//    tss->esi=scene_saver.esi;
-//    tss->edi=scene_saver.edi;
-//    tss->eflags=scene_saver.eflags;
-//    tss->esp=scene_saver.esp;
-//    tss->ebp=scene_saver.ebp;
+    unsigned long long* rs=ctx;
+    current->regs.rbp=rs[0];
+    current->regs.rip=((unsigned long long*)int_stk)[0];
 }
 
 /* int exec(char *path,int priority)

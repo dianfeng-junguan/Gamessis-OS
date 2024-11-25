@@ -4,9 +4,11 @@ global switch_proc_asm
 global move_to_user_mode
 extern req_proc
 extern set_proc
+extern save_context_c
 global test_create_proc_asm
 global switch_to
-;global save_context
+global save_context
+global discard_context
 global move_to_user_mode
 [bits 64]
 create_zero:
@@ -127,28 +129,16 @@ switch_proc_asm:
 ;    db 0xea
 ;    dd 0
 ;    dw 0x8
-save_context:
-    ;pusha;8 regs
-    mov eax,[esp+36];tss
-    add eax,0x44
-    mov ecx,8
-    mov edi,esp
-    .loops:
-        mov dword edx,[edi]
-        mov dword [eax],edx
-        add edi,4
-        sub eax,4
-        loop .loops
-    ;popa
-    ;;保存eflags
-    ;pushf
-    pop rbx
-    mov eax,[esp+4]
-    mov dword [eax+0x24],ebx
-    ;保存eip
-    mov rbx,[esp]
-    mov dword [eax+0x20],ebx
 
+save_context:
+    push rbp
+
+    mov rsi,rsp
+    mov rdi,rsi
+    add rdi,24
+    call save_context_c
+    ret
+discard_context:
     ret
 ;move_to_user_mode:
 ;    mov ax,0x20

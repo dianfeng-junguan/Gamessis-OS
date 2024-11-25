@@ -6,6 +6,7 @@
 #include "exe.h"
 #include "syscall.h"
 #include "kb.h"
+#include <log.h>
 #pragma pack(1)
 gate *idt= (gate *) (KNL_BASE+IDT_ADDR);
 extern int disk_int_handler();
@@ -116,7 +117,10 @@ void bounds(){
 void undefined_operator(){
     //puts("undef operator");
     eoi();
-    backtrace();
+    off_t stk=0;
+    asm volatile("mov %%rbp,%0":"=m"(stk));
+    stk-=16;
+    backtrace(stk);
     __asm__ volatile ("jmp .\r\n leave \r\n iretq");
 }
 void coprocessor_notexist(){
@@ -248,7 +252,49 @@ void wrmsr(unsigned long address,unsigned long value)
 {
     __asm__ __volatile__	("wrmsr	\n\t"::"d"(value >> 32),"a"(value & 0xffffffff),"c"(address):"memory");
 }
-
-void backtrace(){
+ksym *get_ksym(off_t addr){
+    extern char _binary_bin_kallsyms_bin_start[]__attribute__((weak)), \
+    _binary_bin_kallsyms_bin_end[] __attribute__((weak));
+    ksym *sym=_binary_bin_kallsyms_bin_start,*bef=sym;
+    off_t func_belonged=sym->addr;//所属函数
+    while (sym<_binary_bin_kallsyms_bin_end&&sym->addr<addr)
+    {
+        bef=sym;
+        func_belonged=sym->addr;
+        int namelen=sym->namelen;
+        sym+=1;
+        sym=(off_t)sym+namelen;
+    }
+    return bef;
+}
+//根据给定的地址找到相应的内核符号，然后输出，如果找不到，就当成单纯的值输出。
+int print_ksym(off_t addr){
+    ksym *ks=get_ksym(addr);
+    if(!ks){
+        comprintf("%l\n",addr); 
+        return 0;
+    }else{
+        char buf[100];
+        memcpy(buf,ks+1,ks->namelen);
+        buf[ks->namelen]=0;
+        comprintf("%l %s:%l\n",ks->addr,buf,addr-ks->addr);
+        return 1;
+    }
+}
+void backtrace(off_t* ret_stack){
+    asm volatile("mov %%rbp,%0":"=m"(ret_stack));
+    ret_stack=ret_stack[0];
+    off_t addr=ret_stack[2];//第一级返回函数地址
+    comprintf("Backtrace:\n");
+    print_ksym(addr);
+    //回到用户栈，回溯
+    ret_stack=ret_stack[0];
+    for (int i = 0; i < 10;i++)
+    {
+        print_ksym(ret_stack[1]);
+        ret_stack=ret_stack[0];
+        if(ret_stack<KNL_BASE)break;//超过栈顶
+    }
     
+
 }

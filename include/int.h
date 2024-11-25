@@ -18,6 +18,7 @@
 #define sti() asm volatile("sti");
 #define cli() asm volatile("cli");
 #include "typename.h"
+#include <sys/types.h>
 
 void wrmsr(unsigned long address,unsigned long value);
 
@@ -37,6 +38,15 @@ typedef struct {
     u32 offset_high;
     u32 rsvd;
 }__attribute__((packed)) gate;
+
+//不定长结构体，名字是直接存储在结构体后面的
+typedef struct
+{
+    unsigned long long addr;
+    char type;
+    int namelen;
+}__attribute__((packed)) ksym;
+
 #endif
 void outb(u16 device,u8 value);
 void outw(u16 dev,u16 v);
@@ -80,7 +90,8 @@ void general_protect();
 void coprocessor_err();
 
 /// @brief 在错误发生时，输出函数调用堆栈。
-void backtrace();
+/// @param ret_stack ist中，错误码后开始的地址
+void backtrace(off_t* ret_stack);
 /* 
 调用系统中断，所有内核的重要功能基本都在这。
 参数；

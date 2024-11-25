@@ -5,11 +5,12 @@ include loader/loader.mk
 include test/test.mk
 include usrlib/lib.mk
 include dl/dl.mk
+include tools/kallsyms/kallsyms.mk
 KNL_OFILES = bin/int.o bin/main.o bin/log.o \
 			bin/memory.o bin/devman.o bin/proc.o bin/inta.o \
 			bin/gdt.o bin/gdta.o bin/clock.o bin/clocka.o bin/exe.o \
 			bin/syscalla.o bin/framebuffer.o bin/vfs.o bin/sys.o bin/ramfs.o bin/ramdisk.o \
-			bin/blk_dev.o bin/blk_buf.o
+			bin/blk_dev.o bin/blk_buf.o bin/kallsyms.o
 MODS_OFILES = bin/mods/kb.o bin/mods/disk.o bin/mods/diska.o bin/mods/fat32.o \
 				bin/mods/tty.o bin/com.o bin/rd.o#bin/test.o
 COM_OFILES = bin/mem.o bin/str.o bin/types.o bin/proca.o bin/font.o
@@ -27,6 +28,8 @@ knl:
 	@bash knl.sh
 	@objcopy -O elf64-x86-64 -B i386 -I binary res/font.psf bin/font.o
 	objcopy rd.img bin/rd.o -B i386 -O elf64-x86-64 -I binary
+	@ld -T knl.lds -o bin/gmsknl.elf $(KNL_OFILES) $(MODS_OFILES) $(COM_OFILES) --emit-relocs
+	make kallsyms
 	@ld -T knl.lds -o bin/gmsknl.elf $(KNL_OFILES) $(MODS_OFILES) $(COM_OFILES) --emit-relocs
 	@#python reloccheat.py bin/gmsknl.elf
 	@cp bin/gmsknl.elf bin/gmsknlm.elf

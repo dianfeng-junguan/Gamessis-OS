@@ -8,5 +8,5 @@ int strlen(char *str);
 void sprintf(char *dist,char *str,...);
 void sprintchar(char *dist,char c);
 void sprint_decimal(char *dist,int n);
-void sprint_hex(char *dist,unsigned long n);
+void sprint_hex(char *dist,unsigned long long n);
 void sprintn(char *dist,char *str);
