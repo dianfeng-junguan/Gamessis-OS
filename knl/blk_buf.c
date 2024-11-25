@@ -18,6 +18,8 @@ buffer_head *bget(){
         {
             l_buffer_heads[i].data=kmalloc();
             l_buffer_heads[i].count=0;
+            l_buffer_heads[i].next=NULL;
+            l_buffer_heads[i].prev=NULL;
             return l_buffer_heads+i;
         }
     }
@@ -176,6 +178,13 @@ int brelse(buffer_head *bh){
             bh->prev->next=bh->next;
         if(bh->next)
             bh->next->prev=bh->prev;
+        for(int i=0;i<MAX_BLKDEVS;i++){
+            if(l_blk_bh_heads[i]==bh)
+            {
+                l_blk_bh_heads[i]=bh->next;
+                break;
+            }
+        }
         bh->dev=-1;
         kmfree(bh->data);
     }

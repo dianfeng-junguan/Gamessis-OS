@@ -4,8 +4,8 @@
 块设备的高级封装，同时是块设备的缓冲区层
 */
 //
-#define SECTOR_FLOOR(n) (n-n%512)
-#define BLOCK_FLOOR(n) (n-n%4096)
+#define SECTOR_FLOOR(n) ((n-n%512)/512)
+#define BLOCK_FLOOR(n) ((n-n%4096)/4096)
 #define MAX_BUFFERHEADS 128
 typedef struct _buffer_head
 {
