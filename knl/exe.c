@@ -158,26 +158,44 @@ int sys_execve(char *path, int argc, char **argv) {
     //sysret直接返回到新程序的main
     void *retp= (void *) entry;
     stack_store_regs *rs= (stack_store_regs *) (tss->ists[0] - sizeof(stack_store_regs));
-    rs->r10= (unsigned long) retp;//返回地址已经xchg到r10
+    rs->rcx= (unsigned long) retp;//返回地址
     //第二个参数argv需要把内容从内核空间拷贝到用户堆里面
     size_t arglen=0;
     for(int i=0;i<argc;i++){
         arglen+= strlen(argv[i])+1;
     }
-    char* p= sys_malloc(arglen),pp=p;
+    //参数放栈
+    int tot_argsz=0;
     for(int i=0;i<argc;i++){
+        int tmpsz=strlen(argv[i])+1;
+        tot_argsz+=tmpsz;
+    }
+    //初始需要的栈大小为argv指向的字符串大小之和+argv指针数组大小+
+    // argc+一个main函数返回地址+一个rbp入栈空间
+    if(tot_argsz+argc*8+24>=PAGE_4K_SIZE){
+        int needed=(tot_argsz+PAGE_4K_SIZE-1)/PAGE_4K_SIZE-1;
+        for(int i=0;i<needed;i++){
+            smmap(pmalloc(),STACK_TOP-PAGE_4K_SIZE*(i+1),PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,current->pml4);
+        }
+    }
+    unsigned long* argp_aryp=STACK_TOP-tot_argsz;
+    argp_aryp-=argc;
+
+    char* p= STACK_TOP;
+    for(int i=0;i<argc;i++){
+        p-=strlen(argv[i])+1;
         strcpy(p,argv[i]);
-        p+=strlen(argv[i])+1;
+        argp_aryp[i]=p;
     }
     
     //第一个参数argc
     if(current->dl){
         rs->rsi=current->dl;
         rs->rdi=argc;
-        rs->rdx=pp;
+        rs->rdx=argp_aryp;
     }else{
         rs->rsi=argc;
-        rs->rdi=pp;
+        rs->rdi=argp_aryp;
     }
     
     //以下部分是临时测试代码
@@ -540,7 +558,7 @@ ready:
     }
     for(int i=0;i<entn;i++){
         
-        if((ph[i].p_type|PT_INTERP)!=0){
+        if(ph[i].p_type==PT_INTERP){
             //load dl
             //
             if(current->dl)break;
@@ -554,7 +572,7 @@ ready:
     }
     for(int i=0;i<entn;i++){
         //加载段
-        if((ph->p_type|PT_LOAD)!=0){
+        if(ph->p_type==PT_LOAD){
             unsigned long off=ph->p_offset;
             unsigned long fs=ph->p_filesz;
             size_t ms=ph->p_memsz;
@@ -565,7 +583,7 @@ ready:
             }
             //先映射好内存
             int attr=PAGE_PRESENT|PAGE_FOR_ALL;
-            if((ph->p_flags|PF_X)!=0||(ph->p_flags|PF_W)!=0)
+            if((ph->p_flags&PF_X)!=0||(ph->p_flags&PF_W)!=0)
                 attr|=PAGE_RWX;
             int pgc=(ms-1+PAGE_4K_SIZE)/PAGE_4K_SIZE;
             for(int j=0;j<pgc;j++){
@@ -679,7 +697,7 @@ is_rel_prepared:
     off_t lma=pmalloc();
     if(lma==-1)
     {
-        current->regs.errcode=-ENOMEM;
+        set_errno(-ENOMEM);
         return -1;
     }
     smmap(lma, HEAP_BASE, PAGE_PRESENT | PAGE_FOR_ALL | PAGE_RWX, current->pml4);

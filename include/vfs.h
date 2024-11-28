@@ -202,4 +202,7 @@ extern struct super_block * root_sb;
 
 //挂载临时根文件系统，用于初始化/dev等文件夹。
 void init_rootfs();
+
+extern struct dir_entry* droot;
+extern int ROOT_DEV;
 #endif //GMS_VFS_H

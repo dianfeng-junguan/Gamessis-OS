@@ -63,6 +63,5 @@ void init_ramdisk(){
         memcpy(ramdisk_base+i*PAGE_4K_SIZE, _binary_rd_img_start+i*PAGE_4K_SIZE,PAGE_4K_SIZE);
 
     }
-
     
 }

@@ -50,6 +50,7 @@ int unreg_blkdev(unsigned short dev);
 /*
 @brief 向设备发送一个请求。这会导致该进程暂停，直到相应的设备的处理函数解冻进程。
 @param cmd 命令。抽象层只定义了read和write，但是具体的设备可能还会定义其他功能。
+@param count 读取的字节数。一般这个值取BLOCK_SIZE，即4096
 */
 int make_request(unsigned short dev,int cmd,unsigned long sector, unsigned long count,char * buffer);
 

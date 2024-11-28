@@ -23,6 +23,8 @@ int kmalloc_entry_num=VMALLOC_PGN>>5,kmalloc_pgc=VMALLOC_PGN,pmalloc_entc=0;
 int high_mem_base=1024;
 int mmap_t_i=0;
 
+malloc_hdr *pmhdrs,*kmhdrs;
+malloc_hdr* pmalloc_mhdr,*kmalloc_mhdr;
 stat_t mmap(addr_t pa,addr_t la,u32 attr)
 {
     return smmap(pa,la,attr,current->pml4);
@@ -67,7 +69,7 @@ stat_t smmap(addr_t pa,addr_t la,u32 attr,page_item* pml4p)
     int pml4i=la / PML4E_SIZE;
     if(!((unsigned long long)pdptp&PAGE_PRESENT))
     {
-        pdptp=(page_item*) kmalloc();
+        pdptp=(page_item*) kmalloc(0,PAGE_4K_SIZE);
         memset(pdptp,0,4096);
         //这里使用了狡猾的技巧：kmalloc的内存-KNL_BASE直接就是实际的物理地址
         pml4p[pml4i]=((addr_t)pdptp&~KNL_BASE)|attr;
@@ -80,7 +82,7 @@ stat_t smmap(addr_t pa,addr_t la,u32 attr,page_item* pml4p)
     //检查pdptp是否被占用
     if(!((unsigned long long)pdp&PAGE_PRESENT))
     {
-        pdp=(page_item*) kmalloc();
+        pdp=(page_item*) kmalloc(0,PAGE_4K_SIZE);
         memset(pdp,0,4096);
         pdptp[pdpti]=((addr_t)pdp&~KNL_BASE)|attr;
     }
@@ -90,7 +92,7 @@ stat_t smmap(addr_t pa,addr_t la,u32 attr,page_item* pml4p)
     page_item* pt=(page_item*)pdp[la % PDPTE_SIZE / PDE_SIZE];
     if(!((unsigned long long)pt & PAGE_PRESENT))
     {
-        pt=(page_item*) kmalloc();
+        pt=(page_item*) kmalloc(0,PAGE_4K_SIZE);
         memset(pt,0,4096);
         pdp[la%PDPTE_SIZE/PDE_SIZE]= ((addr_t)pt&~KNL_BASE) | attr;
     }
@@ -150,7 +152,7 @@ void set_mem_area(unsigned long base, unsigned long len, unsigned long type)
     mmap_struct[mmap_t_i++].type=type;
     comprintf("mem info:base=0x%l,len=0x%l,type=%d\n",base,len,type);
 }
-addr_t kmalloc()
+addr_t _kmalloc()
 {
     for(int i=0;i<VMALLOC_PGN/32;i++)
     {
@@ -197,7 +199,7 @@ addr_t kmallocat(addr_t addr,int pgc)
 
 }
 
-int kmfree(addr_t ptr)
+int _kmfree(addr_t ptr)
 {
     int num=ptr/PAGE_SIZE;
     int n=num/32;
@@ -277,6 +279,8 @@ void init_memory()
             mem_size+=mmap_struct[i].len;
     }
     usr_mem_pa=PAGE_4K_ALIGN(mem_size/2);
+
+
     //计算出所需内存页数量
     /*
      * 注：物理内存的一半会分给内核。
@@ -289,9 +293,22 @@ void init_memory()
     int pg_bytes=pgc>>5;//=/32
     //初始化vmalloc内存位图
     //计算位图需要多少个int
-    size_t vmec= (mem_size/2-0x1000000)/PAGE_4K_SIZE/32;//去掉内核代码16M
-    size_t vmms=vmec*4/PAGE_4K_SIZE;//位图自己需要多少页
-    comprintf("tot memsize:0x%l,available size 0x%l,kmalloc pages count:%d,kmalloc bitmap taking 0x%d pages\n", tot_mem_size,mem_size,vmec,vmms);
+    // size_t vmec= (mem_size/2-0x1000000)/PAGE_4K_SIZE/32;//去掉内核代码16M
+    size_t vmms=(mem_size/2-0x1000000);//位图自己需要多少页
+    comprintf("tot memsize:0x%l,available size 0x%l,kmalloc bitmap taking 0x%d pages\n", tot_mem_size,mem_size,vmms);
+    //创建mhdr
+    for(int i=0;i< MAX_KMHDRS;i++)
+        kmhdrs[i].type=-1;
+    kmalloc_mhdr=kmhdrs=VMALLOC_BASE;
+    kmhdrs->base=VMALLOC_BASE;
+    kmhdrs->len=vmms;
+    kmhdrs->prev=NULL;
+    kmhdrs->next=NULL;
+    kmhdrs->type=MEM_TYPE_AVAILABLE;
+    kmhdrs->flag=MEM_FLAG_R|MEM_FLAG_W;
+    //先占用两页作为mhdrs
+    kmalloc(VMALLOC_BASE,PAGE_4K_SIZE*2);
+/* 
     if(vmec*4%PAGE_4K_SIZE)
         vmms++;
     for(int i=0;i<vmec;i++){
@@ -306,8 +323,36 @@ void init_memory()
             j++;
         }
         vmalloc_map[j]|=1u<<i;
+    } */
+    
+    //TODO 完成pmalloc的记录分配方式转变
+    pmhdrs=kmalloc(0,PAGE_4K_SIZE);
+    for(int i=0;i< MAX_PMHDRS;i++)
+        pmhdrs[i].type=-1;
+    for(int i=0;i<mmap_t_i;i++)
+    {
+        pmhdrs[i].base=mmap_struct[i].base;
+        pmhdrs[i].len=mmap_struct[i].len;
+        pmhdrs[i].flag=0;
+        pmhdrs[i].next=pmhdrs+i+1;
+        pmhdrs[i].prev=pmhdrs+i-1;
+        switch (mmap_struct[i].type)
+        {
+        case MULTIBOOT_MEMORY_AVAILABLE:
+            pmhdrs[i].type=MEM_TYPE_AVAILABLE;
+            pmhdrs[i].flag=MEM_FLAG_R;
+            break;
+        default:
+            pmhdrs[i].type=MEM_TYPE_RSVD;
+            break;
+        }
     }
-    //kmalloc连续的内存
+    pmhdrs[0].prev=NULL;
+    pmhdrs[mmap_t_i-1].next=NULL;
+    pmalloc_mhdr=pmhdrs;
+
+
+    /* //kmalloc连续的内存
     page_map=kmallocat(0,pgc);//(unsigned int*)PAGE_4K_ALIGN(0xc00000);
     int* p=page_map;
     addr_t curp=0;
@@ -320,10 +365,14 @@ void init_memory()
         for(int j=0;j<l;j++){
             p[b+j/32]|=1u<<(j%32);
         }
-    }
+    } 
     //低1gb提前占用掉 knl
     for(int j=0;j<0x2000;j++){
         page_map[j]=-1;
+    }*/
+   //占用1GB
+    if(pmalloc(0x40000000)!=0){
+        comprintf("error: failed to req pm for knl at 0\n");
     }
 
     /*//低16M空间直接被内核占用
@@ -332,7 +381,7 @@ void init_memory()
     }*/
     //然后把1gb的pdpt改成许多个2MB页（4KB的话太多了），然后把映射区设置成4KB页，这样之后可以使用映射区
     //这里不能用smmap
-    /*page_item *pd=kmalloc();//之后pdpt的第一项就会指向这里。
+    /*page_item *pd=kmalloc(0,PAGE_4K_SIZE);//之后pdpt的第一项就会指向这里。
     memset(pd,0,PAGE_4K_SIZE);
     addr_t pdpm=(addr_t)pd-KNL_BASE;
     //上面用了一个不得已的措施：利用高地址前1G实际对应物理内存低1G，所以直接减掉高地址基地址获得对应物理地址。
@@ -343,7 +392,7 @@ void init_memory()
     //设置索引区
     int mapai=(MAPPING_AREA-KNL_BASE)/PAGE_2M_SIZE;//映射区开始处对应索引
     for(int i=0;i<MAPPING_AREA_SIZE/PAGE_2M_SIZE;i++){
-        page_item *pt=kmalloc();
+        page_item *pt=kmalloc(0,PAGE_4K_SIZE);
         addr_t ptpm=(addr_t)pt-KNL_BASE;
         for(int j=0;j<512;j++){
             set_page_item(pt+j,MAPPING_AREA-KNL_BASE+j*PAGE_4K_SIZE,PAGE_PRESENT|PAGE_RWX);
@@ -375,11 +424,115 @@ addr_t req_a_page(){
     }
     return -1;
 }
+/// @brief 将mhdr对应内存分成两块，返回高地址块内存的mhdr，其属性等复制自原来mhdr，低地址的mhdr来自被分割的mhdr。
+/// @param target 被分割的mhdr
+/// @param split_point 分割地址点
+/// @return 低地址mhdr,即被分割的mhdr;如果割出来高地址内存大小为0，返回低地址mhdr，如果低地址内存大小为0，返回高地址mhdr。
+malloc_hdr *mhdr_split(malloc_hdr* target,off_t split_point,malloc_hdr* array,size_t arraylen){
+    //内部实现的时候出现大小为0的mhdr不创建
+    if(target->base>=split_point||target->base+target->len<=split_point)return target;
+    malloc_hdr* nmh=0;
+    for (int i=0;i<arraylen;i++){
+        if(array[i].type==-1){
+            nmh=array+i;
+            break;
+        }
+    }
+    if(!nmh)return NULL;
+    nmh->next=target->next;
+    target->next->prev=nmh;
+    nmh->prev=target;
+    target->next=nmh;
+    
+    nmh->base=split_point;
+    nmh->len= target->len- split_point;
+    nmh->flag=target->flag;
+    nmh->type=target->flag;
 
-void * pmalloc(){
-    void *ret=(void*)(get_phyaddr(req_a_page()));
+    return nmh;
+
+}
+void *kmalloc(off_t addr,size_t size){
+    for (malloc_hdr *mh = kmalloc_mhdr; mh; mh=mh->next)
+    {
+        if(!addr&&(mh->type!=MEM_TYPE_AVAILABLE||mh->len<size))continue;
+        if(mh->type!=MEM_TYPE_AVAILABLE||mh->len-(addr-mh->base)<size||addr<mh->base||addr>mh->base+mh->len)continue;
+        if(!addr){
+            addr=mh->base;
+        }
+        //以下为符合要求
+        //分割空闲内存
+        malloc_hdr* nmh=mhdr_split(mh,addr,kmhdrs,MAX_KMHDRS);
+        malloc_hdr* top=mhdr_split(nmh,addr+size,kmhdrs,MAX_KMHDRS);
+
+        nmh->type=MEM_TYPE_USED;
+        nmh->flag|=MEM_FLAG_W|MEM_FLAG_X|MEM_FLAG_R;
+        return nmh->base;
+        
+    }
+    return NULL;
+}
+int kmfree(off_t addr){
+    for (malloc_hdr* mh = kmalloc_mhdr; mh; mh=mh->next)
+    {
+        if(mh->base!=addr)continue;
+        mh->type=MEM_TYPE_AVAILABLE;
+        //合并空闲项
+        malloc_hdr* mp;
+        for(mp=mh;mp->prev&&mh->type==MEM_TYPE_AVAILABLE;mp=mp->prev);
+        while (mp->next&&mp->next==MEM_TYPE_AVAILABLE)
+        {
+            mp->len+=mp->next->len;
+            //drop the next
+            mp->next->type=-1;
+            mp->next->prev=mp;
+            mp->next=mp->next->next;
+        }
+        return 1;
+    }
+    return 0;
+    
+}
+void * pmalloc(size_t size){
+    for (malloc_hdr *mh = pmalloc_mhdr; mh; mh=mh->next)
+    {
+        if(mh->type!=MEM_TYPE_AVAILABLE||mh->len<size)continue;
+        //以下为符合要求
+        //分割空闲内存
+        malloc_hdr* nmh=mhdr_split(mh,mh->base+size,pmhdrs,MAX_PMHDRS);
+
+
+        mh->type=MEM_TYPE_USED;
+        mh->flag|=MEM_FLAG_W|MEM_FLAG_X|MEM_FLAG_R;
+        return mh->base;
+        
+    }
+    return -1;
+    
+    /* void *ret=(void*)(get_phyaddr(req_a_page()));
     // comprintf("pmalloc():%l\n",ret);
-    return ret;
+    return ret; */
+}
+int pmfree(void *addr){
+    for (malloc_hdr* mh = pmalloc_mhdr; mh; mh=mh->next)
+    {
+        if(mh->base!=addr)continue;
+        mh->type=MEM_TYPE_AVAILABLE;
+        //合并空闲项
+        malloc_hdr* mp;
+        for(mp=mh;mp->prev&&mh->type==MEM_TYPE_AVAILABLE;mp=mp->prev);
+        while (mp->next&&mp->next==MEM_TYPE_AVAILABLE)
+        {
+            mp->len+=mp->next->len;
+            //drop the next
+            mp->next->type=-1;
+            mp->next->prev=mp;
+            mp->next=mp->next->next;
+        }
+        return 1;
+    }
+    return 0;
+    
 }
 int free_page(char *paddr){
     int num=(int)paddr/4096;

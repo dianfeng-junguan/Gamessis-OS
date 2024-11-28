@@ -12,12 +12,17 @@
 
 unsigned int DISK1_FAT32_read_FAT_Entry(struct FAT32_sb_info * fsbi,unsigned int fat_entry)
 {
-	unsigned int *buf;
-	buffer_head *bh=bread(root_sb->dev,fsbi->FAT1_firstsector + (fat_entry >> 7));
-	buf=bh->data;
-    printf("DISK1_FAT32_read_FAT_Entry fat_entry:%x,%#010x\n",fat_entry,buf[fat_entry & 0x7f]);
-	brelse(bh);
-	return buf[fat_entry & 0x7f] & 0x0fffffff;
+	size_t fat_size=TO_MPGN(fsbi->sector_per_FAT*SECTOR_SIZE);
+	int sector=fsbi->FAT1_firstsector + (fat_entry >> 7);
+	unsigned int *buf=kmallocat(0,fat_size);
+	//FIXME 这里的cluster查找存在问题
+	blkdev_read(root_sb->dev,sector*SECTOR_SIZE,fat_size,buf);
+    printf("DISK1_FAT32_read_FAT_Entry fat_entry:%x,%x\n",fat_entry,buf[fat_entry & 0x7f]);
+	for(int i=0;i<fat_size;i++){
+		kmfree((void*)buf+PAGE_4K_SIZE*i);
+	}
+	unsigned int fatr=buf[fat_entry & 0x7f] & 0x0fffffff;
+	return fatr;
 }
 
 
@@ -90,9 +95,9 @@ long FAT32_read(struct file * filp,char * buf,unsigned long count,long * positio
 		length = index <= fsbi->bytes_per_cluster - offset ? index : fsbi->bytes_per_cluster - offset;
 
 		if((unsigned long)buf < MAX_TASKS)
-			memcpy(buffer + offset,buf,length);
+			memcpy(buf,buffer + offset,length);
 		else
-			memcpy(buffer + offset,buf,length);
+			memcpy(buf,buffer + offset,length);
 
 		index -= length;
 		buf += length;
@@ -834,7 +839,7 @@ struct file_system_type FAT32_fs_type=
 	.read_superblock = fat32_read_superblock,
 	.next = NULL,
 };
-
+//这个函数临时作为挂载根文件系统的函数。等硬盘驱动完成分区识别并注册分区设备之后会更改。
 void DISK1_FAT32_FS_init()
 {
 	int i;
@@ -846,18 +851,22 @@ void DISK1_FAT32_FS_init()
 	
 	memset(buf,0,512);
 
-	blkdev_read(root_sb->dev,0,512,buf);
+	blkdev_read(ROOT_DEV,0,512,buf);
     // read_disk(DISK_MAJOR_MAJOR, 0, 1, buf);/*rint r= equest(DISK_MAJOR_MAJOR,DISKREQ_READ,0x0,1,(unsigned char *)buf);
     // chk_result(r);
     DPT = *(struct Disk_Partition_Table *)buf;
 	printf("DPTE[0] start_LBA:%x\ttype:%x\n",DPT.DPTE[0].start_LBA,DPT.DPTE[0].type);
 
 	memset(buf,0,512);
-	blkdev_read(root_sb->dev,DPT.DPTE[0].start_LBA*512,512,buf);
+	blkdev_read(ROOT_DEV,DPT.DPTE[0].start_LBA*512,512,buf);
 
-    //挂载新文件系统到/mnt
+    //挂载新文件系统到/
 	struct super_block *fat32_sb= mount_fs("FAT32",&DPT.DPTE[0],buf);	//not dev node
-	mount_fs_on(dmnt,fat32_sb);//挂载到/mnt上
+	
+	root_sb=fat32_sb;
+	root_sb->dev=ROOT_DEV;
+	root_sb->p_dev=&bd_ramdisk;
+	mount_fs_on(droot,fat32_sb);//挂载到/上
 }
 
 

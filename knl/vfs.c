@@ -10,7 +10,7 @@
 #include "str.h"
 #include <ramdisk.h>
 mount_point mp_mount_points[MAX_MOUNTPOINTS];
-
+struct dir_entry* droot;
 struct dir_entry * path_walk(char * name,unsigned long flags)
 {
     char * tmpname = NULL;
@@ -32,6 +32,11 @@ struct dir_entry * path_walk(char * name,unsigned long flags)
         while(*name && (*name != '/'))
             name++;
         tmpnamelen = name - tmpname;
+        if(parent->mount_point)
+        {
+            //有挂载点，则进入挂载文件系统的文件树
+            parent=parent->mount_point->sb->root;
+        }
         //先在缓存中寻找已有的dentry
         //寻找名字为tmpname的dentry
         struct List* lp=parent->subdirs_list.next;
@@ -81,11 +86,6 @@ struct dir_entry * path_walk(char * name,unsigned long flags)
             name++;
         if(!*name)
             goto last_slash;
-        if(path->mount_point)
-        {
-            //有挂载点，则进入挂载文件系统的文件树
-            path=path->mount_point->sb->root;
-        }
         parent = path;
     }
 
@@ -197,28 +197,32 @@ struct index_node_operations root_iops={
     .lookup=root_lookup
 };
 void init_rootfs(){
-    root_sb=(struct super_block*) kmalloc();
+    /* root_sb=(struct super_block*) kmalloc();
     root_sb->root=root_sb+1;//紧凑跟在后面
-    root_sb->sb_ops=NULL;
+    root_sb->sb_ops=NULL; */
+    droot=kmalloc();
     
-    struct index_node* ir=root_sb->root+1;
-    root_sb->root->dir_inode=ir;
+    /* struct index_node* ir=droot+1;
+    droot->dir_inode=ir;
     ir->sb=root_sb;
     ir->attribute=FS_ATTR_DIR;
     ir->file_size=0;
     ir->inode_ops=&root_iops;//lookup函数是必要的
     ir->f_ops=NULL;
-    ir->private_index_info=root_sb->root;
+    ir->private_index_info=droot; */
 
-    root_sb->root->name=ir+1;//紧凑跟在后面
-    strcpy(root_sb->root->name,"/");
-    root_sb->root->name_length=1;
-    root_sb->root->parent=root_sb->root;
-    list_init(&root_sb->root->subdirs_list);
-    list_init(&root_sb->root->child_node);
-    root_sb->root->child_node.data=root_sb->root;
+    droot->name=droot+1;//紧凑跟在后面
+    strcpy(droot->name,"/");
+    droot->name_length=1;
+    droot->parent=droot;
+    list_init(&droot->subdirs_list);
+    list_init(&droot->child_node);
+    droot->child_node.data=droot;
 
-    root_sb->dev=dev_ramdisk<<8;
-    root_sb->p_dev=&bd_ramdisk;
+    // root_sb->dev=dev_ramdisk<<8;
+    // root_sb->p_dev=&bd_ramdisk;
+    //
+    ROOT_DEV=dev_ramdisk<<8;
+    
 }
 

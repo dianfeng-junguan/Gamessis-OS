@@ -40,7 +40,7 @@ int make_request(unsigned short dev,int cmd,unsigned long sector, unsigned long 
     req->buffer=buffer;
     req->count=count;
     req->next=NULL;
-    req->nr_sectors=TO_BLKN(count);
+    req->nr_sectors=TO_SECN(count);
     req->sector=sector;
     req->waiting=current;
     //这里可能不需要阻塞进程，有的设备不需要阻塞。    

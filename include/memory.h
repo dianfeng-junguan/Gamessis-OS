@@ -19,13 +19,29 @@ typedef struct
     unsigned long len;
     unsigned long type;
 }mem_t;
+typedef struct _malloc_header
+{
+    off_t base;
+    size_t len;
+    char type;
+    char flag;
+    struct _malloc_header* next;
+    struct _malloc_header* prev;
+}malloc_hdr;
+#define MAX_PMHDRS 85
+#define MAX_KMHDRS 170
 #endif
 #define MAX_MEM_STRUCT 20
 #define MEM_TYPE_RSVD 0
 #define MEM_TYPE_AVAILABLE 1
-#define MEM_TYPE_DEFECTED 5
 #define MEM_TYPE_ACPI 3
 #define MEM_TYPE_HIBER_PRESERVE 4
+#define MEM_TYPE_DEFECTED 5
+#define MEM_TYPE_USED 6
+
+#define MEM_FLAG_R 1
+#define MEM_FLAG_W 2
+#define MEM_FLAG_X 4
 //不定义IA32，默认是64位
 #ifdef IA32
 #define PAGE_INDEX_ADDR 0x100000
@@ -59,7 +75,8 @@ void set_high_mem_base(int base);
 addr_t req_a_page();
 addr_t req_page_at(addr_t base,int pgn);
 //申请一页空闲的物理内存，返回的是物理地址。
-void * pmalloc();
+void * pmalloc(size_t size);
+int pmfree(void *addr);
 
 int free_page(char *paddr);
 int free_pages_at(int base,int pgn);

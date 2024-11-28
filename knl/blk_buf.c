@@ -68,7 +68,7 @@ buffer_head* bread(unsigned short dev,int blkn){
         return bh;//数据没变，可以直接返回
     //这里的疑点是，可以直接返回吗？
     //应该要等数据准备完毕之后再返回的
-    make_request(dev,BLKDEV_REQ_READ,blkn*BLOCK_SIZE/SECTOR_SIZE,BLOCK_SIZE/SECTOR_SIZE,bh->data);
+    make_request(dev,BLKDEV_REQ_READ,blkn*BLOCK_SIZE/SECTOR_SIZE,BLOCK_SIZE,bh->data);
     //TODO 等待读取完成
     return bh;
 }

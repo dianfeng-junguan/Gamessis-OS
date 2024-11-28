@@ -753,6 +753,7 @@ void * sys_malloc(size_t size)
         char* p=task[cur_proc].mem_struct.heap_top;
         for(int i=0;i<needed*CHUNK_SIZE/PAGE_SIZE;i++)
         {
+            //TODO 改掉，不要触发
             *p=0;//触发缺页中断
             p+=PAGE_SIZE;
         }
@@ -887,7 +888,7 @@ int sys_fork(void){
     addr_t stk=task[pid].mem_struct.stack_top-PAGE_4K_SIZE;
     addr_t tmpla=KNL_BASE+0x80000000;
     for(;stk>=task[pid].mem_struct.stack_bottom;stk-=PAGE_4K_SIZE){
-        addr_t new_stkpg= pmalloc();
+        addr_t new_stkpg= pmalloc(PAGE_4K_SIZE);
         smmap(new_stkpg,tmpla,PAGE_PRESENT|PAGE_RWX,current->pml4);
         memcpy(tmpla,stk,PAGE_4K_SIZE);//把当前进程的栈空间复制到新栈里面
         
@@ -897,7 +898,7 @@ int sys_fork(void){
     if(task[pid].mem_struct.stack_top<=task[pid].mem_struct.stack_bottom){
         //父进程没有栈空间（一般是不可能的，这个几乎就是为了内核进程fork而写）
         //开辟一页空栈。
-        addr_t new_stkpg= (addr_t) pmalloc();
+        addr_t new_stkpg= (addr_t) pmalloc(PAGE_4K_SIZE);
         stk=task[pid].mem_struct.stack_top-PAGE_4K_SIZE;
         //把新的页面映射到进程页表里
         smmap(new_stkpg,stk,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,task[pid].pml4);
@@ -925,7 +926,7 @@ int sys_fork(void){
     //堆
     addr_t hp=task[pid].mem_struct.heap_top-PAGE_4K_SIZE;
     for(;hp>=task[pid].mem_struct.heap_base;hp-=PAGE_4K_SIZE){
-        addr_t new_hppg= pmalloc();
+        addr_t new_hppg= pmalloc(PAGE_4K_SIZE);
         smmap(new_hppg,tmpla,PAGE_PRESENT|PAGE_RWX,current->pml4);
         memcpy(tmpla,hp,PAGE_4K_SIZE);//把当前进程的栈空间复制到新栈里面
         //把新的页面映射到进程页表里
