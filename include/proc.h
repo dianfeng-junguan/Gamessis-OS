@@ -62,6 +62,27 @@ typedef struct _procm_{
     addr_t data_base;
     addr_t data_top;
 }proc_mem_arr;
+/// @brief 用于记录进程空间内存映射的数据结构。同时也会用于共享内存。
+typedef struct _mmap_struct
+{
+    off_t base;
+    size_t len;
+    struct file* file;
+    off_t offset;//文件内偏移
+    unsigned short flags;
+    unsigned short type;
+    malloc_hdr* pmhdr;//相应的物理内存
+    struct List node;//链表节点
+}mmap_struct;
+#define MMAP_FLAG_R 1
+#define MMAP_FLAG_W 2
+#define MMAP_FLAG_X 4
+//SHARED
+#define MMAP_FLAG_S 8
+
+#define MMAP_TYPE_TEXT 1
+#define MMAP_TYPE_DATA 2
+#define MMAP_TYPE_STACK 3
 /* 
 进程发生系统调用的时候保存在堆栈的上下文会拷贝到这里（cr3,errcode,rsp,rip是常用的，rsp,rip,cr3会在进程切换的时候用到），只是为了方便访问，而且
 除了cr3,errcode,rsp,rip，其他的寄存器，修改是不会影响syscall恢复上下文的，因为上下文的恢复只依赖栈。
@@ -179,6 +200,7 @@ struct process{
     struct file *openf[MAX_PROC_OPENF];
     TSS tss;
     regs_t regs;
+    struct List* mmaps;//内存空间的映射
     struct List node;//本进程的节点
     struct List *child_procs;//子进程
     int dl;//是否加载了dl
@@ -311,5 +333,6 @@ int sys_tcsetpgrp(int fildes,pid_t pgid_id);
 pid_t sys_tcgetpgrp(int fildes);
 
 extern struct process* current;
+extern mmap_struct* all_mmaps;
 #pragma pack()
 #endif //SRC_PROC_H

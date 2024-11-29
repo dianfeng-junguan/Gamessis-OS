@@ -99,9 +99,9 @@ stat_t mdemap(u64 la);
 
 void page_err();
 //vmalloc区部分
-addr_t kmalloc();
+void *kmalloc(off_t addr,size_t size);
 addr_t kmallocat(addr_t addr,int pgc);
-int kmfree(addr_t ptr);
+int kmfree(off_t addr);
 int chk_vm(int base, int pgn);
 
 int init_paging();

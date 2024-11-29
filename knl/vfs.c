@@ -11,6 +11,47 @@
 #include <ramdisk.h>
 mount_point mp_mount_points[MAX_MOUNTPOINTS];
 struct dir_entry* droot;
+/*原理：
+每一个被使用或者创建的dentry，会被放到数组的开头，剩余后移。当有dentry被挤出去的时候，如果不是necessary，则释放dentry。如果期间被使用了，
+则被放到开头。
+*/
+struct dir_entry* history_dentry[48];
+
+void drelse(struct dir_entry* d){
+    //同步inode到介质中
+    d->dir_ops->iput(d,d->dir_inode);
+    //释放
+    list_drop(&d->child_node);
+    kmfree(d->name);
+    d->dir_inode->link--;
+    if(!d->dir_inode->link)
+    {
+        kmfree(d->dir_inode->private_index_info);
+        kmfree(d->dir_inode);//释放inode
+    }
+    kmfree(d);
+}
+void mark_use(struct dir_entry* d){
+    int mk=47;
+    for(int i=0;i<48;i++){
+        if(dentry_cmp(history_dentry[i],d)==0){
+            mk=i;
+            break;
+        }
+    }
+    struct dir_entry* dropped;
+    if(mk==47){
+        dropped=history_dentry[mk];
+        if(!dropped->mount_point&&!dropped->subdirs_list.next&&!dropped->link){
+            drelse(dropped);
+        }
+    }
+    for(;mk>0;mk--){
+        history_dentry[mk]=history_dentry[mk-1];
+    }
+    history_dentry[0]=d;
+
+}
 struct dir_entry * path_walk(char * name,unsigned long flags)
 {
     char * tmpname = NULL;
@@ -54,7 +95,7 @@ struct dir_entry * path_walk(char * name,unsigned long flags)
             path = (struct dir_entry *) kmalloc(sizeof(struct dir_entry), 0);
             memset(path,0,sizeof(struct dir_entry));
 
-            path->name = kmalloc();
+            path->name = kmalloc(0,tmpnamelen+1);
             memset(path->name,0,tmpnamelen+1);
             memcpy(path->name,tmpname,tmpnamelen);
             path->name_length = tmpnamelen;
@@ -78,8 +119,8 @@ struct dir_entry * path_walk(char * name,unsigned long flags)
         }
         
         
-
-
+        //标记这个dentry刚刚使用过
+        mark_use(path);
         if(!*name)
             goto last_component;
         while(*name == '/')
@@ -200,7 +241,7 @@ void init_rootfs(){
     /* root_sb=(struct super_block*) kmalloc();
     root_sb->root=root_sb+1;//紧凑跟在后面
     root_sb->sb_ops=NULL; */
-    droot=kmalloc();
+    droot=kmalloc(0,sizeof(struct dir_entry));
     
     /* struct index_node* ir=droot+1;
     droot->dir_inode=ir;
@@ -221,7 +262,7 @@ void init_rootfs(){
 
     // root_sb->dev=dev_ramdisk<<8;
     // root_sb->p_dev=&bd_ramdisk;
-    //
+    //TODO 以后要直接拿设备号，这个设备号通过devman创建设备文件（节点）分配。
     ROOT_DEV=dev_ramdisk<<8;
     
 }

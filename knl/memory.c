@@ -17,7 +17,7 @@ page_item* pdpt=PDPT_ADDR;
 page_item* pd=PD_ADDR;
 unsigned int *vmalloc_map=VMALLOC_BASE;//[VMALLOC_PGN/32]={0};
 addr_t usr_mem_pa=0;
-mem_t mmap_struct[MAX_MEM_STRUCT];
+mem_t phy_mmap_struct[MAX_MEM_STRUCT];
 int kmalloc_entry_num=VMALLOC_PGN>>5,kmalloc_pgc=VMALLOC_PGN,pmalloc_entc=0;
 //以kb为单位
 int high_mem_base=1024;
@@ -147,9 +147,9 @@ void set_high_mem_base(int base)
 }
 void set_mem_area(unsigned long base, unsigned long len, unsigned long type)
 {
-    mmap_struct[mmap_t_i].base=base;
-    mmap_struct[mmap_t_i].len=len;
-    mmap_struct[mmap_t_i++].type=type;
+    phy_mmap_struct[mmap_t_i].base=base;
+    phy_mmap_struct[mmap_t_i].len=len;
+    phy_mmap_struct[mmap_t_i++].type=type;
     comprintf("mem info:base=0x%l,len=0x%l,type=%d\n",base,len,type);
 }
 addr_t _kmalloc()
@@ -225,6 +225,12 @@ void page_err(){
         //检查地址合法性
         if(l_addr>=MEM_END)
             ;
+        mmap_struct* mp=NULL;
+        //TODO 实现get_mmap函数
+        if((mp=get_mmap(l_addr))==NULL){
+            //TODO  没有映射，报错
+        }
+        //TODO 给映射实际分配内存，并读取文件
         //在进程的页表中申请新页
         smmap(get_phyaddr(req_a_page()),l_addr&~0xfff,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,current->pml4);
 //        int *pdet=0,*pt=0;
@@ -272,11 +278,11 @@ void init_memory()
 {
     extern addr_t _knl_end,_knl_start;//lds中声明的内核的结尾地址，放置位图
     //获取可用内存大小mem_size
-    size_t tot_mem_size=mmap_struct[mmap_t_i-1].base+mmap_struct[mmap_t_i-1].len,mem_size=0;
+    size_t tot_mem_size=phy_mmap_struct[mmap_t_i-1].base+phy_mmap_struct[mmap_t_i-1].len,mem_size=0;
     for(int i=0;i<mmap_t_i;i++)
     {
-        if(mmap_struct[i].type==MULTIBOOT_MEMORY_AVAILABLE)
-            mem_size+=mmap_struct[i].len;
+        if(phy_mmap_struct[i].type==MULTIBOOT_MEMORY_AVAILABLE)
+            mem_size+=phy_mmap_struct[i].len;
     }
     usr_mem_pa=PAGE_4K_ALIGN(mem_size/2);
 
@@ -331,12 +337,12 @@ void init_memory()
         pmhdrs[i].type=-1;
     for(int i=0;i<mmap_t_i;i++)
     {
-        pmhdrs[i].base=mmap_struct[i].base;
-        pmhdrs[i].len=mmap_struct[i].len;
+        pmhdrs[i].base=phy_mmap_struct[i].base;
+        pmhdrs[i].len=phy_mmap_struct[i].len;
         pmhdrs[i].flag=0;
         pmhdrs[i].next=pmhdrs+i+1;
         pmhdrs[i].prev=pmhdrs+i-1;
-        switch (mmap_struct[i].type)
+        switch (phy_mmap_struct[i].type)
         {
         case MULTIBOOT_MEMORY_AVAILABLE:
             pmhdrs[i].type=MEM_TYPE_AVAILABLE;

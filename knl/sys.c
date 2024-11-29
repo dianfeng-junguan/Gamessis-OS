@@ -35,7 +35,7 @@ unsigned long sys_open(char *filename,int flags)
     int i;
 
 //	printf("sys_open\n");
-    path = (char *) kmalloc();
+    path = (char *) kmalloc(0,PAGE_4K_SIZE);
     if(path == NULL)
         return -ENOMEM;
     memset(path,0,PAGE_4K_SIZE);
@@ -58,6 +58,7 @@ unsigned long sys_open(char *filename,int flags)
         if(!flags&O_CREAT)
             return -ENOENT;
         //创建文件
+        //TODO 创建文件改为更正规的方法
         //找到上一级目录
         char* p=path+strlen(path)-1;
         for(;*p!='/'&&p>path;p--);
@@ -66,7 +67,7 @@ unsigned long sys_open(char *filename,int flags)
         if(parent==NULL)
             return -ENOENT;//上级目录也不在
         //创建新的文件
-        dentry=(struct dir_entry*) kmalloc();
+        dentry=(struct dir_entry*) kmalloc(0,sizeof(struct dir_entry));
         list_init(&dentry->subdirs_list);
         list_init(&dentry->child_node);
         dentry->child_node.data=dentry;
@@ -81,14 +82,15 @@ unsigned long sys_open(char *filename,int flags)
         //这样的创建文件只能创建普通文件，设备文件要通过devman创建
         dentry->dir_inode->attribute=FS_ATTR_FILE;
     }
-    kmfree(path);
+    dentry->link++;//这样哪怕长时间不path walk，也不会被释放
+    // kmfree(path);
 
     if((flags & O_DIRECTORY) && (dentry->dir_inode->attribute != FS_ATTR_DIR))
         return -ENOTDIR;
     if(!(flags & O_DIRECTORY) && (dentry->dir_inode->attribute == FS_ATTR_DIR))
         return -EISDIR;
 
-    filp = (struct file *) kmalloc();
+    filp = (struct file *) kmalloc(0,sizeof(struct file));
     memset(filp,0,sizeof(struct file));
     filp->dentry = dentry;
     filp->mode = flags;
@@ -145,7 +147,7 @@ unsigned long sys_close(int fd)
     filp = current->openf[fd];
     if(filp->f_ops && filp->f_ops->close)
         filp->f_ops->close(filp->dentry->dir_inode,filp);
-
+    filp->dentry->link--;
     kmfree(filp);
     current->openf[fd] = NULL;
 
@@ -215,6 +217,7 @@ unsigned long sys_vfork()
 {
     regs_t *regs = (regs_t *)current->tss.rsp0 -1;
     printf("sys_vfork\n");
+    return sys_fork();
     //return do_fork(regs,CLONE_VM | CLONE_FS | CLONE_SIGNAL,regs->rsp,0);
 }
 //
@@ -394,12 +397,12 @@ unsigned long sys_chdir(char *filename)
     struct dir_entry * dentry = NULL;
 
     printf("sys_chdir\n");
-    path = (char *) kmalloc();
+    pathlen = strlen(filename);
+    path = (char *) kmalloc(0,pathlen);
 
     if(path == NULL)
         return -ENOMEM;
     memset(path,0,PAGE_4K_SIZE);
-    pathlen = strlen(filename);
     if(pathlen <= 0)
     {
         kmfree(path);
@@ -443,42 +446,72 @@ void *sys_mmap(void *addr, size_t len, int prot, int flags,int fildes, off_t off
     int attr=PAGE_PRESENT|PAGE_FOR_ALL;
     if((prot|PROT_WRITE)||(prot|PROT_EXEC))
         attr|=PAGE_RWX;
-    if(addr){
-        if(chk_mmap(addr,len)){
-            int pgc=(len-1+PAGE_4K_SIZE)/PAGE_4K_SIZE;
-            for(int i=0;i<pgc;i++){
-                smmap(pmalloc(),addr+i*PAGE_4K_SIZE,attr,current->pml4);
-
+    if(!addr){
+        //没有指定地址
+        //寻找一块空的虚拟内存
+        while (!chk_mmap(addr,len))
+        {
+            addr+=PAGE_4K_SIZE;
+            if(addr>=KNL_BASE){
+                set_errno(-ENOMEM);
+                return MAP_FAILED;
             }
-            goto sync_f;
-        }
-        if(flags|MAP_FIXED){
-            set_errno(-ENOMEM);
-            return MAP_FAILED;
         }
     }
-    //寻找一块空的虚拟内存
-    while (!chk_mmap(addr,len))
-    {
-        addr+=PAGE_4K_SIZE;
-        if(addr>=KNL_BASE){
-            set_errno(-ENOMEM);
-            return MAP_FAILED;
-        }
+    if(!chk_mmap(addr,len)&&(flags&MAP_FIXED)){
+        set_errno(-ENOMEM);
+        return MAP_FAILED;
     }
+    //创建mmap struct
+    mmap_struct* mmps=kmalloc(0,sizeof(mmap_struct)),*mp=all_mmaps;
+    //TODO 创建进程时要设置mmaps.node
+    for(;mp&&mp->node.next;mp=mp->node.next->data);
+    if(!mp)all_mmaps=kmalloc(0,sizeof(mmap_struct));
+    list_init(&mmps->node);
+    list_add(mp,mmps);
+    //设置mmap struct
+    mmps->base=addr;
+    mmps->len=len;
+    if(fildes>0)
+        mmps->file=current->openf[fildes];
+    else
+        mmps->file=NULL;
+    mmps->offset=off;
+    mmps->pmhdr=NULL;
+    mmps->flags=prot|(flags&MAP_SHARED?MMAP_FLAG_S:0);
+    //加入到进程mmaps链表
+    struct List *new_node=kmalloc(0,sizeof(struct List)),*np=current->mmaps,*prevnp=np;
+    list_init(new_node);
+    new_node->data=mmps;
+    if(!np)current->mmaps=new_node;
+    else{
+        for(;np&&((mmap_struct*)np->data)->base<addr;np=((mmap_struct*)np->next)){
+            prevnp=np;
+        }
+        list_add(prevnp,new_node);
+    }
+    //TODO 需要page err中有申请实际内存并读取文件的功能
+    /* int pgc=(len-1+PAGE_4K_SIZE)/PAGE_4K_SIZE;
+    for(int i=0;i<pgc;i++){
+        smmap(pmalloc(PAGE_4K_SIZE),addr+i*PAGE_4K_SIZE,attr,current->pml4);
+
+    }
+    ===
     int pgc=(len-1+PAGE_4K_SIZE)/PAGE_4K_SIZE;
     for(int i=0;i<pgc;i++){
-        smmap(pmalloc(),addr+i*PAGE_4K_SIZE,attr,current->pml4);
+        smmap(pmalloc(PAGE_4K_SIZE),addr+i*PAGE_4K_SIZE,attr,current->pml4);
     }
-sync_f:
-    if(flags|MAP_ANNONYMOUS){
-        //不需要映射到文件，匿名映射
-        return addr;
-    }
+    goto sync_f; */
+    
+// sync_f:
+//     if(flags|MAP_ANNONYMOUS){
+//         //不需要映射到文件，匿名映射
+//         return addr;
+//     }
     //根据需要是否同步文件内容
     //目前先一致读取
-    sys_lseek(fildes,off,SEEK_SET);
-    sys_read(fildes,addr,len);
+    // sys_lseek(fildes,off,SEEK_SET);
+    // sys_read(fildes,addr,len);
     return addr;
     
 }

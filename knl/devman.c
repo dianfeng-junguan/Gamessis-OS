@@ -99,7 +99,7 @@ struct file_system_type fs_devfs={
 };
 int init_devfs()
 {
-    //创建dev文件夹
+    /* //创建dev文件夹
     ddev=(struct dir_entry*) kmalloc();
     struct index_node* idev=ddev+1;
     ddev->name=idev+1;
@@ -115,10 +115,11 @@ int init_devfs()
     make_dentry(dmnt,"mnt",3,root_sb->root,root_sb->root->dir_ops);
     dmnt->dir_inode=imnt;
     make_inode(imnt,root_sb->root->dir_inode->inode_ops,root_sb->root->dir_inode->f_ops,FS_ATTR_DIR,root_sb);
-    imnt->private_index_info=dmnt;
+    imnt->private_index_info=dmnt; */
 
     register_filesystem(&fs_devfs);
     struct super_block *sb_devfs=mount_fs("devfs",0,0);
+    ddev=path_walk("/dev",1);
     mount_fs_on(ddev,&fs_devfs);
     
     struct dir_entry* rt_devfs=sb_devfs->root;

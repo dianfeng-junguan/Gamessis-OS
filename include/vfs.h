@@ -116,6 +116,7 @@ struct index_node
     unsigned long blocks;
     unsigned long attribute;
     unsigned short dev;
+    int link;   //被dir entry引用的次数
     struct super_block * sb;
 
     struct file_operations * f_ops;
@@ -137,6 +138,7 @@ struct dir_entry
 
     struct index_node * dir_inode;
     struct dir_entry * parent;
+    char link;//标记被file引用的次数，非0不能被释放，一般用于打开文件的时候
 
     mount_point *mount_point;
 
@@ -198,8 +200,13 @@ struct file_operations
 
 struct dir_entry * path_walk(char * name,unsigned long flags);
 int fill_dentry(void *buf,char *name, long namelen,long type,long offset);
+/// @brief 释放dir entry。调用前应当检查是否有挂载点和子目录项。
+/// @param d 
+void drelse(struct dir_entry* d);
 extern struct super_block * root_sb;
-
+/// @brief 标记这个dentry刚被使用过。
+/// @param d 
+void mark_use(struct dir_entry* d);
 //挂载临时根文件系统，用于初始化/dev等文件夹。
 void init_rootfs();
 

@@ -23,6 +23,7 @@ int cur_proc=0;
 int pidd=0;
 int palloc_paddr=0;
 static pid_t sidd=0;
+mmap_struct* all_mmaps=NULL;
 void init_proc(){
     //task=(struct process*)get_global_var(TASK_PCBS_ADDR);//[MAX_TASKS];;
     task=(struct process*)kmallocat(0,13);
@@ -646,14 +647,14 @@ int reg_proc(addr_t entry, struct index_node *cwd, struct index_node *exef)
     //栈顶设置在了4G处
     set_proc(0, 0, 0, 0, DS_USER, CS_USER, DS_USER, DS_USER\
 , DS_USER, DS_USER, STACK_TOP, 0, 0, 0, entry, 0, i);
-    task[i].pml4= kmalloc();
-    task[i].pml4[0]= kmalloc();
+    task[i].pml4= kmalloc(0,PAGE_4K_SIZE);
+    task[i].pml4[0]= kmalloc(0,PAGE_4K_SIZE);
     unsigned long *pdpt=task[i].pml4;
     //pdpt第一项(0-1GB)设置为内核空间，这样才能访问中断
     set_1gb_pdpt(pdpt,0,PAGE_PRESENT|PAGE_RWX);
 
     //申请一项pd,里面申请一2mb页用于堆栈
-    addr_t *stackb= kmalloc();
+    addr_t *stackb= kmalloc(0,PAGE_4K_SIZE);
     pdpt[3]=(unsigned long)stackb|PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX;//3-4G分配栈空间
     set_2mb_pde(stackb + 511, get_phyaddr(req_a_page()), PAGE_FOR_ALL|PAGE_RWX);
     task[i].regs.cr3=task[i].pml4;
@@ -909,7 +910,7 @@ int sys_fork(void){
     }
     //中断使用的栈空间
     //ist一页就够
-    addr_t new_stkpg= kmalloc();
+    addr_t new_stkpg= kmalloc(0,PAGE_4K_SIZE);
     memcpy(new_stkpg,current->tss.ists[0]-PAGE_4K_SIZE,PAGE_4K_SIZE);//把当前进程的栈空间复制到新栈里面
     stack_store_regs* ctx_dup=new_stkpg+PAGE_4K_SIZE-sizeof(stack_store_regs);//拷贝的上下文
     ctx_dup->rax=0;//这样进程切换到子进程的done标签，从时钟中断返回弹出堆栈的时候rax弹出来的就是0，成为返回值。
@@ -933,6 +934,9 @@ int sys_fork(void){
         smmap(new_hppg,hp,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,task[pid].pml4);
     }
     smmap(0,tmpla,0,current->pml4);//解除映射
+    //TODO 拷贝父进程的映射
+    task[pid].mmaps=NULL;
+    
     task[pid].stat=TASK_READY;
     
 
@@ -982,7 +986,7 @@ void release_mmap(struct process* p){
     }
 }
 void copy_mmap(struct process* from, struct process *to){
-    page_item * pml4p= kmalloc();
+    page_item * pml4p= kmalloc(0,PAGE_4K_SIZE);
     memcpy(pml4p, (unsigned char *) from->pml4, PAGE_4K_SIZE);//复制pml4
     to->regs.cr3=(unsigned long)pml4p&~KNL_BASE;
     to->pml4=pml4p;
@@ -994,7 +998,7 @@ void copy_mmap(struct process* from, struct process *to){
         if((pml4e[i]&PAGE_PRESENT)==0)
             continue;
         addr_t old_data=pml4e[i];//旧的数据，里面保存了属性和要拷贝的数据的地址
-        addr_t m4=kmalloc();
+        addr_t m4=kmalloc(0,PAGE_4K_SIZE);
         pml4e[i]= (m4&~KNL_BASE) | (old_data & ~PAGE_4K_MASK);
         memcpy((unsigned char *) m4, old_data & PAGE_4K_MASK | KNL_BASE, PAGE_4K_SIZE);//把老的数据拷贝到新的页面里
         page_item *pdpte= (page_item *) m4;
@@ -1003,7 +1007,7 @@ void copy_mmap(struct process* from, struct process *to){
             if((pdpte[j]&PAGE_PRESENT)==0||(pdpte[j]&PDPTE_1GB)!=0)
                 continue;
             addr_t old_data2=pdpte[j];//旧的数据，里面保存了属性和要拷贝的数据的地址
-            addr_t m3=kmalloc();
+            addr_t m3=kmalloc(0,PAGE_4K_SIZE);
             pdpte[j]= (m3&~KNL_BASE) | (old_data2 & ~PAGE_4K_MASK);
             memcpy((unsigned char *) m3, old_data2 & PAGE_4K_MASK | KNL_BASE, PAGE_4K_SIZE);//把老的数据拷贝到新的页面里
             page_item *pde= (page_item *) m3;
@@ -1012,7 +1016,7 @@ void copy_mmap(struct process* from, struct process *to){
                 if((pde[k]&PAGE_PRESENT)==0||(pde[k]&PDE_2MB)!=0)
                     continue;
                 addr_t old_data3=pde[k];//旧的数据，里面保存了属性和要拷贝的数据的地址
-                addr_t m2=kmalloc();
+                addr_t m2=kmalloc(0,PAGE_4K_SIZE);
                 pde[k]= (m2&~KNL_BASE) | (old_data3 & ~PAGE_4K_MASK);
                 memcpy((unsigned char *) m2, old_data3 & PAGE_4K_MASK | KNL_BASE, PAGE_4K_SIZE);//把老的数据拷贝到新的页面里
 
@@ -1024,6 +1028,19 @@ void copy_mmap(struct process* from, struct process *to){
 }
 
 int chk_mmap(off_t base, size_t mem_size){
+    mmap_struct* mp=current->mmaps;
+    for (; mp; mp=mp->node.next->data)
+    {
+        if(mp->base<=base&&mp->base+mp->len>=base+mem_size)return 0;
+    }
+    return 1;
+    
+}
+/// @brief 查看当前进程下相应内存页表是否已经被填写。
+/// @param base 
+/// @param mem_size 
+/// @return 
+int chk_mtable(off_t base, size_t mem_size){
     size_t nr_pte;
     size_t ndx_pml4=0,ndx_pdpt=0,ndx_pd=0,ndx_pt=0;
     page_item *pml4e= current->pml4;

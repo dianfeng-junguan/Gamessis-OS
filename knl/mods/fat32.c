@@ -657,7 +657,7 @@ find_lookup_success:
 	{
 		p->attribute |= FS_ATTR_DEVICE;
 	}
-
+	p->link=1;
 	dest_dentry->dir_inode = p;
     kmfree(buf);
 	return dest_dentry;	
