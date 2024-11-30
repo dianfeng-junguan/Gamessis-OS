@@ -145,6 +145,7 @@ char to_ascii(char scan_code)
 }
 int init_kb()
 {
+	set_gate(0x21,(addr_t)key_proc,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
 }
 int key_proc()
 {
