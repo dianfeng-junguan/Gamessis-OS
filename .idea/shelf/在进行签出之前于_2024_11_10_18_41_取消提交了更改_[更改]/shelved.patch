@@ -899,7 +899,7 @@ diff --git a/knl.s b/knl.s
 -  8007a5:	e8 a1 13 00 00       	call   801b4b <sys_mkfifo>
 +  8007a5:	e8 4b 18 00 00       	call   801ff5 <sys_mkfifo>
    8007aa:	e9 93 00 00 00       	jmp    800842 <syscall+0x2a8>
-         case SYSCALL_MALLOC:return sys_malloc(a);
+         case SYSCALL_BRK:return sys_malloc(a);
    8007af:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
    8007b2:	89 c7                	mov    edi,eax
 -  8007b4:	e8 c5 47 00 00       	call   804f7e <sys_malloc>

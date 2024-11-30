@@ -77,7 +77,7 @@ addr_t req_a_page();
 addr_t req_page_at(addr_t base,int pgn);
 //申请一页空闲的物理内存，返回的是物理地址。
 void * pmalloc(size_t size);
-int pmfree(void *addr);
+int pmfree(void *addr,size_t len);
 
 int free_page(char *paddr);
 int free_pages_at(int base,int pgn);
@@ -106,4 +106,5 @@ int kmfree(off_t addr);
 int chk_vm(int base, int pgn);
 
 int init_paging();
+int do_munmap(void *addr,int len);
 extern addr_t usr_mem_pa;

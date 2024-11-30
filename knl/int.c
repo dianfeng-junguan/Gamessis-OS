@@ -233,7 +233,7 @@ int syscall(long a, long b, long c, long d, long e, long f)
         case SYSCALL_EXIT:return sys_exit(a);
         case SYSCALL_CALL:return exec_call(a);
         // case SYSCALL_MKFIFO:return sys_mkfifo(a);
-        case SYSCALL_MALLOC:return sys_malloc(a);
+        case SYSCALL_BRK:return sys_brk(a);
         case SYSCALL_FREE:return sys_free(a);
         case SYSCALL_KB_READC:return sys_analyse_key();
         // case SYSCALL_FIND_DEV:return sys_find_dev(a);

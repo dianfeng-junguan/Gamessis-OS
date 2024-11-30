@@ -1,6 +1,8 @@
 //
 // Created by Oniar_Pie on 2023/11/9.
 //
+#include "sys/mman.h"
+#include "sys/types.h"
 #include "vfs.h"
 #include "proc.h"
 #include "memory.h"
@@ -720,7 +722,7 @@ int reg_proc(addr_t entry, struct index_node *cwd, struct index_node *exef)
     int *pptr=pstack;*/
 }
 
-void * sys_malloc(size_t size)
+void * do_brk(off_t brk)
 {
     /* //
     size_t new_heaptop=current->mem_struct.heap_top+size;
@@ -738,28 +740,29 @@ void * sys_malloc(size_t size)
     return data; */
     
 
-    int n=size/CHUNK_SIZE+size%CHUNK_SIZE?1:0;
-    chunk_header *hp=(chunk_header*)task[cur_proc].mem_struct.heap_base;
-    while (hp->next!=NULL&&hp->alloc==0&&hp->pgn>=n)
-        hp=hp->next;
-    if(hp->pgn<n)
+    int n=PAGE_4K_ALIGN(brk),old_n=PAGE_4K_ALIGN(current->mem_struct.heap_top);
+    if(old_n<n)
     {
         //上抬heap top
-        if(task[cur_proc].mem_struct.heap_top+CHUNK_SIZE*n>=HEAP_MAXTOP)
+        if(current->mem_struct.stack_bottom-brk<CHUNK_SIZE)
         {
             //超过顶部
             return NULL;
         }
-        int needed=n-hp->pgn;
+        sys_mmap(PAGE_4K_ALIGN(current->mem_struct.heap_top), (n-old_n)*PAGE_4K_SIZE, PROT_READ|PROT_WRITE, \
+        MAP_ANNONYMOUS|MAP_PRIVATE|MAP_FIXED\
+        , 0, 0);
+        /* int needed=n-hp->pgn;
         char* p=task[cur_proc].mem_struct.heap_top;
         for(int i=0;i<needed*CHUNK_SIZE/PAGE_SIZE;i++)
         {
             //TODO 改掉，不要触发
             *p=0;//触发缺页中断
             p+=PAGE_SIZE;
-        }
+        } */
     }
-    if(hp->pgn>n)
+    // current->mem_struct.heap_top=brk;
+    /* if(hp->pgn>n)
     {
         //在后面新建一个头
         char *p=hp;
@@ -770,8 +773,8 @@ void * sys_malloc(size_t size)
         np->prev=hp;
         hp->next=np;
     }
-    hp->alloc=1;//分配完毕
-    return (char*)hp+CHUNK_SIZE;//返回后边的第一个数据块地址
+    hp->alloc=1;//分配完毕 */
+    return brk;
 }
 int sys_free(int ptr)
 {
@@ -934,8 +937,21 @@ int sys_fork(void){
         smmap(new_hppg,hp,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,task[pid].pml4);
     }
     smmap(0,tmpla,0,current->pml4);//解除映射
-    //TODO 拷贝父进程的映射
-    task[pid].mmaps=NULL;
+    //复制映射数据结构
+    struct List *mp=current->mmaps;
+    for (; mp; mp=mp->next) {
+        mmap_struct* new_mp=kmalloc(0, sizeof(mmap_struct));
+        struct List* nd=kmalloc(0, sizeof(struct List));
+        list_init(nd);
+        nd->data=new_mp;
+        if(!task[pid].mmaps){
+            task[pid].mmaps=nd;
+        }else{
+            list_add(task[pid].mmaps, nd);
+        }
+        memcpy(new_mp, mp->data, sizeof(mmap_struct));
+        
+    }
     
     task[pid].stat=TASK_READY;
     

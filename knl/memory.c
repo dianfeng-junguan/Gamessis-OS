@@ -1,4 +1,5 @@
 #include "memory.h"
+#include "blk_dev.h"
 #include "typename.h"
 #include "sys/types.h"
 #include "int.h"
@@ -347,7 +348,6 @@ void init_memory()
         vmalloc_map[j]|=1u<<i;
     } */
     
-    //TODO 完成pmalloc的记录分配方式转变
     pmhdrs=kmalloc(0,PAGE_4K_SIZE);
     for(int i=0;i< MAX_PMHDRS;i++)
         pmhdrs[i].type=-1;
@@ -449,7 +449,7 @@ addr_t req_a_page(){
 /// @brief 将mhdr对应内存分成两块，返回高地址块内存的mhdr，其属性等复制自原来mhdr，低地址的mhdr来自被分割的mhdr。
 /// @param target 被分割的mhdr
 /// @param split_point 分割地址点
-/// @return 低地址mhdr,即被分割的mhdr;如果割出来高地址内存大小为0，返回低地址mhdr，如果低地址内存大小为0，返回高地址mhdr。
+/// @return 高地址块内存的mhdr,即被分割出来的mhdr;如果割出来高地址内存大小为0，返回低地址mhdr，如果低地址内存大小为0，返回高地址mhdr。
 malloc_hdr *mhdr_split(malloc_hdr* target,off_t split_point,malloc_hdr* array,size_t arraylen){
     //内部实现的时候出现大小为0的mhdr不创建
     if(target->base>=split_point||target->base+target->len<=split_point)return target;
@@ -535,14 +535,22 @@ void * pmalloc(size_t size){
     // comprintf("pmalloc(PAGE_4K_SIZE):%l\n",ret);
     return ret; */
 }
-int pmfree(void *addr){
+int pmfree(void *addr,size_t len){
+    malloc_hdr* prev=pmalloc_mhdr;
     for (malloc_hdr* mh = pmalloc_mhdr; mh; mh=mh->next)
     {
-        if(mh->base!=addr)continue;
-        mh->type=MEM_TYPE_AVAILABLE;
+        if(mh->base<addr){
+            prev=mh;
+            continue;
+        }
+        if(prev->base<addr){
+            //分割
+            prev=mhdr_split(prev, addr, pmalloc_mhdr, MAX_PMHDRS);
+        }
+        prev->type=MEM_TYPE_AVAILABLE;
         //合并空闲项
         malloc_hdr* mp;
-        for(mp=mh;mp->prev&&mh->type==MEM_TYPE_AVAILABLE;mp=mp->prev);
+        for(mp=prev;mp->prev&&prev->type==MEM_TYPE_AVAILABLE;mp=mp->prev);
         while (mp->next&&mp->next==MEM_TYPE_AVAILABLE)
         {
             mp->len+=mp->next->len;
@@ -660,4 +668,41 @@ int is_pgs_ava(int base,int pgn)
     }
     return 1;
 
+}
+//取消映射，调用前应当将addr和len对齐4K，而且不允许释放的内存跨越多个映射块
+int do_munmap(void *addr,int len){
+
+    struct List* lp=current->mmaps;
+    for (; lp; lp=lp->next) {
+        mmap_struct* mp=lp->data;
+        if (mp->base<=addr&&mp->base+mp->len>=addr+len) {
+            //去掉取消映射的部分，将原先分配的整块映射一分为二
+            if (mp->base+mp->len>addr+len) {
+                mmap_struct* extra=kmalloc(0, sizeof(mmap_struct));
+                list_add(all_mmaps, extra);
+                extra->base=addr+len;
+                extra->len=mp->len-(size_t)addr-len;
+                //加到进程映射链表
+                struct List* node=kmalloc(0, sizeof(struct List));
+                list_init(node);
+                node->data=extra;
+                struct List* prevl=current->mmaps;
+                for (struct List* l=current->mmaps; l&&((mmap_struct*)l->data)->base<addr; l=l->next) {
+                    prevl=l;
+                }
+                list_add(prevl, node);
+            }
+            mp->len=addr-mp->base;
+            //把相应的物理内存分配也释放
+            pmfree(mp->pmhdr->base+addr-mp->base,len);
+            //修改页表
+            for (int i=0; i<TO_MPGN(len); i++) {
+                smmap(0, addr+i*PAGE_4K_SIZE, 0, current->pml4);
+            }
+            return 0;
+        }
+    }
+    set_errno(-ENOMEM);
+    return -1;
+    
 }

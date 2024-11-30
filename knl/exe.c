@@ -1,3 +1,6 @@
+#include "fat32.h"
+#include "sys/mman.h"
+#include "sys/types.h"
 #include "vfs.h"
 #include "mem.h"
 #include "syscall.h"
@@ -11,9 +14,11 @@
 #include "errno.h"
 #include "elf.h"
 #include "memory.h"
+#include "log.h"
 
 DLL dlls[MAX_DLLS];
 module modules[MAX_MODULES];
+void fill_reloc(Elf64_Rel* rel,int modid);
 /*
 
 int load_library(char *path)
@@ -497,8 +502,9 @@ off_t new_load_elf(struct file* elf){
     // load elf
 }
 //切换进程前,在execve系统调用中
-off_t load_elf(struct file *elf) {
+off_t load_elf(int fildes) {
     // 读取文件头
+    struct file* elf=current->openf[fildes];
     struct file* elf_storage=elf;
     off_t tmpla=kmalloc(0,PAGE_4K_SIZE);
     off_t shla=kmalloc(0,PAGE_4K_SIZE);
@@ -516,7 +522,9 @@ ready:
     u16 entn=ehdr->e_phnum;
     u16 ents=ehdr->e_phentsize;
     elf->position=ehdr->e_shoff;
-    elf->f_ops->read(elf,(char*)shla,ehdr->e_shnum*ehdr->e_shentsize,&elf->position);
+    sys_lseek(fildes, ehdr->e_shoff, SEEK_SET);
+    sys_read(fildes, shla, entn*ents);
+    // elf->f_ops->read(elf,(char*)shla,ehdr->e_shnum*ehdr->e_shentsize,&elf->position);
     struct Elf64_Shdr* sh= (struct Elf64_Shdr *) (shla);
     Elf64_Phdr *ph= (Elf64_Phdr *) (tmpla + ehdr->e_phoff);
     size_t tot_sz=0;
@@ -562,7 +570,7 @@ ready:
             //load dl
             //
             if(current->dl)break;
-            int fd=sys_open("/mnt/dl.so",O_EXEC);
+            int fd=sys_open("/dl.so",O_EXEC);
             kmfree(tmpla);
             kmfree(shla);
             current->dl=fd;
@@ -570,6 +578,10 @@ ready:
             goto ready;
         }
     }
+    //程序占用的最高地址，这里就是堆开始分配的地方
+    off_t max_allocated=0;
+    current->mem_struct.text_base=-1;
+    current->mem_struct.text_top=0;
     for(int i=0;i<entn;i++){
         //加载段
         if(ph->p_type==PT_LOAD){
@@ -577,15 +589,25 @@ ready:
             unsigned long fs=ph->p_filesz;
             size_t ms=ph->p_memsz;
             char* vptr= (char *) ph->p_vaddr+offset;
+            if(max_allocated<vptr+ms)
+                max_allocated=vptr+ms;
             elf->position=off;
             if(off==0){
                 mod->header=vptr;
             }
-            //先映射好内存
-            int attr=PAGE_PRESENT|PAGE_FOR_ALL;
-            if((ph->p_flags&PF_X)!=0||(ph->p_flags&PF_W)!=0)
-                attr|=PAGE_RWX;
-            int pgc=(ms-1+PAGE_4K_SIZE)/PAGE_4K_SIZE;
+            //先映射好内存，访问时再分配内存
+            int attr=PROT_READ;
+            if((ph->p_flags&PF_W))
+                attr|=PROT_WRITE;
+            if((ph->p_flags&PF_X)){
+                attr|=PROT_EXEC;
+                //代码段底部
+                if(current->mem_struct.text_base>vptr)current->mem_struct.text_base=vptr;
+                //代码段顶部
+                if(current->mem_struct.text_top<vptr+ms)current->mem_struct.text_top=vptr+ms;
+            }
+            sys_mmap(vptr, ms, attr, MAP_FIXED|MAP_PRIVATE, fildes, off);
+            /* int pgc=(ms-1+PAGE_4K_SIZE)/PAGE_4K_SIZE;
             for(int j=0;j<pgc;j++){
                 off_t dest=(off_t) (vptr + j * PAGE_4K_SIZE);
                 off_t lma=pmalloc(PAGE_4K_SIZE);
@@ -597,7 +619,7 @@ ready:
                 smmap(lma , dest, attr, current->pml4);
             }
             //读取
-            elf->f_ops->read(elf,vptr,fs,&elf->position);
+            elf->f_ops->read(elf,vptr,fs,&elf->position); */
 
         }
         ph++;
@@ -642,7 +664,7 @@ ready:
             {
             case DT_NEEDED:
                 //不查错了
-                load_elf(current->openf[so_fno]);
+                load_elf(so_fno);
                 sys_close(so_fno);
                 break;
             case DT_PLTGOT:
@@ -686,25 +708,27 @@ is_rel_prepared:
     }
     
     //初始化堆
-    chunk_header hdrtmp={
-            .alloc=0,
-            .next=NULL,
-            .pgn=0,
-            .prev=NULL
-    };
+    // chunk_header hdrtmp={
+    //         .alloc=0,
+    //         .next=NULL,
+    //         .pgn=0,
+    //         .prev=NULL
+    // };
     //空堆
     //分配堆
-    off_t lma=pmalloc(PAGE_4K_SIZE);
-    if(lma==-1)
-    {
-        set_errno(-ENOMEM);
-        return -1;
-    }
-    smmap(lma, HEAP_BASE, PAGE_PRESENT | PAGE_FOR_ALL | PAGE_RWX, current->pml4);
-    memset((unsigned char *) HEAP_BASE, 0, CHUNK_SIZE);
-    current->mem_struct.heap_base=HEAP_BASE;
-    current->mem_struct.heap_top=HEAP_BASE+CHUNK_SIZE;
-    memcpy((chunk_header*)HEAP_BASE,&hdrtmp,sizeof(hdrtmp));
+    // off_t lma=pmalloc(PAGE_4K_SIZE);
+    // if(lma==-1)
+    // {
+    //     set_errno(-ENOMEM);
+    //     return -1;
+    // }
+    // off_t real_head_base=sys_mmap(HEAP_BASE, CHUNK_SIZE, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANNONYMOUS, 0, 0);
+    // smmap(lma, HEAP_BASE, PAGE_PRESENT | PAGE_FOR_ALL | PAGE_RWX, current->pml4);
+    // memset((unsigned char *) HEAP_BASE, 0, CHUNK_SIZE);
+    //堆一开始不分配，通过后边brk分配
+    current->mem_struct.heap_base=max_allocated;
+    current->mem_struct.heap_top=max_allocated;
+    // memcpy((chunk_header*)HEAP_BASE,&hdrtmp,sizeof(hdrtmp));
     //设置栈
     current->mem_struct.stack_top=STACK_TOP;
     off_t entry=0;

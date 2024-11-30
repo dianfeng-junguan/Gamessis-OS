@@ -1,6 +1,7 @@
 //
 // Created by Oniar_Pie on 2024/10/7.
 //
+#include "sys/types.h"
 #include "vfs.h"
 #include "errno.h"
 #include "fcntl.h"
@@ -351,22 +352,29 @@ unsigned long sys_wait4(unsigned long pid,int *status,int options,void *rusage)
 //    vmfree(child);
 //    return retval;
 }
-
+//扩展或者释放进程可用内存（堆）空间。分配时以4K为单位
 unsigned long sys_brk(unsigned long brk)
 {
-//    unsigned long new_brk = PAGE_2M_ALIGN(brk);
-//
-////	printf("sys_brk\n");
-////	printf("brk:%#018lx,new_brk:%#018lx,current->mm->end_brk:%#018lx\n",brk,new_brk,current->mm->end_brk);
-//    if(new_brk == 0)
-//        return current->mm->start_brk;
-//    if(new_brk < current->mm->end_brk)	//release  brk space
-//        return 0;
-//
-//    new_brk = do_brk(current->mm->end_brk,new_brk - current->mm->end_brk);	//expand brk space
-//
-//    current->mm->end_brk = new_brk;
-//    return new_brk;
+   unsigned long new_brk = PAGE_4K_ALIGN(brk);
+
+//	printf("sys_brk\n");
+//	printf("brk:%#018lx,new_brk:%#018lx,current->mm->end_brk:%#018lx\n",brk,new_brk,current->mm->end_brk);
+    if(new_brk == 0)
+       return current->mem_struct.heap_base;
+    if(new_brk<current->mem_struct.heap_base)return current->mem_struct.heap_top;
+    if(new_brk < current->mem_struct.heap_top)
+    {
+        size_t ms=current->mem_struct.heap_top-new_brk;
+        sys_munmap(brk, ms);
+        
+    }else {
+        new_brk = do_brk(new_brk);	//expand brk space
+    }
+
+
+
+   current->mem_struct.heap_top = new_brk;
+   return new_brk;
 }
 
 unsigned long sys_reboot(unsigned long cmd,void * arg)
@@ -442,6 +450,14 @@ unsigned long sys_getdents(int fd, void * dirent, long count)
     return ret;
 }
 
+int sys_munmap(void *addr, size_t len){
+    void *addr2=PAGE_4K_ALIGN(addr);
+    size_t len2=PAGE_4K_ALIGN(len);
+    if(len==0)return 0;
+    //本来就没被映射
+    if(chk_mmap(addr, len))return 0;
+    return do_munmap(addr2,len2);
+}
 void *sys_mmap(void *addr, size_t len, int prot, int flags,int fildes, off_t off){
     int attr=PAGE_PRESENT|PAGE_FOR_ALL;
     if((prot|PROT_WRITE)||(prot|PROT_EXEC))
@@ -464,7 +480,7 @@ void *sys_mmap(void *addr, size_t len, int prot, int flags,int fildes, off_t off
     }
     //创建mmap struct
     mmap_struct* mmps=kmalloc(0,sizeof(mmap_struct)),*mp=all_mmaps;
-    //TODO 创建进程时要设置mmaps.node
+    
     for(;mp&&mp->node.next;mp=mp->node.next->data);
     if(!mp)all_mmaps=kmalloc(0,sizeof(mmap_struct));
     list_init(&mmps->node);
@@ -490,7 +506,6 @@ void *sys_mmap(void *addr, size_t len, int prot, int flags,int fildes, off_t off
         }
         list_add(prevnp,new_node);
     }
-    //TODO 需要page err中有申请实际内存并读取文件的功能
     /* int pgc=(len-1+PAGE_4K_SIZE)/PAGE_4K_SIZE;
     for(int i=0;i<pgc;i++){
         smmap(pmalloc(PAGE_4K_SIZE),addr+i*PAGE_4K_SIZE,attr,current->pml4);
@@ -515,5 +530,4 @@ void *sys_mmap(void *addr, size_t len, int prot, int flags,int fildes, off_t off
     return addr;
     
 }
-
 

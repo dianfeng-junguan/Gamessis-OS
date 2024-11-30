@@ -1,5 +1,6 @@
 #pragma once
 
+#include <sys/types.h>
 #define MODULE_TYPE_EXE 0
 #define MODULE_TYPE_DLL 1
 #define MAX_MODULES 128
@@ -49,7 +50,7 @@ int load_pe(struct process *proc);
 加载elf可执行文件。
 当elf没有依赖动态库的时候，返回elf的入口地址；当有的时候，则返回0；加载失败返回-1。
 */
-off_t load_elf(struct file *elf);
+off_t load_elf(int fildes);
 
 int proc_start();
 

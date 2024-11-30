@@ -23,7 +23,7 @@
 #define SYSCALL_EXIT    20
 #define SYSCALL_CALL    21
 #define SYSCALL_MKFIFO 22
-#define SYSCALL_MALLOC 23
+#define SYSCALL_BRK 23
 #define SYSCALL_FREE 24
 #define SYSCALL_FIND_DEV 25
 #define SYSCALL_OPERATE_DEV 26
@@ -85,3 +85,6 @@ int sys_ioctl(int fildes, int request, unsigned long args);
 /// @param off 
 /// @return 返回映射内存地址的起始.
 void *sys_mmap(void *addr, size_t len, int prot, int flags,int fildes, off_t off);
+
+int sys_munmap(void *addr, size_t len);
+unsigned long sys_brk(unsigned long brk);

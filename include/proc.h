@@ -243,7 +243,7 @@ int load_dll_at(char *path,int addr);
 int sys_exit(int code);
 
 
-void * sys_malloc(size_t size);
+void * do_brk(off_t brk);
 int sys_free(int ptr);
 //弃用区=========================================
 //创建一个进程，返回进程在task数组中的index
