@@ -24,7 +24,7 @@ ffff800000800016:	49 bb e9 11 12 00 00 	movabs r11,0x1211e9
 ffff80000080001d:	00 00 00 
 ffff800000800020:	4c 01 db             	add    rbx,r11
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:15
-    //asm volatile("sidt %0"::"m"(idt));
+    //__asm__ volatile("sidt %0"::"m"(idt));
     set_gate(0,(addr_t)divide_err,GDT_SEL_CODE,GATE_PRESENT|TRAP_GATE);
 ffff800000800023:	48 b8 20 ff ff ff ff 	movabs rax,0xffffffffffffff20
 ffff80000080002a:	ff ff ff 
@@ -590,7 +590,7 @@ ffff800000800711:	49 bb ee 0a 12 00 00 	movabs r11,0x120aee
 ffff800000800718:	00 00 00 
 ffff80000080071b:	4c 01 da             	add    rdx,r11
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:81
-    asm("cli");
+    __asm__("cli");
 ffff80000080071e:	fa                   	cli    
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:83
     //puts("divide err");
@@ -628,7 +628,7 @@ ffff800000800756:	49 bb a9 0a 12 00 00 	movabs r11,0x120aa9
 ffff80000080075d:	00 00 00 
 ffff800000800760:	4c 01 da             	add    rdx,r11
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:88
-    asm("cli");
+    __asm__("cli");
 ffff800000800763:	fa                   	cli    
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:90
     //puts("debug");
@@ -665,7 +665,7 @@ ffff80000080079b:	49 bb 64 0a 12 00 00 	movabs r11,0x120a64
 ffff8000008007a2:	00 00 00 
 ffff8000008007a5:	4c 01 da             	add    rdx,r11
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:94
-    asm("cli");
+    __asm__("cli");
 ffff8000008007a8:	fa                   	cli    
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:96
     //puts("default_int_proc");
@@ -702,7 +702,7 @@ ffff8000008007e0:	49 bb 1f 0a 12 00 00 	movabs r11,0x120a1f
 ffff8000008007e7:	00 00 00 
 ffff8000008007ea:	4c 01 da             	add    rdx,r11
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:100
-    asm("cli");
+    __asm__("cli");
 ffff8000008007ed:	fa                   	cli    
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:102
     //puts("breakpoint");
@@ -739,7 +739,7 @@ ffff800000800825:	49 bb da 09 12 00 00 	movabs r11,0x1209da
 ffff80000080082c:	00 00 00 
 ffff80000080082f:	4c 01 da             	add    rdx,r11
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:106
-    asm("cli");
+    __asm__("cli");
 ffff800000800832:	fa                   	cli    
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:108
     //puts("overflow");
@@ -776,7 +776,7 @@ ffff80000080086a:	49 bb 95 09 12 00 00 	movabs r11,0x120995
 ffff800000800871:	00 00 00 
 ffff800000800874:	4c 01 da             	add    rdx,r11
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:112
-    asm("cli");
+    __asm__("cli");
 ffff800000800877:	fa                   	cli    
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:114
     //puts("bounds");
@@ -827,7 +827,7 @@ ffff8000008008d2:	ff d2                	call   rdx
 ffff8000008008d4:	48 c7 45 e8 00 00 00 	mov    QWORD PTR [rbp-0x18],0x0
 ffff8000008008db:	00 
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:121
-    asm volatile("mov %%rbp,%0":"=m"(stk));
+    __asm__ volatile("mov %%rbp,%0":"=m"(stk));
 ffff8000008008dc:	48 89 6d e8          	mov    QWORD PTR [rbp-0x18],rbp
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:122
     stk-=16;
@@ -871,7 +871,7 @@ ffff800000800929:	49 bb d6 08 12 00 00 	movabs r11,0x1208d6
 ffff800000800930:	00 00 00 
 ffff800000800933:	4c 01 da             	add    rdx,r11
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:127
-    asm("cli");
+    __asm__("cli");
 ffff800000800936:	fa                   	cli    
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:129
     //puts("coprocessor doesnt exist");
@@ -908,7 +908,7 @@ ffff80000080096e:	49 bb 91 08 12 00 00 	movabs r11,0x120891
 ffff800000800975:	00 00 00 
 ffff800000800978:	4c 01 da             	add    rdx,r11
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:133
-    asm("cli");
+    __asm__("cli");
 ffff80000080097b:	fa                   	cli    
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:135
     //puts("double interrupts");
@@ -978,7 +978,7 @@ ffff8000008009f6:	49 bb 09 08 12 00 00 	movabs r11,0x120809
 ffff8000008009fd:	00 00 00 
 ffff800000800a00:	4c 01 da             	add    rdx,r11
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:144
-    asm("cli");
+    __asm__("cli");
 ffff800000800a03:	fa                   	cli    
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:146
     //puts("invalid tss");
@@ -1015,7 +1015,7 @@ ffff800000800a3b:	49 bb c4 07 12 00 00 	movabs r11,0x1207c4
 ffff800000800a42:	00 00 00 
 ffff800000800a45:	4c 01 da             	add    rdx,r11
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:150
-    asm("cli");
+    __asm__("cli");
 ffff800000800a48:	fa                   	cli    
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:152
     //puts("seg nonexistent");
@@ -1052,7 +1052,7 @@ ffff800000800a80:	49 bb 7f 07 12 00 00 	movabs r11,0x12077f
 ffff800000800a87:	00 00 00 
 ffff800000800a8a:	4c 01 da             	add    rdx,r11
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:156
-    asm("cli");
+    __asm__("cli");
 ffff800000800a8d:	fa                   	cli    
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:158
     //puts("stack seg overbound");
@@ -1132,7 +1132,7 @@ ffff800000800b13:	49 bb ec 06 12 00 00 	movabs r11,0x1206ec
 ffff800000800b1a:	00 00 00 
 ffff800000800b1d:	4c 01 da             	add    rdx,r11
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:186
-    asm("cli");
+    __asm__("cli");
 ffff800000800b20:	fa                   	cli    
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:188
     //puts("coprocessor err");
@@ -1182,7 +1182,7 @@ ffff800000800b76:	4c 89 45 b8          	mov    QWORD PTR [rbp-0x48],r8
 ffff800000800b7a:	4c 89 4d b0          	mov    QWORD PTR [rbp-0x50],r9
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:211
     unsigned long num;
-    asm volatile("":"=a"(num));//这样rax中存的参数就到这了
+    __asm__ volatile("":"=a"(num));//这样rax中存的参数就到这了
 ffff800000800b7e:	48 89 45 e8          	mov    QWORD PTR [rbp-0x18],rax
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:212
     switch (num)
@@ -1689,7 +1689,7 @@ ffff8000008010a4:	00 00 00
 ffff8000008010a7:	4c 01 db             	add    rbx,r11
 ffff8000008010aa:	48 89 7d d8          	mov    QWORD PTR [rbp-0x28],rdi
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:285
-    asm volatile("mov %%rbp,%0":"=m"(ret_stack));
+    __asm__ volatile("mov %%rbp,%0":"=m"(ret_stack));
 ffff8000008010ae:	48 89 6d d8          	mov    QWORD PTR [rbp-0x28],rbp
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/int.c:286
     ret_stack=ret_stack[0];
@@ -2359,7 +2359,7 @@ do_syscall():
 #define	SYSTEM_POWEROFF	(1UL << 1)
 
 __attribute__((__always_inline__))inline int do_syscall(long func,long a1,long a2,long a3,long a4,long a5,long a6){
-        asm volatile(".byte 0x48\n"
+        __asm__ volatile(".byte 0x48\n"
 ffff8000008016df:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
 ffff8000008016e3:	48 8b 7d 90          	mov    rdi,QWORD PTR [rbp-0x70]
 ffff8000008016e7:	48 8b 75 88          	mov    rsi,QWORD PTR [rbp-0x78]
@@ -2374,7 +2374,7 @@ ffff800000801704:	48 0f 05             	rex.W syscall
 ffff800000801707:	48 c7 85 28 ff ff ff 	mov    QWORD PTR [rbp-0xd8],0x0
 ffff80000080170e:	00 00 00 00 
 /mnt/d/Code/Comprehensive/OS/workspace/64/include/syscall.h:66
-        asm volatile("mov %%rax,%0"::"m"(ret));
+        __asm__ volatile("mov %%rax,%0"::"m"(ret));
 ffff800000801712:	48 89 85 28 ff ff ff 	mov    QWORD PTR [rbp-0xd8],rax
 /mnt/d/Code/Comprehensive/OS/workspace/64/include/syscall.h:67
         return ret;
@@ -2414,7 +2414,7 @@ ffff8000008017a1:	48 c7 85 30 ff ff ff 	mov    QWORD PTR [rbp-0xd0],0x0
 ffff8000008017a8:	00 00 00 00 
 do_syscall():
 /mnt/d/Code/Comprehensive/OS/workspace/64/include/syscall.h:63
-        asm volatile(".byte 0x48\n"
+        __asm__ volatile(".byte 0x48\n"
 ffff8000008017ac:	48 8b 85 60 ff ff ff 	mov    rax,QWORD PTR [rbp-0xa0]
 ffff8000008017b3:	48 8b bd 58 ff ff ff 	mov    rdi,QWORD PTR [rbp-0xa8]
 ffff8000008017ba:	48 8b b5 50 ff ff ff 	mov    rsi,QWORD PTR [rbp-0xb0]
@@ -2428,7 +2428,7 @@ ffff8000008017dd:	48 0f 05             	rex.W syscall
 ffff8000008017e0:	48 c7 85 08 ff ff ff 	mov    QWORD PTR [rbp-0xf8],0x0
 ffff8000008017e7:	00 00 00 00 
 /mnt/d/Code/Comprehensive/OS/workspace/64/include/syscall.h:66
-        asm volatile("mov %%rax,%0"::"m"(ret));
+        __asm__ volatile("mov %%rax,%0"::"m"(ret));
 ffff8000008017eb:	48 89 85 08 ff ff ff 	mov    QWORD PTR [rbp-0xf8],rax
 main():
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/main.c:187 (discriminator 3)
@@ -2729,7 +2729,7 @@ ffff800000801a54:	3d ff 03 00 00       	cmp    eax,0x3ff
 ffff800000801a59:	0f 8f f2 02 00 00    	jg     ffff800000801d51 <printf+0x390>
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/log.c:89
         return;//一次性输出不了太长
-    char* tmp=(char*) kmalloc();
+    char* tmp=(char*) kmalloc(0,PAGE_4K_SIZE);
 ffff800000801a5f:	49 89 df             	mov    r15,rbx
 ffff800000801a62:	b8 00 00 00 00       	mov    eax,0x0
 ffff800000801a67:	48 ba 4c 10 ee ff ff 	movabs rdx,0xffffffffffee104c
@@ -3927,7 +3927,7 @@ ffff8000008026a3:	ff ff ff
 ffff8000008026a6:	48 01 da             	add    rdx,rbx
 ffff8000008026a9:	ff d2                	call   rdx
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/memory.c:210
-    asm("cli");
+    __asm__("cli");
 ffff8000008026ab:	48 c7 45 d0 00 00 00 	mov    QWORD PTR [rbp-0x30],0x0
 ffff8000008026b2:	00 
 ffff8000008026b3:	48 c7 45 c8 00 00 00 	mov    QWORD PTR [rbp-0x38],0x0
@@ -3941,12 +3941,12 @@ ffff8000008026bf:	48 89 45 d0          	mov    QWORD PTR [rbp-0x30],rax
 ffff8000008026c3:	0f 20 d0             	mov    rax,cr2
 ffff8000008026c6:	48 89 45 c8          	mov    QWORD PTR [rbp-0x38],rax
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/memory.c:213
-    asm volatile("mov 8(%%rbp),%0":"=r"(err_code));
+    __asm__ volatile("mov 8(%%rbp),%0":"=r"(err_code));
 ffff8000008026ca:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
 ffff8000008026ce:	83 e0 01             	and    eax,0x1
 ffff8000008026d1:	89 45 dc             	mov    DWORD PTR [rbp-0x24],eax
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/memory.c:215
-    asm volatile("mov %%cr2,%0":"=r"(l_addr));//试图访问的地址
+    __asm__ volatile("mov %%cr2,%0":"=r"(l_addr));//试图访问的地址
     int p=err_code&1;
 ffff8000008026d4:	48 c7 45 b8 00 00 00 	mov    QWORD PTR [rbp-0x48],0x0
 ffff8000008026db:	00 
@@ -3959,7 +3959,7 @@ ffff8000008026e0:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
 ffff8000008026e4:	48 83 e8 10          	sub    rax,0x10
 ffff8000008026e8:	48 89 45 b8          	mov    QWORD PTR [rbp-0x48],rax
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/memory.c:218
-    asm volatile("mov %%rbp,%0":"=m"(stk));
+    __asm__ volatile("mov %%rbp,%0":"=m"(stk));
 ffff8000008026ec:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
 ffff8000008026f0:	48 89 c7             	mov    rdi,rax
 ffff8000008026f3:	49 89 df             	mov    r15,rbx
@@ -4099,7 +4099,7 @@ ffff80000080285f:	ff ff ff
 ffff800000802862:	48 01 d9             	add    rcx,rbx
 ffff800000802865:	ff d1                	call   rcx
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/memory.c:265
-    asm volatile("mov 8(%%rbp),%0":"=r"(addr));
+    __asm__ volatile("mov 8(%%rbp),%0":"=r"(addr));
     printf("occurred at %x(paddr), %x(laddr)\n",addr,l_addr);
     extern int cur_proc;
     extern struct process *task;
@@ -4113,7 +4113,7 @@ ffff800000802879:	48 01 da             	add    rdx,rbx
 ffff80000080287c:	ff d2                	call   rdx
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/memory.c:267
         printf("sys died. please reboot.\n");
-        asm volatile("jmp .");
+        __asm__ volatile("jmp .");
 ffff80000080287e:	fb                   	sti    
 ffff80000080287f:	c9                   	leave  
 ffff800000802880:	48 83 c4 08          	add    rsp,0x8
@@ -4697,7 +4697,7 @@ ffff800000802e3b:	5d                   	pop    rbp
 ffff800000802e3c:	c3                   	ret    
 
 ffff800000802e3d <pmalloc>:
-pmalloc():
+pmalloc(PAGE_4K_SIZE):
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/memory.c:379
     }*/
    //占用1GB
@@ -5743,7 +5743,7 @@ ffff800000803753:	4c 01 db             	add    rbx,r11
 ffff800000803756:	48 89 7d c8          	mov    QWORD PTR [rbp-0x38],rdi
 ffff80000080375a:	48 89 75 c0          	mov    QWORD PTR [rbp-0x40],rsi
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/devman.c:69
-    struct super_block* sb=kmalloc();
+    struct super_block* sb=kmalloc(0,PAGE_4K_SIZE);
 ffff80000080375e:	49 89 df             	mov    r15,rbx
 ffff800000803761:	b8 00 00 00 00       	mov    eax,0x0
 ffff800000803766:	48 ba 4c 10 ee ff ff 	movabs rdx,0xffffffffffee104c
@@ -5939,7 +5939,7 @@ ffff800000803939:	00 00 00
 ffff80000080393c:	4c 01 db             	add    rbx,r11
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/devman.c:103
     /* //创建dev文件夹
-    ddev=(struct dir_entry*) kmalloc();
+    ddev=(struct dir_entry*) kmalloc(0,PAGE_4K_SIZE);
 ffff80000080393f:	49 89 df             	mov    r15,rbx
 ffff800000803942:	b8 00 00 00 00       	mov    eax,0x0
 ffff800000803947:	48 ba 4c 10 ee ff ff 	movabs rdx,0xffffffffffee104c
@@ -6045,7 +6045,7 @@ ffff800000803aa2:	48 89 50 38          	mov    QWORD PTR [rax+0x38],rdx
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/devman.c:112
 
     //创建mnt文件夹
-    dmnt=(struct dir_entry*) kmalloc();
+    dmnt=(struct dir_entry*) kmalloc(0,PAGE_4K_SIZE);
 ffff800000803aa6:	49 89 df             	mov    r15,rbx
 ffff800000803aa9:	b8 00 00 00 00       	mov    eax,0x0
 ffff800000803aae:	48 ba 4c 10 ee ff ff 	movabs rdx,0xffffffffffee104c
@@ -6214,7 +6214,7 @@ ffff800000803cc4:	ff ff ff
 ffff800000803cc7:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
 ffff800000803ccb:	48 89 10             	mov    QWORD PTR [rax],rdx
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/devman.c:130
-    dconsole= (struct dir_entry *) kmalloc();
+    dconsole= (struct dir_entry *) kmalloc(0,PAGE_4K_SIZE);
 ffff800000803cce:	48 b8 e0 fe ff ff ff 	movabs rax,0xfffffffffffffee0
 ffff800000803cd5:	ff ff ff 
 ffff800000803cd8:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -6271,7 +6271,7 @@ ffff800000803d7e:	ff ff ff
 ffff800000803d81:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
 ffff800000803d85:	48 89 10             	mov    QWORD PTR [rax],rdx
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/devman.c:136
-    dhd0= (struct dir_entry *) kmalloc();
+    dhd0= (struct dir_entry *) kmalloc(0,PAGE_4K_SIZE);
 ffff800000803d88:	48 b8 d0 fe ff ff ff 	movabs rax,0xfffffffffffffed0
 ffff800000803d8f:	ff ff ff 
 ffff800000803d92:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -6335,7 +6335,7 @@ ffff800000803e4b:	ff ff ff
 ffff800000803e4e:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
 ffff800000803e52:	48 89 10             	mov    QWORD PTR [rax],rdx
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/devman.c:143
-    dtty= (struct dir_entry *) kmalloc();
+    dtty= (struct dir_entry *) kmalloc(0,PAGE_4K_SIZE);
 ffff800000803e55:	48 b8 40 fd ff ff ff 	movabs rax,0xfffffffffffffd40
 ffff800000803e5c:	ff ff ff 
 ffff800000803e5f:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -6409,7 +6409,7 @@ ffff800000803f36:	ff ff ff
 ffff800000803f39:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
 ffff800000803f3d:	48 89 10             	mov    QWORD PTR [rax],rdx
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/devman.c:152
-    dramdisk= (struct dir_entry *) kmalloc();
+    dramdisk= (struct dir_entry *) kmalloc(0,PAGE_4K_SIZE);
 ffff800000803f40:	48 b8 78 ff ff ff ff 	movabs rax,0xffffffffffffff78
 ffff800000803f47:	ff ff ff 
 ffff800000803f4a:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -7282,8 +7282,8 @@ ffff800000804811:	c7 00 01 00 00 00    	mov    DWORD PTR [rax],0x1
     pidd=1;
 
 
-    //asm volatile("lldt %0"::"m"(xi));
-    //asm volatile("ltr %0"::"m"(zi));
+    //__asm__ volatile("lldt %0"::"m"(xi));
+    //__asm__ volatile("ltr %0"::"m"(zi));
 ffff800000804817:	68 00 00 80 00       	push   0x800000
 ffff80000080481c:	c7 44 24 04 00 80 ff 	mov    DWORD PTR [rsp+0x4],0xffff8000
 ffff800000804823:	ff 
@@ -7452,7 +7452,7 @@ ffff800000804a0a:	c7 45 dc ff fb 09 00 	mov    DWORD PTR [rbp-0x24],0x9fbff
     int currsp=0x9fc00-1;
 ffff800000804a11:	48 89 65 dc          	mov    QWORD PTR [rbp-0x24],rsp
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/proc.c:65
-    asm volatile("mov %%rsp,%0":"=m"(currsp));
+    __asm__ volatile("mov %%rsp,%0":"=m"(currsp));
 ffff800000804a15:	48 b8 d8 fd ff ff ff 	movabs rax,0xfffffffffffffdd8
 ffff800000804a1c:	ff ff ff 
 ffff800000804a1f:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8606,7 +8606,7 @@ ffff800000805682:	48 01 d8             	add    rax,rbx
 ffff800000805685:	ff d0                	call   rax
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/proc.c:257
     switch_to(NULL, &task[pnr].tss);
-    //asm volatile("push %0":"=r"(task[pnr].tss.eip));
+    //__asm__ volatile("push %0":"=r"(task[pnr].tss.eip));
     //switch_proc_asm(pnr*8+0x8*3);
 ffff800000805687:	90                   	nop
 ffff800000805688:	48 81 c4 70 03 00 00 	add    rsp,0x370
@@ -9071,10 +9071,10 @@ ffff800000805b18:	4c 01 db             	add    rbx,r11
     int ret;
 ffff800000805b1b:	89 45 ec             	mov    DWORD PTR [rbp-0x14],eax
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/proc.c:495
-    asm volatile("mov %%eax,%0":"=m"(ret));
+    __asm__ volatile("mov %%eax,%0":"=m"(ret));
     //printf("proc #%d ended with retv %d.\n",cur_proc,ret);
     //切换堆栈
-    //asm volatile("mov %0,%%rsp"::"r"(task[0].tss.esp));
+    //__asm__ volatile("mov %0,%%rsp"::"r"(task[0].tss.esp));
 ffff800000805b1e:	48 b8 18 fe ff ff ff 	movabs rax,0xfffffffffffffe18
 ffff800000805b25:	ff ff ff 
 ffff800000805b28:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10129,7 +10129,7 @@ ffff8000008065cd:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
 ffff8000008065d1:	48 8b 80 64 02 00 00 	mov    rax,QWORD PTR [rax+0x264]
 ffff8000008065d8:	0f 22 d8             	mov    cr3,rax
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/proc.c:811
-    asm volatile("mov %0,%%rax\n"
+    __asm__ volatile("mov %0,%%rax\n"
                  "mov %%rax,%%cr3\n":"=m"(to->regs.cr3));
 ffff8000008065db:	4c 8b 4d f0          	mov    r9,QWORD PTR [rbp-0x10]
 ffff8000008065df:	4c 8b 55 f0          	mov    r10,QWORD PTR [rbp-0x10]
@@ -10228,7 +10228,7 @@ ffff800000806719:	8e a2 dc 02 00 00    	mov    fs,WORD PTR [rdx+0x2dc]
 ffff80000080671f:	8e a9 e4 02 00 00    	mov    gs,WORD PTR [rcx+0x2e4]
 ffff800000806725:	fb                   	sti    
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/proc.c:835
-    asm volatile("mov %%fs,%0\r\n"
+    __asm__ volatile("mov %%fs,%0\r\n"
                  "mov %%gs,%1\r\n"
                  "mov %2,%%fs\r\n"
                  "mov %3,%%gs\r\n"
@@ -10479,7 +10479,7 @@ ffff8000008069bd:	c7 40 18 04 00 00 00 	mov    DWORD PTR [rax+0x18],0x4
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/proc.c:870
     
 
-//    asm volatile("mov %%r10,%0"::"m"(r->rip));
+//    __asm__ volatile("mov %%r10,%0"::"m"(r->rip));
     // r->rip=current->regs.rip;
 
     // memcpy(&task[pid].tss,tss, sizeof(TSS));
@@ -12686,7 +12686,7 @@ ffff8000008081b3:	00 00 00
 ffff8000008081b6:	4c 01 d8             	add    rax,r11
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/gdt.c:11
 //    fill_desc(0x108000,108,SEG_SYS_TSS|SEG_PRESENT,4);
-    asm volatile("mov $0x48,%ax\r\n"
+    __asm__ volatile("mov $0x48,%ax\r\n"
 ffff8000008081b9:	66 b8 48 00          	mov    ax,0x48
 ffff8000008081bd:	0f 00 d8             	ltr    ax
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/gdt.c:13
@@ -13377,7 +13377,7 @@ ffff80000080884a:	89 45 94             	mov    DWORD PTR [rbp-0x6c],eax
 ffff80000080884d:	c7 45 c8 00 00 00 00 	mov    DWORD PTR [rbp-0x38],0x0
 ffff800000808854:	eb 6f                	jmp    ffff8000008088c5 <sys_execve+0x30d>
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/exe.c:178 (discriminator 3)
-            smmap(pmalloc(),STACK_TOP-PAGE_4K_SIZE*(i+1),PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,current->pml4);
+            smmap(pmalloc(PAGE_4K_SIZE),STACK_TOP-PAGE_4K_SIZE*(i+1),PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,current->pml4);
 ffff800000808856:	48 b8 80 fe ff ff ff 	movabs rax,0xfffffffffffffe80
 ffff80000080885d:	ff ff ff 
 ffff800000808860:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -14533,7 +14533,7 @@ ffff800000809428:	48 c7 85 78 fe ff ff 	mov    QWORD PTR [rbp-0x188],0x0
 ffff80000080942f:	00 00 00 00 
 do_syscall():
 /mnt/d/Code/Comprehensive/OS/workspace/64/include/syscall.h:63
-        asm volatile(".byte 0x48\n"
+        __asm__ volatile(".byte 0x48\n"
 ffff800000809433:	48 8b 85 a8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x158]
 ffff80000080943a:	48 8b bd a0 fe ff ff 	mov    rdi,QWORD PTR [rbp-0x160]
 ffff800000809441:	48 8b b5 98 fe ff ff 	mov    rsi,QWORD PTR [rbp-0x168]
@@ -14547,7 +14547,7 @@ ffff800000809464:	48 0f 05             	rex.W syscall
 ffff800000809467:	48 c7 85 f8 fc ff ff 	mov    QWORD PTR [rbp-0x308],0x0
 ffff80000080946e:	00 00 00 00 
 /mnt/d/Code/Comprehensive/OS/workspace/64/include/syscall.h:66
-        asm volatile("mov %%rax,%0"::"m"(ret));
+        __asm__ volatile("mov %%rax,%0"::"m"(ret));
 ffff800000809472:	48 89 85 f8 fc ff ff 	mov    QWORD PTR [rbp-0x308],rax
 load_pe():
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/exe.c:420 (discriminator 1)
@@ -14731,7 +14731,7 @@ ffff8000008095c2:	48 89 bd a8 fe ff ff 	mov    QWORD PTR [rbp-0x158],rdi
 ffff8000008095c9:	48 8b 85 a8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x158]
 ffff8000008095d0:	48 89 85 78 ff ff ff 	mov    QWORD PTR [rbp-0x88],rax
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/exe.c:503
-    off_t tmpla=kmalloc();
+    off_t tmpla=kmalloc(0,PAGE_4K_SIZE);
 ffff8000008095d7:	49 89 df             	mov    r15,rbx
 ffff8000008095da:	b8 00 00 00 00       	mov    eax,0x0
 ffff8000008095df:	48 ba 4c 10 ee ff ff 	movabs rdx,0xffffffffffee104c
@@ -14740,7 +14740,7 @@ ffff8000008095e9:	48 01 da             	add    rdx,rbx
 ffff8000008095ec:	ff d2                	call   rdx
 ffff8000008095ee:	48 89 85 70 ff ff ff 	mov    QWORD PTR [rbp-0x90],rax
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/exe.c:504
-    off_t shla=kmalloc();
+    off_t shla=kmalloc(0,PAGE_4K_SIZE);
 ffff8000008095f5:	49 89 df             	mov    r15,rbx
 ffff8000008095f8:	b8 00 00 00 00       	mov    eax,0x0
 ffff8000008095fd:	48 ba 4c 10 ee ff ff 	movabs rdx,0xffffffffffee104c
@@ -15138,7 +15138,7 @@ ffff800000809a8f:	48 8b 85 e0 fe ff ff 	mov    rax,QWORD PTR [rbp-0x120]
 ffff800000809a96:	48 01 d0             	add    rax,rdx
 ffff800000809a99:	48 89 85 d0 fe ff ff 	mov    QWORD PTR [rbp-0x130],rax
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/exe.c:591
-                off_t lma=pmalloc();
+                off_t lma=pmalloc(PAGE_4K_SIZE);
 ffff800000809aa0:	49 89 df             	mov    r15,rbx
 ffff800000809aa3:	b8 00 00 00 00       	mov    eax,0x0
 ffff800000809aa8:	48 ba 45 1c ee ff ff 	movabs rdx,0xffffffffffee1c45
@@ -15622,7 +15622,7 @@ ffff800000809fc2:	00 00 00 00
     };
     //空堆
     //分配堆
-    off_t lma=pmalloc();
+    off_t lma=pmalloc(PAGE_4K_SIZE);
 ffff800000809fc6:	49 89 df             	mov    r15,rbx
 ffff800000809fc9:	b8 00 00 00 00       	mov    eax,0x0
 ffff800000809fce:	48 ba 45 1c ee ff ff 	movabs rdx,0xffffffffffee1c45
@@ -15796,12 +15796,12 @@ ffff80000080a1af:	4c 01 db             	add    rbx,r11
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/exe.c:724
     //获取modid
     unsigned long modid,rel_offset;
-    asm volatile("push %%rax\n mov 8(%%rsp),%%rax\n mov %%rax,%0":"=m"(modid));
+    __asm__ volatile("push %%rax\n mov 8(%%rsp),%%rax\n mov %%rax,%0":"=m"(modid));
 ffff80000080a1b2:	50                   	push   rax
 ffff80000080a1b3:	48 8b 44 24 08       	mov    rax,QWORD PTR [rsp+0x8]
 ffff80000080a1b8:	48 89 45 c8          	mov    QWORD PTR [rbp-0x38],rax
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/exe.c:725
-    asm volatile("push %%rax\n mov 16(%%rsp),%%rax\n mov %%rax,%0":"=m"(rel_offset));
+    __asm__ volatile("push %%rax\n mov 16(%%rsp),%%rax\n mov %%rax,%0":"=m"(rel_offset));
 ffff80000080a1bc:	50                   	push   rax
 ffff80000080a1bd:	48 8b 44 24 10       	mov    rax,QWORD PTR [rsp+0x10]
 ffff80000080a1c2:	48 89 45 c0          	mov    QWORD PTR [rbp-0x40],rax
@@ -15963,7 +15963,7 @@ ffff80000080a343:	90                   	nop
     }
     //重定位完毕，直接返回到目标地址
 
-    asm volatile("mov %0,%%rax\n mov %%rax,0(%%rsp)"::"m"(*v_rel));
+    __asm__ volatile("mov %0,%%rax\n mov %%rax,0(%%rsp)"::"m"(*v_rel));
 ffff80000080a344:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
 ffff80000080a348:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff80000080a34b:	48 89 04 24          	mov    QWORD PTR [rsp],rax
@@ -17563,7 +17563,7 @@ ffff80000080b290:	48 89 75 c0          	mov    QWORD PTR [rbp-0x40],rsi
 ffff80000080b294:	48 89 55 b8          	mov    QWORD PTR [rbp-0x48],rdx
 ffff80000080b298:	48 89 4d b0          	mov    QWORD PTR [rbp-0x50],rcx
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/framebuffer.c:187
-    char *tmp= (char*) kmalloc();
+    char *tmp= (char*) kmalloc(0,PAGE_4K_SIZE);
 ffff80000080b29c:	49 89 df             	mov    r15,rbx
 ffff80000080b29f:	b8 00 00 00 00       	mov    eax,0x0
 ffff80000080b2a4:	48 ba 4c 10 ee ff ff 	movabs rdx,0xffffffffffee104c
@@ -21602,7 +21602,7 @@ ffff80000080d772:	e9 fc 00 00 00       	jmp    ffff80000080d873 <init_ramdisk+0x
 ffff80000080d777:	c7 45 dc 00 00 00 00 	mov    DWORD PTR [rbp-0x24],0x0
 ffff80000080d77e:	e9 b8 00 00 00       	jmp    ffff80000080d83b <init_ramdisk+0x1ef>
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/ramdisk.c:61 (discriminator 3)
-        smmap(pmalloc(),ramdisk_base+i*PAGE_4K_SIZE,PAGE_PRESENT|PAGE_RWX,PML4_ADDR);
+        smmap(pmalloc(PAGE_4K_SIZE),ramdisk_base+i*PAGE_4K_SIZE,PAGE_PRESENT|PAGE_RWX,PML4_ADDR);
 ffff80000080d783:	48 b8 e0 ff ff ff ff 	movabs rax,0xffffffffffffffe0
 ffff80000080d78a:	ff ff ff 
 ffff80000080d78d:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -22132,7 +22132,7 @@ ffff80000080dc95:	66 83 f8 ff          	cmp    ax,0xffff
 ffff80000080dc99:	0f 85 c4 00 00 00    	jne    ffff80000080dd63 <bget+0x11e>
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/blk_buf.c:19
         {
-            l_buffer_heads[i].data=kmalloc();
+            l_buffer_heads[i].data=kmalloc(0,PAGE_4K_SIZE);
 ffff80000080dc9f:	be 00 10 00 00       	mov    esi,0x1000
 ffff80000080dca4:	bf 00 00 00 00       	mov    edi,0x0
 ffff80000080dca9:	49 89 df             	mov    r15,rbx
@@ -23445,7 +23445,7 @@ ffff80000080e8e1:	49 bb 1e 29 11 00 00 	movabs r11,0x11291e
 ffff80000080e8e8:	00 00 00 
 ffff80000080e8eb:	4c 01 db             	add    rbx,r11
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/mods/kb.c:151
-    asm volatile("cli");
+    __asm__ volatile("cli");
 ffff80000080e8ee:	fa                   	cli    
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/mods/kb.c:153
     //获取完整的扫描码
@@ -23669,7 +23669,7 @@ ffff80000080eafa:	ff ff ff
 ffff80000080eafd:	48 01 da             	add    rdx,rbx
 ffff80000080eb00:	ff d2                	call   rdx
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/mods/kb.c:220
-    asm volatile("leave\r\n iretq");
+    __asm__ volatile("leave\r\n iretq");
 ffff80000080eb02:	c9                   	leave  
 ffff80000080eb03:	48 cf                	iretq  
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/mods/kb.c:221
@@ -30023,7 +30023,7 @@ ffff80000081272c:	4c 01 db             	add    rbx,r11
 ffff80000081272f:	48 89 7d d8          	mov    QWORD PTR [rbp-0x28],rdi
 ffff800000812733:	48 89 75 d0          	mov    QWORD PTR [rbp-0x30],rsi
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/mods/tty.c:25
-    tty_t *ntty=(tty_t*) kmalloc();
+    tty_t *ntty=(tty_t*) kmalloc(0,PAGE_4K_SIZE);
 ffff800000812737:	49 89 df             	mov    r15,rbx
 ffff80000081273a:	b8 00 00 00 00       	mov    eax,0x0
 ffff80000081273f:	48 ba 4c 10 ee ff ff 	movabs rdx,0xffffffffffee104c
@@ -30033,7 +30033,7 @@ ffff80000081274c:	ff d2                	call   rdx
 ffff80000081274e:	48 89 45 e8          	mov    QWORD PTR [rbp-0x18],rax
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/mods/tty.c:27
     //创建三个缓冲区
-    ntty->stdin_buf.data= (char*) kmalloc();
+    ntty->stdin_buf.data= (char*) kmalloc(0,PAGE_4K_SIZE);
 ffff800000812752:	49 89 df             	mov    r15,rbx
 ffff800000812755:	b8 00 00 00 00       	mov    eax,0x0
 ffff80000081275a:	48 ba 4c 10 ee ff ff 	movabs rdx,0xffffffffffee104c
@@ -30044,7 +30044,7 @@ ffff800000812769:	48 89 c2             	mov    rdx,rax
 ffff80000081276c:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
 ffff800000812770:	48 89 50 18          	mov    QWORD PTR [rax+0x18],rdx
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/mods/tty.c:28
-    ntty->stdout_buf.data=(char*) kmalloc();
+    ntty->stdout_buf.data=(char*) kmalloc(0,PAGE_4K_SIZE);
 ffff800000812774:	49 89 df             	mov    r15,rbx
 ffff800000812777:	b8 00 00 00 00       	mov    eax,0x0
 ffff80000081277c:	48 ba 4c 10 ee ff ff 	movabs rdx,0xffffffffffee104c
@@ -30055,7 +30055,7 @@ ffff80000081278b:	48 89 c2             	mov    rdx,rax
 ffff80000081278e:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
 ffff800000812792:	48 89 10             	mov    QWORD PTR [rax],rdx
 /mnt/d/Code/Comprehensive/OS/workspace/64/knl/mods/tty.c:29
-    ntty->stderr_buf.data=(char*) kmalloc();
+    ntty->stderr_buf.data=(char*) kmalloc(0,PAGE_4K_SIZE);
 ffff800000812795:	49 89 df             	mov    r15,rbx
 ffff800000812798:	b8 00 00 00 00       	mov    eax,0x0
 ffff80000081279d:	48 ba 4c 10 ee ff ff 	movabs rdx,0xffffffffffee104c

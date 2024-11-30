@@ -34,7 +34,7 @@ void init_ramfs(){
     ramfs_sb.dev=dev_ramdisk;
     //解压img里面的test程序
     // memcpy(ramdisk_base, _binary_bin_test_elf_start, (char*)_binary_bin_test_elf_end - (char*)_binary_bin_test_elf_start);
-    // test= (struct index_node *) kmalloc();
+    // test= (struct index_node *) kmalloc(0,PAGE_4K_SIZE);
     // test->f_ops=&ramfs_fops;
     // test->file_size= (char*)_binary_bin_test_elf_end - (char*)_binary_bin_test_elf_start;
     // test->sb=&ramfs_sb;

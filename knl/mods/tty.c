@@ -22,11 +22,11 @@ long close_tty(struct index_node * inode,struct file * filp){
 //打开文件
 long init_tty(struct index_node * inode,struct file * filp)
 {
-    tty_t *ntty=(tty_t*) kmalloc();
+    tty_t *ntty=(tty_t*) kmalloc(0,PAGE_4K_SIZE);
     //创建三个缓冲区
-    ntty->stdin_buf.data= (char*) kmalloc();
-    ntty->stdout_buf.data=(char*) kmalloc();
-    ntty->stderr_buf.data=(char*) kmalloc();
+    ntty->stdin_buf.data= (char*) kmalloc(0,PAGE_4K_SIZE);
+    ntty->stdout_buf.data=(char*) kmalloc(0,PAGE_4K_SIZE);
+    ntty->stderr_buf.data=(char*) kmalloc(0,PAGE_4K_SIZE);
     ntty->stdin_buf. wptr= 0;
     ntty->stdout_buf.wptr= 0;
     ntty->stderr_buf.wptr= 0;

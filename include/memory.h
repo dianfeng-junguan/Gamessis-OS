@@ -4,6 +4,7 @@
  */
 #include "page.h"
 #include "typename.h"
+#include <sys/types.h>
 #include "multiboot2.h"
 #ifdef IA32
 typedef struct

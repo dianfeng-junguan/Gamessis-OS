@@ -5,7 +5,7 @@
 
 int syscall(long a, long b, long c, long d, long e, long f)
 {
-    asm volatile(
+    __asm__ volatile(
             "mov %0,%%eax\r\n"\
         "mov %1,%%ebx\r\n"\
         "mov %2,%%ecx\r\n"\

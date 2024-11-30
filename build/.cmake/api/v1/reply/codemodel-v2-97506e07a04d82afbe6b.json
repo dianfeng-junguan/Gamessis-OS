@@ -14,7 +14,8 @@
 					"source" : ".",
 					"targetIndexes" : 
 					[
-						0
+						0,
+						1
 					]
 				}
 			],
@@ -29,7 +30,8 @@
 					"name" : "gms",
 					"targetIndexes" : 
 					[
-						0
+						0,
+						1
 					]
 				}
 			],
@@ -38,8 +40,15 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "gms::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-gms-Debug-6302e99d3c6e5c5374ee.json",
+					"jsonFile" : "target-gms-Debug-99c44b41edd5cd50a19c.json",
 					"name" : "gms",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gmsknl::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gmsknl-Debug-32552aed45f83ae917cb.json",
+					"name" : "gmsknl",
 					"projectIndex" : 0
 				}
 			]

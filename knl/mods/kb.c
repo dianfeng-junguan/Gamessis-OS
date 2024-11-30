@@ -148,7 +148,7 @@ int init_kb()
 }
 int key_proc()
 {
-    asm volatile("cli");
+    __asm__ volatile("cli");
     //获取完整的扫描码
     u8 scan1=0,scan2=0,ch=0;
     key_code tmpc;
@@ -217,7 +217,7 @@ int key_proc()
 //        //flush_screen(0);*/
 //    }
     eoi();
-    asm volatile("leave\r\n iretq");
+    __asm__ volatile("leave\r\n iretq");
 }
 
 char sys_analyse_key()

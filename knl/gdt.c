@@ -8,7 +8,7 @@ extern char *gdtptr;
 int init_gdt()
 {
 //    fill_desc(0x108000,108,SEG_SYS_TSS|SEG_PRESENT,4);
-    asm volatile("mov $0x48,%ax\r\n"
+    __asm__ volatile("mov $0x48,%ax\r\n"
                  "ltr %ax");  
 }
 void fill_desc(u64 base, u64 limit, u16 attr, u32 index)

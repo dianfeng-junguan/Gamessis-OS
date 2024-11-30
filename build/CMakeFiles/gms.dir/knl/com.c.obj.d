@@ -12,6 +12,7 @@ CMakeFiles/gms.dir/knl/com.c.obj: \
  D:/Code/Comprehensive/OS/workspace/64/include/com.h \
  D:/Code/Comprehensive/OS/workspace/64/include/int.h \
  D:/Code/Comprehensive/OS/workspace/64/include/typename.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/sys/types.h \
  D:/Code/Comprehensive/OS/workspace/64/include/str.h \
  D:/Code/Comprehensive/OS/workspace/64/include/memory.h \
  D:/Code/Comprehensive/OS/workspace/64/include/page.h \

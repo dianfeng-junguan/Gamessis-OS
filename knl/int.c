@@ -11,7 +11,7 @@
 gate *idt= (gate *) (KNL_BASE+IDT_ADDR);
 extern int disk_int_handler();
 void init_int(){
-    //asm volatile("sidt %0"::"m"(idt));
+    //__asm__ volatile("sidt %0"::"m"(idt));
     set_gate(0,(addr_t)divide_err,GDT_SEL_CODE,GATE_PRESENT|TRAP_GATE);
     set_gate(1,(addr_t)debug,GDT_SEL_CODE,GATE_PRESENT|TRAP_GATE);
     set_gate(2,(addr_t)default_int_proc,GDT_SEL_CODE,GATE_PRESENT|TRAP_GATE);
@@ -78,38 +78,38 @@ void set_gate(u8 index,addr_t offset,u16 selector,u16 attr)
 }
 
 void divide_err(){
-    asm("cli");
+    __asm__("cli");
     //puts("divide err");
     eoi();
     __asm__ volatile ("sti \r\n leave \r\n iretq");
 }
 
 void debug(){
-    asm("cli");
+    __asm__("cli");
     //puts("debug");
     eoi();
     __asm__ volatile ("sti \r\n leave \r\n iretq");
 }
 void default_int_proc(){
-    asm("cli");
+    __asm__("cli");
     //puts("default_int_proc");
     eoi();
     __asm__ volatile ("sti \r\n leave \r\n iretq");
 }
 void breakpoint(){
-    asm("cli");
+    __asm__("cli");
     //puts("breakpoint");
     eoi();
     __asm__ volatile ("sti \r\n leave \r\n iretq");
 }
 void overflow(){
-    asm("cli");
+    __asm__("cli");
     //puts("overflow");
     eoi();
     __asm__ volatile ("sti \r\n leave \r\n iretq");
 }
 void bounds(){
-    asm("cli");
+    __asm__("cli");
     //puts("bounds");
     eoi();
     __asm__ volatile ("sti \r\n leave \r\n iretq");
@@ -118,19 +118,19 @@ void undefined_operator(){
     //puts("undef operator");
     eoi();
     off_t stk=0;
-    asm volatile("mov %%rbp,%0":"=m"(stk));
+    __asm__ volatile("mov %%rbp,%0":"=m"(stk));
     stk-=16;
     backtrace(stk);
     __asm__ volatile ("jmp .\r\n leave \r\n iretq");
 }
 void coprocessor_notexist(){
-    asm("cli");
+    __asm__("cli");
     //puts("coprocessor doesnt exist");
     eoi();
     __asm__ volatile ("sti \r\n leave \r\n iretq");
 }
 void double_ints(){
-    asm("cli");
+    __asm__("cli");
     //puts("double interrupts");
     eoi();
     __asm__ volatile ("sti \r\n leave \r\n iretq");
@@ -141,19 +141,19 @@ void coprocessor_seg_overbound(){
     __asm__ volatile ("leave \r\n iretq");
 }
 void invalid_tss(){
-    asm("cli");
+    __asm__("cli");
     //puts("invalid tss");
     eoi();
     __asm__ volatile ("sti \r\n leave \r\n iretq");
 }
 void segment_notexist(){
-    asm("cli");
+    __asm__("cli");
     //puts("seg nonexistent");
     eoi();
     __asm__ volatile ("sti \r\n leave \r\n iretq");
 }
 void stackseg_overbound(){
-    asm("cli");
+    __asm__("cli");
     //puts("stack seg overbound");
     eoi();
     __asm__ volatile ("sti \r\n leave \r\n iretq");
@@ -161,17 +161,17 @@ void stackseg_overbound(){
 void general_protect(){
     //print("general protect.");
     int err_code=0;
-    /* asm volatile("mov 4(%%ebp),%0":"=r"(err_code));
+    /* __asm__ volatile("mov 4(%%ebp),%0":"=r"(err_code));
     printf("err code:%x\n",err_code);
     unsigned int addr=0;
-    asm volatile("mov 8(%%ebp),%0":"=r"(addr));
+    __asm__ volatile("mov 8(%%ebp),%0":"=r"(addr));
     printf("occurred at %x\n",addr);
     extern int cur_proc;
     extern struct process *task;
     if(task[cur_proc].pid==1)//系统进程
     {
         printf("sys died. please reboot.\n");
-        asm volatile("jmp .");
+        __asm__ volatile("jmp .");
     }
     //杀死问题进程
     del_proc(cur_proc);
@@ -183,7 +183,7 @@ void general_protect(){
 }
 
 void coprocessor_err(){
-    asm("cli");
+    __asm__("cli");
     //puts("coprocessor err");
     eoi();
     __asm__ volatile ("sti \r\n leave \r\n iretq");
@@ -208,7 +208,7 @@ xchg rcx to r10
 int syscall(long a, long b, long c, long d, long e, long f)
 {
     unsigned long num;
-    asm volatile("":"=a"(num));//这样rax中存的参数就到这了
+    __asm__ volatile("":"=a"(num));//这样rax中存的参数就到这了
     switch (num)
     {
         // case 0:return reg_device(a);
@@ -282,7 +282,7 @@ int print_ksym(off_t addr){
     }
 }
 void backtrace(off_t* ret_stack){
-    asm volatile("mov %%rbp,%0":"=m"(ret_stack));
+    __asm__ volatile("mov %%rbp,%0":"=m"(ret_stack));
     ret_stack=ret_stack[0];
     off_t addr=ret_stack[2];//第一级返回函数地址
     comprintf("Backtrace:\n");

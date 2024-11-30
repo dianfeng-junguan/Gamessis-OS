@@ -341,7 +341,7 @@ buffer_head* get_buf(int dev,int block)
             }
             buffer_heads[i].b_count++;
             //给buffer分配一个实际的缓冲区
-            buffer_heads[i].b_data= kmalloc();
+            buffer_heads[i].b_data= kmalloc(0,PAGE_4K_SIZE);
             return &buffer_heads[i];
         }
     }
@@ -360,7 +360,7 @@ int scan_dev(int dev)
 //    device *blkdev=get_dev(dev);
 //    buffer_head* bh=bread(dev,0);
 //    if(!bh)return -1;
-    char* buf= kmalloc();
+    char* buf= kmalloc(0,PAGE_4K_SIZE);
     int r=request(DISK_MAJOR_MAJOR,DISK_CMD_READ,0,1,buf);
     chk_result(r);
 

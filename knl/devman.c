@@ -66,7 +66,7 @@ struct super_block_operations devfs_sops={
     
 };
 struct super_block* devfs_read_superblock(struct Disk_Partition_Table_Entry *PDTE,void *buf){
-    struct super_block* sb=kmalloc();
+    struct super_block* sb=kmalloc(0,PAGE_4K_SIZE);
     sb->dev=0;//不存在具体的存储设备
     sb->p_dev=0;
     sb->root=sb+1;
@@ -100,7 +100,7 @@ struct file_system_type fs_devfs={
 int init_devfs()
 {
     /* //创建dev文件夹
-    ddev=(struct dir_entry*) kmalloc();
+    ddev=(struct dir_entry*) kmalloc(0,PAGE_4K_SIZE);
     struct index_node* idev=ddev+1;
     ddev->name=idev+1;
     make_dentry(ddev,"dev",3,root_sb->root,root_sb->root->dir_ops);
@@ -109,7 +109,7 @@ int init_devfs()
     idev->private_index_info=ddev;
 
     //创建mnt文件夹
-    dmnt=(struct dir_entry*) kmalloc();
+    dmnt=(struct dir_entry*) kmalloc(0,PAGE_4K_SIZE);
     struct index_node* imnt=dmnt+1;
     dmnt->name=imnt+1;
     make_dentry(dmnt,"mnt",3,root_sb->root,root_sb->root->dir_ops);
@@ -127,20 +127,20 @@ int init_devfs()
     
     //创建几个设备文件
     //console-framebuffer.c
-    dconsole= (struct dir_entry *) kmalloc();
+    dconsole= (struct dir_entry *) kmalloc(0,PAGE_4K_SIZE);
     struct index_node* iconsole=dconsole+1;
     dconsole->name=iconsole+1;
     iconsole->dev=0x10000;
     make_devf(dconsole,iconsole,"console",rt_devfs,&devfs_fops);
     //hd0-disk.c
-    dhd0= (struct dir_entry *) kmalloc();
+    dhd0= (struct dir_entry *) kmalloc(0,PAGE_4K_SIZE);
     struct index_node* ihd0=dhd0+1;
     dhd0->name=ihd0+1;
     extern int dev_hd;
     ihd0->dev=dev_hd<<8;
     make_devf(dhd0,ihd0,"hd0",rt_devfs,&devfs_fops);
     //tty-tty.c
-    dtty= (struct dir_entry *) kmalloc();
+    dtty= (struct dir_entry *) kmalloc(0,PAGE_4K_SIZE);
     struct index_node* itty=dtty+1;
     dtty->name=itty+1;
     itty->dev|=0x10000;
@@ -149,7 +149,7 @@ int init_devfs()
     tty_fops.open(itty,&ftty);
 
     //ramdisk- ramdisk.c
-    dramdisk= (struct dir_entry *) kmalloc();
+    dramdisk= (struct dir_entry *) kmalloc(0,PAGE_4K_SIZE);
     struct index_node* iramdisk=dramdisk+1;
     dramdisk->name=iramdisk+1;
     iramdisk->dev=dev_ramdisk<<8;

@@ -47,5 +47,11 @@
         "chrono": "c",
         "algorithm": "c"
     },
-    "C_Cpp.default.compilerPath": "E:\\Mingw\\bin\\gcc.exe"
+    "C_Cpp.default.compilerPath": "E:\\Mingw\\bin\\gcc.exe",
+    "clangd.fallbackFlags": [
+        "-I${workspaceFolder}/usrlib/include",
+        "-ID:/Code/Comprehensive/轻量级libc/back/libc/include",
+        "-ID:/Code/Comprehensive/轻量级libc/back/libc/printf/src",
+        "-ID:/Code/Comprehensive/轻量级libc/back/libc/arch/x86_64/include"
+    ]
 }

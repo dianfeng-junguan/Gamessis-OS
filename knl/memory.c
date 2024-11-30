@@ -6,6 +6,8 @@
 #include "log.h"
 #include "proc.h"
 #include "mem.h"
+#include "vfs.h"
+#include "syscall.h"
 
 //page bitmap. refers to pages of mem.
 unsigned int *page_map=NULL;//[PAGE_BITMAP_NR]={0};
@@ -127,7 +129,7 @@ int init_paging()
         
     }
     //开启分页模式
-    asm volatile("mov %0,%%eax\r\n mov %%rax,%%cr3\r\n"\
+    __asm__ volatile("mov %0,%%eax\r\n mov %%rax,%%cr3\r\n"\
                     "mov %%cr0,%%rax\r\n"
                     "or $0x80000000,%%eax\r\n"
                     "mov %%rax,%%cr0":"=m"(page_index));
@@ -206,16 +208,30 @@ int _kmfree(addr_t ptr)
     int r=num%32;
     vmalloc_map[n]=vmalloc_map[n]&~(unsigned int)(1<<r);
 }
+
+///查询当前进程该地址是否有对应的映射
+mmap_struct* get_mmap(off_t addr){
+    struct List* mp=current->mmaps;
+    for (; mp&&((mmap_struct*)mp->data)->base!=addr; mp=mp->next);
+    if(!mp)return NULL;
+    return mp->data;
+}   
+///获取该物理地址的malloc header。
+malloc_hdr* get_pmhdr(off_t pm){
+    malloc_hdr* mp=pmhdrs;
+    for (; mp&&mp->base!=pm; mp=mp->next);
+    return mp;
+}
 void page_err(){
-    asm("cli");
+    __asm__("cli");
     printf("page err\n");
     unsigned long err_code=0,l_addr=0;
-    asm volatile("mov 8(%%rbp),%0":"=r"(err_code));
-    asm volatile("mov %%cr2,%0":"=r"(l_addr));//试图访问的地址
+    __asm__ volatile("mov 8(%%rbp),%0":"=r"(err_code));
+    __asm__ volatile("mov %%cr2,%0":"=r"(l_addr));//试图访问的地址
     int p=err_code&1;
     
     off_t *stk=0;
-    asm volatile("mov %%rbp,%0":"=m"(stk));
+    __asm__ volatile("mov %%rbp,%0":"=m"(stk));
     stk-=2;
     backtrace(stk);
 
@@ -226,25 +242,25 @@ void page_err(){
         if(l_addr>=MEM_END)
             ;
         mmap_struct* mp=NULL;
-        //TODO 实现get_mmap函数
         if((mp=get_mmap(l_addr))==NULL){
             //TODO  没有映射，报错
+            comprintf("page_err:page acceessed without mmap\n");
+
+        }else {
+            //在进程的页表中申请新页
+            void *pm=pmalloc(PAGE_4K_ALIGN(mp->len));
+            l_addr&=PAGE_4K_MASK;
+            for (int i=0; i<PAGE_4K_ALIGN(mp->len)/PAGE_4K_SIZE; i++) {
+                smmap(pm+i*PAGE_4K_SIZE,l_addr+i*PAGE_4K_SIZE,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,current->pml4);
+            }
+            mp->pmhdr=get_pmhdr(pm);//填写pmhdr
+            //读取文件
+            if(mp->file){
+                int fd=mp->file-current->openf;
+                sys_lseek(fd, mp->offset, SEEK_SET);
+                sys_read(fd, l_addr, mp->len);
+            }
         }
-        //TODO 给映射实际分配内存，并读取文件
-        //在进程的页表中申请新页
-        smmap(get_phyaddr(req_a_page()),l_addr&~0xfff,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,current->pml4);
-//        int *pdet=0,*pt=0;
-//        asm volatile("mov %%cr3,%0":"=r"(pdet));
-//        if(!(pdet[l_addr/PAGE_INDEX_SIZE]&PAGE_PRESENT))
-//        {
-//            //PDE没分配
-//            pt=(int *)vmalloc();
-//            pdet[l_addr/PAGE_INDEX_SIZE]=(int)pt|PAGE_PRESENT|PAGE_FOR_ALL;
-//        }else
-//            pt=pdet[l_addr/PAGE_INDEX_SIZE]&0xfffff000;
-//        //分配PTE
-//        int ptei=l_addr%PAGE_INDEX_SIZE/PAGE_SIZE;
-//        pt[ptei]|=get_phyaddr(req_a_page())|PAGE_PRESENT|PAGE_FOR_ALL;
     }
     else
     {
@@ -257,14 +273,14 @@ void page_err(){
     p=err_code&16;
     if(p)printf("an instruction tries to fetch\n");
     unsigned int addr=0;
-    asm volatile("mov 8(%%rbp),%0":"=r"(addr));
+    __asm__ volatile("mov 8(%%rbp),%0":"=r"(addr));
     printf("occurred at %x(paddr), %x(laddr)\n",addr,l_addr);
     extern int cur_proc;
     extern struct process *task;
     /*if(task[cur_proc].pid==1)//系统进程
     {
         printf("sys died. please reboot.\n");
-        asm volatile("jmp .");
+        __asm__ volatile("jmp .");
     }*/
     //杀死问题进程
 //    del_proc(cur_proc);
@@ -516,7 +532,7 @@ void * pmalloc(size_t size){
     return -1;
     
     /* void *ret=(void*)(get_phyaddr(req_a_page()));
-    // comprintf("pmalloc():%l\n",ret);
+    // comprintf("pmalloc(PAGE_4K_SIZE):%l\n",ret);
     return ret; */
 }
 int pmfree(void *addr){
@@ -625,7 +641,7 @@ addr_t req_page_at(addr_t base,int pgn)
 int chk_vm(int base, int pgn)
 {
     int *pdet=0;
-    asm volatile("mov %%cr3,%0":"=r"(pdet));
+    __asm__ volatile("mov %%cr3,%0":"=r"(pdet));
     int *pt=pdet[base/PAGE_INDEX_SIZE]&0xfffff000;
     if(!(pdet[base/PAGE_INDEX_SIZE]&PAGE_PRESENT)||\
     !(pt[base%PAGE_INDEX_SIZE/PAGE_SIZE]&PAGE_PRESENT))

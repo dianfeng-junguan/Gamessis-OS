@@ -20,6 +20,7 @@
 #include "typename.h"
 #include <sys/types.h>
 #include "vfs.h"
+#include <memory.h>
 
 #define CS_USER 0x30
 #define DS_USER 0x28
@@ -67,7 +68,7 @@ typedef struct _mmap_struct
 {
     off_t base;
     size_t len;
-    struct file* file;
+    struct file** file;
     off_t offset;//文件内偏移
     unsigned short flags;
     unsigned short type;

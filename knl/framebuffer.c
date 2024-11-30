@@ -184,7 +184,7 @@ long read_framebuffer(struct file * filp,char * buf,unsigned long count,long * p
 
 }
 long write_framebuffer(struct file * filp,char * buf,unsigned long count,long * position){
-    char *tmp= (char*) kmalloc();
+    char *tmp= (char*) kmalloc(0,PAGE_4K_SIZE);
     int c=count/(PAGE_4K_SIZE-1),p=0;
     //一块一块输出
     for(int i=0;i<(c?c:1);i++){

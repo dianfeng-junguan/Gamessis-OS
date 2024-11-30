@@ -211,8 +211,8 @@ off_t get_got(unsigned long modid){
 void dl_runtime_resolve(){
     //获取modid
     unsigned long modid,rel_offset;
-    asm volatile("push %%rax\n mov 8(%%rsp),%%rax\n mov %%rax,%0":"=m"(modid));
-    asm volatile("push %%rax\n mov 16(%%rsp),%%rax\n mov %%rax,%0":"=m"(rel_offset));
+    __asm__ volatile("push %%rax\n mov 8(%%rsp),%%rax\n mov %%rax,%0":"=m"(modid));
+    __asm__ volatile("push %%rax\n mov 16(%%rsp),%%rax\n mov %%rax,%0":"=m"(rel_offset));
     Elf64_Rel* rel=rel_offset;
     int symi=ELF64_R_SYM(rel->r_info),type=ELF64_R_TYPE(rel->r_info);
     off_t sym_off=get_sym_addr(modid,symi);
@@ -245,5 +245,5 @@ void dl_runtime_resolve(){
     }
     //重定位完毕，直接返回到目标地址
 
-    asm volatile("mov %0,%%rax\n mov %%rax,0(%%rsp)"::"m"(*v_rel));
+    __asm__ volatile("mov %0,%%rax\n mov %%rax,0(%%rsp)"::"m"(*v_rel));
 }

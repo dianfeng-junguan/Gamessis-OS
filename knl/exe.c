@@ -50,7 +50,7 @@ int load_library(char *path)
     int nbase=tnth.OptionalHeader.ImageBase;
     //如果原来的位置放不了，就向后移动
     int *pgind,*pgt;
-    asm volatile("mov %%cr3,%%eax\r\n mov %%eax,%0"::"m"(pgind));
+    __asm__ volatile("mov %%cr3,%%eax\r\n mov %%eax,%0"::"m"(pgind));
     pgt=pgind[nbase/PAGE_INDEX_SIZE];
     while(!check_pgm(nbase,tnth.OptionalHeader.SizeOfImage/0x1000)&&\
     nbase+tnth.OptionalHeader.SizeOfImage<MEM_END){
@@ -175,7 +175,7 @@ int sys_execve(char *path, int argc, char **argv) {
     if(tot_argsz+argc*8+24>=PAGE_4K_SIZE){
         int needed=(tot_argsz+PAGE_4K_SIZE-1)/PAGE_4K_SIZE-1;
         for(int i=0;i<needed;i++){
-            smmap(pmalloc(),STACK_TOP-PAGE_4K_SIZE*(i+1),PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,current->pml4);
+            smmap(pmalloc(PAGE_4K_SIZE),STACK_TOP-PAGE_4K_SIZE*(i+1),PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,current->pml4);
         }
     }
     unsigned long* argp_aryp=STACK_TOP-tot_argsz;
@@ -500,8 +500,8 @@ off_t new_load_elf(struct file* elf){
 off_t load_elf(struct file *elf) {
     // 读取文件头
     struct file* elf_storage=elf;
-    off_t tmpla=kmalloc();
-    off_t shla=kmalloc();
+    off_t tmpla=kmalloc(0,PAGE_4K_SIZE);
+    off_t shla=kmalloc(0,PAGE_4K_SIZE);
     if(tmpla==-1)
     {
         current->regs.errcode=-ENOMEM;
@@ -588,7 +588,7 @@ ready:
             int pgc=(ms-1+PAGE_4K_SIZE)/PAGE_4K_SIZE;
             for(int j=0;j<pgc;j++){
                 off_t dest=(off_t) (vptr + j * PAGE_4K_SIZE);
-                off_t lma=pmalloc();
+                off_t lma=pmalloc(PAGE_4K_SIZE);
                 if(lma==-1)
                 {
                     current->regs.errcode=-ENOMEM;
@@ -636,11 +636,11 @@ ready:
         size_t relsz=0,relentsz=0;
         off_t relptr=0;
         for(Elf64_Dyn* p=dyn;p->d_tag;p++){
+            char* pathname=p->d_un.d_val+dynstr;
+            int so_fno=sys_open(pathname,O_EXEC);
             switch (p->d_tag)
             {
             case DT_NEEDED:
-                char* pathname=p->d_un.d_val+dynstr;
-                int so_fno=sys_open(pathname,O_EXEC);
                 //不查错了
                 load_elf(current->openf[so_fno]);
                 sys_close(so_fno);
@@ -694,7 +694,7 @@ is_rel_prepared:
     };
     //空堆
     //分配堆
-    off_t lma=pmalloc();
+    off_t lma=pmalloc(PAGE_4K_SIZE);
     if(lma==-1)
     {
         set_errno(-ENOMEM);
@@ -721,8 +721,8 @@ id_t get_modid(void){
 void dl_runtime_resolve(){
     //获取modid
     unsigned long modid,rel_offset;
-    asm volatile("push %%rax\n mov 8(%%rsp),%%rax\n mov %%rax,%0":"=m"(modid));
-    asm volatile("push %%rax\n mov 16(%%rsp),%%rax\n mov %%rax,%0":"=m"(rel_offset));
+    __asm__ volatile("push %%rax\n mov 8(%%rsp),%%rax\n mov %%rax,%0":"=m"(modid));
+    __asm__ volatile("push %%rax\n mov 16(%%rsp),%%rax\n mov %%rax,%0":"=m"(rel_offset));
     Elf64_Rel* rel=rel_offset;
     int symi=ELF64_R_SYM(rel->r_info),type=ELF64_R_TYPE(rel->r_info);
     off_t sym_off=get_sym_addr(modid,symi);
@@ -755,7 +755,7 @@ void dl_runtime_resolve(){
     }
     //重定位完毕，直接返回到目标地址
 
-    asm volatile("mov %0,%%rax\n mov %%rax,0(%%rsp)"::"m"(*v_rel));
+    __asm__ volatile("mov %0,%%rax\n mov %%rax,0(%%rsp)"::"m"(*v_rel));
 }
 off_t get_sym_addr(unsigned long modid,unsigned long symi){
     struct Elf64_Sym *sym=modules[modid].p_symbol;

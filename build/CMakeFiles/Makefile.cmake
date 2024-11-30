@@ -8,10 +8,13 @@ set(CMAKE_DEPENDS_GENERATOR "MinGW Makefiles")
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
   "../CMakeLists.txt"
+  "CMakeFiles/3.20.21032501-MSVC_2/CMakeASM_NASMCompiler.cmake"
   "CMakeFiles/3.20.21032501-MSVC_2/CMakeCCompiler.cmake"
   "CMakeFiles/3.20.21032501-MSVC_2/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.20.21032501-MSVC_2/CMakeRCCompiler.cmake"
   "CMakeFiles/3.20.21032501-MSVC_2/CMakeSystem.cmake"
+  "E:/Visual Studio 2019/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.20/Modules/CMakeASMInformation.cmake"
+  "E:/Visual Studio 2019/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.20/Modules/CMakeASM_NASMInformation.cmake"
   "E:/Visual Studio 2019/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.20/Modules/CMakeCInformation.cmake"
   "E:/Visual Studio 2019/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.20/Modules/CMakeCXXInformation.cmake"
   "E:/Visual Studio 2019/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.20/Modules/CMakeCommonLanguageInclude.cmake"
@@ -48,5 +51,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
+  "CMakeFiles/gmsknl.dir/DependInfo.cmake"
   "CMakeFiles/gms.dir/DependInfo.cmake"
   )

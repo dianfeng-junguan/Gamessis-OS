@@ -6,5 +6,5 @@ C_DEFINES =
 
 C_INCLUDES = @CMakeFiles/gms.dir/includes_C.rsp
 
-C_FLAGS =  -std=c99 -pedantic -g
+C_FLAGS =  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion
 

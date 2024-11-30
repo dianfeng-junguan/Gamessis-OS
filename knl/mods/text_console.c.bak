@@ -95,12 +95,12 @@ void scrup()
 }
 void set_origin(void)
 {
-    asm volatile("cli");
+    __asm__ volatile("cli");
     outb(port_reg_index,12);
     outb(port_reg_v,(page_boffset>>9)&0xff);
     outb(port_reg_index,13);
     outb(port_reg_v,(page_boffset>>1)&0xff);
-    asm volatile("sti");
+    __asm__ volatile("sti");
 
 }
 const driver drv_tty={
@@ -206,12 +206,12 @@ void del_ch()
 }
 void set_cur()
 {
-    asm volatile("cli");
+    __asm__ volatile("cli");
     outb(port_reg_index,14);
     outb(port_reg_v,((m_ptr-video_base)>>9)&0xff);
     outb(port_reg_index,15);
     outb(port_reg_v,((m_ptr-video_base)>>1)&0xff);
-    asm volatile("sti");
+    __asm__ volatile("sti");
 }
 
 int read_tty(driver_args *args)

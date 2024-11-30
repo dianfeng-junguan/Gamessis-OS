@@ -1,27 +1,14 @@
 cmake_minimum_required(VERSION 3.1)
 project(gms)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -pedantic")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c17 -pedantic")
+add_compile_options(-w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion)
 include_directories(include)
+enable_language(ASM_NASM)
+file(GLOB_RECURSE KNL_ASM "knl/*.s")
+message(STATUS ${KNL_ASM})
 aux_source_directory(knl KNL)
 aux_source_directory(knl/mods KNL_MODS)
 aux_source_directory(com KNL_COMS)
-add_executable(gms ${KNL} ${KNL_MODS} ${KNL_COMS}
-        knl/com.c
-        include/com.h
-        include/vfs.h
-        knl/vfs.c
-        include/fat32.h
-        knl/mods/fat32.c
-        knl/sys.c
-        include/fcntl.h
-        include/sys/types.h
-        include/sys/unistd.h
-        include/tty.h
-        knl/mods/tty.c
-        include/sys/wait.h
-        loader/reloc.c
-        include/reloc.h
-        test/test.c
-        knl/ramfs.c
-        include/ramfs.h
+add_custom_target(gmsknl ALL make -C Makefile)
+add_executable(gms ${KNL} ${KNL_ASM} ${KNL_MODS} ${KNL_COMS}
 )

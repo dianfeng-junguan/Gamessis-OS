@@ -1,0 +1,24 @@
+CMakeFiles/gms.dir/knl/exe.c.obj: \
+ D:\Code\Comprehensive\OS\workspace\64\knl\exe.c \
+ D:/Code/Comprehensive/OS/workspace/64/include/vfs.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/c/stddef.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/c/_types/_ptrdiff_t.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/c/_types/_size_t.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/mem.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/syscall.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/sys/types.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/page.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/typename.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/pe.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/proc.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/gdt.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/sys/types.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/vfs.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/memory.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/page.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/multiboot2.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/exe.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/str.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/fcntl.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/errno.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/elf.h

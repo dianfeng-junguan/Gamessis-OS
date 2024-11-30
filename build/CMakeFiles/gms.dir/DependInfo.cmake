@@ -33,8 +33,6 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "D:/Code/Comprehensive/OS/workspace/64/knl/ramfs.c" "CMakeFiles/gms.dir/knl/ramfs.c.obj" "gcc" "CMakeFiles/gms.dir/knl/ramfs.c.obj.d"
   "D:/Code/Comprehensive/OS/workspace/64/knl/sys.c" "CMakeFiles/gms.dir/knl/sys.c.obj" "gcc" "CMakeFiles/gms.dir/knl/sys.c.obj.d"
   "D:/Code/Comprehensive/OS/workspace/64/knl/vfs.c" "CMakeFiles/gms.dir/knl/vfs.c.obj" "gcc" "CMakeFiles/gms.dir/knl/vfs.c.obj.d"
-  "D:/Code/Comprehensive/OS/workspace/64/loader/reloc.c" "CMakeFiles/gms.dir/loader/reloc.c.obj" "gcc" "CMakeFiles/gms.dir/loader/reloc.c.obj.d"
-  "D:/Code/Comprehensive/OS/workspace/64/test/test.c" "CMakeFiles/gms.dir/test/test.c.obj" "gcc" "CMakeFiles/gms.dir/test/test.c.obj.d"
   )
 
 # Targets to which this target links.

@@ -64,16 +64,6 @@ CMAKE_BINARY_DIR = D:\Code\Comprehensive\OS\workspace\64\build
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	"E:\Visual Studio 2019\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E echo "No interactive CMake dialog available."
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-.PHONY : edit_cache/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -83,6 +73,16 @@ rebuild_cache:
 # Special rule for the target rebuild_cache
 rebuild_cache/fast: rebuild_cache
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	"E:\Visual Studio 2019\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E echo "No interactive CMake dialog available."
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+.PHONY : edit_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -114,6 +114,19 @@ preinstall/fast:
 depend:
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles\Makefile.cmake 1
 .PHONY : depend
+
+#=============================================================================
+# Target rules for targets named gmsknl
+
+# Build rule for target.
+gmsknl: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 gmsknl
+.PHONY : gmsknl
+
+# fast build rule for target.
+gmsknl/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\gmsknl.dir\build.make CMakeFiles/gmsknl.dir/build
+.PHONY : gmsknl/fast
 
 #=============================================================================
 # Target rules for targets named gms
@@ -728,54 +741,6 @@ knl/vfs.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\gms.dir\build.make CMakeFiles/gms.dir/knl/vfs.c.s
 .PHONY : knl/vfs.c.s
 
-loader/reloc.obj: loader/reloc.c.obj
-.PHONY : loader/reloc.obj
-
-# target to build an object file
-loader/reloc.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\gms.dir\build.make CMakeFiles/gms.dir/loader/reloc.c.obj
-.PHONY : loader/reloc.c.obj
-
-loader/reloc.i: loader/reloc.c.i
-.PHONY : loader/reloc.i
-
-# target to preprocess a source file
-loader/reloc.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\gms.dir\build.make CMakeFiles/gms.dir/loader/reloc.c.i
-.PHONY : loader/reloc.c.i
-
-loader/reloc.s: loader/reloc.c.s
-.PHONY : loader/reloc.s
-
-# target to generate assembly for a file
-loader/reloc.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\gms.dir\build.make CMakeFiles/gms.dir/loader/reloc.c.s
-.PHONY : loader/reloc.c.s
-
-test/test.obj: test/test.c.obj
-.PHONY : test/test.obj
-
-# target to build an object file
-test/test.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\gms.dir\build.make CMakeFiles/gms.dir/test/test.c.obj
-.PHONY : test/test.c.obj
-
-test/test.i: test/test.c.i
-.PHONY : test/test.i
-
-# target to preprocess a source file
-test/test.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\gms.dir\build.make CMakeFiles/gms.dir/test/test.c.i
-.PHONY : test/test.c.i
-
-test/test.s: test/test.c.s
-.PHONY : test/test.s
-
-# target to generate assembly for a file
-test/test.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\gms.dir\build.make CMakeFiles/gms.dir/test/test.c.s
-.PHONY : test/test.c.s
-
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -784,6 +749,7 @@ help:
 	@echo ... depend
 	@echo ... edit_cache
 	@echo ... rebuild_cache
+	@echo ... gmsknl
 	@echo ... gms
 	@echo ... com/mem.obj
 	@echo ... com/mem.i
@@ -860,12 +826,6 @@ help:
 	@echo ... knl/vfs.obj
 	@echo ... knl/vfs.i
 	@echo ... knl/vfs.s
-	@echo ... loader/reloc.obj
-	@echo ... loader/reloc.i
-	@echo ... loader/reloc.s
-	@echo ... test/test.obj
-	@echo ... test/test.i
-	@echo ... test/test.s
 .PHONY : help
 
 

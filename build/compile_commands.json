@@ -1,137 +1,127 @@
 [
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c99 -pedantic -g -o CMakeFiles\\gms.dir\\knl\\blk_buf.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\blk_buf.c",
+  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\knl\\blk_buf.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\blk_buf.c",
   "file": "D:/Code/Comprehensive/OS/workspace/64/knl/blk_buf.c"
 },
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c99 -pedantic -g -o CMakeFiles\\gms.dir\\knl\\blk_dev.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\blk_dev.c",
+  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\knl\\blk_dev.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\blk_dev.c",
   "file": "D:/Code/Comprehensive/OS/workspace/64/knl/blk_dev.c"
 },
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c99 -pedantic -g -o CMakeFiles\\gms.dir\\knl\\clock.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\clock.c",
+  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\knl\\clock.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\clock.c",
   "file": "D:/Code/Comprehensive/OS/workspace/64/knl/clock.c"
 },
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c99 -pedantic -g -o CMakeFiles\\gms.dir\\knl\\com.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\com.c",
+  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\knl\\com.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\com.c",
   "file": "D:/Code/Comprehensive/OS/workspace/64/knl/com.c"
 },
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c99 -pedantic -g -o CMakeFiles\\gms.dir\\knl\\devman.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\devman.c",
+  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\knl\\devman.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\devman.c",
   "file": "D:/Code/Comprehensive/OS/workspace/64/knl/devman.c"
 },
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c99 -pedantic -g -o CMakeFiles\\gms.dir\\knl\\exe.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\exe.c",
+  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\knl\\exe.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\exe.c",
   "file": "D:/Code/Comprehensive/OS/workspace/64/knl/exe.c"
 },
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c99 -pedantic -g -o CMakeFiles\\gms.dir\\knl\\framebuffer.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\framebuffer.c",
+  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\knl\\framebuffer.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\framebuffer.c",
   "file": "D:/Code/Comprehensive/OS/workspace/64/knl/framebuffer.c"
 },
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c99 -pedantic -g -o CMakeFiles\\gms.dir\\knl\\gdt.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\gdt.c",
+  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\knl\\gdt.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\gdt.c",
   "file": "D:/Code/Comprehensive/OS/workspace/64/knl/gdt.c"
 },
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c99 -pedantic -g -o CMakeFiles\\gms.dir\\knl\\int.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\int.c",
+  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\knl\\int.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\int.c",
   "file": "D:/Code/Comprehensive/OS/workspace/64/knl/int.c"
 },
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c99 -pedantic -g -o CMakeFiles\\gms.dir\\knl\\log.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\log.c",
+  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\knl\\log.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\log.c",
   "file": "D:/Code/Comprehensive/OS/workspace/64/knl/log.c"
 },
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c99 -pedantic -g -o CMakeFiles\\gms.dir\\knl\\main.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\main.c",
+  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\knl\\main.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\main.c",
   "file": "D:/Code/Comprehensive/OS/workspace/64/knl/main.c"
 },
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c99 -pedantic -g -o CMakeFiles\\gms.dir\\knl\\memory.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\memory.c",
+  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\knl\\memory.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\memory.c",
   "file": "D:/Code/Comprehensive/OS/workspace/64/knl/memory.c"
 },
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c99 -pedantic -g -o CMakeFiles\\gms.dir\\knl\\proc.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\proc.c",
+  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\knl\\proc.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\proc.c",
   "file": "D:/Code/Comprehensive/OS/workspace/64/knl/proc.c"
 },
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c99 -pedantic -g -o CMakeFiles\\gms.dir\\knl\\ramdisk.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\ramdisk.c",
+  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\knl\\ramdisk.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\ramdisk.c",
   "file": "D:/Code/Comprehensive/OS/workspace/64/knl/ramdisk.c"
 },
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c99 -pedantic -g -o CMakeFiles\\gms.dir\\knl\\ramfs.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\ramfs.c",
+  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\knl\\ramfs.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\ramfs.c",
   "file": "D:/Code/Comprehensive/OS/workspace/64/knl/ramfs.c"
 },
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c99 -pedantic -g -o CMakeFiles\\gms.dir\\knl\\sys.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\sys.c",
+  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\knl\\sys.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\sys.c",
   "file": "D:/Code/Comprehensive/OS/workspace/64/knl/sys.c"
 },
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c99 -pedantic -g -o CMakeFiles\\gms.dir\\knl\\vfs.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\vfs.c",
+  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\knl\\vfs.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\vfs.c",
   "file": "D:/Code/Comprehensive/OS/workspace/64/knl/vfs.c"
 },
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c99 -pedantic -g -o CMakeFiles\\gms.dir\\knl\\mods\\disk.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\mods\\disk.c",
+  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\knl\\mods\\disk.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\mods\\disk.c",
   "file": "D:/Code/Comprehensive/OS/workspace/64/knl/mods/disk.c"
 },
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c99 -pedantic -g -o CMakeFiles\\gms.dir\\knl\\mods\\fat32.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\mods\\fat32.c",
+  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\knl\\mods\\fat32.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\mods\\fat32.c",
   "file": "D:/Code/Comprehensive/OS/workspace/64/knl/mods/fat32.c"
 },
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c99 -pedantic -g -o CMakeFiles\\gms.dir\\knl\\mods\\kb.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\mods\\kb.c",
+  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\knl\\mods\\kb.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\mods\\kb.c",
   "file": "D:/Code/Comprehensive/OS/workspace/64/knl/mods/kb.c"
 },
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c99 -pedantic -g -o CMakeFiles\\gms.dir\\knl\\mods\\tty.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\mods\\tty.c",
+  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\knl\\mods\\tty.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\mods\\tty.c",
   "file": "D:/Code/Comprehensive/OS/workspace/64/knl/mods/tty.c"
 },
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c99 -pedantic -g -o CMakeFiles\\gms.dir\\com\\mem.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\com\\mem.c",
+  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\com\\mem.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\com\\mem.c",
   "file": "D:/Code/Comprehensive/OS/workspace/64/com/mem.c"
 },
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c99 -pedantic -g -o CMakeFiles\\gms.dir\\com\\str.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\com\\str.c",
+  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\com\\str.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\com\\str.c",
   "file": "D:/Code/Comprehensive/OS/workspace/64/com/str.c"
 },
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c99 -pedantic -g -o CMakeFiles\\gms.dir\\com\\syscall.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\com\\syscall.c",
+  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\com\\syscall.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\com\\syscall.c",
   "file": "D:/Code/Comprehensive/OS/workspace/64/com/syscall.c"
 },
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c99 -pedantic -g -o CMakeFiles\\gms.dir\\com\\types.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\com\\types.c",
+  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\com\\types.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\com\\types.c",
   "file": "D:/Code/Comprehensive/OS/workspace/64/com/types.c"
-},
-{
-  "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c99 -pedantic -g -o CMakeFiles\\gms.dir\\loader\\reloc.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\loader\\reloc.c",
-  "file": "D:/Code/Comprehensive/OS/workspace/64/loader/reloc.c"
-},
-{
-  "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c99 -pedantic -g -o CMakeFiles\\gms.dir\\test\\test.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\test\\test.c",
-  "file": "D:/Code/Comprehensive/OS/workspace/64/test/test.c"
 }
 ]

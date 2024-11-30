@@ -86,7 +86,7 @@ void printf (const char *format,...)
 {
     if(strlen(format)>=1024)
         return;//一次性输出不了太长
-    char* tmp=(char*) kmalloc();
+    char* tmp=(char*) kmalloc(0,PAGE_4K_SIZE);
     va_list vargs;
     va_start(vargs,format);
     char *pstr=format;

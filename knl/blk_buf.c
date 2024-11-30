@@ -16,7 +16,7 @@ buffer_head *bget(){
     for(int i=0;i<MAX_BUFFERHEADS;i++){
         if(l_buffer_heads[i].dev==(unsigned short)-1)
         {
-            l_buffer_heads[i].data=kmalloc();
+            l_buffer_heads[i].data=kmalloc(0,PAGE_4K_SIZE);
             l_buffer_heads[i].count=0;
             l_buffer_heads[i].next=NULL;
             l_buffer_heads[i].prev=NULL;

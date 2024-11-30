@@ -4,8 +4,7 @@
 
 #ifndef GMS_VFS_H
 #define GMS_VFS_H
-
-#include "typename.h"
+#include "c/stddef.h"
 #define MAX_MOUNTPOINTS 24
 // #include <blk_dev.h>
 struct List

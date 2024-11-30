@@ -23,20 +23,18 @@ void ramdisk_do_req(struct request* req){
     if(!req)
         return;
     start_request(req->dev);
+    int len= req->nr_sectors*SECTOR_SIZE;
+    int base=req->sector*SECTOR_SIZE;
     switch (req->cmd)
     {
     case BLKDEV_REQ_READ:
-        int len= req->nr_sectors*SECTOR_SIZE;
-        int base=req->sector*SECTOR_SIZE;
         for(int i=0;i<len;i++){
             req->buffer[i]=ramdisk_base[i + base];
         }
         break;
     case BLKDEV_REQ_WRITE:
-        int lenw= req->nr_sectors*BLOCK_SIZE;
-        int basew=req->sector*BLOCK_SIZE;
-        for(int i=0;i<lenw;i++){
-            ramdisk_base[i + basew]=req->buffer[i];
+        for(int i=0;i<len;i++){
+            ramdisk_base[i + base]=req->buffer[i];
         }
         break;
     default:
@@ -58,7 +56,7 @@ void init_ramdisk(){
         return;
     }
     for(int i=0;i<(ramdisk_size+PAGE_4K_SIZE-1)/PAGE_4K_SIZE;i++){
-        smmap(pmalloc(),ramdisk_base+i*PAGE_4K_SIZE,PAGE_PRESENT|PAGE_RWX,PML4_ADDR);
+        smmap(pmalloc(PAGE_4K_SIZE),ramdisk_base+i*PAGE_4K_SIZE,PAGE_PRESENT|PAGE_RWX,PML4_ADDR);
         //解压img里面的test程序
         memcpy(ramdisk_base+i*PAGE_4K_SIZE, _binary_rd_img_start+i*PAGE_4K_SIZE,PAGE_4K_SIZE);
 

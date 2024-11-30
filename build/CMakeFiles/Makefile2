@@ -62,6 +62,7 @@ CMAKE_BINARY_DIR = D:\Code\Comprehensive\OS\workspace\64\build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
+all: CMakeFiles/gmsknl.dir/all
 all: CMakeFiles/gms.dir/all
 .PHONY : all
 
@@ -70,8 +71,35 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
+clean: CMakeFiles/gmsknl.dir/clean
 clean: CMakeFiles/gms.dir/clean
 .PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/gmsknl.dir
+
+# All Build rule for target.
+CMakeFiles/gmsknl.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\gmsknl.dir\build.make CMakeFiles/gmsknl.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\gmsknl.dir\build.make CMakeFiles/gmsknl.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles --progress-num= "Built target gmsknl"
+.PHONY : CMakeFiles/gmsknl.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/gmsknl.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles 0
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/gmsknl.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles 0
+.PHONY : CMakeFiles/gmsknl.dir/rule
+
+# Convenience name for target.
+gmsknl: CMakeFiles/gmsknl.dir/rule
+.PHONY : gmsknl
+
+# clean rule for target.
+CMakeFiles/gmsknl.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\gmsknl.dir\build.make CMakeFiles/gmsknl.dir/clean
+.PHONY : CMakeFiles/gmsknl.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/gms.dir
@@ -80,12 +108,12 @@ clean: CMakeFiles/gms.dir/clean
 CMakeFiles/gms.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\gms.dir\build.make CMakeFiles/gms.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\gms.dir\build.make CMakeFiles/gms.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28 "Built target gms"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26 "Built target gms"
 .PHONY : CMakeFiles/gms.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/gms.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles 28
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles 26
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/gms.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles 0
 .PHONY : CMakeFiles/gms.dir/rule

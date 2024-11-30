@@ -11,6 +11,7 @@
 #include <ramdisk.h>
 mount_point mp_mount_points[MAX_MOUNTPOINTS];
 struct dir_entry* droot;
+int ROOT_DEV;
 /*原理：
 每一个被使用或者创建的dentry，会被放到数组的开头，剩余后移。当有dentry被挤出去的时候，如果不是necessary，则释放dentry。如果期间被使用了，
 则被放到开头。
@@ -30,6 +31,18 @@ void drelse(struct dir_entry* d){
         kmfree(d->dir_inode);//释放inode
     }
     kmfree(d);
+}
+int dentry_cmp(struct dir_entry* a,struct dir_entry* b){
+    while (a&&b) {
+        if(strcmp(a->name, b->name)!=0)return a->name_length-b->name_length;
+        a=a->parent;
+        b=b->parent;
+        if(a->parent==a&&b->parent==b){
+            //有的根目录会把parent设置成自己，这里的代码是为了检测这种情况，即已经比较到根目录了
+            break;
+        }
+    }
+    return 0;
 }
 void mark_use(struct dir_entry* d){
     int mk=47;
@@ -238,7 +251,7 @@ struct index_node_operations root_iops={
     .lookup=root_lookup
 };
 void init_rootfs(){
-    /* root_sb=(struct super_block*) kmalloc();
+    /* root_sb=(struct super_block*) kmalloc(0,PAGE_4K_SIZE);
     root_sb->root=root_sb+1;//紧凑跟在后面
     root_sb->sb_ops=NULL; */
     droot=kmalloc(0,sizeof(struct dir_entry));

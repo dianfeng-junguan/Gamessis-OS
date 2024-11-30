@@ -15,8 +15,8 @@
 #define SYSCALL_REG_DEVICE 24
 #define SYSCALL_REG_DRIVER 25
 
-#define sti() asm volatile("sti");
-#define cli() asm volatile("cli");
+#define sti() __asm__ volatile("sti");
+#define cli() __asm__ volatile("cli");
 #include "typename.h"
 #include <sys/types.h>
 

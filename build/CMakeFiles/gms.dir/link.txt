@@ -1,3 +1,3 @@
 "E:\Visual Studio 2019\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E rm -f CMakeFiles\gms.dir/objects.a
 E:\Mingw\bin\ar.exe cr CMakeFiles\gms.dir/objects.a @CMakeFiles\gms.dir\objects1.rsp
-E:\Mingw\bin\gcc.exe  -std=c99 -pedantic -g -Wl,--whole-archive CMakeFiles\gms.dir/objects.a -Wl,--no-whole-archive -o gms.exe -Wl,--out-implib,libgms.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\gms.dir\linklibs.rsp
+E:\Mingw\bin\gcc.exe  -std=c17 -pedantic -g -Wl,--whole-archive CMakeFiles\gms.dir/objects.a -Wl,--no-whole-archive -o gms.exe -Wl,--out-implib,libgms.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\gms.dir\linklibs.rsp

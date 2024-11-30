@@ -37,8 +37,8 @@ void init_proc(){
     pidd=1;
 
 
-    //asm volatile("lldt %0"::"m"(xi));
-    //asm volatile("ltr %0"::"m"(zi));
+    //__asm__ volatile("lldt %0"::"m"(xi));
+    //__asm__ volatile("ltr %0"::"m"(zi));
     set_tss(0x400000+KNL_BASE,0x400000+KNL_BASE,0x400000+KNL_BASE\
     ,0x800000+KNL_BASE,0x800000+KNL_BASE,0x800000+KNL_BASE,0x800000+KNL_BASE\
     ,0x800000+KNL_BASE,0x800000+KNL_BASE,0x800000+KNL_BASE);
@@ -62,7 +62,7 @@ void create_test_proc(){
     int index=req_proc();
     task[index].stat=TASK_READY;
     int currsp=0x9fc00-1;
-    asm volatile("mov %%rsp,%0":"=m"(currsp));
+    __asm__ volatile("mov %%rsp,%0":"=m"(currsp));
     set_proc(0, 0, 0, 0, 0x10, 0x8, 0x10, 0x10, 0x10, 0x10,
              0x7e00- sizeof(stack_store_regs), 0, 0, 0, (long)_syscall_sysret, 0, index);
     task[index].tss.rsp0=0x400000;
@@ -184,11 +184,11 @@ void set_proc(long rax, long rbx, long rcx, long rdx, long es, long cs, long ss,
 }
 void proc_zero()
 {
-//    asm volatile("mov $27,%rax\n"
+//    __asm__ volatile("mov $27,%rax\n"
 //                 ".byte 0x48\n"
 //                 "syscall");
 //    long rax;
-//    asm volatile("":"=a"(rax));
+//    __asm__ volatile("":"=a"(rax));
 //    if(rax==0){
 //        printf("child proc ret:%d\n",rax);
 //    }else{
@@ -253,7 +253,7 @@ void switch_proc(int pnr){
     cur_proc=pnr;
     int sel=_TSS_IND(pnr)*8;
     switch_to(NULL, &task[pnr].tss);
-    //asm volatile("push %0":"=r"(task[pnr].tss.eip));
+    //__asm__ volatile("push %0":"=r"(task[pnr].tss.eip));
     //switch_proc_asm(pnr*8+0x8*3);
 }
 void save_context_c(void* ctx,void *int_stk)
@@ -489,10 +489,10 @@ void* malloc(int size)
 void proc_end()
 {
     int ret;
-    asm volatile("mov %%eax,%0":"=m"(ret));
+    __asm__ volatile("mov %%eax,%0":"=m"(ret));
     //printf("proc #%d ended with retv %d.\n",cur_proc,ret);
     //切换堆栈
-    //asm volatile("mov %0,%%rsp"::"r"(task[0].tss.esp));
+    //__asm__ volatile("mov %0,%%rsp"::"r"(task[0].tss.esp));
     del_proc(cur_proc);
     if(task[cur_proc].parent_pid!=-1){
         task[task[cur_proc].parent_pid].stat=TASK_READY;
@@ -729,7 +729,7 @@ void * sys_malloc(size_t size)
     off_t htop=PAGE_4K_ALIGN(current->mem_struct.heap_top);
     while (npgc>opgc)
     {
-        smmap(pmalloc(),htop,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,current->pml4);
+        smmap(pmalloc(PAGE_4K_SIZE),htop,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,current->pml4);
         htop=PAGE_4K_ALIGN(htop+1);
         opgc++;
     }
@@ -807,9 +807,9 @@ void switch_to(struct process *from, struct process *to) {
     cur_proc=to-task;
     current=&task[cur_proc];
     //cr3需要物理地址,regs.cr3里面填的就是物理地址
-    asm volatile("mov %0,%%rax\n"
+    __asm__ volatile("mov %0,%%rax\n"
                  "mov %%rax,%%cr3\n":"=m"(to->regs.cr3));
-    asm volatile("mov %%rsp,%0\r\n"
+    __asm__ volatile("mov %%rsp,%0\r\n"
                  "lea done(%%rip),%%rax\r\n"
                  "mov %%rax,%1\r\n"
                  "mov %%fs,%2\r\n"
@@ -827,7 +827,7 @@ void switch_to(struct process *from, struct process *to) {
 void __switch_to(struct process *from, struct process *to) {
     set_tss(to->tss.rsp0,to->tss.rsp1,to->tss.rsp2,to->tss.ists[0],to->tss.ists[1],
             to->tss.ists[2],to->tss.ists[3],to->tss.ists[4],to->tss.ists[5],to->tss.ists[6]);
-    asm volatile("mov %%fs,%0\r\n"
+    __asm__ volatile("mov %%fs,%0\r\n"
                  "mov %%gs,%1\r\n"
                  "mov %2,%%fs\r\n"
                  "mov %3,%%gs\r\n"
@@ -864,7 +864,7 @@ int sys_fork(void){
     task[pid].stat=TASK_ZOMBIE;
     
 
-//    asm volatile("mov %%r10,%0"::"m"(r->rip));
+//    __asm__ volatile("mov %%r10,%0"::"m"(r->rip));
     // r->rip=current->regs.rip;
 
     // memcpy(&task[pid].tss,tss, sizeof(TSS));
