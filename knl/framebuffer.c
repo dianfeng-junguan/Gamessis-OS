@@ -22,6 +22,8 @@ static u32 font_width, font_height;
 static u32 font_width_bytes;
 static u8 *glyph_table;
 static u32 bytes_per_glyph, glyph_nr;
+static char *text_buffer;
+static int txtbfh=0,txtbft=0,max_chs=0;
 int font_size=1;
 void init_framebuffer()
 {
@@ -42,7 +44,6 @@ void init_framebuffer()
         p+=PAGE_SIZE;
     }
     
-    
 }
 void init_font(){
     boot_font = (struct psf2_header*) (_binary_res_font_psf_start);
@@ -59,6 +60,9 @@ void init_font(){
     max_ch_nr_x = framebuffer.common.framebuffer_width / font_width;
     max_ch_nr_y = framebuffer.common.framebuffer_height / font_height;
     font_size=1;
+    max_chs=max_ch_nr_x*max_ch_nr_y*2;
+    text_buffer=kmalloc(0, max_chs);
+    
 }
 void set_framebuffer(struct multiboot_tag_framebuffer tag)
 {
@@ -127,16 +131,21 @@ void draw_letter(int x, volatile int y, int size, char c) {
 }
 //向上滚动一个像素
 void scr_up(){
-    for(int dy=0;dy<framebuffer.common.framebuffer_height-1;dy++){
-        for(int dx=0;dx<framebuffer.common.framebuffer_width;dx++){
-            char *p=(char*)(FRAMEBUFFER_ADDR+
-                    dy*framebuffer.common.framebuffer_pitch
-                    +dx*framebuffer.common.framebuffer_bpp/8);
-            *p=*(p+framebuffer.common.framebuffer_pitch);
-            p++;
-        }
+    txtbfh=(txtbfh+max_ch_nr_x)%max_chs;
+    fb_cursor_x=0;
+    fb_cursor_y=0;
+    text_buffer[txtbft]='\0';
+    print(txtbfh);
+    // for(int dy=0;dy<framebuffer.common.framebuffer_height-1;dy++){
+    //     for(int dx=0;dx<framebuffer.common.framebuffer_width;dx++){
+    //         char *p=(char*)(FRAMEBUFFER_ADDR+
+    //                 dy*framebuffer.common.framebuffer_pitch
+    //                 +dx*framebuffer.common.framebuffer_bpp/8);
+    //         *p=*(p+framebuffer.common.framebuffer_pitch);
+    //         p++;
+    //     }
 
-    }
+    // }
 //    for(int i=0;i< framebuffer.common.framebuffer_width*framebuffer.common.framebuffer_bpp/8;i++)
 //        *(p++)=0;
 }
@@ -159,13 +168,14 @@ void print(char* s){
         }
         if(*s=='\n')continue;
         if(fb_cursor_y>=max_ch_nr_y-1){
-//            for(int i=0;i<font_height*font_size;i++)
-////                scr_up();
-////            fb_cursor_y=max_ch_nr_y-1;
-            fb_cursor_y=0;
+            scr_up();
+            fb_cursor_y=max_ch_nr_y-1;
+            // fb_cursor_y=0;
         }
         draw_letter(fb_cursor_x*font_width*font_size,fb_cursor_y*font_height*font_size,font_size,*s);
         fb_cursor_x+=1;
+        text_buffer[txtbft++]=*s;
+        if(txtbft==max_chs)txtbft=0;
     }
 }
 struct file_operations framebuffer_fops={

@@ -9,6 +9,7 @@
 #include "mem.h"
 #include "vfs.h"
 #include "syscall.h"
+#include "errno.h"
 
 //page bitmap. refers to pages of mem.
 unsigned int *page_map=NULL;//[PAGE_BITMAP_NR]={0};
