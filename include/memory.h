@@ -99,7 +99,10 @@ stat_t smmap(addr_t pa,addr_t la,u32 attr,page_item* pml4p);
 stat_t mdemap(u64 la);
 
 void page_err();
-//vmalloc区部分
+//申请一块内核缓存。
+//addr用于指定内核缓存地址，
+//size和addr都会做4K对齐之后分配。
+//*addr参数已经废弃不用。
 void *kmalloc(off_t addr,size_t size);
 addr_t kmallocat(addr_t addr,int pgc);
 int kmfree(off_t addr);

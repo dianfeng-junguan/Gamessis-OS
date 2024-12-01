@@ -293,11 +293,26 @@ CMakeFiles/gms.dir/knl/ramfs.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/gms.dir/knl/ramfs.c.s"
 	E:\Mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Code\Comprehensive\OS\workspace\64\knl\ramfs.c -o CMakeFiles\gms.dir\knl\ramfs.c.s
 
+CMakeFiles/gms.dir/knl/signal.c.obj: CMakeFiles/gms.dir/flags.make
+CMakeFiles/gms.dir/knl/signal.c.obj: CMakeFiles/gms.dir/includes_C.rsp
+CMakeFiles/gms.dir/knl/signal.c.obj: ../knl/signal.c
+CMakeFiles/gms.dir/knl/signal.c.obj: CMakeFiles/gms.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/gms.dir/knl/signal.c.obj"
+	E:\Mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/gms.dir/knl/signal.c.obj -MF CMakeFiles\gms.dir\knl\signal.c.obj.d -o CMakeFiles\gms.dir\knl\signal.c.obj -c D:\Code\Comprehensive\OS\workspace\64\knl\signal.c
+
+CMakeFiles/gms.dir/knl/signal.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/gms.dir/knl/signal.c.i"
+	E:\Mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\Code\Comprehensive\OS\workspace\64\knl\signal.c > CMakeFiles\gms.dir\knl\signal.c.i
+
+CMakeFiles/gms.dir/knl/signal.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/gms.dir/knl/signal.c.s"
+	E:\Mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\Code\Comprehensive\OS\workspace\64\knl\signal.c -o CMakeFiles\gms.dir\knl\signal.c.s
+
 CMakeFiles/gms.dir/knl/sys.c.obj: CMakeFiles/gms.dir/flags.make
 CMakeFiles/gms.dir/knl/sys.c.obj: CMakeFiles/gms.dir/includes_C.rsp
 CMakeFiles/gms.dir/knl/sys.c.obj: ../knl/sys.c
 CMakeFiles/gms.dir/knl/sys.c.obj: CMakeFiles/gms.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/gms.dir/knl/sys.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object CMakeFiles/gms.dir/knl/sys.c.obj"
 	E:\Mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/gms.dir/knl/sys.c.obj -MF CMakeFiles\gms.dir\knl\sys.c.obj.d -o CMakeFiles\gms.dir\knl\sys.c.obj -c D:\Code\Comprehensive\OS\workspace\64\knl\sys.c
 
 CMakeFiles/gms.dir/knl/sys.c.i: cmake_force
@@ -312,7 +327,7 @@ CMakeFiles/gms.dir/knl/vfs.c.obj: CMakeFiles/gms.dir/flags.make
 CMakeFiles/gms.dir/knl/vfs.c.obj: CMakeFiles/gms.dir/includes_C.rsp
 CMakeFiles/gms.dir/knl/vfs.c.obj: ../knl/vfs.c
 CMakeFiles/gms.dir/knl/vfs.c.obj: CMakeFiles/gms.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object CMakeFiles/gms.dir/knl/vfs.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building C object CMakeFiles/gms.dir/knl/vfs.c.obj"
 	E:\Mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/gms.dir/knl/vfs.c.obj -MF CMakeFiles\gms.dir\knl\vfs.c.obj.d -o CMakeFiles\gms.dir\knl\vfs.c.obj -c D:\Code\Comprehensive\OS\workspace\64\knl\vfs.c
 
 CMakeFiles/gms.dir/knl/vfs.c.i: cmake_force
@@ -327,7 +342,7 @@ CMakeFiles/gms.dir/knl/mods/disk.c.obj: CMakeFiles/gms.dir/flags.make
 CMakeFiles/gms.dir/knl/mods/disk.c.obj: CMakeFiles/gms.dir/includes_C.rsp
 CMakeFiles/gms.dir/knl/mods/disk.c.obj: ../knl/mods/disk.c
 CMakeFiles/gms.dir/knl/mods/disk.c.obj: CMakeFiles/gms.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building C object CMakeFiles/gms.dir/knl/mods/disk.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building C object CMakeFiles/gms.dir/knl/mods/disk.c.obj"
 	E:\Mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/gms.dir/knl/mods/disk.c.obj -MF CMakeFiles\gms.dir\knl\mods\disk.c.obj.d -o CMakeFiles\gms.dir\knl\mods\disk.c.obj -c D:\Code\Comprehensive\OS\workspace\64\knl\mods\disk.c
 
 CMakeFiles/gms.dir/knl/mods/disk.c.i: cmake_force
@@ -342,7 +357,7 @@ CMakeFiles/gms.dir/knl/mods/fat32.c.obj: CMakeFiles/gms.dir/flags.make
 CMakeFiles/gms.dir/knl/mods/fat32.c.obj: CMakeFiles/gms.dir/includes_C.rsp
 CMakeFiles/gms.dir/knl/mods/fat32.c.obj: ../knl/mods/fat32.c
 CMakeFiles/gms.dir/knl/mods/fat32.c.obj: CMakeFiles/gms.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building C object CMakeFiles/gms.dir/knl/mods/fat32.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building C object CMakeFiles/gms.dir/knl/mods/fat32.c.obj"
 	E:\Mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/gms.dir/knl/mods/fat32.c.obj -MF CMakeFiles\gms.dir\knl\mods\fat32.c.obj.d -o CMakeFiles\gms.dir\knl\mods\fat32.c.obj -c D:\Code\Comprehensive\OS\workspace\64\knl\mods\fat32.c
 
 CMakeFiles/gms.dir/knl/mods/fat32.c.i: cmake_force
@@ -357,7 +372,7 @@ CMakeFiles/gms.dir/knl/mods/kb.c.obj: CMakeFiles/gms.dir/flags.make
 CMakeFiles/gms.dir/knl/mods/kb.c.obj: CMakeFiles/gms.dir/includes_C.rsp
 CMakeFiles/gms.dir/knl/mods/kb.c.obj: ../knl/mods/kb.c
 CMakeFiles/gms.dir/knl/mods/kb.c.obj: CMakeFiles/gms.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building C object CMakeFiles/gms.dir/knl/mods/kb.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building C object CMakeFiles/gms.dir/knl/mods/kb.c.obj"
 	E:\Mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/gms.dir/knl/mods/kb.c.obj -MF CMakeFiles\gms.dir\knl\mods\kb.c.obj.d -o CMakeFiles\gms.dir\knl\mods\kb.c.obj -c D:\Code\Comprehensive\OS\workspace\64\knl\mods\kb.c
 
 CMakeFiles/gms.dir/knl/mods/kb.c.i: cmake_force
@@ -372,7 +387,7 @@ CMakeFiles/gms.dir/knl/mods/tty.c.obj: CMakeFiles/gms.dir/flags.make
 CMakeFiles/gms.dir/knl/mods/tty.c.obj: CMakeFiles/gms.dir/includes_C.rsp
 CMakeFiles/gms.dir/knl/mods/tty.c.obj: ../knl/mods/tty.c
 CMakeFiles/gms.dir/knl/mods/tty.c.obj: CMakeFiles/gms.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building C object CMakeFiles/gms.dir/knl/mods/tty.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building C object CMakeFiles/gms.dir/knl/mods/tty.c.obj"
 	E:\Mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/gms.dir/knl/mods/tty.c.obj -MF CMakeFiles\gms.dir\knl\mods\tty.c.obj.d -o CMakeFiles\gms.dir\knl\mods\tty.c.obj -c D:\Code\Comprehensive\OS\workspace\64\knl\mods\tty.c
 
 CMakeFiles/gms.dir/knl/mods/tty.c.i: cmake_force
@@ -387,7 +402,7 @@ CMakeFiles/gms.dir/com/str.c.obj: CMakeFiles/gms.dir/flags.make
 CMakeFiles/gms.dir/com/str.c.obj: CMakeFiles/gms.dir/includes_C.rsp
 CMakeFiles/gms.dir/com/str.c.obj: ../com/str.c
 CMakeFiles/gms.dir/com/str.c.obj: CMakeFiles/gms.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building C object CMakeFiles/gms.dir/com/str.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building C object CMakeFiles/gms.dir/com/str.c.obj"
 	E:\Mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/gms.dir/com/str.c.obj -MF CMakeFiles\gms.dir\com\str.c.obj.d -o CMakeFiles\gms.dir\com\str.c.obj -c D:\Code\Comprehensive\OS\workspace\64\com\str.c
 
 CMakeFiles/gms.dir/com/str.c.i: cmake_force
@@ -402,7 +417,7 @@ CMakeFiles/gms.dir/com/mem.c.obj: CMakeFiles/gms.dir/flags.make
 CMakeFiles/gms.dir/com/mem.c.obj: CMakeFiles/gms.dir/includes_C.rsp
 CMakeFiles/gms.dir/com/mem.c.obj: ../com/mem.c
 CMakeFiles/gms.dir/com/mem.c.obj: CMakeFiles/gms.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building C object CMakeFiles/gms.dir/com/mem.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building C object CMakeFiles/gms.dir/com/mem.c.obj"
 	E:\Mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/gms.dir/com/mem.c.obj -MF CMakeFiles\gms.dir\com\mem.c.obj.d -o CMakeFiles\gms.dir\com\mem.c.obj -c D:\Code\Comprehensive\OS\workspace\64\com\mem.c
 
 CMakeFiles/gms.dir/com/mem.c.i: cmake_force
@@ -417,7 +432,7 @@ CMakeFiles/gms.dir/com/types.c.obj: CMakeFiles/gms.dir/flags.make
 CMakeFiles/gms.dir/com/types.c.obj: CMakeFiles/gms.dir/includes_C.rsp
 CMakeFiles/gms.dir/com/types.c.obj: ../com/types.c
 CMakeFiles/gms.dir/com/types.c.obj: CMakeFiles/gms.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building C object CMakeFiles/gms.dir/com/types.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building C object CMakeFiles/gms.dir/com/types.c.obj"
 	E:\Mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/gms.dir/com/types.c.obj -MF CMakeFiles\gms.dir\com\types.c.obj.d -o CMakeFiles\gms.dir\com\types.c.obj -c D:\Code\Comprehensive\OS\workspace\64\com\types.c
 
 CMakeFiles/gms.dir/com/types.c.i: cmake_force
@@ -445,6 +460,7 @@ gms_OBJECTS = \
 "CMakeFiles/gms.dir/knl/proc.c.obj" \
 "CMakeFiles/gms.dir/knl/ramdisk.c.obj" \
 "CMakeFiles/gms.dir/knl/ramfs.c.obj" \
+"CMakeFiles/gms.dir/knl/signal.c.obj" \
 "CMakeFiles/gms.dir/knl/sys.c.obj" \
 "CMakeFiles/gms.dir/knl/vfs.c.obj" \
 "CMakeFiles/gms.dir/knl/mods/disk.c.obj" \
@@ -473,6 +489,7 @@ gms.exe: CMakeFiles/gms.dir/knl/memory.c.obj
 gms.exe: CMakeFiles/gms.dir/knl/proc.c.obj
 gms.exe: CMakeFiles/gms.dir/knl/ramdisk.c.obj
 gms.exe: CMakeFiles/gms.dir/knl/ramfs.c.obj
+gms.exe: CMakeFiles/gms.dir/knl/signal.c.obj
 gms.exe: CMakeFiles/gms.dir/knl/sys.c.obj
 gms.exe: CMakeFiles/gms.dir/knl/vfs.c.obj
 gms.exe: CMakeFiles/gms.dir/knl/mods/disk.c.obj
@@ -486,7 +503,7 @@ gms.exe: CMakeFiles/gms.dir/build.make
 gms.exe: CMakeFiles/gms.dir/linklibs.rsp
 gms.exe: CMakeFiles/gms.dir/objects1.rsp
 gms.exe: CMakeFiles/gms.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Linking C executable gms.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=D:\Code\Comprehensive\OS\workspace\64\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Linking C executable gms.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\gms.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

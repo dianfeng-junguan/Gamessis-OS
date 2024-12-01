@@ -13,3 +13,5 @@ build/
 bin/
 
 .cache/
+
+well-confugured-grub/

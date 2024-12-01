@@ -31,6 +31,8 @@
 #define SYSCALL_EXECVE 28
 #define SYSCALL_WAIT 29
 #define SYSCALL_MMAP 30
+#define SYSCALL_MUNMAP 31
+#define SYSCALL_MKNOD 33
 #define SYSCALL_KB_READC 100
 
 
@@ -88,3 +90,7 @@ void *sys_mmap(void *addr, size_t len, int prot, int flags,int fildes, off_t off
 
 int sys_munmap(void *addr, size_t len);
 unsigned long sys_brk(unsigned long brk);
+/*
+创建文件，可以是FIFO，常规文件，目录和设备文件。除了FIFO，其他类型创建前会检查进程权限（未完成）
+*/
+int sys_mknod(const char *path, mode_t mode, dev_t dev);

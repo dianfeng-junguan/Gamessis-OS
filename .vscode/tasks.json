@@ -18,11 +18,25 @@
 			"problemMatcher": [
 				"$gcc"
 			],
+			"group": "build",
+			"detail": "编译器: E:\\Mingw\\bin\\gcc.exe"
+		},
+		{
+			"type": "shell",
+			"label": "qemu",
+			"command": "make debug",
+			"problemMatcher": [],
+			"isBackground": true
+		},
+		{
+			"type": "shell",
+			"label": "gen knl",
+			"command": "bash;make all;make cpknl",
+			"problemMatcher": [],
 			"group": {
 				"kind": "build",
 				"isDefault": true
-			},
-			"detail": "编译器: E:\\Mingw\\bin\\gcc.exe"
+			}
 		}
 	]
 }

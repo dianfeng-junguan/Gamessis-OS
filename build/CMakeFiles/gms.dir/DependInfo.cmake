@@ -30,6 +30,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "D:/Code/Comprehensive/OS/workspace/64/knl/proc.c" "CMakeFiles/gms.dir/knl/proc.c.obj" "gcc" "CMakeFiles/gms.dir/knl/proc.c.obj.d"
   "D:/Code/Comprehensive/OS/workspace/64/knl/ramdisk.c" "CMakeFiles/gms.dir/knl/ramdisk.c.obj" "gcc" "CMakeFiles/gms.dir/knl/ramdisk.c.obj.d"
   "D:/Code/Comprehensive/OS/workspace/64/knl/ramfs.c" "CMakeFiles/gms.dir/knl/ramfs.c.obj" "gcc" "CMakeFiles/gms.dir/knl/ramfs.c.obj.d"
+  "D:/Code/Comprehensive/OS/workspace/64/knl/signal.c" "CMakeFiles/gms.dir/knl/signal.c.obj" "gcc" "CMakeFiles/gms.dir/knl/signal.c.obj.d"
   "D:/Code/Comprehensive/OS/workspace/64/knl/sys.c" "CMakeFiles/gms.dir/knl/sys.c.obj" "gcc" "CMakeFiles/gms.dir/knl/sys.c.obj.d"
   "D:/Code/Comprehensive/OS/workspace/64/knl/vfs.c" "CMakeFiles/gms.dir/knl/vfs.c.obj" "gcc" "CMakeFiles/gms.dir/knl/vfs.c.obj.d"
   )

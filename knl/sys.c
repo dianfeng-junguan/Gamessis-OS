@@ -16,6 +16,7 @@
 #include "syscall.h"
 #include "int.h"
 #include <sys/mman.h>
+#include "sys/stat.h"
 
 
 unsigned long sys_putstring(char *string)
@@ -531,3 +532,25 @@ void *sys_mmap(void *addr, size_t len, int prot, int flags,int fildes, off_t off
     
 }
 
+/*
+TODO 
+创建文件，可以是FIFO，常规文件，目录和设备文件。除了FIFO，其他类型创建前会检查进程权限（未完成）
+*/
+int sys_mknod(const char *path, mode_t mode, dev_t dev){
+    //TODO 权限检查
+
+    int type=mode&0xf;
+    if(S_ISREG(type))type=FILE_TYPE_REGULAR;
+    else if(S_ISDIR(type))type=FILE_TYPE_DIRECTORY;
+    else if(S_ISBLK(type))type=FILE_TYPE_BLKDEV;
+    else if(S_ISCHR(type))type=FILE_TYPE_CHRDEV;
+    else if(S_ISFIFO(type))type=FILE_TYPE_FIFO;
+    else if(S_ISLNK(type))type=FILE_TYPE_REGULAR;
+    //TODO 文件权限检查
+    int perm=mode&~0xf>>4;
+    if(!create_node(path, type, perm, dev)){
+        return -1;
+    }
+
+    return 0;
+}

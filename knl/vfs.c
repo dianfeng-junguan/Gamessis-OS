@@ -69,7 +69,7 @@ struct dir_entry * path_walk(char * name,unsigned long flags)
 {
     char * tmpname = NULL;
     int tmpnamelen = 0;
-    struct dir_entry * parent = root_sb->root;
+    struct dir_entry * parent = droot;
     struct dir_entry * path = NULL;
 
     while(*name == '/')
@@ -105,7 +105,7 @@ struct dir_entry * path_walk(char * name,unsigned long flags)
         }
         if(!lp){
             //缓存中没有，再读取介质
-            path = (struct dir_entry *) kmalloc(sizeof(struct dir_entry), 0);
+            path = (struct dir_entry *) kmalloc(0,sizeof(struct dir_entry));
             memset(path,0,sizeof(struct dir_entry));
 
             path->name = kmalloc(0,tmpnamelen+1);
@@ -276,7 +276,61 @@ void init_rootfs(){
     // root_sb->dev=dev_ramdisk<<8;
     // root_sb->p_dev=&bd_ramdisk;
     //TODO 以后要直接拿设备号，这个设备号通过devman创建设备文件（节点）分配。
-    ROOT_DEV=dev_ramdisk<<8;
+    ROOT_DEV=dev_ramdisk<<4;
     
 }
 
+//创建一个文件，挂到目录树中。文件只会在内存中创建，需要后续iput才能写入介质。
+//permission即权限，此部分尚未完成。
+struct dir_entry* create_node(char* pathname,int type,int permission,unsigned short dev){
+    char *p=pathname;
+    for (; *p; p++);
+    for(;*p!='/';p--);
+    int pplen=p-pathname;
+    char *path=kmalloc(0, pplen+1);
+    memcpy(path, pathname, pplen);
+    path[pplen-1]='\0';
+    struct dir_entry* parent=path_walk(path, 0);
+    if(!parent){
+        return NULL;
+    }
+    p++;
+    kmfree(path);
+    struct dir_entry* new_noded=kmalloc(0, PAGE_4K_SIZE);
+    struct index_node* new_nodei=new_noded+1;
+    new_noded->name=new_nodei+1;
+    new_noded->name_length=strlen(p);
+    strcpy(new_noded->name, p);
+    new_noded->dir_inode=new_nodei;
+    new_noded->dir_ops=parent->dir_ops;
+    new_noded->mount_point=0;
+    new_noded->link=0;
+    list_init(&new_noded->child_node);
+    list_init(&new_noded->subdirs_list);
+    new_noded->child_node.data=new_noded;
+
+    list_add(&parent->subdirs_list, &new_noded->child_node);
+
+    //set inode
+    memcpy(new_nodei, parent->dir_inode, sizeof(struct index_node));
+    new_nodei->dev=dev;
+    new_nodei->link=1;
+    new_nodei->private_index_info=0;
+    new_nodei->blocks=0;
+    new_nodei->file_size=0;
+    switch (type) {
+    case FILE_TYPE_REGULAR:
+        new_nodei->attribute=FS_ATTR_FILE;break;
+    case FILE_TYPE_DIRECTORY:
+        new_nodei->attribute=FS_ATTR_DIR;break;
+    case FILE_TYPE_CHRDEV:
+    case FILE_TYPE_BLKDEV:
+        new_nodei->attribute=FS_ATTR_DEVICE;break;
+    case FILE_TYPE_FIFO:
+    default:
+    break;
+    
+    }
+    
+    return new_noded;
+}

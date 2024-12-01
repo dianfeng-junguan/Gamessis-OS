@@ -29,7 +29,7 @@ static pid_t sidd=0;
 mmap_struct* all_mmaps=NULL;
 void init_proc(){
     //task=(struct process*)get_global_var(TASK_PCBS_ADDR);//[MAX_TASKS];;
-    task=(struct process*)kmallocat(0,13);
+    task=(struct process*)kmalloc(0,13*PAGE_4K_SIZE);
     for(int i=0;i<MAX_PROC_COUNT;i++){
         task[i].pid=-1;
         task[i].stat=TASK_EMPTY;
@@ -46,9 +46,6 @@ void init_proc(){
     ,0x800000+KNL_BASE,0x800000+KNL_BASE,0x800000+KNL_BASE,0x800000+KNL_BASE\
     ,0x800000+KNL_BASE,0x800000+KNL_BASE,0x800000+KNL_BASE);
 
-    //===============创建0号进程======================
-    int zi= init_proc0();
-    task[zi].stat=TASK_READY;
     //IA32_INTERRUPT_SSP_TABLE_ADDR，准备IST
     wrmsr(0x6a8,tss->rsvd2);
     //把内核代码段选择子写到MSR寄存器中准备用于特权级转换(sysexit，现在没用)
@@ -140,6 +137,7 @@ int init_proc0()
     pz->sid=pz->pid;
     pz->fg_pgid=pz->pid;
     pz->in_bgpg=0;
+    pz->stat=TASK_READY;
     return 0;
 }
 int req_proc(){

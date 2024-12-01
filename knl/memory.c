@@ -1,5 +1,6 @@
 #include "memory.h"
 #include "blk_dev.h"
+#include "signal.h"
 #include "typename.h"
 #include "sys/types.h"
 #include "int.h"
@@ -11,6 +12,8 @@
 #include "syscall.h"
 #include "errno.h"
 
+malloc_hdr *mhdr_split(malloc_hdr* target,off_t split_point,malloc_hdr* array,size_t arraylen);
+malloc_hdr* mhdr_merge(malloc_hdr* prev,malloc_hdr* next);
 //page bitmap. refers to pages of mem.
 unsigned int *page_map=NULL;//[PAGE_BITMAP_NR]={0};
 page_item *page_index=PAGE_INDEX_ADDR;
@@ -247,6 +250,7 @@ void page_err(){
         if((mp=get_mmap(l_addr))==NULL){
             //TODO  没有映射，报错
             comprintf("page_err:page acceessed without mmap\n");
+            sys_exit(-1);
 
         }else {
             //在进程的页表中申请新页
@@ -267,6 +271,7 @@ void page_err(){
     else
     {
         //page level protection
+        sys_exit(-1); 
     }
     p=err_code&2;
     if(p)printf("when writing\n");else //puts("when reading");
@@ -321,9 +326,9 @@ void init_memory()
     size_t vmms=(mem_size/2-0x1000000);//位图自己需要多少页
     comprintf("tot memsize:0x%l,available size 0x%l,kmalloc bitmap taking 0x%d pages\n", tot_mem_size,mem_size,vmms);
     //创建mhdr
+    kmalloc_mhdr=kmhdrs=VMALLOC_BASE;
     for(int i=0;i< MAX_KMHDRS;i++)
         kmhdrs[i].type=-1;
-    kmalloc_mhdr=kmhdrs=VMALLOC_BASE;
     kmhdrs->base=VMALLOC_BASE;
     kmhdrs->len=vmms;
     kmhdrs->prev=NULL;
@@ -350,8 +355,13 @@ void init_memory()
     } */
     
     pmhdrs=kmalloc(0,PAGE_4K_SIZE);
-    for(int i=0;i< MAX_PMHDRS;i++)
+    for(int i=0;i< MAX_PMHDRS;i++){
         pmhdrs[i].type=-1;
+        pmhdrs[i].next=pmhdrs+i+1;
+        pmhdrs[i].prev=pmhdrs+i-1;
+    }
+    pmhdrs[0].prev=NULL;
+    pmhdrs[mmap_t_i-1].next=NULL;
     for(int i=0;i<mmap_t_i;i++)
     {
         pmhdrs[i].base=phy_mmap_struct[i].base;
@@ -369,9 +379,22 @@ void init_memory()
             pmhdrs[i].type=MEM_TYPE_RSVD;
             break;
         }
+        
     }
-    pmhdrs[0].prev=NULL;
-    pmhdrs[mmap_t_i-1].next=NULL;
+    for (malloc_hdr* mh=pmhdrs; mh&&mh->base<0x40000000; mh=mh->next) {
+        //内核占用低1GB
+        if(mh->type==MEM_TYPE_AVAILABLE){
+            if(mh->base+mh->len<0x40000000)
+            {
+                mh->type=MEM_TYPE_USED;
+                mh->flag=MEM_FLAG_R|MEM_FLAG_W|MEM_FLAG_X;
+            }else if (mh->base<0x40000000) {
+                mhdr_split(mh,0x40000000,pmhdrs,MAX_PMHDRS);
+                mh->type=MEM_TYPE_USED;
+                mh->flag=MEM_FLAG_R|MEM_FLAG_W|MEM_FLAG_X;
+            }
+        }
+    }
     pmalloc_mhdr=pmhdrs;
 
 
@@ -394,9 +417,9 @@ void init_memory()
         page_map[j]=-1;
     }*/
    //占用1GB
-    if(pmalloc(0x40000000)!=0){
-        comprintf("error: failed to req pm for knl at 0\n");
-    }
+    // if(pmalloc(0x40000000)!=0){
+    //     comprintf("error: failed to req pm for knl at 0\n");
+    // }
 
     /*//低16M空间直接被内核占用
     for(int i=0;i<128;i++){
@@ -461,36 +484,60 @@ malloc_hdr *mhdr_split(malloc_hdr* target,off_t split_point,malloc_hdr* array,si
             break;
         }
     }
-    if(!nmh)return NULL;
+    if(!nmh){
+        comprintf("mhdr split err: no more space\n");
+        return NULL;
+    }
     nmh->next=target->next;
-    target->next->prev=nmh;
+    if(target->next)
+        target->next->prev=nmh;
     nmh->prev=target;
     target->next=nmh;
     
     nmh->base=split_point;
-    nmh->len= target->len- split_point;
+    nmh->len= target->len- split_point+target->base;
     nmh->flag=target->flag;
-    nmh->type=target->flag;
+    nmh->type=target->type;
+
+    target->len=split_point-target->base;
 
     return nmh;
 
 }
+//把后者指向的内存合并到前者里面去，然后释放后者，返回前者。
+//如果二者的内存不相邻，或者属性不同，则不会做操作。
+malloc_hdr* mhdr_merge(malloc_hdr* prev,malloc_hdr* next){
+    //向前合并属性相同的分配头
+    if(!prev||!next)return prev;
+    off_t base=next->base;
+    if(prev->base+prev->len>=base&&next->type==prev->type&&next->flag==prev->flag){
+        prev->len=base+next->len-prev->base;
+        prev->next=next->next;
+        if(next->next)
+            next->next->prev=prev;
+        next->type=-1;
+        comprintf("merged mhdr: base %l new size%l\n",prev->base,prev->len);
+    }
+    return prev;
+}
 void *kmalloc(off_t addr,size_t size){
+    addr=PAGE_4K_ALIGN(addr);
+    size=PAGE_4K_ALIGN(size);
     for (malloc_hdr *mh = kmalloc_mhdr; mh; mh=mh->next)
     {
-        if(!addr&&(mh->type!=MEM_TYPE_AVAILABLE||mh->len<size))continue;
-        if(mh->type!=MEM_TYPE_AVAILABLE||mh->len-(addr-mh->base)<size||addr<mh->base||addr>mh->base+mh->len)continue;
-        if(!addr){
-            addr=mh->base;
-        }
+        
+        if(mh->type!=MEM_TYPE_AVAILABLE||mh->len<size)continue;
         //以下为符合要求
         //分割空闲内存
-        malloc_hdr* nmh=mhdr_split(mh,addr,kmhdrs,MAX_KMHDRS);
-        malloc_hdr* top=mhdr_split(nmh,addr+size,kmhdrs,MAX_KMHDRS);
+        malloc_hdr* nmh=mhdr_split(mh,mh->base+size,kmhdrs,MAX_KMHDRS);
+        // malloc_hdr* top=mhdr_split(nmh,addr+size,kmhdrs,MAX_KMHDRS);
+        mh->type=MEM_TYPE_USED;
+        mh->flag|=MEM_FLAG_W|MEM_FLAG_X|MEM_FLAG_R;
 
-        nmh->type=MEM_TYPE_USED;
-        nmh->flag|=MEM_FLAG_W|MEM_FLAG_X|MEM_FLAG_R;
-        return nmh->base;
+        //向前合并属性相同的分配头
+        mhdr_merge(mh->prev, mh);
+
+        return mh->base;
         
     }
     return NULL;
@@ -500,17 +547,19 @@ int kmfree(off_t addr){
     {
         if(mh->base!=addr)continue;
         mh->type=MEM_TYPE_AVAILABLE;
+        mh->flag=0;
         //合并空闲项
-        malloc_hdr* mp;
-        for(mp=mh;mp->prev&&mh->type==MEM_TYPE_AVAILABLE;mp=mp->prev);
-        while (mp->next&&mp->next==MEM_TYPE_AVAILABLE)
-        {
-            mp->len+=mp->next->len;
-            //drop the next
-            mp->next->type=-1;
-            mp->next->prev=mp;
-            mp->next=mp->next->next;
-        }
+        mhdr_merge(mh->prev, mh);
+        // malloc_hdr* mp;
+        // for(mp=mh;mp->prev&&mh->type==MEM_TYPE_AVAILABLE;mp=mp->prev);
+        // while (mp->next&&mp->next==MEM_TYPE_AVAILABLE)
+        // {
+        //     mp->len+=mp->next->len;
+        //     //drop the next
+        //     mp->next->type=-1;
+        //     mp->next->prev=mp;
+        //     mp->next=mp->next->next;
+        // }
         return 1;
     }
     return 0;
@@ -523,14 +572,19 @@ void * pmalloc(size_t size){
         //以下为符合要求
         //分割空闲内存
         malloc_hdr* nmh=mhdr_split(mh,mh->base+size,pmhdrs,MAX_PMHDRS);
-
+        comprintf("pmalloc at %l, size:%l.\n",mh->base,size);
 
         mh->type=MEM_TYPE_USED;
         mh->flag|=MEM_FLAG_W|MEM_FLAG_X|MEM_FLAG_R;
-        return mh->base;
+        
+        void *retv=mh->base;
+        //向前合并属性相同的分配头
+        mhdr_merge(mh->prev, mh);
+        return retv;
         
     }
-    return -1;
+    comprintf("failed pmalloc\n");
+    return NULL;
     
     /* void *ret=(void*)(get_phyaddr(req_a_page()));
     // comprintf("pmalloc(PAGE_4K_SIZE):%l\n",ret);
@@ -549,17 +603,19 @@ int pmfree(void *addr,size_t len){
             prev=mhdr_split(prev, addr, pmalloc_mhdr, MAX_PMHDRS);
         }
         prev->type=MEM_TYPE_AVAILABLE;
+        prev->flag=0;
         //合并空闲项
-        malloc_hdr* mp;
-        for(mp=prev;mp->prev&&prev->type==MEM_TYPE_AVAILABLE;mp=mp->prev);
-        while (mp->next&&mp->next==MEM_TYPE_AVAILABLE)
-        {
-            mp->len+=mp->next->len;
-            //drop the next
-            mp->next->type=-1;
-            mp->next->prev=mp;
-            mp->next=mp->next->next;
-        }
+        mhdr_merge(prev->prev, prev);
+        // malloc_hdr* mp;
+        // for(mp=prev;mp->prev&&prev->type==MEM_TYPE_AVAILABLE;mp=mp->prev);
+        // while (mp->next&&mp->next==MEM_TYPE_AVAILABLE)
+        // {
+        //     mp->len+=mp->next->len;
+        //     //drop the next
+        //     mp->next->type=-1;
+        //     mp->next->prev=mp;
+        //     mp->next=mp->next->next;
+        // }
         return 1;
     }
     return 0;

@@ -3,6 +3,8 @@
 //
 
 #include "kb.h"
+#include "proc.h"
+#include "signal.h"
 #include "typename.h"
 #include "int.h"
 // #include "devdrv.h"
@@ -199,6 +201,10 @@ int key_proc()
         unsigned long args[]={(unsigned long) &ch, 1};
         //写入stdin
         sys_ioctl(0,TTY_WSTDIN,(unsigned long)args);
+        if((ch=='c'||ch=='C')&&k_ctrl){
+            //ctrl+c
+            send_signal(current->pid, SIGINT);
+        }
     }
 //    if(scan1<=0x80&&ch!=0)
 //    {

@@ -217,11 +217,11 @@ int syscall(long a, long b, long c, long d, long e, long f)
         // case 2:return reg_driver(a);
         // case 3:return dispose_driver(a);
         // case 4:return call_drv_func(a,b,c);
-        case 5:return req_page_at(a,b);
-        case 6:return free_page(a);
-        case 7:return reg_proc(a, b, c);
-        case 8:del_proc(a);
-        case 10:chk_vm(a,b);
+        // case 5:return req_page_at(a,b);
+        // case 6:return free_page(a);
+        // case 7:return reg_proc(a, b, c);
+        // case 8:del_proc(a);
+        // case 10:chk_vm(a,b);
         case 11:return sys_open(a,b);
         case 12:return sys_close(a);
         case 13:return sys_read(a,b,c);
@@ -230,7 +230,7 @@ int syscall(long a, long b, long c, long d, long e, long f)
         // case 16:return sys_tell(a);
         // case 17:return reg_vol(a,b,c);
         // case 18:return free_vol(a);
-        case 19:return execute(a, NULL);
+        // case 19:return execute(a, NULL);
         case SYSCALL_EXIT:return sys_exit(a);
         case SYSCALL_CALL:return exec_call(a);
         // case SYSCALL_MKFIFO:return sys_mkfifo(a);
@@ -243,6 +243,9 @@ int syscall(long a, long b, long c, long d, long e, long f)
         // case SYSCALL_OPERATE_DEV:return sys_operate_dev(a,b,c);
         case SYSCALL_WAIT:return sys_wait(a,b,c);
         case SYSCALL_MMAP:return sys_mmap(a,b,c,d,e,f);
+        case SYSCALL_MUNMAP:return sys_munmap(a, b);
+        case SYSCALL_MKNOD:return sys_mknod(a, b, c);
+
     }
     // __asm__ volatile("mov %0,%%eax\r\n mov %1,%%ebx\r\n mov %2,%%ecx\r\n mov %3,%%edx\r\n mov %4,%%esi\r\n mov %5,%%edi"\
     // ::"m"(func),"m"(a),"m"(b),"m"(c),"m"(d),"m"(e));

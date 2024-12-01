@@ -12,6 +12,7 @@
 #include <disk.h>
 #include <fat32.h>
 #include <kb.h>
+#include "blk_buf.h"
 #include "com.h"
 #include "syscall.h"
 #include "fcntl.h"
@@ -156,11 +157,13 @@ void main(unsigned int magic,void* addr)
 	// init_disk();
     init_ramdisk();
     init_rootfs();
+    init_proc();
+  	DISK1_FAT32_FS_init();
     init_devfs();
 
-    init_proc();
+    //===============创建0号进程======================
+    init_proc0();
 	// init_ramfs();
-  	DISK1_FAT32_FS_init();
 
     //自带驱动
     //init_tty();

@@ -76,6 +76,11 @@
 },
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
+  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\knl\\signal.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\signal.c",
+  "file": "D:/Code/Comprehensive/OS/workspace/64/knl/signal.c"
+},
+{
+  "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
   "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\knl\\sys.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\knl\\sys.c",
   "file": "D:/Code/Comprehensive/OS/workspace/64/knl/sys.c"
 },

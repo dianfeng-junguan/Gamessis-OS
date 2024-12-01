@@ -1,4 +1,5 @@
 #include "devman.h"
+#include "blk_dev.h"
 #include "syscall.h"
 #include "memory.h"
 #include "str.h"
@@ -97,6 +98,9 @@ struct file_system_type fs_devfs={
     .next=0,
     .read_superblock=devfs_read_superblock
 };
+int create_device(char *path,unsigned short dev){
+    // struct dir_entry* newf=create_node(path,)
+}
 int init_devfs()
 {
     /* //创建dev文件夹
@@ -119,41 +123,46 @@ int init_devfs()
 
     register_filesystem(&fs_devfs);
     struct super_block *sb_devfs=mount_fs("devfs",0,0);
-    ddev=path_walk("/dev",1);
+    ddev=path_walk("/dev",0);
     mount_fs_on(ddev,&fs_devfs);
     
     struct dir_entry* rt_devfs=sb_devfs->root;
 
     
     //创建几个设备文件
+    //TODO这里设备文件的创建之后要使用mknod类似的方法
     //console-framebuffer.c
-    dconsole= (struct dir_entry *) kmalloc(0,PAGE_4K_SIZE);
-    struct index_node* iconsole=dconsole+1;
-    dconsole->name=iconsole+1;
-    iconsole->dev=0x10000;
-    make_devf(dconsole,iconsole,"console",rt_devfs,&devfs_fops);
+    // dconsole= (struct dir_entry *) kmalloc(0,PAGE_4K_SIZE);
+    // struct index_node* iconsole=dconsole+1;
+    // dconsole->name=iconsole+1;
+    // iconsole->dev=0x10000;
+    // make_devf(dconsole,iconsole,"console",rt_devfs,&devfs_fops);
+    create_node("/dev/console", FILE_TYPE_CHRDEV, FILE_PERM_R|FILE_PERM_W, 0x10000);
     //hd0-disk.c
-    dhd0= (struct dir_entry *) kmalloc(0,PAGE_4K_SIZE);
-    struct index_node* ihd0=dhd0+1;
-    dhd0->name=ihd0+1;
+    // dhd0= (struct dir_entry *) kmalloc(0,PAGE_4K_SIZE);
+    // struct index_node* ihd0=dhd0+1;
+    // dhd0->name=ihd0+1;
+    // ihd0->dev=dev_hd<<8;
+    // make_devf(dhd0,ihd0,"hd0",rt_devfs,&devfs_fops);
     extern int dev_hd;
-    ihd0->dev=dev_hd<<8;
-    make_devf(dhd0,ihd0,"hd0",rt_devfs,&devfs_fops);
+    create_node("/dev/hd0", FILE_TYPE_BLKDEV, FILE_PERM_R|FILE_PERM_W, dev_hd<<4);
     //tty-tty.c
-    dtty= (struct dir_entry *) kmalloc(0,PAGE_4K_SIZE);
-    struct index_node* itty=dtty+1;
-    dtty->name=itty+1;
-    itty->dev|=0x10000;
-    make_devf(dtty,itty,"tty",rt_devfs,&devfs_fops);
+    // dtty= (struct dir_entry *) kmalloc(0,PAGE_4K_SIZE);
+    // struct index_node* itty=dtty+1;
+    // dtty->name=itty+1;
+    // itty->dev|=0x10000;
+    // make_devf(dtty,itty,"tty",rt_devfs,&devfs_fops);
+    create_node("/dev/tty", FILE_TYPE_CHRDEV, FILE_PERM_R|FILE_PERM_W, 0x10001);
     //初始化一下
-    tty_fops.open(itty,&ftty);
+    // tty_fops.open(itty,&ftty);
 
     //ramdisk- ramdisk.c
-    dramdisk= (struct dir_entry *) kmalloc(0,PAGE_4K_SIZE);
-    struct index_node* iramdisk=dramdisk+1;
-    dramdisk->name=iramdisk+1;
-    iramdisk->dev=dev_ramdisk<<8;
-    make_devf(dramdisk,iramdisk,"ram",rt_devfs,&devfs_fops);
+    // dramdisk= (struct dir_entry *) kmalloc(0,PAGE_4K_SIZE);
+    // struct index_node* iramdisk=dramdisk+1;
+    // dramdisk->name=iramdisk+1;
+    // iramdisk->dev=dev_ramdisk<<8;
+    // make_devf(dramdisk,iramdisk,"ram",rt_devfs,&devfs_fops);
+    create_node("/dev/ram", FILE_TYPE_BLKDEV, FILE_PERM_R|FILE_PERM_W, dev_ramdisk<<4);
 
 }
 //

@@ -196,8 +196,20 @@ struct file_operations
 
     long (*readdir)(struct file * filp,void * dirent,filldir_t filler);
 };
-
+//寻找文件，返回目录项。
+//flag:是否返回文件的上级目录。
 struct dir_entry * path_walk(char * name,unsigned long flags);
+#define FILE_TYPE_REGULAR 1
+#define FILE_TYPE_DIRECTORY 2
+#define FILE_TYPE_BLKDEV 3
+#define FILE_TYPE_CHRDEV 4
+#define FILE_TYPE_FIFO 5
+#define FILE_PERM_R 1
+#define FILE_PERM_W 2
+#define FILE_PERM_X 4
+//创建一个文件，挂到目录树中。文件只会在内存中创建，需要后续iput才能写入介质。
+//permission即权限，此部分尚未完成。
+struct dir_entry* create_node(char* pathname,int type,int permission,unsigned short dev);
 int fill_dentry(void *buf,char *name, long namelen,long type,long offset);
 /// @brief 释放dir entry。调用前应当检查是否有挂载点和子目录项。
 /// @param d 

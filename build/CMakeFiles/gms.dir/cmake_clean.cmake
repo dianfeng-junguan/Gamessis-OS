@@ -43,6 +43,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/gms.dir/knl/ramdisk.c.obj.d"
   "CMakeFiles/gms.dir/knl/ramfs.c.obj"
   "CMakeFiles/gms.dir/knl/ramfs.c.obj.d"
+  "CMakeFiles/gms.dir/knl/signal.c.obj"
+  "CMakeFiles/gms.dir/knl/signal.c.obj.d"
   "CMakeFiles/gms.dir/knl/sys.c.obj"
   "CMakeFiles/gms.dir/knl/sys.c.obj.d"
   "CMakeFiles/gms.dir/knl/vfs.c.obj"

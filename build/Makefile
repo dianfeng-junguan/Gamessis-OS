@@ -669,6 +669,30 @@ knl/ramfs.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\gms.dir\build.make CMakeFiles/gms.dir/knl/ramfs.c.s
 .PHONY : knl/ramfs.c.s
 
+knl/signal.obj: knl/signal.c.obj
+.PHONY : knl/signal.obj
+
+# target to build an object file
+knl/signal.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\gms.dir\build.make CMakeFiles/gms.dir/knl/signal.c.obj
+.PHONY : knl/signal.c.obj
+
+knl/signal.i: knl/signal.c.i
+.PHONY : knl/signal.i
+
+# target to preprocess a source file
+knl/signal.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\gms.dir\build.make CMakeFiles/gms.dir/knl/signal.c.i
+.PHONY : knl/signal.c.i
+
+knl/signal.s: knl/signal.c.s
+.PHONY : knl/signal.s
+
+# target to generate assembly for a file
+knl/signal.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\gms.dir\build.make CMakeFiles/gms.dir/knl/signal.c.s
+.PHONY : knl/signal.c.s
+
 knl/sys.obj: knl/sys.c.obj
 .PHONY : knl/sys.obj
 
@@ -793,6 +817,9 @@ help:
 	@echo ... knl/ramfs.obj
 	@echo ... knl/ramfs.i
 	@echo ... knl/ramfs.s
+	@echo ... knl/signal.obj
+	@echo ... knl/signal.i
+	@echo ... knl/signal.s
 	@echo ... knl/sys.obj
 	@echo ... knl/sys.i
 	@echo ... knl/sys.s

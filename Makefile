@@ -1,5 +1,5 @@
 .PHONY: boot mount umount run knl cpknl com grub all
-CUARGS = -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large
+CUARGS = -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large 
 BOOT = boot.efi
 include loader/loader.mk
 include test/test.mk
@@ -10,7 +10,7 @@ KNL_OFILES = bin/int.o bin/main.o bin/log.o \
 			bin/memory.o bin/devman.o bin/proc.o bin/inta.o \
 			bin/gdt.o bin/gdta.o bin/clock.o bin/clocka.o bin/exe.o \
 			bin/syscalla.o bin/framebuffer.o bin/vfs.o bin/sys.o bin/ramfs.o bin/ramdisk.o \
-			bin/blk_dev.o bin/blk_buf.o bin/kallsyms.o
+			bin/blk_dev.o bin/blk_buf.o bin/kallsyms.o bin/signal.o
 MODS_OFILES = bin/mods/kb.o bin/mods/disk.o bin/mods/diska.o bin/mods/fat32.o \
 				bin/mods/tty.o bin/com.o bin/rd.o#bin/test.o
 COM_OFILES = bin/mem.o bin/str.o bin/types.o bin/proca.o bin/font.o
@@ -19,7 +19,7 @@ QEMU_LOG = -d int,cpu_reset -D log.txt
 all:
 	make knl
 	make loader
-
+	make cpknl
 k:
 	make knl
 	sync
@@ -31,6 +31,7 @@ knl:
 	@ld -T knl.lds -o bin/gmsknl.elf $(KNL_OFILES) $(MODS_OFILES) $(COM_OFILES) --emit-relocs
 	make kallsyms
 	@ld -T knl.lds -o bin/gmsknl.elf $(KNL_OFILES) $(MODS_OFILES) $(COM_OFILES) --emit-relocs
+	debugedit bin/gmsknl.elf -b /mnt/d/Code/Comprehensive/OS/workspace/64 -d D://Code/Comprehensive/OS/workspace/64
 	@#python reloccheat.py bin/gmsknl.elf
 	@cp bin/gmsknl.elf bin/gmsknlm.elf
 	@objcopy bin/gmsknl.elf -I binary -O elf64-x86-64 bin/gmsknl.o -B i386
@@ -75,7 +76,7 @@ run:
 debug_bios:
 	@qemu-system-x86_64 -hda hda.img -m 2G -s -S -serial stdio
 debug:
-	@rm log.txt -f
+	# @rm log.txt -f
 	@qemu-system-x86_64 -hda hda.img -m 2G -s -S -bios OVMF.fd -serial stdio $(QEMU_LOG)
 debs:
 	@qemu-system-x86_64 -hda hda.img -m 2G -s -S -bios OVMF.fd -serial stdio
