@@ -13,6 +13,7 @@
 #include "log.h"
 #include <blk_buf.h>
 #include <vfs.h>
+#include "sys/stat.h"
 
 static int rhead=0,rtail=0;
 static int dev_dfd=-1;
@@ -137,7 +138,7 @@ int init_devfs()
     // dconsole->name=iconsole+1;
     // iconsole->dev=0x10000;
     // make_devf(dconsole,iconsole,"console",rt_devfs,&devfs_fops);
-    create_node("/dev/console", FILE_TYPE_CHRDEV, FILE_PERM_R|FILE_PERM_W, 0x10000);
+    create_node("/dev/console", S_IFCHR, 0x10000);
     //hd0-disk.c
     // dhd0= (struct dir_entry *) kmalloc(0,PAGE_4K_SIZE);
     // struct index_node* ihd0=dhd0+1;
@@ -145,14 +146,14 @@ int init_devfs()
     // ihd0->dev=dev_hd<<8;
     // make_devf(dhd0,ihd0,"hd0",rt_devfs,&devfs_fops);
     extern int dev_hd;
-    create_node("/dev/hd0", FILE_TYPE_BLKDEV, FILE_PERM_R|FILE_PERM_W, dev_hd<<4);
+    create_node("/dev/hd0", S_IFBLK, dev_hd<<4);
     //tty-tty.c
     // dtty= (struct dir_entry *) kmalloc(0,PAGE_4K_SIZE);
     // struct index_node* itty=dtty+1;
     // dtty->name=itty+1;
     // itty->dev|=0x10000;
     // make_devf(dtty,itty,"tty",rt_devfs,&devfs_fops);
-    create_node("/dev/tty", FILE_TYPE_CHRDEV, FILE_PERM_R|FILE_PERM_W, 0x10001);
+    create_node("/dev/tty", S_IFCHR, 0x10001);
     //初始化一下
     // tty_fops.open(itty,&ftty);
 
@@ -162,7 +163,7 @@ int init_devfs()
     // dramdisk->name=iramdisk+1;
     // iramdisk->dev=dev_ramdisk<<8;
     // make_devf(dramdisk,iramdisk,"ram",rt_devfs,&devfs_fops);
-    create_node("/dev/ram", FILE_TYPE_BLKDEV, FILE_PERM_R|FILE_PERM_W, dev_ramdisk<<4);
+    create_node("/dev/ram", S_IFBLK, dev_ramdisk<<4);
 
 }
 //

@@ -8,6 +8,7 @@
 #include "log.h"
 #include "mem.h"
 #include "str.h"
+#include "sys/types.h"
 #include <ramdisk.h>
 mount_point mp_mount_points[MAX_MOUNTPOINTS];
 struct dir_entry* droot;
@@ -280,9 +281,7 @@ void init_rootfs(){
     
 }
 
-//创建一个文件，挂到目录树中。文件只会在内存中创建，需要后续iput才能写入介质。
-//permission即权限，此部分尚未完成。
-struct dir_entry* create_node(char* pathname,int type,int permission,unsigned short dev){
+struct dir_entry* create_node(char* pathname,mode_t mode,unsigned short dev){
     char *p=pathname;
     for (; *p; p++);
     for(;*p!='/';p--);
@@ -318,19 +317,8 @@ struct dir_entry* create_node(char* pathname,int type,int permission,unsigned sh
     new_nodei->private_index_info=0;
     new_nodei->blocks=0;
     new_nodei->file_size=0;
-    switch (type) {
-    case FILE_TYPE_REGULAR:
-        new_nodei->attribute=FS_ATTR_FILE;break;
-    case FILE_TYPE_DIRECTORY:
-        new_nodei->attribute=FS_ATTR_DIR;break;
-    case FILE_TYPE_CHRDEV:
-    case FILE_TYPE_BLKDEV:
-        new_nodei->attribute=FS_ATTR_DEVICE;break;
-    case FILE_TYPE_FIFO:
-    default:
-    break;
-    
-    }
-    
+    new_nodei->mode=mode;
+
+    parent->dir_inode->inode_ops->create(new_nodei,new_noded,0);
     return new_noded;
 }

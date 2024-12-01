@@ -118,7 +118,7 @@ ssize_t      pwrite(int, const void *, size_t, off_t);
 ssize_t      read(int fd, void * buf, size_t count);
 int          readlink(const char *, char *, size_t);
 int          rmdir(const char *);
-void        *sbrk(intptr_t);
+void        *sbrk(int*);
 int          setgid(gid_t);
 int          setpgid(pid_t, pid_t);
 pid_t        setpgrp(void);

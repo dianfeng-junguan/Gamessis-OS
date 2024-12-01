@@ -1,19 +1,20 @@
-#define S_IFMT  0
-#define S_IFREG 0
-#define S_IFDIR 1
-#define S_IFBLK 0
-#define S_IFCHR 2
-#define S_IFIFO 4
-#define S_IFLNK 8
 
-#define S_ISBLK(m) (!(m&S_IFCHR))
-#define S_ISCHR(m) ((m&S_IFCHR))
-#define S_ISDIR(m)  ((m&S_IFDIR))
-#define S_ISFIFO(m) ((m&S_IFIFO))
-#define S_ISREG(m) (!(m&S_IFDIR))
-#define S_ISLNK(m) ((m&S_IFLNK))
+#define S_IFMT  1
+#define S_IFREG 1
+#define S_IFDIR 2
+#define S_IFBLK 3
+#define S_IFCHR 4
+#define S_IFIFO 5
+#define S_IFLNK 6
 
+#define S_ISBLK(m)  ((m&0x7)==S_IFBLK)
+#define S_ISCHR(m)  ((m&0x7)==S_IFCHR)
+#define S_ISDIR(m)  ((m&0x7)==S_IFDIR)
+#define S_ISFIFO(m) ((m&0x7)==S_IFIFO)
+#define S_ISREG(m)  ((m&0x7)==S_IFREG)
+#define S_ISLNK(m)  ((m&0x7)==S_IFLNK)
 
+//TODO 待完成
 #define S_IRWXU 0
 #define S_IRUSR 0
 #define S_IWUSR 0
