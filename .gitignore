@@ -1,4 +1,15 @@
 *.o
+
 *.bin
+
 *.img
+
 *.elf
+
+*.obj
+
+build/
+
+bin/
+
+.cache/

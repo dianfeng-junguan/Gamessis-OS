@@ -1,5 +1,7 @@
 CMakeFiles/gms.dir/knl/proc.c.obj: \
  D:\Code\Comprehensive\OS\workspace\64\knl\proc.c \
+ D:/Code/Comprehensive/OS/workspace/64/include/sys/mman.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/sys/types.h \
  D:/Code/Comprehensive/OS/workspace/64/include/vfs.h \
  D:/Code/Comprehensive/OS/workspace/64/include/c/stddef.h \
  D:/Code/Comprehensive/OS/workspace/64/include/c/_types/_ptrdiff_t.h \
@@ -7,7 +9,6 @@ CMakeFiles/gms.dir/knl/proc.c.obj: \
  D:/Code/Comprehensive/OS/workspace/64/include/proc.h \
  D:/Code/Comprehensive/OS/workspace/64/include/gdt.h \
  D:/Code/Comprehensive/OS/workspace/64/include/typename.h \
- D:/Code/Comprehensive/OS/workspace/64/include/sys/types.h \
  D:/Code/Comprehensive/OS/workspace/64/include/vfs.h \
  D:/Code/Comprehensive/OS/workspace/64/include/memory.h \
  D:/Code/Comprehensive/OS/workspace/64/include/page.h \

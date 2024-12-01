@@ -3,8 +3,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/gms.dir/com/mem.c.obj.d"
   "CMakeFiles/gms.dir/com/str.c.obj"
   "CMakeFiles/gms.dir/com/str.c.obj.d"
-  "CMakeFiles/gms.dir/com/syscall.c.obj"
-  "CMakeFiles/gms.dir/com/syscall.c.obj.d"
   "CMakeFiles/gms.dir/com/types.c.obj"
   "CMakeFiles/gms.dir/com/types.c.obj.d"
   "CMakeFiles/gms.dir/knl/blk_buf.c.obj"

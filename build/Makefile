@@ -189,30 +189,6 @@ com/str.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\gms.dir\build.make CMakeFiles/gms.dir/com/str.c.s
 .PHONY : com/str.c.s
 
-com/syscall.obj: com/syscall.c.obj
-.PHONY : com/syscall.obj
-
-# target to build an object file
-com/syscall.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\gms.dir\build.make CMakeFiles/gms.dir/com/syscall.c.obj
-.PHONY : com/syscall.c.obj
-
-com/syscall.i: com/syscall.c.i
-.PHONY : com/syscall.i
-
-# target to preprocess a source file
-com/syscall.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\gms.dir\build.make CMakeFiles/gms.dir/com/syscall.c.i
-.PHONY : com/syscall.c.i
-
-com/syscall.s: com/syscall.c.s
-.PHONY : com/syscall.s
-
-# target to generate assembly for a file
-com/syscall.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\gms.dir\build.make CMakeFiles/gms.dir/com/syscall.c.s
-.PHONY : com/syscall.c.s
-
 com/types.obj: com/types.c.obj
 .PHONY : com/types.obj
 
@@ -757,9 +733,6 @@ help:
 	@echo ... com/str.obj
 	@echo ... com/str.i
 	@echo ... com/str.s
-	@echo ... com/syscall.obj
-	@echo ... com/syscall.i
-	@echo ... com/syscall.s
 	@echo ... com/types.obj
 	@echo ... com/types.i
 	@echo ... com/types.s

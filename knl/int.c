@@ -4,6 +4,7 @@
 #include "proc.h"
 #include "memory.h"
 #include "exe.h"
+#include "signal.h"
 #include "syscall.h"
 #include "kb.h"
 #include <log.h>
@@ -246,7 +247,7 @@ int syscall(long a, long b, long c, long d, long e, long f)
     // __asm__ volatile("mov %0,%%eax\r\n mov %1,%%ebx\r\n mov %2,%%ecx\r\n mov %3,%%edx\r\n mov %4,%%esi\r\n mov %5,%%edi"\
     // ::"m"(func),"m"(a),"m"(b),"m"(c),"m"(d),"m"(e));
     // __asm__ volatile("int $0x80\r\n leave\r\n ret");
-
+    do_signals();
 }
 void wrmsr(unsigned long address,unsigned long value)
 {

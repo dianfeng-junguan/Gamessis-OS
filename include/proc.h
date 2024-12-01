@@ -204,6 +204,7 @@ struct process{
     struct List* mmaps;//内存空间的映射
     struct List node;//本进程的节点
     struct List *child_procs;//子进程
+    struct List *signal_queue;//等待处理的信号
     int dl;//是否加载了dl
 }__attribute__((packed));//208 bytes
 #endif
@@ -332,6 +333,8 @@ int sys_tcsetpgrp(int fildes,pid_t pgid_id);
 //获取fildes对应的会话的foreground process group id。
 //fildes是当前会话的当前controlling terminal的文件描述符(tty描述符)
 pid_t sys_tcgetpgrp(int fildes);
+
+struct process* get_proc(pid_t pid);
 
 extern struct process* current;
 extern mmap_struct* all_mmaps;

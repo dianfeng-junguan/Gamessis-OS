@@ -10,7 +10,6 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "D:/Code/Comprehensive/OS/workspace/64/com/mem.c" "CMakeFiles/gms.dir/com/mem.c.obj" "gcc" "CMakeFiles/gms.dir/com/mem.c.obj.d"
   "D:/Code/Comprehensive/OS/workspace/64/com/str.c" "CMakeFiles/gms.dir/com/str.c.obj" "gcc" "CMakeFiles/gms.dir/com/str.c.obj.d"
-  "D:/Code/Comprehensive/OS/workspace/64/com/syscall.c" "CMakeFiles/gms.dir/com/syscall.c.obj" "gcc" "CMakeFiles/gms.dir/com/syscall.c.obj.d"
   "D:/Code/Comprehensive/OS/workspace/64/com/types.c" "CMakeFiles/gms.dir/com/types.c.obj" "gcc" "CMakeFiles/gms.dir/com/types.c.obj.d"
   "D:/Code/Comprehensive/OS/workspace/64/knl/blk_buf.c" "CMakeFiles/gms.dir/knl/blk_buf.c.obj" "gcc" "CMakeFiles/gms.dir/knl/blk_buf.c.obj.d"
   "D:/Code/Comprehensive/OS/workspace/64/knl/blk_dev.c" "CMakeFiles/gms.dir/knl/blk_dev.c.obj" "gcc" "CMakeFiles/gms.dir/knl/blk_dev.c.obj.d"

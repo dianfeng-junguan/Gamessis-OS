@@ -106,18 +106,13 @@
 },
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\com\\mem.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\com\\mem.c",
-  "file": "D:/Code/Comprehensive/OS/workspace/64/com/mem.c"
-},
-{
-  "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
   "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\com\\str.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\com\\str.c",
   "file": "D:/Code/Comprehensive/OS/workspace/64/com/str.c"
 },
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",
-  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\com\\syscall.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\com\\syscall.c",
-  "file": "D:/Code/Comprehensive/OS/workspace/64/com/syscall.c"
+  "command": "E:\\Mingw\\bin\\gcc.exe  @CMakeFiles/gms.dir/includes_C.rsp  -std=c17 -pedantic -g -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large -Wno-pointer-to-int-cast -Wno-int-conversion -o CMakeFiles\\gms.dir\\com\\mem.c.obj -c D:\\Code\\Comprehensive\\OS\\workspace\\64\\com\\mem.c",
+  "file": "D:/Code/Comprehensive/OS/workspace/64/com/mem.c"
 },
 {
   "directory": "D:/Code/Comprehensive/OS/workspace/64/build",

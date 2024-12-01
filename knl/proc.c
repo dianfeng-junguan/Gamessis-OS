@@ -1,6 +1,7 @@
 //
 // Created by Oniar_Pie on 2023/11/9.
 //
+#include "signal.h"
 #include "sys/mman.h"
 #include "sys/types.h"
 #include "vfs.h"
@@ -518,6 +519,18 @@ void del_proc(int pnr)
             sys_close(i);
         }
     }
+    //释放映射控制块
+    for (struct List* l=task[pnr].mmaps; l; l=l->next) {
+        //TODO 这里没有考虑公共映射，直接释放了，以后实现so共享映射的时候应该要修改
+        mmap_struct* mp=l->data;
+        sys_munmap(mp->base, mp->len);
+        kmfree(mp);
+        kmfree(l);
+    }
+    //释放信号队列
+    for (struct List* l=task[pnr].signal_queue; l; l=l->next) {
+        kmfree(l);
+    }
     //三个std判断一下是否是会话leader，是的话再关闭
     if(task[pnr].sid==task[pnr].pid){
         //tty和console断联
@@ -527,12 +540,16 @@ void del_proc(int pnr)
         sys_close(2);
         //然后,关闭所有前台进程组的进程
         for(int i=0;i<MAX_TASKS;i++){
-            if(task[i].gpid==task[pnr].pid){
-                //TODO:发送SIGHUP信号使进程终结
+            if(task[i].gpid==task[pnr].pid&&i!=pnr){
+                //发送SIGHUP信号使进程终结
+                send_signal(task[i].pid, SIGHUP);
             }
         }
     }
-    //TODO 给子进程发送SIGHUP信号结束他们
+    //给子进程发送SIGHUP信号结束他们
+    for (struct process* p=task[pnr].child_procs; p; p=p->node.next->data) {
+        send_signal(p->pid, SIGHUP);
+    }
     //
     //从进程中解除cr3,tss和ldt
     //switch_proc_tss(task[pnr]);
@@ -1181,4 +1198,11 @@ int sys_ioctl(int fildes, int request, unsigned long args){
 }
 void set_errno(int errno){
     current->regs.errcode=errno;
+}
+
+struct process* get_proc(pid_t pid){
+    for (int i=0; i<MAX_TASKS; i++) {
+        if(task[i].stat!=TASK_EMPTY&&task[i].pid==pid)return task+i;
+    }
+    return NULL;
 }

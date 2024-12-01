@@ -1,6 +1,7 @@
 #include "clock.h"
 #include "int.h"
 #include "proc.h"
+#include "signal.h"
 #include <devman.h>
 #include <disk.h>
 extern int manage_proc_lock;
@@ -13,4 +14,5 @@ void clock_c(){
         manage_proc();
     }
     //puts("1 disk req executed.");
+    do_signals();
 }
