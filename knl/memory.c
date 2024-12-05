@@ -1,6 +1,7 @@
 #include "memory.h"
 #include "blk_dev.h"
 #include "signal.h"
+#include "sys/mman.h"
 #include "typename.h"
 #include "sys/types.h"
 #include "int.h"
@@ -32,39 +33,39 @@ int mmap_t_i=0;
 
 malloc_hdr *pmhdrs,*kmhdrs;
 malloc_hdr* pmalloc_mhdr,*kmalloc_mhdr;
-stat_t mmap(addr_t pa,addr_t la,u32 attr)
-{
-    return smmap(pa,la,attr,current->pml4);
-    /*//从pml4中找到la所属的pml4项目，即属于第几个512GB
-    page_item *pdptp= (page_item *) (pml4[la / PML4E_SIZE] & (~0xff));//指向的pdpt表
-    //因为一个pml指向512gb内存，目前电脑还没有内存能达到这个大小，就不进行检查是否越界的判断
+// stat_t mmap(addr_t pa,addr_t la,u32 attr)
+// {
+//     return smmap(pa,la,attr,current->pml4);
+//     /*//从pml4中找到la所属的pml4项目，即属于第几个512GB
+//     page_item *pdptp= (page_item *) (pml4[la / PML4E_SIZE] & (~0xff));//指向的pdpt表
+//     //因为一个pml指向512gb内存，目前电脑还没有内存能达到这个大小，就不进行检查是否越界的判断
 
-    //在这个512GB（一张pdpt表）中找到la所属的pdpt项目，找到指向的pd
-    int pdpti=la%PML4E_SIZE/PDPTE_SIZE;
-    page_item* pdp= (page_item *) pdptp[pdpti];//指向的pd
-    //检查pdptp是否被占用
-    if(!((unsigned long long)pdp&PAGE_PRESENT))
-    {
-        pdp=(page_item*)vmalloc();
-        memset(pdp,0,4096);
-        pdptp[pdpti]=(addr_t)pdp|attr;
-    }
-    pdp=(page_item*)((addr_t)pdp&~0xff);
+//     //在这个512GB（一张pdpt表）中找到la所属的pdpt项目，找到指向的pd
+//     int pdpti=la%PML4E_SIZE/PDPTE_SIZE;
+//     page_item* pdp= (page_item *) pdptp[pdpti];//指向的pd
+//     //检查pdptp是否被占用
+//     if(!((unsigned long long)pdp&PAGE_PRESENT))
+//     {
+//         pdp=(page_item*)vmalloc();
+//         memset(pdp,0,4096);
+//         pdptp[pdpti]=(addr_t)pdp|attr;
+//     }
+//     pdp=(page_item*)((addr_t)pdp&~0xff);
 
-    //在pd中找到la指向的pt
-    page_item* pt=(page_item*)pdp[la % PDPTE_SIZE / PDE_SIZE];
-    if(!((unsigned long long)pt & PAGE_PRESENT))
-    {
-        pt=(page_item*)vmalloc();
-        memset(pt,0,4096);
-        pdp[la%PDPTE_SIZE/PDE_SIZE]= (addr_t)pt | attr;
-    }
-    pt=(page_item*)((addr_t)pt & ~0xff);
+//     //在pd中找到la指向的pt
+//     page_item* pt=(page_item*)pdp[la % PDPTE_SIZE / PDE_SIZE];
+//     if(!((unsigned long long)pt & PAGE_PRESENT))
+//     {
+//         pt=(page_item*)vmalloc();
+//         memset(pt,0,4096);
+//         pdp[la%PDPTE_SIZE/PDE_SIZE]= (addr_t)pt | attr;
+//     }
+//     pt=(page_item*)((addr_t)pt & ~0xff);
 
-    //在pt中找到la指向的page
-    pt[la % PDE_SIZE / PAGE_SIZE]=pa|attr;//映射
-    return NORMAL;*/
-}
+//     //在pt中找到la指向的page
+//     pt[la % PDE_SIZE / PAGE_SIZE]=pa|attr;//映射
+//     return NORMAL;*/
+// }
 stat_t smmap(addr_t pa,addr_t la,u32 attr,page_item* pml4p)
 {
     //从pml4中找到la所属的pml4项目，即属于第几个512GB
@@ -216,10 +217,12 @@ int _kmfree(addr_t ptr)
 
 ///查询当前进程该地址是否有对应的映射
 mmap_struct* get_mmap(off_t addr){
-    struct List* mp=current->mmaps;
-    for (; mp&&((mmap_struct*)mp->data)->base!=addr; mp=mp->next);
+    mmap_struct* mp=current->mmaps;
+    for (; mp&&!(mp->base<=addr&&mp->base+mp->len>addr); mp=list_next(mp, &mp->node)){
+        comprintf("mmaps[],base=%l,len=%l,addr=%l\n",mp->base,mp->len,addr);
+    }
     if(!mp)return NULL;
-    return mp->data;
+    return mp;
 }   
 ///获取该物理地址的malloc header。
 malloc_hdr* get_pmhdr(off_t pm){
@@ -227,20 +230,46 @@ malloc_hdr* get_pmhdr(off_t pm){
     for (; mp&&mp->base!=pm; mp=mp->next);
     return mp;
 }
+#define PF_LEVEL_VIOLATION 1
+#define PF_WRITING  2
+#define PF_USER_MODE 4
+#define PF_RSVD 8
+#define PF_INS_FETCH 16
+#define PF_PROTECT_KEY 32
+#define PF_SHADOW_STK_ACCESS 64
+#define PF_HLAT 128
+#define PF_SGX (0x8000)
 void page_err(){
     __asm__("cli");
     printf("page err\n");
-    unsigned long err_code=0,l_addr=0;
-    __asm__ volatile("mov 8(%%rbp),%0":"=r"(err_code));
-    __asm__ volatile("mov %%cr2,%0":"=r"(l_addr));//试图访问的地址
-    int p=err_code&1;
-    
+    off_t err_code=0,l_addr=0;
+    off_t addr=0;
+    __asm__ volatile("push %%rax\nmov 8(%%rbp),%%rax\nmov %%rax,%0\n":"=m"(err_code));
+    __asm__ volatile("mov %%cr2,%%rax\nmov %%rax,%0\n":"=m"(l_addr));//试图访问的地址
+    __asm__ volatile("mov 16(%%rbp),%%rax\nmov %%rax,%0\npop %%rax\n":"=m"(addr));
+    printf("occurred at %x(paddr), trying to access %x(laddr)\n",addr,l_addr);
+
+    printf("cr2=%x\nerr code=%x\n",l_addr,err_code);
+    if(err_code&PF_LEVEL_VIOLATION)
+        printf("non-existent page item\n");
+    if(err_code&PF_WRITING)
+        printf("when writing\n");
+    else 
+        printf("when reading\n");
+    if(!(err_code&PF_USER_MODE))
+        printf("supervisor mode\n");
+    else 
+        printf("user mode");
+    if(err_code&PF_INS_FETCH)
+        printf("instruction fetch\n");
+    if(err_code&PF_PROTECT_KEY)
+        printf("data access not allowed by protection key\n");
     off_t *stk=0;
     __asm__ volatile("mov %%rbp,%0":"=m"(stk));
     stk-=2;
     backtrace(stk);
 
-    if(!p)
+    if(!(err_code&PF_LEVEL_VIOLATION))
     {
         //accessing non-existent page
         //检查地址合法性
@@ -250,19 +279,23 @@ void page_err(){
         if((mp=get_mmap(l_addr))==NULL){
             //TODO  没有映射，报错
             comprintf("page_err:page acceessed without mmap\n");
-            sys_exit(-1);
+                comprintf("sys died.\n");
+                while (1);
+            // sys_exit(-1);
 
         }else {
             //在进程的页表中申请新页
             void *pm=pmalloc(PAGE_4K_ALIGN(mp->len));
             l_addr&=PAGE_4K_MASK;
+            unsigned int attr=PAGE_PRESENT|PAGE_FOR_ALL;
+            if(mp->flags&PROT_WRITE)attr|=PAGE_RWX;
             for (int i=0; i<PAGE_4K_ALIGN(mp->len)/PAGE_4K_SIZE; i++) {
-                smmap(pm+i*PAGE_4K_SIZE,l_addr+i*PAGE_4K_SIZE,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,current->pml4);
+                smmap(pm+i*PAGE_4K_SIZE,l_addr+i*PAGE_4K_SIZE,attr,current->pml4);
             }
             mp->pmhdr=get_pmhdr(pm);//填写pmhdr
             //读取文件
             if(mp->file){
-                int fd=mp->file-current->openf;
+                int fd=mp->fd;
                 sys_lseek(fd, mp->offset, SEEK_SET);
                 sys_read(fd, l_addr, mp->len);
             }
@@ -273,15 +306,7 @@ void page_err(){
         //page level protection
         sys_exit(-1); 
     }
-    p=err_code&2;
-    if(p)printf("when writing\n");else //puts("when reading");
-    p=err_code&4;
-    if(!p)printf("supervisor mode\n");else //puts("user mode");
-    p=err_code&16;
-    if(p)printf("an instruction tries to fetch\n");
-    unsigned int addr=0;
-    __asm__ volatile("mov 8(%%rbp),%0":"=r"(addr));
-    printf("occurred at %x(paddr), %x(laddr)\n",addr,l_addr);
+    
     extern int cur_proc;
     extern struct process *task;
     /*if(task[cur_proc].pid==1)//系统进程
@@ -516,7 +541,7 @@ malloc_hdr* mhdr_merge(malloc_hdr* prev,malloc_hdr* next){
         if(next->next)
             next->next->prev=prev;
         next->type=-1;
-        comprintf("merged mhdr: base %l new size%l\n",prev->base,prev->len);
+        // comprintf("merged mhdr: base %l new size%l\n",prev->base,prev->len);
     }
     return prev;
 }
@@ -536,7 +561,7 @@ void *kmalloc(off_t addr,size_t size){
 
         //向前合并属性相同的分配头
         mhdr_merge(mh->prev, mh);
-
+        // memset(addr, 0, size);
         return mh->base;
         
     }
@@ -572,7 +597,7 @@ void * pmalloc(size_t size){
         //以下为符合要求
         //分割空闲内存
         malloc_hdr* nmh=mhdr_split(mh,mh->base+size,pmhdrs,MAX_PMHDRS);
-        comprintf("pmalloc at %l, size:%l.\n",mh->base,size);
+        // comprintf("pmalloc at %l, size:%l.\n",mh->base,size);
 
         mh->type=MEM_TYPE_USED;
         mh->flag|=MEM_FLAG_W|MEM_FLAG_X|MEM_FLAG_R;
@@ -729,9 +754,9 @@ int is_pgs_ava(int base,int pgn)
 //取消映射，调用前应当将addr和len对齐4K，而且不允许释放的内存跨越多个映射块
 int do_munmap(void *addr,int len){
 
-    struct List* lp=current->mmaps;
-    for (; lp; lp=lp->next) {
-        mmap_struct* mp=lp->data;
+    mmap_struct* lp=current->mmaps;
+    for (; lp; lp=lp->node.next) {
+        mmap_struct* mp=lp;
         if (mp->base<=addr&&mp->base+mp->len>=addr+len) {
             //去掉取消映射的部分，将原先分配的整块映射一分为二
             if (mp->base+mp->len>addr+len) {
@@ -740,14 +765,7 @@ int do_munmap(void *addr,int len){
                 extra->base=addr+len;
                 extra->len=mp->len-(size_t)addr-len;
                 //加到进程映射链表
-                struct List* node=kmalloc(0, sizeof(struct List));
-                list_init(node);
-                node->data=extra;
-                struct List* prevl=current->mmaps;
-                for (struct List* l=current->mmaps; l&&((mmap_struct*)l->data)->base<addr; l=l->next) {
-                    prevl=l;
-                }
-                list_add(prevl, node);
+                list_add(current->mmaps, extra);
             }
             mp->len=addr-mp->base;
             //把相应的物理内存分配也释放
@@ -762,4 +780,20 @@ int do_munmap(void *addr,int len){
     set_errno(-ENOMEM);
     return -1;
     
+}
+//检验一个地址指向的内存是否可以做相应的操作。可以访问的标准是，有无在进程映射结构中做好映射。
+int verify_area(void* addr,int len,int prot){
+    int off=0;
+    //可能这个内存区跨越了好几个映射
+    while (off<len) {
+        mmap_struct* mp=get_mmap(addr+off);
+        if (!mp) {
+            return 0;
+        }
+        int flags=mp->flags;
+        if((prot&PROT_WRITE)&&!(flags&PROT_WRITE))return 0;
+        if((prot&PROT_EXEC)&&!(flags&PROT_EXEC))return 0;
+        off+=mp->len;
+    }
+    return 1;
 }

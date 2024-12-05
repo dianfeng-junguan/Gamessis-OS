@@ -14,5 +14,5 @@ void clock_c(){
         manage_proc();
     }
     //puts("1 disk req executed.");
-    do_signals();
+    // do_signals();
 }

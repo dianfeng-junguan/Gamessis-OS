@@ -13,11 +13,13 @@ SECTIONS {
         *(.bss)
     }
     . = KNL_BASE + 8M;
+    _knl_text_start = . ;
     .text :
     {
         kmain = .;
         *(.text)
     }
+    _knl_text_end = . ;
     .data :
     {
         *(.data)

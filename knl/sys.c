@@ -57,8 +57,8 @@ unsigned long sys_open(char *filename,int flags)
     dentry = path_walk(path,0);
 
     if(dentry == NULL){
-        if(!flags&O_CREAT)
-            return -ENOENT;
+        // if(!flags&O_CREAT)
+        return -ENOENT;
         //创建文件
         //TODO 创建文件改为更正规的方法
         //找到上一级目录
@@ -273,7 +273,7 @@ unsigned long sys_wait(pid_t pid, int *stat_loc, int options){
         //任意一个子进程
         while (1) {
             for(struct List* l=current->child_procs;l;l=l->next) {
-                struct process* p=l->data;
+                struct process* p=(void*)l-((void*)&current->node-(void*)current);//l->data;
                 if(p->stat == TASK_ZOMBIE) {
                     waitee=p;
                     goto done;
@@ -285,7 +285,7 @@ unsigned long sys_wait(pid_t pid, int *stat_loc, int options){
         //等待任意一个和父进程同一个进程组的子进程
         while (1) {
             for(struct List* l=current->child_procs;l;l=l->next) {
-                struct process* p=l->data;
+                struct process* p=(void*)l-((void*)&current->node-(void*)current);//l->data;
                 if(p->gpid==current->gpid&& p->stat == TASK_ZOMBIE) {
                     waitee=p;
                     goto done;
@@ -480,12 +480,14 @@ void *sys_mmap(void *addr, size_t len, int prot, int flags,int fildes, off_t off
         return MAP_FAILED;
     }
     //创建mmap struct
-    mmap_struct* mmps=kmalloc(0,sizeof(mmap_struct)),*mp=all_mmaps;
-    
-    for(;mp&&mp->node.next;mp=mp->node.next->data);
-    if(!mp)all_mmaps=kmalloc(0,sizeof(mmap_struct));
+    mmap_struct* mmps=kmalloc(0,sizeof(mmap_struct));
     list_init(&mmps->node);
-    list_add(mp,mmps);
+    //加入到进程mmaps链表
+    
+    if(!current->mmaps)
+        current->mmaps=mmps;
+    else
+        list_add(&current->mmaps->node,&mmps->node);
     //设置mmap struct
     mmps->base=addr;
     mmps->len=len;
@@ -493,20 +495,11 @@ void *sys_mmap(void *addr, size_t len, int prot, int flags,int fildes, off_t off
         mmps->file=current->openf[fildes];
     else
         mmps->file=NULL;
+    mmps->fd=fildes;
     mmps->offset=off;
     mmps->pmhdr=NULL;
     mmps->flags=prot|(flags&MAP_SHARED?MMAP_FLAG_S:0);
-    //加入到进程mmaps链表
-    struct List *new_node=kmalloc(0,sizeof(struct List)),*np=current->mmaps,*prevnp=np;
-    list_init(new_node);
-    new_node->data=mmps;
-    if(!np)current->mmaps=new_node;
-    else{
-        for(;np&&((mmap_struct*)np->data)->base<addr;np=((mmap_struct*)np->next)){
-            prevnp=np;
-        }
-        list_add(prevnp,new_node);
-    }
+    
     /* int pgc=(len-1+PAGE_4K_SIZE)/PAGE_4K_SIZE;
     for(int i=0;i<pgc;i++){
         smmap(pmalloc(PAGE_4K_SIZE),addr+i*PAGE_4K_SIZE,attr,current->pml4);

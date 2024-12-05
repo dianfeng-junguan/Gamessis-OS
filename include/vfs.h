@@ -29,14 +29,16 @@ __attribute__((always_inline)) inline void list_add_to_behind(struct List * entr
         new->next->prev = new;
     entry->next = new;
 }
-__attribute__((always_inline)) inline void list_add(struct List * entry,struct List * new)	////add to the tail of the link
+void list_add(struct List * entry,struct List * new);
+
+//根据list结构体成员在结构体内的偏移，计算链表中下一项的位置。如果下一项为null，则返回null。
+//list_as_member:在结构体内list的指针
+__attribute__((always_inline)) inline void* list_next(void * stru,struct List * list_as_member)	////add to the tail of the link
 {
-    struct List* p=entry;
-    for(;p->next&&p->next!=p;p=p->next){
-        if(p->data==new->data)
-            return;
-    }
-    list_add_to_behind(p,new);
+    void* offset_in_struct=(void*)list_as_member-stru;
+    void* next_node=list_as_member->next;
+    if(!next_node)return NULL;
+    return (next_node-offset_in_struct);
 }
 __attribute__((always_inline)) inline void list_drop(struct List * entry)
 {

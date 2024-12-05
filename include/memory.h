@@ -110,4 +110,6 @@ int chk_vm(int base, int pgn);
 
 int init_paging();
 int do_munmap(void *addr,int len);
+
+int verify_area(void* addr,int len,int prot);
 extern addr_t usr_mem_pa;

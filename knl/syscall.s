@@ -8,6 +8,7 @@ extern puts
 extern del_proc
 extern syscall
 extern current
+extern store_rip
 REQ_READ_DISK       EQU 0
 REQ_WRITE_DISK      EQU 1
 REQ_SYNC_READ_DISK  EQU 2
@@ -26,7 +27,7 @@ _syscall:
     mov rbp,0xffff800000108000
     ;切换堆栈
     mov qword [rbp+20],rsp
-    mov rsp,qword [rbp+36]
+    mov rsp,qword [rbp+36+8]
 
     ;这部分是为了填上上下文的int部分，是给fork的新进程使用的，
     ;syscall会直接忽略这部分。
@@ -70,10 +71,22 @@ _syscall:
     xchg rcx,r10
     ;把返回地址存到pcb(regs.rip)
     push rdi
-    mov rdi,current
-    mov rdi,[rdi]
-    mov qword [rdi+0x26c],r10
+    mov rdi,r10
+
+    push r11
+    push rax
+    push rdx
+    call store_rip
+    pop rdx
+    pop rax
+    pop r11
+    
     pop rdi
+    ; push rdi
+    ; mov rdi,current
+    ; mov rdi,[rdi]
+    ; mov qword [rdi+0x26c],r10
+    ; pop rdi
 
     call syscall
 _syscall_sysret:

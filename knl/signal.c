@@ -53,7 +53,9 @@ int do_signals(){
         }
 
     }
-    current->signal_queue=current->signal_queue->next;
-    kmfree(sig);
+    if(current->signal_queue){
+        current->signal_queue=current->signal_queue->next;
+        kmfree(sig);
+    }
     return 0;
 }

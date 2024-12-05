@@ -1,4 +1,5 @@
 #include "fat32.h"
+#include "int.h"
 #include "sys/mman.h"
 #include "sys/types.h"
 #include "vfs.h"
@@ -142,6 +143,7 @@ int execute(char *path, char **argv)
 }
 
 int sys_execve(char *path, int argc, char **argv) {
+    cli();
     int fno=-1,cwd_fno=-1;
     if((fno=sys_open(path, O_EXEC)) <0)return -ENOENT;
 
@@ -152,17 +154,18 @@ int sys_execve(char *path, int argc, char **argv) {
     extern TSS* tss;
 
     current->exef=current->openf[fno];//改变执行文件
-    off_t entry= load_elf(current->exef);
+    off_t entry= load_elf(fno);
     if(entry==-1)
     {
         comprintf("failed execve, errcode:%d\n",current->regs.errcode);
         return -1;
     }
-    if(sys_close(fno)<0)return -1;
+    //之后page err还需要这个fno
+    // if(sys_close(fno)<0)return -1;
 
     //sysret直接返回到新程序的main
     void *retp= (void *) entry;
-    stack_store_regs *rs= (stack_store_regs *) (tss->ists[0] - sizeof(stack_store_regs));
+    stack_store_regs *rs= (stack_store_regs *) (tss->ists[1] - sizeof(stack_store_regs));
     rs->rcx= (unsigned long) retp;//返回地址
     //第二个参数argv需要把内容从内核空间拷贝到用户堆里面
     size_t arglen=0;
@@ -206,6 +209,7 @@ int sys_execve(char *path, int argc, char **argv) {
     //以下部分是临时测试代码
 //    int (*pmain)(int argc,char **argv)=(int (*)(int, char **)) entry;
 //    pmain(argc, (char **) rs->rdi);
+    sti();
     return 0;
 }
 int exec_call(char *path)

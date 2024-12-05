@@ -3,6 +3,9 @@
 #include <typename.h>
 #include "sys/types.h"
 #include "mem.h"
+#include "syscall.h"
+#include "sys/mman.h"
+#include "log.h"
 
 struct multiboot_tag_framebuffer framebuffer;
 
@@ -129,13 +132,37 @@ void draw_letter(int x, volatile int y, int size, char c) {
         glyph += font_width_bytes;
     }
 }
-//向上滚动一个像素
+void print_textbuffer(){
+    for(int i=txtbfh;i!=txtbft;i=(i+1)%max_chs){
+        if(text_buffer[i]=='\n'){
+            //剩下用空格填满
+            for(;fb_cursor_x<max_ch_nr_x;fb_cursor_x++)
+                draw_letter(fb_cursor_x*font_width*font_size,fb_cursor_y*font_height*font_size,font_size,' ');
+            
+            fb_cursor_y+=1;
+            fb_cursor_x=0;
+            continue;
+        }
+        if(fb_cursor_x>max_ch_nr_x)
+        {
+            fb_cursor_y+=1;
+            fb_cursor_x=0;
+        }
+        if(fb_cursor_y>=max_ch_nr_y-1){
+            fb_cursor_y=max_ch_nr_y-1;
+            // fb_cursor_y=0;
+        }
+        draw_letter(fb_cursor_x*font_width*font_size,fb_cursor_y*font_height*font_size,font_size,text_buffer[i]);
+        fb_cursor_x+=1;
+    }
+}
+//向上滚动一行
 void scr_up(){
     txtbfh=(txtbfh+max_ch_nr_x)%max_chs;
     fb_cursor_x=0;
     fb_cursor_y=0;
     text_buffer[txtbft]='\0';
-    print(txtbfh);
+    print_textbuffer();
     // for(int dy=0;dy<framebuffer.common.framebuffer_height-1;dy++){
     //     for(int dx=0;dx<framebuffer.common.framebuffer_width;dx++){
     //         char *p=(char*)(FRAMEBUFFER_ADDR+
@@ -160,7 +187,13 @@ void scr_down(){
     }
 }
 void print(char* s){
+    // if(!verify_area(s, 1, PROT_READ)){
+    //     comprintf("frambuffer.err:invalid mem:%l\n",s);
+    //     return;
+    // }
     for(;*s;s++){
+        text_buffer[txtbft++]=*s;
+        if(txtbft==max_chs)txtbft=0;
         if(fb_cursor_x>max_ch_nr_x||*s=='\n')
         {
             fb_cursor_y+=1;
@@ -174,8 +207,6 @@ void print(char* s){
         }
         draw_letter(fb_cursor_x*font_width*font_size,fb_cursor_y*font_height*font_size,font_size,*s);
         fb_cursor_x+=1;
-        text_buffer[txtbft++]=*s;
-        if(txtbft==max_chs)txtbft=0;
     }
 }
 struct file_operations framebuffer_fops={

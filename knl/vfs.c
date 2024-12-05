@@ -95,16 +95,18 @@ struct dir_entry * path_walk(char * name,unsigned long flags)
         //先在缓存中寻找已有的dentry
         //寻找名字为tmpname的dentry
         struct List* lp=parent->subdirs_list.next;
-        while (lp)
+        if(lp)
+            path=(void*)lp-((void*)&path->child_node-(void*)path);
+        while (path)
         {
-            path=lp->data;
             if(memcmp(tmpname,path->name,tmpnamelen)==0){
                 break;
             }
-            lp=&path->child_node;
-            lp=lp->next;
+            // lp=&path->child_node;
+            // lp=lp->next;
+            path=list_next(path, &path->child_node);
         }
-        if(!lp){
+        if(!path){
             //缓存中没有，再读取介质
             path = (struct dir_entry *) kmalloc(0,sizeof(struct dir_entry));
             memset(path,0,sizeof(struct dir_entry));
@@ -129,7 +131,7 @@ struct dir_entry * path_walk(char * name,unsigned long flags)
             //list_add会查重，如果链表里面已经有了data指针值相同的项，就不添加。
             //不过这里已经是缓存中没有找到dentry的情况了，一般不会出现data一样。
             list_add(&parent->subdirs_list,&path->child_node);
-
+            path->child_node.data=path;
         }
         
         
@@ -234,6 +236,7 @@ unsigned long unregister_filesystem(struct file_system_type * fs)
     return 0;
 }
 //在parent inode下查找dest dentry
+//已废弃
 struct dir_entry* root_lookup(struct index_node * parent_inode,struct dir_entry * dest_dentry){
     struct dir_entry* tmp= (struct dir_entry *) parent_inode->private_index_info;
     struct List* p= tmp->subdirs_list.next;
@@ -288,7 +291,7 @@ struct dir_entry* create_node(char* pathname,mode_t mode,unsigned short dev){
     int pplen=p-pathname;
     char *path=kmalloc(0, pplen+1);
     memcpy(path, pathname, pplen);
-    path[pplen-1]='\0';
+    path[pplen]='\0';
     struct dir_entry* parent=path_walk(path, 0);
     if(!parent){
         return NULL;
@@ -321,4 +324,11 @@ struct dir_entry* create_node(char* pathname,mode_t mode,unsigned short dev){
 
     parent->dir_inode->inode_ops->create(new_nodei,new_noded,0);
     return new_noded;
+}
+void list_add(struct List * entry,struct List * new)	////add to the tail of the link
+{
+    struct List* p=entry;
+    for(;p->next&&p->next!=p;p=p->next){
+    }
+    list_add_to_behind(p,new);
 }

@@ -69,6 +69,7 @@ typedef struct _mmap_struct
     off_t base;
     size_t len;
     struct file** file;
+    int fd;
     off_t offset;//文件内偏移
     unsigned short flags;
     unsigned short type;
@@ -201,7 +202,7 @@ struct process{
     struct file *openf[MAX_PROC_OPENF];
     TSS tss;
     regs_t regs;
-    struct List* mmaps;//内存空间的映射
+    mmap_struct* mmaps;//内存空间的映射
     struct List node;//本进程的节点
     struct List *child_procs;//子进程
     struct List *signal_queue;//等待处理的信号

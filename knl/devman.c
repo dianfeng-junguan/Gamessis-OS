@@ -78,7 +78,8 @@ struct super_block* devfs_read_superblock(struct Disk_Partition_Table_Entry *PDT
     sb->root->dir_ops=&devfs_dops;
     list_init(&sb->root->child_node);
     list_init(&sb->root->subdirs_list);
-    sb->root->name="dev";
+    sb->root->name=kmalloc(0, 4);
+    strcpy(sb->root->name, "dev");
     sb->root->name_length=3;
 
     sb->root->dir_inode->dev=0;
@@ -125,7 +126,7 @@ int init_devfs()
     register_filesystem(&fs_devfs);
     struct super_block *sb_devfs=mount_fs("devfs",0,0);
     ddev=path_walk("/dev",0);
-    mount_fs_on(ddev,&fs_devfs);
+    mount_fs_on(ddev,&sb_devfs);
     
     struct dir_entry* rt_devfs=sb_devfs->root;
 

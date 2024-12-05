@@ -295,9 +295,9 @@ void backtrace(off_t* ret_stack){
     ret_stack=ret_stack[0];
     for (int i = 0; i < 10;i++)
     {
+        if(ret_stack<KNL_BASE)break;//超过栈顶
         print_ksym(ret_stack[1]);
         ret_stack=ret_stack[0];
-        if(ret_stack<KNL_BASE)break;//超过栈顶
     }
     
 

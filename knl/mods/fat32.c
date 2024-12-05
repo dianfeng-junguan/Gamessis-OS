@@ -15,9 +15,8 @@ unsigned int DISK1_FAT32_read_FAT_Entry(struct FAT32_sb_info * fsbi,unsigned int
 	size_t fat_size=fsbi->sector_per_FAT*SECTOR_SIZE;
 	int sector=fsbi->FAT1_firstsector + (fat_entry >> 7);
 	unsigned int *buf=kmalloc(0,fat_size);
-	//FIXME 这里的cluster查找存在问题
 	blkdev_read(ROOT_DEV,sector*SECTOR_SIZE,fat_size,buf);
-    printf("DISK1_FAT32_read_FAT_Entry fat_entry:%x,%x\n",fat_entry,buf[fat_entry & 0x7f]);
+    // printf("DISK1_FAT32_read_FAT_Entry fat_entry:%x,%x\n",fat_entry,buf[fat_entry & 0x7f]);
 	for(int i=0;i<fat_size;i++){
 		kmfree((void*)buf+PAGE_4K_SIZE*i);
 	}

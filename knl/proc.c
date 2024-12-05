@@ -1,6 +1,7 @@
 //
 // Created by Oniar_Pie on 2023/11/9.
 //
+#include "multiboot2.h"
 #include "signal.h"
 #include "sys/mman.h"
 #include "sys/types.h"
@@ -16,6 +17,7 @@
 #include "tty.h"
 #include "fcntl.h"
 #include "clock.h"
+#include "framebuffer.h"
 
 
 struct process *task=0;//[MAX_PROC_COUNT];
@@ -43,7 +45,7 @@ void init_proc(){
     //__asm__ volatile("lldt %0"::"m"(xi));
     //__asm__ volatile("ltr %0"::"m"(zi));
     set_tss(0x400000+KNL_BASE,0x400000+KNL_BASE,0x400000+KNL_BASE\
-    ,0x800000+KNL_BASE,0x800000+KNL_BASE,0x800000+KNL_BASE,0x800000+KNL_BASE\
+    ,0x800000+KNL_BASE,0x800000-0x1000+KNL_BASE,0x800000+KNL_BASE,0x800000+KNL_BASE\
     ,0x800000+KNL_BASE,0x800000+KNL_BASE,0x800000+KNL_BASE);
 
     //IA32_INTERRUPT_SSP_TABLE_ADDR，准备IST
@@ -122,6 +124,16 @@ int init_proc0()
     pz->mem_struct.heap_top=HEAP_BASE;
     pz->mem_struct.heap_base=HEAP_BASE;
     memcpy(&pz->tss,tss, sizeof(TSS));
+    //设置映射
+    extern off_t _knl_text_start,_knl_text_end;
+    comprintf("_knl_text_start:%l,_knl_text_end:%l\n",_knl_text_start,_knl_text_end);
+    sys_mmap(KNL_BASE, _knl_text_start-KNL_BASE, PROT_READ|PROT_WRITE, MAP_FIXED|MAP_PRIVATE|MAP_ANNONYMOUS, 0, 0);
+    sys_mmap(_knl_text_start, _knl_text_end-_knl_text_start, PROT_READ|PROT_EXEC, MAP_FIXED|MAP_PRIVATE|MAP_ANNONYMOUS, 0, 0);
+    sys_mmap(_knl_text_end, 0x40000000-_knl_text_end, PROT_READ|PROT_WRITE, MAP_FIXED|MAP_PRIVATE|MAP_ANNONYMOUS, 0, 0);
+    //映射framebuffer
+    extern struct multiboot_tag_framebuffer framebuffer;
+    size_t size=framebuffer.common.framebuffer_height*framebuffer.common.framebuffer_pitch;
+    sys_mmap(FRAMEBUFFER_ADDR, size, PROT_READ|PROT_WRITE, MAP_FIXED|MAP_ANNONYMOUS, 0, 0);
 
     pz->child_procs=NULL;
 
@@ -518,11 +530,10 @@ void del_proc(int pnr)
         }
     }
     //释放映射控制块
-    for (struct List* l=task[pnr].mmaps; l; l=l->next) {
+    for (mmap_struct* l=task[pnr].mmaps; l; l=l->node.next) {
         //TODO 这里没有考虑公共映射，直接释放了，以后实现so共享映射的时候应该要修改
-        mmap_struct* mp=l->data;
+        mmap_struct* mp=l;
         sys_munmap(mp->base, mp->len);
-        kmfree(mp);
         kmfree(l);
     }
     //释放信号队列
@@ -545,8 +556,11 @@ void del_proc(int pnr)
         }
     }
     //给子进程发送SIGHUP信号结束他们
-    for (struct process* p=task[pnr].child_procs; p; p=p->node.next->data) {
+    for (struct process* p=task[pnr].child_procs; p;) {
         send_signal(p->pid, SIGHUP);
+        void* tmp=p->node.next;
+        //下面这部分是用来推算下一项的地址的
+        p=list_next(p,&p->node);
     }
     //
     //从进程中解除cr3,tss和ldt
@@ -928,14 +942,18 @@ int sys_fork(void){
     }
     //中断使用的栈空间
     //ist一页就够
+    //系统中断ist
     addr_t new_stkpg= kmalloc(0,PAGE_4K_SIZE);
-    memcpy(new_stkpg,current->tss.ists[0]-PAGE_4K_SIZE,PAGE_4K_SIZE);//把当前进程的栈空间复制到新栈里面
+    memcpy(new_stkpg,current->tss.ists[1]-PAGE_4K_SIZE,PAGE_4K_SIZE);//把当前进程的栈空间复制到新栈里面
+    task[pid].tss.ists[1]=new_stkpg+PAGE_4K_SIZE;
     stack_store_regs* ctx_dup=new_stkpg+PAGE_4K_SIZE-sizeof(stack_store_regs);//拷贝的上下文
     ctx_dup->rax=0;//这样进程切换到子进程的done标签，从时钟中断返回弹出堆栈的时候rax弹出来的就是0，成为返回值。
     task[pid].regs.rip=clock_ret;
     task[pid].regs.rsp=ctx_dup;
+    //其他中断ist
+    new_stkpg= kmalloc(0,PAGE_4K_SIZE);
+    memcpy(new_stkpg,current->tss.ists[0]-PAGE_4K_SIZE,PAGE_4K_SIZE);//把当前进程的栈空间复制到新栈里面
     task[pid].tss.ists[0]=new_stkpg+PAGE_4K_SIZE;
-    task[pid].tss.ists[1]=new_stkpg+PAGE_4K_SIZE;
     task[pid].tss.ists[2]=new_stkpg+PAGE_4K_SIZE;
     task[pid].tss.ists[3]=new_stkpg+PAGE_4K_SIZE;
     task[pid].tss.ists[4]=new_stkpg+PAGE_4K_SIZE;
@@ -953,18 +971,17 @@ int sys_fork(void){
     }
     smmap(0,tmpla,0,current->pml4);//解除映射
     //复制映射数据结构
-    struct List *mp=current->mmaps;
-    for (; mp; mp=mp->next) {
+    mmap_struct *mp=current->mmaps;
+    for (; mp; mp=mp->node.next) {
         mmap_struct* new_mp=kmalloc(0, sizeof(mmap_struct));
-        struct List* nd=kmalloc(0, sizeof(struct List));
-        list_init(nd);
-        nd->data=new_mp;
+        memcpy(new_mp, mp, sizeof(mmap_struct));
+        list_init(&new_mp->node);
+        new_mp->node.data=new_mp;
         if(!task[pid].mmaps){
-            task[pid].mmaps=nd;
+            task[pid].mmaps=new_mp;
         }else{
-            list_add(task[pid].mmaps, nd);
+            list_add(task[pid].mmaps, new_mp);
         }
-        memcpy(new_mp, mp->data, sizeof(mmap_struct));
         
     }
     
@@ -996,7 +1013,7 @@ void release_mmap(struct process* p){
                             for(int l=0;l<512;l++){
                                 if(pte[l]&PAGE_PRESENT){
                                     //释放申请的物理内存
-                                    free_page(pte[l]&PAGE_4K_MASK);
+                                    pmfree(pte[l]&PAGE_4K_MASK,PAGE_4K_SIZE);
                                 }
                             }
                             //里面的项释放完了，这一项指向的vmalloc内存可以释放了
@@ -1060,7 +1077,7 @@ void copy_mmap(struct process* from, struct process *to){
 
 int chk_mmap(off_t base, size_t mem_size){
     mmap_struct* mp=current->mmaps;
-    for (; mp; mp=mp->node.next->data)
+    for (; mp; mp=list_next(mp, &mp->node))
     {
         if(mp->base<=base&&mp->base+mp->len>=base+mem_size)return 0;
     }
@@ -1203,4 +1220,9 @@ struct process* get_proc(pid_t pid){
         if(task[i].stat!=TASK_EMPTY&&task[i].pid==pid)return task+i;
     }
     return NULL;
+}
+//这个函数用在syscall保存rip，如果修改了里面的代码，请务必查看汇编之后用到了哪些寄存器，
+//然后在_syscall函数里面调用它的部分把寄存器提前入栈保存好。
+void store_rip(unsigned long rip){
+    __asm__ volatile("mov %0,%1":"=D"(rip):"m"(current->regs.rip));
 }
