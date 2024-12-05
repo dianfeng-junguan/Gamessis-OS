@@ -48,7 +48,7 @@ int dentry_cmp(struct dir_entry* a,struct dir_entry* b){
 void mark_use(struct dir_entry* d){
     int mk=47;
     for(int i=0;i<48;i++){
-        if(dentry_cmp(history_dentry[i],d)==0){
+        if(history_dentry[i]&&dentry_cmp(history_dentry[i],d)==0){
             mk=i;
             break;
         }
@@ -56,7 +56,7 @@ void mark_use(struct dir_entry* d){
     struct dir_entry* dropped;
     if(mk==47){
         dropped=history_dentry[mk];
-        if(!dropped->mount_point&&!dropped->subdirs_list.next&&!dropped->link){
+        if(dropped&&!dropped->mount_point&&!dropped->subdirs_list.next&&!dropped->link){
             drelse(dropped);
         }
     }
@@ -282,6 +282,9 @@ void init_rootfs(){
     //TODO 以后要直接拿设备号，这个设备号通过devman创建设备文件（节点）分配。
     ROOT_DEV=dev_ramdisk<<4;
     
+    for (int i=0; i<48; i++) {
+        history_dentry[i]=0;
+    }
 }
 
 struct dir_entry* create_node(char* pathname,mode_t mode,unsigned short dev){

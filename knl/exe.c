@@ -209,7 +209,6 @@ int sys_execve(char *path, int argc, char **argv) {
     //以下部分是临时测试代码
 //    int (*pmain)(int argc,char **argv)=(int (*)(int, char **)) entry;
 //    pmain(argc, (char **) rs->rdi);
-    sti();
     return 0;
 }
 int exec_call(char *path)

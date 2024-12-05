@@ -201,9 +201,9 @@ void print(char* s){
         }
         if(*s=='\n')continue;
         if(fb_cursor_y>=max_ch_nr_y-1){
-            scr_up();
-            fb_cursor_y=max_ch_nr_y-1;
-            // fb_cursor_y=0;
+            // scr_up();
+            // fb_cursor_y=max_ch_nr_y-1;
+            fb_cursor_y=0;
         }
         draw_letter(fb_cursor_x*font_width*font_size,fb_cursor_y*font_height*font_size,font_size,*s);
         fb_cursor_x+=1;

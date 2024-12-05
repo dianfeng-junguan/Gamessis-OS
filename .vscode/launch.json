@@ -18,8 +18,12 @@
             "miDebuggerServerAddress": "127.0.0.1:1234",
             "miDebuggerPath": "E:/Mingw/bin/gdb.exe",
             "program": "${workspaceFolder}/bin/gmsknl.elf",
-            // "program": "${command:extension.vscode-wsl-workspaceFolder}/bin/gmsknl.elf",
-            "args": [],
+            "args": [
+                "-ex",
+                "\"add-symbol-file bin/test.elf\"",
+                "-ex",
+                "\"watch current->openf[3]\""
+            ],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
             // "cwd": "${command:extension.vscode-wsl-workspaceFolder}/knl",

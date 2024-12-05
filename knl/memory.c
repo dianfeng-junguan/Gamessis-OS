@@ -219,7 +219,7 @@ int _kmfree(addr_t ptr)
 mmap_struct* get_mmap(off_t addr){
     mmap_struct* mp=current->mmaps;
     for (; mp&&!(mp->base<=addr&&mp->base+mp->len>addr); mp=list_next(mp, &mp->node)){
-        comprintf("mmaps[],base=%l,len=%l,addr=%l\n",mp->base,mp->len,addr);
+        // comprintf("mmaps[],base=%l,len=%l,addr=%l\n",mp->base,mp->len,addr);
     }
     if(!mp)return NULL;
     return mp;
@@ -227,7 +227,9 @@ mmap_struct* get_mmap(off_t addr){
 ///获取该物理地址的malloc header。
 malloc_hdr* get_pmhdr(off_t pm){
     malloc_hdr* mp=pmhdrs;
-    for (; mp&&mp->base!=pm; mp=mp->next);
+    for (; mp&&mp->base!=pm; mp=mp->next){
+        comprintf("phdr:%l,next=%l\n",mp,mp->next);
+    }
     return mp;
 }
 #define PF_LEVEL_VIOLATION 1
@@ -240,7 +242,7 @@ malloc_hdr* get_pmhdr(off_t pm){
 #define PF_HLAT 128
 #define PF_SGX (0x8000)
 void page_err(){
-    __asm__("cli");
+    cli();
     printf("page err\n");
     off_t err_code=0,l_addr=0;
     off_t addr=0;
@@ -248,7 +250,7 @@ void page_err(){
     __asm__ volatile("mov %%cr2,%%rax\nmov %%rax,%0\n":"=m"(l_addr));//试图访问的地址
     __asm__ volatile("mov 16(%%rbp),%%rax\nmov %%rax,%0\npop %%rax\n":"=m"(addr));
     printf("occurred at %x(paddr), trying to access %x(laddr)\n",addr,l_addr);
-
+    printf("error process pid:0x%x\n",current->pid);
     printf("cr2=%x\nerr code=%x\n",l_addr,err_code);
     if(err_code&PF_LEVEL_VIOLATION)
         printf("non-existent page item\n");
@@ -259,7 +261,7 @@ void page_err(){
     if(!(err_code&PF_USER_MODE))
         printf("supervisor mode\n");
     else 
-        printf("user mode");
+        printf("user mode\n");
     if(err_code&PF_INS_FETCH)
         printf("instruction fetch\n");
     if(err_code&PF_PROTECT_KEY)
@@ -306,21 +308,9 @@ void page_err(){
         //page level protection
         sys_exit(-1); 
     }
-    
-    extern int cur_proc;
-    extern struct process *task;
-    /*if(task[cur_proc].pid==1)//系统进程
-    {
-        printf("sys died. please reboot.\n");
-        __asm__ volatile("jmp .");
-    }*/
-    //杀死问题进程
-//    del_proc(cur_proc);
-    // printf("killed the problem process.\n");
-    // printf("shell:>");
     eoi();
     //这里对esp的加法是必要的，因为page fault多push了一个错误码，但是iret识别不了
-    __asm__ volatile ("sti \r\n  leave\n add $8,%rsp \n iretq");
+    __asm__ volatile ("leave\n add $8,%rsp \n iretq");
 }
 void init_memory()
 {
@@ -382,11 +372,9 @@ void init_memory()
     pmhdrs=kmalloc(0,PAGE_4K_SIZE);
     for(int i=0;i< MAX_PMHDRS;i++){
         pmhdrs[i].type=-1;
-        pmhdrs[i].next=pmhdrs+i+1;
-        pmhdrs[i].prev=pmhdrs+i-1;
+        pmhdrs[i].next=NULL;
+        pmhdrs[i].prev=NULL;
     }
-    pmhdrs[0].prev=NULL;
-    pmhdrs[mmap_t_i-1].next=NULL;
     for(int i=0;i<mmap_t_i;i++)
     {
         pmhdrs[i].base=phy_mmap_struct[i].base;
@@ -406,6 +394,8 @@ void init_memory()
         }
         
     }
+    pmhdrs[0].prev=NULL;
+    pmhdrs[mmap_t_i-1].next=NULL;
     for (malloc_hdr* mh=pmhdrs; mh&&mh->base<0x40000000; mh=mh->next) {
         //内核占用低1GB
         if(mh->type==MEM_TYPE_AVAILABLE){
@@ -516,6 +506,7 @@ malloc_hdr *mhdr_split(malloc_hdr* target,off_t split_point,malloc_hdr* array,si
     nmh->next=target->next;
     if(target->next)
         target->next->prev=nmh;
+    
     nmh->prev=target;
     target->next=nmh;
     

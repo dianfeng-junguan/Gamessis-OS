@@ -863,7 +863,7 @@ void __switch_to(struct process *from, struct process *to) {
                  "mov %%gs,%1\r\n"
                  "mov %2,%%fs\r\n"
                  "mov %3,%%gs\r\n"
-                 "sti":"=m"(to->regs.fs),"=m"(to->regs.gs):
+                 "nop":"=m"(to->regs.fs),"=m"(to->regs.gs):
                  "m"(from->regs.fs),"m"(from->regs.gs));
 }
 
@@ -988,7 +988,6 @@ int sys_fork(void){
     task[pid].stat=TASK_READY;
     
 
-    sti();
     //如果父进程没有堆，不开辟。留给load_xx函数。
     //父进程运行到这里
     return pid;

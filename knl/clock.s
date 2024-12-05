@@ -8,6 +8,7 @@ extern gdt
 extern manage_proc_lock
 extern save_rsp
 clock:
+    cli
     push rax
     push rbx
     push rcx

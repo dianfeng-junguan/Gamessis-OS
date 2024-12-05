@@ -134,7 +134,7 @@ unsigned long sys_open(char *filename,int flags)
         return -EMFILE;
     }
     f[fd] = filp;
-
+    comprintf("new openf:%l\n",filp);
     return fd;
 }
 

@@ -124,8 +124,7 @@ _syscall_sysret:
     pop rbp
 
 
-
-    sti
+    ;不需要sti，sysret恢复rflags也就恢复了中断使能标志位
     db 0x48
     sysret
 
