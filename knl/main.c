@@ -164,7 +164,7 @@ void main(unsigned int magic,void* addr)
     //===============创建0号进程======================
     init_proc0();
 	// init_ramfs();
-
+	
     //自带驱动
     //init_tty();
     init_kb();

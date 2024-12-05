@@ -65,7 +65,8 @@ void init_font(){
     font_size=1;
     max_chs=max_ch_nr_x*max_ch_nr_y*2;
     text_buffer=kmalloc(0, max_chs);
-    
+    txtbfh=0;
+    txtbft=0;
 }
 void set_framebuffer(struct multiboot_tag_framebuffer tag)
 {
@@ -133,7 +134,9 @@ void draw_letter(int x, volatile int y, int size, char c) {
     }
 }
 void print_textbuffer(){
+    int c=0;
     for(int i=txtbfh;i!=txtbft;i=(i+1)%max_chs){
+        if(text_buffer[i]=='\0')break;
         if(text_buffer[i]=='\n'){
             //剩下用空格填满
             for(;fb_cursor_x<max_ch_nr_x;fb_cursor_x++)
@@ -154,11 +157,15 @@ void print_textbuffer(){
         }
         draw_letter(fb_cursor_x*font_width*font_size,fb_cursor_y*font_height*font_size,font_size,text_buffer[i]);
         fb_cursor_x+=1;
+        c++;
+        if(c>=max_chs)break;
     }
 }
 //向上滚动一行
 void scr_up(){
-    txtbfh=(txtbfh+max_ch_nr_x)%max_chs;
+    for (; text_buffer[txtbfh]!='\n'&&txtbfh!=txtbft; txtbfh=(txtbfh+1)%max_chs);
+    if((txtbfh+1)%max_chs!=txtbft)
+        txtbfh=(txtbfh+1)%max_chs;
     fb_cursor_x=0;
     fb_cursor_y=0;
     text_buffer[txtbft]='\0';
@@ -177,14 +184,26 @@ void scr_up(){
 //        *(p++)=0;
 }
 void scr_down(){
-    for(int dy=1;dy<max_ch_nr_y;dy++){
-        for(int dx=0;dx<max_ch_nr_x;dx++){
-            char *p=(char*)(FRAMEBUFFER_ADDR+dy*framebuffer.common.framebuffer_pitch
-                            +dx*framebuffer.common.framebuffer_bpp/8);
-            *p=*(p-framebuffer.common.framebuffer_pitch);
-        }
-
+    unsigned int prev_fbx=fb_cursor_x,prev_fby=fb_cursor_y;
+    fb_cursor_x=0;
+    fb_cursor_y=0;
+    char* p=text_buffer[txtbfh];
+    text_buffer[txtbft]='\0';
+    while (*p&&p!=text_buffer+txtbft&&*p!='\n') {
+        p--;
+        if(p==text_buffer)
+            p=text_buffer+max_chs-1;
     }
+    p=text_buffer+(p-text_buffer+1)%max_chs;
+    print(p);
+    // for(int dy=1;dy<max_ch_nr_y;dy++){
+    //     for(int dx=0;dx<max_ch_nr_x;dx++){
+    //         char *p=(char*)(FRAMEBUFFER_ADDR+dy*framebuffer.common.framebuffer_pitch
+    //                         +dx*framebuffer.common.framebuffer_bpp/8);
+    //         *p=*(p-framebuffer.common.framebuffer_pitch);
+    //     }
+
+    // }
 }
 void print(char* s){
     // if(!verify_area(s, 1, PROT_READ)){
@@ -194,16 +213,25 @@ void print(char* s){
     for(;*s;s++){
         text_buffer[txtbft++]=*s;
         if(txtbft==max_chs)txtbft=0;
-        if(fb_cursor_x>max_ch_nr_x||*s=='\n')
+        if(*s=='\n'){
+            //剩下用空格填满
+            for(;fb_cursor_x<max_ch_nr_x;fb_cursor_x++)
+                draw_letter(fb_cursor_x*font_width*font_size,fb_cursor_y*font_height*font_size,font_size,' ');
+            
+            fb_cursor_y+=1;
+            fb_cursor_x=0;
+            continue;
+        }
+        if(fb_cursor_x>max_ch_nr_x)
         {
             fb_cursor_y+=1;
             fb_cursor_x=0;
         }
         if(*s=='\n')continue;
         if(fb_cursor_y>=max_ch_nr_y-1){
-            // scr_up();
-            // fb_cursor_y=max_ch_nr_y-1;
-            fb_cursor_y=0;
+            fb_cursor_y=max_ch_nr_y-1;
+            scr_up();
+            // fb_cursor_y=0;
         }
         draw_letter(fb_cursor_x*font_width*font_size,fb_cursor_y*font_height*font_size,font_size,*s);
         fb_cursor_x+=1;

@@ -66,6 +66,16 @@ typedef unsigned int page_item;
 #define PAGE_2M_ALIGN(addr) (((unsigned long) (addr) + PAGE_2M_SIZE - 1) &PAGE_2M_MASK)
 ///向上对齐。
 #define PAGE_4K_ALIGN(addr) (((unsigned long) (addr) +PAGE_4K_SIZE - 1) &PAGE_4K_MASK)
+
+#define PF_LEVEL_VIOLATION 1
+#define PF_WRITING  2
+#define PF_USER_MODE 4
+#define PF_RSVD 8
+#define PF_INS_FETCH 16
+#define PF_PROTECT_KEY 32
+#define PF_SHADOW_STK_ACCESS 64
+#define PF_HLAT 128
+#define PF_SGX (0x8000)
 typedef unsigned long long page_item;
 #endif
 //内存页的分配-不是指页表

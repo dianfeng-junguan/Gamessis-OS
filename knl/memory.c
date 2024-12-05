@@ -228,19 +228,10 @@ mmap_struct* get_mmap(off_t addr){
 malloc_hdr* get_pmhdr(off_t pm){
     malloc_hdr* mp=pmhdrs;
     for (; mp&&mp->base!=pm; mp=mp->next){
-        comprintf("phdr:%l,next=%l\n",mp,mp->next);
+        // comprintf("phdr:%l,next=%l\n",mp,mp->next);
     }
     return mp;
 }
-#define PF_LEVEL_VIOLATION 1
-#define PF_WRITING  2
-#define PF_USER_MODE 4
-#define PF_RSVD 8
-#define PF_INS_FETCH 16
-#define PF_PROTECT_KEY 32
-#define PF_SHADOW_STK_ACCESS 64
-#define PF_HLAT 128
-#define PF_SGX (0x8000)
 void page_err(){
     cli();
     printf("page err\n");
@@ -411,57 +402,6 @@ void init_memory()
         }
     }
     pmalloc_mhdr=pmhdrs;
-
-
-    /* //kmalloc连续的内存
-    page_map=kmallocat(0,pgc);//(unsigned int*)PAGE_4K_ALIGN(0xc00000);
-    int* p=page_map;
-    addr_t curp=0;
-    //不能使用的内存提前占用掉
-    for(int i=0;i<mmap_t_i;i++){
-        if(mmap_struct[i].type==MULTIBOOT_MEMORY_AVAILABLE)
-            continue;
-        int b=(mmap_struct[i].base-usr_mem_pa)/PAGE_4K_SIZE;
-        int l=mmap_struct[i].len/PAGE_4K_SIZE;
-        for(int j=0;j<l;j++){
-            p[b+j/32]|=1u<<(j%32);
-        }
-    } 
-    //低1gb提前占用掉 knl
-    for(int j=0;j<0x2000;j++){
-        page_map[j]=-1;
-    }*/
-   //占用1GB
-    // if(pmalloc(0x40000000)!=0){
-    //     comprintf("error: failed to req pm for knl at 0\n");
-    // }
-
-    /*//低16M空间直接被内核占用
-    for(int i=0;i<128;i++){
-        page_map[i]=0xffffffff;
-    }*/
-    //然后把1gb的pdpt改成许多个2MB页（4KB的话太多了），然后把映射区设置成4KB页，这样之后可以使用映射区
-    //这里不能用smmap
-    /*page_item *pd=kmalloc(0,PAGE_4K_SIZE);//之后pdpt的第一项就会指向这里。
-    memset(pd,0,PAGE_4K_SIZE);
-    addr_t pdpm=(addr_t)pd-KNL_BASE;
-    //上面用了一个不得已的措施：利用高地址前1G实际对应物理内存低1G，所以直接减掉高地址基地址获得对应物理地址。
-    //理想情况下，这个东西以后不会动
-    for(int i=0;i<512;i++){
-        set_2mb_pde(pd+i,i*PAGE_2M_SIZE,PAGE_PRESENT|PAGE_RWX);
-    }
-    //设置索引区
-    int mapai=(MAPPING_AREA-KNL_BASE)/PAGE_2M_SIZE;//映射区开始处对应索引
-    for(int i=0;i<MAPPING_AREA_SIZE/PAGE_2M_SIZE;i++){
-        page_item *pt=kmalloc(0,PAGE_4K_SIZE);
-        addr_t ptpm=(addr_t)pt-KNL_BASE;
-        for(int j=0;j<512;j++){
-            set_page_item(pt+j,MAPPING_AREA-KNL_BASE+j*PAGE_4K_SIZE,PAGE_PRESENT|PAGE_RWX);
-        }
-        pd[i+mapai]=ptpm|PAGE_PRESENT|PAGE_RWX;
-    }
-    page_item *pdpt=(addr_t)pml4[256]&PAGE_4K_MASK+KNL_BASE;
-    pdpt[0]=pdpm|PAGE_PRESENT|PAGE_RWX;*/
 
 }
 /*

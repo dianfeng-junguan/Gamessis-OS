@@ -149,6 +149,7 @@ int init_kb()
 {
 	set_gate(0x21,(addr_t)key_proc,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
 }
+int extend_key=0;
 int key_proc()
 {
     __asm__ volatile("cli");
@@ -157,10 +158,11 @@ int key_proc()
     key_code tmpc;
     scan1=inb(0x60);
 //    ch= to_ascii(scan1);
-//    if(scan1 == 0xe0 || scan1 == 0xe1)
-//    {
-//        scan2=inb(0x60);
-//    }
+   if(scan1 == 0xe0 || scan1 == 0xe1)
+   {
+        extend_key=1;
+    //    scan2=inb(0x60);
+   }
 //    tmpc.scan_code=scan1;
 //    tmpc.scan_code2=scan2;
 //    tmpc.ascii= ch;
@@ -191,6 +193,18 @@ int key_proc()
             break;
         case 0x3a:
             capslock();
+            break;
+        case 0xc8:
+            if (extend_key) {
+                scr_up();
+                extend_key=0;
+            }
+            break;
+        case 0xd0:
+            if (extend_key) {
+                scr_up();
+                extend_key=0;
+            }
             break;
         default:
             break;
