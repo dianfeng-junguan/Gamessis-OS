@@ -19,6 +19,7 @@
 #include "exe.h"
 #include "ramdisk.h"
 #include "ramfs.h"
+#include "tty.h"
 
 int manage_proc_lock=1;
 void main(unsigned int magic,void* addr)
@@ -138,16 +139,17 @@ void main(unsigned int magic,void* addr)
 	}
 	tag = (struct multiboot_tag *)((multiboot_uint8_t *)tag + ((tag->size + 7) & ~7));
     init_memory();
+    init_int();
+	init_console();
     init_framebuffer();
 	//printf("Total mbi size 0x%x\n", (unsigned)tag - addr);
-	char disk_count=*(char*)0x475;
+	// char disk_count=*(char*)0x475;
 	//printf("disk count:%d\n",disk_count);
     init_font();
     //初始化区域
     //fill_rect(0,0,100,100,255);
-    print("gamessis os loaded.\nkernel:>");
-    init_int();
-    print("int loaded.\n");
+    // print("gamessis os loaded.\nkernel:>");
+    // print("int loaded.\n");
 //    set_tss(0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000);
 	init_paging();
  	init_gdt();
@@ -167,17 +169,19 @@ void main(unsigned int magic,void* addr)
 	
     //自带驱动
     //init_tty();
-    init_kb();
+    // init_kb();
 //    init_disk();
     sti();
     manage_proc_lock=0;
 
 
     move_to_user_mode();
-    if(do_syscall(SYSCALL_FORK,0,0,0,0,0,0)==0){
+	int shell=0,stat_loc=0;
+    if((shell=do_syscall(SYSCALL_FORK,0,0,0,0,0,0))==0){
         char *argv[]={"/test.elf","gamessis os"};
         do_syscall(SYSCALL_EXECVE, (long) "/test.elf", 2, (long) &argv[0], 0, 0, 0);
     }
+	do_syscall(SYSCALL_WAIT, 2, &stat_loc, 0, 0, 0, 0);
 //    if(sys_fork()==0){
 //    }
 

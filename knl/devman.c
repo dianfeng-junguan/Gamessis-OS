@@ -54,13 +54,21 @@ void make_devf(struct dir_entry* d,struct index_node* i,char* name,struct dir_en
 }
 struct dir_entry* devfs_lookup(struct index_node* parent_inode,struct dir_entry* dest_dentry){
     //TODO 待完成
+    //dev下的设备文件dentry都是存在于内存中的，不应该调用lookup到存储介质中寻找
+    comprintf("devfs:warning: trying to lookup under /dev\n");
+    return NULL;
+}
+
+long devfs_create(struct index_node * inode,struct dir_entry * dentry,int mode){
+    return 0;
 }
 struct dir_entry_operations devfs_dops={
     //TODO 待完成
     
 };
 struct index_node_operations devfs_iops={
-    .lookup=devfs_lookup
+    .lookup=devfs_lookup,
+    .create=devfs_create
     //TODO 待完成
 };
 struct super_block_operations devfs_sops={
@@ -126,13 +134,12 @@ int init_devfs()
     register_filesystem(&fs_devfs);
     struct super_block *sb_devfs=mount_fs("devfs",0,0);
     ddev=path_walk("/dev",0);
-    mount_fs_on(ddev,&sb_devfs);
+    mount_fs_on(ddev,sb_devfs);
     
     struct dir_entry* rt_devfs=sb_devfs->root;
 
     
     //创建几个设备文件
-    //TODO这里设备文件的创建之后要使用mknod类似的方法
     //console-framebuffer.c
     // dconsole= (struct dir_entry *) kmalloc(0,PAGE_4K_SIZE);
     // struct index_node* iconsole=dconsole+1;
@@ -154,7 +161,7 @@ int init_devfs()
     // dtty->name=itty+1;
     // itty->dev|=0x10000;
     // make_devf(dtty,itty,"tty",rt_devfs,&devfs_fops);
-    create_node("/dev/tty", S_IFCHR, 0x10001);
+    create_node("/dev/tty", S_IFCHR, dev_tty);
     //初始化一下
     // tty_fops.open(itty,&ftty);
 
@@ -176,7 +183,7 @@ long open_dev(struct index_node * inode,struct file * filp){
     if(p>=name)
         name=p+1;
     if(memcmp(name,"tty",3)==0){
-        return init_tty(inode,filp);
+        return open_tty(inode,filp);
     }else if(strcmp(name,"console")==0){
         return open_framebuffer(inode,filp);
     }

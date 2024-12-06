@@ -234,29 +234,29 @@ malloc_hdr* get_pmhdr(off_t pm){
 }
 void page_err(){
     cli();
-    printf("page err\n");
+    comprintf("page err\n");
     off_t err_code=0,l_addr=0;
     off_t addr=0;
     __asm__ volatile("push %%rax\nmov 8(%%rbp),%%rax\nmov %%rax,%0\n":"=m"(err_code));
     __asm__ volatile("mov %%cr2,%%rax\nmov %%rax,%0\n":"=m"(l_addr));//试图访问的地址
     __asm__ volatile("mov 16(%%rbp),%%rax\nmov %%rax,%0\npop %%rax\n":"=m"(addr));
-    printf("occurred at %x(paddr), trying to access %x(laddr)\n",addr,l_addr);
-    printf("error process pid:0x%x\n",current->pid);
-    printf("cr2=%x\nerr code=%x\n",l_addr,err_code);
+    comprintf("occurred at %x(paddr), trying to access %x(laddr)\n",addr,l_addr);
+    comprintf("error process pid:0x%x\n",current->pid);
+    comprintf("cr2=%x\nerr code=%x\n",l_addr,err_code);
     if(err_code&PF_LEVEL_VIOLATION)
-        printf("non-existent page item\n");
+        comprintf("non-existent page item\n");
     if(err_code&PF_WRITING)
-        printf("when writing\n");
+        comprintf("when writing\n");
     else 
-        printf("when reading\n");
+        comprintf("when reading\n");
     if(!(err_code&PF_USER_MODE))
-        printf("supervisor mode\n");
+        comprintf("supervisor mode\n");
     else 
-        printf("user mode\n");
+        comprintf("user mode\n");
     if(err_code&PF_INS_FETCH)
-        printf("instruction fetch\n");
+        comprintf("instruction fetch\n");
     if(err_code&PF_PROTECT_KEY)
-        printf("data access not allowed by protection key\n");
+        comprintf("data access not allowed by protection key\n");
     off_t *stk=0;
     __asm__ volatile("mov %%rbp,%0":"=m"(stk));
     stk-=2;
@@ -535,7 +535,8 @@ void * pmalloc(size_t size){
         
         void *retv=mh->base;
         //向前合并属性相同的分配头
-        mhdr_merge(mh->prev, mh);
+        malloc_hdr* fin= mhdr_merge(mh->prev, mh);
+        fin->link++;
         return retv;
         
     }
@@ -554,6 +555,8 @@ int pmfree(void *addr,size_t len){
             prev=mh;
             continue;
         }
+        mh->link--;
+        if(mh->link>0)return 1;
         if(prev->base<addr){
             //分割
             prev=mhdr_split(prev, addr, pmalloc_mhdr, MAX_PMHDRS);

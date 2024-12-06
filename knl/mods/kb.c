@@ -3,27 +3,8 @@
 //
 
 #include "kb.h"
-#include "proc.h"
-#include "signal.h"
-#include "typename.h"
-#include "int.h"
-// #include "devdrv.h"
-#include "devman.h"
-#include "framebuffer.h"
-#include "log.h"
-#include "syscall.h"
-#include "tty.h"
 
-char key_buf[MAX_KEYBUF];
-kb_buf key_bufq={
-        .data=key_buf,
-        .head=0,
-        .tail=0,
-        .size=MAX_KEYBUF
-};
-
-char key_stat[13];//位图
-static const key_code key_map[] ={
+key_code key_map[] ={
 /* 0x00 - none      */ {  0,        0,        0,         0   },
 /* 0x01 - ESC       */ {  0x1b,     0x1b,    0x01,      0x1B },
 /* 0x02 - '1'       */ { '1',      '!',      0x02,      0x31 },
@@ -119,127 +100,7 @@ static const key_code key_map[] ={
 /* 0x5C - Right Win */ {  0,        0,       0x5C,      0x5C },
 /* 0x5D - Apps      */ {  0,        0,       0x5D,      0x5D }
         };
-char k_shift=0,k_ctrl=0,k_capslock=0;
-
-void shift()
-{
-    k_shift=!k_shift;
-}
-void ctrl()
-{
-    k_ctrl=!k_ctrl;
-}
-void capslock()
-{
-    k_capslock=k_capslock==0?1:0;
-}
-char to_ascii(char scan_code)
-{
-    for(int i=0;i<0x5e;i++)//sizeof(key_map)/sizeof(key_code)
-        if(key_map[i].scan_code==scan_code)
-        {
-            if(k_capslock&&key_map[i].ascii>='a'&&key_map[i].ascii<='z')return key_map[i].ascii_shift;
-            else if(k_shift)return key_map[i].ascii_shift;
-            else return key_map[i].ascii;
-        }
-
-    return '\0';
-}
-int init_kb()
-{
-	set_gate(0x21,(addr_t)key_proc,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
-}
-int extend_key=0;
-int key_proc()
-{
-    __asm__ volatile("cli");
-    //获取完整的扫描码
-    u8 scan1=0,scan2=0,ch=0;
-    key_code tmpc;
-    scan1=inb(0x60);
-//    ch= to_ascii(scan1);
-   if(scan1 == 0xe0 || scan1 == 0xe1)
-   {
-        extend_key=1;
-    //    scan2=inb(0x60);
-   }
-//    tmpc.scan_code=scan1;
-//    tmpc.scan_code2=scan2;
-//    tmpc.ascii= ch;
-
-
-//    ENQUEUE(key_bufq,tmpc)
-    if((key_bufq.tail+1)%key_bufq.size!=key_bufq.head)
-    {
-        key_bufq.data[key_bufq.tail]=scan1;
-        key_bufq.tail=(key_bufq.tail+1)%key_bufq.size;
-    }
-
-    if(scan1==0x48)
-        scr_up();
-    if(scan1==0x50)
-        scr_down();
-    switch (scan1)
-    {
-        case 0x36:
-        case 0x2a:
-        case 0xaa:
-        case 0xb6:
-            shift();
-            break;
-        case 0x1d:
-        case 0x9d:
-            ctrl();
-            break;
-        case 0x3a:
-            capslock();
-            break;
-        case 0xc8:
-            if (extend_key) {
-                scr_up();
-                extend_key=0;
-            }
-            break;
-        case 0xd0:
-            if (extend_key) {
-                scr_up();
-                extend_key=0;
-            }
-            break;
-        default:
-            break;
-    }
-    //发送到std
-    if(!(scan1&FLAG_BREAK)){
-        char ch= to_ascii(scan1);
-        unsigned long args[]={(unsigned long) &ch, 1};
-        //写入stdin
-        sys_ioctl(0,TTY_WSTDIN,(unsigned long)args);
-        if((ch=='c'||ch=='C')&&k_ctrl){
-            //ctrl+c
-            send_signal(current->pid, SIGINT);
-        }
-    }
-//    if(scan1<=0x80&&ch!=0)
-//    {
-//        print(&ch);
-//        /*extern io_buf stdin;
-//        extern int stdinc;
-//        char tmpc[]={ch,'\0'};
-//        //fwrite(&ch,1,&stdin);
-//        insert_to_stdin(ch);
-//        if(ch=='\b')
-//            del_ch();
-//        else
-//            printf("%s",tmpc);
-//        //logf("%x\n",stdin.w_ptr);
-//        //print_stdin();
-//        //printchar(ch);
-//        //flush_screen(0);*/
-//    }
-    eoi();
-    __asm__ volatile("leave\r\n iretq");
-}
+/* 
 
 char sys_analyse_key()
 {
@@ -260,4 +121,4 @@ char sys_analyse_key()
     putchar(c);
     printf("\n");
     return c;
-}
+} */

@@ -15,14 +15,11 @@ typedef struct
     char key_code;
 }key_code;
 
-char to_ascii(char code);
-void shift();
-void ctrl();
-void capslock();
+// char to_ascii(char code);
 
 //系统中断函数：获取键盘缓冲区的一个有效字符
 char sys_analyse_key();
 
 int init_kb();
-int key_proc();
+extern key_code key_map[];
 #endif //GMS_KNL_KB_H

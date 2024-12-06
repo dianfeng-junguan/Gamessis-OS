@@ -236,7 +236,7 @@ int syscall(long a, long b, long c, long d, long e, long f)
         // case SYSCALL_MKFIFO:return sys_mkfifo(a);
         case SYSCALL_BRK:return sys_brk(a);
         case SYSCALL_FREE:return sys_free(a);
-        case SYSCALL_KB_READC:return sys_analyse_key();
+        // case SYSCALL_KB_READC:return sys_analyse_key();
         // case SYSCALL_FIND_DEV:return sys_find_dev(a);
         case SYSCALL_FORK:return sys_fork();
         case SYSCALL_EXECVE:return sys_execve(a, b, c);
@@ -281,7 +281,7 @@ int print_ksym(off_t addr){
         char buf[100];
         memcpy(buf,ks+1,ks->namelen);
         buf[ks->namelen]=0;
-        comprintf("%l %s:%l\n",ks->addr,buf,addr-ks->addr);
+        comprintf("%l %s(%l)+%l\n",addr,buf,ks->addr,addr-ks->addr);
         return 1;
     }
 }

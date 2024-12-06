@@ -295,16 +295,19 @@ unsigned long sys_wait(pid_t pid, int *stat_loc, int options){
     }else{
         if(pid<0)pid=-pid;
         //检查是不是本进程的子进程
-        for(int i=0;i<MAX_TASKS;i++){
-            if(task[i].pid==pid){
-                waitee=&task[i];
+        for(struct List* l=current->child_procs;l;l=l->next) {
+            struct process* p=(void*)l-((void*)&current->node-(void*)current);
+            if(p->pid==pid){
+                waitee=p;
                 break;
             }
         }
         if(waitee==NULL||waitee->parent_pid!=current->pid)
             return -ECHILD;//没有这个进程或者不是子进程
         //TODO 等待结束以及等待信号
-        while (waitee->stat != TASK_ZOMBIE);
+        //进入休眠，直到接到子进程结束的信号
+        proc_sleep();
+        // while (waitee->stat != TASK_ZOMBIE);
         *stat_loc=waitee->exit_code;
     }
     done:
@@ -460,6 +463,8 @@ int sys_munmap(void *addr, size_t len){
     return do_munmap(addr2,len2);
 }
 void *sys_mmap(void *addr, size_t len, int prot, int flags,int fildes, off_t off){
+    cli();
+    comprintf("sys mmap:base=%l,len=%l\n",addr,len);
     int attr=PAGE_PRESENT|PAGE_FOR_ALL;
     if((prot|PROT_WRITE)||(prot|PROT_EXEC))
         attr|=PAGE_RWX;

@@ -33,6 +33,7 @@ void init_proc(){
     //task=(struct process*)get_global_var(TASK_PCBS_ADDR);//[MAX_TASKS];;
     task=(struct process*)kmalloc(0,13*PAGE_4K_SIZE);
     for(int i=0;i<MAX_PROC_COUNT;i++){
+        memset(task+i, 0, sizeof(struct process));
         task[i].pid=-1;
         task[i].stat=TASK_EMPTY;
         task[i].parent_pid=-1;
@@ -115,9 +116,10 @@ int init_proc0()
     //stdin stdout stderr
     //这里绕开了sys open，这样是为了尽量快
     extern struct file ftty;
-    pz->openf[0]=(struct file*)&ftty;
-    pz->openf[1]=(struct file*)&ftty;
-    pz->openf[2]=(struct file*)&ftty;
+    sys_open("/dev/tty", O_RDWR);
+    // pz->openf[0]=//(struct file*)&ftty;
+    pz->openf[1]=pz->openf[0];//(struct file*)&ftty;
+    pz->openf[2]=pz->openf[0];//(struct file*)&ftty;
 
     pz->mem_struct.stack_top=STACK_TOP;
     pz->mem_struct.stack_bottom=STACK_TOP;
@@ -209,8 +211,8 @@ void proc_zero()
 //    }
     while (1)
     {
-        char c= sys_analyse_key();
-        putchar(c);
+        // char c= sys_analyse_key();
+        // putchar(c);
     }
 }
 void save_rsp(){
@@ -240,8 +242,10 @@ void manage_proc(){
             }
         }
         if(times==10)return;//超过十次尝试都没有，暂时不切换
+        comprintf("switch:%l to %l\n",current->pid,task[i].pid);
         //switch
-        task[cur_proc].stat=TASK_READY;
+        if(task[cur_proc].stat==TASK_RUNNING)
+            task[cur_proc].stat=TASK_READY;
         task[i].stat=TASK_RUNNING;
         switch_to(&task[cur_proc], &task[i]);
     }
@@ -543,7 +547,6 @@ void del_proc(int pnr)
     //三个std判断一下是否是会话leader，是的话再关闭
     if(task[pnr].sid==task[pnr].pid){
         //tty和console断联
-        sys_ioctl(0,TTY_DISCONNECT,0);
         sys_close(0);
         sys_close(1);
         sys_close(2);
@@ -891,7 +894,8 @@ int sys_fork(void){
     int pids=task[pid].pid;
     if(pid==-1)return -1;
     //首先完全复制
-    task[pid]=*current;
+    memcpy(task+pid, current, sizeof(struct process));
+    // task[pid]=*current;
     task[pid].pid=pids;
     task[pid].stat=TASK_ZOMBIE;
     
@@ -1184,7 +1188,7 @@ pid_t sys_getsid(pid_t pid){
 }
 int sys_tcsetpgrp(int fildes,pid_t pgid_id){
     //当前controlling terminal断联
-    sys_ioctl(fildes,TTY_DISCONNECT,0);
+    // sys_ioctl(fildes,TTY_DISCONNECT,0);
     int sid= sys_getsid(0);//获取session id
     struct process* new_fgl=NULL;
     for (int i = 0; i <MAX_TASKS; ++i) {
@@ -1224,4 +1228,18 @@ struct process* get_proc(pid_t pid){
 //然后在_syscall函数里面调用它的部分把寄存器提前入栈保存好。
 void store_rip(unsigned long rip){
     __asm__ volatile("mov %0,%1":"=D"(rip):"m"(current->regs.rip));
+}
+
+void _proc_sleep(){
+    while (current->stat==TASK_SUSPENDED) {
+        manage_proc();
+    }
+    comprintf("proc sleep end\n");
+    
+}
+void proc_sleep(){
+    // 保存当前地址到上下文，这样切换到此进程的时候可以回到这里
+    current->stat=TASK_SUSPENDED;
+    current->regs.rip=_proc_sleep;
+    _proc_sleep();
 }

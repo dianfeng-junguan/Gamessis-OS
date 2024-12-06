@@ -31,6 +31,8 @@ void fill_rect(int x,int y,int w,int h,unsigned int color);
 void draw_text(int x, int y, int size, char *str);
 void draw_letter(int x, int y, int size, char c);
 void print(char* s);
+void printl(char *s,int len);
+void framebuffer_set_curpos(int x,int y);
 
 long open_framebuffer(struct index_node * inode,struct file * filp);
 long close_framebuffer(struct index_node * inode,struct file * filp);
@@ -38,6 +40,8 @@ long read_framebuffer(struct file * filp,char * buf,unsigned long count,long * p
 long write_framebuffer(struct file * filp,char * buf,unsigned long count,long * position);
 long ioctl_framebuffer(struct index_node * inode,struct file * filp,unsigned long cmd,unsigned long arg);
 
+
+void framebuffer_putchar(char c);
 void scr_up();
 void scr_down();
 

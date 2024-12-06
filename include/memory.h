@@ -28,6 +28,7 @@ typedef struct _malloc_header
     char flag;
     struct _malloc_header* next;
     struct _malloc_header* prev;
+    int link;//引用次数
 }malloc_hdr;
 #define MAX_PMHDRS 85
 #define MAX_KMHDRS 170

@@ -6,6 +6,7 @@
 #include "syscall.h"
 #include "sys/mman.h"
 #include "log.h"
+#include "tty.h"
 
 struct multiboot_tag_framebuffer framebuffer;
 
@@ -28,6 +29,7 @@ static u32 bytes_per_glyph, glyph_nr;
 static char *text_buffer;
 static int txtbfh=0,txtbft=0,max_chs=0;
 int font_size=1;
+int dev_tty;
 void init_framebuffer()
 {
     //映射页帧内存
@@ -47,6 +49,11 @@ void init_framebuffer()
         p+=PAGE_SIZE;
     }
     
+    tty_t tty={
+        .chars_height=h,
+        .chars_width=w
+    };
+    dev_tty=register_tty(&tty);
 }
 void init_font(){
     boot_font = (struct psf2_header*) (_binary_res_font_psf_start);
@@ -237,6 +244,57 @@ void print(char* s){
         fb_cursor_x+=1;
     }
 }
+void framebuffer_putchar(char c){
+    /* if(c=='\n'){
+       //剩下用空格填满
+       for(;fb_cursor_x<max_ch_nr_x;fb_cursor_x++)
+           draw_letter(fb_cursor_x*font_width*font_size,fb_cursor_y*font_height*font_size,font_size,' ');
+       
+       fb_cursor_y+=1;
+       fb_cursor_x=0;
+       return;
+   } */
+   if(fb_cursor_x>max_ch_nr_x)
+   {
+       fb_cursor_y+=1;
+       fb_cursor_x=0;
+   }
+//    if(c=='\n')return;
+   if(fb_cursor_y>=max_ch_nr_y-1){
+       fb_cursor_y=max_ch_nr_y-1;
+    //    scr_up();
+   }
+   draw_letter(fb_cursor_x*font_width*font_size,fb_cursor_y*font_height*font_size,font_size,c);
+   fb_cursor_x+=1;
+}
+void printl(char *s,int len){
+    for(int i=0;i<len;i++,*s++){
+        text_buffer[txtbft++]=*s;
+        if(txtbft==max_chs)txtbft=0;
+        if(*s=='\n'){
+            //剩下用空格填满
+            for(;fb_cursor_x<max_ch_nr_x;fb_cursor_x++)
+                draw_letter(fb_cursor_x*font_width*font_size,fb_cursor_y*font_height*font_size,font_size,' ');
+            
+            fb_cursor_y+=1;
+            fb_cursor_x=0;
+            continue;
+        }
+        if(fb_cursor_x>max_ch_nr_x)
+        {
+            fb_cursor_y+=1;
+            fb_cursor_x=0;
+        }
+        if(*s=='\n')continue;
+        if(fb_cursor_y>=max_ch_nr_y-1){
+            fb_cursor_y=max_ch_nr_y-1;
+            scr_up();
+            // fb_cursor_y=0;
+        }
+        draw_letter(fb_cursor_x*font_width*font_size,fb_cursor_y*font_height*font_size,font_size,*s);
+        fb_cursor_x+=1;
+    }
+}
 struct file_operations framebuffer_fops={
         .open=open_framebuffer,.close=close_framebuffer,.read=read_framebuffer,.write=write_framebuffer,
         .ioctl=ioctl_framebuffer
@@ -267,4 +325,9 @@ long write_framebuffer(struct file * filp,char * buf,unsigned long count,long * 
 }
 long ioctl_framebuffer(struct index_node * inode,struct file * filp,unsigned long cmd,unsigned long arg){
 
+}
+
+void framebuffer_set_curpos(int x,int y){
+    fb_cursor_x=x;
+    fb_cursor_y=y;
 }

@@ -10,6 +10,7 @@
 #include "str.h"
 #include "sys/types.h"
 #include <ramdisk.h>
+#include "sys/stat.h"
 mount_point mp_mount_points[MAX_MOUNTPOINTS];
 struct dir_entry* droot;
 int ROOT_DEV;
@@ -153,7 +154,8 @@ struct dir_entry * path_walk(char * name,unsigned long flags)
     {
         return parent;
     }
-
+    if(path->mount_point)
+        path=path->mount_point->sb->root;
     return path;
 }
 
@@ -324,6 +326,12 @@ struct dir_entry* create_node(char* pathname,mode_t mode,unsigned short dev){
     new_nodei->blocks=0;
     new_nodei->file_size=0;
     new_nodei->mode=mode;
+    if(mode&S_IFBLK||mode&S_IFCHR)
+        new_nodei->attribute=FS_ATTR_DEVICE;
+    else if (mode&S_IFDIR)
+        new_nodei->attribute=FS_ATTR_DIR;
+    else
+        new_nodei->attribute=FS_ATTR_FILE;
 
     parent->dir_inode->inode_ops->create(new_nodei,new_noded,0);
     return new_noded;

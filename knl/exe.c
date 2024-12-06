@@ -150,6 +150,13 @@ int sys_execve(char *path, int argc, char **argv) {
     //重新设置进程数据
     //清空原来的页表
     release_mmap(current);
+    //释放映射数据结构
+    for(mmap_struct* mp=current->mmaps;mp;mp=list_next(mp, &mp->node)){
+        if(mp->pmhdr)
+            pmfree(mp->pmhdr->base, mp->pmhdr->len);
+        kmfree(mp);
+    }
+    current->mmaps=NULL;
     // current->regs.rsp=STACK_TOP;//清空栈
     extern TSS* tss;
 
@@ -205,7 +212,6 @@ int sys_execve(char *path, int argc, char **argv) {
         rs->rsi=argc;
         rs->rdi=argp_aryp;
     }
-    
     //以下部分是临时测试代码
 //    int (*pmain)(int argc,char **argv)=(int (*)(int, char **)) entry;
 //    pmain(argc, (char **) rs->rdi);
