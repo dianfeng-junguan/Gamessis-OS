@@ -71,7 +71,16 @@ long read_tty(struct file * filp,char * buf,unsigned long count,long * position)
 {
     sti();//读取tty的时候可能会需要等待，此时允许其他中断。
     // comprintf("read tty\n");
-    tty_openbufs* opbf=get_tty(filp->dentry->dir_inode->dev)->stds;
+    if(filp<KNL_BASE){
+        comprintf("read tty.err: filp invalid\n");
+        return -1;
+    }
+    tty_t* tty=get_tty(filp->dentry->dir_inode->dev);
+    if(!tty){
+        comprintf("read tty.err: tty NULL\n");
+        return -1;
+    }
+    tty_openbufs* opbf=tty->stds;
     stdbuf_t * b=&opbf->stdin_buf;
     int i=0;
     while (i<count){
@@ -178,20 +187,19 @@ char to_ascii(char scan_code,int cap)
 
     return '\0';
 }
-//计算text buffer里面head到tail之间的字符占用了多少行
-int txtbf_distancel(tty_t* tty){
-    int c=0;
-    for (int i=tty->text_buf_head; i!=tty->text_buf_tail; i=(i+1)%tty->text_buf_size,c++);
-    c=(c-1+tty->chars_width)/tty->chars_width;
-    return c;
-}
 //计算text buffer里面head到tail之间的距离
 int txtbf_distance(tty_t* tty){
     int c=0;
     for (int i=tty->text_buf_head; i!=tty->text_buf_tail; i=(i+1)%tty->text_buf_size,c++);
     return c;
 }
-//将text buffer的指针前移，到末尾自动回到开头
+//计算text buffer里面head到tail之间的字符占用了多少行
+int txtbf_distancel(tty_t* tty){
+    int c=0;
+    c=(txtbf_distance(tty)-1+tty->chars_width)/tty->chars_width;
+    return c;
+}
+//将text buffer的指针后移，到末尾自动回到开头
 void txtbf_forward(int *ptr,int offset,tty_t* tty){
     *ptr=(*ptr+offset)%(tty->text_buf_size);
 }
@@ -199,18 +207,20 @@ void txtbf_forward(int *ptr,int offset,tty_t* tty){
 //填充一行剩下的字符
 void fill_rest_of_line(tty_t* tty,char c){
     int line=tty->chars_width;
-    int lc=line-tty->text_buf_tail%line;
-    for(int i=0;i<lc;i++){
+    int lc=txtbf_distance(tty);
+    for(;lc%line;lc++){
         tty->text_buf[tty->text_buf_tail]=c;
         txtbf_forward(&tty->text_buf_tail, 1, tty);
     }
 }
 //向当前进程的tty的屏幕显示文字缓冲写入字符。
 void write_textbuf(char ch,tty_t* tty){
-    tty->text_buf[tty->text_buf_tail]=ch;
-    txtbf_forward(&tty->text_buf_tail, 1, tty);
     if(ch=='\n')
         fill_rest_of_line(tty, ' ');
+    else{
+        tty->text_buf[tty->text_buf_tail]=ch;
+        txtbf_forward(&tty->text_buf_tail, 1, tty);
+    }
     if(txtbf_distancel(tty)==tty->chars_height){
         //到达最后一行，应当上滚
         txtbf_forward(&tty->text_buf_head, tty->chars_width, tty);
@@ -296,7 +306,9 @@ void flush_textbuf(tty_t* tty){
         len=dis;
     int i=0;
     for (; i<len; i++) {
-        framebuffer_putchar(tty->text_buf[(tty->text_buf_head+i)%tty->text_buf_size]);
+        char c=tty->text_buf[(tty->text_buf_head+i)%tty->text_buf_size];
+        framebuffer_putchar(c);
+        // com_putchar(c, PORT_COM1);
     }
     //剩下没有字符部分用空格填充
     // for(;i<tot;i++){

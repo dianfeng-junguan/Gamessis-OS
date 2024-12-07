@@ -49,11 +49,6 @@ void init_framebuffer()
         p+=PAGE_SIZE;
     }
     
-    tty_t tty={
-        .chars_height=h,
-        .chars_width=w
-    };
-    dev_tty=register_tty(&tty);
 }
 void init_font(){
     boot_font = (struct psf2_header*) (_binary_res_font_psf_start);
@@ -74,6 +69,11 @@ void init_font(){
     text_buffer=kmalloc(0, max_chs);
     txtbfh=0;
     txtbft=0;
+    tty_t tty={
+        .chars_height=max_ch_nr_y,
+        .chars_width=max_ch_nr_x
+    };
+    dev_tty=register_tty(&tty);
 }
 void set_framebuffer(struct multiboot_tag_framebuffer tag)
 {
@@ -254,7 +254,7 @@ void framebuffer_putchar(char c){
        fb_cursor_x=0;
        return;
    } */
-   if(fb_cursor_x>max_ch_nr_x)
+   if(fb_cursor_x>=max_ch_nr_x)
    {
        fb_cursor_y+=1;
        fb_cursor_x=0;
