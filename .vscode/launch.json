@@ -24,7 +24,7 @@
                 "-ex",
                 "\"watch current->openf[3]\""
             ],
-            "stopAtEntry": true,
+            "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             // "cwd": "${command:extension.vscode-wsl-workspaceFolder}/knl",
             "environment": [],

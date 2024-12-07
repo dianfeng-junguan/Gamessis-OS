@@ -3,11 +3,11 @@
 //
 #include "syscall.h"
 #include <sys/unistd.h>
-#include <stdio.h>
+// #include <stdio.h>
 #include <string.h>
 
 int a=1,b=2,c=0;
-char *as="Gamessis OS shell";
+char *as="Gamessis OS shell\n";
 int __main(){}
 int main(int argc,char** argv){
     write(2,as,strlen(as));
@@ -16,17 +16,19 @@ int main(int argc,char** argv){
     {
         memset(cmd,0,128);
         int p=0;
-        while (cmd[p]!='\n')
+        write(2, "shell:>", 7);
+        while (1)
         {
             read(1,cmd+p,1);
+            if(cmd[p]=='\n')break;
             p++;
             if(p==128)p=0;
         }
-        cmd[p]=0;
-        write(2,cmd,strlen(cmd));
+        cmd[p]='\0';
+        write(2,cmd,p);
         if (strcmp(cmd,"version")==0)
         {
-            write(1,"Gamessis OS 1.0.\n",19);
+            write(2,"Gamessis OS 1.0.\n",19);
         }else if(strcmp(cmd,"exit")==0)break;
     }
     
