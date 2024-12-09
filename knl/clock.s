@@ -9,6 +9,7 @@ extern manage_proc_lock
 extern save_rsp
 clock:
     cli
+
     push rax
     push rbx
     push rcx
@@ -61,4 +62,5 @@ clock_ret:
     pop rcx
     pop rbx
     pop rax
+
     iretq

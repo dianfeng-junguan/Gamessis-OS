@@ -84,7 +84,7 @@ int   main(int argc, char** argv)
         int p = 0;
   4010e0:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
         printf("shell:>");
-  4010e7:	48 8d 05 25 2f 00 00 	lea    rax,[rip+0x2f25]        # 404013 <kb_readc+0x6d5>
+  4010e7:	48 8d 05 25 2f 00 00 	lea    rax,[rip+0x2f25]        # 404013 <kb_readc+0x693>
   4010ee:	48 89 c7             	mov    rdi,rax
   4010f1:	b8 00 00 00 00       	mov    eax,0x0
   4010f6:	e8 c5 23 00 00       	call   4034c0 <printf>
@@ -106,19 +106,19 @@ int   main(int argc, char** argv)
         // write(2, cmd, p);
         if (strcmp(cmd, "version") == 0) { puts("Gamessis OS 1.0.\n"); }
   40111e:	48 8d 85 70 ff ff ff 	lea    rax,[rbp-0x90]
-  401125:	48 8d 15 ef 2e 00 00 	lea    rdx,[rip+0x2eef]        # 40401b <kb_readc+0x6dd>
+  401125:	48 8d 15 ef 2e 00 00 	lea    rdx,[rip+0x2eef]        # 40401b <kb_readc+0x69b>
   40112c:	48 89 d6             	mov    rsi,rdx
   40112f:	48 89 c7             	mov    rdi,rax
   401132:	e8 19 02 00 00       	call   401350 <strcmp>
   401137:	85 c0                	test   eax,eax
   401139:	75 14                	jne    40114f <main+0x139>
-  40113b:	48 8d 05 e1 2e 00 00 	lea    rax,[rip+0x2ee1]        # 404023 <kb_readc+0x6e5>
+  40113b:	48 8d 05 e1 2e 00 00 	lea    rax,[rip+0x2ee1]        # 404023 <kb_readc+0x6a3>
   401142:	48 89 c7             	mov    rdi,rax
   401145:	e8 d6 00 00 00       	call   401220 <puts>
   40114a:	e9 78 ff ff ff       	jmp    4010c7 <main+0xb1>
         else if (strcmp(cmd, "exit") == 0) {
   40114f:	48 8d 85 70 ff ff ff 	lea    rax,[rbp-0x90]
-  401156:	48 8d 15 d8 2e 00 00 	lea    rdx,[rip+0x2ed8]        # 404035 <kb_readc+0x6f7>
+  401156:	48 8d 15 d8 2e 00 00 	lea    rdx,[rip+0x2ed8]        # 404035 <kb_readc+0x6b5>
   40115d:	48 89 d6             	mov    rsi,rdx
   401160:	48 89 c7             	mov    rdi,rax
   401163:	e8 e8 01 00 00       	call   401350 <strcmp>
@@ -128,18 +128,18 @@ int   main(int argc, char** argv)
         }
         else {
             printf("trying to execute...\n");
-  401170:	48 8d 05 c3 2e 00 00 	lea    rax,[rip+0x2ec3]        # 40403a <kb_readc+0x6fc>
+  401170:	48 8d 05 c3 2e 00 00 	lea    rax,[rip+0x2ec3]        # 40403a <kb_readc+0x6ba>
   401177:	48 89 c7             	mov    rdi,rax
   40117a:	e8 a1 00 00 00       	call   401220 <puts>
             int pid = 0;
   40117f:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0
             if ((pid = fork()) == 0) {
-  401186:	e8 5f 27 00 00       	call   4038ea <fork>
+  401186:	e8 95 27 00 00       	call   403920 <fork>
   40118b:	89 45 f8             	mov    DWORD PTR [rbp-0x8],eax
   40118e:	83 7d f8 00          	cmp    DWORD PTR [rbp-0x8],0x0
   401192:	75 4d                	jne    4011e1 <main+0x1cb>
                 printf("forked, ready to execve\n");
-  401194:	48 8d 05 b4 2e 00 00 	lea    rax,[rip+0x2eb4]        # 40404f <kb_readc+0x711>
+  401194:	48 8d 05 b4 2e 00 00 	lea    rax,[rip+0x2eb4]        # 40404f <kb_readc+0x6cf>
   40119b:	48 89 c7             	mov    rdi,rax
   40119e:	e8 7d 00 00 00       	call   401220 <puts>
                 if (execve(cmd, NULL, NULL) == -1) {
@@ -147,13 +147,13 @@ int   main(int argc, char** argv)
   4011aa:	ba 00 00 00 00       	mov    edx,0x0
   4011af:	be 00 00 00 00       	mov    esi,0x0
   4011b4:	48 89 c7             	mov    rdi,rax
-  4011b7:	e8 3c 27 00 00       	call   4038f8 <execve>
+  4011b7:	e8 74 27 00 00       	call   403930 <execve>
   4011bc:	83 f8 ff             	cmp    eax,0xffffffff
   4011bf:	75 20                	jne    4011e1 <main+0x1cb>
                     printf("cannot find file:%s\n", cmd);
   4011c1:	48 8d 85 70 ff ff ff 	lea    rax,[rbp-0x90]
   4011c8:	48 89 c6             	mov    rsi,rax
-  4011cb:	48 8d 05 95 2e 00 00 	lea    rax,[rip+0x2e95]        # 404067 <kb_readc+0x729>
+  4011cb:	48 8d 05 95 2e 00 00 	lea    rax,[rip+0x2e95]        # 404067 <kb_readc+0x6e7>
   4011d2:	48 89 c7             	mov    rdi,rax
   4011d5:	b8 00 00 00 00       	mov    eax,0x0
   4011da:	e8 e1 22 00 00       	call   4034c0 <printf>
@@ -171,7 +171,7 @@ int   main(int argc, char** argv)
   4011f5:	ba 00 00 00 00       	mov    edx,0x0
   4011fa:	48 89 ce             	mov    rsi,rcx
   4011fd:	89 c7                	mov    edi,eax
-  4011ff:	e8 02 27 00 00       	call   403906 <waitpid>
+  4011ff:	e8 3c 27 00 00       	call   403940 <waitpid>
     while (1) {
   401204:	e9 be fe ff ff       	jmp    4010c7 <main+0xb1>
             break;
@@ -234,7 +234,7 @@ int   main(int argc, char** argv)
   401296:	ba 01 00 00 00       	mov    edx,0x1
   40129b:	4c 89 e6             	mov    rsi,r12
   40129e:	bf 01 00 00 00       	mov    edi,0x1
-  4012a3:	e8 7e 25 00 00       	call   403826 <read>
+  4012a3:	e8 98 25 00 00       	call   403840 <read>
   4012a8:	41 80 3c 24 0a       	cmp    BYTE PTR [r12],0xa
   4012ad:	75 e1                	jne    401290 <gets+0x10>
   4012af:	4c 89 e0             	mov    rax,r12
@@ -1507,7 +1507,7 @@ int   main(int argc, char** argv)
   402472:	c3                   	ret    
   402473:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
   402478:	89 c8                	mov    eax,ecx
-  40247a:	48 8d 35 00 1c 00 00 	lea    rsi,[rip+0x1c00]        # 404081 <kb_readc+0x743>
+  40247a:	48 8d 35 00 1c 00 00 	lea    rsi,[rip+0x1c00]        # 404081 <kb_readc+0x701>
   402481:	41 89 c8             	mov    r8d,ecx
   402484:	48 89 ef             	mov    rdi,rbp
   402487:	83 e0 04             	and    eax,0x4
@@ -1516,7 +1516,7 @@ int   main(int argc, char** argv)
   402490:	19 d2                	sbb    edx,edx
   402492:	83 c2 04             	add    edx,0x4
   402495:	85 c0                	test   eax,eax
-  402497:	48 8d 05 de 1b 00 00 	lea    rax,[rip+0x1bde]        # 40407c <kb_readc+0x73e>
+  402497:	48 8d 05 de 1b 00 00 	lea    rax,[rip+0x1bde]        # 40407c <kb_readc+0x6fc>
   40249e:	48 0f 45 f0          	cmovne rsi,rax
   4024a2:	48 83 c4 58          	add    rsp,0x58
   4024a6:	5d                   	pop    rbp
@@ -1550,7 +1550,7 @@ int   main(int argc, char** argv)
   402501:	48 89 ef             	mov    rdi,rbp
   402504:	ba 03 00 00 00       	mov    edx,0x3
   402509:	5d                   	pop    rbp
-  40250a:	48 8d 35 74 1b 00 00 	lea    rsi,[rip+0x1b74]        # 404085 <kb_readc+0x747>
+  40250a:	48 8d 35 74 1b 00 00 	lea    rsi,[rip+0x1b74]        # 404085 <kb_readc+0x705>
   402511:	41 5c                	pop    r12
   402513:	e9 88 ef ff ff       	jmp    4014a0 <out_rev_>
   402518:	0f 1f 84 00 00 00 00 	nop    DWORD PTR [rax+rax*1+0x0]
@@ -1579,7 +1579,7 @@ int   main(int argc, char** argv)
   402569:	48 89 ef             	mov    rdi,rbp
   40256c:	ba 04 00 00 00       	mov    edx,0x4
   402571:	5d                   	pop    rbp
-  402572:	48 8d 35 10 1b 00 00 	lea    rsi,[rip+0x1b10]        # 404089 <kb_readc+0x74b>
+  402572:	48 8d 35 10 1b 00 00 	lea    rsi,[rip+0x1b10]        # 404089 <kb_readc+0x709>
   402579:	41 5c                	pop    r12
   40257b:	e9 20 ef ff ff       	jmp    4014a0 <out_rev_>
   402580:	b8 01 00 00 00       	mov    eax,0x1
@@ -1604,7 +1604,7 @@ int   main(int argc, char** argv)
   4025b6:	0f 84 5f 01 00 00    	je     40271b <format_string_loop.constprop.0+0x17b>
   4025bc:	49 89 fc             	mov    r12,rdi
   4025bf:	48 89 f3             	mov    rbx,rsi
-  4025c2:	4c 8d 2d d3 1a 00 00 	lea    r13,[rip+0x1ad3]        # 40409c <kb_readc+0x75e>
+  4025c2:	4c 8d 2d d3 1a 00 00 	lea    r13,[rip+0x1ad3]        # 40409c <kb_readc+0x71c>
   4025c9:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
   4025d0:	4c 8d 73 01          	lea    r14,[rbx+0x1]
   4025d4:	80 fa 25             	cmp    dl,0x25
@@ -1636,7 +1636,7 @@ int   main(int argc, char** argv)
   402633:	49 8d 5e 01          	lea    rbx,[r14+0x1]
   402637:	40 80 ff 12          	cmp    dil,0x12
   40263b:	0f 87 7f 00 00 00    	ja     4026c0 <format_string_loop.constprop.0+0x120>
-  402641:	4c 8d 05 98 1a 00 00 	lea    r8,[rip+0x1a98]        # 4040e0 <kb_readc+0x7a2>
+  402641:	4c 8d 05 98 1a 00 00 	lea    r8,[rip+0x1a98]        # 4040e0 <kb_readc+0x760>
   402648:	40 0f b6 ff          	movzx  edi,dil
   40264c:	49 63 3c b8          	movsxd rdi,DWORD PTR [r8+rdi*4]
   402650:	4c 01 c7             	add    rdi,r8
@@ -1673,7 +1673,7 @@ int   main(int argc, char** argv)
   4026c0:	8d 7e db             	lea    edi,[rsi-0x25]
   4026c3:	40 80 ff 53          	cmp    dil,0x53
   4026c7:	77 17                	ja     4026e0 <format_string_loop.constprop.0+0x140>
-  4026c9:	48 8d 05 5c 1a 00 00 	lea    rax,[rip+0x1a5c]        # 40412c <kb_readc+0x7ee>
+  4026c9:	48 8d 05 5c 1a 00 00 	lea    rax,[rip+0x1a5c]        # 40412c <kb_readc+0x7ac>
   4026d0:	40 0f b6 ff          	movzx  edi,dil
   4026d4:	48 63 3c b8          	movsxd rdi,DWORD PTR [rax+rdi*4]
   4026d8:	48 01 c7             	add    rdi,rax
@@ -2104,7 +2104,7 @@ int   main(int argc, char** argv)
   402cf0:	48 85 ed             	test   rbp,rbp
   402cf3:	0f 85 5c fc ff ff    	jne    402955 <format_string_loop.constprop.0+0x3b5>
   402cf9:	41 89 c8             	mov    r8d,ecx
-  402cfc:	48 8d 35 8b 13 00 00 	lea    rsi,[rip+0x138b]        # 40408e <kb_readc+0x750>
+  402cfc:	48 8d 35 8b 13 00 00 	lea    rsi,[rip+0x138b]        # 40408e <kb_readc+0x70e>
   402d03:	89 d1                	mov    ecx,edx
   402d05:	4c 89 e7             	mov    rdi,r12
   402d08:	ba 06 00 00 00       	mov    edx,0x6
@@ -2171,7 +2171,7 @@ int   main(int argc, char** argv)
   402de8:	ba 05 00 00 00       	mov    edx,0x5
   402ded:	b9 12 00 00 00       	mov    ecx,0x12
   402df2:	4c 89 e7             	mov    rdi,r12
-  402df5:	48 8d 35 99 12 00 00 	lea    rsi,[rip+0x1299]        # 404095 <kb_readc+0x757>
+  402df5:	48 8d 35 99 12 00 00 	lea    rsi,[rip+0x1299]        # 404095 <kb_readc+0x715>
   402dfc:	e8 9f e6 ff ff       	call   4014a0 <out_rev_>
   402e01:	e9 0a f9 ff ff       	jmp    402710 <format_string_loop.constprop.0+0x170>
   402e06:	4d 8b 47 08          	mov    r8,QWORD PTR [r15+0x8]
@@ -2813,7 +2813,7 @@ int   main(int argc, char** argv)
   40374f:	40 88 7c 24 0c       	mov    BYTE PTR [rsp+0xc],dil
   403754:	48 8d 74 24 0c       	lea    rsi,[rsp+0xc]
   403759:	bf 01 00 00 00       	mov    edi,0x1
-  40375e:	e8 d1 00 00 00       	call   403834 <write>
+  40375e:	e8 ed 00 00 00       	call   403850 <write>
   403763:	48 83 c4 18          	add    rsp,0x18
   403767:	c3                   	ret    
   403768:	0f 1f 84 00 00 00 00 	nop    DWORD PTR [rax+rax*1+0x0]
@@ -2823,270 +2823,338 @@ int   main(int argc, char** argv)
   403770:	55                   	push   rbp
   403771:	48 89 e5             	mov    rbp,rsp
   403774:	b8 00 00 00 00       	mov    eax,0x0
-  403779:	48 0f 05             	rex.W syscall 
-  40377c:	c9                   	leave  
-  40377d:	c3                   	ret    
+  403779:	55                   	push   rbp
+  40377a:	48 0f 05             	rex.W syscall 
+  40377d:	5d                   	pop    rbp
+  40377e:	c9                   	leave  
+  40377f:	c3                   	ret    
 
-000000000040377e <dispose_dev>:
-  40377e:	55                   	push   rbp
-  40377f:	48 89 e5             	mov    rbp,rsp
-  403782:	b8 01 00 00 00       	mov    eax,0x1
-  403787:	48 0f 05             	rex.W syscall 
-  40378a:	c9                   	leave  
-  40378b:	c3                   	ret    
+0000000000403780 <dispose_dev>:
+  403780:	55                   	push   rbp
+  403781:	48 89 e5             	mov    rbp,rsp
+  403784:	b8 01 00 00 00       	mov    eax,0x1
+  403789:	55                   	push   rbp
+  40378a:	48 0f 05             	rex.W syscall 
+  40378d:	5d                   	pop    rbp
+  40378e:	c9                   	leave  
+  40378f:	c3                   	ret    
 
-000000000040378c <reg_drv>:
-  40378c:	55                   	push   rbp
-  40378d:	48 89 e5             	mov    rbp,rsp
-  403790:	b8 02 00 00 00       	mov    eax,0x2
-  403795:	48 0f 05             	rex.W syscall 
-  403798:	c9                   	leave  
-  403799:	c3                   	ret    
+0000000000403790 <reg_drv>:
+  403790:	55                   	push   rbp
+  403791:	48 89 e5             	mov    rbp,rsp
+  403794:	b8 02 00 00 00       	mov    eax,0x2
+  403799:	55                   	push   rbp
+  40379a:	48 0f 05             	rex.W syscall 
+  40379d:	5d                   	pop    rbp
+  40379e:	c9                   	leave  
+  40379f:	c3                   	ret    
 
-000000000040379a <dispose_drv>:
-  40379a:	55                   	push   rbp
-  40379b:	48 89 e5             	mov    rbp,rsp
-  40379e:	b8 03 00 00 00       	mov    eax,0x3
-  4037a3:	48 0f 05             	rex.W syscall 
-  4037a6:	c9                   	leave  
-  4037a7:	c3                   	ret    
+00000000004037a0 <dispose_drv>:
+  4037a0:	55                   	push   rbp
+  4037a1:	48 89 e5             	mov    rbp,rsp
+  4037a4:	b8 03 00 00 00       	mov    eax,0x3
+  4037a9:	55                   	push   rbp
+  4037aa:	48 0f 05             	rex.W syscall 
+  4037ad:	5d                   	pop    rbp
+  4037ae:	c9                   	leave  
+  4037af:	c3                   	ret    
 
-00000000004037a8 <call_drvfunc>:
-  4037a8:	55                   	push   rbp
-  4037a9:	48 89 e5             	mov    rbp,rsp
-  4037ac:	b8 04 00 00 00       	mov    eax,0x4
-  4037b1:	48 0f 05             	rex.W syscall 
-  4037b4:	c9                   	leave  
-  4037b5:	c3                   	ret    
+00000000004037b0 <call_drvfunc>:
+  4037b0:	55                   	push   rbp
+  4037b1:	48 89 e5             	mov    rbp,rsp
+  4037b4:	b8 04 00 00 00       	mov    eax,0x4
+  4037b9:	55                   	push   rbp
+  4037ba:	48 0f 05             	rex.W syscall 
+  4037bd:	5d                   	pop    rbp
+  4037be:	c9                   	leave  
+  4037bf:	c3                   	ret    
 
-00000000004037b6 <req_mem>:
-  4037b6:	55                   	push   rbp
-  4037b7:	48 89 e5             	mov    rbp,rsp
-  4037ba:	b8 05 00 00 00       	mov    eax,0x5
-  4037bf:	48 0f 05             	rex.W syscall 
-  4037c2:	c9                   	leave  
-  4037c3:	c3                   	ret    
+00000000004037c0 <req_mem>:
+  4037c0:	55                   	push   rbp
+  4037c1:	48 89 e5             	mov    rbp,rsp
+  4037c4:	b8 05 00 00 00       	mov    eax,0x5
+  4037c9:	55                   	push   rbp
+  4037ca:	48 0f 05             	rex.W syscall 
+  4037cd:	5d                   	pop    rbp
+  4037ce:	c9                   	leave  
+  4037cf:	c3                   	ret    
 
-00000000004037c4 <free_mem>:
-  4037c4:	55                   	push   rbp
-  4037c5:	48 89 e5             	mov    rbp,rsp
-  4037c8:	b8 06 00 00 00       	mov    eax,0x6
-  4037cd:	48 0f 05             	rex.W syscall 
-  4037d0:	c9                   	leave  
-  4037d1:	c3                   	ret    
-
-00000000004037d2 <reg_proc>:
-  4037d2:	55                   	push   rbp
-  4037d3:	48 89 e5             	mov    rbp,rsp
-  4037d6:	b8 07 00 00 00       	mov    eax,0x7
-  4037db:	48 0f 05             	rex.W syscall 
+00000000004037d0 <free_mem>:
+  4037d0:	55                   	push   rbp
+  4037d1:	48 89 e5             	mov    rbp,rsp
+  4037d4:	b8 06 00 00 00       	mov    eax,0x6
+  4037d9:	55                   	push   rbp
+  4037da:	48 0f 05             	rex.W syscall 
+  4037dd:	5d                   	pop    rbp
   4037de:	c9                   	leave  
   4037df:	c3                   	ret    
 
-00000000004037e0 <del_proc>:
+00000000004037e0 <reg_proc>:
   4037e0:	55                   	push   rbp
   4037e1:	48 89 e5             	mov    rbp,rsp
-  4037e4:	b8 08 00 00 00       	mov    eax,0x8
-  4037e9:	48 0f 05             	rex.W syscall 
-  4037ec:	c9                   	leave  
-  4037ed:	c3                   	ret    
+  4037e4:	b8 07 00 00 00       	mov    eax,0x7
+  4037e9:	55                   	push   rbp
+  4037ea:	48 0f 05             	rex.W syscall 
+  4037ed:	5d                   	pop    rbp
+  4037ee:	c9                   	leave  
+  4037ef:	c3                   	ret    
 
-00000000004037ee <get_proc_addr>:
-  4037ee:	55                   	push   rbp
-  4037ef:	48 89 e5             	mov    rbp,rsp
-  4037f2:	b8 09 00 00 00       	mov    eax,0x9
-  4037f7:	48 0f 05             	rex.W syscall 
-  4037fa:	c9                   	leave  
-  4037fb:	c3                   	ret    
+00000000004037f0 <del_proc>:
+  4037f0:	55                   	push   rbp
+  4037f1:	48 89 e5             	mov    rbp,rsp
+  4037f4:	b8 08 00 00 00       	mov    eax,0x8
+  4037f9:	55                   	push   rbp
+  4037fa:	48 0f 05             	rex.W syscall 
+  4037fd:	5d                   	pop    rbp
+  4037fe:	c9                   	leave  
+  4037ff:	c3                   	ret    
 
-00000000004037fc <chk_vm>:
-  4037fc:	55                   	push   rbp
-  4037fd:	48 89 e5             	mov    rbp,rsp
-  403800:	b8 0a 00 00 00       	mov    eax,0xa
-  403805:	48 0f 05             	rex.W syscall 
-  403808:	c9                   	leave  
-  403809:	c3                   	ret    
+0000000000403800 <get_proc_addr>:
+  403800:	55                   	push   rbp
+  403801:	48 89 e5             	mov    rbp,rsp
+  403804:	b8 09 00 00 00       	mov    eax,0x9
+  403809:	55                   	push   rbp
+  40380a:	48 0f 05             	rex.W syscall 
+  40380d:	5d                   	pop    rbp
+  40380e:	c9                   	leave  
+  40380f:	c3                   	ret    
 
-000000000040380a <open>:
-  40380a:	55                   	push   rbp
-  40380b:	48 89 e5             	mov    rbp,rsp
-  40380e:	b8 0b 00 00 00       	mov    eax,0xb
-  403813:	48 0f 05             	rex.W syscall 
-  403816:	c9                   	leave  
-  403817:	c3                   	ret    
+0000000000403810 <chk_vm>:
+  403810:	55                   	push   rbp
+  403811:	48 89 e5             	mov    rbp,rsp
+  403814:	b8 0a 00 00 00       	mov    eax,0xa
+  403819:	55                   	push   rbp
+  40381a:	48 0f 05             	rex.W syscall 
+  40381d:	5d                   	pop    rbp
+  40381e:	c9                   	leave  
+  40381f:	c3                   	ret    
 
-0000000000403818 <close>:
-  403818:	55                   	push   rbp
-  403819:	48 89 e5             	mov    rbp,rsp
-  40381c:	b8 0c 00 00 00       	mov    eax,0xc
-  403821:	48 0f 05             	rex.W syscall 
-  403824:	c9                   	leave  
-  403825:	c3                   	ret    
+0000000000403820 <open>:
+  403820:	55                   	push   rbp
+  403821:	48 89 e5             	mov    rbp,rsp
+  403824:	b8 0b 00 00 00       	mov    eax,0xb
+  403829:	55                   	push   rbp
+  40382a:	48 0f 05             	rex.W syscall 
+  40382d:	5d                   	pop    rbp
+  40382e:	c9                   	leave  
+  40382f:	c3                   	ret    
 
-0000000000403826 <read>:
-  403826:	55                   	push   rbp
-  403827:	48 89 e5             	mov    rbp,rsp
-  40382a:	b8 0d 00 00 00       	mov    eax,0xd
-  40382f:	48 0f 05             	rex.W syscall 
-  403832:	c9                   	leave  
-  403833:	c3                   	ret    
+0000000000403830 <close>:
+  403830:	55                   	push   rbp
+  403831:	48 89 e5             	mov    rbp,rsp
+  403834:	b8 0c 00 00 00       	mov    eax,0xc
+  403839:	55                   	push   rbp
+  40383a:	48 0f 05             	rex.W syscall 
+  40383d:	5d                   	pop    rbp
+  40383e:	c9                   	leave  
+  40383f:	c3                   	ret    
 
-0000000000403834 <write>:
-  403834:	55                   	push   rbp
-  403835:	48 89 e5             	mov    rbp,rsp
-  403838:	b8 0e 00 00 00       	mov    eax,0xe
-  40383d:	48 0f 05             	rex.W syscall 
-  403840:	c9                   	leave  
-  403841:	c3                   	ret    
-
-0000000000403842 <seek>:
-  403842:	55                   	push   rbp
-  403843:	48 89 e5             	mov    rbp,rsp
-  403846:	b8 0f 00 00 00       	mov    eax,0xf
-  40384b:	48 0f 05             	rex.W syscall 
+0000000000403840 <read>:
+  403840:	55                   	push   rbp
+  403841:	48 89 e5             	mov    rbp,rsp
+  403844:	b8 0d 00 00 00       	mov    eax,0xd
+  403849:	55                   	push   rbp
+  40384a:	48 0f 05             	rex.W syscall 
+  40384d:	5d                   	pop    rbp
   40384e:	c9                   	leave  
   40384f:	c3                   	ret    
 
-0000000000403850 <tell>:
+0000000000403850 <write>:
   403850:	55                   	push   rbp
   403851:	48 89 e5             	mov    rbp,rsp
-  403854:	b8 10 00 00 00       	mov    eax,0x10
-  403859:	48 0f 05             	rex.W syscall 
-  40385c:	c9                   	leave  
-  40385d:	c3                   	ret    
+  403854:	b8 0e 00 00 00       	mov    eax,0xe
+  403859:	55                   	push   rbp
+  40385a:	48 0f 05             	rex.W syscall 
+  40385d:	5d                   	pop    rbp
+  40385e:	c9                   	leave  
+  40385f:	c3                   	ret    
 
-000000000040385e <reg_vol>:
-  40385e:	55                   	push   rbp
-  40385f:	48 89 e5             	mov    rbp,rsp
-  403862:	b8 11 00 00 00       	mov    eax,0x11
-  403867:	48 0f 05             	rex.W syscall 
-  40386a:	c9                   	leave  
-  40386b:	c3                   	ret    
+0000000000403860 <seek>:
+  403860:	55                   	push   rbp
+  403861:	48 89 e5             	mov    rbp,rsp
+  403864:	b8 0f 00 00 00       	mov    eax,0xf
+  403869:	55                   	push   rbp
+  40386a:	48 0f 05             	rex.W syscall 
+  40386d:	5d                   	pop    rbp
+  40386e:	c9                   	leave  
+  40386f:	c3                   	ret    
 
-000000000040386c <free_vol>:
-  40386c:	55                   	push   rbp
-  40386d:	48 89 e5             	mov    rbp,rsp
-  403870:	b8 12 00 00 00       	mov    eax,0x12
-  403875:	48 0f 05             	rex.W syscall 
-  403878:	c9                   	leave  
-  403879:	c3                   	ret    
+0000000000403870 <tell>:
+  403870:	55                   	push   rbp
+  403871:	48 89 e5             	mov    rbp,rsp
+  403874:	b8 10 00 00 00       	mov    eax,0x10
+  403879:	55                   	push   rbp
+  40387a:	48 0f 05             	rex.W syscall 
+  40387d:	5d                   	pop    rbp
+  40387e:	c9                   	leave  
+  40387f:	c3                   	ret    
 
-000000000040387a <exec>:
-  40387a:	55                   	push   rbp
-  40387b:	48 89 e5             	mov    rbp,rsp
-  40387e:	b8 13 00 00 00       	mov    eax,0x13
-  403883:	48 0f 05             	rex.W syscall 
-  403886:	c9                   	leave  
-  403887:	c3                   	ret    
+0000000000403880 <reg_vol>:
+  403880:	55                   	push   rbp
+  403881:	48 89 e5             	mov    rbp,rsp
+  403884:	b8 11 00 00 00       	mov    eax,0x11
+  403889:	55                   	push   rbp
+  40388a:	48 0f 05             	rex.W syscall 
+  40388d:	5d                   	pop    rbp
+  40388e:	c9                   	leave  
+  40388f:	c3                   	ret    
 
-0000000000403888 <exit>:
-  403888:	55                   	push   rbp
-  403889:	48 89 e5             	mov    rbp,rsp
-  40388c:	b8 14 00 00 00       	mov    eax,0x14
-  403891:	48 0f 05             	rex.W syscall 
-  403894:	c9                   	leave  
-  403895:	c3                   	ret    
+0000000000403890 <free_vol>:
+  403890:	55                   	push   rbp
+  403891:	48 89 e5             	mov    rbp,rsp
+  403894:	b8 12 00 00 00       	mov    eax,0x12
+  403899:	55                   	push   rbp
+  40389a:	48 0f 05             	rex.W syscall 
+  40389d:	5d                   	pop    rbp
+  40389e:	c9                   	leave  
+  40389f:	c3                   	ret    
 
-0000000000403896 <call>:
-  403896:	55                   	push   rbp
-  403897:	48 89 e5             	mov    rbp,rsp
-  40389a:	b8 15 00 00 00       	mov    eax,0x15
-  40389f:	48 0f 05             	rex.W syscall 
-  4038a2:	c9                   	leave  
-  4038a3:	c3                   	ret    
+00000000004038a0 <exec>:
+  4038a0:	55                   	push   rbp
+  4038a1:	48 89 e5             	mov    rbp,rsp
+  4038a4:	b8 13 00 00 00       	mov    eax,0x13
+  4038a9:	55                   	push   rbp
+  4038aa:	48 0f 05             	rex.W syscall 
+  4038ad:	5d                   	pop    rbp
+  4038ae:	c9                   	leave  
+  4038af:	c3                   	ret    
 
-00000000004038a4 <mkfifo>:
-  4038a4:	55                   	push   rbp
-  4038a5:	48 89 e5             	mov    rbp,rsp
-  4038a8:	b8 16 00 00 00       	mov    eax,0x16
-  4038ad:	48 0f 05             	rex.W syscall 
-  4038b0:	c9                   	leave  
-  4038b1:	c3                   	ret    
-
-00000000004038b2 <brk>:
-  4038b2:	55                   	push   rbp
-  4038b3:	48 89 e5             	mov    rbp,rsp
-  4038b6:	b8 17 00 00 00       	mov    eax,0x17
-  4038bb:	48 0f 05             	rex.W syscall 
+00000000004038b0 <exit>:
+  4038b0:	55                   	push   rbp
+  4038b1:	48 89 e5             	mov    rbp,rsp
+  4038b4:	b8 14 00 00 00       	mov    eax,0x14
+  4038b9:	55                   	push   rbp
+  4038ba:	48 0f 05             	rex.W syscall 
+  4038bd:	5d                   	pop    rbp
   4038be:	c9                   	leave  
   4038bf:	c3                   	ret    
 
-00000000004038c0 <free>:
+00000000004038c0 <call>:
   4038c0:	55                   	push   rbp
   4038c1:	48 89 e5             	mov    rbp,rsp
-  4038c4:	b8 18 00 00 00       	mov    eax,0x18
-  4038c9:	48 0f 05             	rex.W syscall 
-  4038cc:	c9                   	leave  
-  4038cd:	c3                   	ret    
+  4038c4:	b8 15 00 00 00       	mov    eax,0x15
+  4038c9:	55                   	push   rbp
+  4038ca:	48 0f 05             	rex.W syscall 
+  4038cd:	5d                   	pop    rbp
+  4038ce:	c9                   	leave  
+  4038cf:	c3                   	ret    
 
-00000000004038ce <find_dev>:
-  4038ce:	55                   	push   rbp
-  4038cf:	48 89 e5             	mov    rbp,rsp
-  4038d2:	b8 19 00 00 00       	mov    eax,0x19
-  4038d7:	48 0f 05             	rex.W syscall 
-  4038da:	c9                   	leave  
-  4038db:	c3                   	ret    
+00000000004038d0 <mkfifo>:
+  4038d0:	55                   	push   rbp
+  4038d1:	48 89 e5             	mov    rbp,rsp
+  4038d4:	b8 16 00 00 00       	mov    eax,0x16
+  4038d9:	55                   	push   rbp
+  4038da:	48 0f 05             	rex.W syscall 
+  4038dd:	5d                   	pop    rbp
+  4038de:	c9                   	leave  
+  4038df:	c3                   	ret    
 
-00000000004038dc <operate_dev>:
-  4038dc:	55                   	push   rbp
-  4038dd:	48 89 e5             	mov    rbp,rsp
-  4038e0:	b8 1a 00 00 00       	mov    eax,0x1a
-  4038e5:	48 0f 05             	rex.W syscall 
-  4038e8:	c9                   	leave  
-  4038e9:	c3                   	ret    
+00000000004038e0 <brk>:
+  4038e0:	55                   	push   rbp
+  4038e1:	48 89 e5             	mov    rbp,rsp
+  4038e4:	b8 17 00 00 00       	mov    eax,0x17
+  4038e9:	55                   	push   rbp
+  4038ea:	48 0f 05             	rex.W syscall 
+  4038ed:	5d                   	pop    rbp
+  4038ee:	c9                   	leave  
+  4038ef:	c3                   	ret    
 
-00000000004038ea <fork>:
-  4038ea:	55                   	push   rbp
-  4038eb:	48 89 e5             	mov    rbp,rsp
-  4038ee:	b8 1b 00 00 00       	mov    eax,0x1b
-  4038f3:	48 0f 05             	rex.W syscall 
-  4038f6:	c9                   	leave  
-  4038f7:	c3                   	ret    
+00000000004038f0 <free>:
+  4038f0:	55                   	push   rbp
+  4038f1:	48 89 e5             	mov    rbp,rsp
+  4038f4:	b8 18 00 00 00       	mov    eax,0x18
+  4038f9:	55                   	push   rbp
+  4038fa:	48 0f 05             	rex.W syscall 
+  4038fd:	5d                   	pop    rbp
+  4038fe:	c9                   	leave  
+  4038ff:	c3                   	ret    
 
-00000000004038f8 <execve>:
-  4038f8:	55                   	push   rbp
-  4038f9:	48 89 e5             	mov    rbp,rsp
-  4038fc:	b8 1c 00 00 00       	mov    eax,0x1c
-  403901:	48 0f 05             	rex.W syscall 
-  403904:	c9                   	leave  
-  403905:	c3                   	ret    
+0000000000403900 <find_dev>:
+  403900:	55                   	push   rbp
+  403901:	48 89 e5             	mov    rbp,rsp
+  403904:	b8 19 00 00 00       	mov    eax,0x19
+  403909:	55                   	push   rbp
+  40390a:	48 0f 05             	rex.W syscall 
+  40390d:	5d                   	pop    rbp
+  40390e:	c9                   	leave  
+  40390f:	c3                   	ret    
 
-0000000000403906 <waitpid>:
-  403906:	55                   	push   rbp
-  403907:	48 89 e5             	mov    rbp,rsp
-  40390a:	b8 1d 00 00 00       	mov    eax,0x1d
-  40390f:	48 0f 05             	rex.W syscall 
-  403912:	c9                   	leave  
-  403913:	c3                   	ret    
+0000000000403910 <operate_dev>:
+  403910:	55                   	push   rbp
+  403911:	48 89 e5             	mov    rbp,rsp
+  403914:	b8 1a 00 00 00       	mov    eax,0x1a
+  403919:	55                   	push   rbp
+  40391a:	48 0f 05             	rex.W syscall 
+  40391d:	5d                   	pop    rbp
+  40391e:	c9                   	leave  
+  40391f:	c3                   	ret    
 
-0000000000403914 <mmap>:
-  403914:	55                   	push   rbp
-  403915:	48 89 e5             	mov    rbp,rsp
-  403918:	b8 1e 00 00 00       	mov    eax,0x1e
-  40391d:	48 0f 05             	rex.W syscall 
-  403920:	c9                   	leave  
-  403921:	c3                   	ret    
-
-0000000000403922 <munmap>:
-  403922:	55                   	push   rbp
-  403923:	48 89 e5             	mov    rbp,rsp
-  403926:	b8 1f 00 00 00       	mov    eax,0x1f
-  40392b:	48 0f 05             	rex.W syscall 
+0000000000403920 <fork>:
+  403920:	55                   	push   rbp
+  403921:	48 89 e5             	mov    rbp,rsp
+  403924:	b8 1b 00 00 00       	mov    eax,0x1b
+  403929:	55                   	push   rbp
+  40392a:	48 0f 05             	rex.W syscall 
+  40392d:	5d                   	pop    rbp
   40392e:	c9                   	leave  
   40392f:	c3                   	ret    
 
-0000000000403930 <mknod>:
+0000000000403930 <execve>:
   403930:	55                   	push   rbp
   403931:	48 89 e5             	mov    rbp,rsp
-  403934:	b8 21 00 00 00       	mov    eax,0x21
-  403939:	48 0f 05             	rex.W syscall 
-  40393c:	c9                   	leave  
-  40393d:	c3                   	ret    
+  403934:	b8 1c 00 00 00       	mov    eax,0x1c
+  403939:	55                   	push   rbp
+  40393a:	48 0f 05             	rex.W syscall 
+  40393d:	5d                   	pop    rbp
+  40393e:	c9                   	leave  
+  40393f:	c3                   	ret    
 
-000000000040393e <kb_readc>:
-  40393e:	55                   	push   rbp
-  40393f:	48 89 e5             	mov    rbp,rsp
-  403942:	b8 64 00 00 00       	mov    eax,0x64
-  403947:	48 0f 05             	rex.W syscall 
-  40394a:	c9                   	leave  
-  40394b:	c3                   	ret    
+0000000000403940 <waitpid>:
+  403940:	55                   	push   rbp
+  403941:	48 89 e5             	mov    rbp,rsp
+  403944:	b8 1d 00 00 00       	mov    eax,0x1d
+  403949:	55                   	push   rbp
+  40394a:	48 0f 05             	rex.W syscall 
+  40394d:	5d                   	pop    rbp
+  40394e:	c9                   	leave  
+  40394f:	c3                   	ret    
+
+0000000000403950 <mmap>:
+  403950:	55                   	push   rbp
+  403951:	48 89 e5             	mov    rbp,rsp
+  403954:	b8 1e 00 00 00       	mov    eax,0x1e
+  403959:	55                   	push   rbp
+  40395a:	48 0f 05             	rex.W syscall 
+  40395d:	5d                   	pop    rbp
+  40395e:	c9                   	leave  
+  40395f:	c3                   	ret    
+
+0000000000403960 <munmap>:
+  403960:	55                   	push   rbp
+  403961:	48 89 e5             	mov    rbp,rsp
+  403964:	b8 1f 00 00 00       	mov    eax,0x1f
+  403969:	55                   	push   rbp
+  40396a:	48 0f 05             	rex.W syscall 
+  40396d:	5d                   	pop    rbp
+  40396e:	c9                   	leave  
+  40396f:	c3                   	ret    
+
+0000000000403970 <mknod>:
+  403970:	55                   	push   rbp
+  403971:	48 89 e5             	mov    rbp,rsp
+  403974:	b8 21 00 00 00       	mov    eax,0x21
+  403979:	55                   	push   rbp
+  40397a:	48 0f 05             	rex.W syscall 
+  40397d:	5d                   	pop    rbp
+  40397e:	c9                   	leave  
+  40397f:	c3                   	ret    
+
+0000000000403980 <kb_readc>:
+  403980:	55                   	push   rbp
+  403981:	48 89 e5             	mov    rbp,rsp
+  403984:	b8 64 00 00 00       	mov    eax,0x64
+  403989:	55                   	push   rbp
+  40398a:	48 0f 05             	rex.W syscall 
+  40398d:	5d                   	pop    rbp
+  40398e:	c9                   	leave  
+  40398f:	c3                   	ret    

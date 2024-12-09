@@ -8035,14 +8035,14 @@ ffff800000806063:	ff ff ff
 ffff800000806066:	48 8b 04 08          	mov    rax,QWORD PTR [rax+rcx*1]
 ffff80000080606a:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff80000080606d:	48 89 90 9c 02 00 00 	mov    QWORD PTR [rax+0x29c],rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:257
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:258
 ffff800000806074:	90                   	nop
 ffff800000806075:	5d                   	pop    rbp
 ffff800000806076:	c3                   	ret    
 
 ffff800000806077 <manage_proc>:
 manage_proc():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:259
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:260
 ffff800000806077:	f3 0f 1e fa          	endbr64 
 ffff80000080607b:	55                   	push   rbp
 ffff80000080607c:	48 89 e5             	mov    rbp,rsp
@@ -8053,14 +8053,14 @@ ffff800000806086:	48 8d 1d f9 ff ff ff 	lea    rbx,[rip+0xfffffffffffffff9]     
 ffff80000080608d:	49 bb 82 ed 11 00 00 	movabs r11,0x11ed82
 ffff800000806094:	00 00 00 
 ffff800000806097:	4c 01 db             	add    rbx,r11
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:260
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:261
 ffff80000080609a:	48 b8 e0 fd ff ff ff 	movabs rax,0xfffffffffffffde0
 ffff8000008060a1:	ff ff ff 
 ffff8000008060a4:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
 ffff8000008060a8:	8b 00                	mov    eax,DWORD PTR [rax]
 ffff8000008060aa:	83 f8 ff             	cmp    eax,0xffffffff
 ffff8000008060ad:	74 36                	je     ffff8000008060e5 <manage_proc+0x6e>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:260 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:261 (discriminator 1)
 ffff8000008060af:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff8000008060b6:	ff ff ff 
 ffff8000008060b9:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8075,14 +8075,14 @@ ffff8000008060d9:	48 01 d0             	add    rax,rdx
 ffff8000008060dc:	8b 50 1c             	mov    edx,DWORD PTR [rax+0x1c]
 ffff8000008060df:	83 c2 01             	add    edx,0x1
 ffff8000008060e2:	89 50 1c             	mov    DWORD PTR [rax+0x1c],edx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:261
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:262
 ffff8000008060e5:	48 b8 e0 fd ff ff ff 	movabs rax,0xfffffffffffffde0
 ffff8000008060ec:	ff ff ff 
 ffff8000008060ef:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
 ffff8000008060f3:	8b 00                	mov    eax,DWORD PTR [rax]
 ffff8000008060f5:	83 f8 ff             	cmp    eax,0xffffffff
 ffff8000008060f8:	74 6e                	je     ffff800000806168 <manage_proc+0xf1>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:261 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:262 (discriminator 1)
 ffff8000008060fa:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000806101:	ff ff ff 
 ffff800000806104:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8097,7 +8097,7 @@ ffff800000806124:	48 01 d0             	add    rax,rdx
 ffff800000806127:	8b 40 1c             	mov    eax,DWORD PTR [rax+0x1c]
 ffff80000080612a:	83 f8 0a             	cmp    eax,0xa
 ffff80000080612d:	77 39                	ja     ffff800000806168 <manage_proc+0xf1>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:261 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:262 (discriminator 2)
 ffff80000080612f:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000806136:	ff ff ff 
 ffff800000806139:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8112,14 +8112,14 @@ ffff800000806159:	48 01 d0             	add    rax,rdx
 ffff80000080615c:	8b 40 18             	mov    eax,DWORD PTR [rax+0x18]
 ffff80000080615f:	83 f8 02             	cmp    eax,0x2
 ffff800000806162:	0f 84 48 02 00 00    	je     ffff8000008063b0 <manage_proc+0x339>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:262
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:263
 ffff800000806168:	48 b8 e0 fd ff ff ff 	movabs rax,0xfffffffffffffde0
 ffff80000080616f:	ff ff ff 
 ffff800000806172:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
 ffff800000806176:	8b 00                	mov    eax,DWORD PTR [rax]
 ffff800000806178:	83 f8 ff             	cmp    eax,0xffffffff
 ffff80000080617b:	74 34                	je     ffff8000008061b1 <manage_proc+0x13a>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:262 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:263 (discriminator 1)
 ffff80000080617d:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000806184:	ff ff ff 
 ffff800000806187:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8132,18 +8132,18 @@ ffff80000080619e:	48 98                	cdqe
 ffff8000008061a0:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff8000008061a7:	48 01 d0             	add    rax,rdx
 ffff8000008061aa:	c7 40 1c 00 00 00 00 	mov    DWORD PTR [rax+0x1c],0x0
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:264
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:265
 ffff8000008061b1:	48 b8 e0 fd ff ff ff 	movabs rax,0xfffffffffffffde0
 ffff8000008061b8:	ff ff ff 
 ffff8000008061bb:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
 ffff8000008061bf:	8b 00                	mov    eax,DWORD PTR [rax]
 ffff8000008061c1:	83 c0 01             	add    eax,0x1
 ffff8000008061c4:	89 45 ec             	mov    DWORD PTR [rbp-0x14],eax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:265
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:266
 ffff8000008061c7:	c7 45 e8 00 00 00 00 	mov    DWORD PTR [rbp-0x18],0x0
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:267
-ffff8000008061ce:	eb 79                	jmp    ffff800000806249 <manage_proc+0x1d2>
 D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:268
+ffff8000008061ce:	eb 79                	jmp    ffff800000806249 <manage_proc+0x1d2>
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:269
 ffff8000008061d0:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff8000008061d7:	ff ff ff 
 ffff8000008061da:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8155,7 +8155,7 @@ ffff8000008061ed:	48 01 d0             	add    rax,rdx
 ffff8000008061f0:	8b 00                	mov    eax,DWORD PTR [rax]
 ffff8000008061f2:	83 f8 ff             	cmp    eax,0xffffffff
 ffff8000008061f5:	74 3d                	je     ffff800000806234 <manage_proc+0x1bd>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:268 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:269 (discriminator 1)
 ffff8000008061f7:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff8000008061fe:	ff ff ff 
 ffff800000806201:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8167,32 +8167,32 @@ ffff800000806214:	48 01 d0             	add    rax,rdx
 ffff800000806217:	8b 40 18             	mov    eax,DWORD PTR [rax+0x18]
 ffff80000080621a:	83 f8 02             	cmp    eax,0x2
 ffff80000080621d:	75 15                	jne    ffff800000806234 <manage_proc+0x1bd>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:268 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:269 (discriminator 2)
 ffff80000080621f:	48 b8 e0 fd ff ff ff 	movabs rax,0xfffffffffffffde0
 ffff800000806226:	ff ff ff 
 ffff800000806229:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
 ffff80000080622d:	8b 00                	mov    eax,DWORD PTR [rax]
 ffff80000080622f:	39 45 ec             	cmp    DWORD PTR [rbp-0x14],eax
 ffff800000806232:	75 1d                	jne    ffff800000806251 <manage_proc+0x1da>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:269
-ffff800000806234:	83 45 ec 01          	add    DWORD PTR [rbp-0x14],0x1
 D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:270
+ffff800000806234:	83 45 ec 01          	add    DWORD PTR [rbp-0x14],0x1
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:271
 ffff800000806238:	83 7d ec 1f          	cmp    DWORD PTR [rbp-0x14],0x1f
 ffff80000080623c:	7e 0b                	jle    ffff800000806249 <manage_proc+0x1d2>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:271
-ffff80000080623e:	83 45 e8 01          	add    DWORD PTR [rbp-0x18],0x1
 D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:272
+ffff80000080623e:	83 45 e8 01          	add    DWORD PTR [rbp-0x18],0x1
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:273
 ffff800000806242:	c7 45 ec 00 00 00 00 	mov    DWORD PTR [rbp-0x14],0x0
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:267
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:268
 ffff800000806249:	83 7d e8 09          	cmp    DWORD PTR [rbp-0x18],0x9
 ffff80000080624d:	7e 81                	jle    ffff8000008061d0 <manage_proc+0x159>
 ffff80000080624f:	eb 01                	jmp    ffff800000806252 <manage_proc+0x1db>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:268
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:269
 ffff800000806251:	90                   	nop
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:275
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:276
 ffff800000806252:	83 7d e8 0a          	cmp    DWORD PTR [rbp-0x18],0xa
 ffff800000806256:	0f 84 57 01 00 00    	je     ffff8000008063b3 <manage_proc+0x33c>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:276
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:277
 ffff80000080625c:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000806263:	ff ff ff 
 ffff800000806266:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8218,7 +8218,7 @@ ffff8000008062ac:	48 b9 02 12 ef ff ff 	movabs rcx,0xffffffffffef1202
 ffff8000008062b3:	ff ff ff 
 ffff8000008062b6:	48 01 d9             	add    rcx,rbx
 ffff8000008062b9:	ff d1                	call   rcx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:278
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:279
 ffff8000008062bb:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff8000008062c2:	ff ff ff 
 ffff8000008062c5:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8233,7 +8233,7 @@ ffff8000008062e5:	48 01 d0             	add    rax,rdx
 ffff8000008062e8:	8b 40 18             	mov    eax,DWORD PTR [rax+0x18]
 ffff8000008062eb:	83 f8 01             	cmp    eax,0x1
 ffff8000008062ee:	75 34                	jne    ffff800000806324 <manage_proc+0x2ad>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:278 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:279 (discriminator 1)
 ffff8000008062f0:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff8000008062f7:	ff ff ff 
 ffff8000008062fa:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8246,7 +8246,7 @@ ffff800000806311:	48 98                	cdqe
 ffff800000806313:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff80000080631a:	48 01 d0             	add    rax,rdx
 ffff80000080631d:	c7 40 18 02 00 00 00 	mov    DWORD PTR [rax+0x18],0x2
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:279
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:280
 ffff800000806324:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff80000080632b:	ff ff ff 
 ffff80000080632e:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8256,7 +8256,7 @@ ffff800000806338:	48 98                	cdqe
 ffff80000080633a:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff800000806341:	48 01 d0             	add    rax,rdx
 ffff800000806344:	c7 40 18 01 00 00 00 	mov    DWORD PTR [rax+0x18],0x1
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:280
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:281
 ffff80000080634b:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000806352:	ff ff ff 
 ffff800000806355:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8283,12 +8283,12 @@ ffff8000008063a1:	48 b8 f9 26 ee ff ff 	movabs rax,0xffffffffffee26f9
 ffff8000008063a8:	ff ff ff 
 ffff8000008063ab:	48 01 d8             	add    rax,rbx
 ffff8000008063ae:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:282
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:283
 ffff8000008063b0:	90                   	nop
 ffff8000008063b1:	eb 01                	jmp    ffff8000008063b4 <manage_proc+0x33d>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:275
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:276
 ffff8000008063b3:	90                   	nop
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:283
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:284
 ffff8000008063b4:	48 83 c4 10          	add    rsp,0x10
 ffff8000008063b8:	5b                   	pop    rbx
 ffff8000008063b9:	41 5f                	pop    r15
@@ -8297,7 +8297,7 @@ ffff8000008063bc:	c3                   	ret
 
 ffff8000008063bd <switch_proc_tss>:
 switch_proc_tss():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:286
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:287
 ffff8000008063bd:	f3 0f 1e fa          	endbr64 
 ffff8000008063c1:	55                   	push   rbp
 ffff8000008063c2:	48 89 e5             	mov    rbp,rsp
@@ -8308,19 +8308,19 @@ ffff8000008063d2:	49 bb 3d ea 11 00 00 	movabs r11,0x11ea3d
 ffff8000008063d9:	00 00 00 
 ffff8000008063dc:	4c 01 d8             	add    rax,r11
 ffff8000008063df:	89 7d dc             	mov    DWORD PTR [rbp-0x24],edi
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:287
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:288
 ffff8000008063e2:	8b 55 dc             	mov    edx,DWORD PTR [rbp-0x24]
 ffff8000008063e5:	01 d2                	add    edx,edx
 ffff8000008063e7:	83 c2 05             	add    edx,0x5
 ffff8000008063ea:	c1 e2 03             	shl    edx,0x3
 ffff8000008063ed:	89 55 ec             	mov    DWORD PTR [rbp-0x14],edx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:288
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:289
 ffff8000008063f0:	48 ba e0 fd ff ff ff 	movabs rdx,0xfffffffffffffde0
 ffff8000008063f7:	ff ff ff 
 ffff8000008063fa:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
 ffff8000008063fe:	8b 4d dc             	mov    ecx,DWORD PTR [rbp-0x24]
 ffff800000806401:	89 0a                	mov    DWORD PTR [rdx],ecx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:289
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:290
 ffff800000806403:	8b 55 ec             	mov    edx,DWORD PTR [rbp-0x14]
 ffff800000806406:	89 d7                	mov    edi,edx
 ffff800000806408:	49 89 c7             	mov    r15,rax
@@ -8328,7 +8328,7 @@ ffff80000080640b:	48 ba bf 1f ef ff ff 	movabs rdx,0xffffffffffef1fbf
 ffff800000806412:	ff ff ff 
 ffff800000806415:	48 01 c2             	add    rdx,rax
 ffff800000806418:	ff d2                	call   rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:290
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:291
 ffff80000080641a:	90                   	nop
 ffff80000080641b:	4c 8b 7d f8          	mov    r15,QWORD PTR [rbp-0x8]
 ffff80000080641f:	c9                   	leave  
@@ -8336,7 +8336,7 @@ ffff800000806420:	c3                   	ret
 
 ffff800000806421 <switch_proc>:
 switch_proc():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:292
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:293
 ffff800000806421:	f3 0f 1e fa          	endbr64 
 ffff800000806425:	55                   	push   rbp
 ffff800000806426:	48 89 e5             	mov    rbp,rsp
@@ -8348,7 +8348,7 @@ ffff80000080643a:	49 bb d5 e9 11 00 00 	movabs r11,0x11e9d5
 ffff800000806441:	00 00 00 
 ffff800000806444:	4c 01 db             	add    rbx,r11
 ffff800000806447:	89 bd 7c fc ff ff    	mov    DWORD PTR [rbp-0x384],edi
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:295
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:296
 ffff80000080644d:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000806454:	ff ff ff 
 ffff800000806457:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8363,7 +8363,7 @@ ffff80000080647a:	ba 6d 00 00 00       	mov    edx,0x6d
 ffff80000080647f:	48 89 c7             	mov    rdi,rax
 ffff800000806482:	48 89 d1             	mov    rcx,rdx
 ffff800000806485:	f3 48 a5             	rep movs QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:296
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:297
 ffff800000806488:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff80000080648f:	ff ff ff 
 ffff800000806492:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8383,19 +8383,19 @@ ffff8000008064c6:	48 ba bf 1f ef ff ff 	movabs rdx,0xffffffffffef1fbf
 ffff8000008064cd:	ff ff ff 
 ffff8000008064d0:	48 01 da             	add    rdx,rbx
 ffff8000008064d3:	ff d2                	call   rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:301
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:302
 ffff8000008064d5:	48 b8 e0 fd ff ff ff 	movabs rax,0xfffffffffffffde0
 ffff8000008064dc:	ff ff ff 
 ffff8000008064df:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
 ffff8000008064e3:	8b 95 7c fc ff ff    	mov    edx,DWORD PTR [rbp-0x384]
 ffff8000008064e9:	89 10                	mov    DWORD PTR [rax],edx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:302
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:303
 ffff8000008064eb:	8b 85 7c fc ff ff    	mov    eax,DWORD PTR [rbp-0x384]
 ffff8000008064f1:	01 c0                	add    eax,eax
 ffff8000008064f3:	83 c0 05             	add    eax,0x5
 ffff8000008064f6:	c1 e0 03             	shl    eax,0x3
 ffff8000008064f9:	89 45 ec             	mov    DWORD PTR [rbp-0x14],eax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:303
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:304
 ffff8000008064fc:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000806503:	ff ff ff 
 ffff800000806506:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8412,7 +8412,7 @@ ffff800000806530:	48 b8 f9 26 ee ff ff 	movabs rax,0xffffffffffee26f9
 ffff800000806537:	ff ff ff 
 ffff80000080653a:	48 01 d8             	add    rax,rbx
 ffff80000080653d:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:306
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:307
 ffff80000080653f:	90                   	nop
 ffff800000806540:	48 81 c4 80 03 00 00 	add    rsp,0x380
 ffff800000806547:	5b                   	pop    rbx
@@ -8422,7 +8422,7 @@ ffff80000080654b:	c3                   	ret
 
 ffff80000080654c <save_context_c>:
 save_context_c():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:308
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:309
 ffff80000080654c:	f3 0f 1e fa          	endbr64 
 ffff800000806550:	55                   	push   rbp
 ffff800000806551:	48 89 e5             	mov    rbp,rsp
@@ -8432,10 +8432,10 @@ ffff800000806562:	00 00 00
 ffff800000806565:	4c 01 d8             	add    rax,r11
 ffff800000806568:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
 ffff80000080656c:	48 89 75 e0          	mov    QWORD PTR [rbp-0x20],rsi
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:309
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:310
 ffff800000806570:	48 8b 55 e8          	mov    rdx,QWORD PTR [rbp-0x18]
 ffff800000806574:	48 89 55 f8          	mov    QWORD PTR [rbp-0x8],rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:310
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:311
 ffff800000806578:	48 8b 55 f8          	mov    rdx,QWORD PTR [rbp-0x8]
 ffff80000080657c:	48 8b 0a             	mov    rcx,QWORD PTR [rdx]
 ffff80000080657f:	48 ba 48 fe ff ff ff 	movabs rdx,0xfffffffffffffe48
@@ -8443,7 +8443,7 @@ ffff800000806586:	ff ff ff
 ffff800000806589:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
 ffff80000080658d:	48 8b 12             	mov    rdx,QWORD PTR [rdx]
 ffff800000806590:	48 89 8a a4 02 00 00 	mov    QWORD PTR [rdx+0x2a4],rcx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:311
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:312
 ffff800000806597:	48 8b 55 e0          	mov    rdx,QWORD PTR [rbp-0x20]
 ffff80000080659b:	48 8b 12             	mov    rdx,QWORD PTR [rdx]
 ffff80000080659e:	48 b9 48 fe ff ff ff 	movabs rcx,0xfffffffffffffe48
@@ -8451,14 +8451,14 @@ ffff8000008065a5:	ff ff ff
 ffff8000008065a8:	48 8b 04 08          	mov    rax,QWORD PTR [rax+rcx*1]
 ffff8000008065ac:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff8000008065af:	48 89 90 6c 02 00 00 	mov    QWORD PTR [rax+0x26c],rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:312
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:313
 ffff8000008065b6:	90                   	nop
 ffff8000008065b7:	5d                   	pop    rbp
 ffff8000008065b8:	c3                   	ret    
 
 ffff8000008065b9 <palloc>:
 palloc():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:473
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:474
 ffff8000008065b9:	f3 0f 1e fa          	endbr64 
 ffff8000008065bd:	55                   	push   rbp
 ffff8000008065be:	48 89 e5             	mov    rbp,rsp
@@ -8471,7 +8471,7 @@ ffff8000008065d6:	00 00 00
 ffff8000008065d9:	4c 01 db             	add    rbx,r11
 ffff8000008065dc:	89 7d 9c             	mov    DWORD PTR [rbp-0x64],edi
 ffff8000008065df:	89 75 98             	mov    DWORD PTR [rbp-0x68],esi
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:474
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:475
 ffff8000008065e2:	8b 45 98             	mov    eax,DWORD PTR [rbp-0x68]
 ffff8000008065e5:	8d 90 ff 0f 00 00    	lea    edx,[rax+0xfff]
 ffff8000008065eb:	85 c0                	test   eax,eax
@@ -8489,36 +8489,36 @@ ffff800000806607:	85 c0                	test   eax,eax
 ffff800000806609:	0f 95 c0             	setne  al
 ffff80000080660c:	0f b6 c0             	movzx  eax,al
 ffff80000080660f:	89 45 ec             	mov    DWORD PTR [rbp-0x14],eax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:475
-ffff800000806612:	c7 45 e8 00 00 00 00 	mov    DWORD PTR [rbp-0x18],0x0
 D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:476
+ffff800000806612:	c7 45 e8 00 00 00 00 	mov    DWORD PTR [rbp-0x18],0x0
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:477
 ffff800000806619:	48 c7 45 c0 00 00 00 	mov    QWORD PTR [rbp-0x40],0x0
 ffff800000806620:	00 
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:477
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:478
 ffff800000806621:	48 c7 45 e0 00 00 00 	mov    QWORD PTR [rbp-0x20],0x0
 ffff800000806628:	00 
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:478
-ffff800000806629:	48 83 45 e0 08       	add    QWORD PTR [rbp-0x20],0x8
 D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:479
+ffff800000806629:	48 83 45 e0 08       	add    QWORD PTR [rbp-0x20],0x8
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:480
 ffff80000080662e:	c7 45 dc 01 00 00 00 	mov    DWORD PTR [rbp-0x24],0x1
 ffff800000806635:	e9 07 03 00 00       	jmp    ffff800000806941 <palloc+0x388>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:480
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:481
 ffff80000080663a:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
 ffff80000080663e:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff800000806641:	25 00 f0 ff ff       	and    eax,0xfffff000
 ffff800000806646:	48 89 45 d0          	mov    QWORD PTR [rbp-0x30],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:481
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:482
 ffff80000080664a:	c7 45 cc 00 00 00 00 	mov    DWORD PTR [rbp-0x34],0x0
 ffff800000806651:	e9 d5 02 00 00       	jmp    ffff80000080692b <palloc+0x372>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:482
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:483
 ffff800000806656:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
 ffff80000080665a:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff80000080665d:	83 e0 01             	and    eax,0x1
 ffff800000806660:	89 45 bc             	mov    DWORD PTR [rbp-0x44],eax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:483
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:484
 ffff800000806663:	83 7d bc 00          	cmp    DWORD PTR [rbp-0x44],0x0
 ffff800000806667:	0f 85 b5 02 00 00    	jne    ffff800000806922 <palloc+0x369>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:484
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:485
 ffff80000080666d:	49 89 df             	mov    r15,rbx
 ffff800000806670:	b8 00 00 00 00       	mov    eax,0x0
 ffff800000806675:	48 ba 3e e6 ed ff ff 	movabs rdx,0xffffffffffede63e
@@ -8526,10 +8526,10 @@ ffff80000080667c:	ff ff ff
 ffff80000080667f:	48 01 da             	add    rdx,rbx
 ffff800000806682:	ff d2                	call   rdx
 ffff800000806684:	89 45 b8             	mov    DWORD PTR [rbp-0x48],eax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:485
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:486
 ffff800000806687:	83 7d b8 ff          	cmp    DWORD PTR [rbp-0x48],0xffffffff
 ffff80000080668b:	0f 85 0c 01 00 00    	jne    ffff80000080679d <palloc+0x1e4>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:487
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:488
 ffff800000806691:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000806698:	ff ff ff 
 ffff80000080669b:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8541,7 +8541,7 @@ ffff8000008066ae:	48 01 d0             	add    rax,rdx
 ffff8000008066b1:	0f b7 80 88 00 00 00 	movzx  eax,WORD PTR [rax+0x88]
 ffff8000008066b8:	0f b7 c0             	movzx  eax,ax
 ffff8000008066bb:	89 45 a4             	mov    DWORD PTR [rbp-0x5c],eax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:488
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:489
 ffff8000008066be:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff8000008066c5:	ff ff ff 
 ffff8000008066c8:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8555,10 +8555,10 @@ ffff8000008066e5:	0f b7 c0             	movzx  eax,ax
 ffff8000008066e8:	c1 e0 10             	shl    eax,0x10
 ffff8000008066eb:	25 00 00 0f 00       	and    eax,0xf0000
 ffff8000008066f0:	01 45 a4             	add    DWORD PTR [rbp-0x5c],eax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:489
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:490
 ffff8000008066f3:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
 ffff8000008066f6:	01 45 a4             	add    DWORD PTR [rbp-0x5c],eax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:490
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:491
 ffff8000008066f9:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000806700:	ff ff ff 
 ffff800000806703:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8569,7 +8569,7 @@ ffff80000080670f:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff800000806716:	48 01 d0             	add    rax,rdx
 ffff800000806719:	8b 55 a4             	mov    edx,DWORD PTR [rbp-0x5c]
 ffff80000080671c:	66 89 90 88 00 00 00 	mov    WORD PTR [rax+0x88],dx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:491
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:492
 ffff800000806723:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff80000080672a:	ff ff ff 
 ffff80000080672d:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8581,9 +8581,9 @@ ffff800000806740:	48 01 d0             	add    rax,rdx
 ffff800000806743:	0f b7 80 8d 00 00 00 	movzx  eax,WORD PTR [rax+0x8d]
 ffff80000080674a:	0f b7 c0             	movzx  eax,ax
 ffff80000080674d:	89 45 a0             	mov    DWORD PTR [rbp-0x60],eax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:492
-ffff800000806750:	81 65 a0 f0 ff 00 00 	and    DWORD PTR [rbp-0x60],0xfff0
 D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:493
+ffff800000806750:	81 65 a0 f0 ff 00 00 	and    DWORD PTR [rbp-0x60],0xfff0
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:494
 ffff800000806757:	8b 45 a4             	mov    eax,DWORD PTR [rbp-0x5c]
 ffff80000080675a:	c1 e8 10             	shr    eax,0x10
 ffff80000080675d:	83 e0 0f             	and    eax,0xf
@@ -8591,7 +8591,7 @@ ffff800000806760:	89 c2                	mov    edx,eax
 ffff800000806762:	8b 45 a0             	mov    eax,DWORD PTR [rbp-0x60]
 ffff800000806765:	01 d0                	add    eax,edx
 ffff800000806767:	89 45 a0             	mov    DWORD PTR [rbp-0x60],eax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:494
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:495
 ffff80000080676a:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000806771:	ff ff ff 
 ffff800000806774:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8602,10 +8602,10 @@ ffff800000806780:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff800000806787:	48 01 d0             	add    rax,rdx
 ffff80000080678a:	8b 55 a0             	mov    edx,DWORD PTR [rbp-0x60]
 ffff80000080678d:	66 89 90 8d 00 00 00 	mov    WORD PTR [rax+0x8d],dx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:495
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:496
 ffff800000806794:	48 8b 45 c0          	mov    rax,QWORD PTR [rbp-0x40]
 ffff800000806798:	e9 b6 01 00 00       	jmp    ffff800000806953 <palloc+0x39a>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:497
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:498
 ffff80000080679d:	8b 45 b8             	mov    eax,DWORD PTR [rbp-0x48]
 ffff8000008067a0:	89 c7                	mov    edi,eax
 ffff8000008067a2:	49 89 df             	mov    r15,rbx
@@ -8614,7 +8614,7 @@ ffff8000008067ac:	ff ff ff
 ffff8000008067af:	48 01 d8             	add    rax,rbx
 ffff8000008067b2:	ff d0                	call   rax
 ffff8000008067b4:	89 45 b4             	mov    DWORD PTR [rbp-0x4c],eax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:498
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:499
 ffff8000008067b7:	8b 4d b4             	mov    ecx,DWORD PTR [rbp-0x4c]
 ffff8000008067ba:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
 ffff8000008067be:	ba 07 00 00 00       	mov    edx,0x7
@@ -8625,7 +8625,7 @@ ffff8000008067cb:	48 b8 39 f0 ed ff ff 	movabs rax,0xffffffffffedf039
 ffff8000008067d2:	ff ff ff 
 ffff8000008067d5:	48 01 d8             	add    rax,rbx
 ffff8000008067d8:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:499
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:500
 ffff8000008067da:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
 ffff8000008067dd:	c1 e0 0a             	shl    eax,0xa
 ffff8000008067e0:	89 c2                	mov    edx,eax
@@ -8633,23 +8633,23 @@ ffff8000008067e2:	8b 45 cc             	mov    eax,DWORD PTR [rbp-0x34]
 ffff8000008067e5:	01 d0                	add    eax,edx
 ffff8000008067e7:	c1 e0 0c             	shl    eax,0xc
 ffff8000008067ea:	89 45 b0             	mov    DWORD PTR [rbp-0x50],eax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:500
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:501
 ffff8000008067ed:	48 83 7d c0 00       	cmp    QWORD PTR [rbp-0x40],0x0
 ffff8000008067f2:	75 13                	jne    ffff800000806807 <palloc+0x24e>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:502
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:503
 ffff8000008067f4:	48 b8 18 fd ff ff ff 	movabs rax,0xfffffffffffffd18
 ffff8000008067fb:	ff ff ff 
 ffff8000008067fe:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
 ffff800000806802:	8b 55 b4             	mov    edx,DWORD PTR [rbp-0x4c]
 ffff800000806805:	89 10                	mov    DWORD PTR [rax],edx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:504
-ffff800000806807:	83 6d ec 01          	sub    DWORD PTR [rbp-0x14],0x1
 D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:505
-ffff80000080680b:	83 45 e8 01          	add    DWORD PTR [rbp-0x18],0x1
+ffff800000806807:	83 6d ec 01          	sub    DWORD PTR [rbp-0x14],0x1
 D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:506
+ffff80000080680b:	83 45 e8 01          	add    DWORD PTR [rbp-0x18],0x1
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:507
 ffff80000080680f:	83 7d ec 00          	cmp    DWORD PTR [rbp-0x14],0x0
 ffff800000806813:	0f 85 09 01 00 00    	jne    ffff800000806922 <palloc+0x369>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:508
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:509
 ffff800000806819:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000806820:	ff ff ff 
 ffff800000806823:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8661,7 +8661,7 @@ ffff800000806836:	48 01 d0             	add    rax,rdx
 ffff800000806839:	0f b7 80 88 00 00 00 	movzx  eax,WORD PTR [rax+0x88]
 ffff800000806840:	0f b7 c0             	movzx  eax,ax
 ffff800000806843:	89 45 ac             	mov    DWORD PTR [rbp-0x54],eax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:509
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:510
 ffff800000806846:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff80000080684d:	ff ff ff 
 ffff800000806850:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8675,10 +8675,10 @@ ffff80000080686d:	0f b7 c0             	movzx  eax,ax
 ffff800000806870:	c1 e0 10             	shl    eax,0x10
 ffff800000806873:	25 00 00 0f 00       	and    eax,0xf0000
 ffff800000806878:	01 45 ac             	add    DWORD PTR [rbp-0x54],eax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:510
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:511
 ffff80000080687b:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
 ffff80000080687e:	01 45 ac             	add    DWORD PTR [rbp-0x54],eax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:511
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:512
 ffff800000806881:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000806888:	ff ff ff 
 ffff80000080688b:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8689,7 +8689,7 @@ ffff800000806897:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff80000080689e:	48 01 d0             	add    rax,rdx
 ffff8000008068a1:	8b 55 ac             	mov    edx,DWORD PTR [rbp-0x54]
 ffff8000008068a4:	66 89 90 88 00 00 00 	mov    WORD PTR [rax+0x88],dx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:512
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:513
 ffff8000008068ab:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff8000008068b2:	ff ff ff 
 ffff8000008068b5:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8701,9 +8701,9 @@ ffff8000008068c8:	48 01 d0             	add    rax,rdx
 ffff8000008068cb:	0f b7 80 8d 00 00 00 	movzx  eax,WORD PTR [rax+0x8d]
 ffff8000008068d2:	0f b7 c0             	movzx  eax,ax
 ffff8000008068d5:	89 45 a8             	mov    DWORD PTR [rbp-0x58],eax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:513
-ffff8000008068d8:	81 65 a8 f0 ff 00 00 	and    DWORD PTR [rbp-0x58],0xfff0
 D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:514
+ffff8000008068d8:	81 65 a8 f0 ff 00 00 	and    DWORD PTR [rbp-0x58],0xfff0
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:515
 ffff8000008068df:	8b 45 ac             	mov    eax,DWORD PTR [rbp-0x54]
 ffff8000008068e2:	c1 e8 10             	shr    eax,0x10
 ffff8000008068e5:	83 e0 0f             	and    eax,0xf
@@ -8711,7 +8711,7 @@ ffff8000008068e8:	89 c2                	mov    edx,eax
 ffff8000008068ea:	8b 45 a8             	mov    eax,DWORD PTR [rbp-0x58]
 ffff8000008068ed:	01 d0                	add    eax,edx
 ffff8000008068ef:	89 45 a8             	mov    DWORD PTR [rbp-0x58],eax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:515
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:516
 ffff8000008068f2:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff8000008068f9:	ff ff ff 
 ffff8000008068fc:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8722,26 +8722,26 @@ ffff800000806908:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff80000080690f:	48 01 d0             	add    rax,rdx
 ffff800000806912:	8b 55 a8             	mov    edx,DWORD PTR [rbp-0x58]
 ffff800000806915:	66 89 90 8d 00 00 00 	mov    WORD PTR [rax+0x8d],dx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:516
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:517
 ffff80000080691c:	48 8b 45 c0          	mov    rax,QWORD PTR [rbp-0x40]
 ffff800000806920:	eb 31                	jmp    ffff800000806953 <palloc+0x39a>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:519 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:520 (discriminator 2)
 ffff800000806922:	48 83 45 d0 08       	add    QWORD PTR [rbp-0x30],0x8
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:481 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:482 (discriminator 2)
 ffff800000806927:	83 45 cc 01          	add    DWORD PTR [rbp-0x34],0x1
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:481 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:482 (discriminator 1)
 ffff80000080692b:	81 7d cc ff 03 00 00 	cmp    DWORD PTR [rbp-0x34],0x3ff
 ffff800000806932:	0f 8e 1e fd ff ff    	jle    ffff800000806656 <palloc+0x9d>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:521 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:522 (discriminator 2)
 ffff800000806938:	48 83 45 e0 08       	add    QWORD PTR [rbp-0x20],0x8
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:479 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:480 (discriminator 2)
 ffff80000080693d:	83 45 dc 01          	add    DWORD PTR [rbp-0x24],0x1
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:479 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:480 (discriminator 1)
 ffff800000806941:	81 7d dc ff 03 00 00 	cmp    DWORD PTR [rbp-0x24],0x3ff
 ffff800000806948:	0f 8e ec fc ff ff    	jle    ffff80000080663a <palloc+0x81>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:523
-ffff80000080694e:	b8 00 00 00 00       	mov    eax,0x0
 D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:524
+ffff80000080694e:	b8 00 00 00 00       	mov    eax,0x0
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:525
 ffff800000806953:	48 83 c4 60          	add    rsp,0x60
 ffff800000806957:	5b                   	pop    rbx
 ffff800000806958:	41 5f                	pop    r15
@@ -8750,7 +8750,7 @@ ffff80000080695b:	c3                   	ret
 
 ffff80000080695c <malloc>:
 malloc():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:527
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:528
 ffff80000080695c:	f3 0f 1e fa          	endbr64 
 ffff800000806960:	55                   	push   rbp
 ffff800000806961:	48 89 e5             	mov    rbp,rsp
@@ -8761,7 +8761,7 @@ ffff800000806971:	49 bb 9e e4 11 00 00 	movabs r11,0x11e49e
 ffff800000806978:	00 00 00 
 ffff80000080697b:	4c 01 d8             	add    rax,r11
 ffff80000080697e:	89 7d ec             	mov    DWORD PTR [rbp-0x14],edi
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:528
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:529
 ffff800000806981:	48 ba e0 fd ff ff ff 	movabs rdx,0xfffffffffffffde0
 ffff800000806988:	ff ff ff 
 ffff80000080698b:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
@@ -8774,14 +8774,14 @@ ffff80000080699b:	48 ba b1 17 ee ff ff 	movabs rdx,0xffffffffffee17b1
 ffff8000008069a2:	ff ff ff 
 ffff8000008069a5:	48 01 c2             	add    rdx,rax
 ffff8000008069a8:	ff d2                	call   rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:529
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:530
 ffff8000008069aa:	4c 8b 7d f8          	mov    r15,QWORD PTR [rbp-0x8]
 ffff8000008069ae:	c9                   	leave  
 ffff8000008069af:	c3                   	ret    
 
 ffff8000008069b0 <proc_end>:
 proc_end():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:531
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:532
 ffff8000008069b0:	f3 0f 1e fa          	endbr64 
 ffff8000008069b4:	55                   	push   rbp
 ffff8000008069b5:	48 89 e5             	mov    rbp,rsp
@@ -8792,9 +8792,9 @@ ffff8000008069bf:	48 8d 1d f9 ff ff ff 	lea    rbx,[rip+0xfffffffffffffff9]     
 ffff8000008069c6:	49 bb 49 e4 11 00 00 	movabs r11,0x11e449
 ffff8000008069cd:	00 00 00 
 ffff8000008069d0:	4c 01 db             	add    rbx,r11
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:533
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:534
 ffff8000008069d3:	89 45 ec             	mov    DWORD PTR [rbp-0x14],eax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:537
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:538
 ffff8000008069d6:	48 b8 e0 fd ff ff ff 	movabs rax,0xfffffffffffffde0
 ffff8000008069dd:	ff ff ff 
 ffff8000008069e0:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8805,7 +8805,7 @@ ffff8000008069eb:	48 b8 ef 1c ee ff ff 	movabs rax,0xffffffffffee1cef
 ffff8000008069f2:	ff ff ff 
 ffff8000008069f5:	48 01 d8             	add    rax,rbx
 ffff8000008069f8:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:538
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:539
 ffff8000008069fa:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000806a01:	ff ff ff 
 ffff800000806a04:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8820,7 +8820,7 @@ ffff800000806a24:	48 01 d0             	add    rax,rdx
 ffff800000806a27:	8b 80 bc 00 00 00    	mov    eax,DWORD PTR [rax+0xbc]
 ffff800000806a2d:	83 f8 ff             	cmp    eax,0xffffffff
 ffff800000806a30:	0f 84 a0 00 00 00    	je     ffff800000806ad6 <proc_end+0x126>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:539
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:540
 ffff800000806a36:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000806a3d:	ff ff ff 
 ffff800000806a40:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8841,7 +8841,7 @@ ffff800000806a7a:	89 c0                	mov    eax,eax
 ffff800000806a7c:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff800000806a83:	48 01 d0             	add    rax,rdx
 ffff800000806a86:	c7 40 18 02 00 00 00 	mov    DWORD PTR [rax+0x18],0x2
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:540
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:541
 ffff800000806a8d:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000806a94:	ff ff ff 
 ffff800000806a97:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8860,16 +8860,16 @@ ffff800000806ac5:	48 b8 b5 15 ee ff ff 	movabs rax,0xffffffffffee15b5
 ffff800000806acc:	ff ff ff 
 ffff800000806acf:	48 01 d8             	add    rax,rbx
 ffff800000806ad2:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:545
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:546
 ffff800000806ad4:	eb 17                	jmp    ffff800000806aed <proc_end+0x13d>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:543
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:544
 ffff800000806ad6:	bf 00 00 00 00       	mov    edi,0x0
 ffff800000806adb:	49 89 df             	mov    r15,rbx
 ffff800000806ade:	48 b8 b5 15 ee ff ff 	movabs rax,0xffffffffffee15b5
 ffff800000806ae5:	ff ff ff 
 ffff800000806ae8:	48 01 d8             	add    rax,rbx
 ffff800000806aeb:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:545
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:546
 ffff800000806aed:	90                   	nop
 ffff800000806aee:	48 83 c4 10          	add    rsp,0x10
 ffff800000806af2:	5b                   	pop    rbx
@@ -8879,7 +8879,7 @@ ffff800000806af6:	c3                   	ret
 
 ffff800000806af7 <del_proc>:
 del_proc():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:547
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:548
 ffff800000806af7:	f3 0f 1e fa          	endbr64 
 ffff800000806afb:	55                   	push   rbp
 ffff800000806afc:	48 89 e5             	mov    rbp,rsp
@@ -8891,7 +8891,7 @@ ffff800000806b0d:	49 bb 02 e3 11 00 00 	movabs r11,0x11e302
 ffff800000806b14:	00 00 00 
 ffff800000806b17:	4c 01 db             	add    rbx,r11
 ffff800000806b1a:	89 7d 8c             	mov    DWORD PTR [rbp-0x74],edi
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:548
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:549
 ffff800000806b1d:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000806b24:	ff ff ff 
 ffff800000806b27:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8901,7 +8901,7 @@ ffff800000806b31:	48 98                	cdqe
 ffff800000806b33:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff800000806b3a:	48 01 d0             	add    rax,rdx
 ffff800000806b3d:	c7 40 18 04 00 00 00 	mov    DWORD PTR [rax+0x18],0x4
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:551
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:552
 ffff800000806b44:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000806b4b:	ff ff ff 
 ffff800000806b4e:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8916,7 +8916,7 @@ ffff800000806b6a:	48 b8 4c 35 ee ff ff 	movabs rax,0xffffffffffee354c
 ffff800000806b71:	ff ff ff 
 ffff800000806b74:	48 01 d8             	add    rax,rbx
 ffff800000806b77:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:553
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:554
 ffff800000806b79:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000806b80:	ff ff ff 
 ffff800000806b83:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8932,10 +8932,10 @@ ffff800000806ba6:	48 b8 30 eb ed ff ff 	movabs rax,0xffffffffffedeb30
 ffff800000806bad:	ff ff ff 
 ffff800000806bb0:	48 01 d8             	add    rax,rbx
 ffff800000806bb3:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:555
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:556
 ffff800000806bb5:	c7 45 ec 03 00 00 00 	mov    DWORD PTR [rbp-0x14],0x3
 ffff800000806bbc:	eb 4f                	jmp    ffff800000806c0d <del_proc+0x116>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:556
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:557
 ffff800000806bbe:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000806bc5:	ff ff ff 
 ffff800000806bc8:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8950,7 +8950,7 @@ ffff800000806be4:	48 83 c2 1e          	add    rdx,0x1e
 ffff800000806be8:	48 8b 44 d0 08       	mov    rax,QWORD PTR [rax+rdx*8+0x8]
 ffff800000806bed:	48 85 c0             	test   rax,rax
 ffff800000806bf0:	74 17                	je     ffff800000806c09 <del_proc+0x112>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:556 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:557 (discriminator 1)
 ffff800000806bf2:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
 ffff800000806bf5:	89 c7                	mov    edi,eax
 ffff800000806bf7:	49 89 df             	mov    r15,rbx
@@ -8958,12 +8958,12 @@ ffff800000806bfa:	48 b8 e6 9a ee ff ff 	movabs rax,0xffffffffffee9ae6
 ffff800000806c01:	ff ff ff 
 ffff800000806c04:	48 01 d8             	add    rax,rbx
 ffff800000806c07:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:555 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:556 (discriminator 2)
 ffff800000806c09:	83 45 ec 01          	add    DWORD PTR [rbp-0x14],0x1
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:555 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:556 (discriminator 1)
 ffff800000806c0d:	83 7d ec 1f          	cmp    DWORD PTR [rbp-0x14],0x1f
 ffff800000806c11:	7e ab                	jle    ffff800000806bbe <del_proc+0xc7>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:559
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:560
 ffff800000806c13:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000806c1a:	ff ff ff 
 ffff800000806c1d:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -8975,10 +8975,10 @@ ffff800000806c30:	48 01 d0             	add    rax,rdx
 ffff800000806c33:	48 8b 80 34 03 00 00 	mov    rax,QWORD PTR [rax+0x334]
 ffff800000806c3a:	48 89 45 e0          	mov    QWORD PTR [rbp-0x20],rax
 ffff800000806c3e:	eb 54                	jmp    ffff800000806c94 <del_proc+0x19d>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:561 (discriminator 3)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:562 (discriminator 3)
 ffff800000806c40:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
 ffff800000806c44:	48 89 45 b8          	mov    QWORD PTR [rbp-0x48],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:562 (discriminator 3)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:563 (discriminator 3)
 ffff800000806c48:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
 ffff800000806c4c:	48 8b 40 08          	mov    rax,QWORD PTR [rax+0x8]
 ffff800000806c50:	48 8b 55 b8          	mov    rdx,QWORD PTR [rbp-0x48]
@@ -8990,7 +8990,7 @@ ffff800000806c60:	48 b8 2b a6 ee ff ff 	movabs rax,0xffffffffffeea62b
 ffff800000806c67:	ff ff ff 
 ffff800000806c6a:	48 01 d8             	add    rax,rbx
 ffff800000806c6d:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:563 (discriminator 3)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:564 (discriminator 3)
 ffff800000806c6f:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
 ffff800000806c73:	48 89 c7             	mov    rdi,rax
 ffff800000806c76:	49 89 df             	mov    r15,rbx
@@ -8998,14 +8998,14 @@ ffff800000806c79:	48 b8 30 eb ed ff ff 	movabs rax,0xffffffffffedeb30
 ffff800000806c80:	ff ff ff 
 ffff800000806c83:	48 01 d8             	add    rax,rbx
 ffff800000806c86:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:559 (discriminator 3)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:560 (discriminator 3)
 ffff800000806c88:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
 ffff800000806c8c:	48 8b 40 48          	mov    rax,QWORD PTR [rax+0x48]
 ffff800000806c90:	48 89 45 e0          	mov    QWORD PTR [rbp-0x20],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:559 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:560 (discriminator 1)
 ffff800000806c94:	48 83 7d e0 00       	cmp    QWORD PTR [rbp-0x20],0x0
 ffff800000806c99:	75 a5                	jne    ffff800000806c40 <del_proc+0x149>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:566
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:567
 ffff800000806c9b:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000806ca2:	ff ff ff 
 ffff800000806ca5:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -9017,7 +9017,7 @@ ffff800000806cb8:	48 01 d0             	add    rax,rdx
 ffff800000806cbb:	48 8b 80 5c 03 00 00 	mov    rax,QWORD PTR [rax+0x35c]
 ffff800000806cc2:	48 89 45 d8          	mov    QWORD PTR [rbp-0x28],rax
 ffff800000806cc6:	eb 25                	jmp    ffff800000806ced <del_proc+0x1f6>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:566 (discriminator 3)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:567 (discriminator 3)
 ffff800000806cc8:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
 ffff800000806ccc:	48 89 c7             	mov    rdi,rax
 ffff800000806ccf:	49 89 df             	mov    r15,rbx
@@ -9028,10 +9028,10 @@ ffff800000806cdf:	ff d0                	call   rax
 ffff800000806ce1:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
 ffff800000806ce5:	48 8b 40 10          	mov    rax,QWORD PTR [rax+0x10]
 ffff800000806ce9:	48 89 45 d8          	mov    QWORD PTR [rbp-0x28],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:566 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:567 (discriminator 1)
 ffff800000806ced:	48 83 7d d8 00       	cmp    QWORD PTR [rbp-0x28],0x0
 ffff800000806cf2:	75 d4                	jne    ffff800000806cc8 <del_proc+0x1d1>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:568
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:569
 ffff800000806cf4:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000806cfb:	ff ff ff 
 ffff800000806cfe:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -9052,31 +9052,31 @@ ffff800000806d34:	48 01 c8             	add    rax,rcx
 ffff800000806d37:	8b 00                	mov    eax,DWORD PTR [rax]
 ffff800000806d39:	39 c2                	cmp    edx,eax
 ffff800000806d3b:	0f 85 eb 00 00 00    	jne    ffff800000806e2c <del_proc+0x335>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:570
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:571
 ffff800000806d41:	bf 00 00 00 00       	mov    edi,0x0
 ffff800000806d46:	49 89 df             	mov    r15,rbx
 ffff800000806d49:	48 b8 e6 9a ee ff ff 	movabs rax,0xffffffffffee9ae6
 ffff800000806d50:	ff ff ff 
 ffff800000806d53:	48 01 d8             	add    rax,rbx
 ffff800000806d56:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:571
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:572
 ffff800000806d58:	bf 01 00 00 00       	mov    edi,0x1
 ffff800000806d5d:	49 89 df             	mov    r15,rbx
 ffff800000806d60:	48 b8 e6 9a ee ff ff 	movabs rax,0xffffffffffee9ae6
 ffff800000806d67:	ff ff ff 
 ffff800000806d6a:	48 01 d8             	add    rax,rbx
 ffff800000806d6d:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:572
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:573
 ffff800000806d6f:	bf 02 00 00 00       	mov    edi,0x2
 ffff800000806d74:	49 89 df             	mov    r15,rbx
 ffff800000806d77:	48 b8 e6 9a ee ff ff 	movabs rax,0xffffffffffee9ae6
 ffff800000806d7e:	ff ff ff 
 ffff800000806d81:	48 01 d8             	add    rax,rbx
 ffff800000806d84:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:574
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:575
 ffff800000806d86:	c7 45 d4 00 00 00 00 	mov    DWORD PTR [rbp-0x2c],0x0
 ffff800000806d8d:	e9 90 00 00 00       	jmp    ffff800000806e22 <del_proc+0x32b>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:575
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:576
 ffff800000806d92:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000806d99:	ff ff ff 
 ffff800000806d9c:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -9097,11 +9097,11 @@ ffff800000806dd2:	48 01 c8             	add    rax,rcx
 ffff800000806dd5:	8b 00                	mov    eax,DWORD PTR [rax]
 ffff800000806dd7:	39 c2                	cmp    edx,eax
 ffff800000806dd9:	75 43                	jne    ffff800000806e1e <del_proc+0x327>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:575 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:576 (discriminator 1)
 ffff800000806ddb:	8b 45 d4             	mov    eax,DWORD PTR [rbp-0x2c]
 ffff800000806dde:	3b 45 8c             	cmp    eax,DWORD PTR [rbp-0x74]
 ffff800000806de1:	74 3b                	je     ffff800000806e1e <del_proc+0x327>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:577
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:578
 ffff800000806de3:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000806dea:	ff ff ff 
 ffff800000806ded:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -9118,12 +9118,12 @@ ffff800000806e0f:	48 b8 d8 be ee ff ff 	movabs rax,0xffffffffffeebed8
 ffff800000806e16:	ff ff ff 
 ffff800000806e19:	48 01 d8             	add    rax,rbx
 ffff800000806e1c:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:574 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:575 (discriminator 2)
 ffff800000806e1e:	83 45 d4 01          	add    DWORD PTR [rbp-0x2c],0x1
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:574 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:575 (discriminator 1)
 ffff800000806e22:	83 7d d4 1f          	cmp    DWORD PTR [rbp-0x2c],0x1f
 ffff800000806e26:	0f 8e 66 ff ff ff    	jle    ffff800000806d92 <del_proc+0x29b>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:582
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:583
 ffff800000806e2c:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000806e33:	ff ff ff 
 ffff800000806e36:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -9135,7 +9135,7 @@ ffff800000806e49:	48 01 d0             	add    rax,rdx
 ffff800000806e4c:	48 8b 80 54 03 00 00 	mov    rax,QWORD PTR [rax+0x354]
 ffff800000806e53:	48 89 45 c8          	mov    QWORD PTR [rbp-0x38],rax
 ffff800000806e57:	eb 77                	jmp    ffff800000806ed0 <del_proc+0x3d9>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:583
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:584
 ffff800000806e59:	48 8b 45 c8          	mov    rax,QWORD PTR [rbp-0x38]
 ffff800000806e5d:	8b 00                	mov    eax,DWORD PTR [rax]
 ffff800000806e5f:	be 01 00 00 00       	mov    esi,0x1
@@ -9145,11 +9145,11 @@ ffff800000806e69:	48 b8 d8 be ee ff ff 	movabs rax,0xffffffffffeebed8
 ffff800000806e70:	ff ff ff 
 ffff800000806e73:	48 01 d8             	add    rax,rbx
 ffff800000806e76:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:584
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:585
 ffff800000806e78:	48 8b 45 c8          	mov    rax,QWORD PTR [rbp-0x38]
 ffff800000806e7c:	48 8b 80 4c 03 00 00 	mov    rax,QWORD PTR [rax+0x34c]
 ffff800000806e83:	48 89 45 c0          	mov    QWORD PTR [rbp-0x40],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:586
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:587
 ffff800000806e87:	48 8b 45 c8          	mov    rax,QWORD PTR [rbp-0x38]
 ffff800000806e8b:	48 8d 90 3c 03 00 00 	lea    rdx,[rax+0x33c]
 ffff800000806e92:	48 8b 45 c8          	mov    rax,QWORD PTR [rbp-0x38]
@@ -9173,12 +9173,12 @@ D:/Code/Comprehensive/OS/workspace/64/include/vfs.h:41
 ffff800000806ec4:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
 ffff800000806ec8:	48 2b 45 a0          	sub    rax,QWORD PTR [rbp-0x60]
 del_proc():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:586
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:587
 ffff800000806ecc:	48 89 45 c8          	mov    QWORD PTR [rbp-0x38],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:582 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:583 (discriminator 1)
 ffff800000806ed0:	48 83 7d c8 00       	cmp    QWORD PTR [rbp-0x38],0x0
 ffff800000806ed5:	75 82                	jne    ffff800000806e59 <del_proc+0x362>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:591
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:592
 ffff800000806ed7:	90                   	nop
 ffff800000806ed8:	90                   	nop
 ffff800000806ed9:	48 83 c4 70          	add    rsp,0x70
@@ -9189,7 +9189,7 @@ ffff800000806ee1:	c3                   	ret
 
 ffff800000806ee2 <set_proc_stat>:
 set_proc_stat():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:594
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:595
 ffff800000806ee2:	f3 0f 1e fa          	endbr64 
 ffff800000806ee6:	55                   	push   rbp
 ffff800000806ee7:	48 89 e5             	mov    rbp,rsp
@@ -9199,19 +9199,19 @@ ffff800000806ef8:	00 00 00
 ffff800000806efb:	4c 01 d8             	add    rax,r11
 ffff800000806efe:	89 7d ec             	mov    DWORD PTR [rbp-0x14],edi
 ffff800000806f01:	89 75 e8             	mov    DWORD PTR [rbp-0x18],esi
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:595
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:596
 ffff800000806f04:	83 7d ec ff          	cmp    DWORD PTR [rbp-0x14],0xffffffff
 ffff800000806f08:	75 0a                	jne    ffff800000806f14 <set_proc_stat+0x32>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:595 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:596 (discriminator 1)
 ffff800000806f0a:	b8 ff ff ff ff       	mov    eax,0xffffffff
 ffff800000806f0f:	e9 b9 00 00 00       	jmp    ffff800000806fcd <set_proc_stat+0xeb>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:596
-ffff800000806f14:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
 D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:597
+ffff800000806f14:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:598
 ffff800000806f1b:	eb 04                	jmp    ffff800000806f21 <set_proc_stat+0x3f>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:597 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:598 (discriminator 2)
 ffff800000806f1d:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:597 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:598 (discriminator 1)
 ffff800000806f21:	48 ba 60 fe ff ff ff 	movabs rdx,0xfffffffffffffe60
 ffff800000806f28:	ff ff ff 
 ffff800000806f2b:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
@@ -9224,13 +9224,13 @@ ffff800000806f42:	8b 0a                	mov    ecx,DWORD PTR [rdx]
 ffff800000806f44:	8b 55 ec             	mov    edx,DWORD PTR [rbp-0x14]
 ffff800000806f47:	39 d1                	cmp    ecx,edx
 ffff800000806f49:	75 d2                	jne    ffff800000806f1d <set_proc_stat+0x3b>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:599
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:600
 ffff800000806f4b:	83 7d fc 40          	cmp    DWORD PTR [rbp-0x4],0x40
 ffff800000806f4f:	75 07                	jne    ffff800000806f58 <set_proc_stat+0x76>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:599 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:600 (discriminator 1)
 ffff800000806f51:	b8 ff ff ff ff       	mov    eax,0xffffffff
 ffff800000806f56:	eb 75                	jmp    ffff800000806fcd <set_proc_stat+0xeb>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:600
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:601
 ffff800000806f58:	48 ba 60 fe ff ff ff 	movabs rdx,0xfffffffffffffe60
 ffff800000806f5f:	ff ff ff 
 ffff800000806f62:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
@@ -9241,14 +9241,14 @@ ffff800000806f6f:	48 69 d2 68 03 00 00 	imul   rdx,rdx,0x368
 ffff800000806f76:	48 01 d1             	add    rcx,rdx
 ffff800000806f79:	8b 55 e8             	mov    edx,DWORD PTR [rbp-0x18]
 ffff800000806f7c:	89 51 18             	mov    DWORD PTR [rcx+0x18],edx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:602
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:603
 ffff800000806f7f:	48 ba e0 fd ff ff ff 	movabs rdx,0xfffffffffffffde0
 ffff800000806f86:	ff ff ff 
 ffff800000806f89:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
 ffff800000806f8d:	8b 12                	mov    edx,DWORD PTR [rdx]
 ffff800000806f8f:	39 55 fc             	cmp    DWORD PTR [rbp-0x4],edx
 ffff800000806f92:	75 34                	jne    ffff800000806fc8 <set_proc_stat+0xe6>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:602 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:603 (discriminator 1)
 ffff800000806f94:	48 ba 60 fe ff ff ff 	movabs rdx,0xfffffffffffffe60
 ffff800000806f9b:	ff ff ff 
 ffff800000806f9e:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
@@ -9261,15 +9261,15 @@ ffff800000806fb5:	48 98                	cdqe
 ffff800000806fb7:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff800000806fbe:	48 01 c8             	add    rax,rcx
 ffff800000806fc1:	c7 40 1c 0a 00 00 00 	mov    DWORD PTR [rax+0x1c],0xa
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:603
-ffff800000806fc8:	b8 00 00 00 00       	mov    eax,0x0
 D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:604
+ffff800000806fc8:	b8 00 00 00 00       	mov    eax,0x0
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:605
 ffff800000806fcd:	5d                   	pop    rbp
 ffff800000806fce:	c3                   	ret    
 
 ffff800000806fcf <sys_exit>:
 sys_exit():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:636
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:637
 ffff800000806fcf:	f3 0f 1e fa          	endbr64 
 ffff800000806fd3:	55                   	push   rbp
 ffff800000806fd4:	48 89 e5             	mov    rbp,rsp
@@ -9281,14 +9281,14 @@ ffff800000806fe5:	49 bb 2a de 11 00 00 	movabs r11,0x11de2a
 ffff800000806fec:	00 00 00 
 ffff800000806fef:	4c 01 db             	add    rbx,r11
 ffff800000806ff2:	89 7d ec             	mov    DWORD PTR [rbp-0x14],edi
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:637
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:638
 ffff800000806ff5:	48 b8 48 fe ff ff ff 	movabs rax,0xfffffffffffffe48
 ffff800000806ffc:	ff ff ff 
 ffff800000806fff:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
 ffff800000807003:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff800000807006:	8b 55 ec             	mov    edx,DWORD PTR [rbp-0x14]
 ffff800000807009:	89 50 24             	mov    DWORD PTR [rax+0x24],edx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:638
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:639
 ffff80000080700c:	48 b8 e0 fd ff ff ff 	movabs rax,0xfffffffffffffde0
 ffff800000807013:	ff ff ff 
 ffff800000807016:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -9299,7 +9299,7 @@ ffff800000807021:	48 b8 ef 1c ee ff ff 	movabs rax,0xffffffffffee1cef
 ffff800000807028:	ff ff ff 
 ffff80000080702b:	48 01 d8             	add    rax,rbx
 ffff80000080702e:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:639 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:640 (discriminator 1)
 ffff800000807030:	49 89 df             	mov    r15,rbx
 ffff800000807033:	b8 00 00 00 00       	mov    eax,0x0
 ffff800000807038:	48 ba 6f 12 ee ff ff 	movabs rdx,0xffffffffffee126f
@@ -9310,7 +9310,7 @@ ffff800000807047:	eb e7                	jmp    ffff800000807030 <sys_exit+0x61>
 
 ffff800000807049 <reg_proc>:
 reg_proc():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:695
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:696
 ffff800000807049:	f3 0f 1e fa          	endbr64 
 ffff80000080704d:	55                   	push   rbp
 ffff80000080704e:	48 89 e5             	mov    rbp,rsp
@@ -9325,7 +9325,7 @@ ffff80000080706b:	4c 01 db             	add    rbx,r11
 ffff80000080706e:	48 89 7d b8          	mov    QWORD PTR [rbp-0x48],rdi
 ffff800000807072:	48 89 75 b0          	mov    QWORD PTR [rbp-0x50],rsi
 ffff800000807076:	48 89 55 a8          	mov    QWORD PTR [rbp-0x58],rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:697
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:698
 ffff80000080707a:	49 89 df             	mov    r15,rbx
 ffff80000080707d:	b8 00 00 00 00       	mov    eax,0x0
 ffff800000807082:	48 ba 1c 0f ee ff ff 	movabs rdx,0xffffffffffee0f1c
@@ -9333,13 +9333,13 @@ ffff800000807089:	ff ff ff
 ffff80000080708c:	48 01 da             	add    rdx,rbx
 ffff80000080708f:	ff d2                	call   rdx
 ffff800000807091:	89 45 dc             	mov    DWORD PTR [rbp-0x24],eax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:698
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:699
 ffff800000807094:	83 7d dc ff          	cmp    DWORD PTR [rbp-0x24],0xffffffff
 ffff800000807098:	75 0a                	jne    ffff8000008070a4 <reg_proc+0x5b>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:698 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:699 (discriminator 1)
 ffff80000080709a:	b8 ff ff ff ff       	mov    eax,0xffffffff
 ffff80000080709f:	e9 90 02 00 00       	jmp    ffff800000807334 <reg_proc+0x2eb>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:701
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:702
 ffff8000008070a4:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
 ffff8000008070a8:	48 83 ec 08          	sub    rsp,0x8
 ffff8000008070ac:	8b 55 dc             	mov    edx,DWORD PTR [rbp-0x24]
@@ -9368,7 +9368,7 @@ ffff8000008070f8:	ff ff ff
 ffff8000008070fb:	48 01 d8             	add    rax,rbx
 ffff8000008070fe:	ff d0                	call   rax
 ffff800000807100:	48 83 c4 60          	add    rsp,0x60
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:718
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:719
 ffff800000807104:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff80000080710b:	ff ff ff 
 ffff80000080710e:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -9386,7 +9386,7 @@ ffff80000080713c:	48 01 d8             	add    rax,rbx
 ffff80000080713f:	ff d0                	call   rax
 ffff800000807141:	49 89 84 24 e0 00 00 	mov    QWORD PTR [r12+0xe0],rax
 ffff800000807148:	00 
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:719
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:720
 ffff800000807149:	be 00 10 00 00       	mov    esi,0x1000
 ffff80000080714e:	bf 00 00 00 00       	mov    edi,0x0
 ffff800000807153:	49 89 df             	mov    r15,rbx
@@ -9405,7 +9405,7 @@ ffff80000080717e:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff800000807185:	48 01 c8             	add    rax,rcx
 ffff800000807188:	48 8b 80 e0 00 00 00 	mov    rax,QWORD PTR [rax+0xe0]
 ffff80000080718f:	48 89 10             	mov    QWORD PTR [rax],rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:720
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:721
 ffff800000807192:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000807199:	ff ff ff 
 ffff80000080719c:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -9416,7 +9416,7 @@ ffff8000008071a8:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff8000008071af:	48 01 d0             	add    rax,rdx
 ffff8000008071b2:	48 8b 80 e0 00 00 00 	mov    rax,QWORD PTR [rax+0xe0]
 ffff8000008071b9:	48 89 45 d0          	mov    QWORD PTR [rbp-0x30],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:722
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:723
 ffff8000008071bd:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
 ffff8000008071c1:	ba 03 00 00 00       	mov    edx,0x3
 ffff8000008071c6:	be 00 00 00 00       	mov    esi,0x0
@@ -9426,7 +9426,7 @@ ffff8000008071d1:	48 b8 9e f0 ed ff ff 	movabs rax,0xffffffffffedf09e
 ffff8000008071d8:	ff ff ff 
 ffff8000008071db:	48 01 d8             	add    rax,rbx
 ffff8000008071de:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:725
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:726
 ffff8000008071e0:	be 00 10 00 00       	mov    esi,0x1000
 ffff8000008071e5:	bf 00 00 00 00       	mov    edi,0x0
 ffff8000008071ea:	49 89 df             	mov    r15,rbx
@@ -9435,13 +9435,13 @@ ffff8000008071f4:	ff ff ff
 ffff8000008071f7:	48 01 d8             	add    rax,rbx
 ffff8000008071fa:	ff d0                	call   rax
 ffff8000008071fc:	48 89 45 c8          	mov    QWORD PTR [rbp-0x38],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:726
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:727
 ffff800000807200:	48 8b 55 c8          	mov    rdx,QWORD PTR [rbp-0x38]
 ffff800000807204:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
 ffff800000807208:	48 83 c0 18          	add    rax,0x18
 ffff80000080720c:	48 83 ca 07          	or     rdx,0x7
 ffff800000807210:	48 89 10             	mov    QWORD PTR [rax],rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:727
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:728
 ffff800000807213:	49 89 df             	mov    r15,rbx
 ffff800000807216:	b8 00 00 00 00       	mov    eax,0x0
 ffff80000080721b:	48 ba 3e e6 ed ff ff 	movabs rdx,0xffffffffffede63e
@@ -9465,7 +9465,7 @@ ffff800000807257:	48 b8 09 f1 ed ff ff 	movabs rax,0xffffffffffedf109
 ffff80000080725e:	ff ff ff 
 ffff800000807261:	48 01 d8             	add    rax,rbx
 ffff800000807264:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:728
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:729
 ffff800000807266:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff80000080726d:	ff ff ff 
 ffff800000807270:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -9484,7 +9484,7 @@ ffff8000008072a1:	48 98                	cdqe
 ffff8000008072a3:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff8000008072aa:	48 01 c8             	add    rax,rcx
 ffff8000008072ad:	48 89 90 64 02 00 00 	mov    QWORD PTR [rax+0x264],rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:730
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:731
 ffff8000008072b4:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff8000008072bb:	ff ff ff 
 ffff8000008072be:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -9494,7 +9494,7 @@ ffff8000008072c8:	48 98                	cdqe
 ffff8000008072ca:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff8000008072d1:	48 01 d0             	add    rax,rdx
 ffff8000008072d4:	c7 40 18 02 00 00 00 	mov    DWORD PTR [rax+0x18],0x2
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:731
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:732
 ffff8000008072db:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff8000008072e2:	ff ff ff 
 ffff8000008072e5:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -9505,7 +9505,7 @@ ffff8000008072f1:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff8000008072f8:	48 01 c2             	add    rdx,rax
 ffff8000008072fb:	48 8b 45 b0          	mov    rax,QWORD PTR [rbp-0x50]
 ffff8000008072ff:	48 89 82 e8 00 00 00 	mov    QWORD PTR [rdx+0xe8],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:732
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:733
 ffff800000807306:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff80000080730d:	ff ff ff 
 ffff800000807310:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -9516,9 +9516,9 @@ ffff80000080731c:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff800000807323:	48 01 c2             	add    rdx,rax
 ffff800000807326:	48 8b 45 a8          	mov    rax,QWORD PTR [rbp-0x58]
 ffff80000080732a:	48 89 82 f0 00 00 00 	mov    QWORD PTR [rdx+0xf0],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:734
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:735
 ffff800000807331:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:789
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:790
 ffff800000807334:	48 8d 65 e8          	lea    rsp,[rbp-0x18]
 ffff800000807338:	5b                   	pop    rbx
 ffff800000807339:	41 5c                	pop    r12
@@ -9528,7 +9528,7 @@ ffff80000080733e:	c3                   	ret
 
 ffff80000080733f <do_brk>:
 do_brk():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:792
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:793
 ffff80000080733f:	f3 0f 1e fa          	endbr64 
 ffff800000807343:	55                   	push   rbp
 ffff800000807344:	48 89 e5             	mov    rbp,rsp
@@ -9539,7 +9539,7 @@ ffff800000807354:	49 bb bb da 11 00 00 	movabs r11,0x11dabb
 ffff80000080735b:	00 00 00 
 ffff80000080735e:	4c 01 d8             	add    rax,r11
 ffff800000807361:	48 89 7d d8          	mov    QWORD PTR [rbp-0x28],rdi
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:810
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:811
 ffff800000807365:	48 8b 55 d8          	mov    rdx,QWORD PTR [rbp-0x28]
 ffff800000807369:	81 c2 ff 0f 00 00    	add    edx,0xfff
 ffff80000080736f:	81 e2 00 f0 ff ff    	and    edx,0xfffff000
@@ -9552,11 +9552,11 @@ ffff800000807389:	48 8b 52 30          	mov    rdx,QWORD PTR [rdx+0x30]
 ffff80000080738d:	81 c2 ff 0f 00 00    	add    edx,0xfff
 ffff800000807393:	81 e2 00 f0 ff ff    	and    edx,0xfffff000
 ffff800000807399:	89 55 e8             	mov    DWORD PTR [rbp-0x18],edx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:811
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:812
 ffff80000080739c:	8b 55 e8             	mov    edx,DWORD PTR [rbp-0x18]
 ffff80000080739f:	3b 55 ec             	cmp    edx,DWORD PTR [rbp-0x14]
 ffff8000008073a2:	0f 8d 84 00 00 00    	jge    ffff80000080742c <do_brk+0xed>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:813
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:814
 ffff8000008073a8:	48 ba 48 fe ff ff ff 	movabs rdx,0xfffffffffffffe48
 ffff8000008073af:	ff ff ff 
 ffff8000008073b2:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
@@ -9565,14 +9565,14 @@ ffff8000008073b9:	48 8b 52 38          	mov    rdx,QWORD PTR [rdx+0x38]
 ffff8000008073bd:	48 2b 55 d8          	sub    rdx,QWORD PTR [rbp-0x28]
 ffff8000008073c1:	48 81 fa ff 0f 00 00 	cmp    rdx,0xfff
 ffff8000008073c8:	77 07                	ja     ffff8000008073d1 <do_brk+0x92>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:815
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:816
 ffff8000008073ca:	b8 00 00 00 00       	mov    eax,0x0
 ffff8000008073cf:	eb 5f                	jmp    ffff800000807430 <do_brk+0xf1>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:818
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:819
 ffff8000008073d1:	8b 55 ec             	mov    edx,DWORD PTR [rbp-0x14]
 ffff8000008073d4:	2b 55 e8             	sub    edx,DWORD PTR [rbp-0x18]
 ffff8000008073d7:	c1 e2 0c             	shl    edx,0xc
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:817
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:818
 ffff8000008073da:	48 63 f2             	movsxd rsi,edx
 ffff8000008073dd:	48 ba 48 fe ff ff ff 	movabs rdx,0xfffffffffffffe48
 ffff8000008073e4:	ff ff ff 
@@ -9591,16 +9591,16 @@ ffff80000080741c:	49 ba e1 a6 ee ff ff 	movabs r10,0xffffffffffeea6e1
 ffff800000807423:	ff ff ff 
 ffff800000807426:	49 01 c2             	add    r10,rax
 ffff800000807429:	41 ff d2             	call   r10
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:845
-ffff80000080742c:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
 D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:846
+ffff80000080742c:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:847
 ffff800000807430:	4c 8b 7d f8          	mov    r15,QWORD PTR [rbp-0x8]
 ffff800000807434:	c9                   	leave  
 ffff800000807435:	c3                   	ret    
 
 ffff800000807436 <sys_free>:
 sys_free():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:848
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:849
 ffff800000807436:	f3 0f 1e fa          	endbr64 
 ffff80000080743a:	55                   	push   rbp
 ffff80000080743b:	48 89 e5             	mov    rbp,rsp
@@ -9609,26 +9609,26 @@ ffff800000807445:	49 bb ca d9 11 00 00 	movabs r11,0x11d9ca
 ffff80000080744c:	00 00 00 
 ffff80000080744f:	4c 01 d8             	add    rax,r11
 ffff800000807452:	89 7d ec             	mov    DWORD PTR [rbp-0x14],edi
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:849
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:850
 ffff800000807455:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
 ffff800000807458:	2d 00 10 00 00       	sub    eax,0x1000
 ffff80000080745d:	48 98                	cdqe   
 ffff80000080745f:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:850
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:851
 ffff800000807463:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
 ffff800000807467:	c7 40 04 00 00 00 00 	mov    DWORD PTR [rax+0x4],0x0
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:852
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:853
 ffff80000080746e:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
 ffff800000807472:	48 8b 40 08          	mov    rax,QWORD PTR [rax+0x8]
 ffff800000807476:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:853
-ffff80000080747a:	eb 2e                	jmp    ffff8000008074aa <sys_free+0x74>
 D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:854
+ffff80000080747a:	eb 2e                	jmp    ffff8000008074aa <sys_free+0x74>
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:855
 ffff80000080747c:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 ffff800000807480:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
 ffff800000807483:	85 c0                	test   eax,eax
 ffff800000807485:	75 2c                	jne    ffff8000008074b3 <sys_free+0x7d>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:855
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:856
 ffff800000807487:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
 ffff80000080748b:	8b 10                	mov    edx,DWORD PTR [rax]
 ffff80000080748d:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
@@ -9637,28 +9637,28 @@ ffff800000807493:	83 c0 01             	add    eax,0x1
 ffff800000807496:	01 c2                	add    edx,eax
 ffff800000807498:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
 ffff80000080749c:	89 10                	mov    DWORD PTR [rax],edx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:859
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:860
 ffff80000080749e:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 ffff8000008074a2:	48 8b 40 08          	mov    rax,QWORD PTR [rax+0x8]
 ffff8000008074a6:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:853
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:854
 ffff8000008074aa:	48 83 7d f8 00       	cmp    QWORD PTR [rbp-0x8],0x0
 ffff8000008074af:	75 cb                	jne    ffff80000080747c <sys_free+0x46>
 ffff8000008074b1:	eb 01                	jmp    ffff8000008074b4 <sys_free+0x7e>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:858
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:859
 ffff8000008074b3:	90                   	nop
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:862
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:863
 ffff8000008074b4:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
 ffff8000008074b8:	48 8b 40 10          	mov    rax,QWORD PTR [rax+0x10]
 ffff8000008074bc:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:863
-ffff8000008074c0:	eb 2e                	jmp    ffff8000008074f0 <sys_free+0xba>
 D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:864
+ffff8000008074c0:	eb 2e                	jmp    ffff8000008074f0 <sys_free+0xba>
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:865
 ffff8000008074c2:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 ffff8000008074c6:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
 ffff8000008074c9:	85 c0                	test   eax,eax
 ffff8000008074cb:	75 2c                	jne    ffff8000008074f9 <sys_free+0xc3>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:865
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:866
 ffff8000008074cd:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 ffff8000008074d1:	8b 10                	mov    edx,DWORD PTR [rax]
 ffff8000008074d3:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
@@ -9667,25 +9667,25 @@ ffff8000008074d9:	83 c0 01             	add    eax,0x1
 ffff8000008074dc:	01 c2                	add    edx,eax
 ffff8000008074de:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 ffff8000008074e2:	89 10                	mov    DWORD PTR [rax],edx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:869
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:870
 ffff8000008074e4:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 ffff8000008074e8:	48 8b 40 10          	mov    rax,QWORD PTR [rax+0x10]
 ffff8000008074ec:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:863
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:864
 ffff8000008074f0:	48 83 7d f8 00       	cmp    QWORD PTR [rbp-0x8],0x0
 ffff8000008074f5:	75 cb                	jne    ffff8000008074c2 <sys_free+0x8c>
 ffff8000008074f7:	eb 01                	jmp    ffff8000008074fa <sys_free+0xc4>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:868
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:869
 ffff8000008074f9:	90                   	nop
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:872
-ffff8000008074fa:	b8 00 00 00 00       	mov    eax,0x0
 D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:873
+ffff8000008074fa:	b8 00 00 00 00       	mov    eax,0x0
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:874
 ffff8000008074ff:	5d                   	pop    rbp
 ffff800000807500:	c3                   	ret    
 
 ffff800000807501 <switch_to>:
 switch_to():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:876
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:877
 ffff800000807501:	f3 0f 1e fa          	endbr64 
 ffff800000807505:	55                   	push   rbp
 ffff800000807506:	48 89 e5             	mov    rbp,rsp
@@ -9696,7 +9696,7 @@ ffff800000807518:	00 00 00
 ffff80000080751b:	4c 01 d8             	add    rax,r11
 ffff80000080751e:	48 89 7d f0          	mov    QWORD PTR [rbp-0x10],rdi
 ffff800000807522:	48 89 75 e8          	mov    QWORD PTR [rbp-0x18],rsi
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:877
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:878
 ffff800000807526:	48 ba 60 fe ff ff ff 	movabs rdx,0xfffffffffffffe60
 ffff80000080752d:	ff ff ff 
 ffff800000807530:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
@@ -9713,7 +9713,7 @@ ffff800000807555:	48 ba e0 fd ff ff ff 	movabs rdx,0xfffffffffffffde0
 ffff80000080755c:	ff ff ff 
 ffff80000080755f:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
 ffff800000807563:	89 0a                	mov    DWORD PTR [rdx],ecx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:878
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:879
 ffff800000807565:	48 ba 60 fe ff ff ff 	movabs rdx,0xfffffffffffffe60
 ffff80000080756c:	ff ff ff 
 ffff80000080756f:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
@@ -9729,11 +9729,11 @@ ffff800000807593:	48 b9 48 fe ff ff ff 	movabs rcx,0xfffffffffffffe48
 ffff80000080759a:	ff ff ff 
 ffff80000080759d:	48 8b 04 08          	mov    rax,QWORD PTR [rax+rcx*1]
 ffff8000008075a1:	48 89 10             	mov    QWORD PTR [rax],rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:880
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:881
 ffff8000008075a4:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
 ffff8000008075a8:	48 8b 80 64 02 00 00 	mov    rax,QWORD PTR [rax+0x264]
 ffff8000008075af:	0f 22 d8             	mov    cr3,rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:883
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:884
 ffff8000008075b2:	4c 8b 4d f0          	mov    r9,QWORD PTR [rbp-0x10]
 ffff8000008075b6:	4c 8b 55 f0          	mov    r10,QWORD PTR [rbp-0x10]
 ffff8000008075ba:	4c 8b 5d f0          	mov    r11,QWORD PTR [rbp-0x10]
@@ -9755,7 +9755,7 @@ ffff80000080760a:	eb 08                	jmp    ffff800000807614 <__switch_to>
 
 ffff80000080760c <done>:
 ffff80000080760c:	90                   	nop
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:901
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:902
 ffff80000080760d:	90                   	nop
 ffff80000080760e:	48 8b 5d f8          	mov    rbx,QWORD PTR [rbp-0x8]
 ffff800000807612:	c9                   	leave  
@@ -9763,7 +9763,7 @@ ffff800000807613:	c3                   	ret
 
 ffff800000807614 <__switch_to>:
 __switch_to():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:903
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:904
 ffff800000807614:	f3 0f 1e fa          	endbr64 
 ffff800000807618:	55                   	push   rbp
 ffff800000807619:	48 89 e5             	mov    rbp,rsp
@@ -9777,7 +9777,7 @@ ffff800000807633:	00 00 00
 ffff800000807636:	4c 01 d8             	add    rax,r11
 ffff800000807639:	48 89 7d d8          	mov    QWORD PTR [rbp-0x28],rdi
 ffff80000080763d:	48 89 75 d0          	mov    QWORD PTR [rbp-0x30],rsi
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:904
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:905
 ffff800000807641:	48 8b 55 d0          	mov    rdx,QWORD PTR [rbp-0x30]
 ffff800000807645:	4c 8b 9a 4c 02 00 00 	mov    r11,QWORD PTR [rdx+0x24c]
 ffff80000080764c:	48 8b 55 d0          	mov    rdx,QWORD PTR [rbp-0x30]
@@ -9810,7 +9810,7 @@ ffff8000008076c7:	ff ff ff
 ffff8000008076ca:	49 01 c2             	add    r10,rax
 ffff8000008076cd:	41 ff d2             	call   r10
 ffff8000008076d0:	48 83 c4 20          	add    rsp,0x20
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:914
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:915
 ffff8000008076d4:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
 ffff8000008076d8:	48 8b 75 d0          	mov    rsi,QWORD PTR [rbp-0x30]
 ffff8000008076dc:	48 8b 55 d8          	mov    rdx,QWORD PTR [rbp-0x28]
@@ -9820,7 +9820,7 @@ ffff8000008076ea:	8c ae e4 02 00 00    	mov    WORD PTR [rsi+0x2e4],gs
 ffff8000008076f0:	8e a2 dc 02 00 00    	mov    fs,WORD PTR [rdx+0x2dc]
 ffff8000008076f6:	8e a9 e4 02 00 00    	mov    gs,WORD PTR [rcx+0x2e4]
 ffff8000008076fc:	90                   	nop
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:921
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:922
 ffff8000008076fd:	90                   	nop
 ffff8000008076fe:	48 8d 65 e8          	lea    rsp,[rbp-0x18]
 ffff800000807702:	5b                   	pop    rbx
@@ -9831,7 +9831,7 @@ ffff800000807708:	c3                   	ret
 
 ffff800000807709 <set_tss>:
 set_tss():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:925
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:926
 ffff800000807709:	f3 0f 1e fa          	endbr64 
 ffff80000080770d:	55                   	push   rbp
 ffff80000080770e:	48 89 e5             	mov    rbp,rsp
@@ -9845,84 +9845,84 @@ ffff80000080772d:	48 89 55 e8          	mov    QWORD PTR [rbp-0x18],rdx
 ffff800000807731:	48 89 4d e0          	mov    QWORD PTR [rbp-0x20],rcx
 ffff800000807735:	4c 89 45 d8          	mov    QWORD PTR [rbp-0x28],r8
 ffff800000807739:	4c 89 4d d0          	mov    QWORD PTR [rbp-0x30],r9
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:926
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:927
 ffff80000080773d:	48 ba c8 fd ff ff ff 	movabs rdx,0xfffffffffffffdc8
 ffff800000807744:	ff ff ff 
 ffff800000807747:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
 ffff80000080774b:	48 8b 12             	mov    rdx,QWORD PTR [rdx]
 ffff80000080774e:	48 8b 4d f8          	mov    rcx,QWORD PTR [rbp-0x8]
 ffff800000807752:	48 89 4a 04          	mov    QWORD PTR [rdx+0x4],rcx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:927
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:928
 ffff800000807756:	48 ba c8 fd ff ff ff 	movabs rdx,0xfffffffffffffdc8
 ffff80000080775d:	ff ff ff 
 ffff800000807760:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
 ffff800000807764:	48 8b 12             	mov    rdx,QWORD PTR [rdx]
 ffff800000807767:	48 8b 4d f0          	mov    rcx,QWORD PTR [rbp-0x10]
 ffff80000080776b:	48 89 4a 0c          	mov    QWORD PTR [rdx+0xc],rcx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:928
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:929
 ffff80000080776f:	48 ba c8 fd ff ff ff 	movabs rdx,0xfffffffffffffdc8
 ffff800000807776:	ff ff ff 
 ffff800000807779:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
 ffff80000080777d:	48 8b 12             	mov    rdx,QWORD PTR [rdx]
 ffff800000807780:	48 8b 4d e8          	mov    rcx,QWORD PTR [rbp-0x18]
 ffff800000807784:	48 89 4a 14          	mov    QWORD PTR [rdx+0x14],rcx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:929
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:930
 ffff800000807788:	48 ba c8 fd ff ff ff 	movabs rdx,0xfffffffffffffdc8
 ffff80000080778f:	ff ff ff 
 ffff800000807792:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
 ffff800000807796:	48 8b 12             	mov    rdx,QWORD PTR [rdx]
 ffff800000807799:	48 8b 4d e0          	mov    rcx,QWORD PTR [rbp-0x20]
 ffff80000080779d:	48 89 4a 24          	mov    QWORD PTR [rdx+0x24],rcx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:930
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:931
 ffff8000008077a1:	48 ba c8 fd ff ff ff 	movabs rdx,0xfffffffffffffdc8
 ffff8000008077a8:	ff ff ff 
 ffff8000008077ab:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
 ffff8000008077af:	48 8b 12             	mov    rdx,QWORD PTR [rdx]
 ffff8000008077b2:	48 8b 4d d8          	mov    rcx,QWORD PTR [rbp-0x28]
 ffff8000008077b6:	48 89 4a 2c          	mov    QWORD PTR [rdx+0x2c],rcx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:931
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:932
 ffff8000008077ba:	48 ba c8 fd ff ff ff 	movabs rdx,0xfffffffffffffdc8
 ffff8000008077c1:	ff ff ff 
 ffff8000008077c4:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
 ffff8000008077c8:	48 8b 12             	mov    rdx,QWORD PTR [rdx]
 ffff8000008077cb:	48 8b 4d d0          	mov    rcx,QWORD PTR [rbp-0x30]
 ffff8000008077cf:	48 89 4a 34          	mov    QWORD PTR [rdx+0x34],rcx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:932
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:933
 ffff8000008077d3:	48 ba c8 fd ff ff ff 	movabs rdx,0xfffffffffffffdc8
 ffff8000008077da:	ff ff ff 
 ffff8000008077dd:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
 ffff8000008077e1:	48 8b 12             	mov    rdx,QWORD PTR [rdx]
 ffff8000008077e4:	48 8b 4d 10          	mov    rcx,QWORD PTR [rbp+0x10]
 ffff8000008077e8:	48 89 4a 3c          	mov    QWORD PTR [rdx+0x3c],rcx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:933
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:934
 ffff8000008077ec:	48 ba c8 fd ff ff ff 	movabs rdx,0xfffffffffffffdc8
 ffff8000008077f3:	ff ff ff 
 ffff8000008077f6:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
 ffff8000008077fa:	48 8b 12             	mov    rdx,QWORD PTR [rdx]
 ffff8000008077fd:	48 8b 4d 18          	mov    rcx,QWORD PTR [rbp+0x18]
 ffff800000807801:	48 89 4a 44          	mov    QWORD PTR [rdx+0x44],rcx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:934
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:935
 ffff800000807805:	48 ba c8 fd ff ff ff 	movabs rdx,0xfffffffffffffdc8
 ffff80000080780c:	ff ff ff 
 ffff80000080780f:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
 ffff800000807813:	48 8b 12             	mov    rdx,QWORD PTR [rdx]
 ffff800000807816:	48 8b 4d 20          	mov    rcx,QWORD PTR [rbp+0x20]
 ffff80000080781a:	48 89 4a 4c          	mov    QWORD PTR [rdx+0x4c],rcx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:935
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:936
 ffff80000080781e:	48 ba c8 fd ff ff ff 	movabs rdx,0xfffffffffffffdc8
 ffff800000807825:	ff ff ff 
 ffff800000807828:	48 8b 04 10          	mov    rax,QWORD PTR [rax+rdx*1]
 ffff80000080782c:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff80000080782f:	48 8b 55 28          	mov    rdx,QWORD PTR [rbp+0x28]
 ffff800000807833:	48 89 50 54          	mov    QWORD PTR [rax+0x54],rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:936
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:937
 ffff800000807837:	90                   	nop
 ffff800000807838:	5d                   	pop    rbp
 ffff800000807839:	c3                   	ret    
 
 ffff80000080783a <fork_child_ret>:
 fork_child_ret():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:939
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:940
 ffff80000080783a:	f3 0f 1e fa          	endbr64 
 ffff80000080783e:	55                   	push   rbp
 ffff80000080783f:	48 89 e5             	mov    rbp,rsp
@@ -9930,15 +9930,15 @@ ffff800000807842:	48 8d 05 f9 ff ff ff 	lea    rax,[rip+0xfffffffffffffff9]     
 ffff800000807849:	49 bb c6 d5 11 00 00 	movabs r11,0x11d5c6
 ffff800000807850:	00 00 00 
 ffff800000807853:	4c 01 d8             	add    rax,r11
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:940
-ffff800000807856:	b8 00 00 00 00       	mov    eax,0x0
 D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:941
+ffff800000807856:	b8 00 00 00 00       	mov    eax,0x0
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:942
 ffff80000080785b:	5d                   	pop    rbp
 ffff80000080785c:	c3                   	ret    
 
 ffff80000080785d <sys_fork>:
 sys_fork():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:944
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:945
 ffff80000080785d:	f3 0f 1e fa          	endbr64 
 ffff800000807861:	55                   	push   rbp
 ffff800000807862:	48 89 e5             	mov    rbp,rsp
@@ -9949,9 +9949,9 @@ ffff80000080786c:	48 8d 1d f9 ff ff ff 	lea    rbx,[rip+0xfffffffffffffff9]     
 ffff800000807873:	49 bb 9c d5 11 00 00 	movabs r11,0x11d59c
 ffff80000080787a:	00 00 00 
 ffff80000080787d:	4c 01 db             	add    rbx,r11
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:945
-ffff800000807880:	fa                   	cli    
 D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:946
+ffff800000807880:	fa                   	cli    
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:947
 ffff800000807881:	49 89 df             	mov    r15,rbx
 ffff800000807884:	b8 00 00 00 00       	mov    eax,0x0
 ffff800000807889:	48 ba 1c 0f ee ff ff 	movabs rdx,0xffffffffffee0f1c
@@ -9959,7 +9959,7 @@ ffff800000807890:	ff ff ff
 ffff800000807893:	48 01 da             	add    rdx,rbx
 ffff800000807896:	ff d2                	call   rdx
 ffff800000807898:	89 45 d4             	mov    DWORD PTR [rbp-0x2c],eax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:947
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:948
 ffff80000080789b:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff8000008078a2:	ff ff ff 
 ffff8000008078a5:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -9970,13 +9970,13 @@ ffff8000008078b1:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff8000008078b8:	48 01 d0             	add    rax,rdx
 ffff8000008078bb:	8b 00                	mov    eax,DWORD PTR [rax]
 ffff8000008078bd:	89 45 d0             	mov    DWORD PTR [rbp-0x30],eax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:948
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:949
 ffff8000008078c0:	83 7d d4 ff          	cmp    DWORD PTR [rbp-0x2c],0xffffffff
 ffff8000008078c4:	75 0a                	jne    ffff8000008078d0 <sys_fork+0x73>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:948 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:949 (discriminator 1)
 ffff8000008078c6:	b8 ff ff ff ff       	mov    eax,0xffffffff
 ffff8000008078cb:	e9 7b 0a 00 00       	jmp    ffff80000080834b <sys_fork+0xaee>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:950
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:951
 ffff8000008078d0:	48 b8 48 fe ff ff ff 	movabs rax,0xfffffffffffffe48
 ffff8000008078d7:	ff ff ff 
 ffff8000008078da:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -9997,7 +9997,7 @@ ffff800000807910:	48 b8 a2 16 ef ff ff 	movabs rax,0xffffffffffef16a2
 ffff800000807917:	ff ff ff 
 ffff80000080791a:	48 01 d8             	add    rax,rbx
 ffff80000080791d:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:952
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:953
 ffff80000080791f:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000807926:	ff ff ff 
 ffff800000807929:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10008,7 +10008,7 @@ ffff800000807935:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff80000080793c:	48 01 c2             	add    rdx,rax
 ffff80000080793f:	8b 45 d0             	mov    eax,DWORD PTR [rbp-0x30]
 ffff800000807942:	89 02                	mov    DWORD PTR [rdx],eax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:953
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:954
 ffff800000807944:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff80000080794b:	ff ff ff 
 ffff80000080794e:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10018,7 +10018,7 @@ ffff800000807958:	48 98                	cdqe
 ffff80000080795a:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff800000807961:	48 01 d0             	add    rax,rdx
 ffff800000807964:	c7 40 18 04 00 00 00 	mov    DWORD PTR [rax+0x18],0x4
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:960
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:961
 ffff80000080796b:	48 b8 48 fe ff ff ff 	movabs rax,0xfffffffffffffe48
 ffff800000807972:	ff ff ff 
 ffff800000807975:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10033,7 +10033,7 @@ ffff800000807993:	48 69 d2 68 03 00 00 	imul   rdx,rdx,0x368
 ffff80000080799a:	48 01 ca             	add    rdx,rcx
 ffff80000080799d:	8b 00                	mov    eax,DWORD PTR [rax]
 ffff80000080799f:	89 82 bc 00 00 00    	mov    DWORD PTR [rdx+0xbc],eax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:962
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:963
 ffff8000008079a5:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff8000008079ac:	ff ff ff 
 ffff8000008079af:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10055,7 +10055,7 @@ ffff8000008079e5:	00
 D:/Code/Comprehensive/OS/workspace/64/include/vfs.h:22
 ffff8000008079e6:	90                   	nop
 sys_fork():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:963
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:964
 ffff8000008079e7:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff8000008079ee:	ff ff ff 
 ffff8000008079f1:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10066,7 +10066,7 @@ ffff8000008079fd:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff800000807a04:	48 01 d0             	add    rax,rdx
 ffff800000807a07:	48 c7 80 54 03 00 00 	mov    QWORD PTR [rax+0x354],0x0
 ffff800000807a0e:	00 00 00 00 
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:964
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:965
 ffff800000807a12:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000807a19:	ff ff ff 
 ffff800000807a1c:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10084,7 +10084,7 @@ ffff800000807a45:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff800000807a4c:	48 01 f0             	add    rax,rsi
 ffff800000807a4f:	48 01 ca             	add    rdx,rcx
 ffff800000807a52:	48 89 90 44 03 00 00 	mov    QWORD PTR [rax+0x344],rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:965
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:966
 ffff800000807a59:	48 b8 48 fe ff ff ff 	movabs rax,0xfffffffffffffe48
 ffff800000807a60:	ff ff ff 
 ffff800000807a63:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10092,7 +10092,7 @@ ffff800000807a67:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff800000807a6a:	48 8b 80 54 03 00 00 	mov    rax,QWORD PTR [rax+0x354]
 ffff800000807a71:	48 85 c0             	test   rax,rax
 ffff800000807a74:	75 41                	jne    ffff800000807ab7 <sys_fork+0x25a>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:966
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:967
 ffff800000807a76:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000807a7d:	ff ff ff 
 ffff800000807a80:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10108,7 +10108,7 @@ ffff800000807aa4:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff800000807aa7:	48 81 c2 3c 03 00 00 	add    rdx,0x33c
 ffff800000807aae:	48 89 90 54 03 00 00 	mov    QWORD PTR [rax+0x354],rdx
 ffff800000807ab5:	eb 57                	jmp    ffff800000807b0e <sys_fork+0x2b1>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:968
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:969
 ffff800000807ab7:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000807abe:	ff ff ff 
 ffff800000807ac1:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10130,7 +10130,7 @@ ffff800000807aff:	48 b8 d2 95 ee ff ff 	movabs rax,0xffffffffffee95d2
 ffff800000807b06:	ff ff ff 
 ffff800000807b09:	48 01 d8             	add    rax,rbx
 ffff800000807b0c:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:970
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:971
 ffff800000807b0e:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000807b15:	ff ff ff 
 ffff800000807b18:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10140,7 +10140,7 @@ ffff800000807b22:	48 98                	cdqe
 ffff800000807b24:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff800000807b2b:	48 01 d0             	add    rax,rdx
 ffff800000807b2e:	c7 40 1c 00 00 00 00 	mov    DWORD PTR [rax+0x1c],0x0
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:973
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:974
 ffff800000807b35:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000807b3c:	ff ff ff 
 ffff800000807b3f:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10160,7 +10160,7 @@ ffff800000807b6f:	48 b8 f3 38 ee ff ff 	movabs rax,0xffffffffffee38f3
 ffff800000807b76:	ff ff ff 
 ffff800000807b79:	48 01 d8             	add    rax,rbx
 ffff800000807b7c:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:978
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:979
 ffff800000807b7e:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000807b85:	ff ff ff 
 ffff800000807b88:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10172,13 +10172,13 @@ ffff800000807b9b:	48 01 d0             	add    rax,rdx
 ffff800000807b9e:	48 8b 40 40          	mov    rax,QWORD PTR [rax+0x40]
 ffff800000807ba2:	48 2d 00 10 00 00    	sub    rax,0x1000
 ffff800000807ba8:	48 89 45 e8          	mov    QWORD PTR [rbp-0x18],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:979
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:980
 ffff800000807bac:	48 b8 00 00 00 80 00 	movabs rax,0xffff800080000000
 ffff800000807bb3:	80 ff ff 
 ffff800000807bb6:	48 89 45 c8          	mov    QWORD PTR [rbp-0x38],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:980
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:981
 ffff800000807bba:	e9 d1 00 00 00       	jmp    ffff800000807c90 <sys_fork+0x433>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:981 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:982 (discriminator 2)
 ffff800000807bbf:	bf 00 10 00 00       	mov    edi,0x1000
 ffff800000807bc4:	49 89 df             	mov    r15,rbx
 ffff800000807bc7:	48 b8 d4 eb ed ff ff 	movabs rax,0xffffffffffedebd4
@@ -10186,7 +10186,7 @@ ffff800000807bce:	ff ff ff
 ffff800000807bd1:	48 01 d8             	add    rax,rbx
 ffff800000807bd4:	ff d0                	call   rax
 ffff800000807bd6:	48 89 45 98          	mov    QWORD PTR [rbp-0x68],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:982 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:983 (discriminator 2)
 ffff800000807bda:	48 b8 48 fe ff ff ff 	movabs rax,0xfffffffffffffe48
 ffff800000807be1:	ff ff ff 
 ffff800000807be4:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10202,7 +10202,7 @@ ffff800000807c08:	48 b8 1e d0 ed ff ff 	movabs rax,0xffffffffffedd01e
 ffff800000807c0f:	ff ff ff 
 ffff800000807c12:	48 01 d8             	add    rax,rbx
 ffff800000807c15:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:983 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:984 (discriminator 2)
 ffff800000807c17:	48 8b 4d e8          	mov    rcx,QWORD PTR [rbp-0x18]
 ffff800000807c1b:	48 8b 45 c8          	mov    rax,QWORD PTR [rbp-0x38]
 ffff800000807c1f:	ba 00 10 00 00       	mov    edx,0x1000
@@ -10213,7 +10213,7 @@ ffff800000807c2d:	48 b8 a2 16 ef ff ff 	movabs rax,0xffffffffffef16a2
 ffff800000807c34:	ff ff ff 
 ffff800000807c37:	48 01 d8             	add    rax,rbx
 ffff800000807c3a:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:986 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:987 (discriminator 2)
 ffff800000807c3c:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000807c43:	ff ff ff 
 ffff800000807c46:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10233,10 +10233,10 @@ ffff800000807c79:	48 b8 1e d0 ed ff ff 	movabs rax,0xffffffffffedd01e
 ffff800000807c80:	ff ff ff 
 ffff800000807c83:	48 01 d8             	add    rax,rbx
 ffff800000807c86:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:980 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:981 (discriminator 2)
 ffff800000807c88:	48 81 6d e8 00 10 00 	sub    QWORD PTR [rbp-0x18],0x1000
 ffff800000807c8f:	00 
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:980 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:981 (discriminator 1)
 ffff800000807c90:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000807c97:	ff ff ff 
 ffff800000807c9a:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10248,7 +10248,7 @@ ffff800000807cad:	48 01 d0             	add    rax,rdx
 ffff800000807cb0:	48 8b 40 38          	mov    rax,QWORD PTR [rax+0x38]
 ffff800000807cb4:	48 39 45 e8          	cmp    QWORD PTR [rbp-0x18],rax
 ffff800000807cb8:	0f 83 01 ff ff ff    	jae    ffff800000807bbf <sys_fork+0x362>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:988
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:989
 ffff800000807cbe:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000807cc5:	ff ff ff 
 ffff800000807cc8:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10269,7 +10269,7 @@ ffff800000807cff:	48 01 c8             	add    rax,rcx
 ffff800000807d02:	48 8b 40 38          	mov    rax,QWORD PTR [rax+0x38]
 ffff800000807d06:	48 39 c2             	cmp    rdx,rax
 ffff800000807d09:	0f 87 bd 00 00 00    	ja     ffff800000807dcc <sys_fork+0x56f>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:991
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:992
 ffff800000807d0f:	bf 00 10 00 00       	mov    edi,0x1000
 ffff800000807d14:	49 89 df             	mov    r15,rbx
 ffff800000807d17:	48 b8 d4 eb ed ff ff 	movabs rax,0xffffffffffedebd4
@@ -10277,7 +10277,7 @@ ffff800000807d1e:	ff ff ff
 ffff800000807d21:	48 01 d8             	add    rax,rbx
 ffff800000807d24:	ff d0                	call   rax
 ffff800000807d26:	48 89 45 c0          	mov    QWORD PTR [rbp-0x40],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:992
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:993
 ffff800000807d2a:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000807d31:	ff ff ff 
 ffff800000807d34:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10289,7 +10289,7 @@ ffff800000807d47:	48 01 d0             	add    rax,rdx
 ffff800000807d4a:	48 8b 40 40          	mov    rax,QWORD PTR [rax+0x40]
 ffff800000807d4e:	48 2d 00 10 00 00    	sub    rax,0x1000
 ffff800000807d54:	48 89 45 e8          	mov    QWORD PTR [rbp-0x18],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:994
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:995
 ffff800000807d58:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000807d5f:	ff ff ff 
 ffff800000807d62:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10309,7 +10309,7 @@ ffff800000807d95:	48 b8 1e d0 ed ff ff 	movabs rax,0xffffffffffedd01e
 ffff800000807d9c:	ff ff ff 
 ffff800000807d9f:	48 01 d8             	add    rax,rbx
 ffff800000807da2:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:996
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:997
 ffff800000807da4:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000807dab:	ff ff ff 
 ffff800000807dae:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10320,7 +10320,7 @@ ffff800000807dba:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff800000807dc1:	48 01 c2             	add    rdx,rax
 ffff800000807dc4:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
 ffff800000807dc8:	48 89 42 38          	mov    QWORD PTR [rdx+0x38],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1002
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1003
 ffff800000807dcc:	be 00 10 00 00       	mov    esi,0x1000
 ffff800000807dd1:	bf 00 00 00 00       	mov    edi,0x0
 ffff800000807dd6:	49 89 df             	mov    r15,rbx
@@ -10329,14 +10329,14 @@ ffff800000807de0:	ff ff ff
 ffff800000807de3:	48 01 d8             	add    rax,rbx
 ffff800000807de6:	ff d0                	call   rax
 ffff800000807de8:	48 89 45 b8          	mov    QWORD PTR [rbp-0x48],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1004
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1005
 ffff800000807dec:	48 b8 48 fe ff ff ff 	movabs rax,0xfffffffffffffe48
 ffff800000807df3:	ff ff ff 
 ffff800000807df6:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
 ffff800000807dfa:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff800000807dfd:	48 8b 80 24 02 00 00 	mov    rax,QWORD PTR [rax+0x224]
 ffff800000807e04:	48 2d 00 10 00 00    	sub    rax,0x1000
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1003
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1004
 ffff800000807e0a:	48 89 c1             	mov    rcx,rax
 ffff800000807e0d:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
 ffff800000807e11:	ba 00 10 00 00       	mov    edx,0x1000
@@ -10347,7 +10347,7 @@ ffff800000807e1f:	48 b8 a2 16 ef ff ff 	movabs rax,0xffffffffffef16a2
 ffff800000807e26:	ff ff ff 
 ffff800000807e29:	48 01 d8             	add    rax,rbx
 ffff800000807e2c:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1006
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1007
 ffff800000807e2e:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000807e35:	ff ff ff 
 ffff800000807e38:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10359,16 +10359,16 @@ ffff800000807e4b:	48 01 d0             	add    rax,rdx
 ffff800000807e4e:	48 8b 55 b8          	mov    rdx,QWORD PTR [rbp-0x48]
 ffff800000807e52:	48 81 c2 00 10 00 00 	add    rdx,0x1000
 ffff800000807e59:	48 89 90 24 02 00 00 	mov    QWORD PTR [rax+0x224],rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1008
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1009
 ffff800000807e60:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
 ffff800000807e64:	48 05 58 0f 00 00    	add    rax,0xf58
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1007
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1008
 ffff800000807e6a:	48 89 45 b0          	mov    QWORD PTR [rbp-0x50],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1010
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1011
 ffff800000807e6e:	48 8b 45 b0          	mov    rax,QWORD PTR [rbp-0x50]
 ffff800000807e72:	48 c7 40 78 00 00 00 	mov    QWORD PTR [rax+0x78],0x0
 ffff800000807e79:	00 
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1012
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1014
 ffff800000807e7a:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000807e81:	ff ff ff 
 ffff800000807e84:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10381,7 +10381,7 @@ ffff800000807e9a:	48 ba 98 ff ff ff ff 	movabs rdx,0xffffffffffffff98
 ffff800000807ea1:	ff ff ff 
 ffff800000807ea4:	48 8b 14 13          	mov    rdx,QWORD PTR [rbx+rdx*1]
 ffff800000807ea8:	48 89 90 6c 02 00 00 	mov    QWORD PTR [rax+0x26c],rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1014
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1016
 ffff800000807eaf:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000807eb6:	ff ff ff 
 ffff800000807eb9:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10392,7 +10392,7 @@ ffff800000807ec5:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff800000807ecc:	48 01 c2             	add    rdx,rax
 ffff800000807ecf:	48 8b 45 b0          	mov    rax,QWORD PTR [rbp-0x50]
 ffff800000807ed3:	48 89 82 9c 02 00 00 	mov    QWORD PTR [rdx+0x29c],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1016
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1018
 ffff800000807eda:	be 00 10 00 00       	mov    esi,0x1000
 ffff800000807edf:	bf 00 00 00 00       	mov    edi,0x0
 ffff800000807ee4:	49 89 df             	mov    r15,rbx
@@ -10401,14 +10401,14 @@ ffff800000807eee:	ff ff ff
 ffff800000807ef1:	48 01 d8             	add    rax,rbx
 ffff800000807ef4:	ff d0                	call   rax
 ffff800000807ef6:	48 89 45 b8          	mov    QWORD PTR [rbp-0x48],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1018
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1020
 ffff800000807efa:	48 b8 48 fe ff ff ff 	movabs rax,0xfffffffffffffe48
 ffff800000807f01:	ff ff ff 
 ffff800000807f04:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
 ffff800000807f08:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff800000807f0b:	48 8b 80 1c 02 00 00 	mov    rax,QWORD PTR [rax+0x21c]
 ffff800000807f12:	48 2d 00 10 00 00    	sub    rax,0x1000
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1017
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1019
 ffff800000807f18:	48 89 c1             	mov    rcx,rax
 ffff800000807f1b:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
 ffff800000807f1f:	ba 00 10 00 00       	mov    edx,0x1000
@@ -10419,7 +10419,7 @@ ffff800000807f2d:	48 b8 a2 16 ef ff ff 	movabs rax,0xffffffffffef16a2
 ffff800000807f34:	ff ff ff 
 ffff800000807f37:	48 01 d8             	add    rax,rbx
 ffff800000807f3a:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1020
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1022
 ffff800000807f3c:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000807f43:	ff ff ff 
 ffff800000807f46:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10431,7 +10431,7 @@ ffff800000807f59:	48 01 d0             	add    rax,rdx
 ffff800000807f5c:	48 8b 55 b8          	mov    rdx,QWORD PTR [rbp-0x48]
 ffff800000807f60:	48 81 c2 00 10 00 00 	add    rdx,0x1000
 ffff800000807f67:	48 89 90 1c 02 00 00 	mov    QWORD PTR [rax+0x21c],rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1021
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1023
 ffff800000807f6e:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000807f75:	ff ff ff 
 ffff800000807f78:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10443,7 +10443,7 @@ ffff800000807f8b:	48 01 d0             	add    rax,rdx
 ffff800000807f8e:	48 8b 55 b8          	mov    rdx,QWORD PTR [rbp-0x48]
 ffff800000807f92:	48 81 c2 00 10 00 00 	add    rdx,0x1000
 ffff800000807f99:	48 89 90 2c 02 00 00 	mov    QWORD PTR [rax+0x22c],rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1022
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1024
 ffff800000807fa0:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000807fa7:	ff ff ff 
 ffff800000807faa:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10455,7 +10455,7 @@ ffff800000807fbd:	48 01 d0             	add    rax,rdx
 ffff800000807fc0:	48 8b 55 b8          	mov    rdx,QWORD PTR [rbp-0x48]
 ffff800000807fc4:	48 81 c2 00 10 00 00 	add    rdx,0x1000
 ffff800000807fcb:	48 89 90 34 02 00 00 	mov    QWORD PTR [rax+0x234],rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1023
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1025
 ffff800000807fd2:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000807fd9:	ff ff ff 
 ffff800000807fdc:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10467,7 +10467,7 @@ ffff800000807fef:	48 01 d0             	add    rax,rdx
 ffff800000807ff2:	48 8b 55 b8          	mov    rdx,QWORD PTR [rbp-0x48]
 ffff800000807ff6:	48 81 c2 00 10 00 00 	add    rdx,0x1000
 ffff800000807ffd:	48 89 90 3c 02 00 00 	mov    QWORD PTR [rax+0x23c],rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1024
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1026
 ffff800000808004:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff80000080800b:	ff ff ff 
 ffff80000080800e:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10479,7 +10479,7 @@ ffff800000808021:	48 01 d0             	add    rax,rdx
 ffff800000808024:	48 8b 55 b8          	mov    rdx,QWORD PTR [rbp-0x48]
 ffff800000808028:	48 81 c2 00 10 00 00 	add    rdx,0x1000
 ffff80000080802f:	48 89 90 44 02 00 00 	mov    QWORD PTR [rax+0x244],rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1025
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1027
 ffff800000808036:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff80000080803d:	ff ff ff 
 ffff800000808040:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10491,7 +10491,7 @@ ffff800000808053:	48 01 d0             	add    rax,rdx
 ffff800000808056:	48 8b 55 b8          	mov    rdx,QWORD PTR [rbp-0x48]
 ffff80000080805a:	48 81 c2 00 10 00 00 	add    rdx,0x1000
 ffff800000808061:	48 89 90 4c 02 00 00 	mov    QWORD PTR [rax+0x24c],rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1028
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1030
 ffff800000808068:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff80000080806f:	ff ff ff 
 ffff800000808072:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10503,9 +10503,9 @@ ffff800000808085:	48 01 d0             	add    rax,rdx
 ffff800000808088:	48 8b 40 30          	mov    rax,QWORD PTR [rax+0x30]
 ffff80000080808c:	48 2d 00 10 00 00    	sub    rax,0x1000
 ffff800000808092:	48 89 45 e0          	mov    QWORD PTR [rbp-0x20],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1029
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1031
 ffff800000808096:	e9 d1 00 00 00       	jmp    ffff80000080816c <sys_fork+0x90f>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1030 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1032 (discriminator 2)
 ffff80000080809b:	bf 00 10 00 00       	mov    edi,0x1000
 ffff8000008080a0:	49 89 df             	mov    r15,rbx
 ffff8000008080a3:	48 b8 d4 eb ed ff ff 	movabs rax,0xffffffffffedebd4
@@ -10513,7 +10513,7 @@ ffff8000008080aa:	ff ff ff
 ffff8000008080ad:	48 01 d8             	add    rax,rbx
 ffff8000008080b0:	ff d0                	call   rax
 ffff8000008080b2:	48 89 45 a0          	mov    QWORD PTR [rbp-0x60],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1031 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1033 (discriminator 2)
 ffff8000008080b6:	48 b8 48 fe ff ff ff 	movabs rax,0xfffffffffffffe48
 ffff8000008080bd:	ff ff ff 
 ffff8000008080c0:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10529,7 +10529,7 @@ ffff8000008080e4:	48 b8 1e d0 ed ff ff 	movabs rax,0xffffffffffedd01e
 ffff8000008080eb:	ff ff ff 
 ffff8000008080ee:	48 01 d8             	add    rax,rbx
 ffff8000008080f1:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1032 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1034 (discriminator 2)
 ffff8000008080f3:	48 8b 4d e0          	mov    rcx,QWORD PTR [rbp-0x20]
 ffff8000008080f7:	48 8b 45 c8          	mov    rax,QWORD PTR [rbp-0x38]
 ffff8000008080fb:	ba 00 10 00 00       	mov    edx,0x1000
@@ -10540,7 +10540,7 @@ ffff800000808109:	48 b8 a2 16 ef ff ff 	movabs rax,0xffffffffffef16a2
 ffff800000808110:	ff ff ff 
 ffff800000808113:	48 01 d8             	add    rax,rbx
 ffff800000808116:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1034 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1036 (discriminator 2)
 ffff800000808118:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff80000080811f:	ff ff ff 
 ffff800000808122:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10560,10 +10560,10 @@ ffff800000808155:	48 b8 1e d0 ed ff ff 	movabs rax,0xffffffffffedd01e
 ffff80000080815c:	ff ff ff 
 ffff80000080815f:	48 01 d8             	add    rax,rbx
 ffff800000808162:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1029 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1031 (discriminator 2)
 ffff800000808164:	48 81 6d e0 00 10 00 	sub    QWORD PTR [rbp-0x20],0x1000
 ffff80000080816b:	00 
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1029 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1031 (discriminator 1)
 ffff80000080816c:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000808173:	ff ff ff 
 ffff800000808176:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10575,7 +10575,7 @@ ffff800000808189:	48 01 d0             	add    rax,rdx
 ffff80000080818c:	48 8b 40 28          	mov    rax,QWORD PTR [rax+0x28]
 ffff800000808190:	48 39 45 e0          	cmp    QWORD PTR [rbp-0x20],rax
 ffff800000808194:	0f 83 01 ff ff ff    	jae    ffff80000080809b <sys_fork+0x83e>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1036
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1038
 ffff80000080819a:	48 b8 48 fe ff ff ff 	movabs rax,0xfffffffffffffe48
 ffff8000008081a1:	ff ff ff 
 ffff8000008081a4:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10591,16 +10591,16 @@ ffff8000008081c9:	48 b8 1e d0 ed ff ff 	movabs rax,0xffffffffffedd01e
 ffff8000008081d0:	ff ff ff 
 ffff8000008081d3:	48 01 d8             	add    rax,rbx
 ffff8000008081d6:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1038
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1040
 ffff8000008081d8:	48 b8 48 fe ff ff ff 	movabs rax,0xfffffffffffffe48
 ffff8000008081df:	ff ff ff 
 ffff8000008081e2:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
 ffff8000008081e6:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff8000008081e9:	48 8b 80 34 03 00 00 	mov    rax,QWORD PTR [rax+0x334]
 ffff8000008081f0:	48 89 45 d8          	mov    QWORD PTR [rbp-0x28],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1039
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1041
 ffff8000008081f4:	e9 1d 01 00 00       	jmp    ffff800000808316 <sys_fork+0xab9>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1040
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1042
 ffff8000008081f9:	be 50 00 00 00       	mov    esi,0x50
 ffff8000008081fe:	bf 00 00 00 00       	mov    edi,0x0
 ffff800000808203:	49 89 df             	mov    r15,rbx
@@ -10609,7 +10609,7 @@ ffff80000080820d:	ff ff ff
 ffff800000808210:	48 01 d8             	add    rax,rbx
 ffff800000808213:	ff d0                	call   rax
 ffff800000808215:	48 89 45 a8          	mov    QWORD PTR [rbp-0x58],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1041
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1043
 ffff800000808219:	48 8b 4d d8          	mov    rcx,QWORD PTR [rbp-0x28]
 ffff80000080821d:	48 8b 45 a8          	mov    rax,QWORD PTR [rbp-0x58]
 ffff800000808221:	ba 50 00 00 00       	mov    edx,0x50
@@ -10620,7 +10620,7 @@ ffff80000080822f:	48 b8 a2 16 ef ff ff 	movabs rax,0xffffffffffef16a2
 ffff800000808236:	ff ff ff 
 ffff800000808239:	48 01 d8             	add    rax,rbx
 ffff80000080823c:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1042
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1044
 ffff80000080823e:	48 8b 45 a8          	mov    rax,QWORD PTR [rbp-0x58]
 ffff800000808242:	48 83 c0 38          	add    rax,0x38
 ffff800000808246:	48 89 45 88          	mov    QWORD PTR [rbp-0x78],rax
@@ -10635,11 +10635,11 @@ ffff800000808260:	00
 D:/Code/Comprehensive/OS/workspace/64/include/vfs.h:22
 ffff800000808261:	90                   	nop
 sys_fork():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1043
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1045
 ffff800000808262:	48 8b 45 a8          	mov    rax,QWORD PTR [rbp-0x58]
 ffff800000808266:	48 8b 55 a8          	mov    rdx,QWORD PTR [rbp-0x58]
 ffff80000080826a:	48 89 50 40          	mov    QWORD PTR [rax+0x40],rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1044
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1046
 ffff80000080826e:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000808275:	ff ff ff 
 ffff800000808278:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10651,7 +10651,7 @@ ffff80000080828b:	48 01 d0             	add    rax,rdx
 ffff80000080828e:	48 8b 80 34 03 00 00 	mov    rax,QWORD PTR [rax+0x334]
 ffff800000808295:	48 85 c0             	test   rax,rax
 ffff800000808298:	75 2d                	jne    ffff8000008082c7 <sys_fork+0xa6a>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1044 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1046 (discriminator 1)
 ffff80000080829a:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff8000008082a1:	ff ff ff 
 ffff8000008082a4:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10663,7 +10663,7 @@ ffff8000008082b7:	48 01 c2             	add    rdx,rax
 ffff8000008082ba:	48 8b 45 a8          	mov    rax,QWORD PTR [rbp-0x58]
 ffff8000008082be:	48 89 82 34 03 00 00 	mov    QWORD PTR [rdx+0x334],rax
 ffff8000008082c5:	eb 43                	jmp    ffff80000080830a <sys_fork+0xaad>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1046
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1048
 ffff8000008082c7:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff8000008082ce:	ff ff ff 
 ffff8000008082d1:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10681,14 +10681,14 @@ ffff8000008082fb:	48 b8 d2 95 ee ff ff 	movabs rax,0xffffffffffee95d2
 ffff800000808302:	ff ff ff 
 ffff800000808305:	48 01 d8             	add    rax,rbx
 ffff800000808308:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1039
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1041
 ffff80000080830a:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
 ffff80000080830e:	48 8b 40 48          	mov    rax,QWORD PTR [rax+0x48]
 ffff800000808312:	48 89 45 d8          	mov    QWORD PTR [rbp-0x28],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1039 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1041 (discriminator 1)
 ffff800000808316:	48 83 7d d8 00       	cmp    QWORD PTR [rbp-0x28],0x0
 ffff80000080831b:	0f 85 d8 fe ff ff    	jne    ffff8000008081f9 <sys_fork+0x99c>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1050
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1052
 ffff800000808321:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000808328:	ff ff ff 
 ffff80000080832b:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -10698,9 +10698,9 @@ ffff800000808335:	48 98                	cdqe
 ffff800000808337:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff80000080833e:	48 01 d0             	add    rax,rdx
 ffff800000808341:	c7 40 18 02 00 00 00 	mov    DWORD PTR [rax+0x18],0x2
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1055
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1057
 ffff800000808348:	8b 45 d4             	mov    eax,DWORD PTR [rbp-0x2c]
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1056
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1058
 ffff80000080834b:	48 83 c4 70          	add    rsp,0x70
 ffff80000080834f:	5b                   	pop    rbx
 ffff800000808350:	41 5f                	pop    r15
@@ -10709,7 +10709,7 @@ ffff800000808353:	c3                   	ret
 
 ffff800000808354 <release_mmap>:
 release_mmap():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1059
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1061
 ffff800000808354:	f3 0f 1e fa          	endbr64 
 ffff800000808358:	55                   	push   rbp
 ffff800000808359:	48 89 e5             	mov    rbp,rsp
@@ -10721,17 +10721,17 @@ ffff80000080836a:	49 bb a5 ca 11 00 00 	movabs r11,0x11caa5
 ffff800000808371:	00 00 00 
 ffff800000808374:	4c 01 db             	add    rbx,r11
 ffff800000808377:	48 89 7d a8          	mov    QWORD PTR [rbp-0x58],rdi
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1060
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1062
 ffff80000080837b:	48 8b 45 a8          	mov    rax,QWORD PTR [rbp-0x58]
 ffff80000080837f:	48 8b 80 e0 00 00 00 	mov    rax,QWORD PTR [rax+0xe0]
 ffff800000808386:	48 89 45 d8          	mov    QWORD PTR [rbp-0x28],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1062
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1064
 ffff80000080838a:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
 ffff80000080838e:	48 89 45 d0          	mov    QWORD PTR [rbp-0x30],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1063
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1065
 ffff800000808392:	c7 45 ec 00 00 00 00 	mov    DWORD PTR [rbp-0x14],0x0
 ffff800000808399:	e9 45 03 00 00       	jmp    ffff8000008086e3 <release_mmap+0x38f>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1065
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1067
 ffff80000080839e:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
 ffff8000008083a1:	48 98                	cdqe   
 ffff8000008083a3:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
@@ -10742,7 +10742,7 @@ ffff8000008083b2:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff8000008083b5:	83 e0 01             	and    eax,0x1
 ffff8000008083b8:	48 85 c0             	test   rax,rax
 ffff8000008083bb:	0f 84 1e 03 00 00    	je     ffff8000008086df <release_mmap+0x38b>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1066
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1068
 ffff8000008083c1:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
 ffff8000008083c4:	48 98                	cdqe   
 ffff8000008083c6:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
@@ -10757,10 +10757,10 @@ ffff8000008083e5:	48 b8 00 00 00 00 00 	movabs rax,0xffff800000000000
 ffff8000008083ec:	80 ff ff 
 ffff8000008083ef:	48 09 d0             	or     rax,rdx
 ffff8000008083f2:	48 89 45 c8          	mov    QWORD PTR [rbp-0x38],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1067
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1069
 ffff8000008083f6:	c7 45 e8 00 00 00 00 	mov    DWORD PTR [rbp-0x18],0x0
 ffff8000008083fd:	e9 8a 02 00 00       	jmp    ffff80000080868c <release_mmap+0x338>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1068
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1070
 ffff800000808402:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
 ffff800000808405:	48 98                	cdqe   
 ffff800000808407:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
@@ -10771,7 +10771,7 @@ ffff800000808416:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff800000808419:	83 e0 01             	and    eax,0x1
 ffff80000080841c:	48 85 c0             	test   rax,rax
 ffff80000080841f:	0f 84 63 02 00 00    	je     ffff800000808688 <release_mmap+0x334>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1068 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1070 (discriminator 1)
 ffff800000808425:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
 ffff800000808428:	48 98                	cdqe   
 ffff80000080842a:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
@@ -10782,7 +10782,7 @@ ffff800000808439:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff80000080843c:	25 80 00 00 00       	and    eax,0x80
 ffff800000808441:	48 85 c0             	test   rax,rax
 ffff800000808444:	0f 85 3e 02 00 00    	jne    ffff800000808688 <release_mmap+0x334>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1069
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1071
 ffff80000080844a:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
 ffff80000080844d:	48 98                	cdqe   
 ffff80000080844f:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
@@ -10797,10 +10797,10 @@ ffff80000080846e:	48 b8 00 00 00 00 00 	movabs rax,0xffff800000000000
 ffff800000808475:	80 ff ff 
 ffff800000808478:	48 09 d0             	or     rax,rdx
 ffff80000080847b:	48 89 45 c0          	mov    QWORD PTR [rbp-0x40],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1070
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1072
 ffff80000080847f:	c7 45 e4 00 00 00 00 	mov    DWORD PTR [rbp-0x1c],0x0
 ffff800000808486:	e9 aa 01 00 00       	jmp    ffff800000808635 <release_mmap+0x2e1>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1071
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1073
 ffff80000080848b:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
 ffff80000080848e:	48 98                	cdqe   
 ffff800000808490:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
@@ -10811,7 +10811,7 @@ ffff80000080849f:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff8000008084a2:	83 e0 01             	and    eax,0x1
 ffff8000008084a5:	48 85 c0             	test   rax,rax
 ffff8000008084a8:	0f 84 0e 01 00 00    	je     ffff8000008085bc <release_mmap+0x268>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1071 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1073 (discriminator 1)
 ffff8000008084ae:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
 ffff8000008084b1:	48 98                	cdqe   
 ffff8000008084b3:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
@@ -10822,7 +10822,7 @@ ffff8000008084c2:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff8000008084c5:	25 80 00 00 00       	and    eax,0x80
 ffff8000008084ca:	48 85 c0             	test   rax,rax
 ffff8000008084cd:	0f 85 e9 00 00 00    	jne    ffff8000008085bc <release_mmap+0x268>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1072
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1074
 ffff8000008084d3:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
 ffff8000008084d6:	48 98                	cdqe   
 ffff8000008084d8:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
@@ -10837,10 +10837,10 @@ ffff8000008084f7:	48 b8 00 00 00 00 00 	movabs rax,0xffff800000000000
 ffff8000008084fe:	80 ff ff 
 ffff800000808501:	48 09 d0             	or     rax,rdx
 ffff800000808504:	48 89 45 b8          	mov    QWORD PTR [rbp-0x48],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1073
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1075
 ffff800000808508:	c7 45 e0 00 00 00 00 	mov    DWORD PTR [rbp-0x20],0x0
 ffff80000080850f:	eb 5a                	jmp    ffff80000080856b <release_mmap+0x217>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1074
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1076
 ffff800000808511:	8b 45 e0             	mov    eax,DWORD PTR [rbp-0x20]
 ffff800000808514:	48 98                	cdqe   
 ffff800000808516:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
@@ -10851,7 +10851,7 @@ ffff800000808525:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff800000808528:	83 e0 01             	and    eax,0x1
 ffff80000080852b:	48 85 c0             	test   rax,rax
 ffff80000080852e:	74 37                	je     ffff800000808567 <release_mmap+0x213>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1076
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1078
 ffff800000808530:	8b 45 e0             	mov    eax,DWORD PTR [rbp-0x20]
 ffff800000808533:	48 98                	cdqe   
 ffff800000808535:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
@@ -10867,12 +10867,12 @@ ffff800000808558:	48 b8 2d ed ed ff ff 	movabs rax,0xffffffffffeded2d
 ffff80000080855f:	ff ff ff 
 ffff800000808562:	48 01 d8             	add    rax,rbx
 ffff800000808565:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1073 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1075 (discriminator 2)
 ffff800000808567:	83 45 e0 01          	add    DWORD PTR [rbp-0x20],0x1
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1073 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1075 (discriminator 1)
 ffff80000080856b:	81 7d e0 ff 01 00 00 	cmp    DWORD PTR [rbp-0x20],0x1ff
 ffff800000808572:	7e 9d                	jle    ffff800000808511 <release_mmap+0x1bd>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1080
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1082
 ffff800000808574:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
 ffff800000808577:	48 98                	cdqe   
 ffff800000808579:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
@@ -10892,9 +10892,9 @@ ffff8000008085ab:	48 b8 30 eb ed ff ff 	movabs rax,0xffffffffffedeb30
 ffff8000008085b2:	ff ff ff 
 ffff8000008085b5:	48 01 d8             	add    rax,rbx
 ffff8000008085b8:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1071
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1073
 ffff8000008085ba:	eb 75                	jmp    ffff800000808631 <release_mmap+0x2dd>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1082
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1084
 ffff8000008085bc:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
 ffff8000008085bf:	48 98                	cdqe   
 ffff8000008085c1:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
@@ -10905,7 +10905,7 @@ ffff8000008085d0:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff8000008085d3:	83 e0 01             	and    eax,0x1
 ffff8000008085d6:	48 85 c0             	test   rax,rax
 ffff8000008085d9:	74 56                	je     ffff800000808631 <release_mmap+0x2dd>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1082 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1084 (discriminator 1)
 ffff8000008085db:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
 ffff8000008085de:	48 98                	cdqe   
 ffff8000008085e0:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
@@ -10916,7 +10916,7 @@ ffff8000008085ef:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff8000008085f2:	25 80 00 00 00       	and    eax,0x80
 ffff8000008085f7:	48 85 c0             	test   rax,rax
 ffff8000008085fa:	74 35                	je     ffff800000808631 <release_mmap+0x2dd>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1084
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1086
 ffff8000008085fc:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
 ffff8000008085ff:	48 98                	cdqe   
 ffff800000808601:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
@@ -10932,12 +10932,12 @@ ffff800000808622:	48 b8 1d ef ed ff ff 	movabs rax,0xffffffffffedef1d
 ffff800000808629:	ff ff ff 
 ffff80000080862c:	48 01 d8             	add    rax,rbx
 ffff80000080862f:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1070 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1072 (discriminator 2)
 ffff800000808631:	83 45 e4 01          	add    DWORD PTR [rbp-0x1c],0x1
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1070 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1072 (discriminator 1)
 ffff800000808635:	81 7d e4 ff 01 00 00 	cmp    DWORD PTR [rbp-0x1c],0x1ff
 ffff80000080863c:	0f 8e 49 fe ff ff    	jle    ffff80000080848b <release_mmap+0x137>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1088
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1090
 ffff800000808642:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
 ffff800000808645:	48 98                	cdqe   
 ffff800000808647:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
@@ -10957,12 +10957,12 @@ ffff800000808679:	48 b8 30 eb ed ff ff 	movabs rax,0xffffffffffedeb30
 ffff800000808680:	ff ff ff 
 ffff800000808683:	48 01 d8             	add    rax,rbx
 ffff800000808686:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1067 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1069 (discriminator 2)
 ffff800000808688:	83 45 e8 01          	add    DWORD PTR [rbp-0x18],0x1
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1067 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1069 (discriminator 1)
 ffff80000080868c:	81 7d e8 ff 01 00 00 	cmp    DWORD PTR [rbp-0x18],0x1ff
 ffff800000808693:	0f 8e 69 fd ff ff    	jle    ffff800000808402 <release_mmap+0xae>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1092
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1094
 ffff800000808699:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
 ffff80000080869c:	48 98                	cdqe   
 ffff80000080869e:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
@@ -10982,12 +10982,12 @@ ffff8000008086d0:	48 b8 30 eb ed ff ff 	movabs rax,0xffffffffffedeb30
 ffff8000008086d7:	ff ff ff 
 ffff8000008086da:	48 01 d8             	add    rax,rbx
 ffff8000008086dd:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1063 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1065 (discriminator 2)
 ffff8000008086df:	83 45 ec 01          	add    DWORD PTR [rbp-0x14],0x1
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1063 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1065 (discriminator 1)
 ffff8000008086e3:	81 7d ec ff 00 00 00 	cmp    DWORD PTR [rbp-0x14],0xff
 ffff8000008086ea:	0f 8e ae fc ff ff    	jle    ffff80000080839e <release_mmap+0x4a>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1095
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1097
 ffff8000008086f0:	90                   	nop
 ffff8000008086f1:	90                   	nop
 ffff8000008086f2:	48 83 c4 50          	add    rsp,0x50
@@ -10998,7 +10998,7 @@ ffff8000008086fa:	c3                   	ret
 
 ffff8000008086fb <copy_mmap>:
 copy_mmap():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1097
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1099
 ffff8000008086fb:	f3 0f 1e fa          	endbr64 
 ffff8000008086ff:	55                   	push   rbp
 ffff800000808700:	48 89 e5             	mov    rbp,rsp
@@ -11011,7 +11011,7 @@ ffff800000808718:	00 00 00
 ffff80000080871b:	4c 01 db             	add    rbx,r11
 ffff80000080871e:	48 89 7d 88          	mov    QWORD PTR [rbp-0x78],rdi
 ffff800000808722:	48 89 75 80          	mov    QWORD PTR [rbp-0x80],rsi
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1098
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1100
 ffff800000808726:	be 00 10 00 00       	mov    esi,0x1000
 ffff80000080872b:	bf 00 00 00 00       	mov    edi,0x0
 ffff800000808730:	49 89 df             	mov    r15,rbx
@@ -11020,7 +11020,7 @@ ffff80000080873a:	ff ff ff
 ffff80000080873d:	48 01 d8             	add    rax,rbx
 ffff800000808740:	ff d0                	call   rax
 ffff800000808742:	48 89 45 d8          	mov    QWORD PTR [rbp-0x28],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1099
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1101
 ffff800000808746:	48 8b 45 88          	mov    rax,QWORD PTR [rbp-0x78]
 ffff80000080874a:	48 8b 88 e0 00 00 00 	mov    rcx,QWORD PTR [rax+0xe0]
 ffff800000808751:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
@@ -11032,24 +11032,24 @@ ffff800000808763:	48 b8 a2 16 ef ff ff 	movabs rax,0xffffffffffef16a2
 ffff80000080876a:	ff ff ff 
 ffff80000080876d:	48 01 d8             	add    rax,rbx
 ffff800000808770:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1100
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1102
 ffff800000808772:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
 ffff800000808776:	48 ba ff ff ff ff ff 	movabs rdx,0x7fffffffffff
 ffff80000080877d:	7f 00 00 
 ffff800000808780:	48 21 c2             	and    rdx,rax
 ffff800000808783:	48 8b 45 80          	mov    rax,QWORD PTR [rbp-0x80]
 ffff800000808787:	48 89 90 64 02 00 00 	mov    QWORD PTR [rax+0x264],rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1101
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1103
 ffff80000080878e:	48 8b 45 80          	mov    rax,QWORD PTR [rbp-0x80]
 ffff800000808792:	48 8b 55 d8          	mov    rdx,QWORD PTR [rbp-0x28]
 ffff800000808796:	48 89 90 e0 00 00 00 	mov    QWORD PTR [rax+0xe0],rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1104
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1106
 ffff80000080879d:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
 ffff8000008087a1:	48 89 45 d0          	mov    QWORD PTR [rbp-0x30],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1105
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1107
 ffff8000008087a5:	c7 45 ec 00 00 00 00 	mov    DWORD PTR [rbp-0x14],0x0
 ffff8000008087ac:	e9 1d 03 00 00       	jmp    ffff800000808ace <copy_mmap+0x3d3>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1106
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1108
 ffff8000008087b1:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
 ffff8000008087b4:	48 98                	cdqe   
 ffff8000008087b6:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
@@ -11060,7 +11060,7 @@ ffff8000008087c5:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff8000008087c8:	83 e0 01             	and    eax,0x1
 ffff8000008087cb:	48 85 c0             	test   rax,rax
 ffff8000008087ce:	0f 84 f5 02 00 00    	je     ffff800000808ac9 <copy_mmap+0x3ce>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1107
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1109
 ffff8000008087d4:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
 ffff8000008087d7:	48 98                	cdqe   
 ffff8000008087d9:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
@@ -11069,7 +11069,7 @@ ffff8000008087e1:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
 ffff8000008087e5:	48 01 d0             	add    rax,rdx
 ffff8000008087e8:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff8000008087eb:	48 89 45 c8          	mov    QWORD PTR [rbp-0x38],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1108
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1110
 ffff8000008087ef:	be 00 10 00 00       	mov    esi,0x1000
 ffff8000008087f4:	bf 00 00 00 00       	mov    edi,0x0
 ffff8000008087f9:	49 89 df             	mov    r15,rbx
@@ -11078,7 +11078,7 @@ ffff800000808803:	ff ff ff
 ffff800000808806:	48 01 d8             	add    rax,rbx
 ffff800000808809:	ff d0                	call   rax
 ffff80000080880b:	48 89 45 c0          	mov    QWORD PTR [rbp-0x40],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1109
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1111
 ffff80000080880f:	48 b8 ff ff ff ff ff 	movabs rax,0x7fffffffffff
 ffff800000808816:	7f 00 00 
 ffff800000808819:	48 23 45 c0          	and    rax,QWORD PTR [rbp-0x40]
@@ -11094,14 +11094,14 @@ ffff800000808839:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
 ffff80000080883d:	48 01 f0             	add    rax,rsi
 ffff800000808840:	48 09 ca             	or     rdx,rcx
 ffff800000808843:	48 89 10             	mov    QWORD PTR [rax],rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1111
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1113
 ffff800000808846:	48 b8 00 f0 ff ff ff 	movabs rax,0x7ffffffff000
 ffff80000080884d:	7f 00 00 
 ffff800000808850:	48 23 45 c8          	and    rax,QWORD PTR [rbp-0x38]
 ffff800000808854:	48 ba 00 00 00 00 00 	movabs rdx,0xffff800000000000
 ffff80000080885b:	80 ff ff 
 ffff80000080885e:	48 09 d0             	or     rax,rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1110
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1112
 ffff800000808861:	48 89 c1             	mov    rcx,rax
 ffff800000808864:	48 8b 45 c0          	mov    rax,QWORD PTR [rbp-0x40]
 ffff800000808868:	ba 00 10 00 00       	mov    edx,0x1000
@@ -11112,13 +11112,13 @@ ffff800000808876:	48 b8 a2 16 ef ff ff 	movabs rax,0xffffffffffef16a2
 ffff80000080887d:	ff ff ff 
 ffff800000808880:	48 01 d8             	add    rax,rbx
 ffff800000808883:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1113
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1115
 ffff800000808885:	48 8b 45 c0          	mov    rax,QWORD PTR [rbp-0x40]
 ffff800000808889:	48 89 45 b8          	mov    QWORD PTR [rbp-0x48],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1114
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1116
 ffff80000080888d:	c7 45 e8 00 00 00 00 	mov    DWORD PTR [rbp-0x18],0x0
 ffff800000808894:	e9 21 02 00 00       	jmp    ffff800000808aba <copy_mmap+0x3bf>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1115
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1117
 ffff800000808899:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
 ffff80000080889c:	48 98                	cdqe   
 ffff80000080889e:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
@@ -11129,7 +11129,7 @@ ffff8000008088ad:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff8000008088b0:	83 e0 01             	and    eax,0x1
 ffff8000008088b3:	48 85 c0             	test   rax,rax
 ffff8000008088b6:	0f 84 f9 01 00 00    	je     ffff800000808ab5 <copy_mmap+0x3ba>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1115 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1117 (discriminator 2)
 ffff8000008088bc:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
 ffff8000008088bf:	48 98                	cdqe   
 ffff8000008088c1:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
@@ -11140,7 +11140,7 @@ ffff8000008088d0:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff8000008088d3:	25 80 00 00 00       	and    eax,0x80
 ffff8000008088d8:	48 85 c0             	test   rax,rax
 ffff8000008088db:	0f 85 d4 01 00 00    	jne    ffff800000808ab5 <copy_mmap+0x3ba>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1116
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1118
 ffff8000008088e1:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
 ffff8000008088e4:	48 98                	cdqe   
 ffff8000008088e6:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
@@ -11149,7 +11149,7 @@ ffff8000008088ee:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
 ffff8000008088f2:	48 01 d0             	add    rax,rdx
 ffff8000008088f5:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff8000008088f8:	48 89 45 b0          	mov    QWORD PTR [rbp-0x50],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1117
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1119
 ffff8000008088fc:	be 00 10 00 00       	mov    esi,0x1000
 ffff800000808901:	bf 00 00 00 00       	mov    edi,0x0
 ffff800000808906:	49 89 df             	mov    r15,rbx
@@ -11158,7 +11158,7 @@ ffff800000808910:	ff ff ff
 ffff800000808913:	48 01 d8             	add    rax,rbx
 ffff800000808916:	ff d0                	call   rax
 ffff800000808918:	48 89 45 a8          	mov    QWORD PTR [rbp-0x58],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1118
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1120
 ffff80000080891c:	48 b8 ff ff ff ff ff 	movabs rax,0x7fffffffffff
 ffff800000808923:	7f 00 00 
 ffff800000808926:	48 23 45 a8          	and    rax,QWORD PTR [rbp-0x58]
@@ -11174,14 +11174,14 @@ ffff800000808946:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
 ffff80000080894a:	48 01 f0             	add    rax,rsi
 ffff80000080894d:	48 09 ca             	or     rdx,rcx
 ffff800000808950:	48 89 10             	mov    QWORD PTR [rax],rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1120
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1122
 ffff800000808953:	48 b8 00 f0 ff ff ff 	movabs rax,0x7ffffffff000
 ffff80000080895a:	7f 00 00 
 ffff80000080895d:	48 23 45 b0          	and    rax,QWORD PTR [rbp-0x50]
 ffff800000808961:	48 ba 00 00 00 00 00 	movabs rdx,0xffff800000000000
 ffff800000808968:	80 ff ff 
 ffff80000080896b:	48 09 d0             	or     rax,rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1119
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1121
 ffff80000080896e:	48 89 c1             	mov    rcx,rax
 ffff800000808971:	48 8b 45 a8          	mov    rax,QWORD PTR [rbp-0x58]
 ffff800000808975:	ba 00 10 00 00       	mov    edx,0x1000
@@ -11192,13 +11192,13 @@ ffff800000808983:	48 b8 a2 16 ef ff ff 	movabs rax,0xffffffffffef16a2
 ffff80000080898a:	ff ff ff 
 ffff80000080898d:	48 01 d8             	add    rax,rbx
 ffff800000808990:	ff d0                	call   rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1122
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1124
 ffff800000808992:	48 8b 45 a8          	mov    rax,QWORD PTR [rbp-0x58]
 ffff800000808996:	48 89 45 a0          	mov    QWORD PTR [rbp-0x60],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1123
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1125
 ffff80000080899a:	c7 45 e4 00 00 00 00 	mov    DWORD PTR [rbp-0x1c],0x0
 ffff8000008089a1:	e9 00 01 00 00       	jmp    ffff800000808aa6 <copy_mmap+0x3ab>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1124
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1126
 ffff8000008089a6:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
 ffff8000008089a9:	48 98                	cdqe   
 ffff8000008089ab:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
@@ -11209,7 +11209,7 @@ ffff8000008089ba:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff8000008089bd:	83 e0 01             	and    eax,0x1
 ffff8000008089c0:	48 85 c0             	test   rax,rax
 ffff8000008089c3:	0f 84 d8 00 00 00    	je     ffff800000808aa1 <copy_mmap+0x3a6>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1124 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1126 (discriminator 2)
 ffff8000008089c9:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
 ffff8000008089cc:	48 98                	cdqe   
 ffff8000008089ce:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
@@ -11220,7 +11220,7 @@ ffff8000008089dd:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff8000008089e0:	25 80 00 00 00       	and    eax,0x80
 ffff8000008089e5:	48 85 c0             	test   rax,rax
 ffff8000008089e8:	0f 85 b3 00 00 00    	jne    ffff800000808aa1 <copy_mmap+0x3a6>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1125
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1127
 ffff8000008089ee:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
 ffff8000008089f1:	48 98                	cdqe   
 ffff8000008089f3:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
@@ -11229,7 +11229,7 @@ ffff8000008089fb:	48 8b 45 a0          	mov    rax,QWORD PTR [rbp-0x60]
 ffff8000008089ff:	48 01 d0             	add    rax,rdx
 ffff800000808a02:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff800000808a05:	48 89 45 98          	mov    QWORD PTR [rbp-0x68],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1126
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1128
 ffff800000808a09:	be 00 10 00 00       	mov    esi,0x1000
 ffff800000808a0e:	bf 00 00 00 00       	mov    edi,0x0
 ffff800000808a13:	49 89 df             	mov    r15,rbx
@@ -11238,7 +11238,7 @@ ffff800000808a1d:	ff ff ff
 ffff800000808a20:	48 01 d8             	add    rax,rbx
 ffff800000808a23:	ff d0                	call   rax
 ffff800000808a25:	48 89 45 90          	mov    QWORD PTR [rbp-0x70],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1127
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1129
 ffff800000808a29:	48 b8 ff ff ff ff ff 	movabs rax,0x7fffffffffff
 ffff800000808a30:	7f 00 00 
 ffff800000808a33:	48 23 45 90          	and    rax,QWORD PTR [rbp-0x70]
@@ -11254,14 +11254,14 @@ ffff800000808a53:	48 8b 45 a0          	mov    rax,QWORD PTR [rbp-0x60]
 ffff800000808a57:	48 01 f0             	add    rax,rsi
 ffff800000808a5a:	48 09 ca             	or     rdx,rcx
 ffff800000808a5d:	48 89 10             	mov    QWORD PTR [rax],rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1129
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1131
 ffff800000808a60:	48 b8 00 f0 ff ff ff 	movabs rax,0x7ffffffff000
 ffff800000808a67:	7f 00 00 
 ffff800000808a6a:	48 23 45 98          	and    rax,QWORD PTR [rbp-0x68]
 ffff800000808a6e:	48 ba 00 00 00 00 00 	movabs rdx,0xffff800000000000
 ffff800000808a75:	80 ff ff 
 ffff800000808a78:	48 09 d0             	or     rax,rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1128
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1130
 ffff800000808a7b:	48 89 c1             	mov    rcx,rax
 ffff800000808a7e:	48 8b 45 90          	mov    rax,QWORD PTR [rbp-0x70]
 ffff800000808a82:	ba 00 10 00 00       	mov    edx,0x1000
@@ -11273,30 +11273,30 @@ ffff800000808a97:	ff ff ff
 ffff800000808a9a:	48 01 d8             	add    rax,rbx
 ffff800000808a9d:	ff d0                	call   rax
 ffff800000808a9f:	eb 01                	jmp    ffff800000808aa2 <copy_mmap+0x3a7>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1124
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1126
 ffff800000808aa1:	90                   	nop
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1123 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1125 (discriminator 2)
 ffff800000808aa2:	83 45 e4 01          	add    DWORD PTR [rbp-0x1c],0x1
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1123 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1125 (discriminator 1)
 ffff800000808aa6:	81 7d e4 ff 01 00 00 	cmp    DWORD PTR [rbp-0x1c],0x1ff
 ffff800000808aad:	0f 8e f3 fe ff ff    	jle    ffff8000008089a6 <copy_mmap+0x2ab>
 ffff800000808ab3:	eb 01                	jmp    ffff800000808ab6 <copy_mmap+0x3bb>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1115
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1117
 ffff800000808ab5:	90                   	nop
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1114 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1116 (discriminator 2)
 ffff800000808ab6:	83 45 e8 01          	add    DWORD PTR [rbp-0x18],0x1
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1114 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1116 (discriminator 1)
 ffff800000808aba:	81 7d e8 ff 01 00 00 	cmp    DWORD PTR [rbp-0x18],0x1ff
 ffff800000808ac1:	0f 8e d2 fd ff ff    	jle    ffff800000808899 <copy_mmap+0x19e>
 ffff800000808ac7:	eb 01                	jmp    ffff800000808aca <copy_mmap+0x3cf>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1106
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1108
 ffff800000808ac9:	90                   	nop
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1105 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1107 (discriminator 2)
 ffff800000808aca:	83 45 ec 01          	add    DWORD PTR [rbp-0x14],0x1
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1105 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1107 (discriminator 1)
 ffff800000808ace:	81 7d ec ff 01 00 00 	cmp    DWORD PTR [rbp-0x14],0x1ff
 ffff800000808ad5:	0f 8e d6 fc ff ff    	jle    ffff8000008087b1 <copy_mmap+0xb6>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1134
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1136
 ffff800000808adb:	90                   	nop
 ffff800000808adc:	90                   	nop
 ffff800000808add:	48 83 c4 70          	add    rsp,0x70
@@ -11307,7 +11307,7 @@ ffff800000808ae5:	c3                   	ret
 
 ffff800000808ae6 <chk_mmap>:
 chk_mmap():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1137
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1139
 ffff800000808ae6:	f3 0f 1e fa          	endbr64 
 ffff800000808aea:	55                   	push   rbp
 ffff800000808aeb:	48 89 e5             	mov    rbp,rsp
@@ -11317,21 +11317,21 @@ ffff800000808afc:	00 00 00
 ffff800000808aff:	4c 01 d8             	add    rax,r11
 ffff800000808b02:	48 89 7d c8          	mov    QWORD PTR [rbp-0x38],rdi
 ffff800000808b06:	48 89 75 c0          	mov    QWORD PTR [rbp-0x40],rsi
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1138
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1140
 ffff800000808b0a:	48 ba 48 fe ff ff ff 	movabs rdx,0xfffffffffffffe48
 ffff800000808b11:	ff ff ff 
 ffff800000808b14:	48 8b 04 10          	mov    rax,QWORD PTR [rax+rdx*1]
 ffff800000808b18:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff800000808b1b:	48 8b 80 34 03 00 00 	mov    rax,QWORD PTR [rax+0x334]
 ffff800000808b22:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1139
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1141
 ffff800000808b26:	eb 7c                	jmp    ffff800000808ba4 <chk_mmap+0xbe>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1140
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1142
 ffff800000808b28:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 ffff800000808b2c:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff800000808b2f:	48 39 45 c8          	cmp    QWORD PTR [rbp-0x38],rax
 ffff800000808b33:	72 29                	jb     ffff800000808b5e <chk_mmap+0x78>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1140 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1142 (discriminator 1)
 ffff800000808b35:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 ffff800000808b39:	48 8b 10             	mov    rdx,QWORD PTR [rax]
 ffff800000808b3c:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
@@ -11342,10 +11342,10 @@ ffff800000808b4b:	48 8b 45 c0          	mov    rax,QWORD PTR [rbp-0x40]
 ffff800000808b4f:	48 01 c8             	add    rax,rcx
 ffff800000808b52:	48 39 c2             	cmp    rdx,rax
 ffff800000808b55:	72 07                	jb     ffff800000808b5e <chk_mmap+0x78>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1140 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1142 (discriminator 2)
 ffff800000808b57:	b8 00 00 00 00       	mov    eax,0x0
 ffff800000808b5c:	eb 56                	jmp    ffff800000808bb4 <chk_mmap+0xce>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1139
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1141
 ffff800000808b5e:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 ffff800000808b62:	48 8d 50 38          	lea    rdx,[rax+0x38]
 ffff800000808b66:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
@@ -11369,20 +11369,20 @@ D:/Code/Comprehensive/OS/workspace/64/include/vfs.h:41
 ffff800000808b98:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
 ffff800000808b9c:	48 2b 45 e0          	sub    rax,QWORD PTR [rbp-0x20]
 chk_mmap():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1139
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1141
 ffff800000808ba0:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1139 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1141 (discriminator 1)
 ffff800000808ba4:	48 83 7d f8 00       	cmp    QWORD PTR [rbp-0x8],0x0
 ffff800000808ba9:	0f 85 79 ff ff ff    	jne    ffff800000808b28 <chk_mmap+0x42>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1142
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1144
 ffff800000808baf:	b8 01 00 00 00       	mov    eax,0x1
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1143
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1145
 ffff800000808bb4:	5d                   	pop    rbp
 ffff800000808bb5:	c3                   	ret    
 
 ffff800000808bb6 <chk_mtable>:
 chk_mtable():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1149
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1151
 ffff800000808bb6:	f3 0f 1e fa          	endbr64 
 ffff800000808bba:	55                   	push   rbp
 ffff800000808bbb:	48 89 e5             	mov    rbp,rsp
@@ -11392,7 +11392,7 @@ ffff800000808bcc:	00 00 00
 ffff800000808bcf:	4c 01 d8             	add    rax,r11
 ffff800000808bd2:	48 89 7d c8          	mov    QWORD PTR [rbp-0x38],rdi
 ffff800000808bd6:	48 89 75 c0          	mov    QWORD PTR [rbp-0x40],rsi
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1151
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1153
 ffff800000808bda:	48 c7 45 f0 00 00 00 	mov    QWORD PTR [rbp-0x10],0x0
 ffff800000808be1:	00 
 ffff800000808be2:	48 c7 45 f8 00 00 00 	mov    QWORD PTR [rbp-0x8],0x0
@@ -11401,67 +11401,67 @@ ffff800000808bea:	48 c7 45 e8 00 00 00 	mov    QWORD PTR [rbp-0x18],0x0
 ffff800000808bf1:	00 
 ffff800000808bf2:	48 c7 45 d8 00 00 00 	mov    QWORD PTR [rbp-0x28],0x0
 ffff800000808bf9:	00 
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1152
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1154
 ffff800000808bfa:	48 ba 48 fe ff ff ff 	movabs rdx,0xfffffffffffffe48
 ffff800000808c01:	ff ff ff 
 ffff800000808c04:	48 8b 04 10          	mov    rax,QWORD PTR [rax+rdx*1]
 ffff800000808c08:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff800000808c0b:	48 8b 80 e0 00 00 00 	mov    rax,QWORD PTR [rax+0xe0]
 ffff800000808c12:	48 89 45 d0          	mov    QWORD PTR [rbp-0x30],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1153
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1155
 ffff800000808c16:	48 8b 45 c0          	mov    rax,QWORD PTR [rbp-0x40]
 ffff800000808c1a:	48 05 ff 0f 00 00    	add    rax,0xfff
 ffff800000808c20:	48 c1 e8 0c          	shr    rax,0xc
 ffff800000808c24:	48 89 45 e0          	mov    QWORD PTR [rbp-0x20],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1154
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1156
 ffff800000808c28:	48 8b 45 c8          	mov    rax,QWORD PTR [rbp-0x38]
 ffff800000808c2c:	48 c1 e8 0c          	shr    rax,0xc
 ffff800000808c30:	48 89 45 d8          	mov    QWORD PTR [rbp-0x28],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1155
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1157
 ffff800000808c34:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
 ffff800000808c38:	48 c1 e8 09          	shr    rax,0x9
 ffff800000808c3c:	25 ff 01 00 00       	and    eax,0x1ff
 ffff800000808c41:	48 89 45 e8          	mov    QWORD PTR [rbp-0x18],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1156
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1158
 ffff800000808c45:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
 ffff800000808c49:	48 c1 e8 09          	shr    rax,0x9
 ffff800000808c4d:	25 ff 01 00 00       	and    eax,0x1ff
 ffff800000808c52:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1157
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1159
 ffff800000808c56:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 ffff800000808c5a:	48 c1 e8 09          	shr    rax,0x9
 ffff800000808c5e:	25 ff 01 00 00       	and    eax,0x1ff
 ffff800000808c63:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1158
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1160
 ffff800000808c67:	eb 25                	jmp    ffff800000808c8e <chk_mtable+0xd8>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1159
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1161
 ffff800000808c69:	48 81 7d f8 00 02 00 	cmp    QWORD PTR [rbp-0x8],0x200
 ffff800000808c70:	00 
 ffff800000808c71:	75 0d                	jne    ffff800000808c80 <chk_mtable+0xca>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1160
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1162
 ffff800000808c73:	48 83 45 f0 01       	add    QWORD PTR [rbp-0x10],0x1
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1161
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1163
 ffff800000808c78:	48 c7 45 f8 00 00 00 	mov    QWORD PTR [rbp-0x8],0x0
 ffff800000808c7f:	00 
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1164 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1166 (discriminator 1)
 ffff800000808c80:	48 83 45 f0 01       	add    QWORD PTR [rbp-0x10],0x1
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1165 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1167 (discriminator 1)
 ffff800000808c85:	48 c7 45 f8 00 00 00 	mov    QWORD PTR [rbp-0x8],0x0
 ffff800000808c8c:	00 
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1166 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1168 (discriminator 1)
 ffff800000808c8d:	90                   	nop
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1158
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1160
 ffff800000808c8e:	48 83 7d e0 00       	cmp    QWORD PTR [rbp-0x20],0x0
 ffff800000808c93:	75 d4                	jne    ffff800000808c69 <chk_mtable+0xb3>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1196
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1198
 ffff800000808c95:	b8 01 00 00 00       	mov    eax,0x1
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1197
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1199
 ffff800000808c9a:	5d                   	pop    rbp
 ffff800000808c9b:	c3                   	ret    
 
 ffff800000808c9c <sys_getpgrp>:
 sys_getpgrp():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1199
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1201
 ffff800000808c9c:	f3 0f 1e fa          	endbr64 
 ffff800000808ca0:	55                   	push   rbp
 ffff800000808ca1:	48 89 e5             	mov    rbp,rsp
@@ -11469,19 +11469,19 @@ ffff800000808ca4:	48 8d 05 f9 ff ff ff 	lea    rax,[rip+0xfffffffffffffff9]     
 ffff800000808cab:	49 bb 64 c1 11 00 00 	movabs r11,0x11c164
 ffff800000808cb2:	00 00 00 
 ffff800000808cb5:	4c 01 d8             	add    rax,r11
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1200
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1202
 ffff800000808cb8:	48 ba 48 fe ff ff ff 	movabs rdx,0xfffffffffffffe48
 ffff800000808cbf:	ff ff ff 
 ffff800000808cc2:	48 8b 04 10          	mov    rax,QWORD PTR [rax+rdx*1]
 ffff800000808cc6:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff800000808cc9:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1201
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1203
 ffff800000808ccc:	5d                   	pop    rbp
 ffff800000808ccd:	c3                   	ret    
 
 ffff800000808cce <sys_getpgid>:
 sys_getpgid():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1204
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1206
 ffff800000808cce:	f3 0f 1e fa          	endbr64 
 ffff800000808cd2:	55                   	push   rbp
 ffff800000808cd3:	48 89 e5             	mov    rbp,rsp
@@ -11491,20 +11491,20 @@ ffff800000808ce4:	00 00 00
 ffff800000808ce7:	4c 01 d8             	add    rax,r11
 ffff800000808cea:	89 7d ec             	mov    DWORD PTR [rbp-0x14],edi
 ffff800000808ced:	89 75 e8             	mov    DWORD PTR [rbp-0x18],esi
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1205
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1207
 ffff800000808cf0:	83 7d ec 00          	cmp    DWORD PTR [rbp-0x14],0x0
 ffff800000808cf4:	75 16                	jne    ffff800000808d0c <sys_getpgid+0x3e>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1205 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1207 (discriminator 1)
 ffff800000808cf6:	48 ba 48 fe ff ff ff 	movabs rdx,0xfffffffffffffe48
 ffff800000808cfd:	ff ff ff 
 ffff800000808d00:	48 8b 04 10          	mov    rax,QWORD PTR [rax+rdx*1]
 ffff800000808d04:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff800000808d07:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
 ffff800000808d0a:	eb 67                	jmp    ffff800000808d73 <sys_getpgid+0xa5>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1206
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1208
 ffff800000808d0c:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
 ffff800000808d13:	eb 53                	jmp    ffff800000808d68 <sys_getpgid+0x9a>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1207
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1209
 ffff800000808d15:	48 ba 60 fe ff ff ff 	movabs rdx,0xfffffffffffffe60
 ffff800000808d1c:	ff ff ff 
 ffff800000808d1f:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
@@ -11517,7 +11517,7 @@ ffff800000808d36:	8b 0a                	mov    ecx,DWORD PTR [rdx]
 ffff800000808d38:	8b 55 ec             	mov    edx,DWORD PTR [rbp-0x14]
 ffff800000808d3b:	39 d1                	cmp    ecx,edx
 ffff800000808d3d:	75 25                	jne    ffff800000808d64 <sys_getpgid+0x96>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1207 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1209 (discriminator 1)
 ffff800000808d3f:	48 ba 60 fe ff ff ff 	movabs rdx,0xfffffffffffffe60
 ffff800000808d46:	ff ff ff 
 ffff800000808d49:	48 8b 04 10          	mov    rax,QWORD PTR [rax+rdx*1]
@@ -11528,20 +11528,20 @@ ffff800000808d55:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff800000808d5c:	48 01 d0             	add    rax,rdx
 ffff800000808d5f:	8b 40 04             	mov    eax,DWORD PTR [rax+0x4]
 ffff800000808d62:	eb 0f                	jmp    ffff800000808d73 <sys_getpgid+0xa5>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1206 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1208 (discriminator 2)
 ffff800000808d64:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1206 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1208 (discriminator 1)
 ffff800000808d68:	83 7d fc 1f          	cmp    DWORD PTR [rbp-0x4],0x1f
 ffff800000808d6c:	7e a7                	jle    ffff800000808d15 <sys_getpgid+0x47>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1209
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1211
 ffff800000808d6e:	b8 ff ff ff ff       	mov    eax,0xffffffff
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1210
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1212
 ffff800000808d73:	5d                   	pop    rbp
 ffff800000808d74:	c3                   	ret    
 
 ffff800000808d75 <sys_setpgid>:
 sys_setpgid():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1212
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1214
 ffff800000808d75:	f3 0f 1e fa          	endbr64 
 ffff800000808d79:	55                   	push   rbp
 ffff800000808d7a:	48 89 e5             	mov    rbp,rsp
@@ -11551,10 +11551,10 @@ ffff800000808d8b:	00 00 00
 ffff800000808d8e:	4c 01 d8             	add    rax,r11
 ffff800000808d91:	89 7d ec             	mov    DWORD PTR [rbp-0x14],edi
 ffff800000808d94:	89 75 e8             	mov    DWORD PTR [rbp-0x18],esi
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1213
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1215
 ffff800000808d97:	83 7d ec 00          	cmp    DWORD PTR [rbp-0x14],0x0
 ffff800000808d9b:	75 56                	jne    ffff800000808df3 <sys_setpgid+0x7e>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1214
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1216
 ffff800000808d9d:	48 ba 48 fe ff ff ff 	movabs rdx,0xfffffffffffffe48
 ffff800000808da4:	ff ff ff 
 ffff800000808da7:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
@@ -11567,23 +11567,23 @@ ffff800000808dbf:	48 8b 12             	mov    rdx,QWORD PTR [rdx]
 ffff800000808dc2:	8b 12                	mov    edx,DWORD PTR [rdx]
 ffff800000808dc4:	39 d1                	cmp    ecx,edx
 ffff800000808dc6:	75 0a                	jne    ffff800000808dd2 <sys_setpgid+0x5d>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1214 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1216 (discriminator 1)
 ffff800000808dc8:	b8 ff ff ff ff       	mov    eax,0xffffffff
 ffff800000808dcd:	e9 e9 00 00 00       	jmp    ffff800000808ebb <sys_setpgid+0x146>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1215
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1217
 ffff800000808dd2:	48 ba 48 fe ff ff ff 	movabs rdx,0xfffffffffffffe48
 ffff800000808dd9:	ff ff ff 
 ffff800000808ddc:	48 8b 04 10          	mov    rax,QWORD PTR [rax+rdx*1]
 ffff800000808de0:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff800000808de3:	8b 55 e8             	mov    edx,DWORD PTR [rbp-0x18]
 ffff800000808de6:	89 50 04             	mov    DWORD PTR [rax+0x4],edx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1216
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1218
 ffff800000808de9:	b8 00 00 00 00       	mov    eax,0x0
 ffff800000808dee:	e9 c8 00 00 00       	jmp    ffff800000808ebb <sys_setpgid+0x146>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1218
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1220
 ffff800000808df3:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
 ffff800000808dfa:	e9 ad 00 00 00       	jmp    ffff800000808eac <sys_setpgid+0x137>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1219
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1221
 ffff800000808dff:	48 ba 60 fe ff ff ff 	movabs rdx,0xfffffffffffffe60
 ffff800000808e06:	ff ff ff 
 ffff800000808e09:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
@@ -11596,7 +11596,7 @@ ffff800000808e20:	8b 0a                	mov    ecx,DWORD PTR [rdx]
 ffff800000808e22:	8b 55 ec             	mov    edx,DWORD PTR [rbp-0x14]
 ffff800000808e25:	39 d1                	cmp    ecx,edx
 ffff800000808e27:	75 7f                	jne    ffff800000808ea8 <sys_setpgid+0x133>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1220
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1222
 ffff800000808e29:	48 ba 60 fe ff ff ff 	movabs rdx,0xfffffffffffffe60
 ffff800000808e30:	ff ff ff 
 ffff800000808e33:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
@@ -11617,10 +11617,10 @@ ffff800000808e6b:	48 01 f2             	add    rdx,rsi
 ffff800000808e6e:	8b 12                	mov    edx,DWORD PTR [rdx]
 ffff800000808e70:	39 d1                	cmp    ecx,edx
 ffff800000808e72:	75 07                	jne    ffff800000808e7b <sys_setpgid+0x106>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1220 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1222 (discriminator 1)
 ffff800000808e74:	b8 ff ff ff ff       	mov    eax,0xffffffff
 ffff800000808e79:	eb 40                	jmp    ffff800000808ebb <sys_setpgid+0x146>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1221
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1223
 ffff800000808e7b:	48 ba 60 fe ff ff ff 	movabs rdx,0xfffffffffffffe60
 ffff800000808e82:	ff ff ff 
 ffff800000808e85:	48 8b 04 10          	mov    rax,QWORD PTR [rax+rdx*1]
@@ -11631,23 +11631,23 @@ ffff800000808e91:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff800000808e98:	48 01 c2             	add    rdx,rax
 ffff800000808e9b:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
 ffff800000808e9e:	89 42 04             	mov    DWORD PTR [rdx+0x4],eax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1222
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1224
 ffff800000808ea1:	b8 00 00 00 00       	mov    eax,0x0
 ffff800000808ea6:	eb 13                	jmp    ffff800000808ebb <sys_setpgid+0x146>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1218 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1220 (discriminator 2)
 ffff800000808ea8:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1218 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1220 (discriminator 1)
 ffff800000808eac:	83 7d fc 1f          	cmp    DWORD PTR [rbp-0x4],0x1f
 ffff800000808eb0:	0f 8e 49 ff ff ff    	jle    ffff800000808dff <sys_setpgid+0x8a>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1225
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1227
 ffff800000808eb6:	b8 ff ff ff ff       	mov    eax,0xffffffff
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1226
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1228
 ffff800000808ebb:	5d                   	pop    rbp
 ffff800000808ebc:	c3                   	ret    
 
 ffff800000808ebd <sys_setsid>:
 sys_setsid():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1229
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1231
 ffff800000808ebd:	f3 0f 1e fa          	endbr64 
 ffff800000808ec1:	55                   	push   rbp
 ffff800000808ec2:	48 89 e5             	mov    rbp,rsp
@@ -11655,7 +11655,7 @@ ffff800000808ec5:	48 8d 05 f9 ff ff ff 	lea    rax,[rip+0xfffffffffffffff9]     
 ffff800000808ecc:	49 bb 43 bf 11 00 00 	movabs r11,0x11bf43
 ffff800000808ed3:	00 00 00 
 ffff800000808ed6:	4c 01 d8             	add    rax,r11
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1230
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1232
 ffff800000808ed9:	48 ba 48 fe ff ff ff 	movabs rdx,0xfffffffffffffe48
 ffff800000808ee0:	ff ff ff 
 ffff800000808ee3:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
@@ -11666,14 +11666,14 @@ ffff800000808ef4:	48 8b 04 08          	mov    rax,QWORD PTR [rax+rcx*1]
 ffff800000808ef8:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff800000808efb:	8b 12                	mov    edx,DWORD PTR [rdx]
 ffff800000808efd:	89 50 08             	mov    DWORD PTR [rax+0x8],edx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1231
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1233
 ffff800000808f00:	90                   	nop
 ffff800000808f01:	5d                   	pop    rbp
 ffff800000808f02:	c3                   	ret    
 
 ffff800000808f03 <sys_getsid>:
 sys_getsid():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1233
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1235
 ffff800000808f03:	f3 0f 1e fa          	endbr64 
 ffff800000808f07:	55                   	push   rbp
 ffff800000808f08:	48 89 e5             	mov    rbp,rsp
@@ -11682,20 +11682,20 @@ ffff800000808f12:	49 bb fd be 11 00 00 	movabs r11,0x11befd
 ffff800000808f19:	00 00 00 
 ffff800000808f1c:	4c 01 d8             	add    rax,r11
 ffff800000808f1f:	89 7d ec             	mov    DWORD PTR [rbp-0x14],edi
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1234
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1236
 ffff800000808f22:	83 7d ec 00          	cmp    DWORD PTR [rbp-0x14],0x0
 ffff800000808f26:	75 16                	jne    ffff800000808f3e <sys_getsid+0x3b>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1234 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1236 (discriminator 1)
 ffff800000808f28:	48 ba 48 fe ff ff ff 	movabs rdx,0xfffffffffffffe48
 ffff800000808f2f:	ff ff ff 
 ffff800000808f32:	48 8b 04 10          	mov    rax,QWORD PTR [rax+rdx*1]
 ffff800000808f36:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff800000808f39:	8b 40 08             	mov    eax,DWORD PTR [rax+0x8]
 ffff800000808f3c:	eb 67                	jmp    ffff800000808fa5 <sys_getsid+0xa2>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1235
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1237
 ffff800000808f3e:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
 ffff800000808f45:	eb 53                	jmp    ffff800000808f9a <sys_getsid+0x97>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1236
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1238
 ffff800000808f47:	48 ba 60 fe ff ff ff 	movabs rdx,0xfffffffffffffe60
 ffff800000808f4e:	ff ff ff 
 ffff800000808f51:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
@@ -11708,7 +11708,7 @@ ffff800000808f68:	8b 0a                	mov    ecx,DWORD PTR [rdx]
 ffff800000808f6a:	8b 55 ec             	mov    edx,DWORD PTR [rbp-0x14]
 ffff800000808f6d:	39 d1                	cmp    ecx,edx
 ffff800000808f6f:	75 25                	jne    ffff800000808f96 <sys_getsid+0x93>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1236 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1238 (discriminator 1)
 ffff800000808f71:	48 ba 60 fe ff ff ff 	movabs rdx,0xfffffffffffffe60
 ffff800000808f78:	ff ff ff 
 ffff800000808f7b:	48 8b 04 10          	mov    rax,QWORD PTR [rax+rdx*1]
@@ -11719,20 +11719,20 @@ ffff800000808f87:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff800000808f8e:	48 01 d0             	add    rax,rdx
 ffff800000808f91:	8b 40 08             	mov    eax,DWORD PTR [rax+0x8]
 ffff800000808f94:	eb 0f                	jmp    ffff800000808fa5 <sys_getsid+0xa2>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1235 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1237 (discriminator 2)
 ffff800000808f96:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1235 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1237 (discriminator 1)
 ffff800000808f9a:	83 7d fc 1f          	cmp    DWORD PTR [rbp-0x4],0x1f
 ffff800000808f9e:	7e a7                	jle    ffff800000808f47 <sys_getsid+0x44>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1238
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1240
 ffff800000808fa0:	b8 ff ff ff ff       	mov    eax,0xffffffff
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1239
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1241
 ffff800000808fa5:	5d                   	pop    rbp
 ffff800000808fa6:	c3                   	ret    
 
 ffff800000808fa7 <sys_tcsetpgrp>:
 sys_tcsetpgrp():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1241
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1243
 ffff800000808fa7:	f3 0f 1e fa          	endbr64 
 ffff800000808fab:	55                   	push   rbp
 ffff800000808fac:	48 89 e5             	mov    rbp,rsp
@@ -11745,7 +11745,7 @@ ffff800000808fc4:	00 00 00
 ffff800000808fc7:	4c 01 db             	add    rbx,r11
 ffff800000808fca:	89 7d dc             	mov    DWORD PTR [rbp-0x24],edi
 ffff800000808fcd:	89 75 d8             	mov    DWORD PTR [rbp-0x28],esi
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1244
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1246
 ffff800000808fd0:	bf 00 00 00 00       	mov    edi,0x0
 ffff800000808fd5:	49 89 df             	mov    r15,rbx
 ffff800000808fd8:	48 b8 fb 40 ee ff ff 	movabs rax,0xffffffffffee40fb
@@ -11753,13 +11753,13 @@ ffff800000808fdf:	ff ff ff
 ffff800000808fe2:	48 01 d8             	add    rax,rbx
 ffff800000808fe5:	ff d0                	call   rax
 ffff800000808fe7:	89 45 e0             	mov    DWORD PTR [rbp-0x20],eax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1245
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1247
 ffff800000808fea:	48 c7 45 e8 00 00 00 	mov    QWORD PTR [rbp-0x18],0x0
 ffff800000808ff1:	00 
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1246
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1248
 ffff800000808ff2:	c7 45 e4 00 00 00 00 	mov    DWORD PTR [rbp-0x1c],0x0
 ffff800000808ff9:	e9 fb 00 00 00       	jmp    ffff8000008090f9 <sys_tcsetpgrp+0x152>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1247
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1249
 ffff800000808ffe:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000809005:	ff ff ff 
 ffff800000809008:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -11771,7 +11771,7 @@ ffff80000080901b:	48 01 d0             	add    rax,rdx
 ffff80000080901e:	8b 40 18             	mov    eax,DWORD PTR [rax+0x18]
 ffff800000809021:	83 f8 04             	cmp    eax,0x4
 ffff800000809024:	0f 84 ca 00 00 00    	je     ffff8000008090f4 <sys_tcsetpgrp+0x14d>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1247 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1249 (discriminator 2)
 ffff80000080902a:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000809031:	ff ff ff 
 ffff800000809034:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -11783,7 +11783,7 @@ ffff800000809047:	48 01 d0             	add    rax,rdx
 ffff80000080904a:	8b 40 18             	mov    eax,DWORD PTR [rax+0x18]
 ffff80000080904d:	85 c0                	test   eax,eax
 ffff80000080904f:	0f 84 9f 00 00 00    	je     ffff8000008090f4 <sys_tcsetpgrp+0x14d>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1248
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1250
 ffff800000809055:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff80000080905c:	ff ff ff 
 ffff80000080905f:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -11796,7 +11796,7 @@ ffff800000809075:	8b 50 08             	mov    edx,DWORD PTR [rax+0x8]
 ffff800000809078:	8b 45 e0             	mov    eax,DWORD PTR [rbp-0x20]
 ffff80000080907b:	39 c2                	cmp    edx,eax
 ffff80000080907d:	75 76                	jne    ffff8000008090f5 <sys_tcsetpgrp+0x14e>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1249
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1251
 ffff80000080907f:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff800000809086:	ff ff ff 
 ffff800000809089:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -11807,7 +11807,7 @@ ffff800000809095:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff80000080909c:	48 01 c2             	add    rdx,rax
 ffff80000080909f:	8b 45 d8             	mov    eax,DWORD PTR [rbp-0x28]
 ffff8000008090a2:	89 42 0c             	mov    DWORD PTR [rdx+0xc],eax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1250
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1252
 ffff8000008090a5:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff8000008090ac:	ff ff ff 
 ffff8000008090af:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -11820,7 +11820,7 @@ ffff8000008090c5:	8b 10                	mov    edx,DWORD PTR [rax]
 ffff8000008090c7:	8b 45 d8             	mov    eax,DWORD PTR [rbp-0x28]
 ffff8000008090ca:	39 c2                	cmp    edx,eax
 ffff8000008090cc:	75 27                	jne    ffff8000008090f5 <sys_tcsetpgrp+0x14e>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1252
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1254
 ffff8000008090ce:	48 b8 60 fe ff ff ff 	movabs rax,0xfffffffffffffe60
 ffff8000008090d5:	ff ff ff 
 ffff8000008090d8:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -11831,14 +11831,14 @@ ffff8000008090e4:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff8000008090eb:	48 01 d0             	add    rax,rdx
 ffff8000008090ee:	48 89 45 e8          	mov    QWORD PTR [rbp-0x18],rax
 ffff8000008090f2:	eb 01                	jmp    ffff8000008090f5 <sys_tcsetpgrp+0x14e>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1247
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1249
 ffff8000008090f4:	90                   	nop
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1246 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1248 (discriminator 2)
 ffff8000008090f5:	83 45 e4 01          	add    DWORD PTR [rbp-0x1c],0x1
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1246 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1248 (discriminator 1)
 ffff8000008090f9:	83 7d e4 1f          	cmp    DWORD PTR [rbp-0x1c],0x1f
 ffff8000008090fd:	0f 8e fb fe ff ff    	jle    ffff800000808ffe <sys_tcsetpgrp+0x57>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1257
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1259
 ffff800000809103:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
 ffff800000809107:	8b 50 14             	mov    edx,DWORD PTR [rax+0x14]
 ffff80000080910a:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
@@ -11852,20 +11852,20 @@ ffff800000809126:	8b 55 dc             	mov    edx,DWORD PTR [rbp-0x24]
 ffff800000809129:	48 63 d2             	movsxd rdx,edx
 ffff80000080912c:	48 83 c2 1e          	add    rdx,0x1e
 ffff800000809130:	48 8b 74 d0 08       	mov    rsi,QWORD PTR [rax+rdx*8+0x8]
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1258
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1260
 ffff800000809135:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
 ffff800000809139:	8b 55 dc             	mov    edx,DWORD PTR [rbp-0x24]
 ffff80000080913c:	48 63 d2             	movsxd rdx,edx
 ffff80000080913f:	48 83 c2 1e          	add    rdx,0x1e
 ffff800000809143:	48 8b 44 d0 08       	mov    rax,QWORD PTR [rax+rdx*8+0x8]
 ffff800000809148:	48 8b 40 10          	mov    rax,QWORD PTR [rax+0x10]
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1257
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1259
 ffff80000080914c:	48 8b 40 40          	mov    rax,QWORD PTR [rax+0x40]
 ffff800000809150:	b9 00 00 00 00       	mov    ecx,0x0
 ffff800000809155:	ba 01 00 00 00       	mov    edx,0x1
 ffff80000080915a:	48 89 c7             	mov    rdi,rax
 ffff80000080915d:	41 ff d0             	call   r8
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1259
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1261
 ffff800000809160:	90                   	nop
 ffff800000809161:	48 83 c4 20          	add    rsp,0x20
 ffff800000809165:	5b                   	pop    rbx
@@ -11875,7 +11875,7 @@ ffff800000809169:	c3                   	ret
 
 ffff80000080916a <sys_tcgetpgrp>:
 sys_tcgetpgrp():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1261
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1263
 ffff80000080916a:	f3 0f 1e fa          	endbr64 
 ffff80000080916e:	55                   	push   rbp
 ffff80000080916f:	48 89 e5             	mov    rbp,rsp
@@ -11884,19 +11884,19 @@ ffff800000809179:	49 bb 96 bc 11 00 00 	movabs r11,0x11bc96
 ffff800000809180:	00 00 00 
 ffff800000809183:	4c 01 d8             	add    rax,r11
 ffff800000809186:	89 7d fc             	mov    DWORD PTR [rbp-0x4],edi
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1262
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1264
 ffff800000809189:	48 ba 48 fe ff ff ff 	movabs rdx,0xfffffffffffffe48
 ffff800000809190:	ff ff ff 
 ffff800000809193:	48 8b 04 10          	mov    rax,QWORD PTR [rax+rdx*1]
 ffff800000809197:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff80000080919a:	8b 40 0c             	mov    eax,DWORD PTR [rax+0xc]
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1263
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1265
 ffff80000080919d:	5d                   	pop    rbp
 ffff80000080919e:	c3                   	ret    
 
 ffff80000080919f <sys_ioctl>:
 sys_ioctl():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1267
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1269
 ffff80000080919f:	f3 0f 1e fa          	endbr64 
 ffff8000008091a3:	55                   	push   rbp
 ffff8000008091a4:	48 89 e5             	mov    rbp,rsp
@@ -11908,7 +11908,7 @@ ffff8000008091bc:	4c 01 d8             	add    rax,r11
 ffff8000008091bf:	89 7d fc             	mov    DWORD PTR [rbp-0x4],edi
 ffff8000008091c2:	89 75 f8             	mov    DWORD PTR [rbp-0x8],esi
 ffff8000008091c5:	48 89 55 f0          	mov    QWORD PTR [rbp-0x10],rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1268
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1270
 ffff8000008091c9:	48 ba 48 fe ff ff ff 	movabs rdx,0xfffffffffffffe48
 ffff8000008091d0:	ff ff ff 
 ffff8000008091d3:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
@@ -11921,17 +11921,17 @@ ffff8000008091e9:	48 8b 52 18          	mov    rdx,QWORD PTR [rdx+0x18]
 ffff8000008091ed:	4c 8b 42 28          	mov    r8,QWORD PTR [rdx+0x28]
 ffff8000008091f1:	8b 55 f8             	mov    edx,DWORD PTR [rbp-0x8]
 ffff8000008091f4:	48 63 d2             	movsxd rdx,edx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1269
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1271
 ffff8000008091f7:	48 b9 48 fe ff ff ff 	movabs rcx,0xfffffffffffffe48
 ffff8000008091fe:	ff ff ff 
 ffff800000809201:	48 8b 0c 08          	mov    rcx,QWORD PTR [rax+rcx*1]
 ffff800000809205:	48 8b 09             	mov    rcx,QWORD PTR [rcx]
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1268
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1270
 ffff800000809208:	8b 75 fc             	mov    esi,DWORD PTR [rbp-0x4]
 ffff80000080920b:	48 63 f6             	movsxd rsi,esi
 ffff80000080920e:	48 83 c6 1e          	add    rsi,0x1e
 ffff800000809212:	48 8b 74 f1 08       	mov    rsi,QWORD PTR [rcx+rsi*8+0x8]
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1269
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1271
 ffff800000809217:	48 b9 48 fe ff ff ff 	movabs rcx,0xfffffffffffffe48
 ffff80000080921e:	ff ff ff 
 ffff800000809221:	48 8b 04 08          	mov    rax,QWORD PTR [rax+rcx*1]
@@ -11941,19 +11941,19 @@ ffff80000080922b:	48 63 c9             	movsxd rcx,ecx
 ffff80000080922e:	48 83 c1 1e          	add    rcx,0x1e
 ffff800000809232:	48 8b 44 c8 08       	mov    rax,QWORD PTR [rax+rcx*8+0x8]
 ffff800000809237:	48 8b 40 10          	mov    rax,QWORD PTR [rax+0x10]
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1268
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1270
 ffff80000080923b:	48 8b 40 40          	mov    rax,QWORD PTR [rax+0x40]
 ffff80000080923f:	48 8b 4d f0          	mov    rcx,QWORD PTR [rbp-0x10]
 ffff800000809243:	48 89 c7             	mov    rdi,rax
 ffff800000809246:	41 ff d0             	call   r8
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1270
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1272
 ffff800000809249:	90                   	nop
 ffff80000080924a:	c9                   	leave  
 ffff80000080924b:	c3                   	ret    
 
 ffff80000080924c <set_errno>:
 set_errno():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1272
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1274
 ffff80000080924c:	f3 0f 1e fa          	endbr64 
 ffff800000809250:	55                   	push   rbp
 ffff800000809251:	48 89 e5             	mov    rbp,rsp
@@ -11962,7 +11962,7 @@ ffff80000080925b:	49 bb b4 bb 11 00 00 	movabs r11,0x11bbb4
 ffff800000809262:	00 00 00 
 ffff800000809265:	4c 01 d8             	add    rax,r11
 ffff800000809268:	89 7d fc             	mov    DWORD PTR [rbp-0x4],edi
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1273
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1275
 ffff80000080926b:	48 ba 48 fe ff ff ff 	movabs rdx,0xfffffffffffffe48
 ffff800000809272:	ff ff ff 
 ffff800000809275:	48 8b 04 10          	mov    rax,QWORD PTR [rax+rdx*1]
@@ -11970,14 +11970,14 @@ ffff800000809279:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff80000080927c:	8b 55 fc             	mov    edx,DWORD PTR [rbp-0x4]
 ffff80000080927f:	48 63 d2             	movsxd rdx,edx
 ffff800000809282:	48 89 90 2c 03 00 00 	mov    QWORD PTR [rax+0x32c],rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1274
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1276
 ffff800000809289:	90                   	nop
 ffff80000080928a:	5d                   	pop    rbp
 ffff80000080928b:	c3                   	ret    
 
 ffff80000080928c <get_proc>:
 get_proc():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1277
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1279
 ffff80000080928c:	f3 0f 1e fa          	endbr64 
 ffff800000809290:	55                   	push   rbp
 ffff800000809291:	48 89 e5             	mov    rbp,rsp
@@ -11986,10 +11986,10 @@ ffff80000080929b:	49 bb 74 bb 11 00 00 	movabs r11,0x11bb74
 ffff8000008092a2:	00 00 00 
 ffff8000008092a5:	4c 01 d8             	add    rax,r11
 ffff8000008092a8:	89 7d ec             	mov    DWORD PTR [rbp-0x14],edi
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1278
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1280
 ffff8000008092ab:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
 ffff8000008092b2:	eb 78                	jmp    ffff80000080932c <get_proc+0xa0>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1279
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1281
 ffff8000008092b4:	48 ba 60 fe ff ff ff 	movabs rdx,0xfffffffffffffe60
 ffff8000008092bb:	ff ff ff 
 ffff8000008092be:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
@@ -12001,7 +12001,7 @@ ffff8000008092d2:	48 01 ca             	add    rdx,rcx
 ffff8000008092d5:	8b 52 18             	mov    edx,DWORD PTR [rdx+0x18]
 ffff8000008092d8:	85 d2                	test   edx,edx
 ffff8000008092da:	74 4c                	je     ffff800000809328 <get_proc+0x9c>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1279 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1281 (discriminator 1)
 ffff8000008092dc:	48 ba 60 fe ff ff ff 	movabs rdx,0xfffffffffffffe60
 ffff8000008092e3:	ff ff ff 
 ffff8000008092e6:	48 8b 14 10          	mov    rdx,QWORD PTR [rax+rdx*1]
@@ -12014,7 +12014,7 @@ ffff8000008092fd:	8b 0a                	mov    ecx,DWORD PTR [rdx]
 ffff8000008092ff:	8b 55 ec             	mov    edx,DWORD PTR [rbp-0x14]
 ffff800000809302:	39 d1                	cmp    ecx,edx
 ffff800000809304:	75 22                	jne    ffff800000809328 <get_proc+0x9c>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1279 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1281 (discriminator 2)
 ffff800000809306:	48 ba 60 fe ff ff ff 	movabs rdx,0xfffffffffffffe60
 ffff80000080930d:	ff ff ff 
 ffff800000809310:	48 8b 04 10          	mov    rax,QWORD PTR [rax+rdx*1]
@@ -12024,20 +12024,20 @@ ffff80000080931a:	48 98                	cdqe
 ffff80000080931c:	48 69 c0 68 03 00 00 	imul   rax,rax,0x368
 ffff800000809323:	48 01 d0             	add    rax,rdx
 ffff800000809326:	eb 0f                	jmp    ffff800000809337 <get_proc+0xab>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1278 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1280 (discriminator 2)
 ffff800000809328:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1278 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1280 (discriminator 1)
 ffff80000080932c:	83 7d fc 1f          	cmp    DWORD PTR [rbp-0x4],0x1f
 ffff800000809330:	7e 82                	jle    ffff8000008092b4 <get_proc+0x28>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1281
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1283
 ffff800000809332:	b8 00 00 00 00       	mov    eax,0x0
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1282
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1284
 ffff800000809337:	5d                   	pop    rbp
 ffff800000809338:	c3                   	ret    
 
 ffff800000809339 <store_rip>:
 store_rip():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1286
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1288
 ffff800000809339:	f3 0f 1e fa          	endbr64 
 ffff80000080933d:	55                   	push   rbp
 ffff80000080933e:	48 89 e5             	mov    rbp,rsp
@@ -12046,7 +12046,7 @@ ffff800000809348:	49 bb c7 ba 11 00 00 	movabs r11,0x11bac7
 ffff80000080934f:	00 00 00 
 ffff800000809352:	4c 01 d8             	add    rax,r11
 ffff800000809355:	48 89 7d f8          	mov    QWORD PTR [rbp-0x8],rdi
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1287
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1289
 ffff800000809359:	48 ba 48 fe ff ff ff 	movabs rdx,0xfffffffffffffe48
 ffff800000809360:	ff ff ff 
 ffff800000809363:	48 8b 04 10          	mov    rax,QWORD PTR [rax+rdx*1]
@@ -12054,14 +12054,14 @@ ffff800000809367:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff80000080936a:	48 89 b8 6c 02 00 00 	mov    QWORD PTR [rax+0x26c],rdi
 ffff800000809371:	48 89 f8             	mov    rax,rdi
 ffff800000809374:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1288
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1290
 ffff800000809378:	90                   	nop
 ffff800000809379:	5d                   	pop    rbp
 ffff80000080937a:	c3                   	ret    
 
 ffff80000080937b <_proc_sleep>:
 _proc_sleep():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1291
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1293
 ffff80000080937b:	f3 0f 1e fa          	endbr64 
 ffff80000080937f:	55                   	push   rbp
 ffff800000809380:	48 89 e5             	mov    rbp,rsp
@@ -12071,16 +12071,16 @@ ffff800000809386:	48 8d 1d f9 ff ff ff 	lea    rbx,[rip+0xfffffffffffffff9]     
 ffff80000080938d:	49 bb 82 ba 11 00 00 	movabs r11,0x11ba82
 ffff800000809394:	00 00 00 
 ffff800000809397:	4c 01 db             	add    rbx,r11
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1292
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1294
 ffff80000080939a:	eb 17                	jmp    ffff8000008093b3 <_proc_sleep+0x38>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1292 (discriminator 2)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1294 (discriminator 2)
 ffff80000080939c:	49 89 df             	mov    r15,rbx
 ffff80000080939f:	b8 00 00 00 00       	mov    eax,0x0
 ffff8000008093a4:	48 ba 6f 12 ee ff ff 	movabs rdx,0xffffffffffee126f
 ffff8000008093ab:	ff ff ff 
 ffff8000008093ae:	48 01 da             	add    rdx,rbx
 ffff8000008093b1:	ff d2                	call   rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1292 (discriminator 1)
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1294 (discriminator 1)
 ffff8000008093b3:	48 b8 48 fe ff ff ff 	movabs rax,0xfffffffffffffe48
 ffff8000008093ba:	ff ff ff 
 ffff8000008093bd:	48 8b 04 03          	mov    rax,QWORD PTR [rbx+rax*1]
@@ -12088,7 +12088,7 @@ ffff8000008093c1:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff8000008093c4:	8b 40 18             	mov    eax,DWORD PTR [rax+0x18]
 ffff8000008093c7:	83 f8 03             	cmp    eax,0x3
 ffff8000008093ca:	74 d0                	je     ffff80000080939c <_proc_sleep+0x21>
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1293
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1295
 ffff8000008093cc:	48 b8 f6 d1 ff ff ff 	movabs rax,0xffffffffffffd1f6
 ffff8000008093d3:	ff ff ff 
 ffff8000008093d6:	48 8d 04 03          	lea    rax,[rbx+rax*1]
@@ -12099,7 +12099,7 @@ ffff8000008093e5:	48 ba 02 12 ef ff ff 	movabs rdx,0xffffffffffef1202
 ffff8000008093ec:	ff ff ff 
 ffff8000008093ef:	48 01 da             	add    rdx,rbx
 ffff8000008093f2:	ff d2                	call   rdx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1294
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1296
 ffff8000008093f4:	90                   	nop
 ffff8000008093f5:	5b                   	pop    rbx
 ffff8000008093f6:	41 5f                	pop    r15
@@ -12108,7 +12108,7 @@ ffff8000008093f9:	c3                   	ret
 
 ffff8000008093fa <proc_sleep>:
 proc_sleep():
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1296
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1298
 ffff8000008093fa:	f3 0f 1e fa          	endbr64 
 ffff8000008093fe:	55                   	push   rbp
 ffff8000008093ff:	48 89 e5             	mov    rbp,rsp
@@ -12118,13 +12118,13 @@ ffff800000809408:	48 8d 15 f9 ff ff ff 	lea    rdx,[rip+0xfffffffffffffff9]     
 ffff80000080940f:	49 bb 00 ba 11 00 00 	movabs r11,0x11ba00
 ffff800000809416:	00 00 00 
 ffff800000809419:	4c 01 da             	add    rdx,r11
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1298
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1300
 ffff80000080941c:	48 b8 48 fe ff ff ff 	movabs rax,0xfffffffffffffe48
 ffff800000809423:	ff ff ff 
 ffff800000809426:	48 8b 04 02          	mov    rax,QWORD PTR [rdx+rax*1]
 ffff80000080942a:	48 8b 00             	mov    rax,QWORD PTR [rax]
 ffff80000080942d:	c7 40 18 03 00 00 00 	mov    DWORD PTR [rax+0x18],0x3
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1299
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1301
 ffff800000809434:	48 b8 48 fe ff ff ff 	movabs rax,0xfffffffffffffe48
 ffff80000080943b:	ff ff ff 
 ffff80000080943e:	48 8b 04 02          	mov    rax,QWORD PTR [rdx+rax*1]
@@ -12133,14 +12133,14 @@ ffff800000809445:	48 b9 00 fd ff ff ff 	movabs rcx,0xfffffffffffffd00
 ffff80000080944c:	ff ff ff 
 ffff80000080944f:	48 8b 0c 0a          	mov    rcx,QWORD PTR [rdx+rcx*1]
 ffff800000809453:	48 89 88 6c 02 00 00 	mov    QWORD PTR [rax+0x26c],rcx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1300
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1302
 ffff80000080945a:	49 89 d7             	mov    r15,rdx
 ffff80000080945d:	b8 00 00 00 00       	mov    eax,0x0
 ffff800000809462:	48 b9 73 45 ee ff ff 	movabs rcx,0xffffffffffee4573
 ffff800000809469:	ff ff ff 
 ffff80000080946c:	48 01 d1             	add    rcx,rdx
 ffff80000080946f:	ff d1                	call   rcx
-D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1301
+D:/Code/Comprehensive/OS/workspace/64/knl/proc.c:1303
 ffff800000809471:	90                   	nop
 ffff800000809472:	4c 8b 7d f8          	mov    r15,QWORD PTR [rbp-0x8]
 ffff800000809476:	c9                   	leave  

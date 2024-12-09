@@ -254,6 +254,7 @@ void save_rsp()
     //在时钟中断context下
     addr_t* p         = INT_STACK_TOP - 16;
     current->regs.rsp = *p;
+    // current->regs.rbp = ;
 }
 void manage_proc()
 {
@@ -1008,6 +1009,7 @@ int sys_fork(void)
         new_stkpg + PAGE_4K_SIZE - sizeof(stack_store_regs);   //拷贝的上下文
     //这样进程切换到子进程的done标签，从时钟中断返回弹出堆栈的时候rax弹出来的就是0，成为返回值。
     ctx_dup->rax = 0;
+    //设置iret时的堆栈
     // 这里让进程回到clock_ret是为了恢复上下文。否则切换到新进程时，没有任何通用寄存器会被更改。
     task[pid].regs.rip = clock_ret;
     //此时处于syscall调用中，原来的用户栈已经保存在当前ctx_dup中
