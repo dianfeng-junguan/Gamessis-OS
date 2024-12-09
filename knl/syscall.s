@@ -32,11 +32,16 @@ _syscall:
     ;这部分是为了填上上下文的int部分，是给fork的新进程使用的，
     ;syscall会直接忽略这部分。
     push 0x2b
-    push rsp
+    push rsp;这里之后fork时要修改成用户栈
     pushf
     push 0x33
     push rcx
 ;syscall上下文
+;保存用户栈的rsp到上面int部分。
+    mov rcx,[rbp+20]
+    mov qword [rsp+24],rcx
+    mov rcx,[rsp]
+
     push rax
     push rbx
     push rcx
@@ -89,10 +94,10 @@ _syscall:
     ; pop rdi
 
     call syscall
-_syscall_sysret:
     xchg r10,rcx
     pop rcx
     pop r11
+_syscall_sysret:
 
     ;mov qword [rsp+15*8],rax;存储好返回值
     pop rax

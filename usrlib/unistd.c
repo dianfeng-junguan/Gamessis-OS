@@ -27,3 +27,12 @@ pid_t vfork(void){
 int close(int fd){
     return do_syscall(SYSCAll_CLOSE,fd,0,0,0,0,0);
 }
+
+
+off_t lseek(int fildes, off_t offset, int whence){
+    return do_syscall(SYSCAll_SEEK, fildes, offset, whence, 0, 0, 0);
+}
+
+int open(const char *path, int oflag){
+    return do_syscall(SYSCAll_OPEN, path, oflag, 0, 0, 0, 0);
+}

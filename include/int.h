@@ -20,39 +20,41 @@
 #include "typename.h"
 #include <sys/types.h>
 
-void wrmsr(unsigned long address,unsigned long value);
+void wrmsr(unsigned long address, unsigned long value);
 
 #ifdef IA32
-typedef struct{
+typedef struct
+{
     u16 offset_low;
     u16 selector;
     u16 attr;
     u16 offset_high;
-}__attribute__((packed)) gate;
+} __attribute__((packed)) gate;
 #else
-typedef struct {
+typedef struct
+{
     u16 offset_low;
     u16 selector;
     u16 attr;
     u16 offset_mid;
     u32 offset_high;
     u32 rsvd;
-}__attribute__((packed)) gate;
+} __attribute__((packed)) gate;
 
 //不定长结构体，名字是直接存储在结构体后面的
 typedef struct
 {
     unsigned long long addr;
-    char type;
-    int namelen;
-}__attribute__((packed)) ksym;
+    char               type;
+    int                namelen;
+} __attribute__((packed)) ksym;
 
 #endif
-void outb(u16 device,u8 value);
-void outw(u16 dev,u16 v);
+void outb(u16 device, u8 value);
+void outw(u16 dev, u16 v);
 void io_delay();
-u8 inb(u8 device);
-u16 inw(u16 device);
+u8   inb(u8 device);
+u16  inw(u16 device);
 
 
 void turn_on_int();
@@ -63,7 +65,7 @@ void turn_on_int();
 #define TASK_GATE 0xc00
 #define INT_GATE 0xe00
 //注：这里的index指的是idt作为数组，每一项的index，不是0x8,0x10那些
-void set_gate(u8 index,addr_t offset,u16 selector,u16 attr);
+void set_gate(u8 index, addr_t offset, u16 selector, u16 attr);
 
 void eoi();
 /*
@@ -72,7 +74,7 @@ void eoi();
  * */
 
 void init_int();
-//static struct desgate idt[0x21];
+// static struct desgate idt[0x21];
 void divide_err();
 void debug();
 void default_int_proc();
@@ -91,8 +93,8 @@ void coprocessor_err();
 
 /// @brief 在错误发生时，输出函数调用堆栈。
 /// @param ret_stack ist中，错误码后开始的地址
-void backtrace(off_t* ret_stack);
-/* 
+void backtrace();
+/*
 调用系统中断，所有内核的重要功能基本都在这。
 参数；
 int func:调用号
@@ -120,8 +122,8 @@ func_num,char *str
 12:
 func,count,char *dist
  */
-int syscall(long a, long b, long c, long d, long e, long f);
-void* _syscall(int func_num,...);
+int   syscall(long a, long b, long c, long d, long e, long f);
+void* _syscall(int func_num, ...);
 
 
 #endif
