@@ -267,8 +267,9 @@ void move_to_user_mode();
 void save_context();
 void save_context_c(void* ctx, void* int_stk);
 //用来保存rsp到当前proc.regs
-void  save_rsp();
-void  proc_zero();
+void save_rsp();
+void proc_zero();
+// main函数返回之后回到这里。
 void  proc_end();
 void* malloc(int size);
 void* palloc(int proc_index, int size);

@@ -531,20 +531,20 @@ void* malloc(int size)
 {
     return palloc(cur_proc, size);
 }
-void proc_end()
+void _proc_end(long v_ret)
 {
-    int ret;
-    __asm__ volatile("mov %%eax,%0" : "=m"(ret));
+    do_syscall(SYSCALL_EXIT, v_ret, 0, 0, 0, 0, 0);
+
     // printf("proc #%d ended with retv %d.\n",cur_proc,ret);
     //切换堆栈
     //__asm__ volatile("mov %0,%%rsp"::"r"(task[0].tss.esp));
-    del_proc(cur_proc);
-    if (task[cur_proc].parent_pid != -1) {
-        task[task[cur_proc].parent_pid].stat = TASK_READY;
-        switch_proc_tss(task[cur_proc].parent_pid);
-    }
-    else
-        switch_proc_tss(0);
+    // del_proc(cur_proc);
+    // if (task[cur_proc].parent_pid != -1) {
+    //     task[task[cur_proc].parent_pid].stat = TASK_READY;
+    //     switch_proc_tss(task[cur_proc].parent_pid);
+    // }
+    // else
+    //     switch_proc_tss(0);
     // syscall(SYSCALL_DEL_PROC,cur_proc,0,0,0,0);
 }
 void del_proc(int pnr)
@@ -645,6 +645,7 @@ int sys_exit(int code)
     while (1) manage_proc();
     return code;
 }
+
 /*int load_dll_at(char *path,int addr)
 {
     extern dir_entry cur_dir;
@@ -880,11 +881,11 @@ int sys_free(int ptr)
 
 void switch_to(struct process* from, struct process* to)
 {
-    cur_proc = to - task;
-    current  = &task[cur_proc];
     //保存rsp
     current->tss.rsp0 = tss->rsp0;
     current->tss.rsp2 = tss->rsp2;
+    cur_proc          = to - task;
+    current           = &task[cur_proc];
     // cr3需要物理地址,regs.cr3里面填的就是物理地址
     __asm__ volatile("mov %0,%%rax\n"
                      "mov %%rax,%%cr3\n"
@@ -1305,7 +1306,10 @@ void wait_for_signal()
     // 保存当前地址到上下文，这样切换到此进程的时候可以回到这里
     current->stat = TASK_SUSPENDED;
     //切换到其他进程
-    while (current->stat == TASK_SUSPENDED) manage_proc();
+    while (current->stat == TASK_SUSPENDED) {
+        manage_proc();
+        do_signals();
+    }
 }
 void store_rbp(unsigned long rbp)
 {

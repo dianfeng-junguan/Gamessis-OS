@@ -187,21 +187,13 @@ void general_protect()
     comprintf("occurred at %x\n", err_code);
     backtrace();
 
-    /*unsigned int addr=0;
-    __asm__ volatile("mov 8(%%ebp),%0":"=r"(addr));
-    printf("occurred at %x\n",addr);
-    extern int cur_proc;
-    extern struct process *task;
-    if(task[cur_proc].pid==1)//系统进程
-    {
-        printf("sys died. please reboot.\n");
-        __asm__ volatile("jmp .");
+    //处理问题进程
+    if (current->pid == 1) {
+        comprintf("sys died.\n");
+        while (1) {}
     }
-    //杀死问题进程
-    del_proc(cur_proc);
-    printf("killed the problem process.\n");
-    printf("shell:>");
-    switch_proc_tss(0); */
+    //终结问题进程
+    sys_exit(-1);
     eoi();
     __asm__ volatile("leave\r\n add $8,%rsp \r\n iretq");
 }

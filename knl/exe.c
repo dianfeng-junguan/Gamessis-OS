@@ -203,7 +203,7 @@ int sys_execve(char* path, int argc, char** argv)
     // syscall返回依赖这个
     tss->rsp2 = stp;
     stp[0]    = 0;   // rbp占位符-反正返回到main,会mov rbp,rsp
-    stp[1]    = sys_exit;
+    stp[1]    = proc_end;
 
     char* p = STACK_TOP;
     for (int i = 0; i < argc; i++) {

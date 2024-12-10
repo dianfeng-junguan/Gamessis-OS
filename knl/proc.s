@@ -5,11 +5,13 @@ global move_to_user_mode
 extern req_proc
 extern set_proc
 extern save_context_c
+extern _proc_end
 global test_create_proc_asm
 global switch_to_
 global save_context
 global discard_context
 global move_to_user_mode
+global proc_end
 [bits 64]
 create_zero:
 call req_proc
@@ -24,7 +26,9 @@ ret
 ;rdi:to->regs.rsp
 ;rsi:from->
 ; switch_to_:
-
+proc_end:
+    mov rdi,rax
+    jmp _proc_end
 ;fill_desc:
 ;push rbp
 ;mov rbp,rsp
