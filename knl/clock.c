@@ -4,15 +4,16 @@
 #include "signal.h"
 #include <devman.h>
 #include <disk.h>
-extern int manage_proc_lock;
-extern int cur_proc;
-extern struct process *task;
-void clock_c(){
-    //refresh_wnds();
-    if(!manage_proc_lock)
-    {
+extern int             manage_proc_lock;
+extern int             cur_proc;
+extern struct process* task;
+
+void clock_c()
+{
+    if (!manage_proc_lock) {
         manage_proc();
+        do_signals();
+        //处理信号之后，可能进程状态被改变,需要重新调度。
+        if (current && current->stat == TASK_SUSPENDED) { manage_proc(); }
     }
-    //puts("1 disk req executed.");
-    // do_signals();
 }

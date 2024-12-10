@@ -6,7 +6,7 @@ extern req_proc
 extern set_proc
 extern save_context_c
 global test_create_proc_asm
-global switch_to
+global switch_to_
 global save_context
 global discard_context
 global move_to_user_mode
@@ -20,6 +20,10 @@ mov eax,[esp];proc_nr
 add esp,16*4
 .retu:
 ret
+;参数：
+;rdi:to->regs.rsp
+;rsi:from->
+; switch_to_:
 
 ;fill_desc:
 ;push rbp

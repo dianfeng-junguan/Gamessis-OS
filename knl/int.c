@@ -95,7 +95,7 @@ void debug()
     __asm__("cli");
     // puts("debug");
     eoi();
-    __asm__ volatile("sti \r\n leave \r\n iretq");
+    __asm__ volatile("leave \r\n iretq");
 }
 void default_int_proc()
 {
@@ -179,12 +179,12 @@ void stackseg_overbound()
 void general_protect()
 {
     com_puts("general protect.", PORT_COM1);
-    long err_code = 0, addr = 0;
-    __asm__ volatile("mov 16(%%rbp),%0" : "=r"(err_code));
-    __asm__ volatile("mov 24(%%rbp),%0" : "=r"(addr));
-    comprintf("err code:%x\n", err_code);
+    long addr = 0, err_code = 0;
+    __asm__ volatile("mov 16(%%rbp),%0" : "=r"(addr));
+    __asm__ volatile("mov 24(%%rbp),%0" : "=r"(err_code));
+    comprintf("err code:%x\n", addr);
     comprintf("problem process pid:%d\n", current->pid);
-    comprintf("occurred at %x\n", addr);
+    comprintf("occurred at %x\n", err_code);
     backtrace();
 
     /*unsigned int addr=0;
@@ -234,45 +234,29 @@ int syscall(long a, long b, long c, long d, long e, long f)
 {
     unsigned long num;
     __asm__ volatile("" : "=a"(num));   //这样rax中存的参数就到这了
+    int retv = 0;
     switch (num) {
-    // case 0:return reg_device(a);
-    // case 1:return dispose_device(a);
-    // case 2:return reg_driver(a);
-    // case 3:return dispose_driver(a);
-    // case 4:return call_drv_func(a,b,c);
-    // case 5:return req_page_at(a,b);
-    // case 6:return free_page(a);
-    // case 7:return reg_proc(a, b, c);
-    // case 8:del_proc(a);
-    // case 10:chk_vm(a,b);
-    case 11: return sys_open(a, b);
-    case 12: return sys_close(a);
-    case 13: return sys_read(a, b, c);
-    case 14: return sys_write(a, b, c);
-    case 15: return sys_lseek(a, b, c);
-    // case 16:return sys_tell(a);
-    // case 17:return reg_vol(a,b,c);
-    // case 18:return free_vol(a);
-    // case 19:return execute(a, NULL);
-    case SYSCALL_EXIT: return sys_exit(a);
-    case SYSCALL_CALL: return exec_call(a);
-    // case SYSCALL_MKFIFO:return sys_mkfifo(a);
-    case SYSCALL_BRK: return sys_brk(a);
-    case SYSCALL_FREE: return sys_free(a);
-    // case SYSCALL_KB_READC:return sys_analyse_key();
-    // case SYSCALL_FIND_DEV:return sys_find_dev(a);
-    case SYSCALL_FORK: return sys_fork();
-    case SYSCALL_EXECVE: return sys_execve(a, b, c);
-    // case SYSCALL_OPERATE_DEV:return sys_operate_dev(a,b,c);
-    case SYSCALL_WAIT: return sys_wait(a, b, c);
-    case SYSCALL_MMAP: return sys_mmap(a, b, c, d, e, f);
-    case SYSCALL_MUNMAP: return sys_munmap(a, b);
-    case SYSCALL_MKNOD: return sys_mknod(a, b, c);
+    case 11: retv = sys_open(a, b); break;
+    case 12: retv = sys_close(a); break;
+    case 13: retv = sys_read(a, b, c); break;
+    case 14: retv = sys_write(a, b, c); break;
+    case 15: retv = sys_lseek(a, b, c); break;
+    case SYSCALL_EXIT: retv = sys_exit(a); break;
+    case SYSCALL_CALL: exec_call(a); break;
+    case SYSCALL_BRK: retv = sys_brk(a); break;
+    case SYSCALL_FREE: retv = sys_free(a); break;
+    case SYSCALL_FORK: retv = sys_fork(); break;
+    case SYSCALL_EXECVE: retv = sys_execve(a, b, c); break;
+    case SYSCALL_WAIT: retv = sys_wait(a, b, c); break;
+    case SYSCALL_MMAP: retv = sys_mmap(a, b, c, d, e, f); break;
+    case SYSCALL_MUNMAP: retv = sys_munmap(a, b); break;
+    case SYSCALL_MKNOD: retv = sys_mknod(a, b, c); break;
     }
     // __asm__ volatile("mov %0,%%eax\r\n mov %1,%%ebx\r\n mov %2,%%ecx\r\n mov %3,%%edx\r\n mov %4,%%esi\r\n mov %5,%%edi"\
     // ::"m"(func),"m"(a),"m"(b),"m"(c),"m"(d),"m"(e));
     // __asm__ volatile("int $0x80\r\n leave\r\n ret");
     do_signals();
+    return retv;
 }
 void wrmsr(unsigned long address, unsigned long value)
 {

@@ -50,6 +50,7 @@ int   main(int argc, char** argv)
                     break;
                 }
             }
+            printf("forked. pid=%d\n", pid);
             int loc = 0;
 
             waitpid(pid, &loc, 0);

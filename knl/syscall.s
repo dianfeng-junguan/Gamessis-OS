@@ -9,6 +9,7 @@ extern del_proc
 extern syscall
 extern current
 extern store_rip
+extern store_rbp
 REQ_READ_DISK       EQU 0
 REQ_WRITE_DISK      EQU 1
 REQ_SYNC_READ_DISK  EQU 2
@@ -24,6 +25,12 @@ REQ_FETCH_KBBUF     EQU 12
 _syscall:
     ; cli 有的需要cli有的不需要
     push rbp
+
+    ; push rdi
+    ; mov rdi,rbp
+    ; call store_rbp
+    ; pop rdi
+
     mov rbp,0xffff800000108000
     ;切换堆栈
     mov qword [rbp+20],rsp
@@ -100,10 +107,10 @@ _syscall:
 _syscall_sysret:
 
     ;mov qword [rsp+15*8],rax;存储好返回值
-    pop rax
-    mov ds,ax
-    pop rax
-    mov es,ax
+    pop rbx
+    mov ds,bx
+    pop rbx
+    mov es,bx
 
     pop r15
     pop r14
@@ -125,6 +132,7 @@ _syscall_sysret:
 
     ;不用把rsp的值放回到tss.rsp0
     ;mov qword [rbp+4],rsp
+    mov rbp,0xffff800000108000
     mov rsp,[rbp+20]
     pop rbp
 

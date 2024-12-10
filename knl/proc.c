@@ -266,7 +266,10 @@ void manage_proc()
         int times = 0;
         //轮询，直到有一个符合条件
         while (times < 10) {
-            if (task[i].pid != -1 && task[i].stat == TASK_READY && i != cur_proc) { break; }
+            if (task[i].pid != -1 &&
+                (task[i].stat == TASK_READY || task[i].stat == TASK_SUSPENDED) && i != cur_proc) {
+                break;   // suspended在这里可以选择，但是切换之后要处理信号，处理完还是suspended就得重新调度
+            }
             i++;
             if (i >= MAX_TASKS) {
                 times++;
@@ -274,10 +277,10 @@ void manage_proc()
             }
         }
         if (times == 10) return;   //超过十次尝试都没有，暂时不切换
-        comprintf("switch:%l to %l\n", current->pid, task[i].pid);
+        // comprintf("switch:%l to %l\n", current->pid, task[i].pid);
         // switch
-        if (task[cur_proc].stat == TASK_RUNNING) task[cur_proc].stat = TASK_READY;
-        task[i].stat = TASK_RUNNING;
+        // if (task[cur_proc].stat == TASK_RUNNING) task[cur_proc].stat = TASK_READY;
+        // task[i].stat = TASK_RUNNING;
         switch_to(&task[cur_proc], &task[i]);
     }
     return;
@@ -586,6 +589,8 @@ void del_proc(int pnr)
         //下面这部分是用来推算下一项的地址的
         p = list_next(p, &p->node);
     }
+    //向父进程发送信号告知进程结束
+    if (current->parent_pid > 0) send_signal(current->parent_pid, SIGCHLD);
     //
     //从进程中解除cr3,tss和ldt
     // switch_proc_tss(task[pnr]);
@@ -877,28 +882,32 @@ void switch_to(struct process* from, struct process* to)
 {
     cur_proc = to - task;
     current  = &task[cur_proc];
+    //保存rsp
+    current->tss.rsp0 = tss->rsp0;
+    current->tss.rsp2 = tss->rsp2;
     // cr3需要物理地址,regs.cr3里面填的就是物理地址
     __asm__ volatile("mov %0,%%rax\n"
                      "mov %%rax,%%cr3\n"
                      : "=m"(to->regs.cr3));
-    __asm__ volatile(
-        "mov %%rsp,%0\r\n"
-        "lea done(%%rip),%%rax\r\n"
-        "mov %%rax,%1\r\n"
-        "mov %%fs,%2\r\n"
-        "mov %%gs,%3\r\n"
-        "mov %6,%%rsp\r\n"
-        "pushq %7\r\n"
-        "jmp __switch_to\r\n"
-        "done:\r\n"
-        "nop"
-        : "=m"(from->regs.rsp), "=m"(from->regs.rip), "=m"(from->regs.fs), "=m"(from->regs.gs)
-        : "m"(to->regs.fs),
-          "m"(to->regs.gs),
-          "m"(to->regs.rsp),
-          "m"(to->regs.rip),
-          "D"(from),
-          "S"(to));
+    __asm__ volatile("mov %%rsp,%0\r\n"
+                     "lea done(%%rip),%%rax\r\n"
+                     "mov %%rax,%2\r\n"
+                     "mov %%fs,%3\r\n"
+                     "mov %%gs,%4\r\n"
+                     "nop"
+                     : "=m"(from->regs.rsp),
+                       "=m"(from->regs.rbp),
+                       "=m"(from->regs.rip),
+                       "=m"(from->regs.fs),
+                       "=m"(from->regs.gs));
+    __asm__ volatile("mov %0,%%rsp\r\n"
+                     "pushq %1\r\n mov %2,%%rdi\r\n mov %3,%%rsi\r\n"
+                     "jmp __switch_to\r\n"
+                     "done:\r\n"
+                     "nop\r\n" ::"m"(to->regs.rsp),
+                     "m"(to->regs.rip),
+                     "m"(from),
+                     "m"(to));
 }
 void __switch_to(struct process* from, struct process* to)
 {
@@ -912,6 +921,7 @@ void __switch_to(struct process* from, struct process* to)
             to->tss.ists[4],
             to->tss.ists[5],
             to->tss.ists[6]);
+
     __asm__ volatile("mov %%fs,%0\r\n"
                      "mov %%gs,%1\r\n"
                      "mov %2,%%fs\r\n"
@@ -1054,7 +1064,8 @@ int sys_fork(void)
 
     //如果父进程没有堆，不开辟。留给load_xx函数。
     //父进程运行到这里
-    return pid;
+    comprintf("new forked pid=%d\n", task[pid].pid);
+    return task[pid].pid;
 }
 //释放进程页表映射的内存，内核空间除外。
 void release_mmap(struct process* p)
@@ -1289,15 +1300,14 @@ void store_rip(unsigned long rip)
     __asm__ volatile("mov %0,%1" : "=D"(rip) : "m"(current->regs.rip));
 }
 
-void _proc_sleep()
-{
-    while (current->stat == TASK_SUSPENDED) { manage_proc(); }
-    comprintf("proc sleep end\n");
-}
-void proc_sleep()
+void wait_for_signal()
 {
     // 保存当前地址到上下文，这样切换到此进程的时候可以回到这里
-    current->stat     = TASK_SUSPENDED;
-    current->regs.rip = _proc_sleep;
-    _proc_sleep();
+    current->stat = TASK_SUSPENDED;
+    //切换到其他进程
+    while (current->stat == TASK_SUSPENDED) manage_proc();
+}
+void store_rbp(unsigned long rbp)
+{
+    current->regs.rbp = rbp;
 }
