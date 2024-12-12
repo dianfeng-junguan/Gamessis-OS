@@ -1,3 +1,0 @@
-/mnt/d/Code/Comprehensive/OS/workspace/64/bin/CMakeFiles/gms.dir
-/mnt/d/Code/Comprehensive/OS/workspace/64/bin/CMakeFiles/edit_cache.dir
-/mnt/d/Code/Comprehensive/OS/workspace/64/bin/CMakeFiles/rebuild_cache.dir
