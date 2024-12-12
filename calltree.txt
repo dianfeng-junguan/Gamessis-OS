@@ -1,0 +1,788 @@
++-main() <void main (unsigned int magic, void *addr) at knl/main.c:25>
+  +-init_logging() <int init_logging () at knl/log.c:11>
+  +-init_com() <void init_com (int base_port) at knl/com.c:12>
+  | \-outb()
+  +-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  | +-strlen()
+  | +-memset()
+  | +-va_start()
+  | +-va_arg()
+  | +-sprint_hex()
+  | +-sprintn()
+  | +-sprint_decimal()
+  | +-sprintchar()
+  | +-va_end()
+  | \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  |   \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  |     +-inb()
+  |     \-outb()
+  +-set_high_mem_base() <void set_high_mem_base (int base) at knl/memory.c:152>
+  +-set_mem_area() <void set_mem_area (unsigned long base, unsigned long len, unsigned long type) at knl/memory.c:156>
+  | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  |   +-strlen()
+  |   +-memset()
+  |   +-va_start()
+  |   +-va_arg()
+  |   +-sprint_hex()
+  |   +-sprintn()
+  |   +-sprint_decimal()
+  |   +-sprintchar()
+  |   +-va_end()
+  |   \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  |     \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  |       +-inb()
+  |       \-outb()
+  +-set_framebuffer() <void set_framebuffer (struct multiboot_tag_framebuffer tag) at knl/framebuffer.c:78>
+  +-init_memory() <void init_memory () at knl/memory.c:306>
+  | +-PAGE_4K_ALIGN()
+  | +-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  | | +-strlen()
+  | | +-memset()
+  | | +-va_start()
+  | | +-va_arg()
+  | | +-sprint_hex()
+  | | +-sprintn()
+  | | +-sprint_decimal()
+  | | +-sprintchar()
+  | | +-va_end()
+  | | \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  | |   \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  | |     +-inb()
+  | |     \-outb()
+  | +-kmalloc() <void *kmalloc (off_t addr, size_t size) at knl/memory.c:479>
+  | | +-PAGE_4K_ALIGN()
+  | | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
+  | | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  | | |   +-strlen()
+  | | |   +-memset()
+  | | |   +-va_start()
+  | | |   +-va_arg()
+  | | |   +-sprint_hex()
+  | | |   +-sprintn()
+  | | |   +-sprint_decimal()
+  | | |   +-sprintchar()
+  | | |   +-va_end()
+  | | |   \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  | | |     \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  | | |       +-inb()
+  | | |       \-outb()
+  | | \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
+  | \-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
+  |   \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  |     +-strlen()
+  |     +-memset()
+  |     +-va_start()
+  |     +-va_arg()
+  |     +-sprint_hex()
+  |     +-sprintn()
+  |     +-sprint_decimal()
+  |     +-sprintchar()
+  |     +-va_end()
+  |     \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  |       \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  |         +-inb()
+  |         \-outb()
+  +-init_int() <void init_int () at knl/int.c:14>
+  | +-set_gate() <void set_gate (u8 index, addr_t offset, u16 selector, u16 attr) at knl/int.c:63>
+  | +-divide_err() <void divide_err () at knl/int.c:81>
+  | | \-eoi()
+  | +-debug() <void debug () at knl/int.c:88>
+  | | \-eoi()
+  | +-default_int_proc() <void default_int_proc () at knl/int.c:94>
+  | | \-eoi()
+  | +-breakpoint() <void breakpoint () at knl/int.c:100>
+  | | \-eoi()
+  | +-overflow() <void overflow () at knl/int.c:106>
+  | | \-eoi()
+  | +-bounds() <void bounds () at knl/int.c:112>
+  | | \-eoi()
+  | +-undefined_operator() <void undefined_operator () at knl/int.c:118>
+  | | +-eoi()
+  | | \-backtrace() <void backtrace (off_t *ret_stack) at knl/int.c:288>
+  | |   +-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  | |   | +-strlen()
+  | |   | +-memset()
+  | |   | +-va_start()
+  | |   | +-va_arg()
+  | |   | +-sprint_hex()
+  | |   | +-sprintn()
+  | |   | +-sprint_decimal()
+  | |   | +-sprintchar()
+  | |   | +-va_end()
+  | |   | \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  | |   |   \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  | |   |     +-inb()
+  | |   |     \-outb()
+  | |   \-print_ksym() <int print_ksym (off_t addr) at knl/int.c:275>
+  | |     +-get_ksym() <ksym *get_ksym (off_t addr) at knl/int.c:259>
+  | |     +-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  | |     | +-strlen()
+  | |     | +-memset()
+  | |     | +-va_start()
+  | |     | +-va_arg()
+  | |     | +-sprint_hex()
+  | |     | +-sprintn()
+  | |     | +-sprint_decimal()
+  | |     | +-sprintchar()
+  | |     | +-va_end()
+  | |     | \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  | |     |   \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  | |     |     +-inb()
+  | |     |     \-outb()
+  | |     \-memcpy()
+  | +-coprocessor_notexist() <void coprocessor_notexist () at knl/int.c:127>
+  | | \-eoi()
+  | +-double_ints() <void double_ints () at knl/int.c:133>
+  | | \-eoi()
+  | +-coprocessor_seg_overbound() <void coprocessor_seg_overbound () at knl/int.c:139>
+  | | \-eoi()
+  | +-invalid_tss() <void invalid_tss () at knl/int.c:144>
+  | | \-eoi()
+  | +-segment_notexist() <void segment_notexist () at knl/int.c:150>
+  | | \-eoi()
+  | +-stackseg_overbound() <void stackseg_overbound () at knl/int.c:156>
+  | | \-eoi()
+  | +-general_protect() <void general_protect () at knl/int.c:162>
+  | | \-eoi()
+  | +-page_err() <void page_err () at knl/memory.c:235>
+  | | +-cli()
+  | | +-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  | | | +-strlen()
+  | | | +-memset()
+  | | | +-va_start()
+  | | | +-va_arg()
+  | | | +-sprint_hex()
+  | | | +-sprintn()
+  | | | +-sprint_decimal()
+  | | | +-sprintchar()
+  | | | +-va_end()
+  | | | \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  | | |   \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  | | |     +-inb()
+  | | |     \-outb()
+  | | +-backtrace() <void backtrace (off_t *ret_stack) at knl/int.c:288>
+  | | | +-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  | | | | +-strlen()
+  | | | | +-memset()
+  | | | | +-va_start()
+  | | | | +-va_arg()
+  | | | | +-sprint_hex()
+  | | | | +-sprintn()
+  | | | | +-sprint_decimal()
+  | | | | +-sprintchar()
+  | | | | +-va_end()
+  | | | | \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  | | | |   \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  | | | |     +-inb()
+  | | | |     \-outb()
+  | | | \-print_ksym() <int print_ksym (off_t addr) at knl/int.c:275>
+  | | |   +-get_ksym() <ksym *get_ksym (off_t addr) at knl/int.c:259>
+  | | |   +-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  | | |   | +-strlen()
+  | | |   | +-memset()
+  | | |   | +-va_start()
+  | | |   | +-va_arg()
+  | | |   | +-sprint_hex()
+  | | |   | +-sprintn()
+  | | |   | +-sprint_decimal()
+  | | |   | +-sprintchar()
+  | | |   | +-va_end()
+  | | |   | \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  | | |   |   \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  | | |   |     +-inb()
+  | | |   |     \-outb()
+  | | |   \-memcpy()
+  | | +-get_mmap() <mmap_struct *get_mmap (off_t addr) at knl/memory.c:219>
+  | | | \-list_next()
+  | | +-pmalloc() <void *pmalloc (size_t size) at knl/memory.c:524>
+  | | | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
+  | | | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  | | | |   +-strlen()
+  | | | |   +-memset()
+  | | | |   +-va_start()
+  | | | |   +-va_arg()
+  | | | |   +-sprint_hex()
+  | | | |   +-sprintn()
+  | | | |   +-sprint_decimal()
+  | | | |   +-sprintchar()
+  | | | |   +-va_end()
+  | | | |   \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  | | | |     \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  | | | |       +-inb()
+  | | | |       \-outb()
+  | | | +-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
+  | | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  | | |   +-strlen()
+  | | |   +-memset()
+  | | |   +-va_start()
+  | | |   +-va_arg()
+  | | |   +-sprint_hex()
+  | | |   +-sprintn()
+  | | |   +-sprint_decimal()
+  | | |   +-sprintchar()
+  | | |   +-va_end()
+  | | |   \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  | | |     \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  | | |       +-inb()
+  | | |       \-outb()
+  | | +-PAGE_4K_ALIGN()
+  | | +-get_pmhdr() <malloc_hdr *get_pmhdr (off_t pm) at knl/memory.c:228>
+  | | +-sys_lseek() <unsigned long sys_lseek (int filds, long offset, int whence) at knl/sys.c:194>
+  | | +-sys_read() <unsigned long sys_read (int fd, void *buf, long count) at knl/sys.c:159>
+  | | +-sys_exit() <int sys_exit (int code) at knl/proc.c:615>
+  | | | +-del_proc() <void del_proc (int pnr) at knl/proc.c:522>
+  | | | | +-release_mmap() <void release_mmap (struct process *p) at knl/proc.c:1000>
+  | | | | +-kmfree() <int kmfree (off_t addr) at knl/memory.c:501>
+  | | | | | \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
+  | | | | +-sys_munmap() <int sys_munmap (void *addr, size_t len) at knl/sys.c:457>
+  | | | | | +-PAGE_4K_ALIGN()
+  | | | | | +-chk_mmap() <int chk_mmap (off_t base, size_t mem_size) at knl/proc.c:1081>
+  | | | | | | \-list_next()
+  | | | | | \-do_munmap() <int do_munmap (void *addr, int len) at knl/memory.c:689>
+  | | | | |   +-kmalloc() <void *kmalloc (off_t addr, size_t size) at knl/memory.c:479>
+  | | | | |   | +-PAGE_4K_ALIGN()
+  | | | | |   | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
+  | | | | |   | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  | | | | |   | |   +-strlen()
+  | | | | |   | |   +-memset()
+  | | | | |   | |   +-va_start()
+  | | | | |   | |   +-va_arg()
+  | | | | |   | |   +-sprint_hex()
+  | | | | |   | |   +-sprintn()
+  | | | | |   | |   +-sprint_decimal()
+  | | | | |   | |   +-sprintchar()
+  | | | | |   | |   +-va_end()
+  | | | | |   | |   \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  | | | | |   | |     \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  | | | | |   | |       +-inb()
+  | | | | |   | |       \-outb()
+  | | | | |   | \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
+  | | | | |   +-list_add() <void list_add (struct List *entry, struct List *new) at knl/vfs.c:339>
+  | | | | |   | \-list_add_to_behind()
+  | | | | |   +-pmfree() <int pmfree (void *addr, size_t len) at knl/memory.c:550>
+  | | | | |   | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
+  | | | | |   | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  | | | | |   | |   +-strlen()
+  | | | | |   | |   +-memset()
+  | | | | |   | |   +-va_start()
+  | | | | |   | |   +-va_arg()
+  | | | | |   | |   +-sprint_hex()
+  | | | | |   | |   +-sprintn()
+  | | | | |   | |   +-sprint_decimal()
+  | | | | |   | |   +-sprintchar()
+  | | | | |   | |   +-va_end()
+  | | | | |   | |   \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  | | | | |   | |     \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  | | | | |   | |       +-inb()
+  | | | | |   | |       \-outb()
+  | | | | |   | \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
+  | | | | |   \-set_errno() <void set_errno (int errno) at knl/proc.c:1217>
+  | | | | \-sys_close() <unsigned long sys_close (int fd) at knl/sys.c:141>
+  | | | |   \-kmfree() <int kmfree (off_t addr) at knl/memory.c:501>
+  | | | |     \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
+  | | | \-manage_proc() <void manage_proc () at knl/proc.c:223>
+  | | |   +-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  | | |   | +-strlen()
+  | | |   | +-memset()
+  | | |   | +-va_start()
+  | | |   | +-va_arg()
+  | | |   | +-sprint_hex()
+  | | |   | +-sprintn()
+  | | |   | +-sprint_decimal()
+  | | |   | +-sprintchar()
+  | | |   | +-va_end()
+  | | |   | \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  | | |   |   \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  | | |   |     +-inb()
+  | | |   |     \-outb()
+  | | |   \-switch_to() <void switch_to (struct process *from, struct process *to) at knl/proc.c:841>
+  | | \-eoi()
+  | +-coprocessor_err() <void coprocessor_err () at knl/int.c:186>
+  | | \-eoi()
+  | +-outb()
+  | +-turn_on_int()
+  | \-wrmsr() <void wrmsr (unsigned long address, unsigned long value) at knl/int.c:255>
+  +-init_console()
+  +-init_framebuffer() <void init_framebuffer () at knl/framebuffer.c:33>
+  | \-smmap() <stat_t smmap (addr_t pa, addr_t la, u32 attr, page_item *pml4p) at knl/memory.c:69>
+  |   +-kmalloc() <void *kmalloc (off_t addr, size_t size) at knl/memory.c:479>
+  |   | +-PAGE_4K_ALIGN()
+  |   | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
+  |   | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  |   | |   +-strlen()
+  |   | |   +-memset()
+  |   | |   +-va_start()
+  |   | |   +-va_arg()
+  |   | |   +-sprint_hex()
+  |   | |   +-sprintn()
+  |   | |   +-sprint_decimal()
+  |   | |   +-sprintchar()
+  |   | |   +-va_end()
+  |   | |   \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  |   | |     \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  |   | |       +-inb()
+  |   | |       \-outb()
+  |   | \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
+  |   \-memset()
+  +-init_font() <void init_font () at knl/framebuffer.c:53>
+  | +-kmalloc() <void *kmalloc (off_t addr, size_t size) at knl/memory.c:479>
+  | | +-PAGE_4K_ALIGN()
+  | | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
+  | | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  | | |   +-strlen()
+  | | |   +-memset()
+  | | |   +-va_start()
+  | | |   +-va_arg()
+  | | |   +-sprint_hex()
+  | | |   +-sprintn()
+  | | |   +-sprint_decimal()
+  | | |   +-sprintchar()
+  | | |   +-va_end()
+  | | |   \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  | | |     \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  | | |       +-inb()
+  | | |       \-outb()
+  | | \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
+  | \-register_tty()
+  +-init_paging() <int init_paging () at knl/memory.c:115>
+  +-init_gdt() <int init_gdt () at knl/gdt.c:8>
+  +-init_blkdev() <void init_blkdev (void) at knl/blk_dev.c:58>
+  +-init_blkbuf() <void init_blkbuf () at knl/blk_buf.c:9>
+  +-init_ramdisk() <void init_ramdisk () at knl/ramdisk.c:46>
+  | +-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  | | +-strlen()
+  | | +-memset()
+  | | +-va_start()
+  | | +-va_arg()
+  | | +-sprint_hex()
+  | | +-sprintn()
+  | | +-sprint_decimal()
+  | | +-sprintchar()
+  | | +-va_end()
+  | | \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  | |   \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  | |     +-inb()
+  | |     \-outb()
+  | \-reg_blkdev() <int reg_blkdev (struct blk_dev *dev) at knl/blk_dev.c:5>
+  +-init_rootfs() <void init_rootfs () at knl/vfs.c:259>
+  | +-kmalloc() <void *kmalloc (off_t addr, size_t size) at knl/memory.c:479>
+  | | +-PAGE_4K_ALIGN()
+  | | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
+  | | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  | | |   +-strlen()
+  | | |   +-memset()
+  | | |   +-va_start()
+  | | |   +-va_arg()
+  | | |   +-sprint_hex()
+  | | |   +-sprintn()
+  | | |   +-sprint_decimal()
+  | | |   +-sprintchar()
+  | | |   +-va_end()
+  | | |   \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  | | |     \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  | | |       +-inb()
+  | | |       \-outb()
+  | | \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
+  | +-strcpy()
+  | \-list_init()
+  +-init_proc() <void init_proc () at knl/proc.c:32>
+  | +-kmalloc() <void *kmalloc (off_t addr, size_t size) at knl/memory.c:479>
+  | | +-PAGE_4K_ALIGN()
+  | | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
+  | | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  | | |   +-strlen()
+  | | |   +-memset()
+  | | |   +-va_start()
+  | | |   +-va_arg()
+  | | |   +-sprint_hex()
+  | | |   +-sprintn()
+  | | |   +-sprint_decimal()
+  | | |   +-sprintchar()
+  | | |   +-va_end()
+  | | |   \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  | | |     \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  | | |       +-inb()
+  | | |       \-outb()
+  | | \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
+  | +-set_tss() <void set_tss (u64 rsp0, u64 rsp1, u64 rsp2, u64 ist0, u64 ist1, u64 ist2, u64 ist3, u64 ist4, u64 ist5, u64 ist6) at knl/proc.c:873>
+  | +-wrmsr() <void wrmsr (unsigned long address, unsigned long value) at knl/int.c:255>
+  | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  |   +-strlen()
+  |   +-memset()
+  |   +-va_start()
+  |   +-va_arg()
+  |   +-sprint_hex()
+  |   +-sprintn()
+  |   +-sprint_decimal()
+  |   +-sprintchar()
+  |   +-va_end()
+  |   \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  |     \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  |       +-inb()
+  |       \-outb()
+  +-DISK1_FAT32_FS_init()
+  +-init_devfs() <int init_devfs () at knl/devman.c:114>
+  | +-register_filesystem() <unsigned long register_filesystem (struct file_system_type *fs) at knl/vfs.c:211>
+  | | \-strcmp()
+  | +-mount_fs() <struct super_block *mount_fs (char *name, struct Disk_Partition_Table_Entry *DPTE, void *buf) at knl/vfs.c:181>
+  | | \-strcmp()
+  | +-path_walk() <struct dir_entry *path_walk (char *name, unsigned long flags) at knl/vfs.c:70>
+  | | +-memcmp()
+  | | +-list_next()
+  | | +-kmalloc() <void *kmalloc (off_t addr, size_t size) at knl/memory.c:479>
+  | | | +-PAGE_4K_ALIGN()
+  | | | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
+  | | | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  | | | |   +-strlen()
+  | | | |   +-memset()
+  | | | |   +-va_start()
+  | | | |   +-va_arg()
+  | | | |   +-sprint_hex()
+  | | | |   +-sprintn()
+  | | | |   +-sprint_decimal()
+  | | | |   +-sprintchar()
+  | | | |   +-va_end()
+  | | | |   \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  | | | |     \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  | | | |       +-inb()
+  | | | |       \-outb()
+  | | | \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
+  | | +-memset()
+  | | +-memcpy()
+  | | +-printf() <void printf (const char *format, ...) at knl/log.c:85>
+  | | | +-strlen()
+  | | | +-kmalloc() <void *kmalloc (off_t addr, size_t size) at knl/memory.c:479>
+  | | | | +-PAGE_4K_ALIGN()
+  | | | | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
+  | | | | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  | | | | |   +-strlen()
+  | | | | |   +-memset()
+  | | | | |   +-va_start()
+  | | | | |   +-va_arg()
+  | | | | |   +-sprint_hex()
+  | | | | |   +-sprintn()
+  | | | | |   +-sprint_decimal()
+  | | | | |   +-sprintchar()
+  | | | | |   +-va_end()
+  | | | | |   \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  | | | | |     \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  | | | | |       +-inb()
+  | | | | |       \-outb()
+  | | | | \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
+  | | | +-va_start()
+  | | | +-va_arg()
+  | | | +-sprint_hex()
+  | | | +-sprintn()
+  | | | +-sprint_decimal()
+  | | | +-sprintchar()
+  | | | +-va_end()
+  | | | +-print() <void print (char *s) at knl/framebuffer.c:215>
+  | | | | +-draw_letter() <void draw_letter (int x, volatile int y, int size, char c) at knl/framebuffer.c:114>
+  | | | | \-scr_up() <void scr_up () at knl/framebuffer.c:172>
+  | | | |   \-print_textbuffer() <void print_textbuffer () at knl/framebuffer.c:143>
+  | | | +-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  | | | | +-strlen()
+  | | | | +-memset()
+  | | | | +-va_start()
+  | | | | +-va_arg()
+  | | | | +-sprint_hex()
+  | | | | +-sprintn()
+  | | | | +-sprint_decimal()
+  | | | | +-sprintchar()
+  | | | | +-va_end()
+  | | | | \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  | | | |   \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  | | | |     +-inb()
+  | | | |     \-outb()
+  | | | \-kmfree() <int kmfree (off_t addr) at knl/memory.c:501>
+  | | |   \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
+  | | +-list_add() <void list_add (struct List *entry, struct List *new) at knl/vfs.c:339>
+  | | | \-list_add_to_behind()
+  | | \-mark_use() <void mark_use (struct dir_entry *d) at knl/vfs.c:49>
+  | |   \-drelse() <void drelse (struct dir_entry *d) at knl/vfs.c:23>
+  | |     +-list_drop()
+  | |     \-kmfree() <int kmfree (off_t addr) at knl/memory.c:501>
+  | |       \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
+  | +-mount_fs_on() <int mount_fs_on (struct dir_entry *d_to_mount, struct super_block *fs) at knl/vfs.c:192>
+  | \-create_node() <struct dir_entry *create_node (char *pathname, mode_t mode, unsigned short dev) at knl/vfs.c:292>
+  |   +-kmalloc() <void *kmalloc (off_t addr, size_t size) at knl/memory.c:479>
+  |   | +-PAGE_4K_ALIGN()
+  |   | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
+  |   | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  |   | |   +-strlen()
+  |   | |   +-memset()
+  |   | |   +-va_start()
+  |   | |   +-va_arg()
+  |   | |   +-sprint_hex()
+  |   | |   +-sprintn()
+  |   | |   +-sprint_decimal()
+  |   | |   +-sprintchar()
+  |   | |   +-va_end()
+  |   | |   \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  |   | |     \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  |   | |       +-inb()
+  |   | |       \-outb()
+  |   | \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
+  |   +-memcpy()
+  |   +-path_walk() <struct dir_entry *path_walk (char *name, unsigned long flags) at knl/vfs.c:70>
+  |   | +-memcmp()
+  |   | +-list_next()
+  |   | +-kmalloc() <void *kmalloc (off_t addr, size_t size) at knl/memory.c:479>
+  |   | | +-PAGE_4K_ALIGN()
+  |   | | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
+  |   | | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  |   | | |   +-strlen()
+  |   | | |   +-memset()
+  |   | | |   +-va_start()
+  |   | | |   +-va_arg()
+  |   | | |   +-sprint_hex()
+  |   | | |   +-sprintn()
+  |   | | |   +-sprint_decimal()
+  |   | | |   +-sprintchar()
+  |   | | |   +-va_end()
+  |   | | |   \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  |   | | |     \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  |   | | |       +-inb()
+  |   | | |       \-outb()
+  |   | | \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
+  |   | +-memset()
+  |   | +-memcpy()
+  |   | +-printf() <void printf (const char *format, ...) at knl/log.c:85>
+  |   | | +-strlen()
+  |   | | +-kmalloc() <void *kmalloc (off_t addr, size_t size) at knl/memory.c:479>
+  |   | | | +-PAGE_4K_ALIGN()
+  |   | | | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
+  |   | | | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  |   | | | |   +-strlen()
+  |   | | | |   +-memset()
+  |   | | | |   +-va_start()
+  |   | | | |   +-va_arg()
+  |   | | | |   +-sprint_hex()
+  |   | | | |   +-sprintn()
+  |   | | | |   +-sprint_decimal()
+  |   | | | |   +-sprintchar()
+  |   | | | |   +-va_end()
+  |   | | | |   \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  |   | | | |     \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  |   | | | |       +-inb()
+  |   | | | |       \-outb()
+  |   | | | \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
+  |   | | +-va_start()
+  |   | | +-va_arg()
+  |   | | +-sprint_hex()
+  |   | | +-sprintn()
+  |   | | +-sprint_decimal()
+  |   | | +-sprintchar()
+  |   | | +-va_end()
+  |   | | +-print() <void print (char *s) at knl/framebuffer.c:215>
+  |   | | | +-draw_letter() <void draw_letter (int x, volatile int y, int size, char c) at knl/framebuffer.c:114>
+  |   | | | \-scr_up() <void scr_up () at knl/framebuffer.c:172>
+  |   | | |   \-print_textbuffer() <void print_textbuffer () at knl/framebuffer.c:143>
+  |   | | +-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  |   | | | +-strlen()
+  |   | | | +-memset()
+  |   | | | +-va_start()
+  |   | | | +-va_arg()
+  |   | | | +-sprint_hex()
+  |   | | | +-sprintn()
+  |   | | | +-sprint_decimal()
+  |   | | | +-sprintchar()
+  |   | | | +-va_end()
+  |   | | | \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  |   | | |   \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  |   | | |     +-inb()
+  |   | | |     \-outb()
+  |   | | \-kmfree() <int kmfree (off_t addr) at knl/memory.c:501>
+  |   | |   \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
+  |   | +-list_add() <void list_add (struct List *entry, struct List *new) at knl/vfs.c:339>
+  |   | | \-list_add_to_behind()
+  |   | \-mark_use() <void mark_use (struct dir_entry *d) at knl/vfs.c:49>
+  |   |   \-drelse() <void drelse (struct dir_entry *d) at knl/vfs.c:23>
+  |   |     +-list_drop()
+  |   |     \-kmfree() <int kmfree (off_t addr) at knl/memory.c:501>
+  |   |       \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
+  |   +-kmfree() <int kmfree (off_t addr) at knl/memory.c:501>
+  |   | \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
+  |   +-strlen()
+  |   +-strcpy()
+  |   +-list_init()
+  |   \-list_add() <void list_add (struct List *entry, struct List *new) at knl/vfs.c:339>
+  |     \-list_add_to_behind()
+  +-init_proc0() <int init_proc0 () at knl/proc.c:102>
+  | +-sys_open() <unsigned long sys_open (char *filename, int flags) at knl/sys.c:28>
+  | | +-kmalloc() <void *kmalloc (off_t addr, size_t size) at knl/memory.c:479>
+  | | | +-PAGE_4K_ALIGN()
+  | | | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
+  | | | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  | | | |   +-strlen()
+  | | | |   +-memset()
+  | | | |   +-va_start()
+  | | | |   +-va_arg()
+  | | | |   +-sprint_hex()
+  | | | |   +-sprintn()
+  | | | |   +-sprint_decimal()
+  | | | |   +-sprintchar()
+  | | | |   +-va_end()
+  | | | |   \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  | | | |     \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  | | | |       +-inb()
+  | | | |       \-outb()
+  | | | \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
+  | | +-memset()
+  | | +-strlen()
+  | | +-kmfree() <int kmfree (off_t addr) at knl/memory.c:501>
+  | | | \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
+  | | +-strcpy()
+  | | +-path_walk() <struct dir_entry *path_walk (char *name, unsigned long flags) at knl/vfs.c:70>
+  | | | +-memcmp()
+  | | | +-list_next()
+  | | | +-kmalloc() <void *kmalloc (off_t addr, size_t size) at knl/memory.c:479>
+  | | | | +-PAGE_4K_ALIGN()
+  | | | | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
+  | | | | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  | | | | |   +-strlen()
+  | | | | |   +-memset()
+  | | | | |   +-va_start()
+  | | | | |   +-va_arg()
+  | | | | |   +-sprint_hex()
+  | | | | |   +-sprintn()
+  | | | | |   +-sprint_decimal()
+  | | | | |   +-sprintchar()
+  | | | | |   +-va_end()
+  | | | | |   \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  | | | | |     \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  | | | | |       +-inb()
+  | | | | |       \-outb()
+  | | | | \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
+  | | | +-memset()
+  | | | +-memcpy()
+  | | | +-printf() <void printf (const char *format, ...) at knl/log.c:85>
+  | | | | +-strlen()
+  | | | | +-kmalloc() <void *kmalloc (off_t addr, size_t size) at knl/memory.c:479>
+  | | | | | +-PAGE_4K_ALIGN()
+  | | | | | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
+  | | | | | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  | | | | | |   +-strlen()
+  | | | | | |   +-memset()
+  | | | | | |   +-va_start()
+  | | | | | |   +-va_arg()
+  | | | | | |   +-sprint_hex()
+  | | | | | |   +-sprintn()
+  | | | | | |   +-sprint_decimal()
+  | | | | | |   +-sprintchar()
+  | | | | | |   +-va_end()
+  | | | | | |   \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  | | | | | |     \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  | | | | | |       +-inb()
+  | | | | | |       \-outb()
+  | | | | | \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
+  | | | | +-va_start()
+  | | | | +-va_arg()
+  | | | | +-sprint_hex()
+  | | | | +-sprintn()
+  | | | | +-sprint_decimal()
+  | | | | +-sprintchar()
+  | | | | +-va_end()
+  | | | | +-print() <void print (char *s) at knl/framebuffer.c:215>
+  | | | | | +-draw_letter() <void draw_letter (int x, volatile int y, int size, char c) at knl/framebuffer.c:114>
+  | | | | | \-scr_up() <void scr_up () at knl/framebuffer.c:172>
+  | | | | |   \-print_textbuffer() <void print_textbuffer () at knl/framebuffer.c:143>
+  | | | | +-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  | | | | | +-strlen()
+  | | | | | +-memset()
+  | | | | | +-va_start()
+  | | | | | +-va_arg()
+  | | | | | +-sprint_hex()
+  | | | | | +-sprintn()
+  | | | | | +-sprint_decimal()
+  | | | | | +-sprintchar()
+  | | | | | +-va_end()
+  | | | | | \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  | | | | |   \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  | | | | |     +-inb()
+  | | | | |     \-outb()
+  | | | | \-kmfree() <int kmfree (off_t addr) at knl/memory.c:501>
+  | | | |   \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
+  | | | +-list_add() <void list_add (struct List *entry, struct List *new) at knl/vfs.c:339>
+  | | | | \-list_add_to_behind()
+  | | | \-mark_use() <void mark_use (struct dir_entry *d) at knl/vfs.c:49>
+  | | |   \-drelse() <void drelse (struct dir_entry *d) at knl/vfs.c:23>
+  | | |     +-list_drop()
+  | | |     \-kmfree() <int kmfree (off_t addr) at knl/memory.c:501>
+  | | |       \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
+  | | +-list_init()
+  | | +-list_add() <void list_add (struct List *entry, struct List *new) at knl/vfs.c:339>
+  | | | \-list_add_to_behind()
+  | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  | |   +-strlen()
+  | |   +-memset()
+  | |   +-va_start()
+  | |   +-va_arg()
+  | |   +-sprint_hex()
+  | |   +-sprintn()
+  | |   +-sprint_decimal()
+  | |   +-sprintchar()
+  | |   +-va_end()
+  | |   \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  | |     \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  | |       +-inb()
+  | |       \-outb()
+  | +-memcpy()
+  | +-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  | | +-strlen()
+  | | +-memset()
+  | | +-va_start()
+  | | +-va_arg()
+  | | +-sprint_hex()
+  | | +-sprintn()
+  | | +-sprint_decimal()
+  | | +-sprintchar()
+  | | +-va_end()
+  | | \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  | |   \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  | |     +-inb()
+  | |     \-outb()
+  | +-sys_mmap() <void *sys_mmap (void *addr, size_t len, int prot, int flags, int fildes, off_t off) at knl/sys.c:465>
+  | | +-cli()
+  | | +-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  | | | +-strlen()
+  | | | +-memset()
+  | | | +-va_start()
+  | | | +-va_arg()
+  | | | +-sprint_hex()
+  | | | +-sprintn()
+  | | | +-sprint_decimal()
+  | | | +-sprintchar()
+  | | | +-va_end()
+  | | | \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  | | |   \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  | | |     +-inb()
+  | | |     \-outb()
+  | | +-chk_mmap() <int chk_mmap (off_t base, size_t mem_size) at knl/proc.c:1081>
+  | | | \-list_next()
+  | | +-set_errno() <void set_errno (int errno) at knl/proc.c:1217>
+  | | +-kmalloc() <void *kmalloc (off_t addr, size_t size) at knl/memory.c:479>
+  | | | +-PAGE_4K_ALIGN()
+  | | | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
+  | | | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
+  | | | |   +-strlen()
+  | | | |   +-memset()
+  | | | |   +-va_start()
+  | | | |   +-va_arg()
+  | | | |   +-sprint_hex()
+  | | | |   +-sprintn()
+  | | | |   +-sprint_decimal()
+  | | | |   +-sprintchar()
+  | | | |   +-va_end()
+  | | | |   \-com_puts() <void com_puts (char *s, int com_port) at knl/com.c:57>
+  | | | |     \-com_putchar() <void com_putchar (unsigned short ch, int com_base) at knl/com.c:46>
+  | | | |       +-inb()
+  | | | |       \-outb()
+  | | | \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
+  | | +-list_init()
+  | | \-list_add() <void list_add (struct List *entry, struct List *new) at knl/vfs.c:339>
+  | |   \-list_add_to_behind()
+  | \-list_init()
+  +-sti()
+  +-move_to_user_mode()
+  \-do_syscall()
