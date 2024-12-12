@@ -23,26 +23,25 @@ void init_int()
     //__asm__ volatile("sidt %0"::"m"(idt));
     // TODO 写完这里的idt修改
     // register_int(0, _debug, debug, TRAP_GATE);
-    set_gate(0, (addr_t)divide_err, GDT_SEL_CODE, GATE_PRESENT | TRAP_GATE);
-    set_gate(1, (addr_t)debug, GDT_SEL_CODE, GATE_PRESENT | TRAP_GATE);
-    set_gate(2, (addr_t)default_int_proc, GDT_SEL_CODE, GATE_PRESENT | TRAP_GATE);
-    set_gate(3, (addr_t)breakpoint, GDT_SEL_CODE, GATE_PRESENT | TRAP_GATE);
-    set_gate(4, (addr_t)overflow, GDT_SEL_CODE, GATE_PRESENT | TRAP_GATE);
-    set_gate(5, (addr_t)bounds, GDT_SEL_CODE, GATE_PRESENT | TRAP_GATE);
-    set_gate(6, (addr_t)undefined_operator, GDT_SEL_CODE, GATE_PRESENT | TRAP_GATE);
-    set_gate(7, (addr_t)coprocessor_notexist, GDT_SEL_CODE, GATE_PRESENT | TRAP_GATE);
-    set_gate(8, (addr_t)double_ints, GDT_SEL_CODE, GATE_PRESENT | TRAP_GATE);   // double_ints
-    set_gate(9, (addr_t)coprocessor_seg_overbound, GDT_SEL_CODE, GATE_PRESENT | TRAP_GATE);
-    set_gate(10, (addr_t)invalid_tss, GDT_SEL_CODE, GATE_PRESENT | TRAP_GATE);
-    set_gate(11, (addr_t)segment_notexist, GDT_SEL_CODE, GATE_PRESENT | TRAP_GATE);
-    set_gate(12, (addr_t)stackseg_overbound, GDT_SEL_CODE, GATE_PRESENT | TRAP_GATE);   //
-    set_gate(13, (addr_t)general_protect, GDT_SEL_CODE, GATE_PRESENT | TRAP_GATE);
-    set_gate(14, (addr_t)page_err, GDT_SEL_CODE, GATE_PRESENT | TRAP_GATE);
-    set_gate(15, (addr_t)default_int_proc, GDT_SEL_CODE, GATE_PRESENT | TRAP_GATE);
-    set_gate(16, (addr_t)coprocessor_err, GDT_SEL_CODE, GATE_PRESENT | TRAP_GATE);
-    for (int i = 17; i < 48; i++)
-        set_gate(i, (addr_t)default_int_proc, GDT_SEL_CODE, GATE_PRESENT | INT_GATE);
-    // set_gate(0x21,(addr_t)key_proc,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
+    register_int(0, _divide_err, divide_err, TRAP_GATE);
+    register_int(1, _debug, debug, TRAP_GATE);
+    register_int(2, _default_int_proc, default_int_proc, TRAP_GATE);
+    register_int(3, _breakpoint, breakpoint, TRAP_GATE);
+    register_int(4, _overflow, overflow, TRAP_GATE);
+    register_int(5, _bounds, bounds, TRAP_GATE);
+    register_int(6, _undefined_operator, undefined_operator, TRAP_GATE);
+    register_int(7, _coprocessor_notexist, coprocessor_notexist, TRAP_GATE);
+    register_int(8, _double_ints, double_ints, TRAP_GATE);   // double_ints
+    register_int(9, _coprocessor_seg_overbound, coprocessor_seg_overbound, TRAP_GATE);
+    register_int(10, _invalid_tss, invalid_tss, TRAP_GATE);
+    register_int(11, _segment_notexist, segment_notexist, TRAP_GATE);
+    register_int(12, _stackseg_overbound, stackseg_overbound, TRAP_GATE);   //
+    register_int(13, _general_protect, general_protect, TRAP_GATE);
+    register_int(14, _page_err, page_err, TRAP_GATE);
+    register_int(15, _default_int_proc, default_int_proc, TRAP_GATE);
+    register_int(16, _coprocessor_err, coprocessor_err, TRAP_GATE);
+    for (int i = 17; i < 48; i++) register_int(i, _default_int_proc, default_int_proc, TRAP_GATE);
+    // register_int(0x21,(addr_t)key_proc,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
     set_gate(0x20, (addr_t)clock, GDT_SEL_CODE, GATE_PRESENT | INT_GATE);
     set_gate(0x2e, (addr_t)disk_int_handler, GDT_SEL_CODE, GATE_PRESENT | INT_GATE);
     set_gate(0x80, (addr_t)_syscall, GDT_SEL_CODE, GATE_PRESENT | INT_GATE);   //
@@ -97,97 +96,62 @@ void set_gate(u8 index, addr_t offset, u16 selector, u16 attr)
 
 void divide_err()
 {
-    __asm__("cli");
-    // puts("divide err");
-    eoi();
-    __asm__ volatile("sti \r\n leave \r\n iretq");
+    comprintf("divide err");
 }
 
 void debug()
 {
-    __asm__("cli");
-    // puts("debug");
-    eoi();
-    __asm__ volatile("leave \r\n iretq");
+    comprintf("debug");
 }
 void default_int_proc()
 {
-    __asm__("cli");
-    // puts("default_int_proc");
-    eoi();
-    __asm__ volatile("sti \r\n leave \r\n iretq");
+    comprintf("default_int_proc");
 }
 void breakpoint()
 {
-    __asm__("cli");
-    // puts("breakpoint");
-    eoi();
-    __asm__ volatile("sti \r\n leave \r\n iretq");
+    comprintf("breakpoint");
 }
 void overflow()
 {
-    __asm__("cli");
-    // puts("overflow");
-    eoi();
-    __asm__ volatile("sti \r\n leave \r\n iretq");
+    comprintf("overflow");
 }
 void bounds()
 {
-    __asm__("cli");
-    // puts("bounds");
-    eoi();
-    __asm__ volatile("sti \r\n leave \r\n iretq");
+    comprintf("bounds");
 }
 void undefined_operator()
 {
-    // puts("undef operator");
+    comprintf("undef operator");
     eoi();
     off_t stk = 0;
     __asm__ volatile("mov %%rbp,%0" : "=m"(stk));
     stk -= 16;
     backtrace(stk);
-    __asm__ volatile("jmp .\r\n leave \r\n iretq");
+    while (1) {}
 }
 void coprocessor_notexist()
 {
-    __asm__("cli");
-    // puts("coprocessor doesnt exist");
-    eoi();
-    __asm__ volatile("sti \r\n leave \r\n iretq");
+    comprintf("coprocessor doesnt exist");
 }
 void double_ints()
 {
-    __asm__("cli");
-    // puts("double interrupts");
-    eoi();
-    __asm__ volatile("sti \r\n leave \r\n iretq");
+    comprintf("double interrupts");
 }
 void coprocessor_seg_overbound()
 {
-    // puts("coprocessfor seg overdound");
-    eoi();
-    __asm__ volatile("leave \r\n iretq");
+    comprintf("coprocessfor seg overdound");
 }
 void invalid_tss()
 {
-    __asm__("cli");
-    // puts("invalid tss");
-    eoi();
-    __asm__ volatile("sti \r\n leave \r\n iretq");
+    comprintf("invalid tss");
 }
 void segment_notexist()
 {
-    __asm__("cli");
-    // puts("seg nonexistent");
-    eoi();
-    __asm__ volatile("sti \r\n leave \r\n iretq");
+    comprintf("seg nonexistent");
 }
 void stackseg_overbound()
 {
-    __asm__("cli");
-    // puts("stack seg overbound");
-    eoi();
-    __asm__ volatile("sti \r\n leave \r\n iretq");
+    comprintf("stack seg overbound");
 }
 void general_protect()
 {
@@ -207,16 +171,11 @@ void general_protect()
     }
     //终结问题进程
     sys_exit(-1);
-    eoi();
-    __asm__ volatile("leave\r\n add $8,%rsp \r\n iretq");
 }
 
 void coprocessor_err()
 {
-    __asm__("cli");
-    // puts("coprocessor err");
-    eoi();
-    __asm__ volatile("sti \r\n leave \r\n iretq");
+    comprintf("coprocessor err");
 }
 
 /*

@@ -4,6 +4,7 @@ global inw
 global eoi
 global turn_on_int
 global io_delay
+global common_int_handler
 extern print
 extern printn
 extern print_hex
@@ -14,15 +15,18 @@ extern do_signals
 ;common_int_handler(long int_no),应当被各个中断第一级handler调用
 common_int_handler:
 	push rsi
-	movabs rsi,int_table
+	lea rsi,[rel int_table]
 	shl rdi,3;rdi是第一个参数,*8
 	add rsi,rdi
+	mov rsi,[rsi]
 	call rsi
 	pop rsi
 
 	call do_signals
 	
 	call eoi
+	;去除错误码
+	add rsp,8
 	iret
 outb:
 	mov dx,di

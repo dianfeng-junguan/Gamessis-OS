@@ -10,7 +10,7 @@ KNL_OFILES = bin/int.o bin/main.o bin/log.o \
 			bin/memory.o bin/devman.o bin/proc.o bin/inta.o \
 			bin/gdt.o bin/gdta.o bin/clock.o bin/clocka.o bin/exe.o \
 			bin/syscalla.o bin/framebuffer.o bin/vfs.o bin/sys.o bin/ramfs.o bin/ramdisk.o \
-			bin/blk_dev.o bin/blk_buf.o bin/kallsyms.o bin/signal.o
+			bin/blk_dev.o bin/blk_buf.o bin/kallsyms.o bin/signal.o bin/int_handlera.o
 MODS_OFILES = bin/mods/kb.o bin/mods/disk.o bin/mods/diska.o bin/mods/fat32.o \
 				bin/mods/tty.o bin/com.o bin/rd.o#bin/test.o
 COM_OFILES = bin/mem.o bin/str.o bin/types.o bin/proca.o bin/font.o
@@ -47,6 +47,8 @@ boot:
 		-I lib/efi/em64t -I lib/efi $(CUARGS)
 cpboot:
 	@sudo cp bin/$(BOOT) /mnt/boot/$(BOOT)
+genint:
+	python gen_inthandler.py -i tools/ints.list -o knl/int_handler.s -t tools/int_template.s
 com:
 	@gcc -c com/mem.c -o bin/mem.o $(CUARGS)
 	@gcc -c com/str.c -o bin/str.o $(CUARGS)
