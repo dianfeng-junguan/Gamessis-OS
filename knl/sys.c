@@ -287,6 +287,7 @@ unsigned long sys_wait(pid_t pid, int* stat_loc, int options)
         // TODO 等待结束以及等待信号
         //进入休眠，直到接到子进程结束的信号
         wait_for_signal();
+        comprintf("wait %d ended.\n", pid);
         // while (waitee->stat != TASK_ZOMBIE);
         *stat_loc = waitee->exit_code;
     }

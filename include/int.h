@@ -90,7 +90,7 @@ void coprocessor_seg_overbound();
 void invalid_tss();
 void segment_notexist();
 void stackseg_overbound();
-void general_protect();
+void general_protect(long* int_stk);
 void coprocessor_err();
 
 void _divide_err();
@@ -110,8 +110,10 @@ void _general_protect();
 void _coprocessor_err();
 
 /// @brief 在错误发生时，输出函数调用堆栈。
-/// @param ret_stack ist中，错误码后开始的地址
+/// @param ret_stack ist中int stack，包括错误码
 void backtrace();
+//让系统死机。
+void die();
 /*
 调用系统中断，所有内核的重要功能基本都在这。
 参数；

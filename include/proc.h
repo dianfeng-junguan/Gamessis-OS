@@ -4,6 +4,7 @@
 
 #ifndef SRC_PROC_H
 #define SRC_PROC_H
+#include "signal.h"
 #pragma once
 #pragma pack(1)
 #define MAX_PAGES_PROC 8
@@ -213,6 +214,7 @@ struct process
     struct List* child_procs;    //子进程
     struct List* signal_queue;   //等待处理的信号
     int          dl;             //是否加载了dl
+    sigset_t     sigmask;        //信号屏蔽位图
 } __attribute__((packed));       // 208 bytes
 #endif
 typedef struct
@@ -242,11 +244,11 @@ typedef struct
 #define STACK_PROTECTOR 0xc8f7e9b8eb413a00
 __attribute__((__always_inline__)) inline void wait_on_req(struct process* p)
 {
-    if (p->stat == TASK_READY || p->stat == TASK_RUNNING) p->stat = TASK_SUSPENDED;
+    if (p && (p->stat == TASK_READY || p->stat == TASK_RUNNING)) p->stat = TASK_SUSPENDED;
 }
 __attribute__((__always_inline__)) inline void wake_up(struct process* p)
 {
-    if (p->stat == TASK_SUSPENDED) p->stat = TASK_READY;
+    if (p && p->stat == TASK_SUSPENDED) p->stat = TASK_READY;
 }
 void set_errno(int errno);
 
@@ -276,6 +278,8 @@ int   sys_free(int ptr);
 int create_zero();
 //创建一个零号进程为默认值的进程。
 int init_proc0();
+//进程0进一步初始化，需要在文件系统初始化完成之后调用
+int further_init_proc0();
 // void fill_desc(u32 addr,u32 limit,u32 attr,unsigned long long* des);
 void switch_proc(int pnr);
 void switch_to_ia32(TSS* tss);

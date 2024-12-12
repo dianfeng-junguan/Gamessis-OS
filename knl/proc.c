@@ -123,6 +123,7 @@ void create_test_proc()
     str->ds               = 0x2b;
     str->es               = 0x2b;
 }
+//初步初始化进程0，在需要进程0的pid等基本信息的模块之前调用。
 int init_proc0()
 {
 
@@ -135,15 +136,8 @@ int init_proc0()
     // addr_t currsp=KNL_BASE+0x400000;
     // set_proc(0, 0, 0, 0, 0x10, 0x8, 0x10, 0x10, 0x10, 0x10,
     //          currsp, 0, 0, 0, (long)proc_zero, 0, 0);
-    //    task[index].tss.eip=(long)proc_zero;
-    extern struct dir_entry* dtty;
+    //    task[index].tss.eip=(long)proc_zero;S
     // stdin stdout stderr
-    //这里绕开了sys open，这样是为了尽量快
-    extern struct file ftty;
-    sys_open("/dev/tty", O_RDWR);
-    // pz->openf[0]=//(struct file*)&ftty;
-    pz->openf[1] = pz->openf[0];   //(struct file*)&ftty;
-    pz->openf[2] = pz->openf[0];   //(struct file*)&ftty;
 
     pz->mem_struct.stack_top    = STACK_TOP;
     pz->mem_struct.stack_bottom = STACK_TOP;
@@ -152,7 +146,7 @@ int init_proc0()
     memcpy(&pz->tss, tss, sizeof(TSS));
     //设置映射
     extern off_t _knl_text_start, _knl_text_end;
-    comprintf("_knl_text_start:%l,_knl_text_end:%l\n", _knl_text_start, _knl_text_end);
+    comprintf("_knl_text_start:%l,_knl_text_end:%l\n", &_knl_text_start, &_knl_text_end);
     sys_mmap(KNL_BASE,
              _knl_text_start - KNL_BASE,
              PROT_READ | PROT_WRITE,
@@ -181,7 +175,6 @@ int init_proc0()
     //这个是进程切换的时候要读取的值
     pz->regs.cr3 = PML4_ADDR & ~KNL_BASE;
     pz->pml4     = PML4_ADDR;
-    pz->cwd      = root_sb->root;
     pz->exef     = NULL;
     list_init(&pz->node);
     pz->node.data = pz;
@@ -198,6 +191,18 @@ int init_proc0()
     tcb->stack_guard = STACK_PROTECTOR;
     pz->regs.fs_base = STACK_TOP;
     return 0;
+}
+//进程0进一步初始化，需要在文件系统初始化完成之后调用
+int further_init_proc0()
+{
+    struct process* pz = task;
+
+    pz->cwd = root_sb->root;
+    //这里绕开了sys open，这样是为了尽量快
+    sys_open("/dev/tty", O_RDWR);
+    // pz->openf[0]=//(struct file*)&ftty;
+    pz->openf[1] = pz->openf[0];   //(struct file*)&ftty;
+    pz->openf[2] = pz->openf[0];   //(struct file*)&ftty;
 }
 int req_proc()
 {
@@ -888,10 +893,10 @@ int sys_free(int ptr)
 void switch_to(struct process* from, struct process* to)
 {
     //保存rsp
-    current->tss.rsp0 = tss->rsp0;
-    current->tss.rsp2 = tss->rsp2;
-    cur_proc          = to - task;
-    current           = &task[cur_proc];
+    from->tss.rsp0 = tss->rsp0;
+    from->tss.rsp2 = tss->rsp2;
+    cur_proc       = to - task;
+    current        = &task[cur_proc];
     //设置fs
     wrmsr(MSR_FS_BASE, to->regs.fs_base);
     // cr3需要物理地址,regs.cr3里面填的就是物理地址
@@ -1116,6 +1121,7 @@ void release_mmap(struct process* p)
         }
     }
 }
+//拷贝页表。页表指向的物理地址没有改变，需要后面自己更改。
 void copy_mmap(struct process* from, struct process* to)
 {
     page_item* pml4p = kmalloc(0, PAGE_4K_SIZE);

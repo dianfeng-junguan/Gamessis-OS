@@ -13,5 +13,4 @@
 12 stackseg_overbound
 13 general_protect 
 14 page_err 
-15 default_int_proc
 16 coprocessor_err 

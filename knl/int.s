@@ -12,22 +12,24 @@ extern new_line
 extern int_table
 extern do_signals
 [bits 64]
-;common_int_handler(long int_no),应当被各个中断第一级handler调用
+;common_int_handler(long int_no,void *int_stk),应当被各个中断第一级handler调用
+;会将中断堆栈指针作为第一个参数传入
 common_int_handler:
-	push rsi
-	lea rsi,[rel int_table]
+	push rdx
+	lea rdx,[rel int_table]
 	shl rdi,3;rdi是第一个参数,*8
-	add rsi,rdi
-	mov rsi,[rsi]
-	call rsi
-	pop rsi
+	add rdx,rdi
+	mov rdx,[rdx]
+	mov rdi,rsi;rsi第二个参数
+	call rdx
+	pop rdx
 
 	call do_signals
 	
 	call eoi
 	;去除错误码
 	add rsp,8
-	iret
+	iretq
 outb:
 	mov dx,di
 	mov ax,si

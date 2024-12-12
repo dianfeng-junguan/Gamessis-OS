@@ -15,9 +15,9 @@ do
     #echo "$f $final"
     if [ ${final} == "setup" ]
     then
-	    nasm $f -o bin/${final}a.o -f elf32 -w-zext-reloc -w-zeroing
+	    nasm $f -o bin/${final}a.o -g -f elf32 -w-zext-reloc -w-zeroing
       objcopy -I elf32-i386 -O elf64-x86-64 bin/${final}a.o bin/${final}a.o
     else
-      nasm $f -o bin/${final}a.o -f elf64 -w-zext-reloc -w-zeroing
+      nasm $f -o bin/${final}a.o -g -f elf64 -w-zext-reloc -w-zeroing
     fi
 done

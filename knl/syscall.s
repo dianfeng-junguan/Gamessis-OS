@@ -42,7 +42,7 @@ _syscall:
     push rsp;这里之后fork时要修改成用户栈
     pushf
     push 0x33
-    push rcx
+    push rcx;rcx=rip
 ;syscall上下文
 ;保存用户栈的rsp到上面int部分。
     mov rcx,[rbp+20]

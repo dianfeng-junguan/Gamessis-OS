@@ -220,15 +220,15 @@ malloc_hdr* get_pmhdr(off_t pm)
     }
     return mp;
 }
-void page_err()
+void page_err(long* int_stk)
 {
     cli();
     comprintf("page err\n");
-    off_t err_code = 0, l_addr = 0;
-    off_t addr = 0;
-    __asm__ volatile("push %%rax\nmov 8(%%rbp),%%rax\nmov %%rax,%0\n" : "=m"(err_code));
+    off_t err_code = int_stk[0], l_addr = 0;
+    off_t addr = int_stk[1];
+    // __asm__ volatile("push %%rax\nmov 8(%%rbp),%%rax\nmov %%rax,%0\n" : "=m"(err_code));
     __asm__ volatile("mov %%cr2,%%rax\nmov %%rax,%0\n" : "=m"(l_addr));   //试图访问的地址
-    __asm__ volatile("mov 16(%%rbp),%%rax\nmov %%rax,%0\npop %%rax\n" : "=m"(addr));
+    // __asm__ volatile("mov 16(%%rbp),%%rax\nmov %%rax,%0\npop %%rax\n" : "=m"(addr));
     comprintf("occurred at %x(paddr), trying to access %x(laddr)\n", addr, l_addr);
     comprintf("error process pid:0x%x\n", current->pid);
     comprintf("cr2=%x\nerr code=%x\n", l_addr, err_code);
@@ -243,10 +243,7 @@ void page_err()
         comprintf("user mode\n");
     if (err_code & PF_INS_FETCH) comprintf("instruction fetch\n");
     if (err_code & PF_PROTECT_KEY) comprintf("data access not allowed by protection key\n");
-    off_t* stk = 0;
-    __asm__ volatile("mov %%rbp,%0" : "=m"(stk));
-    stk -= 2;
-    backtrace(stk);
+    backtrace(int_stk);
 
     if (!(err_code & PF_LEVEL_VIOLATION)) {
         // accessing non-existent page
@@ -257,10 +254,10 @@ void page_err()
         if ((mp = get_mmap(l_addr)) == NULL) {
             // TODO  没有映射，报错
             comprintf("page_err:page acceessed without mmap\n");
-            comprintf("sys died.\n");
-            while (1)
-                ;
-            // sys_exit(-1);
+            // if (current->pid == 1)
+            die();
+            //结束问题进程
+            sys_exit(-1);
         }
         else {
             //在进程的页表中申请新页
@@ -282,11 +279,11 @@ void page_err()
     }
     else {
         // page level protection
+        comprintf("page err caused by level protection\n");
         sys_exit(-1);
     }
-    eoi();
     //这里对esp的加法是必要的，因为page fault多push了一个错误码，但是iret识别不了
-    __asm__ volatile("leave\n add $8,%rsp \n iretq");
+    // __asm__ volatile("leave\n add $8,%rsp \n iretq");
 }
 void init_memory()
 {

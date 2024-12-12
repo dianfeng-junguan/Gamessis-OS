@@ -110,7 +110,7 @@ stat_t smmap(addr_t pa, addr_t la, u32 attr, page_item* pml4p);
 stat_t mdemap(u64 la);
 
 void _page_err();
-void page_err();
+void page_err(long* int_stk);
 //申请一块内核缓存。
 // addr用于指定内核缓存地址，
 // size和addr都会做4K对齐之后分配。

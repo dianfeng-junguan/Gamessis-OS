@@ -68,7 +68,15 @@ struct sigaction{
 
 int send_signal(pid_t pid,int sig);
 
+//设置信号屏蔽状态
 int mask_signal(int sig,int should_block);
+//获取当前进程信号屏蔽状态
+int sig_masked(int sig);
+//清除信号屏蔽位，这将会取消屏蔽这个信号。
+int reset_sigmask(pid_t pid, int signal);
+//设置信号屏蔽位，这将会屏蔽这个信号。
+//但是,SIGINT,SIGABORT,SIGILL,SIGSEGV,SIGSTOP等停止类信号是不能被屏蔽的。
+int set_sigmask(pid_t pid, int signal);
 
 int default_signal_handler(int sig);
 

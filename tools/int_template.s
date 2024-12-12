@@ -1,5 +1,7 @@
 global %s
 %s:
     mov rdi,%d
-    lea rsi,common_int_handler
-    jmp rsi
+    ;int stack pointer
+    mov rsi,rsp
+    lea rdx,[rel common_int_handler]
+    jmp rdx

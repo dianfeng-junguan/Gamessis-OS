@@ -21,7 +21,6 @@ extern int disk_int_handler();
 void init_int()
 {
     //__asm__ volatile("sidt %0"::"m"(idt));
-    // TODO 写完这里的idt修改
     // register_int(0, _debug, debug, TRAP_GATE);
     register_int(0, _divide_err, divide_err, TRAP_GATE);
     register_int(1, _debug, debug, TRAP_GATE);
@@ -93,89 +92,89 @@ void set_gate(u8 index, addr_t offset, u16 selector, u16 attr)
     idt[index].rsvd        = 0;
 #endif
 }
-
+void die()
+{
+    com_puts("sys died.\n", PORT_COM1);
+    printf("sys died.\n");
+    while (1) {
+        // __asm__ volatile("hlt\n");
+    }
+}
 void divide_err()
 {
-    comprintf("divide err");
+    comprintf("divide err\n");
 }
 
 void debug()
 {
-    comprintf("debug");
+    comprintf("debug\n");
 }
 void default_int_proc()
 {
-    comprintf("default_int_proc");
+    comprintf("default_int_proc\n");
 }
 void breakpoint()
 {
-    comprintf("breakpoint");
+    comprintf("breakpoint\n");
 }
 void overflow()
 {
-    comprintf("overflow");
+    comprintf("overflow\n");
 }
 void bounds()
 {
-    comprintf("bounds");
+    comprintf("bounds\n");
 }
-void undefined_operator()
+void undefined_operator(long* int_stk)
 {
-    comprintf("undef operator");
-    eoi();
-    off_t stk = 0;
-    __asm__ volatile("mov %%rbp,%0" : "=m"(stk));
-    stk -= 16;
-    backtrace(stk);
-    while (1) {}
+    comprintf("undef operator\nprogram has run to a non-code area.\n");
+    backtrace(int_stk);
+    die();
 }
 void coprocessor_notexist()
 {
-    comprintf("coprocessor doesnt exist");
+    comprintf("coprocessor doesnt exist\n");
 }
 void double_ints()
 {
-    comprintf("double interrupts");
+    comprintf("double interrupts\n");
 }
 void coprocessor_seg_overbound()
 {
-    comprintf("coprocessfor seg overdound");
+    comprintf("coprocessfor seg overdound\n");
 }
 void invalid_tss()
 {
-    comprintf("invalid tss");
+    comprintf("invalid tss\n");
 }
 void segment_notexist()
 {
-    comprintf("seg nonexistent");
+    comprintf("seg nonexistent\n");
 }
 void stackseg_overbound()
 {
-    comprintf("stack seg overbound");
+    comprintf("stack seg overbound\n");
 }
-void general_protect()
+void general_protect(long* int_stk)
 {
     com_puts("general protect.", PORT_COM1);
-    long addr = 0, err_code = 0;
-    __asm__ volatile("mov 16(%%rbp),%0" : "=r"(addr));
-    __asm__ volatile("mov 24(%%rbp),%0" : "=r"(err_code));
+    long addr = int_stk[1], err_code = int_stk[0];
+    // __asm__ volatile("mov 16(%%rbp),%0" : "=r"(addr));
+    // __asm__ volatile("mov 24(%%rbp),%0" : "=r"(err_code));
     comprintf("err code(seg descriptor):%x\n", err_code);
     comprintf("problem process pid:%d\n", current->pid);
     comprintf("occurred at %x\n", addr);
-    backtrace();
+    backtrace(int_stk);
 
     //处理问题进程
-    if (current->pid == 1) {
-        comprintf("sys died.\n");
-        while (1) {}
-    }
+    if (current->pid == 1) { die(); }
     //终结问题进程
     sys_exit(-1);
 }
 
 void coprocessor_err()
 {
-    comprintf("coprocessor err");
+    comprintf("coprocessor err\n");
 }
 
 /*
@@ -258,11 +257,11 @@ int print_ksym(off_t addr)
         return 1;
     }
 }
-void backtrace()
+void backtrace(off_t* ret_stack)
 {
-    off_t* ret_stack = 0;
-    __asm__ volatile("mov %%rbp,%0" : "=m"(ret_stack));
-    ret_stack  = ret_stack[0];
+    // off_t* ret_stack = 0;
+    // __asm__ volatile("mov %%rbp,%0" : "=m"(ret_stack));
+    ret_stack  = ret_stack[4];
     off_t addr = ret_stack[2];   //第一级返回函数地址
     comprintf("Backtrace:\n");
     print_ksym(addr);
