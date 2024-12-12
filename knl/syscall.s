@@ -133,7 +133,7 @@ _syscall_sysret:
     ;不用把rsp的值放回到tss.rsp0
     ;mov qword [rbp+4],rsp
     mov rbp,0xffff800000108000
-    mov rsp,[rbp+20]
+    mov qword rsp,[rbp+20]
     pop rbp
 
 

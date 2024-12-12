@@ -12,11 +12,17 @@
 #include <log.h>
 
 #pragma pack(1)
-gate*      idt = (gate*)(KNL_BASE + IDT_ADDR);
+gate* idt = (gate*)(KNL_BASE + IDT_ADDR);
+void* int_table[256];   //第二级中断处理函数
+//调用过程:
+//->_xxx->common_int->xxx
 extern int disk_int_handler();
-void       init_int()
+
+void init_int()
 {
     //__asm__ volatile("sidt %0"::"m"(idt));
+    // TODO 写完这里的idt修改
+    // register_int(0, _debug, debug, TRAP_GATE);
     set_gate(0, (addr_t)divide_err, GDT_SEL_CODE, GATE_PRESENT | TRAP_GATE);
     set_gate(1, (addr_t)debug, GDT_SEL_CODE, GATE_PRESENT | TRAP_GATE);
     set_gate(2, (addr_t)default_int_proc, GDT_SEL_CODE, GATE_PRESENT | TRAP_GATE);
@@ -63,6 +69,13 @@ void       init_int()
     wrmsr(0xc0000082, _syscall);
     //设置IA32_FMASK,为syscall做设置
     wrmsr(0xc0000084, -1);
+}
+//同时注册idt和int table。
+void register_int(unsigned char  index, void(*first_handler), void(*sec_handler),
+                  unsigned short attr)
+{
+    set_gate(index, first_handler, GDT_SEL_CODE, attr | GATE_PRESENT);
+    int_table[index] = sec_handler;
 }
 void set_gate(u8 index, addr_t offset, u16 selector, u16 attr)
 {
@@ -182,9 +195,9 @@ void general_protect()
     long addr = 0, err_code = 0;
     __asm__ volatile("mov 16(%%rbp),%0" : "=r"(addr));
     __asm__ volatile("mov 24(%%rbp),%0" : "=r"(err_code));
-    comprintf("err code:%x\n", addr);
+    comprintf("err code(seg descriptor):%x\n", err_code);
     comprintf("problem process pid:%d\n", current->pid);
-    comprintf("occurred at %x\n", err_code);
+    comprintf("occurred at %x\n", addr);
     backtrace();
 
     //处理问题进程

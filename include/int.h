@@ -14,7 +14,7 @@
 #define SYSCALL_FETCH_KBBUF 12
 #define SYSCALL_REG_DEVICE 24
 #define SYSCALL_REG_DRIVER 25
-
+#define MSR_FS_BASE 0xc0000100
 #define sti() __asm__ volatile("sti");
 #define cli() __asm__ volatile("cli");
 #include "typename.h"
@@ -67,6 +67,8 @@ void turn_on_int();
 //注：这里的index指的是idt作为数组，每一项的index，不是0x8,0x10那些
 void set_gate(u8 index, addr_t offset, u16 selector, u16 attr);
 
+void register_int(unsigned char  index, void(*first_handler), void(*sec_handler),
+                  unsigned short attr);
 void eoi();
 /*
  * the major difference between trap gate and sys gate is that trap gate will block other ints until
@@ -90,6 +92,22 @@ void segment_notexist();
 void stackseg_overbound();
 void general_protect();
 void coprocessor_err();
+
+void _divide_err();
+void _debug();
+void _default_int_proc();
+void _breakpoint();
+void _overflow();
+void _bounds();
+void _undefined_operator();
+void _coprocessor_notexist();
+void _double_ints();
+void _coprocessor_seg_overbound();
+void _invalid_tss();
+void _segment_notexist();
+void _stackseg_overbound();
+void _general_protect();
+void _coprocessor_err();
 
 /// @brief 在错误发生时，输出函数调用堆栈。
 /// @param ret_stack ist中，错误码后开始的地址

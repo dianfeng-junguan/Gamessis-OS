@@ -112,6 +112,7 @@ typedef struct
     long gs;
     long r8, r9, r10, r11, r12, r13, r14, r15;
     long errcode;
+    long fs_base, gs_base;
 } regs_t;
 //在时钟中断和系统调用发生的时候，对栈里面保存现场用的入栈数据。此结构体还用于创建进程时方便构建一个这样的现场。
 typedef struct
@@ -221,6 +222,24 @@ typedef struct
     unsigned int argc;
 } proc_ret_stack;
 
+//这是glibc使用的线程TCB模块简化版，会在进程初始化时放在0x00007ffffffff000处，fs也会指向这里，
+//引入这个是因为linux gcc编译器会时不时引用这里面的值检查堆栈，虽然
+//可以通过-fno-stack-protector禁止这个行为，但我还是希望哪天我忘记加这个参数的
+//时候程序仍然不出问题。
+typedef struct
+{
+    void* tcb; /* Pointer to the TCB.  Not necessarily the
+                thread descriptor used by libpthread.  */
+    void*              dtv;
+    void*              self; /* Pointer to the thread descriptor.  */
+    int                multiple_threads;
+    int                gscope_flag;
+    unsigned long long sysinfo;
+    unsigned long long stack_guard; /* canary，0x28偏移 */
+    unsigned long long pointer_guard;
+    /* ... 其他成员 ... */
+} tcbhead_t;
+#define STACK_PROTECTOR 0xc8f7e9b8eb413a00
 __attribute__((__always_inline__)) inline void wait_on_req(struct process* p)
 {
     if (p->stat == TASK_READY || p->stat == TASK_RUNNING) p->stat = TASK_SUSPENDED;

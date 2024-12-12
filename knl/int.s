@@ -8,7 +8,22 @@ extern print
 extern printn
 extern print_hex
 extern new_line
+extern int_table
+extern do_signals
 [bits 64]
+;common_int_handler(long int_no),应当被各个中断第一级handler调用
+common_int_handler:
+	push rsi
+	movabs rsi,int_table
+	shl rdi,3;rdi是第一个参数,*8
+	add rsi,rdi
+	call rsi
+	pop rsi
+
+	call do_signals
+	
+	call eoi
+	iret
 outb:
 	mov dx,di
 	mov ax,si

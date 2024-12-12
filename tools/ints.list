@@ -1,0 +1,17 @@
+0 divide_err
+1 debug
+2 default_int_proc
+3 breakpoint
+4 overflow
+5 bounds
+6 undefined_operator
+7 coprocessor_notexist
+8 double_ints
+9 coprocessor_seg_overbound
+10 invalid_tss 
+11 segment_notexist
+12 stackseg_overbound
+13 general_protect 
+14 page_err 
+15 default_int_proc
+16 coprocessor_err 

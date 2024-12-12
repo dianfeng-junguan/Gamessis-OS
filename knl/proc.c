@@ -191,6 +191,12 @@ int init_proc0()
     pz->fg_pgid = pz->pid;
     pz->in_bgpg = 0;
     pz->stat    = TASK_READY;
+
+    //设置tcb
+    smmap(pmalloc(PAGE_4K_SIZE), STACK_TOP, PAGE_PRESENT | PAGE_RWX | PAGE_FOR_ALL, PML4_ADDR);
+    tcbhead_t* tcb   = STACK_TOP;
+    tcb->stack_guard = STACK_PROTECTOR;
+    pz->regs.fs_base = STACK_TOP;
     return 0;
 }
 int req_proc()
@@ -886,6 +892,8 @@ void switch_to(struct process* from, struct process* to)
     current->tss.rsp2 = tss->rsp2;
     cur_proc          = to - task;
     current           = &task[cur_proc];
+    //设置fs
+    wrmsr(MSR_FS_BASE, to->regs.fs_base);
     // cr3需要物理地址,regs.cr3里面填的就是物理地址
     __asm__ volatile("mov %0,%%rax\n"
                      "mov %%rax,%%cr3\n"
@@ -1036,6 +1044,7 @@ int sys_fork(void)
     task[pid].tss.ists[4] = new_stkpg + PAGE_4K_SIZE;
     task[pid].tss.ists[5] = new_stkpg + PAGE_4K_SIZE;
     task[pid].tss.ists[6] = new_stkpg + PAGE_4K_SIZE;
+
 
     //堆
     addr_t hp = task[pid].mem_struct.heap_top - PAGE_4K_SIZE;

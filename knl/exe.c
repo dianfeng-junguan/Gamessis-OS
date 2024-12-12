@@ -222,6 +222,13 @@ int sys_execve(char* path, int argc, char** argv)
         rs->rsi = argc;
         rs->rdi = argp_aryp;
     }
+    //设置线程控制块TCB，需要立即加载内存
+    smmap(pmalloc(PAGE_4K_SIZE), STACK_TOP, PAGE_PRESENT | PAGE_RWX | PAGE_FOR_ALL, current->pml4);
+    // sys_mmap(STACK_TOP, PAGE_4K_SIZE, PROT_READ | PROT_WRITE, MAP_ANNONYMOUS | MAP_FIXED, 0, 0);
+    tcbhead_t* tcb        = STACK_TOP;
+    tcb->stack_guard      = STACK_PROTECTOR;
+    current->regs.fs_base = STACK_TOP;
+    wrmsr(MSR_FS_BASE, STACK_TOP);
     //以下部分是临时测试代码
     //    int (*pmain)(int argc,char **argv)=(int (*)(int, char **)) entry;
     //    pmain(argc, (char **) rs->rdi);

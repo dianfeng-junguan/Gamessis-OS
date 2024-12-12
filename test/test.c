@@ -12,14 +12,15 @@
 
 
 
-int   a = 1, b = 2, c = 0;
-char* as = "Gamessis OS shell\n";
-int   __main() {}
-int   __stack_chk_fail() {}
-int   main(int argc, char** argv)
+int a = 1, b = 2, c = 0;
+// unsigned long long __bss_start__ = 0, __bss_end__ = 0;
+
+int __main() {}
+// int   __stack_chk_fail() {}
+int main(int argc, char** argv)
 {
     // write(2, as, strlen(as));
-    puts(as);
+    puts("Gamessis OS shell\n");
     char cmd[128] = {0};
     while (1) {
         memset(cmd, 0, 128);
