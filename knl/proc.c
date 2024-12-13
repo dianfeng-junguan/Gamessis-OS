@@ -563,7 +563,7 @@ void del_proc(int pnr)
     task[pnr].stat = TASK_ZOMBIE;
     //    task[pnr].pid=-1;
     //释放申请的页面
-    release_mmap(&task[pnr]);
+    release_pm(&task[pnr]);
     //释放存放页目录的页面
     kmfree(task[pnr].pml4);
     //关闭打开的文件
@@ -1082,9 +1082,10 @@ int sys_fork(void)
     comprintf("new forked pid=%d\n", task[pid].pid);
     return task[pid].pid;
 }
-//释放进程页表映射的内存，内核空间除外。
-void release_mmap(struct process* p)
+//释放当前进程空间低地址的所有物理内存
+void release_pm(struct process* p)
 {
+
     page_item* pml4p = p->pml4;
     //复制pdpt
     page_item* pml4e = pml4p;
@@ -1104,6 +1105,39 @@ void release_mmap(struct process* p)
                                     pmfree(pte[l] & PAGE_4K_MASK, PAGE_4K_SIZE);
                                 }
                             }
+                            //里面的项释放完了，这一项指向的vmalloc内存可以释放了
+                            kmfree(pde[k] & PAGE_4K_MASK | KNL_BASE);
+                        }
+                        else if ((pde[k] & PAGE_PRESENT) && (pde[k] & PDE_2MB)) {
+                            //释放2MB页
+                            free_pages_at(pde[k] & PAGE_4K_MASK, 512);
+                        }
+                    }
+                    //这一页pde的内容释放完了，这一项指向的vmalloc可以释放了
+                    kmfree(pdpte[j] & PAGE_4K_MASK | KNL_BASE);
+                }   // 1GB先不写，目前还没有初始化之后动态申请1GB页的
+            }
+            //这一页pdpte的内容释放完了，这一项指向的vmalloc可以释放了
+            kmfree(pml4e[i] & PAGE_4K_MASK | KNL_BASE);
+        }
+    }
+}
+//释放进程低地址页表项，但是不释放物理内存。
+void release_mmap(struct process* p)
+{
+    page_item* pml4p = p->pml4;
+    //复制pdpt
+    page_item* pml4e = pml4p;
+    for (int i = 0; i < 256; i++)   //高地址不释放（内核空间）
+    {
+        if (pml4e[i] & PAGE_PRESENT) {
+            page_item* pdpte = pml4e[i] & PAGE_4K_MASK | KNL_BASE;
+            for (int j = 0; j < 512; j++) {
+                if (pdpte[j] & PAGE_PRESENT && !(pdpte[j] & PDPTE_1GB)) {
+                    page_item* pde = pdpte[j] & PAGE_4K_MASK | KNL_BASE;
+                    for (int k = 0; k < 512; k++) {
+                        if (pde[k] & PAGE_PRESENT && !(pde[k] & PDE_2MB)) {
+                            page_item* pte = pde[k] & PAGE_4K_MASK | KNL_BASE;
                             //里面的项释放完了，这一项指向的vmalloc内存可以释放了
                             kmfree(pde[k] & PAGE_4K_MASK | KNL_BASE);
                         }

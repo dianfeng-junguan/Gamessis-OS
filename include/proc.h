@@ -313,6 +313,7 @@ int  sys_fork(void);
 
 void copy_mmap(struct process* from, struct process* to);
 void release_mmap(struct process* p);
+void release_pm(struct process* p);
 /// @brief 检查当前内存空间一块虚拟内存是否已经被映射。
 /// @param base 基地址
 /// @param mem_size 大小（字节）
