@@ -46,7 +46,7 @@ int main(int argc, char** argv)
             int pid = 0;
             if ((pid = fork()) == 0) {
                 printf("forked, ready to execve\n");
-                if (execve(cmd, NULL, NULL) == -1) {
+                if (execve(cmd, argv, environ) == -1) {
                     printf("cannot find file:%s\n", cmd);
                     break;
                 }

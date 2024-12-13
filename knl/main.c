@@ -170,8 +170,9 @@ void main(unsigned int magic, void* addr)
     move_to_user_mode();
     int shell = 0, stat_loc = 0;
     if ((shell = do_syscall(SYSCALL_FORK, 0, 0, 0, 0, 0, 0)) == 0) {
-        char* argv[] = {"/test.elf", "gamessis os"};
-        do_syscall(SYSCALL_EXECVE, (long)"/test.elf", 2, (long)&argv[0], 0, 0, 0);
+        char* argv[]    = {"/test.elf", "gamessis os", 0};
+        char* environ[] = {"os=gms", 0};
+        do_syscall(SYSCALL_EXECVE, (long)"/test.elf", (long)&argv[0], environ, 0, 0, 0);
     }
     do_syscall(SYSCALL_WAIT, 2, &stat_loc, 0, 0, 0, 0);
     //    if(sys_fork()==0){

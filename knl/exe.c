@@ -142,13 +142,26 @@ int execute(char* path, char** argv)
     // int pi= reg_proc(proc_start, &opened[cwd_fno], &opened[fno]);
     return 0;
 }
-
-int sys_execve(char* path, int argc, char** argv)
+//将参数从内核空间拷贝到进程栈中。args必须以一个NULL结尾。
+//返回一个指向参数底部的指针。
+char* copy_to_stack(long* stktop, char** argv)
+{
+    char* p = stktop;
+    int   i = 0;
+    for (; argv[i]; i++) {
+        p -= strlen(argv[i]) + 1;
+        strcpy(p, argv[i]);
+    }
+    return p;
+}
+int sys_execve(char* path, char** argv, char** environ)
 {
     cli();
     int fno = -1, cwd_fno = -1;
+    int argc = 0;
     if ((fno = sys_open(path, O_EXEC)) < 0) return -ENOENT;
-
+    for (int i = 0; argv[i]; i++, argc++)
+        ;
     //重新设置进程数据
     //清空原来的页表
     release_mmap(current);
@@ -194,33 +207,40 @@ int sys_execve(char* path, int argc, char** argv)
                   current->pml4);
         }
     }
-    unsigned long* argp_aryp = STACK_TOP - tot_argsz;
-    argp_aryp -= argc;
+
+    //拷贝argv
+    long* p = copy_to_stack(STACK_TOP, argv);
+    p -= argc + 1;
+    memcpy(p, argv, (argc + 1) * 8);
+    //拷贝environ
+    long* ep = copy_to_stack(p, environ);
+    int   i  = 0;
+    for (; environ[i]; i++)
+        ;
+    i++;
+    ep -= i;
+    memcpy(ep, environ, i * 8);
 
     // argp_aryp指向的是argv指针数组的地址，应该把用户栈设在这里
-    unsigned long* stp = argp_aryp;
+    unsigned long* stp = ep;
     stp -= 2;
     // syscall返回依赖这个
     tss->rsp2 = stp;
     stp[0]    = 0;   // rbp占位符-反正返回到main,会mov rbp,rsp
     stp[1]    = proc_end;
 
-    char* p = STACK_TOP;
-    for (int i = 0; i < argc; i++) {
-        p -= strlen(argv[i]) + 1;
-        strcpy(p, argv[i]);
-        argp_aryp[i] = p;
-    }
 
     //第一个参数argc
     if (current->dl) {
-        rs->rsi = current->dl;
-        rs->rdi = argc;
-        rs->rdx = argp_aryp;
+        rs->rdi = current->dl;
+        rs->rsi = argc;
+        rs->rdx = p;
+        rs->r10 = ep;
     }
     else {
-        rs->rsi = argc;
-        rs->rdi = argp_aryp;
+        rs->rdi = argc;
+        rs->rsi = p;
+        rs->r10 = ep;
     }
     //设置线程控制块TCB，需要立即加载内存
     smmap(pmalloc(PAGE_4K_SIZE), STACK_TOP, PAGE_PRESENT | PAGE_RWX | PAGE_FOR_ALL, current->pml4);
