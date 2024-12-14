@@ -28,13 +28,6 @@ int main(int argc, char** argv)
         printf("shell:>");
         // write(2, "shell:>", 7);
         gets(cmd);
-        // while (1) {
-        //     // read(1, cmd + p, 1);
-        //     if (cmd[p] == '\n') break;
-        //     p++;
-        //     if (p == 128) p = 0;
-        // }
-        // cmd[p] = '\0';
         puts(cmd);
         // write(2, cmd, p);
         if (strcmp(cmd, "version") == 0) { puts("Gamessis OS 1.0.\n"); }

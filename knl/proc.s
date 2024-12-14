@@ -6,12 +6,15 @@ extern req_proc
 extern set_proc
 extern save_context_c
 extern _proc_end
+extern manage_proc
+extern do_signals
 global test_create_proc_asm
 global switch_to_
 global save_context
 global discard_context
 global move_to_user_mode
 global proc_end
+global schedule
 [bits 64]
 create_zero:
 call req_proc
@@ -227,4 +230,56 @@ move_to_user_mode:
     mov ds,ax
     mov fs,ax
     mov gs,ax
+    ret
+schedule:
+    push rbp
+    mov rbp,rsp
+
+    ;save context
+    push rax
+    push rbx
+    push rcx
+    push rdx
+    push rdi
+    push rsi
+
+    push r8
+    push r9
+    push r10
+    push r11
+    push r12
+    push r13
+    push r14
+    push r15
+
+    mov ax,es
+    push rax
+    mov ax,ds
+    push rax
+
+    call manage_proc
+    call do_signals
+
+    pop rbx
+    mov ds,bx
+    pop rbx
+    mov es,bx
+
+    pop r15
+    pop r14
+    pop r13
+    pop r12
+    pop r11
+    pop r10
+    pop r9
+    pop r8
+
+    pop rsi
+    pop rdi
+    pop rdx
+    pop rcx
+    pop rbx
+    pop rax
+
+    pop rbp
     ret

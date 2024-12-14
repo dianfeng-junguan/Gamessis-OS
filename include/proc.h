@@ -258,6 +258,9 @@ int  req_proc();
 void set_proc(long rax, long rbx, long rcx, long rdx, long es, long cs, long ss, long ds, long fs,
               long gs, long rsp, long rbp, long rsi, long rdi, long rip, long rflags, int proc_nr);
 void manage_proc();
+//包括了保存和恢复上下文的manage_proc版本。用于在系统调用和中断中需要允许进程调度但是又不能开启中断
+//从而导致不能保存上下文的地方。
+void schedule();
 void switch_proc_tss(int pnr);
 // tss_ind:tss在gdt中的索引
 void switch_proc_asm(int tss_ind);

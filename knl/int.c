@@ -199,11 +199,12 @@ int syscall(long a, long b, long c, long d, long e, long f)
     __asm__ volatile("" : "=a"(num));   //这样rax中存的参数就到这了
     int retv = 0;
     switch (num) {
-    case 11: retv = sys_open(a, b); break;
-    case 12: retv = sys_close(a); break;
-    case 13: retv = sys_read(a, b, c); break;
-    case 14: retv = sys_write(a, b, c); break;
-    case 15: retv = sys_lseek(a, b, c); break;
+    case SYSCALL_OPEN: retv = sys_open(a, b); break;
+    case SYSCALL_CLOSE: retv = sys_close(a); break;
+    case SYSCALL_READ: retv = sys_read(a, b, c); break;
+    case SYSCALL_WRITE: retv = sys_write(a, b, c); break;
+    case SYSCALL_SEEK: retv = sys_lseek(a, b, c); break;
+    case SYSCALL_TELL: retv = sys_tell(a); break;
     case SYSCALL_EXIT: retv = sys_exit(a); break;
     case SYSCALL_CALL: exec_call(a); break;
     case SYSCALL_BRK: retv = sys_brk(a); break;
@@ -262,7 +263,7 @@ void backtrace(off_t* ret_stack)
     // off_t* ret_stack = 0;
     // __asm__ volatile("mov %%rbp,%0" : "=m"(ret_stack));
     ret_stack  = ret_stack[4];
-    off_t addr = ret_stack[2];   //第一级返回函数地址
+    off_t addr = ret_stack[1];   //第一级返回函数地址
     comprintf("Backtrace:\n");
     print_ksym(addr);
     //回到用户栈，回溯

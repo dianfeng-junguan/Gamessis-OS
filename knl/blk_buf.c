@@ -1,9 +1,11 @@
+#include "proc.h"
 #include "signal.h"
 #include <blk_buf.h>
 #include <blk_dev.h>
 #include <mem.h>
 #include <errno.h>
 #include <memory.h>
+#include "int.h"
 buffer_head l_buffer_heads[MAX_BUFFERHEADS];
 //这个存储的是各个块设备映射的缓冲区链表中的头
 buffer_head* l_blk_bh_heads[MAX_BLKDEVS];
@@ -33,10 +35,7 @@ static void wait_for_finish(buffer_head* bh)
 {
     //屏蔽子进程SIGCHLD防止被子进程信号唤醒
     mask_signal(SIGCHLD, 1);
-    while (current->stat == TASK_SUSPENDED) {
-        manage_proc();
-        do_signals();
-    }
+    while (current->stat == TASK_SUSPENDED) { schedule(); }
     mask_signal(SIGCHLD, 0);
 }
 buffer_head* get_block(unsigned short dev, int blocknr)
@@ -81,9 +80,8 @@ buffer_head* bread(unsigned short dev, int blkn)
     buffer_head* bh = get_block(dev, blkn);
     if (!bh) return NULL;
     if (bh->uptodate) return bh;   //数据没变，可以直接返回
-    //极其简陋的等待解锁代码，权宜之计
-    while (bh->lock)
-        ;
+    //等待解锁，此时可以切换进程。
+    while (bh->lock) { schedule(); }
     //上锁
     bh->lock = 1;
     //应该要等数据准备完毕之后再返回的

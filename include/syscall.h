@@ -11,15 +11,15 @@
 #define SYSCALL_DEL_PROC 8
 #define SYSCALL_GET_PROC_ADDR 9
 #define SYSCALL_CHK_VM 10
-#define SYSCAll_OPEN 11
-#define SYSCAll_CLOSE 12
-#define SYSCAll_READ 13
-#define SYSCAll_WRITE 14
-#define SYSCAll_SEEK 15
-#define SYSCAll_TELL 16
-#define SYSCAll_REG_VOL 17
-#define SYSCAll_FREE_VOL 18
-#define SYSCAll_EXEC 19
+#define SYSCALL_OPEN 11
+#define SYSCALL_CLOSE 12
+#define SYSCALL_READ 13
+#define SYSCALL_WRITE 14
+#define SYSCALL_SEEK 15
+#define SYSCALL_TELL 16
+#define SYSCALL_REG_VOL 17
+#define SYSCALL_FREE_VOL 18
+#define SYSCALL_EXEC 19
 #define SYSCALL_EXIT 20
 #define SYSCALL_CALL 21
 #define SYSCALL_MKFIFO 22
@@ -33,6 +33,8 @@
 #define SYSCALL_MMAP 30
 #define SYSCALL_MUNMAP 31
 #define SYSCALL_MKNOD 33
+#define SYSCALL_REMOVE 34
+#define SYSCALL_SBRK 35
 #define SYSCALL_KB_READC 100
 
 
@@ -88,6 +90,7 @@ unsigned long sys_write(int fd, void* buf, long count);
 unsigned long sys_lseek(int filds, long offset, int whence);
 unsigned long sys_wait(pid_t pid, int* stat_loc, int options);
 int           sys_ioctl(int fildes, int request, unsigned long args);
+int           sys_remove(char* pathname);
 /// @brief 建立文件内容到内存空间的映射。
 /// @param addr 映射内存地址，为0则可以任意地址。
 /// @param len
@@ -100,6 +103,7 @@ void* sys_mmap(void* addr, size_t len, int prot, int flags, int fildes, off_t of
 
 int           sys_munmap(void* addr, size_t len);
 unsigned long sys_brk(unsigned long brk);
+void*         sys_sbrk(long long increment);
 /*
 创建文件，可以是FIFO，常规文件，目录和设备文件。除了FIFO，其他类型创建前会检查进程权限（未完成）
 */

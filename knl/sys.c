@@ -183,7 +183,18 @@ unsigned long sys_lseek(int filds, long offset, int whence)
     if (filp->f_ops && filp->f_ops->lseek) ret = filp->f_ops->lseek(filp, offset, whence);
     return ret;
 }
+unsigned long sys_tell(int fd)
+{
+    struct file*  filp = NULL;
+    unsigned long ret  = 0;
 
+    //	printf("sys_lseek:%d\n",filds);
+    if (fd < 0 || fd >= MAX_TASKS) return -EBADF;
+
+    filp = current->openf[fd];
+    ret  = filp->position;
+    return ret;
+}
 // unsigned long sys_fork()
 //{
 //    TSS *regs = (TSS*)current->tss.rsp0 -1;
@@ -359,6 +370,19 @@ unsigned long sys_brk(unsigned long brk)
     current->mem_struct.heap_top = new_brk;
     return new_brk;
 }
+void* sys_sbrk(long long increment)
+{
+    if (!increment) { return current->mem_struct.heap_top; }
+    void*              old_brk = current->mem_struct.heap_top;
+    unsigned long long new_brk = old_brk;
+    //这里是考虑到long long 有符号和无符号补码表示可能带来的问题
+    if (increment > 0)
+        new_brk += increment;
+    else
+        new_brk -= -increment;
+    if (sys_brk(new_brk) == 0) { return -1; }
+    return old_brk;
+}
 
 unsigned long sys_reboot(unsigned long cmd, void* arg)
 {
@@ -504,4 +528,9 @@ int sys_mknod(const char* path, mode_t mode, dev_t dev)
     if (!create_node(path, mode, dev)) { return -1; }
 
     return 0;
+}
+
+int sys_remove(char* pathname)
+{
+    remove(pathname);
 }

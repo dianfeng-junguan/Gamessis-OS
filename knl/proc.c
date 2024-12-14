@@ -1355,10 +1355,7 @@ void wait_for_signal()
     // 保存当前地址到上下文，这样切换到此进程的时候可以回到这里
     current->stat = TASK_SUSPENDED;
     //切换到其他进程
-    while (current->stat == TASK_SUSPENDED) {
-        manage_proc();
-        do_signals();
-    }
+    while (current->stat == TASK_SUSPENDED) { schedule(); }
 }
 void store_rbp(unsigned long rbp)
 {
