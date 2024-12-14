@@ -27,6 +27,22 @@ common_int_handler:
 	call do_signals
 	
 	call eoi
+	;恢复上下文
+    pop r15
+    pop r14
+    pop r13
+    pop r12
+    pop r11
+    pop r10
+    pop r9
+    pop r8
+
+    pop rsi
+    pop rdi
+    pop rdx
+    pop rcx
+    pop rbx
+	pop rax
 	;去除错误码
 	add rsp,8
 	iretq

@@ -261,20 +261,22 @@ void page_err(long* int_stk)
             sys_exit(-1);
         }
         else {
-            //在进程的页表中申请新页
-            void* pm = pmalloc(PAGE_4K_ALIGN(mp->len));
-            l_addr &= PAGE_4K_MASK;
             unsigned int attr = PAGE_PRESENT | PAGE_FOR_ALL;
             if (mp->flags & PROT_WRITE) attr |= PAGE_RWX;
-            for (int i = 0; i < PAGE_4K_ALIGN(mp->len) / PAGE_4K_SIZE; i++) {
-                smmap(pm + i * PAGE_4K_SIZE, l_addr + i * PAGE_4K_SIZE, attr, current->pml4);
+            off_t mbase = mp->base & PAGE_4K_MASK;
+            off_t mtop  = PAGE_4K_ALIGN(mp->base + mp->len);
+            int   pgn   = (mtop - mbase) / PAGE_4K_SIZE;
+            //在进程的页表中申请新页
+            void* pm = pmalloc(pgn * PAGE_4K_SIZE);
+            for (int i = 0; i < pgn; i++) {
+                smmap(pm + i * PAGE_4K_SIZE, mbase + i * PAGE_4K_SIZE, attr, current->pml4);
             }
             mp->pmhdr = get_pmhdr(pm);   //填写pmhdr
             //读取文件
             if (mp->file) {
                 int fd = mp->fd;
                 sys_lseek(fd, mp->offset, SEEK_SET);
-                sys_read(fd, l_addr, mp->len);
+                sys_read(fd, mp->base, mp->len);
             }
         }
     }

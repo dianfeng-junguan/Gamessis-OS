@@ -1,7 +1,9 @@
 .PHONY: dl
+LIB_PREFIX="/mnt/d/Code/Comprehensive/OS/gmslibc/libc/buildresults/src/"
 dl:
 	gcc -fPIC -w -m64 -c -g dl/dl.c -o bin/dl.o -nostdlib -nostdinc -I include -nostartfiles -nodefaultlibs
-	ld bin/dl.o -O elf64-x86-64 -o bin/dl.so -e dlmain -shared
+	ld bin/dl.o $(LIB_PREFIX)/libsyscall.a -O elf64-x86-64 -o bin/dl.so -e dlmain -shared
+	objdump -d bin/dl.so -M intel -S >dl/dl.s
 cpdl:
 	# sudo mount bin/rd
 	sudo mount rd.img /mnt

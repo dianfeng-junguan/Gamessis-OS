@@ -241,7 +241,7 @@ int sys_execve(char* path, char** argv, char** environ)
 
     //第一个参数argc
     if (current->dl) {
-        rs->rdi = current->dl;
+        rs->rdi = fno;
         rs->rsi = argc;
         rs->rdx = p;
         rs->r10 = ep;
@@ -543,12 +543,11 @@ off_t load_elf(int fildes)
     struct file* elf         = current->openf[fildes];
     struct file* elf_storage = elf;
     off_t        tmpla       = kmalloc(0, PAGE_4K_SIZE);
-    off_t        shla        = kmalloc(0, PAGE_4K_SIZE);
+ready:
     if (tmpla == -1) {
         current->regs.errcode = -ENOMEM;
         return -1;
     }
-ready:
     elf->position = 0;
     //读取文件头
     elf->f_ops->read(elf, (char*)tmpla, PAGE_4K_SIZE, &elf->position);
@@ -557,8 +556,9 @@ ready:
     u16         entn = ehdr->e_phnum;
     u16         ents = ehdr->e_phentsize;
     elf->position    = ehdr->e_shoff;
+    off_t shla       = kmalloc(0, ehdr->e_shnum * ehdr->e_shentsize);
     sys_lseek(fildes, ehdr->e_shoff, SEEK_SET);
-    sys_read(fildes, shla, entn * ents);
+    sys_read(fildes, shla, ehdr->e_shnum * ehdr->e_shentsize);
     // elf->f_ops->read(elf,(char*)shla,ehdr->e_shnum*ehdr->e_shentsize,&elf->position);
     struct Elf64_Shdr* sh     = (struct Elf64_Shdr*)(shla);
     Elf64_Phdr*        ph     = (Elf64_Phdr*)(tmpla + ehdr->e_phoff);
@@ -566,26 +566,27 @@ ready:
     off_t              base = ph->p_vaddr, offset = 0;
     int                reloc_flag = 0;
     //判断是否为DYN
-    /* if(ehdr->e_type==ET_DYN){
-        reloc_flag=1;
-        for(int i=0;i<ehdr->e_phnum;i++){
-            tot_sz+=ph[i].p_memsz;
-            if(ph[i].p_vaddr<base)
-                base=ph[i].p_vaddr;
+    if (ehdr->e_type == ET_DYN) {
+        reloc_flag = 1;
+        for (int i = 0; i < ehdr->e_phnum; i++) {
+            tot_sz += ph[i].p_memsz;
+            if (ph[i].p_vaddr < base) base = ph[i].p_vaddr;
         }
         /*
         似乎有的系统支持单个段的重定位。但是这样在有些重定位方式下，尤其是跨段的相对地址调用来说，这会带来大难度，
-        所以这里先整体移动。
+        所以这里先整体移动。*/
 
-        if(!chk_mmap(base,tot_sz)){
+        if (!chk_mmap(base, tot_sz)) {
             //原来的地方已经被映射
             //需要重定位
             //找到另一块大小符合的连续虚拟内存，然后返回首地址（不映射，下面手动映射）
-            reloc_flag=2;
-            off_t new_base=find_free_vm(tot_sz);
-            offset=new_base-base;
+            reloc_flag     = 2;
+            off_t new_base = base;
+            while (!chk_mmap(new_base, tot_sz)) { new_base += PAGE_4K_SIZE; }
+            if (new_base >= KNL_BASE) { return -ENOMEM; }
+            offset = new_base - base;
         }
-    } */
+    }
 
 
     module* mod = 0;
@@ -605,11 +606,11 @@ ready:
             // load dl
             //
             if (current->dl) break;
-            int fd = sys_open("/dl.so", O_EXEC);
-            kmfree(tmpla);
-            kmfree(shla);
+            int fd      = sys_open("/dl.so", O_EXEC);
             current->dl = fd;
-            elf         = current->openf[fd];
+            fildes      = fd;
+            kmfree(shla);   // section header 缓存可能需要更大，所以要重新分配
+            elf = current->openf[fd];
             goto ready;
         }
     }
@@ -659,13 +660,15 @@ ready:
     struct Elf64_Shdr* dynamic = NULL;
     off_t*             got     = NULL;
     for (int i = 0; i < ehdr->e_shnum; i++) {
-        if (sh[i].sh_type == SHT_DYNAMIC) dynamic = sh + i;
+        if (sh[i].sh_type == SHT_DYNAMIC) {
+            dynamic = sh + i;
+            break;
+        }
     }
     if (dynamic) {
         char*      dynstr = 0;
         Elf64_Dyn* dyn    = dynamic->sh_addr + offset;
-
-        mod->p_dynamic = dynamic;
+        mod->p_dynamic    = dynamic;
         //这里一堆获取函数之后实现细节
         // dynstr=so_get_dynstr(dyn);
         // so_get_dynstr从so中获取.dynstr节
@@ -686,11 +689,13 @@ ready:
         size_t relsz = 0, relentsz = 0;
         off_t  relptr = 0;
         for (Elf64_Dyn* p = dyn; p->d_tag; p++) {
-            char* pathname = p->d_un.d_val + dynstr;
-            int   so_fno   = sys_open(pathname, O_EXEC);
+            char* pathname = NULL;
+            int   so_fno   = 0;
             switch (p->d_tag) {
             case DT_NEEDED:
                 //不查错了
+                pathname = p->d_un.d_val + dynstr;
+                so_fno   = sys_open(pathname, O_EXEC);
                 load_elf(so_fno);
                 sys_close(so_fno);
                 break;

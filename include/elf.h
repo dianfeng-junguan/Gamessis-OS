@@ -52,7 +52,7 @@ typedef unsigned short Elf32_Half;
 #define SHF_EXECINSTR	0x4
 #define SHF_MASKPROC	0xf0000000
 typedef unsigned long long Elf64_Addr,Elf64_Off;
-typedef unsigned long Elf64_Xword;
+typedef unsigned long long Elf64_Xword;
 typedef unsigned int Elf64_Word;
 typedef unsigned short Elf64_Half;
 
@@ -107,14 +107,14 @@ struct Elf64_Shdr              //共40个字节    //Shdl表示Section header
 {
     Elf64_Word sh_name;        //所指向Section的名字，如".text"、".data"、".bss"等
     Elf64_Word sh_type;        //所指向Section的类型，如：符号表、字符串表等
-    Elf64_Word sh_flags;
+    Elf64_Xword sh_flags;
     Elf64_Addr sh_addr;
     Elf64_Off sh_offset;       //所指向Section在ELF文件中的偏移量
-    Elf64_Word sh_size;        //所指向Section的size
+    Elf64_Xword sh_size;        //所指向Section的size
     Elf64_Word sh_link;        //和其关联的Section头的下标索引
     Elf64_Word sh_info;
-    Elf64_Word sh_addralign;   //字节对齐
-    Elf64_Word sh_entsize;
+    Elf64_Xword sh_addralign;   //字节对齐
+    Elf64_Xword sh_entsize;
 };
 struct Elf32_phdr            //32个字节    //phdr表示Program header
 {
