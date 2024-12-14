@@ -53,6 +53,7 @@ typedef unsigned short Elf32_Half;
 #define SHF_MASKPROC	0xf0000000
 typedef unsigned long long Elf64_Addr,Elf64_Off;
 typedef unsigned long long Elf64_Xword;
+typedef long long Elf64_Sxword ;
 typedef unsigned int Elf64_Word;
 typedef unsigned short Elf64_Half;
 
@@ -164,7 +165,7 @@ typedef struct {
 #define ELF64_R_TYPE(i)((i) & 0xffffffffL)
 #define ELF64_R_INFO(s, t)(((s) << 32) + ((t) & 0xffffffffL))
 typedef struct {
-        Elf64_Xword d_tag;
+        Elf64_Sxword d_tag;
         union {
                 Elf64_Xword     d_val;
                 Elf64_Addr      d_ptr;
@@ -183,11 +184,11 @@ struct Elf32_sym                //
 struct Elf64_Sym                //
 {
     Elf64_Word st_name;         //符号的名字
-    Elf64_Addr st_value;        //符号相对于其所在Section偏移的相对地址
-    Elf64_Word st_size;         //符号的size
     unsigned char st_info;      //低四位表示符号的作用范围（全局或局部），高四位表示符号的类型（变量、函数等）
     unsigned char st_other;
     Elf64_Half st_shndx;        //该符号的值在哪个Section下存储
+    Elf64_Addr st_value;        //符号相对于其所在Section偏移的相对地址
+    Elf64_Xword st_size;         //符号的size
 };
 #define PT_NULL 0
 #define PT_LOAD 1
@@ -202,7 +203,7 @@ struct Elf64_Sym                //
 typedef struct
 {
     Elf64_Addr  r_offset;       /* Address */
-    Elf64_Word  r_info;         /* Relocation type and symbol index */
+    Elf64_Xword  r_info;         /* Relocation type and symbol index */
 } Elf64_Rel;
 
 typedef struct

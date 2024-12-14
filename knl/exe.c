@@ -19,7 +19,7 @@
 
 DLL    dlls[MAX_DLLS];
 module modules[MAX_MODULES];
-void   fill_reloc(Elf64_Rel* rel, int modid);
+void   fill_reloc(Elf64_Rel* rel, int modid, struct Elf64_Shdr* shdrs);
 /*
 
 int load_library(char *path)
@@ -596,6 +596,7 @@ ready:
             modules[i].type        = ehdr->e_type;
             modules[i].load_offset = offset;
             modules[i].base        = base;
+            modules[i].p_shdrs     = shla;
             mod                    = modules + i;
             break;
         }
@@ -707,6 +708,7 @@ ready:
                 //填入模块id
                 got[1]     = mod - modules;
                 mod->p_got = got;
+                break;
             case DT_SYMTAB: mod->p_symbol = p->d_un.d_ptr; break;
             case DT_RELSZ:
             case DT_RELASZ: relsz = p->d_un.d_val; goto is_rel_prepared;
@@ -722,7 +724,7 @@ ready:
         is_rel_prepared:
             if (!(relsz && relentsz && relptr)) continue;
             for (int j = 0; j < relsz / relentsz; j++) {
-                fill_reloc(relptr + j * relentsz, mod - modules);
+                fill_reloc(relptr + j * relentsz, mod - modules, (struct Elf64_Shdr*)shla);
             }
             relsz = relentsz = relptr = 0;
         }
@@ -755,7 +757,8 @@ ready:
     off_t entry                   = 0;
     entry                         = ehdr->e_entry;
     kmfree(tmpla);
-    kmfree(shla);
+    // TODO 进程结束时释放modules里面的内存
+    // kmfree(shla);
     //从系统调用返回
     return entry;
 }
@@ -772,7 +775,7 @@ void dl_runtime_resolve()
     __asm__ volatile("push %%rax\n mov 16(%%rsp),%%rax\n mov %%rax,%0" : "=m"(rel_offset));
     Elf64_Rel* rel  = rel_offset;
     int        symi = ELF64_R_SYM(rel->r_info), type = ELF64_R_TYPE(rel->r_info);
-    off_t      sym_off = get_sym_addr(modid, symi);
+    off_t      sym_off = get_sym_addr(modid, symi, modules[modid].p_shdrs);   // FIXME shdr
     //这里假定获取符号的地址是正确的，可以不修改符号表，而是通过记录模块整体加载地址，
     //来加上偏移量获取正确的符号地址
     off_t* v_rel = rel->r_offset;
@@ -792,7 +795,7 @@ void dl_runtime_resolve()
 
     __asm__ volatile("mov %0,%%rax\n mov %%rax,0(%%rsp)" ::"m"(*v_rel));
 }
-off_t get_sym_addr(unsigned long modid, unsigned long symi)
+off_t get_sym_addr(unsigned long modid, unsigned long symi, struct Elf64_Shdr* shdrs)
 {
     struct Elf64_Sym* sym = modules[modid].p_symbol;
     sym += symi;
@@ -803,9 +806,8 @@ off_t get_sym_addr(unsigned long modid, unsigned long symi)
     off_t symaddr = sym->st_value + modules[modid].load_offset;
     if (modules[modid].type == ET_DYN) {
         //还要加上节地址
-        Elf64_Ehdr*        ehdr = modules[modid].header;
-        struct Elf64_Shdr* shdr = ehdr->e_shoff;
-        symaddr += shdr[sym->st_shndx].sh_addr;
+        Elf64_Ehdr* ehdr = modules[modid].header;
+        symaddr += shdrs[sym->st_shndx].sh_addr;
     }
     return symaddr;
 }
@@ -819,10 +821,10 @@ off_t get_got(unsigned long modid)
     return modules[modid].p_got;
 }
 
-void fill_reloc(Elf64_Rel* rel, int modid)
+void fill_reloc(Elf64_Rel* rel, int modid, struct Elf64_Shdr* shdrs)
 {
     int   symi = ELF64_R_SYM(rel->r_info), type = ELF64_R_TYPE(rel->r_info);
-    off_t sym_off = get_sym_addr(modid, symi);
+    off_t sym_off = get_sym_addr(modid, symi, shdrs);
     //这里假定获取符号的地址是正确的，可以不修改符号表，而是通过记录模块整体加载地址，
     //来加上偏移量获取正确的符号地址
     off_t* v_rel = rel->r_offset;
