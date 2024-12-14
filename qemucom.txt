@@ -12,7 +12,7 @@ mem info:base=0x0000000007ffd0000,len=0x00000000000030000,type=0000000000000002
 tot memsize:0x00000000080000000,available size 0x0000000007fefa000,kmalloc bitmap taking 0000000003ef7d000 bytes
 proc init set.
 tss.ist=0x00000000000800000
-_knl_text_start:0ffff800000800000,_knl_text_end:0ffff8000008181fd
+_knl_text_start:0ffff800000800000,_knl_text_end:0ffff8000008185dd
 sys mmap:base=0ffff800000000000,len=0e589c855fa1e0ff3
 sys mmap:base=0e5894855fa1e0ff3,len=01a76c80a05e1f00d
 sys mmap:base=00000106000000000,len=0ffffefa040000000
@@ -34,8 +34,8 @@ lookup cluster:0x00000000000000002x,sector:0x00000000000000040x
 new openf:0ffff800002056000
 FAT32 FS(lseek) alert position:0000000000025872
 sys mmap:base=00000000000400000,len=00000000000003d14
-copy_to_stack:invalid argv/environ[0000000000000000]:0ffff800000923677,truncated
-copy_to_stack:invalid argv/environ[0000000000000000]:0ffff80000092368d,truncated
+copy_to_stack:invalid argv/environ[0000000000000000]:0ffff800000923a97,truncated
+copy_to_stack:invalid argv/environ[0000000000000000]:0ffff800000923aad,truncated
 page err
 occurred at 000000000004006f0x(paddr), trying to access 000000000004006f0x(laddr)
 error process pid:0x00000000000000002x
@@ -44,28 +44,12 @@ err code=00000000000000004x
 when reading
 user mode
 Backtrace:
-0ffff80000092368d .LC2(0ffff800000923681)+0000000000000000c
+0ffff800000923aad .LC2(0ffff800000923aa1)+0000000000000000c
 048f78948e6894855 _binary_rd_img_size(00000000000100000)+048f78948e6794855
 FAT32 FS(lseek) alert position:0000000000004096
-test.elf
+test.elft.elf
 new forked pid=0000000000000003
 wait pid:0000000000000003
-new openf:0ffff800002219000
-FAT32 FS(lseek) alert position:0000000000025872
-sys mmap:base=00000000000400000,len=00000000000003d14
-copy_to_stack:invalid argv/environ[0000000000000000]:00000002000000010,truncated
-copy_to_stack:invalid argv/environ[0000000000000000]:0ffbf64c8158d4852,truncated
-exit
-new forked pid=0000000000000004
-wait pid:0000000000000004
-wait 0000000000000004 ended.
-exit
-new forked pid=0000000000000005
-wait pid:0000000000000005
-wait pid:0000000000000000
-exit
-new forked pid=0000000000000006
-wait pid:0000000000000006
 lookup cluster:0x00000000000000002x,sector:0x00000000000000040x
 can not find file or dir:
 wait pid:0000000000000000

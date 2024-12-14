@@ -219,12 +219,36 @@ void fill_rest_of_line(tty_t* tty, char c)
 //向当前进程的tty的屏幕显示文字缓冲写入字符。
 void write_textbuf(char ch, tty_t* tty)
 {
-    if (ch == '\n')
-        fill_rest_of_line(tty, ' ');
-    else {
+    switch (ch) {
+    case '\n': fill_rest_of_line(tty, ' '); break;
+    case '\b':
+    case '\r':
+        txtbf_forward(&tty->text_buf_tail, -1, tty);
+        erase();   //擦除光标
+        offset_cursor(-1, 0);
+        erase();
+        break;
+    case '\t':
+        for (int i = 0; i < 4; i++) {
+            tty->text_buf[tty->text_buf_tail] = ' ';
+            txtbf_forward(&tty->text_buf_tail, 1, tty);
+        }
+        break;
+    default:
         tty->text_buf[tty->text_buf_tail] = ch;
         txtbf_forward(&tty->text_buf_tail, 1, tty);
+        break;
     }
+    //显示光标
+    if (ch != '\b') {
+        offset_cursor(1, 0);
+        display('_');
+        offset_cursor(-1, 0);
+    }
+    else {
+        display('_');
+    }
+
     if (txtbf_distancel(tty) == tty->chars_height) {
         //到达最后一行，应当上滚
         txtbf_forward(&tty->text_buf_head, tty->chars_width, tty);

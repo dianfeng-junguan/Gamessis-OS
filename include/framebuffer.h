@@ -4,21 +4,23 @@
 #include "vfs.h"
 #define FRAMEBUFFER_ADDR 0xffff800040000000ul
 #define PSF1_FONT_MAGIC 0x0436
-struct psf1_header {
+struct psf1_header
+{
     unsigned short magic;     /* magic number for identification */
-    unsigned char font_mode;  /* PSF font mode */
-    unsigned char char_size;  /* PSF char size */
+    unsigned char  font_mode; /* PSF font mode */
+    unsigned char  char_size; /* PSF char size */
 };
 #define PSF2_FONT_MAGIC 0x864ab572
-struct psf2_header {
-    unsigned int magic;             /* magic number for PSF */
-    unsigned int version;           /* zero */
-    unsigned int header_size;       /* offset of bitmaps in file, 32 */
-    unsigned int flags;             /* 0 if there's no unicode table */
-    unsigned int glyph_nr;          /* number of glyphs */
-    unsigned int bytes_per_glyph;   /* size of each glyph */
-    unsigned int height;            /* height in pixels */
-    unsigned int width;             /* width in pixels */
+struct psf2_header
+{
+    unsigned int magic;           /* magic number for PSF */
+    unsigned int version;         /* zero */
+    unsigned int header_size;     /* offset of bitmaps in file, 32 */
+    unsigned int flags;           /* 0 if there's no unicode table */
+    unsigned int glyph_nr;        /* number of glyphs */
+    unsigned int bytes_per_glyph; /* size of each glyph */
+    unsigned int height;          /* height in pixels */
+    unsigned int width;           /* width in pixels */
 };
 
 //映射页帧缓冲区
@@ -27,22 +29,26 @@ void set_framebuffer(struct multiboot_tag_framebuffer tag);
 
 //图形绘制
 void init_font();
-void fill_rect(int x,int y,int w,int h,unsigned int color);
-void draw_text(int x, int y, int size, char *str);
+void fill_rect(int x, int y, int w, int h, unsigned int color);
+void draw_text(int x, int y, int size, char* str);
 void draw_letter(int x, int y, int size, char c);
 void print(char* s);
-void printl(char *s,int len);
-void framebuffer_set_curpos(int x,int y);
+void printl(char* s, int len);
+void framebuffer_set_curpos(int x, int y);
 
-long open_framebuffer(struct index_node * inode,struct file * filp);
-long close_framebuffer(struct index_node * inode,struct file * filp);
-long read_framebuffer(struct file * filp,char * buf,unsigned long count,long * position);
-long write_framebuffer(struct file * filp,char * buf,unsigned long count,long * position);
-long ioctl_framebuffer(struct index_node * inode,struct file * filp,unsigned long cmd,unsigned long arg);
+long open_framebuffer(struct index_node* inode, struct file* filp);
+long close_framebuffer(struct index_node* inode, struct file* filp);
+long read_framebuffer(struct file* filp, char* buf, unsigned long count, long* position);
+long write_framebuffer(struct file* filp, char* buf, unsigned long count, long* position);
+long ioctl_framebuffer(struct index_node* inode, struct file* filp, unsigned long cmd,
+                       unsigned long arg);
 
 
 void framebuffer_putchar(char c);
 void scr_up();
 void scr_down();
+void erase();
+void display(char ch);
+void offset_cursor(int dx, int dy);
 
 extern struct file_operations framebuffer_fops;
