@@ -148,9 +148,14 @@ char* copy_to_stack(long* stktop, char** argv)
 {
     char* p = stktop;
     int   i = 0;
-    for (; argv[i]; i++) {
+    for (; argv[i] && verify_area(argv[i], 1, PROT_READ); i++) {
         p -= strlen(argv[i]) + 1;
         strcpy(p, argv[i]);
+    }
+    if (argv[i]) {
+        // argv里面存在非法的指针，需要手动添加NULL尾
+        comprintf("copy_to_stack:invalid argv/environ[%d]:%l,truncated\n", i, argv[i]);
+        *p = NULL;
     }
     return p;
 }
@@ -160,7 +165,7 @@ int sys_execve(char* path, char** argv, char** environ)
     int fno = -1, cwd_fno = -1;
     int argc = 0;
     if ((fno = sys_open(path, O_EXEC)) < 0) return -ENOENT;
-    for (int i = 0; argv[i]; i++, argc++)
+    for (int i = 0; argv[i] && verify_area(argv[i], 1, PROT_READ); i++, argc++)
         ;
     //重新设置进程数据
     //清空原来的页表
@@ -188,17 +193,21 @@ int sys_execve(char* path, char** argv, char** environ)
     stack_store_regs* rs   = (stack_store_regs*)(tss->ists[1] - sizeof(stack_store_regs));
     rs->rcx                = (unsigned long)retp;   //返回地址
     //第二个参数argv需要把内容从内核空间拷贝到用户堆里面
-    size_t arglen = 0;
-    for (int i = 0; i < argc; i++) { arglen += strlen(argv[i]) + 1; }
+    //计算argv和environ所需要的栈的空间
+    //
     //参数放栈
     int tot_argsz = 0;
     for (int i = 0; i < argc; i++) {
         int tmpsz = strlen(argv[i]) + 1;
-        tot_argsz += tmpsz;
+        tot_argsz += tmpsz + 8;
+    }
+    for (int i = 0; environ[i] && verify_area(environ[i], 1, PROT_READ); i++) {
+        int tmpsz = strlen(environ[i]) + 1;
+        tot_argsz += tmpsz + 8;
     }
     //初始需要的栈大小为argv指向的字符串大小之和+argv指针数组大小+
     // argc+一个main函数返回地址+一个rbp入栈空间
-    if (tot_argsz + argc * 8 + 24 >= PAGE_4K_SIZE) {
+    if (tot_argsz >= PAGE_4K_SIZE) {
         int needed = (tot_argsz + PAGE_4K_SIZE - 1) / PAGE_4K_SIZE - 1;
         for (int i = 0; i < needed; i++) {
             smmap(pmalloc(PAGE_4K_SIZE),
@@ -215,7 +224,7 @@ int sys_execve(char* path, char** argv, char** environ)
     //拷贝environ
     long* ep = copy_to_stack(p, environ);
     int   i  = 0;
-    for (; environ[i]; i++)
+    for (; environ[i] && verify_area(environ, 1, PROT_READ); i++)
         ;
     i++;
     ep -= i;

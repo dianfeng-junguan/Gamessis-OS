@@ -53,5 +53,8 @@
         "-ID:/Code/Comprehensive/轻量级libc/back/libc/include",
         "-ID:/Code/Comprehensive/轻量级libc/back/libc/printf/src",
         "-ID:/Code/Comprehensive/轻量级libc/back/libc/arch/x86_64/include"
+    ],
+    "clangd.arguments": [
+        "--header-insertion=never"
     ]
 }

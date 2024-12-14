@@ -12,10 +12,10 @@ mem info:base=0x0000000007ffd0000,len=0x00000000000030000,type=0000000000000002
 tot memsize:0x00000000080000000,available size 0x0000000007fefa000,kmalloc bitmap taking 0000000003ef7d000 bytes
 proc init set.
 tss.ist=0x00000000000800000
-_knl_text_start:0ffff800000800000,_knl_text_end:0ffff8000008180ad
+_knl_text_start:0ffff800000800000,_knl_text_end:0ffff8000008181fd
 sys mmap:base=0ffff800000000000,len=0e589c855fa1e0ff3
-sys mmap:base=0e5894855fa1e0ff3,len=01a76b7aa05e1f00d
-sys mmap:base=00000000000000000,len=00000000040000000
+sys mmap:base=0e5894855fa1e0ff3,len=01a76c80a05e1f00d
+sys mmap:base=00000106000000000,len=0ffffefa040000000
 sys mmap:base=0ffff800040000000,len=00000000000300000
 DPTE[0] start_LBA:00000000000000000x	type:00000000000000000x
 FAT32 Boot Sector
@@ -34,6 +34,8 @@ lookup cluster:0x00000000000000002x,sector:0x00000000000000040x
 new openf:0ffff800002056000
 FAT32 FS(lseek) alert position:0000000000025872
 sys mmap:base=00000000000400000,len=00000000000003d14
+copy_to_stack:invalid argv/environ[0000000000000000]:0ffff800000923677,truncated
+copy_to_stack:invalid argv/environ[0000000000000000]:0ffff80000092368d,truncated
 page err
 occurred at 000000000004006f0x(paddr), trying to access 000000000004006f0x(laddr)
 error process pid:0x00000000000000002x
@@ -42,7 +44,7 @@ err code=00000000000000004x
 when reading
 user mode
 Backtrace:
-0ffff80000092352d .LC2(0ffff800000923521)+0000000000000000c
+0ffff80000092368d .LC2(0ffff800000923681)+0000000000000000c
 048f78948e6894855 _binary_rd_img_size(00000000000100000)+048f78948e6794855
 FAT32 FS(lseek) alert position:0000000000004096
 test.elf
@@ -51,18 +53,19 @@ wait pid:0000000000000003
 new openf:0ffff800002219000
 FAT32 FS(lseek) alert position:0000000000025872
 sys mmap:base=00000000000400000,len=00000000000003d14
-page err
-occurred at 0ffff800000817abdx(paddr), trying to access 00000002000000010x(laddr)
-error process pid:0x00000000000000003x
-cr2=00000002000000010x
-err code=00000000000000000x
-when reading
-supervisor mode
-Backtrace:
-0ffff80000080a40b sys_execve(0ffff80000080a111)+000000000000002fa
-0ffff8000008010df syscall(0ffff800000800eb2)+0000000000000022d
-0ffff80000080c4af _syscall(0ffff80000080c440)+0000000000000006f
-000400000ffff8000 _binary_rd_img_size(00000000000100000)+000400000ffef8000
-page_err:page acceessed without mmap
-sys died.
-sys died.
+copy_to_stack:invalid argv/environ[0000000000000000]:00000002000000010,truncated
+copy_to_stack:invalid argv/environ[0000000000000000]:0ffbf64c8158d4852,truncated
+exit
+new forked pid=0000000000000004
+wait pid:0000000000000004
+wait 0000000000000004 ended.
+exit
+new forked pid=0000000000000005
+wait pid:0000000000000005
+wait pid:0000000000000000
+exit
+new forked pid=0000000000000006
+wait pid:0000000000000006
+lookup cluster:0x00000000000000002x,sector:0x00000000000000040x
+can not find file or dir:
+wait pid:0000000000000000
