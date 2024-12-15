@@ -207,8 +207,11 @@ int further_init_proc0()
 int req_proc()
 {
     int num = 0;
-    while (task[num].pid != -1 && task[num].stat != TASK_EMPTY && num <= MAX_PROC_COUNT) { num++; }
-    if (num >= MAX_PROC_COUNT) return -1;
+    while (task[num].pid != -1 && task[num].stat != TASK_EMPTY && num <= MAX_PROC_COUNT) {
+        num++;
+    }
+    if (num >= MAX_PROC_COUNT)
+        return -1;
     task[num].pid      = pidd++;
     task[num].stat     = TASK_ZOMBIE;
     task[num].utime    = 0;
@@ -269,9 +272,11 @@ void save_rsp()
 }
 void manage_proc()
 {
-    if (cur_proc != -1) task[cur_proc].utime++;
+    if (cur_proc != -1)
+        task[cur_proc].utime++;
     if (cur_proc == -1 || task[cur_proc].utime > MAX_UTIME || task[cur_proc].stat != TASK_READY) {
-        if (cur_proc != -1) task[cur_proc].utime = 0;
+        if (cur_proc != -1)
+            task[cur_proc].utime = 0;
         // find
         int i     = cur_proc + 1;
         int times = 0;
@@ -287,7 +292,8 @@ void manage_proc()
                 i = 0;
             }
         }
-        if (times == 10) return;   //超过十次尝试都没有，暂时不切换
+        if (times == 10)
+            return;   //超过十次尝试都没有，暂时不切换
         // comprintf("switch:%l to %l\n", current->pid, task[i].pid);
         // switch
         // if (task[cur_proc].stat == TASK_RUNNING) task[cur_proc].stat = TASK_READY;
@@ -568,7 +574,9 @@ void del_proc(int pnr)
     kmfree(task[pnr].pml4);
     //关闭打开的文件
     for (int i = 3; i < MAX_PROC_OPENF; i++) {
-        if (task[pnr].openf[i]) { sys_close(i); }
+        if (task[pnr].openf[i]) {
+            sys_close(i);
+        }
     }
     //释放映射控制块
     for (mmap_struct* l = task[pnr].mmaps; l; l = l->node.next) {
@@ -578,7 +586,9 @@ void del_proc(int pnr)
         kmfree(l);
     }
     //释放信号队列
-    for (struct List* l = task[pnr].signal_queue; l; l = l->next) { kmfree(l); }
+    for (struct List* l = task[pnr].signal_queue; l; l = l->next) {
+        kmfree(l);
+    }
     //三个std判断一下是否是会话leader，是的话再关闭
     if (task[pnr].sid == task[pnr].pid) {
         // tty和console断联
@@ -601,7 +611,8 @@ void del_proc(int pnr)
         p = list_next(p, &p->node);
     }
     //向父进程发送信号告知进程结束
-    if (current->parent_pid > 0) send_signal(current->parent_pid, SIGCHLD);
+    if (current->parent_pid > 0)
+        send_signal(current->parent_pid, SIGCHLD);
     //
     //从进程中解除cr3,tss和ldt
     // switch_proc_tss(task[pnr]);
@@ -609,14 +620,17 @@ void del_proc(int pnr)
 
 int set_proc_stat(int pid, int stat)
 {
-    if (pid == -1) return -1;
+    if (pid == -1)
+        return -1;
     int i = 0;
     for (; task[i].pid != pid; i++)
         ;
-    if (i == MAX_PROC_COUNT) return -1;
+    if (i == MAX_PROC_COUNT)
+        return -1;
     task[i].stat = stat;
     //如果这就是正在运行的进程，那么马上停止
-    if (cur_proc == i) task[cur_proc].utime = MAX_UTIME;
+    if (cur_proc == i)
+        task[cur_proc].utime = MAX_UTIME;
     return 0;
 }
 /*
@@ -653,7 +667,8 @@ int sys_exit(int code)
 {
     current->exit_code = code;
     del_proc(cur_proc);
-    while (1) manage_proc();
+    while (1)
+        manage_proc();
     return code;
 }
 
@@ -713,7 +728,8 @@ int reg_proc(addr_t entry, struct index_node* cwd, struct index_node* exef)
 {
 
     int i = req_proc();
-    if (i == -1) return -1;
+    if (i == -1)
+        return -1;
 
     //栈顶设置在了4G处
     set_proc(0,
@@ -970,7 +986,8 @@ int sys_fork(void)
     cli();
     int pid  = req_proc();
     int pids = task[pid].pid;
-    if (pid == -1) return -1;
+    if (pid == -1)
+        return -1;
     //首先完全复制
     memcpy(task + pid, current, sizeof(struct process));
     // task[pid]=*current;
@@ -1068,7 +1085,9 @@ int sys_fork(void)
         memcpy(new_mp, mp, sizeof(mmap_struct));
         list_init(&new_mp->node);
         new_mp->node.data = new_mp;
-        if (!task[pid].mmaps) { task[pid].mmaps = new_mp; }
+        if (!task[pid].mmaps) {
+            task[pid].mmaps = new_mp;
+        }
         else {
             list_add(task[pid].mmaps, new_mp);
         }
@@ -1166,7 +1185,8 @@ void copy_mmap(struct process* from, struct process* to)
 
     page_item* pml4e = pml4p;
     for (int i = 0; i < 512; i++) {
-        if ((pml4e[i] & PAGE_PRESENT) == 0) continue;
+        if ((pml4e[i] & PAGE_PRESENT) == 0)
+            continue;
         addr_t old_data = pml4e[i];   //旧的数据，里面保存了属性和要拷贝的数据的地址
         addr_t m4       = kmalloc(0, PAGE_4K_SIZE);
         pml4e[i]        = (m4 & ~KNL_BASE) | (old_data & ~PAGE_4K_MASK);
@@ -1175,7 +1195,8 @@ void copy_mmap(struct process* from, struct process* to)
                PAGE_4K_SIZE);   //把老的数据拷贝到新的页面里
         page_item* pdpte = (page_item*)m4;
         for (int j = 0; j < 512; j++) {
-            if ((pdpte[j] & PAGE_PRESENT) == 0 || (pdpte[j] & PDPTE_1GB) != 0) continue;
+            if ((pdpte[j] & PAGE_PRESENT) == 0 || (pdpte[j] & PDPTE_1GB) != 0)
+                continue;
             addr_t old_data2 = pdpte[j];   //旧的数据，里面保存了属性和要拷贝的数据的地址
             addr_t m3 = kmalloc(0, PAGE_4K_SIZE);
             pdpte[j]  = (m3 & ~KNL_BASE) | (old_data2 & ~PAGE_4K_MASK);
@@ -1184,7 +1205,8 @@ void copy_mmap(struct process* from, struct process* to)
                    PAGE_4K_SIZE);   //把老的数据拷贝到新的页面里
             page_item* pde = (page_item*)m3;
             for (int k = 0; k < 512; k++) {
-                if ((pde[k] & PAGE_PRESENT) == 0 || (pde[k] & PDE_2MB) != 0) continue;
+                if ((pde[k] & PAGE_PRESENT) == 0 || (pde[k] & PDE_2MB) != 0)
+                    continue;
                 addr_t old_data3 = pde[k];   //旧的数据，里面保存了属性和要拷贝的数据的地址
                 addr_t m2 = kmalloc(0, PAGE_4K_SIZE);
                 pde[k]    = (m2 & ~KNL_BASE) | (old_data3 & ~PAGE_4K_MASK);
@@ -1200,7 +1222,11 @@ int chk_mmap(off_t base, size_t mem_size)
 {
     mmap_struct* mp = current->mmaps;
     for (; mp; mp = list_next(mp, &mp->node)) {
-        if (mp->base <= base && mp->base + mp->len >= base + mem_size) return 0;
+        off_t mpbase = mp->base, mptop = mpbase + mp->len;
+        off_t top = base + mem_size;
+        if (mpbase >= base && mpbase < top || mptop >= base && mptop < top ||
+            base >= mpbase && top < mptop)
+            return 0;
     }
     return 1;
 }
@@ -1238,7 +1264,8 @@ int chk_mtable(off_t base, size_t mem_size)
             ndx_pd = 0;
             continue;
         }
-        if (pdpt[ndx_pdpt] & PDPTE_1GB) return 0;
+        if (pdpt[ndx_pdpt] & PDPTE_1GB)
+            return 0;
         unsigned long* pd = pdpt[ndx_pdpt] & ~0xfff | KNL_BASE;
         if (ndx_pt == 512) {
             ndx_pd++;
@@ -1249,9 +1276,11 @@ int chk_mtable(off_t base, size_t mem_size)
             ndx_pt = 0;
             continue;
         }
-        if (pd[ndx_pd] & PDE_2MB) return 0;
+        if (pd[ndx_pd] & PDE_2MB)
+            return 0;
         unsigned long* pt = pd[ndx_pd] & ~0xfff | KNL_BASE;
-        if (pt[ndx_pt] & PAGE_PRESENT) return 0;
+        if (pt[ndx_pt] & PAGE_PRESENT)
+            return 0;
         ndx_pt++;
         nr_pte--;
     }
@@ -1265,22 +1294,26 @@ pid_t sys_getpgrp(void)
 
 int sys_getpgid(pid_t pid, gid_t gid)
 {
-    if (pid == 0) return current->gpid;
+    if (pid == 0)
+        return current->gpid;
     for (int i = 0; i < MAX_TASKS; ++i) {
-        if (task[i].pid == pid) return task[i].gpid;
+        if (task[i].pid == pid)
+            return task[i].gpid;
     }
     return -1;
 }
 int sys_setpgid(pid_t pid, gid_t gid)
 {
     if (pid == 0) {
-        if (current->sid == current->pid) return -1;
+        if (current->sid == current->pid)
+            return -1;
         current->gpid = gid;
         return 0;
     }
     for (int i = 0; i < MAX_TASKS; ++i) {
         if (task[i].pid == pid) {
-            if (task[i].sid == task[i].pid) return -1;
+            if (task[i].sid == task[i].pid)
+                return -1;
             task[i].gpid = gid;
             return 0;
         }
@@ -1294,9 +1327,11 @@ pid_t sys_setsid(void)
 }
 pid_t sys_getsid(pid_t pid)
 {
-    if (pid == 0) return current->sid;
+    if (pid == 0)
+        return current->sid;
     for (int i = 0; i < MAX_TASKS; ++i) {
-        if (task[i].pid == pid) return task[i].sid;
+        if (task[i].pid == pid)
+            return task[i].sid;
     }
     return -1;
 }
@@ -1307,7 +1342,8 @@ int sys_tcsetpgrp(int fildes, pid_t pgid_id)
     int             sid     = sys_getsid(0);   //获取session id
     struct process* new_fgl = NULL;
     for (int i = 0; i < MAX_TASKS; ++i) {
-        if (task[i].stat == TASK_ZOMBIE || task[i].stat == TASK_EMPTY) continue;
+        if (task[i].stat == TASK_ZOMBIE || task[i].stat == TASK_EMPTY)
+            continue;
         if (task[i].sid == sid) {
             task[i].fg_pgid = pgid_id;
             if (task[i].pid == pgid_id) {
@@ -1339,7 +1375,8 @@ void set_errno(int errno)
 struct process* get_proc(pid_t pid)
 {
     for (int i = 0; i < MAX_TASKS; i++) {
-        if (task[i].stat != TASK_EMPTY && task[i].pid == pid) return task + i;
+        if (task[i].stat != TASK_EMPTY && task[i].pid == pid)
+            return task + i;
     }
     return NULL;
 }
@@ -1355,7 +1392,9 @@ void wait_for_signal()
     // 保存当前地址到上下文，这样切换到此进程的时候可以回到这里
     current->stat = TASK_SUSPENDED;
     //切换到其他进程
-    while (current->stat == TASK_SUSPENDED) { schedule(); }
+    while (current->stat == TASK_SUSPENDED) {
+        schedule();
+    }
 }
 void store_rbp(unsigned long rbp)
 {

@@ -79,7 +79,7 @@ debug_bios:
 	@qemu-system-x86_64 -hda hda.img -m 2G -s -S -serial stdio
 debug:
 	# @del log.txt -serial stdio 
-	@qemu-system-x86_64 -hda hda.img -m 2G -s -S -bios OVMF.fd -serial file:qemucom.txt $(QEMU_LOG)
+	@qemu-system-x86_64 -hda hda.img -m 2G -s -S -bios OVMF.fd -serial stdio $(QEMU_LOG)#file:qemucom.txt
 debs:
 	@qemu-system-x86_64 -hda hda.img -m 2G -s -S -bios OVMF.fd -serial stdio
 

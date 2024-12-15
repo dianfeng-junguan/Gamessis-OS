@@ -46,6 +46,7 @@ typedef unsigned short Elf32_Half;
 #define SHT_HIUSER	0xffffffff
 
 #define SHN_COMMON 0xfff2
+#define SHN_UNDEF 0
 /* sh_flags */
 #define SHF_WRITE	0x1
 #define SHF_ALLOC	0x2
@@ -149,6 +150,7 @@ typedef struct {
 } Elf32_Dyn;//32位程序 */
 #define DT_NULL 0
 #define DT_NEEDED 1
+#define DT_PLTRELSZ 2
 #define DT_STRTAB 5
 #define DT_FLAGS 30
 #define DT_PLTGOT 3
@@ -156,6 +158,8 @@ typedef struct {
 #define DT_RELSZ 18
 #define DT_RELASZ 8
 #define DT_REL  17
+#define DT_JMPREL 23
+#define DT_PLTREL 20
 #define DT_RELA 7
 #define DT_RELENT 19
 #define DT_RELAENT 9

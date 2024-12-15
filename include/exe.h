@@ -16,6 +16,8 @@ typedef struct
     off_t         p_symbol;
     off_t         p_got;
     off_t         p_shdrs;
+    off_t         p_strtab;
+    size_t        s_symtabsz;
 } module;
 /*
  * 运行文件，成为独立进程。

@@ -125,7 +125,8 @@ int execute(char* path, char** argv)
     //尚未切换到目标进程
     // syscall(SYSCALL_REG_PROC, load_pe,0,0,0,0);
     int fno = -1, cwd_fno = -1;
-    if ((fno = sys_open(path, O_EXEC)) < 0) return -1;
+    if ((fno = sys_open(path, O_EXEC)) < 0)
+        return -1;
     //
     char* p = path;
     for (; *p != '\0'; p++)
@@ -134,7 +135,8 @@ int execute(char* path, char** argv)
         ;
     if (p > path) {
         *p = '\0';
-        if ((cwd_fno = sys_open(path, O_DIRECTORY)) < 0) return -1;
+        if ((cwd_fno = sys_open(path, O_DIRECTORY)) < 0)
+            return -1;
         *p = '/';
     }
     // extern struct file opened[];
@@ -164,7 +166,8 @@ int sys_execve(char* path, char** argv, char** environ)
     cli();
     int fno = -1, cwd_fno = -1;
     int argc = 0;
-    if ((fno = sys_open(path, O_EXEC)) < 0) return -ENOENT;
+    if ((fno = sys_open(path, O_EXEC)) < 0)
+        return -ENOENT;
     for (int i = 0; argv[i] && verify_area(argv[i], 1, PROT_READ); i++, argc++)
         ;
     //重新设置进程数据
@@ -172,7 +175,8 @@ int sys_execve(char* path, char** argv, char** environ)
     release_mmap(current);
     //释放映射数据结构
     for (mmap_struct* mp = current->mmaps; mp; mp = list_next(mp, &mp->node)) {
-        if (mp->pmhdr) pmfree(mp->pmhdr->base, mp->pmhdr->len);
+        if (mp->pmhdr)
+            pmfree(mp->pmhdr->base, mp->pmhdr->len);
         kmfree(mp);
     }
     current->mmaps = NULL;
@@ -242,7 +246,7 @@ int sys_execve(char* path, char** argv, char** environ)
     //第一个参数argc
     if (current->dl) {
         rs->rdi = fno;
-        rs->rsi = argc;
+        rs->rsi = current->dl;
         rs->rdx = p;
         rs->r10 = ep;
     }
@@ -293,7 +297,8 @@ int load_pe(struct process* proc)
             exefno = i;
             break;
         }
-    if (exefno == -1) return ERR;
+    if (exefno == -1)
+        return ERR;
 
     IMAGE_DOS_HEADER   tdh;
     IMAGE_NT_HEADERS32 tnth;
@@ -351,7 +356,8 @@ int load_pe(struct process* proc)
     data_start = data_start % align ? data_start - data_start % align + align : data_start;
     for (int i = 0; i < nth->FileHeader.NumberOfSections; i++, psec++) {
         int disca = psec->Characteristics & IMAGE_SCN_MEM_DISCARDABLE;
-        if (disca) continue;
+        if (disca)
+            continue;
         //直接读，缺页内核解决
         sys_lseek(exefno, psec->PointerToRawData, SEEK_SET);
         sys_read(exefno, psec->VirtualAddress + nbase, psec->SizeOfRawData);
@@ -430,8 +436,9 @@ int load_pe(struct process* proc)
         while (relp->VirtualAddress) {
             int pgva = relp->VirtualAddress + nbase;
             for (int i = 0; i < relp->SizeOfBlock / 4; i++) {
-                if (*rtype == IMAGE_REL_BASED_ABSOLUTE) continue;   //不用重定位
-                int* at = *reloc + pgva;                            //要重定位的数据的地址
+                if (*rtype == IMAGE_REL_BASED_ABSOLUTE)
+                    continue;              //不用重定位
+                int* at = *reloc + pgva;   //要重定位的数据的地址
                 *at     = *at - old_base + nbase;
                 //下一个
                 reloc += 2;
@@ -472,7 +479,8 @@ int get_module_addr(int mi)
 }
 int dispose_library(int dlln)
 {
-    if (dlln < 0 || dlln >= MAX_DLLS) return -1;
+    if (dlln < 0 || dlln >= MAX_DLLS)
+        return -1;
     //空间不够，释放之前申请的
     // for(int j=0;j<dlls[dlln].page_used;j++)
     //     dispose_page(get_phyaddr(dlls[dlln].page_num[j]));
@@ -570,7 +578,8 @@ ready:
         reloc_flag = 1;
         for (int i = 0; i < ehdr->e_phnum; i++) {
             tot_sz += ph[i].p_memsz;
-            if (ph[i].p_vaddr < base) base = ph[i].p_vaddr;
+            if (ph[i].p_vaddr < base)
+                base = ph[i].p_vaddr;
         }
         /*
         似乎有的系统支持单个段的重定位。但是这样在有些重定位方式下，尤其是跨段的相对地址调用来说，这会带来大难度，
@@ -581,9 +590,13 @@ ready:
             //需要重定位
             //找到另一块大小符合的连续虚拟内存，然后返回首地址（不映射，下面手动映射）
             reloc_flag     = 2;
-            off_t new_base = base;
-            while (!chk_mmap(new_base, tot_sz)) { new_base += PAGE_4K_SIZE; }
-            if (new_base >= KNL_BASE) { return -ENOMEM; }
+            off_t new_base = base + PAGE_4K_SIZE;
+            while (!chk_mmap(new_base, tot_sz)) {
+                new_base += PAGE_4K_SIZE;
+            }
+            if (new_base >= KNL_BASE) {
+                return -ENOMEM;
+            }
             offset = new_base - base;
         }
     }
@@ -601,14 +614,21 @@ ready:
             break;
         }
     }
+
+    for (int i = 0; i < ehdr->e_shnum; i++) {
+        if (sh[i].sh_type == SHT_DYNSYM) {
+            mod->s_symtabsz = sh[i].sh_size;
+        }
+    }
     for (int i = 0; i < entn; i++) {
 
         if (ph[i].p_type == PT_INTERP) {
             // load dl
             //
-            if (current->dl) break;
+            if (current->dl)
+                break;
             int fd      = sys_open("/dl.so", O_EXEC);
-            current->dl = fd;
+            current->dl = ehdr;
             fildes      = fd;
             kmfree(shla);   // section header 缓存可能需要更大，所以要重新分配
             elf = current->openf[fd];
@@ -626,16 +646,21 @@ ready:
             unsigned long fs   = ph->p_filesz;
             size_t        ms   = ph->p_memsz;
             char*         vptr = (char*)ph->p_vaddr + offset;
-            if (max_allocated < vptr + ms) max_allocated = vptr + ms;
+            if (max_allocated < vptr + ms)
+                max_allocated = vptr + ms;
             elf->position = off;
-            if (off == 0) { mod->header = vptr; }
+            if (off == 0) {
+                mod->header = vptr;
+            }
             //先映射好内存，访问时再分配内存
             int attr = PROT_READ;
-            if ((ph->p_flags & PF_W)) attr |= PROT_WRITE;
+            if ((ph->p_flags & PF_W))
+                attr |= PROT_WRITE;
             if ((ph->p_flags & PF_X)) {
                 attr |= PROT_EXEC;
                 //代码段底部
-                if (current->mem_struct.text_base > vptr) current->mem_struct.text_base = vptr;
+                if (current->mem_struct.text_base > vptr)
+                    current->mem_struct.text_base = vptr;
                 //代码段顶部
                 if (current->mem_struct.text_top < vptr + ms)
                     current->mem_struct.text_top = vptr + ms;
@@ -675,11 +700,14 @@ ready:
         // so_get_dynstr从so中获取.dynstr节
         for (Elf64_Dyn* p = dyn; p->d_tag; p++) {
             if (p->d_tag == DT_STRTAB) {
-                dynstr = p->d_un.d_ptr + offset;
+                dynstr        = p->d_un.d_ptr + offset;
+                mod->p_strtab = dynstr;
                 break;
             }
         }
-        if (!dynstr) { comprintf("cannot find dynstr in .dynamic!\n"); }
+        if (!dynstr) {
+            comprintf("cannot find dynstr in .dynamic!\n");
+        }
 
         // char **so_paths=so_get_needed(dyn,dynstr);
         // so_load_sos(so_paths);
@@ -687,8 +715,12 @@ ready:
         // so_get_got
         // got=so_get_got(dyn);
         // intel架构上DT_PLTGOT存放的是got地址
+
         size_t relsz = 0, relentsz = 0;
-        off_t  relptr = 0;
+        size_t relasz = 0, relaentsz = 0;
+        size_t jmprelsz = 0, jmprelaentsz = 0;
+        off_t  relptr = 0, relaptr = 0, jmprelptr = 0;
+        int    pltrel = 0;
         for (Elf64_Dyn* p = dyn; p->d_tag; p++) {
             char* pathname = NULL;
             int   so_fno   = 0;
@@ -709,27 +741,35 @@ ready:
                 got[1]     = mod - modules;
                 mod->p_got = got;
                 break;
-            case DT_SYMTAB: mod->p_symbol = p->d_un.d_ptr; break;
-            case DT_RELSZ:
-            case DT_RELASZ: relsz = p->d_un.d_val; goto is_rel_prepared;
-            case DT_REL:
-            case DT_RELA: relptr = p->d_un.d_ptr; goto is_rel_prepared;
-            case DT_RELENT:
-            case DT_RELAENT: relentsz = p->d_un.d_val; goto is_rel_prepared;
-
-
+            case DT_SYMTAB: mod->p_symbol = p->d_un.d_ptr + offset; break;
+            case DT_PLTRELSZ: jmprelsz = p->d_un.d_val; break;
+            case DT_RELSZ: relsz = p->d_un.d_val; break;
+            case DT_RELASZ: relasz = p->d_un.d_val; break;
+            case DT_PLTREL: pltrel = p->d_un.d_val; break;
+            case DT_JMPREL: jmprelptr = p->d_un.d_val; break;
+            case DT_REL: relptr = p->d_un.d_ptr; break;
+            case DT_RELA: relaptr = p->d_un.d_ptr; break;
+            case DT_RELENT: relentsz = p->d_un.d_val; break;
+            case DT_RELAENT: relaentsz = p->d_un.d_val; break;
             default: break;
             }
-            continue;
-        is_rel_prepared:
-            if (!(relsz && relentsz && relptr)) continue;
-            for (int j = 0; j < relsz / relentsz; j++) {
-                fill_reloc(relptr + j * relentsz, mod - modules, (struct Elf64_Shdr*)shla);
-            }
-            relsz = relentsz = relptr = 0;
         }
+        if (relptr && relentsz && relsz)   // REL
+            for (int j = 0; j < relsz / relentsz; j++)
+                fill_reloc(relptr + offset + j * relentsz, mod - modules, (struct Elf64_Shdr*)shla);
+        if (relaptr && relaentsz && relasz)   // RELA
+            for (int j = 0; j < relasz / relaentsz; j++)
+                fill_reloc(
+                    relaptr + offset + j * relaentsz, mod - modules, (struct Elf64_Shdr*)shla);
+        if (pltrel == DT_REL)
+            jmprelaentsz = relentsz;
+        else
+            jmprelaentsz = relaentsz;
+        if (jmprelptr && jmprelaentsz && jmprelsz)   // PLTREL
+            for (int j = 0; j < jmprelsz / jmprelaentsz; j++)
+                fill_reloc(
+                    jmprelptr + offset + j * jmprelaentsz, mod - modules, (struct Elf64_Shdr*)shla);
     }
-
     //初始化堆
     // chunk_header hdrtmp={
     //         .alloc=0,
@@ -775,7 +815,7 @@ void dl_runtime_resolve()
     __asm__ volatile("push %%rax\n mov 16(%%rsp),%%rax\n mov %%rax,%0" : "=m"(rel_offset));
     Elf64_Rel* rel  = rel_offset;
     int        symi = ELF64_R_SYM(rel->r_info), type = ELF64_R_TYPE(rel->r_info);
-    off_t      sym_off = get_sym_addr(modid, symi, modules[modid].p_shdrs);   // FIXME shdr
+    off_t      sym_off = get_sym_addr(modid, symi, modules[modid].p_shdrs);
     //这里假定获取符号的地址是正确的，可以不修改符号表，而是通过记录模块整体加载地址，
     //来加上偏移量获取正确的符号地址
     off_t* v_rel = rel->r_offset;
@@ -802,13 +842,39 @@ off_t get_sym_addr(unsigned long modid, unsigned long symi, struct Elf64_Shdr* s
     if (sym->st_shndx == SHN_COMMON) {
         //还没分配空间的符号，需要分配空间，st_value表示地址对齐约束
     }
-
-    off_t symaddr = sym->st_value + modules[modid].load_offset;
-    if (modules[modid].type == ET_DYN) {
-        //还要加上节地址
-        Elf64_Ehdr* ehdr = modules[modid].header;
-        symaddr += shdrs[sym->st_shndx].sh_addr;
+    off_t symaddr = 0;
+    if (sym->st_shndx != SHN_UNDEF && sym->st_value)
+        symaddr = sym->st_value + modules[modid].load_offset;
+    else {
+        //不在本模块，需要在别的模块符号表中寻找
+        comprintf("finding symbols in other modules.\n");
+        char* target_name = modules[modid].p_strtab + sym->st_name;
+        for (int i = 0; i < MAX_MODULES; i++) {
+            if (modules[i].type == ET_NONE || i == modid)
+                continue;
+            sym = modules[i].p_symbol;
+            if (!sym)
+                continue;
+            for (int j = 0; j < modules[i].s_symtabsz / sizeof(struct Elf64_Sym); j++) {
+                //获取符号名称
+                if (!sym[j].st_name)
+                    continue;
+                char* symname = modules[i].p_strtab + sym[j].st_name;
+                comprintf("symbol %s=%l\n", symname, sym[j].st_value);
+                if (strcmp(target_name, symname) == 0) {
+                    comprintf(
+                        "found symbol %s=%l\n", symname, modules[i].load_offset + sym[j].st_value);
+                    return modules[i].load_offset + sym[j].st_value;
+                }
+            }
+        }
     }
+    //节内地址是relocatable才有的，shared和exec直接是虚拟地址
+    // if (modules[modid].type == ET_DYN) {
+    //     //还要加上节地址
+    //     Elf64_Ehdr* ehdr = modules[modid].header;
+    //     symaddr += shdrs[sym->st_shndx].sh_addr;
+    // }
     return symaddr;
 }
 off_t get_sym_plt(unsigned long modid, unsigned long symi) {}
@@ -827,7 +893,8 @@ void fill_reloc(Elf64_Rel* rel, int modid, struct Elf64_Shdr* shdrs)
     off_t sym_off = get_sym_addr(modid, symi, shdrs);
     //这里假定获取符号的地址是正确的，可以不修改符号表，而是通过记录模块整体加载地址，
     //来加上偏移量获取正确的符号地址
-    off_t* v_rel = rel->r_offset;
+    off_t* v_rel = rel->r_offset + modules[modid].load_offset;
+    // comprintf("relocate:at %l,type=%d,sym at %l\n", v_rel, type, sym_off);
     switch (type) {
     case R_X86_64_GLOB_DAT:
     case R_X86_64_JUMP_SLOT: *v_rel = sym_off; break;

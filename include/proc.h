@@ -213,7 +213,7 @@ struct process
     struct List  node;           //本进程的节点
     struct List* child_procs;    //子进程
     struct List* signal_queue;   //等待处理的信号
-    int          dl;             //是否加载了dl
+    void*        dl;             // dl的文件描述符
     sigset_t     sigmask;        //信号屏蔽位图
 } __attribute__((packed));       // 208 bytes
 #endif
