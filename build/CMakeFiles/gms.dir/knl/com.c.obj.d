@@ -1,5 +1,14 @@
 CMakeFiles/gms.dir/knl/com.c.obj: \
  D:\Code\Comprehensive\OS\workspace\64\knl\com.c \
+ D:/Code/Comprehensive/OS/workspace/64/include/com.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/int.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/typename.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/sys/types.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/mem.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/memory.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/page.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/multiboot2.h \
+ D:/Code/Comprehensive/OS/workspace/64/include/str.h \
  E:/Mingw/lib/gcc/x86_64-w64-mingw32/8.1.0/include/stdarg.h \
  E:/Mingw/x86_64-w64-mingw32/include/stdarg.h \
  E:/Mingw/x86_64-w64-mingw32/include/_mingw_stdarg.h \
@@ -8,13 +17,4 @@ CMakeFiles/gms.dir/knl/com.c.obj: \
  E:/Mingw/x86_64-w64-mingw32/include/_mingw_mac.h \
  E:/Mingw/x86_64-w64-mingw32/include/_mingw_secapi.h \
  E:/Mingw/x86_64-w64-mingw32/include/sdks/_mingw_directx.h \
- E:/Mingw/x86_64-w64-mingw32/include/sdks/_mingw_ddk.h \
- D:/Code/Comprehensive/OS/workspace/64/include/com.h \
- D:/Code/Comprehensive/OS/workspace/64/include/int.h \
- D:/Code/Comprehensive/OS/workspace/64/include/typename.h \
- D:/Code/Comprehensive/OS/workspace/64/include/sys/types.h \
- D:/Code/Comprehensive/OS/workspace/64/include/str.h \
- D:/Code/Comprehensive/OS/workspace/64/include/memory.h \
- D:/Code/Comprehensive/OS/workspace/64/include/page.h \
- D:/Code/Comprehensive/OS/workspace/64/include/multiboot2.h \
- D:/Code/Comprehensive/OS/workspace/64/include/mem.h
+ E:/Mingw/x86_64-w64-mingw32/include/sdks/_mingw_ddk.h

@@ -35,6 +35,7 @@
 #define SYSCALL_MKNOD 33
 #define SYSCALL_REMOVE 34
 #define SYSCALL_SBRK 35
+#define SYSCALL_CHKMMAP 36
 #define SYSCALL_KB_READC 100
 
 
@@ -91,6 +92,8 @@ unsigned long sys_lseek(int filds, long offset, int whence);
 unsigned long sys_wait(pid_t pid, int* stat_loc, int options);
 int           sys_ioctl(int fildes, int request, unsigned long args);
 int           sys_remove(char* pathname);
+
+int sys_chk_mmap(off_t base, size_t mem_size);
 /// @brief 建立文件内容到内存空间的映射。
 /// @param addr 映射内存地址，为0则可以任意地址。
 /// @param len

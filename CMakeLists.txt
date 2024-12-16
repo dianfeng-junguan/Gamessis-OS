@@ -14,3 +14,4 @@ SET(CMAKE_ASM_NASM_SOURCE_FILE_EXTENSIONS asm)  # 设置NASM的文件扩展名�
 add_custom_target(gmsknl ALL make -C Makefile)
 add_executable(gms ${KNL} ${KNL_ASM} ${KNL_MODS} ${KNL_COMS}
 )
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)

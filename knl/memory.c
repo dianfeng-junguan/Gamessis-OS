@@ -71,7 +71,9 @@ stat_t smmap(addr_t pa, addr_t la, u32 attr, page_item* pml4p)
 {
     //从pml4中找到la所属的pml4项目，即属于第几个512GB
     // canonical 高地址判断
-    if (la > 0x7ffffffffffful) { la &= ~0xffff000000000000ul; }
+    if (la > 0x7ffffffffffful) {
+        la &= ~0xffff000000000000ul;
+    }
     page_item* pdptp = (page_item*)(pml4p[la / PML4E_SIZE]);   //指向的pdpt表
     int        pml4i = la / PML4E_SIZE;
     if (!((unsigned long long)pdptp & PAGE_PRESENT)) {
@@ -80,6 +82,7 @@ stat_t smmap(addr_t pa, addr_t la, u32 attr, page_item* pml4p)
         //这里使用了狡猾的技巧：kmalloc的内存-KNL_BASE直接就是实际的物理地址
         pml4p[pml4i] = ((addr_t)pdptp & ~KNL_BASE) | attr;
     }
+    pml4p[pml4i] |= attr;
     pdptp = (page_item*)(((addr_t)pdptp & ~0xff) | KNL_BASE);
 
     //在这个512GB（一张pdpt表）中找到la所属的pdpt项目，找到指向的pd
@@ -91,6 +94,7 @@ stat_t smmap(addr_t pa, addr_t la, u32 attr, page_item* pml4p)
         memset(pdp, 0, 4096);
         pdptp[pdpti] = ((addr_t)pdp & ~KNL_BASE) | attr;
     }
+    pdptp[pdpti] |= attr;
     pdp = (page_item*)(((addr_t)(pdp) & ~0xff) | KNL_BASE);
 
     //在pd中找到la指向的pt
@@ -100,6 +104,7 @@ stat_t smmap(addr_t pa, addr_t la, u32 attr, page_item* pml4p)
         memset(pt, 0, 4096);
         pdp[la % PDPTE_SIZE / PDE_SIZE] = ((addr_t)pt & ~KNL_BASE) | attr;
     }
+    pdp[la % PDPTE_SIZE / PDE_SIZE] |= attr;
     pt = (page_item*)(((addr_t)pt & ~0xff) | KNL_BASE);
 
     //在pt中找到la指向的page
@@ -174,23 +179,31 @@ addr_t kmallocat(addr_t addr, int pgc)
         int l = 0, p = 0;
         for (int i = 0; i < kmalloc_pgc; i++) {
             if (!(vmalloc_map[i / 32] & (1u << (i % 32)))) {
-                if (l == 0) p = i;   //开头空页
+                if (l == 0)
+                    p = i;   //开头空页
                 l++;
             }
             else
                 l = 0;
-            if (l == pgc) break;
+            if (l == pgc)
+                break;
         }
-        if (l < pgc) return -1;
+        if (l < pgc)
+            return -1;
         //开始占用
-        for (int i = 0; i < pgc; i++) { vmalloc_map[(p + i) / 32] |= 1u << ((p + i) % 32); }
+        for (int i = 0; i < pgc; i++) {
+            vmalloc_map[(p + i) / 32] |= 1u << ((p + i) % 32);
+        }
         return VMALLOC_BASE + PAGE_4K_SIZE * p;
     }
     for (int i = 0; i < pgc; i++) {
-        if (vmalloc_map[(pi + i) / 32] & (1 << ((pi + i) % 32))) return -1;
+        if (vmalloc_map[(pi + i) / 32] & (1 << ((pi + i) % 32)))
+            return -1;
     }
     //
-    for (int i = 0; i < pgc; i++) { vmalloc_map[(pi + i)] |= (1 << ((pi + i) % 32)); }
+    for (int i = 0; i < pgc; i++) {
+        vmalloc_map[(pi + i)] |= (1 << ((pi + i) % 32));
+    }
     return addr;
 }
 
@@ -209,7 +222,8 @@ mmap_struct* get_mmap(off_t addr)
     for (; mp && !(mp->base <= addr && mp->base + mp->len > addr); mp = list_next(mp, &mp->node)) {
         // comprintf("mmaps[],base=%l,len=%l,addr=%l\n",mp->base,mp->len,addr);
     }
-    if (!mp) return NULL;
+    if (!mp)
+        return NULL;
     return mp;
 }
 ///获取该物理地址的malloc header。
@@ -233,7 +247,8 @@ void page_err(long* int_stk)
     comprintf("occurred at %x(paddr), trying to access %x(laddr)\n", addr, l_addr);
     comprintf("error process pid:0x%x\n", current->pid);
     comprintf("cr2=%x\nerr code=%x\n", l_addr, err_code);
-    if (err_code & PF_LEVEL_VIOLATION) comprintf("non-existent page item\n");
+    if (err_code & PF_LEVEL_VIOLATION)
+        comprintf("non-existent page item\n");
     if (err_code & PF_WRITING)
         comprintf("when writing\n");
     else
@@ -242,8 +257,10 @@ void page_err(long* int_stk)
         comprintf("supervisor mode\n");
     else
         comprintf("user mode\n");
-    if (err_code & PF_INS_FETCH) comprintf("instruction fetch\n");
-    if (err_code & PF_PROTECT_KEY) comprintf("data access not allowed by protection key\n");
+    if (err_code & PF_INS_FETCH)
+        comprintf("instruction fetch\n");
+    if (err_code & PF_PROTECT_KEY)
+        comprintf("data access not allowed by protection key\n");
     backtrace(int_stk);
 
     if (!(err_code & PF_LEVEL_VIOLATION)) {
@@ -262,7 +279,8 @@ void page_err(long* int_stk)
         }
         else {
             unsigned int attr = PAGE_PRESENT | PAGE_FOR_ALL;
-            if (mp->flags & PROT_WRITE) attr |= PAGE_RWX;
+            if ((mp->flags & PROT_WRITE))
+                attr |= PAGE_RWX;
             off_t mbase = mp->base & PAGE_4K_MASK;
             off_t mtop  = PAGE_4K_ALIGN(mp->base + mp->len);
             int   pgn   = (mtop - mbase) / PAGE_4K_SIZE;
@@ -321,7 +339,8 @@ void init_memory()
               vmms);
     //创建mhdr
     kmalloc_mhdr = kmhdrs = VMALLOC_BASE;
-    for (int i = 0; i < MAX_KMHDRS; i++) kmhdrs[i].type = -1;
+    for (int i = 0; i < MAX_KMHDRS; i++)
+        kmhdrs[i].type = -1;
     //先占用两页作为mhdrs
     kmhdrs[0].base = VMALLOC_BASE;
     kmhdrs[0].len  = vmms;
@@ -398,7 +417,8 @@ addr_t req_a_page()
 malloc_hdr* mhdr_split(malloc_hdr* target, off_t split_point, malloc_hdr* array, size_t arraylen)
 {
     //内部实现的时候出现大小为0的mhdr不创建
-    if (target->base >= split_point || target->base + target->len <= split_point) return target;
+    if (target->base >= split_point || target->base + target->len <= split_point)
+        return target;
     malloc_hdr* nmh = 0;   // kmalloc(0, sizeof(malloc_hdr));
     for (int i = 0; i < arraylen; i++) {
         if (array[i].type == -1) {
@@ -411,7 +431,8 @@ malloc_hdr* mhdr_split(malloc_hdr* target, off_t split_point, malloc_hdr* array,
         return NULL;
     }
     nmh->next = target->next;
-    if (target->next) target->next->prev = nmh;
+    if (target->next)
+        target->next->prev = nmh;
 
     nmh->prev    = target;
     target->next = nmh;
@@ -430,12 +451,14 @@ malloc_hdr* mhdr_split(malloc_hdr* target, off_t split_point, malloc_hdr* array,
 malloc_hdr* mhdr_merge(malloc_hdr* prev, malloc_hdr* next)
 {
     //向前合并属性相同的分配头
-    if (!prev || !next) return prev;
+    if (!prev || !next)
+        return prev;
     off_t base = next->base;
     if (prev->base + prev->len >= base && next->type == prev->type && next->flag == prev->flag) {
         prev->len  = base + next->len - prev->base;
         prev->next = next->next;
-        if (next->next) next->next->prev = prev;
+        if (next->next)
+            next->next->prev = prev;
         next->type = -1;
         next->prev = 0;
         next->next = 0;
@@ -453,7 +476,8 @@ void* kmalloc(off_t addr, size_t size)
     size = PAGE_4K_ALIGN(size);
     for (malloc_hdr* mh = kmalloc_mhdr; mh; mh = mh->next) {
 
-        if (mh->type != MEM_TYPE_AVAILABLE || mh->len < size) continue;
+        if (mh->type != MEM_TYPE_AVAILABLE || mh->len < size)
+            continue;
         //以下为符合要求
         //分割空闲内存
         malloc_hdr* nmh = mhdr_split(mh, mh->base + size, kmhdrs, MAX_KMHDRS);
@@ -473,7 +497,8 @@ void* kmalloc(off_t addr, size_t size)
 int kmfree(off_t addr)
 {
     for (malloc_hdr* mh = kmalloc_mhdr; mh; mh = mh->next) {
-        if (mh->base != addr) continue;
+        if (mh->base != addr)
+            continue;
         mh->type = MEM_TYPE_AVAILABLE;
         mh->flag = 0;
         //合并空闲项
@@ -496,7 +521,8 @@ void* pmalloc(size_t size)
 {
     for (malloc_hdr* mh = pmalloc_mhdr; mh; mh = mh->next) {
         // comprintf("pmalloc iterate: mh: base=%l,len=%l,type=%l\n", mh->base, mh->len, mh->type);
-        if (mh->type != MEM_TYPE_AVAILABLE || mh->len < size) continue;
+        if (mh->type != MEM_TYPE_AVAILABLE || mh->len < size)
+            continue;
         //以下为符合要求
         //分割空闲内存
         malloc_hdr* nmh = mhdr_split(mh, mh->base + size, pmhdrs, MAX_PMHDRS);
@@ -529,7 +555,8 @@ int pmfree(void* addr, size_t len)
             continue;
         }
         mh->link--;
-        if (mh->link > 0) return 1;
+        if (mh->link > 0)
+            return 1;
         if (prev->base < addr) {
             //分割
             prev = mhdr_split(prev, addr, pmalloc_mhdr, MAX_PMHDRS);
@@ -562,7 +589,9 @@ int free_page(char* paddr)
 
 int free_pages_at(int base, int pgn)
 {
-    for (int i = 0; i < pgn; i++) { free_page(base + i * PAGE_4K_SIZE); }
+    for (int i = 0; i < pgn; i++) {
+        free_page(base + i * PAGE_4K_SIZE);
+    }
 }
 int check_page(int num)
 {
@@ -576,7 +605,8 @@ int check_page(int num)
  * */
 int get_phyaddr(int num)
 {
-    if (num == -1) return -1;
+    if (num == -1)
+        return -1;
     return num * 0x1000;
 }
 
@@ -625,11 +655,14 @@ addr_t req_page_at(addr_t base, int pgn)
     {
         return get_phyaddr(req_a_page());
     }
-    if (!is_pgs_ava(base, pgn)) return -1;   //先检查
+    if (!is_pgs_ava(base, pgn))
+        return -1;   //先检查
     int pgni = base / 4096;
     int pgi  = pgni / 32;
     int pgj  = pgni % 32;
-    for (int i = 0; i < pgn; i++) { page_map[i] |= (1 << pgj); }
+    for (int i = 0; i < pgn; i++) {
+        page_map[i] |= (1 << pgj);
+    }
     return 0;
 }
 int chk_vm(int base, int pgn)
@@ -648,7 +681,8 @@ int is_pgs_ava(int base, int pgn)
 {
     int pgi = base / 4096;
     for (int i = 0; i < pgn; i++) {
-        if (check_page(pgi + i) != 0) return 0;
+        if (check_page(pgi + i) != 0)
+            return 0;
     }
     return 1;
 }
@@ -689,10 +723,14 @@ int verify_area(void* addr, int len, int prot)
     //可能这个内存区跨越了好几个映射
     while (off < len) {
         mmap_struct* mp = get_mmap(addr + off);
-        if (!mp) { return 0; }
+        if (!mp) {
+            return 0;
+        }
         int flags = mp->flags;
-        if ((prot & PROT_WRITE) && !(flags & PROT_WRITE)) return 0;
-        if ((prot & PROT_EXEC) && !(flags & PROT_EXEC)) return 0;
+        if ((prot & PROT_WRITE) && !(flags & PROT_WRITE))
+            return 0;
+        if ((prot & PROT_EXEC) && !(flags & PROT_EXEC))
+            return 0;
         off += mp->len;
     }
     return 1;

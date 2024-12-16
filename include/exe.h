@@ -18,6 +18,8 @@ typedef struct
     off_t         p_shdrs;
     off_t         p_strtab;
     size_t        s_symtabsz;
+    off_t         p_reloc;
+    size_t        s_relentsz;
 } module;
 /*
  * 运行文件，成为独立进程。
@@ -70,10 +72,10 @@ void dl_runtime_resolve();
 id_t get_modid(void);
 
 
-off_t get_sym_addr(unsigned long modid, unsigned long symi, struct Elf64_Shdr* shdrs);
-off_t get_sym_plt(unsigned long modid, unsigned long symi);
-off_t get_load_base(unsigned long modid);
-off_t get_got(unsigned long modid);
+// off_t get_sym_addr(unsigned long modid, unsigned long symi, struct Elf64_Shdr* shdrs);
+// off_t get_sym_plt(unsigned long modid, unsigned long symi);
+// off_t get_load_base(unsigned long modid);
+// off_t get_got(unsigned long modid);
 //模块管理
 int sys_insmod(char* path);
 int sys_rmmod(char* name);

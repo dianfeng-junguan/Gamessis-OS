@@ -163,6 +163,7 @@ typedef struct {
 #define DT_RELA 7
 #define DT_RELENT 19
 #define DT_RELAENT 9
+#define DT_BIND_NOW 24
 #define DT_INIT_ARRAY 25
 #define DT_INIT_ARRAYSZ 27
 #define ELF64_R_SYM(i)((i) >> 32)

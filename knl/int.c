@@ -39,7 +39,8 @@ void init_int()
     register_int(14, _page_err, page_err, TRAP_GATE);
     register_int(15, _default_int_proc, default_int_proc, TRAP_GATE);
     register_int(16, _coprocessor_err, coprocessor_err, TRAP_GATE);
-    for (int i = 17; i < 48; i++) register_int(i, _default_int_proc, default_int_proc, TRAP_GATE);
+    for (int i = 17; i < 48; i++)
+        register_int(i, _default_int_proc, default_int_proc, TRAP_GATE);
     // register_int(0x21,(addr_t)key_proc,GDT_SEL_CODE,GATE_PRESENT|INT_GATE);
     set_gate(0x20, (addr_t)clock, GDT_SEL_CODE, GATE_PRESENT | INT_GATE);
     set_gate(0x2e, (addr_t)disk_int_handler, GDT_SEL_CODE, GATE_PRESENT | INT_GATE);
@@ -167,7 +168,9 @@ void general_protect(long* int_stk)
     backtrace(int_stk);
 
     //处理问题进程
-    if (current->pid == 1) { die(); }
+    if (current->pid == 1) {
+        die();
+    }
     //终结问题进程
     sys_exit(-1);
 }
@@ -215,6 +218,7 @@ int syscall(long a, long b, long c, long d, long e, long f)
     case SYSCALL_MMAP: retv = sys_mmap(a, b, c, d, e, f); break;
     case SYSCALL_MUNMAP: retv = sys_munmap(a, b); break;
     case SYSCALL_MKNOD: retv = sys_mknod(a, b, c); break;
+    case SYSCALL_CHKMMAP: retv = sys_chk_mmap(a, b); break;
     }
     // __asm__ volatile("mov %0,%%eax\r\n mov %1,%%ebx\r\n mov %2,%%ecx\r\n mov %3,%%edx\r\n mov %4,%%esi\r\n mov %5,%%edi"\
     // ::"m"(func),"m"(a),"m"(b),"m"(c),"m"(d),"m"(e));
@@ -269,7 +273,8 @@ void backtrace(off_t* ret_stack)
     //回到用户栈，回溯
     ret_stack = ret_stack[0];
     for (int i = 0; i < 10; i++) {
-        if (ret_stack < KNL_BASE) break;   //超过栈顶
+        if (ret_stack < KNL_BASE)
+            break;   //超过栈顶
         print_ksym(ret_stack[1]);
         ret_stack = ret_stack[0];
     }

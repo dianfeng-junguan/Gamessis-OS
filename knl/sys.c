@@ -38,7 +38,8 @@ unsigned long sys_open(char* filename, int flags)
 
     //	printf("sys_open\n");
     path = (char*)kmalloc(0, PAGE_4K_SIZE);
-    if (path == NULL) return -ENOMEM;
+    if (path == NULL)
+        return -ENOMEM;
     memset(path, 0, PAGE_4K_SIZE);
     pathlen = strlen(filename);
     if (pathlen <= 0) {
@@ -64,7 +65,8 @@ unsigned long sys_open(char* filename, int flags)
             ;
         *p                       = '\0';
         struct dir_entry* parent = path_walk(path, O_DIRECTORY);
-        if (parent == NULL) return -ENOENT;   //上级目录也不在
+        if (parent == NULL)
+            return -ENOENT;   //上级目录也不在
         //创建新的文件
         dentry = (struct dir_entry*)kmalloc(0, sizeof(struct dir_entry));
         list_init(&dentry->subdirs_list);
@@ -84,8 +86,10 @@ unsigned long sys_open(char* filename, int flags)
     dentry->link++;   //这样哪怕长时间不path walk，也不会被释放
     // kmfree(path);
 
-    if ((flags & O_DIRECTORY) && (dentry->dir_inode->attribute != FS_ATTR_DIR)) return -ENOTDIR;
-    if (!(flags & O_DIRECTORY) && (dentry->dir_inode->attribute == FS_ATTR_DIR)) return -EISDIR;
+    if ((flags & O_DIRECTORY) && (dentry->dir_inode->attribute != FS_ATTR_DIR))
+        return -ENOTDIR;
+    if (!(flags & O_DIRECTORY) && (dentry->dir_inode->attribute == FS_ATTR_DIR))
+        return -EISDIR;
 
     filp = (struct file*)kmalloc(0, sizeof(struct file));
     memset(filp, 0, sizeof(struct file));
@@ -98,14 +102,19 @@ unsigned long sys_open(char* filename, int flags)
     }
     else
         filp->f_ops = dentry->dir_inode->f_ops;
-    if (filp->f_ops && filp->f_ops->open) error = filp->f_ops->open(dentry->dir_inode, filp);
+    if (filp->f_ops && filp->f_ops->open)
+        error = filp->f_ops->open(dentry->dir_inode, filp);
     if (error != 1) {
         kmfree(filp);
         return -EFAULT;
     }
 
-    if (filp->mode & O_TRUNC) { filp->dentry->dir_inode->file_size = 0; }
-    if (filp->mode & O_APPEND) { filp->position = filp->dentry->dir_inode->file_size; }
+    if (filp->mode & O_TRUNC) {
+        filp->dentry->dir_inode->file_size = 0;
+    }
+    if (filp->mode & O_APPEND) {
+        filp->position = filp->dentry->dir_inode->file_size;
+    }
 
     f = current->openf;
     for (i = 0; i < MAX_TASKS; i++)
@@ -128,10 +137,12 @@ unsigned long sys_close(int fd)
     struct file* filp = NULL;
 
     //	printf("sys_close:%d\n",fd);
-    if (fd < 0 || fd >= MAX_TASKS) return -EBADF;
+    if (fd < 0 || fd >= MAX_TASKS)
+        return -EBADF;
 
     filp = current->openf[fd];
-    if (filp->f_ops && filp->f_ops->close) filp->f_ops->close(filp->dentry->dir_inode, filp);
+    if (filp->f_ops && filp->f_ops->close)
+        filp->f_ops->close(filp->dentry->dir_inode, filp);
     filp->dentry->link--;
     kmfree(filp);
     current->openf[fd] = NULL;
@@ -145,8 +156,10 @@ unsigned long sys_read(int fd, void* buf, long count)
     unsigned long ret  = 0;
 
     //	printf("sys_read:%d\n",fd);
-    if (fd < 0 || fd >= MAX_TASKS) return -EBADF;
-    if (count < 0) return -EINVAL;
+    if (fd < 0 || fd >= MAX_TASKS)
+        return -EBADF;
+    if (count < 0)
+        return -EINVAL;
 
     filp = current->openf[fd];
     if (filp->f_ops && filp->f_ops->read)
@@ -160,8 +173,10 @@ unsigned long sys_write(int fd, void* buf, long count)
     unsigned long ret  = 0;
 
     //	printf("sys_write:%d\n",fd);
-    if (fd < 0 || fd >= MAX_TASKS) return -EBADF;
-    if (count < 0) return -EINVAL;
+    if (fd < 0 || fd >= MAX_TASKS)
+        return -EBADF;
+    if (count < 0)
+        return -EINVAL;
 
     filp = current->openf[fd];
     if (filp->f_ops && filp->f_ops->write)
@@ -176,11 +191,14 @@ unsigned long sys_lseek(int filds, long offset, int whence)
     unsigned long ret  = 0;
 
     //	printf("sys_lseek:%d\n",filds);
-    if (filds < 0 || filds >= MAX_TASKS) return -EBADF;
-    if (whence < 0 || whence >= SEEK_MAX) return -EINVAL;
+    if (filds < 0 || filds >= MAX_TASKS)
+        return -EBADF;
+    if (whence < 0 || whence >= SEEK_MAX)
+        return -EINVAL;
 
     filp = current->openf[filds];
-    if (filp->f_ops && filp->f_ops->lseek) ret = filp->f_ops->lseek(filp, offset, whence);
+    if (filp->f_ops && filp->f_ops->lseek)
+        ret = filp->f_ops->lseek(filp, offset, whence);
     return ret;
 }
 unsigned long sys_tell(int fd)
@@ -189,7 +207,8 @@ unsigned long sys_tell(int fd)
     unsigned long ret  = 0;
 
     //	printf("sys_lseek:%d\n",filds);
-    if (fd < 0 || fd >= MAX_TASKS) return -EBADF;
+    if (fd < 0 || fd >= MAX_TASKS)
+        return -EBADF;
 
     filp = current->openf[fd];
     ret  = filp->position;
@@ -256,7 +275,8 @@ unsigned long sys_wait(pid_t pid, int* stat_loc, int options)
     struct process*       waitee = NULL;
     extern struct process task[];
     comprintf("wait pid:%d\n", pid);
-    if (!current->child_procs) return -ECHILD;   //没有子进程可以等
+    if (!current->child_procs)
+        return -ECHILD;   //没有子进程可以等
     if (pid == -1) {
         //任意一个子进程
         while (1) {
@@ -284,7 +304,8 @@ unsigned long sys_wait(pid_t pid, int* stat_loc, int options)
         }
     }
     else {
-        if (pid < 0) pid = -pid;
+        if (pid < 0)
+            pid = -pid;
         //检查是不是本进程的子进程
         for (struct List* l = current->child_procs; l; l = l->next) {
             struct process* p = (void*)l - ((void*)&current->node - (void*)current);
@@ -355,8 +376,10 @@ unsigned long sys_brk(unsigned long brk)
 
     //	printf("sys_brk\n");
     //	printf("brk:%#018lx,new_brk:%#018lx,current->mm->end_brk:%#018lx\n",brk,new_brk,current->mm->end_brk);
-    if (new_brk == 0) return current->mem_struct.heap_base;
-    if (new_brk < current->mem_struct.heap_base) return current->mem_struct.heap_top;
+    if (new_brk == 0)
+        return current->mem_struct.heap_base;
+    if (new_brk < current->mem_struct.heap_base)
+        return current->mem_struct.heap_top;
     if (new_brk < current->mem_struct.heap_top) {
         size_t ms = current->mem_struct.heap_top - new_brk;
         sys_munmap(brk, ms);
@@ -372,7 +395,9 @@ unsigned long sys_brk(unsigned long brk)
 }
 void* sys_sbrk(long long increment)
 {
-    if (!increment) { return current->mem_struct.heap_top; }
+    if (!increment) {
+        return current->mem_struct.heap_top;
+    }
     void*              old_brk = current->mem_struct.heap_top;
     unsigned long long new_brk = old_brk;
     //这里是考虑到long long 有符号和无符号补码表示可能带来的问题
@@ -380,7 +405,9 @@ void* sys_sbrk(long long increment)
         new_brk += increment;
     else
         new_brk -= -increment;
-    if (sys_brk(new_brk) == 0) { return -1; }
+    if (sys_brk(new_brk) == 0) {
+        return -1;
+    }
     return old_brk;
 }
 
@@ -408,7 +435,8 @@ unsigned long sys_chdir(char* filename)
     pathlen = strlen(filename);
     path    = (char*)kmalloc(0, pathlen);
 
-    if (path == NULL) return -ENOMEM;
+    if (path == NULL)
+        return -ENOMEM;
     memset(path, 0, PAGE_4K_SIZE);
     if (pathlen <= 0) {
         kmfree(path);
@@ -423,8 +451,10 @@ unsigned long sys_chdir(char* filename)
     dentry = path_walk(path, 0);
     kmfree(path);
 
-    if (dentry == NULL) return -ENOENT;
-    if (dentry->dir_inode->attribute != FS_ATTR_DIR) return -ENOTDIR;
+    if (dentry == NULL)
+        return -ENOENT;
+    if (dentry->dir_inode->attribute != FS_ATTR_DIR)
+        return -ENOTDIR;
     return 0;
 }
 
@@ -434,11 +464,14 @@ unsigned long sys_getdents(int fd, void* dirent, long count)
     unsigned long ret  = 0;
 
     //	printf("sys_getdents:%d\n",fd);
-    if (fd < 0 || fd > MAX_TASKS) return -EBADF;
-    if (count < 0) return -EINVAL;
+    if (fd < 0 || fd > MAX_TASKS)
+        return -EBADF;
+    if (count < 0)
+        return -EINVAL;
 
     filp = current->openf[fd];
-    if (filp->f_ops && filp->f_ops->readdir) ret = filp->f_ops->readdir(filp, dirent, &fill_dentry);
+    if (filp->f_ops && filp->f_ops->readdir)
+        ret = filp->f_ops->readdir(filp, dirent, &fill_dentry);
     return ret;
 }
 
@@ -446,17 +479,20 @@ int sys_munmap(void* addr, size_t len)
 {
     void*  addr2 = PAGE_4K_ALIGN(addr);
     size_t len2  = PAGE_4K_ALIGN(len);
-    if (len == 0) return 0;
+    if (len == 0)
+        return 0;
     //本来就没被映射
-    if (chk_mmap(addr, len)) return 0;
+    if (chk_mmap(addr, len))
+        return 0;
     return do_munmap(addr2, len2);
 }
 void* sys_mmap(void* addr, size_t len, int prot, int flags, int fildes, off_t off)
 {
     cli();
-    comprintf("sys mmap:base=%l,len=%l\n", addr, len);
+    comprintf("sys mmap:base=%l,len=%l\n,prot=%l", addr, len, prot);
     int attr = PAGE_PRESENT | PAGE_FOR_ALL;
-    if ((prot | PROT_WRITE) || (prot | PROT_EXEC)) attr |= PAGE_RWX;
+    if ((prot & PROT_WRITE) || (prot & PROT_EXEC))
+        attr |= PAGE_RWX;
     if (!addr) {
         //没有指定地址
         //寻找一块空的虚拟内存
@@ -525,7 +561,9 @@ int sys_mknod(const char* path, mode_t mode, dev_t dev)
 {
     // TODO 权限检查
 
-    if (!create_node(path, mode, dev)) { return -1; }
+    if (!create_node(path, mode, dev)) {
+        return -1;
+    }
 
     return 0;
 }
@@ -533,4 +571,9 @@ int sys_mknod(const char* path, mode_t mode, dev_t dev)
 int sys_remove(char* pathname)
 {
     remove(pathname);
+}
+
+int sys_chk_mmap(off_t base, size_t mem_size)
+{
+    return chk_mmap(base, mem_size);
 }
