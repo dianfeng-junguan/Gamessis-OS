@@ -123,5 +123,10 @@ int    chk_vm(int base, int pgn);
 int init_paging();
 int do_munmap(void* addr, int len);
 
-int           verify_area(void* addr, int len, int prot);
+int verify_area(void* addr, int len, int prot);
+///@brief 映射一块内存到一块文件内容上，或者作匿名映射；如果len>flen，多出的部分会用0填充。
+///@param len 内存大小
+///@param flen 映射的文件内容大小
+void* do_mmap(void* addr, size_t len, int prot, int flags, int fildes, off_t off, size_t flen);
+
 extern addr_t usr_mem_pa;

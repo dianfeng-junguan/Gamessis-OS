@@ -849,33 +849,12 @@ void* do_brk(off_t brk)
             return NULL;
         }
         sys_mmap(PAGE_4K_ALIGN(current->mem_struct.heap_top),
-                 (n - old_n) * PAGE_4K_SIZE,
+                 (n - old_n),
                  PROT_READ | PROT_WRITE,
                  MAP_ANNONYMOUS | MAP_PRIVATE | MAP_FIXED,
                  0,
                  0);
-        /* int needed=n-hp->pgn;
-        char* p=task[cur_proc].mem_struct.heap_top;
-        for(int i=0;i<needed*CHUNK_SIZE/PAGE_SIZE;i++)
-        {
-            //TODO 改掉，不要触发
-            *p=0;//触发缺页中断
-            p+=PAGE_SIZE;
-        } */
     }
-    // current->mem_struct.heap_top=brk;
-    /* if(hp->pgn>n)
-    {
-        //在后面新建一个头
-        char *p=hp;
-        p+=(n+1)*CHUNK_SIZE;//算上存储头一个
-        chunk_header *np=p;
-        np->pgn=hp->pgn-n-1;
-        np->next=hp->next;
-        np->prev=hp;
-        hp->next=np;
-    }
-    hp->alloc=1;//分配完毕 */
     return brk;
 }
 int sys_free(int ptr)

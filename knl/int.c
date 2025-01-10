@@ -219,6 +219,7 @@ int syscall(long a, long b, long c, long d, long e, long f)
     case SYSCALL_MUNMAP: retv = sys_munmap(a, b); break;
     case SYSCALL_MKNOD: retv = sys_mknod(a, b, c); break;
     case SYSCALL_CHKMMAP: retv = sys_chk_mmap(a, b); break;
+    case SYSCALL_SBRK: retv = sys_sbrk(a); break;
     }
     // __asm__ volatile("mov %0,%%eax\r\n mov %1,%%ebx\r\n mov %2,%%ecx\r\n mov %3,%%edx\r\n mov %4,%%esi\r\n mov %5,%%edi"\
     // ::"m"(func),"m"(a),"m"(b),"m"(c),"m"(d),"m"(e));

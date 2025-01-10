@@ -70,7 +70,8 @@ typedef struct _procm_
 typedef struct _mmap_struct
 {
     off_t          base;
-    size_t         len;
+    size_t         len;    //映射的内存大小
+    size_t         flen;   //映射的文件大小，可以和len不一样大
     struct file**  file;
     int            fd;
     off_t          offset;   //文件内偏移
@@ -244,11 +245,13 @@ typedef struct
 #define STACK_PROTECTOR 0xc8f7e9b8eb413a00
 __attribute__((__always_inline__)) inline void wait_on_req(struct process* p)
 {
-    if (p && (p->stat == TASK_READY || p->stat == TASK_RUNNING)) p->stat = TASK_SUSPENDED;
+    if (p && (p->stat == TASK_READY || p->stat == TASK_RUNNING))
+        p->stat = TASK_SUSPENDED;
 }
 __attribute__((__always_inline__)) inline void wake_up(struct process* p)
 {
-    if (p && p->stat == TASK_SUSPENDED) p->stat = TASK_READY;
+    if (p && p->stat == TASK_SUSPENDED)
+        p->stat = TASK_READY;
 }
 void set_errno(int errno);
 

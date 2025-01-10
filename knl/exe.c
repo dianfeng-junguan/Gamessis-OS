@@ -244,6 +244,8 @@ int sys_execve(char* path, char** argv, char** environ)
 
     //第一个参数argc
     if (current->dl) {
+        //设置回开头，不然dl还得自己设置
+        sys_lseek(fno, 0, SEEK_SET);
         rs->rdi = fno;
         rs->rsi = 0;
         rs->rdx = argc;
@@ -646,7 +648,7 @@ ready:
                 if (current->mem_struct.text_top < vptr + ms)
                     current->mem_struct.text_top = vptr + ms;
             }
-            sys_mmap(vptr, ms, attr, MAP_FIXED | MAP_PRIVATE, fildes, off);
+            do_mmap(vptr, ms, attr, MAP_FIXED | MAP_PRIVATE, fildes, off, fs);
         }
         else if (ph->p_type == PT_INTERP) {
             if (current->dl)
@@ -660,97 +662,6 @@ ready:
         }
         ph++;
     }
-    //找dynamic段
-    // struct Elf64_Shdr* dynamic = NULL;
-    // off_t*             got     = NULL;
-    // for (int i = 0; i < ehdr->e_shnum; i++) {
-    //     if (sh[i].sh_type == SHT_DYNAMIC) {
-    //         dynamic = sh + i;
-    //         break;
-    //     }
-    // }
-    // if (dynamic) {
-    //     char*      dynstr = 0;
-    //     Elf64_Dyn* dyn    = dynamic->sh_addr + offset;
-    //     // mod->p_dynamic    = dynamic;
-    //     //这里一堆获取函数之后实现细节
-    //     // dynstr=so_get_dynstr(dyn);
-    //     // so_get_dynstr从so中获取.dynstr节
-    //     for (Elf64_Dyn* p = dyn; p->d_tag; p++) {
-    //         if (p->d_tag == DT_STRTAB) {
-    //             dynstr        = p->d_un.d_ptr + offset;
-    //             mod->p_strtab = dynstr;
-    //             break;
-    //         }
-    //     }
-    //     if (!dynstr) {
-    //         comprintf("cannot find dynstr in .dynamic!\n");
-    //     }
-
-    //     // char **so_paths=so_get_needed(dyn,dynstr);
-    //     // so_load_sos(so_paths);
-    //     // so_get_needed&so_load_sos
-    //     // so_get_got
-    //     // got=so_get_got(dyn);
-    //     // intel架构上DT_PLTGOT存放的是got地址
-
-    //     size_t relsz = 0, relentsz = 0;
-    //     size_t relasz = 0, relaentsz = 0;
-    //     size_t jmprelsz = 0, jmprelaentsz = 0;
-    //     off_t  relptr = 0, relaptr = 0, jmprelptr = 0;
-    //     int    pltrel = 0;
-    //     for (Elf64_Dyn* p = dyn; p->d_tag; p++) {
-    //         char* pathname = NULL;
-    //         int   so_fno   = 0;
-    //         switch (p->d_tag) {
-    //         case DT_NEEDED:
-    //             //不查错了
-    //             pathname = p->d_un.d_val + dynstr;
-    //             so_fno   = sys_open(pathname, O_EXEC);
-    //             load_elf(so_fno);
-    //             sys_close(so_fno);
-    //             break;
-    //         case DT_PLTGOT:
-    //             got = p->d_un.d_ptr + offset;
-
-    //             //赋值为dl的运行时重定位函数
-    //             got[2] = dl_runtime_resolve;
-    //             //填入模块id
-    //             got[1]     = mod - modules;
-    //             mod->p_got = got;
-    //             break;
-    //         case DT_SYMTAB: mod->p_symbol = p->d_un.d_ptr + offset; break;
-    //         case DT_PLTRELSZ: jmprelsz = p->d_un.d_val; break;
-    //         case DT_RELSZ: relsz = p->d_un.d_val; break;
-    //         case DT_RELASZ: relasz = p->d_un.d_val; break;
-    //         case DT_PLTREL: pltrel = p->d_un.d_val; break;
-    //         case DT_JMPREL: jmprelptr = p->d_un.d_val; break;
-    //         case DT_REL: relptr = p->d_un.d_ptr; break;
-    //         case DT_RELA: relaptr = p->d_un.d_ptr; break;
-    //         case DT_RELENT: relentsz = p->d_un.d_val; break;
-    //         case DT_RELAENT: relaentsz = p->d_un.d_val; break;
-    //         default: break;
-    //         }
-    //     }
-    //     if (relptr && relentsz && relsz)   // REL
-    //         for (int j = 0; j < relsz / relentsz; j++)
-    //             fill_reloc(relptr + offset + j * relentsz, mod - modules, (struct
-    //             Elf64_Shdr*)shla);
-    //     if (relaptr && relaentsz && relasz)   // RELA
-    //         for (int j = 0; j < relasz / relaentsz; j++)
-    //             fill_reloc(
-    //                 relaptr + offset + j * relaentsz, mod - modules, (struct Elf64_Shdr*)shla);
-    //     if (pltrel == DT_REL)
-    //         jmprelaentsz = relentsz;
-    //     else
-    //         jmprelaentsz = relaentsz;
-    //     if (jmprelptr && jmprelaentsz && jmprelsz)   // PLTREL
-    //         for (int j = 0; j < jmprelsz / jmprelaentsz; j++)
-    //             fill_reloc(
-    //                 jmprelptr + offset + j * jmprelaentsz, mod - modules, (struct
-    //                 Elf64_Shdr*)shla);
-    // }
-
 
     //堆一开始不分配，通过后边brk分配
     current->mem_struct.heap_base = max_allocated;

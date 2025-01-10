@@ -56,5 +56,10 @@
     ],
     "clangd.arguments": [
         "--header-insertion=never"
+    ],
+    "clang-tidy.buildPath": "bin",
+    "clang-tidy.compilerArgs": [
+        "-Iinclude",
+        "-nostdinc"
     ]
 }

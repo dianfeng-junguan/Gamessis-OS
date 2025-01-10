@@ -24,6 +24,9 @@ int dlmain(int fno, void* load_offset, int argc, char** argv, char** environ)
     //完成自我重定位（自举）
     dlid = dl_init(load_offset);
 
+    //这部分是因为c库的malloc需要这个变量，但是现在又不能直接设置入口函数为entry
+    extern unsigned long long __heap_base;
+    __heap_base = sbrk(0);
     //加载elf文件
     //读取文件头
 
@@ -211,9 +214,12 @@ int load_elfso(int fildes)
     }
 
 
-    module* mod   = 0;
-    int     elfid = reg_module();
-    mod           = modules + elfid;
+    module* mod      = 0;
+    int     elfid    = reg_module();
+    mod              = modules + elfid;
+    mod->type        = ehdr.e_type;
+    mod->load_offset = offset;
+    mod->base        = base;
     //找dynamic段
     struct Elf64_Shdr* dynamic = 0;
     off_t*             got     = 0;
@@ -312,24 +318,24 @@ int load_elfso(int fildes)
         for (int i = 0; i < t_needed; i++) {
             char* pathname = 0;
             int   so_fno   = 0;
-            pathname       = (off_t)dynstr + (off_t)needed_nameoff[i];
+            pathname       = needed_nameoff[i];
             so_fno         = open(pathname, O_EXEC);
             load_elfso(so_fno);
             close(so_fno);
         }
         if (relptr && relentsz && relsz)   // REL
             for (int j = 0; j < relsz / relentsz; j++)
-                fill_reloc(relptr + offset + j * relentsz, offset, mod->p_symbol, 0);
+                fill_reloc(relptr + offset + j * relentsz, elfid, mod->p_symbol, 0);
         if (relaptr && relaentsz && relasz)   // RELA
             for (int j = 0; j < relasz / relaentsz; j++)
-                fill_reloc(relaptr + offset + j * relaentsz, offset, mod->p_symbol, 1);
+                fill_reloc(relaptr + offset + j * relaentsz, elfid, mod->p_symbol, 1);
         if (pltrel == DT_REL)
             jmprelaentsz = relentsz, pltrel = 0;
         else
             jmprelaentsz = relaentsz, pltrel = 1;
         if (bind_now && jmprelptr && jmprelaentsz && jmprelsz)   // PLTREL
             for (int j = 0; j < jmprelsz / jmprelaentsz; j++)
-                fill_reloc(jmprelptr + offset + j * jmprelaentsz, offset, mod->p_symbol, pltrel);
+                fill_reloc(jmprelptr + offset + j * jmprelaentsz, elfid, mod->p_symbol, pltrel);
         if (init) {
             //调用模块入口函数
             for (int i = 0; i < init_arrsz; i++) {
@@ -391,6 +397,8 @@ off_t get_got(unsigned long modid)
 }
 static void dl_runtime_resolve()
 {
+    //需要先保存寄存器，里面可能保存了函数的参数
+    __asm__ volatile("push %rdi\n push %rsi\n push %rcx\n push %rdx\n push %r8\n push %r9\n");
     //获取modid
     unsigned long long modid, rel_offset;
     __asm__ volatile("mov 8(%%rbp),%%rax\n mov %%rax,%0" : "=m"(modid));
@@ -402,8 +410,10 @@ static void dl_runtime_resolve()
     off_t* v_rel = rel->r_offset;
     *v_rel       = sym_off;
 
+    //恢复原函数调用参数
+    __asm__ volatile("pop %r9\n pop %r8\n pop %rdx\n pop %rcx\n pop %rsi\n pop %rdi\n");
     //重定位完毕，直接返回到目标地址
-    __asm__ volatile("mov %0,%%rax\n leave\n jmp *%%rax\n" ::"m"(sym_off));
+    __asm__ volatile("mov %0,%%rax\n leave\n add $16,%%rsp\n jmp *%%rax\n" ::"m"(sym_off));
 }
 
 void fill_reloc(void* relp, int modid, void* shdrs, int rela)

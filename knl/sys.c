@@ -41,7 +41,7 @@ unsigned long sys_open(char* filename, int flags)
     if (path == NULL)
         return -ENOMEM;
     memset(path, 0, PAGE_4K_SIZE);
-    pathlen = strlen(filename);
+    pathlen = strnlen(filename, PAGE_4K_SIZE);
     if (pathlen <= 0) {
         kmfree(path);
         return -EFAULT;
@@ -486,71 +486,12 @@ int sys_munmap(void* addr, size_t len)
         return 0;
     return do_munmap(addr2, len2);
 }
+
+
 void* sys_mmap(void* addr, size_t len, int prot, int flags, int fildes, off_t off)
 {
     cli();
-    comprintf("sys mmap:base=%l,len=%l\n,prot=%l", addr, len, prot);
-    int attr = PAGE_PRESENT | PAGE_FOR_ALL;
-    if ((prot & PROT_WRITE) || (prot & PROT_EXEC))
-        attr |= PAGE_RWX;
-    if (!addr) {
-        //没有指定地址
-        //寻找一块空的虚拟内存
-        while (!chk_mmap(addr, len)) {
-            addr += PAGE_4K_SIZE;
-            if (addr >= KNL_BASE) {
-                set_errno(-ENOMEM);
-                return MAP_FAILED;
-            }
-        }
-    }
-    if (!chk_mmap(addr, len) && (flags & MAP_FIXED)) {
-        set_errno(-ENOMEM);
-        return MAP_FAILED;
-    }
-    //创建mmap struct
-    mmap_struct* mmps = kmalloc(0, sizeof(mmap_struct));
-    list_init(&mmps->node);
-    //加入到进程mmaps链表
-
-    if (!current->mmaps)
-        current->mmaps = mmps;
-    else
-        list_add(&current->mmaps->node, &mmps->node);
-    //设置mmap struct
-    mmps->base = addr;
-    mmps->len  = len;
-    if (fildes > 0)
-        mmps->file = current->openf[fildes];
-    else
-        mmps->file = NULL;
-    mmps->fd     = fildes;
-    mmps->offset = off;
-    mmps->pmhdr  = NULL;
-    mmps->flags  = prot | (flags & MAP_SHARED ? MMAP_FLAG_S : 0);
-
-    /* int pgc=(len-1+PAGE_4K_SIZE)/PAGE_4K_SIZE;
-    for(int i=0;i<pgc;i++){
-        smmap(pmalloc(PAGE_4K_SIZE),addr+i*PAGE_4K_SIZE,attr,current->pml4);
-
-    }
-    ===
-    int pgc=(len-1+PAGE_4K_SIZE)/PAGE_4K_SIZE;
-    for(int i=0;i<pgc;i++){
-        smmap(pmalloc(PAGE_4K_SIZE),addr+i*PAGE_4K_SIZE,attr,current->pml4);
-    }
-    goto sync_f; */
-
-    // sync_f:
-    //     if(flags|MAP_ANNONYMOUS){
-    //         //不需要映射到文件，匿名映射
-    //         return addr;
-    //     }
-    //根据需要是否同步文件内容
-    //目前先一致读取
-    // sys_lseek(fildes,off,SEEK_SET);
-    // sys_read(fildes,addr,len);
-    return addr;
+    return do_mmap(addr, len, prot, flags, fildes, off, len);
 }
 
 /*

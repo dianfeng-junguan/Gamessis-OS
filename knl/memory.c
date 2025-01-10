@@ -287,14 +287,20 @@ void page_err(long* int_stk)
             //在进程的页表中申请新页
             void* pm = pmalloc(pgn * PAGE_4K_SIZE);
             for (int i = 0; i < pgn; i++) {
-                smmap(pm + i * PAGE_4K_SIZE, mbase + i * PAGE_4K_SIZE, attr, current->pml4);
+                addr_t dest_la = mbase + i * PAGE_4K_SIZE;
+                smmap(pm + i * PAGE_4K_SIZE, dest_la, attr, current->pml4);
             }
             mp->pmhdr = get_pmhdr(pm);   //填写pmhdr
             //读取文件
             if (mp->file) {
                 int fd = mp->fd;
                 sys_lseek(fd, mp->offset, SEEK_SET);
-                sys_read(fd, mp->base, mp->len);
+                sys_read(fd, mp->base, mp->flen);
+            }
+            if (mp->flen < mp->len) {
+                //多出来部分需要初始化为0
+                addr_t fill_base = mp->base + mp->flen;
+                memset(fill_base, 0, mtop - fill_base);
             }
         }
     }
@@ -734,4 +740,53 @@ int verify_area(void* addr, int len, int prot)
         off += mp->len;
     }
     return 1;
+}
+void* do_mmap(void* addr, size_t len, int prot, int flags, int fildes, off_t off, size_t flen)
+{
+    if (len == 0)
+        return NULL;
+    comprintf("do_mmap:base=%l,len=%l\n,prot=%l\n", addr, len, prot);
+    int attr = PAGE_PRESENT | PAGE_FOR_ALL;
+    if ((prot & PROT_WRITE) || (prot & PROT_EXEC))
+        attr |= PAGE_RWX;
+    if (!addr) {
+        //没有指定地址
+        //寻找一块空的虚拟内存
+        while (!chk_mmap(addr, len)) {
+            addr += PAGE_4K_SIZE;
+            if (addr >= KNL_BASE) {
+                set_errno(-ENOMEM);
+                return MAP_FAILED;
+            }
+        }
+    }
+    if (!chk_mmap(addr, len) && (flags & MAP_FIXED)) {
+        set_errno(-ENOMEM);
+        return MAP_FAILED;
+    }
+    //创建mmap struct
+    mmap_struct* mmps = kmalloc(0, sizeof(mmap_struct));
+    list_init(&mmps->node);
+    //加入到进程mmaps链表
+
+    if (!current->mmaps)
+        current->mmaps = mmps;
+    else
+        list_add(&current->mmaps->node, &mmps->node);
+    //设置mmap struct
+    mmps->base = addr;
+    mmps->len  = len;
+    if (flags & MAP_ANNONYMOUS)
+        mmps->flen = 0;   //匿名映射flen=0，这样page err会填充剩下空间
+    else
+        mmps->flen = flen;
+    if (fildes > 0)
+        mmps->file = current->openf[fildes];
+    else
+        mmps->file = NULL;
+    mmps->fd     = fildes;
+    mmps->offset = off;
+    mmps->pmhdr  = NULL;
+    mmps->flags  = prot | (flags & MAP_SHARED ? MMAP_FLAG_S : 0);
+    return addr;
 }
