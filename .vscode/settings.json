@@ -61,5 +61,6 @@
     "clang-tidy.compilerArgs": [
         "-Iinclude",
         "-nostdinc"
-    ]
+    ],
+    "clang-tidy.fixOnSave": false
 }

@@ -32,7 +32,6 @@ int dlmain(int fno, void* load_offset, int argc, char** argv, char** environ)
 
     //递归加载elf和so
     off_t entry = load_elfso(fno);
-    close(fno);
     //跳转到程序入口
     int (*main)(int, char**, char**) = entry;
     main(argc, argv, environ);
@@ -219,10 +218,13 @@ int load_elfso(int fildes)
     mod              = modules + elfid;
     mod->type        = ehdr.e_type;
     mod->load_offset = offset;
-    mod->base        = base;
+    mod->base        = base + offset;
+    mod->p_shdrs     = base + offset + ehdr.e_shoff;
+
     //找dynamic段
-    struct Elf64_Shdr* dynamic = 0;
-    off_t*             got     = 0;
+    struct Elf64_Shdr* dynamic  = 0;
+    off_t*             got      = 0;
+    size_t             got_size = 0;
 
     for (int i = 0; i < ehdr.e_shnum; i++) {
         if (sh[i].sh_type == SHT_DYNSYM) {
@@ -296,15 +298,31 @@ int load_elfso(int fildes)
                 //赋值为dl的运行时重定位函数
                 got[2] = dl_runtime_resolve;
                 //填入模块id
-                got[1]     = mod - modules;
+                got[1] = mod - modules;
+                got[0] += offset;   // 0th项存着.dynamic的地址
                 mod->p_got = got;
+                //这里需要把got表里面的地址先偏移offset，因为plt里面jmp到plt0要用到
+                for (int i = 0; i < ehdr.e_shnum; i++) {
+                    if (sh[i].sh_addr == p->d_un.d_ptr) {
+                        //.got.plt表
+                        got_size = sh[i].sh_size;
+                        break;
+                    }
+                }
+                size_t nr_gotent = got_size / sizeof(off_t);
+                for (int i = 3; i < nr_gotent; i++) {
+                    got[i] += offset;
+                }
                 break;
             case DT_SYMTAB: mod->p_symbol = p->d_un.d_ptr + offset; break;
             case DT_PLTRELSZ: jmprelsz = p->d_un.d_val; break;
             case DT_RELSZ: relsz = p->d_un.d_val; break;
             case DT_RELASZ: relasz = p->d_un.d_val; break;
             case DT_PLTREL: pltrel = p->d_un.d_val; break;
-            case DT_JMPREL: jmprelptr = p->d_un.d_val; break;
+            case DT_JMPREL:
+                jmprelptr    = p->d_un.d_val;
+                mod->p_reloc = jmprelptr + offset;
+                break;
             case DT_REL: relptr = p->d_un.d_ptr; break;
             case DT_RELA: relaptr = p->d_un.d_ptr; break;
             case DT_RELENT: relentsz = p->d_un.d_val; break;
@@ -321,7 +339,6 @@ int load_elfso(int fildes)
             pathname       = needed_nameoff[i];
             so_fno         = open(pathname, O_EXEC);
             load_elfso(so_fno);
-            close(so_fno);
         }
         if (relptr && relentsz && relsz)   // REL
             for (int j = 0; j < relsz / relentsz; j++)
@@ -336,6 +353,7 @@ int load_elfso(int fildes)
         if (bind_now && jmprelptr && jmprelaentsz && jmprelsz)   // PLTREL
             for (int j = 0; j < jmprelsz / jmprelaentsz; j++)
                 fill_reloc(jmprelptr + offset + j * jmprelaentsz, elfid, mod->p_symbol, pltrel);
+        mod->s_relentsz = jmprelaentsz;
         if (init) {
             //调用模块入口函数
             for (int i = 0; i < init_arrsz; i++) {
@@ -346,6 +364,7 @@ int load_elfso(int fildes)
 
     return entry;
 }
+//返回指定模块中指定索引的符号地址，已经计算了加载偏移。
 static off_t get_sym_addr(unsigned long modid, unsigned long symi)
 {
     struct Elf64_Sym* sym = modules[modid].p_symbol;
@@ -387,7 +406,7 @@ int dlstrcmp(char* src, char* dst)
     }
     return 0;
 }
-off_t get_load_base(unsigned long modid)
+static off_t get_load_base(unsigned long modid)
 {
     return modules[modid].base;
 }
@@ -403,11 +422,20 @@ static void dl_runtime_resolve()
     unsigned long long modid, rel_offset;
     __asm__ volatile("mov 8(%%rbp),%%rax\n mov %%rax,%0" : "=m"(modid));
     __asm__ volatile("mov 16(%%rbp),%%rax\n mov %%rax,%0" : "=m"(rel_offset));
-    Elf64_Rel* rel     = rel_offset * modules[modid].s_relentsz + modules[modid].p_reloc;
+
+    //排除COPY项的影响，他们不算在索引内
+    Elf64_Rel* rel_table = modules[modid].p_reloc;
+    int        eff = 0, i = 0;
+    for (; eff < rel_offset && i < 37268; i++) {
+        if (ELF64_R_TYPE(rel_table[i].r_info) != R_X86_64_COPY)
+            eff++;
+    }
+
+    Elf64_Rel* rel     = i * modules[modid].s_relentsz + modules[modid].p_reloc;
     int        symi    = ELF64_R_SYM(rel->r_info);
     off_t      sym_off = get_sym_addr(modid, symi);
     //必然是R_X86_64_JUMP_SLOT
-    off_t* v_rel = rel->r_offset;
+    off_t* v_rel = rel->r_offset + modules[modid].load_offset;
     *v_rel       = sym_off;
 
     //恢复原函数调用参数
@@ -425,7 +453,7 @@ void fill_reloc(void* relp, int modid, void* shdrs, int rela)
     off_t       got       = get_got(modid);
     //这里假定获取符号的地址是正确的，可以不修改符号表，而是通过记录模块整体加载地址，
     //来加上偏移量获取正确的符号地址
-    off_t* v_rel = rel->r_offset;
+    off_t* v_rel = rel->r_offset + load_base;
     switch (type) {
     case R_X86_64_GLOB_DAT:
     case R_X86_64_JUMP_SLOT: *v_rel = sym_off; break;
@@ -468,7 +496,7 @@ static int reg_module()
 {
     int i = 0;
     for (; i < MAX_MODULES; i++) {
-        if (modules[i].type = ET_NONE) {
+        if (modules[i].type == ET_NONE) {
             return i;
         }
     }
@@ -587,5 +615,16 @@ static void init_fill_reloc(void* relp, unsigned long long load_base, void* symt
             *v_rel = rel->r_addend + sym_off - rel->r_offset;
         break;
     default: break;
+    }
+}
+/**
+    @brief 查找字符串。
+ */
+static char* lookup_strtab(char* strtab, int index)
+{
+    char* ptr = strtab;
+    for (int i = 0; i < index; i++) {
+        while (*ptr++)
+            ;
     }
 }

@@ -18,6 +18,7 @@ typedef unsigned short Elf32_Half;
 #define R_X86_64_GOTOFF 9
 #define R_X86_64_GOTPC 10
 #define R_X86_64_GOT32 3
+#define R_X86_64_COPY 5
 #define EI_NIDENT 16
 /* These constants define the different elf file types */
 #define ET_NONE   0

@@ -13,3 +13,5 @@ int         dlstrcmp(char* src, char* dst);
 int         load_elfso(int fildes);
 static void init_fill_reloc(void* relp, unsigned long long load_base, void* symtab, int rela,
                             unsigned long long igot);
+
+static char* lookup_strtab(char* strtab, int index);
