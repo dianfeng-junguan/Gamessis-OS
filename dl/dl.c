@@ -32,6 +32,9 @@ int dlmain(int fno, void* load_offset, int argc, char** argv, char** environ)
 
     //递归加载elf和so
     off_t entry = load_elfso(fno);
+    if (entry == -1) {
+        return -1;
+    }
     //跳转到程序入口
     int (*main)(int, char**, char**) = entry;
     main(argc, argv, environ);
@@ -353,7 +356,13 @@ int load_elfso(int fildes)
         if (bind_now && jmprelptr && jmprelaentsz && jmprelsz)   // PLTREL
             for (int j = 0; j < jmprelsz / jmprelaentsz; j++)
                 fill_reloc(jmprelptr + offset + j * jmprelaentsz, elfid, mod->p_symbol, pltrel);
-        mod->s_relentsz = jmprelaentsz;
+        if (jmprelaentsz) {
+            mod->s_relentsz = jmprelaentsz;
+        }
+        else {
+            //编译器有的时候不给relasz或者relsz
+            mod->s_relentsz = pltrel == DT_RELA ? sizeof(Elf64_Rela) : sizeof(Elf64_Rel);
+        }
         if (init) {
             //调用模块入口函数
             for (int i = 0; i < init_arrsz; i++) {
@@ -426,6 +435,8 @@ static void dl_runtime_resolve()
     //排除COPY项的影响，他们不算在索引内
     Elf64_Rel* rel_table = modules[modid].p_reloc;
     int        eff = 0, i = 0;
+    if (ELF64_R_TYPE(rel_table[0].r_info) == R_X86_64_COPY)   //第一项就是COPY
+        i++;
     for (; eff < rel_offset && i < 37268; i++) {
         if (ELF64_R_TYPE(rel_table[i].r_info) != R_X86_64_COPY)
             eff++;

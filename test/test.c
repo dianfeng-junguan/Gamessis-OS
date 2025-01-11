@@ -20,6 +20,7 @@ int __main() {}
 int main(int argc, char** argv)
 {
     // write(2, as, strlen(as));
+    char* prepared_environ = {"os=gms"};
     puts("Gamessis OS shell\n");
     char cmd[128] = {0};
     while (1) {
@@ -30,7 +31,9 @@ int main(int argc, char** argv)
         gets(cmd);
         puts(cmd);
         // write(2, cmd, p);
-        if (strcmp(cmd, "version") == 0) { puts("Gamessis OS 1.0.\n"); }
+        if (strcmp(cmd, "version") == 0) {
+            puts("Gamessis OS 1.0.\n");
+        }
         else if (strcmp(cmd, "exit") == 0) {
             break;
         }

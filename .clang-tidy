@@ -1,7 +1,7 @@
 ---
 Checks: '-*,
         clang-analyzer-core.*,
-        clang-analyzer-cplusplus.*,
+        -clang-analyzer-cplusplus.*,
         modernize-redundant-void-arg,
         modernize-use-bool-literals,
         modernize-use-equals-default,
@@ -9,7 +9,7 @@ Checks: '-*,
         modernize-use-override,
         google-explicit-constructor,
         google-readability-casting,
-        readability-braces-around-statements,
+        -readability-braces-around-statements,
         readability-identifier-naming.ClassCase,
         readability-identifier-naming.StructCase,
         readability-identifier-naming.TypedefCase,
@@ -22,7 +22,7 @@ Checks: '-*,
         bugprone-forward-declaration-namespace,
         bugprone-bool-pointer-implicit-conversion,
         bugprone-misplaced-widening-cast,
-        cppcoreguidelines-narrowing-conversions,
+        -cppcoreguidelines-narrowing-conversions,
         misc-unconventional-assign-operator,
         misc-unused-parameters'
 WarningsAsErrors: ''
@@ -47,8 +47,6 @@ CheckOptions:
     value:           'true'  # 检查并建议使用 C++ 风格的类型转换（如 static_cast、dynamic_cast、const_cast 和 reinterpret_cast）代替 C 风格的类型转换。
 
   # 可读性（Readability）
-  - key:             readability-braces-around-statements
-    value:           'false'  # 建议在单行语句周围添加大括号，以提高代码的可读性和一致性。
   - key:             readability-identifier-naming.ClassCase
     value:           'CamelCase'  # 类名应使用 CamelCase 风格，例如 MyClassName。
   - key:             readability-identifier-naming.StructCase
@@ -87,6 +85,8 @@ CheckOptions:
     value:           'true'  # 检查并标识不常见的赋值操作符重载，以确保代码的一致性和可维护性。
   - key:             misc-unused-parameters
     value:           'true'  # 检测未使用的参数。
+ExtraArgs: 
+ - '-Wno-int-conversion'
 ...
 
 

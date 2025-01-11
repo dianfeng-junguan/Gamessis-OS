@@ -349,12 +349,18 @@ void init_memory()
         kmhdrs[i].type = -1;
     //先占用两页作为mhdrs
     kmhdrs[0].base = VMALLOC_BASE;
-    kmhdrs[0].len  = vmms;
+    kmhdrs[0].len  = 2 * PAGE_4K_SIZE;
     kmhdrs[0].prev = NULL;
-    kmhdrs[0].next = NULL;
-    kmhdrs[0].type = MEM_TYPE_AVAILABLE;
+    kmhdrs[0].next = kmhdrs + 1;
+    kmhdrs[0].type = MEM_TYPE_USED;
     kmhdrs[0].flag = MEM_FLAG_R | MEM_FLAG_W;
-    kmalloc(VMALLOC_BASE, PAGE_4K_SIZE * 2);
+
+    kmhdrs[1].base = VMALLOC_BASE + 2 * PAGE_4K_SIZE;
+    kmhdrs[1].len  = vmms - 2 * PAGE_4K_SIZE;
+    kmhdrs[1].prev = kmhdrs;
+    kmhdrs[1].next = 0;
+    kmhdrs[1].type = MEM_TYPE_AVAILABLE;
+    kmhdrs[1].flag = MEM_FLAG_R | MEM_FLAG_W;
 
     pmhdrs = kmalloc(0, PAGE_4K_SIZE);
     for (int i = 0; i < MAX_PMHDRS; i++) {
@@ -494,10 +500,13 @@ void* kmalloc(off_t addr, size_t size)
         off_t ret_base = mh->base;
         //向前合并属性相同的分配头
         mhdr_merge(mh->prev, mh);
-        // memset(addr, 0, size);
 
+        // memset(ret_base, 0, size);
         return ret_base;
     }
+    // kmalloc绝不应该出问题
+    comprintf("FATAL ERR:kmalloc failed!\n");
+    die();
     return NULL;
 }
 int kmfree(off_t addr)
@@ -596,7 +605,8 @@ int free_page(char* paddr)
 int free_pages_at(int base, int pgn)
 {
     for (int i = 0; i < pgn; i++) {
-        free_page(base + i * PAGE_4K_SIZE);
+        pmfree(base, PAGE_4K_SIZE);
+        // free_page(base + i * PAGE_4K_SIZE);
     }
 }
 int check_page(int num)

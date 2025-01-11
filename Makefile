@@ -15,7 +15,7 @@ MODS_OFILES = bin/mods/kb.o bin/mods/disk.o bin/mods/diska.o bin/mods/fat32.o \
 				bin/mods/tty.o bin/com.o bin/rd.o#bin/test.o
 COM_OFILES = bin/mem.o bin/str.o bin/types.o bin/proca.o bin/font.o
 PH_MODIFIER = /mnt/d/Code/Python/elfph/elf.py
-QEMU_LOG = -d int,cpu_reset -D log.txt
+QEMU_LOG = -d int,cpu_reset,guest_errors,page -D log.txt
 all:
 	make knl
 	make loader
