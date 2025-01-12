@@ -241,27 +241,7 @@ void page_err(long* int_stk)
     comprintf("page err\n");
     off_t err_code = int_stk[0], l_addr = 0;
     off_t addr = int_stk[1];
-    // __asm__ volatile("push %%rax\nmov 8(%%rbp),%%rax\nmov %%rax,%0\n" : "=m"(err_code));
     __asm__ volatile("mov %%cr2,%%rax\nmov %%rax,%0\n" : "=m"(l_addr));   //试图访问的地址
-    // __asm__ volatile("mov 16(%%rbp),%%rax\nmov %%rax,%0\npop %%rax\n" : "=m"(addr));
-    comprintf("occurred at %x(paddr), trying to access %x(laddr)\n", addr, l_addr);
-    comprintf("error process pid:0x%x\n", current->pid);
-    comprintf("cr2=%x\nerr code=%x\n", l_addr, err_code);
-    if (err_code & PF_LEVEL_VIOLATION)
-        comprintf("non-existent page item\n");
-    if (err_code & PF_WRITING)
-        comprintf("when writing\n");
-    else
-        comprintf("when reading\n");
-    if (!(err_code & PF_USER_MODE))
-        comprintf("supervisor mode\n");
-    else
-        comprintf("user mode\n");
-    if (err_code & PF_INS_FETCH)
-        comprintf("instruction fetch\n");
-    if (err_code & PF_PROTECT_KEY)
-        comprintf("data access not allowed by protection key\n");
-    backtrace(int_stk);
 
     if (!(err_code & PF_LEVEL_VIOLATION)) {
         // accessing non-existent page
@@ -272,6 +252,7 @@ void page_err(long* int_stk)
         if ((mp = get_mmap(l_addr)) == NULL) {
             // TODO  没有映射，报错
             comprintf("page_err:page acceessed without mmap\n");
+            goto invalid_pgerr;
             // if (current->pid == 1)
             die();
             //结束问题进程
@@ -306,6 +287,25 @@ void page_err(long* int_stk)
     }
     else {
         // page level protection
+    invalid_pgerr:
+        comprintf("occurred at %x(paddr), trying to access %x(laddr)\n", addr, l_addr);
+        comprintf("error process pid:0x%x\n", current->pid);
+        comprintf("cr2=%x\nerr code=%x\n", l_addr, err_code);
+        if (err_code & PF_LEVEL_VIOLATION)
+            comprintf("non-existent page item\n");
+        if (err_code & PF_WRITING)
+            comprintf("when writing\n");
+        else
+            comprintf("when reading\n");
+        if (!(err_code & PF_USER_MODE))
+            comprintf("supervisor mode\n");
+        else
+            comprintf("user mode\n");
+        if (err_code & PF_INS_FETCH)
+            comprintf("instruction fetch\n");
+        if (err_code & PF_PROTECT_KEY)
+            comprintf("data access not allowed by protection key\n");
+        backtrace(int_stk);
         comprintf("page err caused by level protection\n");
         sys_exit(-1);
     }
@@ -755,7 +755,7 @@ void* do_mmap(void* addr, size_t len, int prot, int flags, int fildes, off_t off
 {
     if (len == 0)
         return NULL;
-    comprintf("do_mmap:base=%l,len=%l\n,prot=%l\n", addr, len, prot);
+    // comprintf("do_mmap:base=%l,len=%l,prot=%l\n", addr, len, prot);
     int attr = PAGE_PRESENT | PAGE_FOR_ALL;
     if ((prot & PROT_WRITE) || (prot & PROT_EXEC))
         attr |= PAGE_RWX;
@@ -799,4 +799,63 @@ void* do_mmap(void* addr, size_t len, int prot, int flags, int fildes, off_t off
     mmps->pmhdr  = NULL;
     mmps->flags  = prot | (flags & MAP_SHARED ? MMAP_FLAG_S : 0);
     return addr;
+}
+/*
+显示内存映射。
+*/
+void print_mmap(page_item* pml4p)
+{
+//从pml4中找到la所属的pml4项目，即属于第几个512GB
+#define MAX_ITEMS 512
+#define PGE_ATTR(x) ((x)&0xfff)
+#define LADDR(i, j, k, l) (((i)*0x8000000000ul + (j)*0x40000000ul + (k)*0x200000 + (l)*0x1000))
+#define TABLE(x, i) ((x)[i] & PAGE_4K_MASK | KNL_BASE)
+    addr_t vbase = 0;
+    size_t vlen  = 0;
+    addr_t pbase = 0;
+    int    attr  = 0;
+#define INFORMATION(entry, size, i, j, k, l)                                              \
+    do {                                                                                  \
+        if (PGE_ATTR(entry) != attr || pbase + vlen != (entry)&PAGE_4K_MASK) {            \
+            if (attr & PAGE_PRESENT)                                                      \
+                comprintf("(la)%l->(pa)%l,(len)%l,(attr)%l\n", vbase, pbase, vlen, attr); \
+            vlen  = PAGE_4K_SIZE;                                                         \
+            vbase = LADDR(i, j, k, l);                                                    \
+            pbase = (entry)&PAGE_4K_MASK;                                                 \
+            attr  = PGE_ATTR(entry);                                                      \
+        }                                                                                 \
+        else {                                                                            \
+            vlen += (size);                                                               \
+        }                                                                                 \
+    } while (0)
+    ;
+    comprintf("The mapping:\n");
+    for (int i = 0; i < MAX_ITEMS; i++) {
+        if (!(pml4p[i] & PAGE_PRESENT))
+            continue;
+        page_item* pdpte = TABLE(pml4p, i);
+        for (int j = 0; j < MAX_ITEMS; j++) {
+            if ((pdpte[j] & PAGE_PRESENT) == 0)
+                continue;
+            if (pdpte[j] & PDPTE_1GB) {
+                INFORMATION(pdpte[j], PDPTE_SIZE, i, j, 0, 0);
+                continue;
+            }
+            page_item* pde = TABLE(pdpte, j);
+            for (int k = 0; k < MAX_ITEMS; k++) {
+                if ((pde[k] & PAGE_PRESENT) == 0)
+                    continue;
+                if (pde[k] & PDE_2MB) {
+                    INFORMATION(pde[k], PDE_SIZE, i, j, k, 0);
+                    continue;
+                }
+                page_item* pt = TABLE(pde, k);
+                for (int l = 0; l < MAX_ITEMS; l++) {
+                    INFORMATION(pt[l], PAGE_4K_SIZE, i, j, k, l);
+                }
+            }
+        }
+    }
+    if (attr & PAGE_PRESENT)
+        comprintf("(la)%l->(pa)%l,(len)%l,(attr)%l\n", vbase, pbase, vlen, attr);
 }

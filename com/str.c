@@ -157,8 +157,10 @@ void sprint_hex(char* dist, unsigned long long c)
         st[p++] = a;
         c /= 16;
     }
-    while (p > 0) {
-        sprintchar(dist, st[--p]);
+    while (st[--p] == '0')   //除去无效数字
+        ;
+    while (p >= 0) {
+        sprintchar(dist, st[p--]);
     }
 }
 void sprintn(char* dist, char* str)

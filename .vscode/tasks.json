@@ -24,18 +24,27 @@
 		{
 			"type": "shell",
 			"label": "qemu",
-			"command": "make debug",
+			"command": "make debug;",
 			"problemMatcher": [],
 			"isBackground": true
 		},
 		{
 			"type": "shell",
 			"label": "gen knl",
-			"command": "bash;make all;make cpknl",
+			"command": "make",
+			"args": [
+				"all"
+			],
 			"problemMatcher": [],
 			"group": {
 				"kind": "build",
 				"isDefault": true
+			},
+			"options": {
+				"shell": {
+					"executable": "C://Windows/System32/wsl.exe",
+					"args": []
+				}
 			}
 		}
 	]

@@ -898,6 +898,10 @@ void switch_to(struct process* from, struct process* to)
     __asm__ volatile("mov %0,%%rax\n"
                      "mov %%rax,%%cr3\n"
                      : "=m"(to->regs.cr3));
+    if (from->pid == 2 && to->pid == 3) {
+        comprintf("the new proc mapping:\n");
+        print_mmap(current->pml4);
+    }
     __asm__ volatile("mov %%rsp,%0\r\n"
                      "lea done(%%rip),%%rax\r\n"
                      "mov %%rax,%2\r\n"
@@ -990,6 +994,8 @@ int sys_fork(void)
 
     task[pid].utime = 0;
 
+    comprintf("mapping while forking:\n");
+    print_mmap(current->pml4);
     //复制父进程的内存映射到子进程，然后重新映射并复制子进程的堆栈和数据段
     copy_mmap(current, &task[pid]);
 

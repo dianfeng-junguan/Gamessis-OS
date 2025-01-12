@@ -62,5 +62,7 @@
         "-Iinclude",
         "-nostdinc"
     ],
-    "clang-tidy.fixOnSave": false
+    "clang-tidy.fixOnSave": false,
+    "terminal.integrated.suggest.enabled": true,
+    "terminal.integrated.defaultProfile.windows": null
 }

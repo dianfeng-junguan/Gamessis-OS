@@ -17,3 +17,4 @@ bin/
 well-confugured-grub/
 
 OVMF.fd
+log/
