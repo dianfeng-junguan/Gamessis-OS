@@ -15,7 +15,7 @@ MODS_OFILES = bin/mods/kb.o bin/mods/disk.o bin/mods/diska.o bin/mods/fat32.o \
 				bin/mods/tty.o bin/com.o bin/rd.o#bin/test.o
 COM_OFILES = bin/mem.o bin/str.o bin/types.o bin/proca.o bin/font.o
 PH_MODIFIER = /mnt/d/Code/Python/elfph/elf.py
-QEMU_LOG = -d int,cpu_reset,guest_errors,page -D log.txt
+QEMU_LOG = -d int,cpu_reset,guest_errors,page -D log/log.txt
 all:
 	make knl
 	make loader
@@ -32,15 +32,9 @@ knl:
 	make kallsyms
 	@ld -T knl.lds -o bin/gmsknl.elf $(KNL_OFILES) $(MODS_OFILES) $(COM_OFILES) --emit-relocs
 	debugedit bin/gmsknl.elf -b /mnt/d/Code/Comprehensive/OS/workspace/64 -d D://Code/Comprehensive/OS/workspace/64
-	@#python reloccheat.py bin/gmsknl.elf
 	@cp bin/gmsknl.elf bin/gmsknlm.elf
 	@objcopy bin/gmsknl.elf -I binary -O elf64-x86-64 bin/gmsknl.o -B i386
-	@#python $(PH_MODIFIER) bin/gmsknl.elf
-	#@objdump -d bin/gmsknl.elf -j .entry -M intel > knl.s
-	@objdump -l -S -d bin/gmsknl.elf -M intel > knl.s
-	#@objcopy bin/gmsknl.elf bin/gmsknlm.elf #--change-section-lma .bss+0xffff800000000000 \
-#                                              --change-section-lma .text+0xffff800000000000 --change-section-lma .data+0xffff800000000000\
-#                                              --change-section-lma .rodata+0xffff800000000000 --change-section-lma .eh_frame+0xffff800000000000
+	@objdump -l -S -d bin/gmsknl.elf -M intel > disas/knl.s
 boot:
 	@gcc -w -e main -nostdlib \
         -fno-builtin -Wl,--subsystem,10 -o bin/boot.efi boot/boot.c \
