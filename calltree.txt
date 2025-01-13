@@ -3,12 +3,12 @@
   +-init_com() <void init_com (int base_port) at knl/com.c:12>
   | \-outb()
   +-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  | +-strlen()
+  | +-strlenk()
   | +-memset()
   | +-va_start()
   | +-va_arg()
   | +-sprint_hex()
-  | +-sprintn()
+  | +-strcat()
   | +-sprint_decimal()
   | +-sprintchar()
   | +-va_end()
@@ -19,12 +19,12 @@
   +-set_high_mem_base() <void set_high_mem_base (int base) at knl/memory.c:152>
   +-set_mem_area() <void set_mem_area (unsigned long base, unsigned long len, unsigned long type) at knl/memory.c:156>
   | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  |   +-strlen()
+  |   +-strlenk()
   |   +-memset()
   |   +-va_start()
   |   +-va_arg()
   |   +-sprint_hex()
-  |   +-sprintn()
+  |   +-strcat()
   |   +-sprint_decimal()
   |   +-sprintchar()
   |   +-va_end()
@@ -36,12 +36,12 @@
   +-init_memory() <void init_memory () at knl/memory.c:306>
   | +-PAGE_4K_ALIGN()
   | +-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  | | +-strlen()
+  | | +-strlenk()
   | | +-memset()
   | | +-va_start()
   | | +-va_arg()
   | | +-sprint_hex()
-  | | +-sprintn()
+  | | +-strcat()
   | | +-sprint_decimal()
   | | +-sprintchar()
   | | +-va_end()
@@ -53,12 +53,12 @@
   | | +-PAGE_4K_ALIGN()
   | | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
   | | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  | | |   +-strlen()
+  | | |   +-strlenk()
   | | |   +-memset()
   | | |   +-va_start()
   | | |   +-va_arg()
   | | |   +-sprint_hex()
-  | | |   +-sprintn()
+  | | |   +-strcat()
   | | |   +-sprint_decimal()
   | | |   +-sprintchar()
   | | |   +-va_end()
@@ -69,12 +69,12 @@
   | | \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
   | \-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
   |   \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  |     +-strlen()
+  |     +-strlenk()
   |     +-memset()
   |     +-va_start()
   |     +-va_arg()
   |     +-sprint_hex()
-  |     +-sprintn()
+  |     +-strcat()
   |     +-sprint_decimal()
   |     +-sprintchar()
   |     +-va_end()
@@ -100,12 +100,12 @@
   | | +-eoi()
   | | \-backtrace() <void backtrace (off_t *ret_stack) at knl/int.c:288>
   | |   +-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  | |   | +-strlen()
+  | |   | +-strlenk()
   | |   | +-memset()
   | |   | +-va_start()
   | |   | +-va_arg()
   | |   | +-sprint_hex()
-  | |   | +-sprintn()
+  | |   | +-strcat()
   | |   | +-sprint_decimal()
   | |   | +-sprintchar()
   | |   | +-va_end()
@@ -116,12 +116,12 @@
   | |   \-print_ksym() <int print_ksym (off_t addr) at knl/int.c:275>
   | |     +-get_ksym() <ksym *get_ksym (off_t addr) at knl/int.c:259>
   | |     +-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  | |     | +-strlen()
+  | |     | +-strlenk()
   | |     | +-memset()
   | |     | +-va_start()
   | |     | +-va_arg()
   | |     | +-sprint_hex()
-  | |     | +-sprintn()
+  | |     | +-strcat()
   | |     | +-sprint_decimal()
   | |     | +-sprintchar()
   | |     | +-va_end()
@@ -147,12 +147,12 @@
   | +-page_err() <void page_err () at knl/memory.c:235>
   | | +-cli()
   | | +-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  | | | +-strlen()
+  | | | +-strlenk()
   | | | +-memset()
   | | | +-va_start()
   | | | +-va_arg()
   | | | +-sprint_hex()
-  | | | +-sprintn()
+  | | | +-strcat()
   | | | +-sprint_decimal()
   | | | +-sprintchar()
   | | | +-va_end()
@@ -162,12 +162,12 @@
   | | |     \-outb()
   | | +-backtrace() <void backtrace (off_t *ret_stack) at knl/int.c:288>
   | | | +-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  | | | | +-strlen()
+  | | | | +-strlenk()
   | | | | +-memset()
   | | | | +-va_start()
   | | | | +-va_arg()
   | | | | +-sprint_hex()
-  | | | | +-sprintn()
+  | | | | +-strcat()
   | | | | +-sprint_decimal()
   | | | | +-sprintchar()
   | | | | +-va_end()
@@ -178,12 +178,12 @@
   | | | \-print_ksym() <int print_ksym (off_t addr) at knl/int.c:275>
   | | |   +-get_ksym() <ksym *get_ksym (off_t addr) at knl/int.c:259>
   | | |   +-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  | | |   | +-strlen()
+  | | |   | +-strlenk()
   | | |   | +-memset()
   | | |   | +-va_start()
   | | |   | +-va_arg()
   | | |   | +-sprint_hex()
-  | | |   | +-sprintn()
+  | | |   | +-strcat()
   | | |   | +-sprint_decimal()
   | | |   | +-sprintchar()
   | | |   | +-va_end()
@@ -197,12 +197,12 @@
   | | +-pmalloc() <void *pmalloc (size_t size) at knl/memory.c:524>
   | | | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
   | | | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  | | | |   +-strlen()
+  | | | |   +-strlenk()
   | | | |   +-memset()
   | | | |   +-va_start()
   | | | |   +-va_arg()
   | | | |   +-sprint_hex()
-  | | | |   +-sprintn()
+  | | | |   +-strcat()
   | | | |   +-sprint_decimal()
   | | | |   +-sprintchar()
   | | | |   +-va_end()
@@ -212,12 +212,12 @@
   | | | |       \-outb()
   | | | +-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
   | | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  | | |   +-strlen()
+  | | |   +-strlenk()
   | | |   +-memset()
   | | |   +-va_start()
   | | |   +-va_arg()
   | | |   +-sprint_hex()
-  | | |   +-sprintn()
+  | | |   +-strcat()
   | | |   +-sprint_decimal()
   | | |   +-sprintchar()
   | | |   +-va_end()
@@ -243,12 +243,12 @@
   | | | | |   | +-PAGE_4K_ALIGN()
   | | | | |   | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
   | | | | |   | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  | | | | |   | |   +-strlen()
+  | | | | |   | |   +-strlenk()
   | | | | |   | |   +-memset()
   | | | | |   | |   +-va_start()
   | | | | |   | |   +-va_arg()
   | | | | |   | |   +-sprint_hex()
-  | | | | |   | |   +-sprintn()
+  | | | | |   | |   +-strcat()
   | | | | |   | |   +-sprint_decimal()
   | | | | |   | |   +-sprintchar()
   | | | | |   | |   +-va_end()
@@ -262,12 +262,12 @@
   | | | | |   +-pmfree() <int pmfree (void *addr, size_t len) at knl/memory.c:550>
   | | | | |   | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
   | | | | |   | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  | | | | |   | |   +-strlen()
+  | | | | |   | |   +-strlenk()
   | | | | |   | |   +-memset()
   | | | | |   | |   +-va_start()
   | | | | |   | |   +-va_arg()
   | | | | |   | |   +-sprint_hex()
-  | | | | |   | |   +-sprintn()
+  | | | | |   | |   +-strcat()
   | | | | |   | |   +-sprint_decimal()
   | | | | |   | |   +-sprintchar()
   | | | | |   | |   +-va_end()
@@ -282,12 +282,12 @@
   | | | |     \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
   | | | \-manage_proc() <void manage_proc () at knl/proc.c:223>
   | | |   +-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  | | |   | +-strlen()
+  | | |   | +-strlenk()
   | | |   | +-memset()
   | | |   | +-va_start()
   | | |   | +-va_arg()
   | | |   | +-sprint_hex()
-  | | |   | +-sprintn()
+  | | |   | +-strcat()
   | | |   | +-sprint_decimal()
   | | |   | +-sprintchar()
   | | |   | +-va_end()
@@ -309,12 +309,12 @@
   |   | +-PAGE_4K_ALIGN()
   |   | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
   |   | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  |   | |   +-strlen()
+  |   | |   +-strlenk()
   |   | |   +-memset()
   |   | |   +-va_start()
   |   | |   +-va_arg()
   |   | |   +-sprint_hex()
-  |   | |   +-sprintn()
+  |   | |   +-strcat()
   |   | |   +-sprint_decimal()
   |   | |   +-sprintchar()
   |   | |   +-va_end()
@@ -329,12 +329,12 @@
   | | +-PAGE_4K_ALIGN()
   | | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
   | | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  | | |   +-strlen()
+  | | |   +-strlenk()
   | | |   +-memset()
   | | |   +-va_start()
   | | |   +-va_arg()
   | | |   +-sprint_hex()
-  | | |   +-sprintn()
+  | | |   +-strcat()
   | | |   +-sprint_decimal()
   | | |   +-sprintchar()
   | | |   +-va_end()
@@ -350,12 +350,12 @@
   +-init_blkbuf() <void init_blkbuf () at knl/blk_buf.c:9>
   +-init_ramdisk() <void init_ramdisk () at knl/ramdisk.c:46>
   | +-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  | | +-strlen()
+  | | +-strlenk()
   | | +-memset()
   | | +-va_start()
   | | +-va_arg()
   | | +-sprint_hex()
-  | | +-sprintn()
+  | | +-strcat()
   | | +-sprint_decimal()
   | | +-sprintchar()
   | | +-va_end()
@@ -369,12 +369,12 @@
   | | +-PAGE_4K_ALIGN()
   | | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
   | | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  | | |   +-strlen()
+  | | |   +-strlenk()
   | | |   +-memset()
   | | |   +-va_start()
   | | |   +-va_arg()
   | | |   +-sprint_hex()
-  | | |   +-sprintn()
+  | | |   +-strcat()
   | | |   +-sprint_decimal()
   | | |   +-sprintchar()
   | | |   +-va_end()
@@ -383,19 +383,19 @@
   | | |       +-inb()
   | | |       \-outb()
   | | \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
-  | +-strcpy()
+  | +-strcpyk()
   | \-list_init()
   +-init_proc() <void init_proc () at knl/proc.c:32>
   | +-kmalloc() <void *kmalloc (off_t addr, size_t size) at knl/memory.c:479>
   | | +-PAGE_4K_ALIGN()
   | | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
   | | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  | | |   +-strlen()
+  | | |   +-strlenk()
   | | |   +-memset()
   | | |   +-va_start()
   | | |   +-va_arg()
   | | |   +-sprint_hex()
-  | | |   +-sprintn()
+  | | |   +-strcat()
   | | |   +-sprint_decimal()
   | | |   +-sprintchar()
   | | |   +-va_end()
@@ -407,12 +407,12 @@
   | +-set_tss() <void set_tss (u64 rsp0, u64 rsp1, u64 rsp2, u64 ist0, u64 ist1, u64 ist2, u64 ist3, u64 ist4, u64 ist5, u64 ist6) at knl/proc.c:873>
   | +-wrmsr() <void wrmsr (unsigned long address, unsigned long value) at knl/int.c:255>
   | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  |   +-strlen()
+  |   +-strlenk()
   |   +-memset()
   |   +-va_start()
   |   +-va_arg()
   |   +-sprint_hex()
-  |   +-sprintn()
+  |   +-strcat()
   |   +-sprint_decimal()
   |   +-sprintchar()
   |   +-va_end()
@@ -423,9 +423,9 @@
   +-DISK1_FAT32_FS_init()
   +-init_devfs() <int init_devfs () at knl/devman.c:114>
   | +-register_filesystem() <unsigned long register_filesystem (struct file_system_type *fs) at knl/vfs.c:211>
-  | | \-strcmp()
+  | | \-strcmpk()
   | +-mount_fs() <struct super_block *mount_fs (char *name, struct Disk_Partition_Table_Entry *DPTE, void *buf) at knl/vfs.c:181>
-  | | \-strcmp()
+  | | \-strcmpk()
   | +-path_walk() <struct dir_entry *path_walk (char *name, unsigned long flags) at knl/vfs.c:70>
   | | +-memcmp()
   | | +-list_next()
@@ -433,12 +433,12 @@
   | | | +-PAGE_4K_ALIGN()
   | | | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
   | | | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  | | | |   +-strlen()
+  | | | |   +-strlenk()
   | | | |   +-memset()
   | | | |   +-va_start()
   | | | |   +-va_arg()
   | | | |   +-sprint_hex()
-  | | | |   +-sprintn()
+  | | | |   +-strcat()
   | | | |   +-sprint_decimal()
   | | | |   +-sprintchar()
   | | | |   +-va_end()
@@ -450,17 +450,17 @@
   | | +-memset()
   | | +-memcpy()
   | | +-printf() <void printf (const char *format, ...) at knl/log.c:85>
-  | | | +-strlen()
+  | | | +-strlenk()
   | | | +-kmalloc() <void *kmalloc (off_t addr, size_t size) at knl/memory.c:479>
   | | | | +-PAGE_4K_ALIGN()
   | | | | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
   | | | | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  | | | | |   +-strlen()
+  | | | | |   +-strlenk()
   | | | | |   +-memset()
   | | | | |   +-va_start()
   | | | | |   +-va_arg()
   | | | | |   +-sprint_hex()
-  | | | | |   +-sprintn()
+  | | | | |   +-strcat()
   | | | | |   +-sprint_decimal()
   | | | | |   +-sprintchar()
   | | | | |   +-va_end()
@@ -472,7 +472,7 @@
   | | | +-va_start()
   | | | +-va_arg()
   | | | +-sprint_hex()
-  | | | +-sprintn()
+  | | | +-strcat()
   | | | +-sprint_decimal()
   | | | +-sprintchar()
   | | | +-va_end()
@@ -481,12 +481,12 @@
   | | | | \-scr_up() <void scr_up () at knl/framebuffer.c:172>
   | | | |   \-print_textbuffer() <void print_textbuffer () at knl/framebuffer.c:143>
   | | | +-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  | | | | +-strlen()
+  | | | | +-strlenk()
   | | | | +-memset()
   | | | | +-va_start()
   | | | | +-va_arg()
   | | | | +-sprint_hex()
-  | | | | +-sprintn()
+  | | | | +-strcat()
   | | | | +-sprint_decimal()
   | | | | +-sprintchar()
   | | | | +-va_end()
@@ -509,12 +509,12 @@
   |   | +-PAGE_4K_ALIGN()
   |   | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
   |   | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  |   | |   +-strlen()
+  |   | |   +-strlenk()
   |   | |   +-memset()
   |   | |   +-va_start()
   |   | |   +-va_arg()
   |   | |   +-sprint_hex()
-  |   | |   +-sprintn()
+  |   | |   +-strcat()
   |   | |   +-sprint_decimal()
   |   | |   +-sprintchar()
   |   | |   +-va_end()
@@ -531,12 +531,12 @@
   |   | | +-PAGE_4K_ALIGN()
   |   | | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
   |   | | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  |   | | |   +-strlen()
+  |   | | |   +-strlenk()
   |   | | |   +-memset()
   |   | | |   +-va_start()
   |   | | |   +-va_arg()
   |   | | |   +-sprint_hex()
-  |   | | |   +-sprintn()
+  |   | | |   +-strcat()
   |   | | |   +-sprint_decimal()
   |   | | |   +-sprintchar()
   |   | | |   +-va_end()
@@ -548,17 +548,17 @@
   |   | +-memset()
   |   | +-memcpy()
   |   | +-printf() <void printf (const char *format, ...) at knl/log.c:85>
-  |   | | +-strlen()
+  |   | | +-strlenk()
   |   | | +-kmalloc() <void *kmalloc (off_t addr, size_t size) at knl/memory.c:479>
   |   | | | +-PAGE_4K_ALIGN()
   |   | | | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
   |   | | | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  |   | | | |   +-strlen()
+  |   | | | |   +-strlenk()
   |   | | | |   +-memset()
   |   | | | |   +-va_start()
   |   | | | |   +-va_arg()
   |   | | | |   +-sprint_hex()
-  |   | | | |   +-sprintn()
+  |   | | | |   +-strcat()
   |   | | | |   +-sprint_decimal()
   |   | | | |   +-sprintchar()
   |   | | | |   +-va_end()
@@ -570,7 +570,7 @@
   |   | | +-va_start()
   |   | | +-va_arg()
   |   | | +-sprint_hex()
-  |   | | +-sprintn()
+  |   | | +-strcat()
   |   | | +-sprint_decimal()
   |   | | +-sprintchar()
   |   | | +-va_end()
@@ -579,12 +579,12 @@
   |   | | | \-scr_up() <void scr_up () at knl/framebuffer.c:172>
   |   | | |   \-print_textbuffer() <void print_textbuffer () at knl/framebuffer.c:143>
   |   | | +-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  |   | | | +-strlen()
+  |   | | | +-strlenk()
   |   | | | +-memset()
   |   | | | +-va_start()
   |   | | | +-va_arg()
   |   | | | +-sprint_hex()
-  |   | | | +-sprintn()
+  |   | | | +-strcat()
   |   | | | +-sprint_decimal()
   |   | | | +-sprintchar()
   |   | | | +-va_end()
@@ -603,8 +603,8 @@
   |   |       \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
   |   +-kmfree() <int kmfree (off_t addr) at knl/memory.c:501>
   |   | \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
-  |   +-strlen()
-  |   +-strcpy()
+  |   +-strlenk()
+  |   +-strcpyk()
   |   +-list_init()
   |   \-list_add() <void list_add (struct List *entry, struct List *new) at knl/vfs.c:339>
   |     \-list_add_to_behind()
@@ -614,12 +614,12 @@
   | | | +-PAGE_4K_ALIGN()
   | | | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
   | | | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  | | | |   +-strlen()
+  | | | |   +-strlenk()
   | | | |   +-memset()
   | | | |   +-va_start()
   | | | |   +-va_arg()
   | | | |   +-sprint_hex()
-  | | | |   +-sprintn()
+  | | | |   +-strcat()
   | | | |   +-sprint_decimal()
   | | | |   +-sprintchar()
   | | | |   +-va_end()
@@ -629,10 +629,10 @@
   | | | |       \-outb()
   | | | \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
   | | +-memset()
-  | | +-strlen()
+  | | +-strlenk()
   | | +-kmfree() <int kmfree (off_t addr) at knl/memory.c:501>
   | | | \-mhdr_merge() <malloc_hdr *mhdr_merge (malloc_hdr *prev, malloc_hdr *next) at knl/memory.c:465>
-  | | +-strcpy()
+  | | +-strcpyk()
   | | +-path_walk() <struct dir_entry *path_walk (char *name, unsigned long flags) at knl/vfs.c:70>
   | | | +-memcmp()
   | | | +-list_next()
@@ -640,12 +640,12 @@
   | | | | +-PAGE_4K_ALIGN()
   | | | | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
   | | | | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  | | | | |   +-strlen()
+  | | | | |   +-strlenk()
   | | | | |   +-memset()
   | | | | |   +-va_start()
   | | | | |   +-va_arg()
   | | | | |   +-sprint_hex()
-  | | | | |   +-sprintn()
+  | | | | |   +-strcat()
   | | | | |   +-sprint_decimal()
   | | | | |   +-sprintchar()
   | | | | |   +-va_end()
@@ -657,17 +657,17 @@
   | | | +-memset()
   | | | +-memcpy()
   | | | +-printf() <void printf (const char *format, ...) at knl/log.c:85>
-  | | | | +-strlen()
+  | | | | +-strlenk()
   | | | | +-kmalloc() <void *kmalloc (off_t addr, size_t size) at knl/memory.c:479>
   | | | | | +-PAGE_4K_ALIGN()
   | | | | | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
   | | | | | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  | | | | | |   +-strlen()
+  | | | | | |   +-strlenk()
   | | | | | |   +-memset()
   | | | | | |   +-va_start()
   | | | | | |   +-va_arg()
   | | | | | |   +-sprint_hex()
-  | | | | | |   +-sprintn()
+  | | | | | |   +-strcat()
   | | | | | |   +-sprint_decimal()
   | | | | | |   +-sprintchar()
   | | | | | |   +-va_end()
@@ -679,7 +679,7 @@
   | | | | +-va_start()
   | | | | +-va_arg()
   | | | | +-sprint_hex()
-  | | | | +-sprintn()
+  | | | | +-strcat()
   | | | | +-sprint_decimal()
   | | | | +-sprintchar()
   | | | | +-va_end()
@@ -688,12 +688,12 @@
   | | | | | \-scr_up() <void scr_up () at knl/framebuffer.c:172>
   | | | | |   \-print_textbuffer() <void print_textbuffer () at knl/framebuffer.c:143>
   | | | | +-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  | | | | | +-strlen()
+  | | | | | +-strlenk()
   | | | | | +-memset()
   | | | | | +-va_start()
   | | | | | +-va_arg()
   | | | | | +-sprint_hex()
-  | | | | | +-sprintn()
+  | | | | | +-strcat()
   | | | | | +-sprint_decimal()
   | | | | | +-sprintchar()
   | | | | | +-va_end()
@@ -714,12 +714,12 @@
   | | +-list_add() <void list_add (struct List *entry, struct List *new) at knl/vfs.c:339>
   | | | \-list_add_to_behind()
   | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  | |   +-strlen()
+  | |   +-strlenk()
   | |   +-memset()
   | |   +-va_start()
   | |   +-va_arg()
   | |   +-sprint_hex()
-  | |   +-sprintn()
+  | |   +-strcat()
   | |   +-sprint_decimal()
   | |   +-sprintchar()
   | |   +-va_end()
@@ -729,12 +729,12 @@
   | |       \-outb()
   | +-memcpy()
   | +-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  | | +-strlen()
+  | | +-strlenk()
   | | +-memset()
   | | +-va_start()
   | | +-va_arg()
   | | +-sprint_hex()
-  | | +-sprintn()
+  | | +-strcat()
   | | +-sprint_decimal()
   | | +-sprintchar()
   | | +-va_end()
@@ -745,12 +745,12 @@
   | +-sys_mmap() <void *sys_mmap (void *addr, size_t len, int prot, int flags, int fildes, off_t off) at knl/sys.c:465>
   | | +-cli()
   | | +-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  | | | +-strlen()
+  | | | +-strlenk()
   | | | +-memset()
   | | | +-va_start()
   | | | +-va_arg()
   | | | +-sprint_hex()
-  | | | +-sprintn()
+  | | | +-strcat()
   | | | +-sprint_decimal()
   | | | +-sprintchar()
   | | | +-va_end()
@@ -765,12 +765,12 @@
   | | | +-PAGE_4K_ALIGN()
   | | | +-mhdr_split() <malloc_hdr *mhdr_split (malloc_hdr *target, off_t split_point, malloc_hdr *array, size_t arraylen) at knl/memory.c:432>
   | | | | \-comprintf() <void comprintf (char *fmt, ...) at knl/com.c:63>
-  | | | |   +-strlen()
+  | | | |   +-strlenk()
   | | | |   +-memset()
   | | | |   +-va_start()
   | | | |   +-va_arg()
   | | | |   +-sprint_hex()
-  | | | |   +-sprintn()
+  | | | |   +-strcat()
   | | | |   +-sprint_decimal()
   | | | |   +-sprintchar()
   | | | |   +-va_end()

@@ -337,7 +337,7 @@ void save_context_c(void* ctx, void* int_stk)
     //enter_dir(path);
     char name[20];
     //get_fname(path,name);
-    strcpy(name,path);
+    strcpyk(name,path);
     if(!verify_name(name))
     {
         //printf("err: invalid file name\n");
@@ -898,10 +898,6 @@ void switch_to(struct process* from, struct process* to)
     __asm__ volatile("mov %0,%%rax\n"
                      "mov %%rax,%%cr3\n"
                      : "=m"(to->regs.cr3));
-    if (from->pid == 2 && to->pid == 3) {
-        comprintf("the new proc mapping:\n");
-        print_mmap(current->pml4);
-    }
     __asm__ volatile("mov %%rsp,%0\r\n"
                      "lea done(%%rip),%%rax\r\n"
                      "mov %%rax,%2\r\n"
@@ -1009,6 +1005,12 @@ int sys_fork(void)
         smmap(new_stkpg, tmpla, PAGE_PRESENT | PAGE_RWX, current->pml4);
         memcpy(tmpla, stk, PAGE_4K_SIZE);   //把当前进程的栈空间复制到新栈里面
 
+        if (new_stkpg == 0x4013a000) {
+            // TODO 测试用代码，监测内存状况
+            // smmap(new_stkpg, tmpla + PAGE_4K_SIZE, PAGE_PRESENT | PAGE_RWX, current->pml4);
+            // smmap(new_stkpg, tmpla + PAGE_4K_SIZE, PAGE_PRESENT | PAGE_RWX, task[pid].pml4);
+            // comprintf("now the problem mem mmaped to %l\n", tmpla + PAGE_4K_SIZE);
+        }
         //把新的页面映射到进程页表里
         smmap(new_stkpg, stk, PAGE_PRESENT | PAGE_RWX | PAGE_FOR_ALL, task[pid].pml4);
     }
@@ -1023,6 +1025,7 @@ int sys_fork(void)
         task[pid].mem_struct.stack_bottom = stk;
         //给这页新的栈填上恢复上下文需要的内容
     }
+
     //中断使用的栈空间
     // ist一页就够
     //系统中断ist
@@ -1058,6 +1061,7 @@ int sys_fork(void)
     for (; hp >= task[pid].mem_struct.heap_base; hp -= PAGE_4K_SIZE) {
         addr_t new_hppg = pmalloc(PAGE_4K_SIZE);
         smmap(new_hppg, tmpla, PAGE_PRESENT | PAGE_RWX, current->pml4);
+
         memcpy(tmpla, hp, PAGE_4K_SIZE);   //把当前进程的栈空间复制到新栈里面
         //把新的页面映射到进程页表里
         smmap(new_hppg, hp, PAGE_PRESENT | PAGE_RWX | PAGE_FOR_ALL, task[pid].pml4);

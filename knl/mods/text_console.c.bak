@@ -124,8 +124,8 @@ const device dev_stdout={
 };
 void init_tty()
 {
-    strcpy(dev_tty.name,"tty0");
-    strcpy(dev_stdout.name,"stdout");
+    strcpyk(dev_tty.name,"tty0");
+    strcpyk(dev_stdout.name,"stdout");
     reg_driver(&drv_tty);
     reg_device(&dev_tty);
     reg_device(&dev_stdout);

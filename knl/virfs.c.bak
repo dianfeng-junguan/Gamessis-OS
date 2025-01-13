@@ -78,7 +78,7 @@ int reg_vol(int disk_drvi, int fs_drvi, char *name)
             vols[i].stat=VOLUME_STAT_READY;
             vols[i].fs= &fs[fs_drvi];
             vols[i].disk_drv= get_drv(disk_drvi);
-            strcpy(vols[i].name,name);
+            strcpyk(vols[i].name,name);
             return i;
         }
     }
@@ -102,7 +102,7 @@ int reg_vol(int disk_drvi, int fs_drvi, char *name)
 //    rec=i;
 //    for(i=0;i<MAX_VOLUMES;i++)
 //        if(vols[i].stat!=VOLUME_STAT_EMPTY&& \
-//        (strcmp(vols[i].name,volname)==0))
+//        (strcmpk(vols[i].name,volname)==0))
 //            break;
 //    if(i==MAX_VOLUMES)return -1;
 //    driver_args arg={

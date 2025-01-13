@@ -18,3 +18,7 @@ well-confugured-grub/
 
 OVMF.fd
 log/
+
+*.s
+
+*.txt

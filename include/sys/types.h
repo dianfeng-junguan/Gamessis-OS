@@ -17,15 +17,14 @@ typedef int gid_t;
 typedef int id_t;
 typedef int ino_t;
 
-typedef int pid_t;
-typedef int mode_t;
+typedef int                pid_t;
+typedef int                mode_t;
 typedef unsigned long long off_t;
-typedef int uid_t;
-typedef int nlink_t;
-typedef unsigned long size_t,useconds_t;
-typedef long ssize_t;
+typedef int                uid_t;
+typedef int                nlink_t;
+typedef unsigned long      size_t;
+typedef unsigned long      useconds_t;
+typedef long               ssize_t;
 
 
-#endif	/* _INC_TYPES */
-
-
+#endif /* _INC_TYPES */

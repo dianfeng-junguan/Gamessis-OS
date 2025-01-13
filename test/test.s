@@ -28,7 +28,7 @@ int main(int argc, char** argv)
   400013:	48 81 ec b0 00 00 00 	sub    rsp,0xb0
   40001a:	89 bd 5c ff ff ff    	mov    DWORD PTR [rbp-0xa4],edi
   400020:	48 89 b5 50 ff ff ff 	mov    QWORD PTR [rbp-0xb0],rsi
-    // write(2, as, strlen(as));
+    // write(2, as, strlenk(as));
     char* prepared_environ = {"os=gms"};
   400027:	48 8d 05 b2 06 00 00 	lea    rax,[rip+0x6b2]        # 4006e0 <b+0x4>
   40002e:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
@@ -87,104 +87,105 @@ int main(int argc, char** argv)
         gets(cmd);
   4000fb:	48 8d 85 70 ff ff ff 	lea    rax,[rbp-0x90]
   400102:	48 89 c7             	mov    rdi,rax
-  400105:	b8 00 00 00 00       	mov    eax,0x0
-  40010a:	e8 e1 01 00 00       	call   4002f0 <gets@plt>
+  400105:	e8 e6 01 00 00       	call   4002f0 <gets@plt>
         puts(cmd);
-  40010f:	48 8d 85 70 ff ff ff 	lea    rax,[rbp-0x90]
-  400116:	48 89 c7             	mov    rdi,rax
-  400119:	e8 f2 01 00 00       	call   400310 <puts@plt>
+  40010a:	48 8d 85 70 ff ff ff 	lea    rax,[rbp-0x90]
+  400111:	48 89 c7             	mov    rdi,rax
+  400114:	e8 f7 01 00 00       	call   400310 <puts@plt>
         // write(2, cmd, p);
         if (strcmp(cmd, "version") == 0) {
-  40011e:	48 8d 85 70 ff ff ff 	lea    rax,[rbp-0x90]
-  400125:	48 8d 15 d6 05 00 00 	lea    rdx,[rip+0x5d6]        # 400702 <b+0x26>
-  40012c:	48 89 d6             	mov    rsi,rdx
-  40012f:	48 89 c7             	mov    rdi,rax
-  400132:	e8 09 02 00 00       	call   400340 <strcmp@plt>
-  400137:	85 c0                	test   eax,eax
-  400139:	75 14                	jne    40014f <main+0x144>
+  400119:	48 8d 85 70 ff ff ff 	lea    rax,[rbp-0x90]
+  400120:	48 8d 15 db 05 00 00 	lea    rdx,[rip+0x5db]        # 400702 <b+0x26>
+  400127:	48 89 d6             	mov    rsi,rdx
+  40012a:	48 89 c7             	mov    rdi,rax
+  40012d:	e8 0e 02 00 00       	call   400340 <strcmp@plt>
+  400132:	85 c0                	test   eax,eax
+  400134:	75 11                	jne    400147 <main+0x13c>
             puts("Gamessis OS 1.0.\n");
-  40013b:	48 8d 05 c8 05 00 00 	lea    rax,[rip+0x5c8]        # 40070a <b+0x2e>
-  400142:	48 89 c7             	mov    rdi,rax
-  400145:	e8 c6 01 00 00       	call   400310 <puts@plt>
-  40014a:	e9 78 ff ff ff       	jmp    4000c7 <main+0xbc>
+  400136:	48 8d 05 cd 05 00 00 	lea    rax,[rip+0x5cd]        # 40070a <b+0x2e>
+  40013d:	48 89 c7             	mov    rdi,rax
+  400140:	e8 cb 01 00 00       	call   400310 <puts@plt>
+  400145:	eb 80                	jmp    4000c7 <main+0xbc>
         }
         else if (strcmp(cmd, "exit") == 0) {
-  40014f:	48 8d 85 70 ff ff ff 	lea    rax,[rbp-0x90]
-  400156:	48 8d 15 bf 05 00 00 	lea    rdx,[rip+0x5bf]        # 40071c <b+0x40>
-  40015d:	48 89 d6             	mov    rsi,rdx
-  400160:	48 89 c7             	mov    rdi,rax
-  400163:	e8 d8 01 00 00       	call   400340 <strcmp@plt>
-  400168:	85 c0                	test   eax,eax
-  40016a:	0f 84 b9 00 00 00    	je     400229 <main+0x21e>
+  400147:	48 8d 85 70 ff ff ff 	lea    rax,[rbp-0x90]
+  40014e:	48 8d 15 c7 05 00 00 	lea    rdx,[rip+0x5c7]        # 40071c <b+0x40>
+  400155:	48 89 d6             	mov    rsi,rdx
+  400158:	48 89 c7             	mov    rdi,rax
+  40015b:	e8 e0 01 00 00       	call   400340 <strcmp@plt>
+  400160:	85 c0                	test   eax,eax
+  400162:	0f 84 c3 00 00 00    	je     40022b <main+0x220>
             break;
         }
         else {
             printf("trying to execute...\n");
-  400170:	48 8d 05 aa 05 00 00 	lea    rax,[rip+0x5aa]        # 400721 <b+0x45>
-  400177:	48 89 c7             	mov    rdi,rax
-  40017a:	e8 91 01 00 00       	call   400310 <puts@plt>
+  400168:	48 8d 05 b2 05 00 00 	lea    rax,[rip+0x5b2]        # 400721 <b+0x45>
+  40016f:	48 89 c7             	mov    rdi,rax
+  400172:	b8 00 00 00 00       	mov    eax,0x0
+  400177:	e8 64 01 00 00       	call   4002e0 <printf@plt>
             int pid = 0;
-  40017f:	c7 45 f0 00 00 00 00 	mov    DWORD PTR [rbp-0x10],0x0
+  40017c:	c7 45 f0 00 00 00 00 	mov    DWORD PTR [rbp-0x10],0x0
             if ((pid = fork()) == 0) {
-  400186:	e8 95 01 00 00       	call   400320 <fork@plt>
-  40018b:	89 45 f0             	mov    DWORD PTR [rbp-0x10],eax
-  40018e:	83 7d f0 00          	cmp    DWORD PTR [rbp-0x10],0x0
-  400192:	75 54                	jne    4001e8 <main+0x1dd>
+  400183:	e8 98 01 00 00       	call   400320 <fork@plt>
+  400188:	89 45 f0             	mov    DWORD PTR [rbp-0x10],eax
+  40018b:	83 7d f0 00          	cmp    DWORD PTR [rbp-0x10],0x0
+  40018f:	75 59                	jne    4001ea <main+0x1df>
                 printf("forked, ready to execve\n");
-  400194:	48 8d 05 9b 05 00 00 	lea    rax,[rip+0x59b]        # 400736 <b+0x5a>
-  40019b:	48 89 c7             	mov    rdi,rax
-  40019e:	e8 6d 01 00 00       	call   400310 <puts@plt>
+  400191:	48 8d 05 9f 05 00 00 	lea    rax,[rip+0x59f]        # 400737 <b+0x5b>
+  400198:	48 89 c7             	mov    rdi,rax
+  40019b:	b8 00 00 00 00       	mov    eax,0x0
+  4001a0:	e8 3b 01 00 00       	call   4002e0 <printf@plt>
                 if (execve(cmd, argv, environ) == -1) {
-  4001a3:	48 8b 15 96 07 00 00 	mov    rdx,QWORD PTR [rip+0x796]        # 400940 <environ>
-  4001aa:	48 8b 8d 50 ff ff ff 	mov    rcx,QWORD PTR [rbp-0xb0]
-  4001b1:	48 8d 85 70 ff ff ff 	lea    rax,[rbp-0x90]
-  4001b8:	48 89 ce             	mov    rsi,rcx
-  4001bb:	48 89 c7             	mov    rdi,rax
-  4001be:	e8 3d 01 00 00       	call   400300 <execve@plt>
-  4001c3:	83 f8 ff             	cmp    eax,0xffffffff
-  4001c6:	75 20                	jne    4001e8 <main+0x1dd>
+  4001a5:	48 8b 15 94 07 00 00 	mov    rdx,QWORD PTR [rip+0x794]        # 400940 <environ>
+  4001ac:	48 8b 8d 50 ff ff ff 	mov    rcx,QWORD PTR [rbp-0xb0]
+  4001b3:	48 8d 85 70 ff ff ff 	lea    rax,[rbp-0x90]
+  4001ba:	48 89 ce             	mov    rsi,rcx
+  4001bd:	48 89 c7             	mov    rdi,rax
+  4001c0:	e8 3b 01 00 00       	call   400300 <execve@plt>
+  4001c5:	83 f8 ff             	cmp    eax,0xffffffff
+  4001c8:	75 20                	jne    4001ea <main+0x1df>
                     printf("cannot find file:%s\n", cmd);
-  4001c8:	48 8d 85 70 ff ff ff 	lea    rax,[rbp-0x90]
-  4001cf:	48 89 c6             	mov    rsi,rax
-  4001d2:	48 8d 05 75 05 00 00 	lea    rax,[rip+0x575]        # 40074e <b+0x72>
-  4001d9:	48 89 c7             	mov    rdi,rax
-  4001dc:	b8 00 00 00 00       	mov    eax,0x0
-  4001e1:	e8 fa 00 00 00       	call   4002e0 <printf@plt>
-  4001e6:	eb 42                	jmp    40022a <main+0x21f>
+  4001ca:	48 8d 85 70 ff ff ff 	lea    rax,[rbp-0x90]
+  4001d1:	48 89 c6             	mov    rsi,rax
+  4001d4:	48 8d 05 75 05 00 00 	lea    rax,[rip+0x575]        # 400750 <b+0x74>
+  4001db:	48 89 c7             	mov    rdi,rax
+  4001de:	b8 00 00 00 00       	mov    eax,0x0
+  4001e3:	e8 f8 00 00 00       	call   4002e0 <printf@plt>
+  4001e8:	eb 42                	jmp    40022c <main+0x221>
                     break;
                 }
             }
             printf("forked. pid=%d\n", pid);
-  4001e8:	8b 45 f0             	mov    eax,DWORD PTR [rbp-0x10]
-  4001eb:	89 c6                	mov    esi,eax
-  4001ed:	48 8d 05 6f 05 00 00 	lea    rax,[rip+0x56f]        # 400763 <b+0x87>
-  4001f4:	48 89 c7             	mov    rdi,rax
-  4001f7:	b8 00 00 00 00       	mov    eax,0x0
-  4001fc:	e8 df 00 00 00       	call   4002e0 <printf@plt>
+  4001ea:	8b 45 f0             	mov    eax,DWORD PTR [rbp-0x10]
+  4001ed:	89 c6                	mov    esi,eax
+  4001ef:	48 8d 05 6f 05 00 00 	lea    rax,[rip+0x56f]        # 400765 <b+0x89>
+  4001f6:	48 89 c7             	mov    rdi,rax
+  4001f9:	b8 00 00 00 00       	mov    eax,0x0
+  4001fe:	e8 dd 00 00 00       	call   4002e0 <printf@plt>
             int loc = 0;
-  400201:	c7 85 6c ff ff ff 00 	mov    DWORD PTR [rbp-0x94],0x0
-  400208:	00 00 00 
+  400203:	c7 85 6c ff ff ff 00 	mov    DWORD PTR [rbp-0x94],0x0
+  40020a:	00 00 00 
 
             waitpid(pid, &loc, 0);
-  40020b:	48 8d 8d 6c ff ff ff 	lea    rcx,[rbp-0x94]
-  400212:	8b 45 f0             	mov    eax,DWORD PTR [rbp-0x10]
-  400215:	ba 00 00 00 00       	mov    edx,0x0
-  40021a:	48 89 ce             	mov    rsi,rcx
-  40021d:	89 c7                	mov    edi,eax
-  40021f:	e8 ac 00 00 00       	call   4002d0 <waitpid@plt>
+  40020d:	48 8d 8d 6c ff ff ff 	lea    rcx,[rbp-0x94]
+  400214:	8b 45 f0             	mov    eax,DWORD PTR [rbp-0x10]
+  400217:	ba 00 00 00 00       	mov    edx,0x0
+  40021c:	48 89 ce             	mov    rsi,rcx
+  40021f:	89 c7                	mov    edi,eax
+  400221:	e8 aa 00 00 00       	call   4002d0 <waitpid@plt>
     while (1) {
-  400224:	e9 9e fe ff ff       	jmp    4000c7 <main+0xbc>
+  400226:	e9 9c fe ff ff       	jmp    4000c7 <main+0xbc>
             break;
-  400229:	90                   	nop
+  40022b:	90                   	nop
     }
 
 
     // do_syscall(SYSCAll_WRITE, 2, (int) "test exe running.\n", 0, 0, 0,0);
 
     return 0;
-  40022a:	b8 00 00 00 00       	mov    eax,0x0
-  40022f:	c9                   	leave  
-  400230:	c3                   	ret    
+  40022c:	b8 00 00 00 00       	mov    eax,0x0
+  400231:	c9                   	leave  
+  400232:	c3                   	ret    
 
 Disassembly of section .plt:
 

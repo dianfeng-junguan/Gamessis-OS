@@ -166,7 +166,6 @@ void main(unsigned int magic, void* addr)
     sti();
     manage_proc_lock = 0;
 
-
     move_to_user_mode();
     int shell = 0, stat_loc = 0;
     if ((shell = do_syscall(SYSCALL_FORK, 0, 0, 0, 0, 0, 0)) == 0) {

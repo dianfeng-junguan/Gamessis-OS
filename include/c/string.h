@@ -129,7 +129,7 @@ size_t strlen(const char* str);
 /**
  * @brief Returns the length of the given null-terminated byte string.
  *
- * Same as @sa strlen, except that the function returns zero if str is a null pointer
+ * Same as @sa strlenk, except that the function returns zero if str is a null pointer
  * and returns maxlen if the null character was not found in the first maxlen bytes of str.
  *
  * The behavior is undefined if str points to a character array which lacks the null character
@@ -155,7 +155,7 @@ size_t strnlen(const char* str, size_t maxlen);
  * The behavior is undefined if the strings overlap.
  * The behavior is undefined if either dest is not a pointer to a character array or src is not a
  * pointer to a null-terminated byte string. The behavior is undefined if the size of the character
- * array pointed to by dest <= strlen(src, destsz)
+ * array pointed to by dest <= strlenk(src, destsz)
  *
  * @param dst pointer to the character array to write to
  * @param src pointer to the null-terminated byte string to copy from
@@ -362,7 +362,7 @@ char* strncat(char* __restrict dst, const char* __restrict src, size_t maxlen);
  *  This function is designed to be called multiples times to obtain successive tokens from the same
  * string.
  *
- *  - If s != NULL, the call is treated as the first call to strtok for this particular string.
+ *  - If s != NULL, the call is treated as the first call to strtokk for this particular string.
  *    The function searches for the first character which is not contained in delim.
  *
  *  The behavior is undefined if either s or delim is not a pointer to a null-terminated byte

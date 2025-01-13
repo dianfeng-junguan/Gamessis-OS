@@ -82,7 +82,7 @@ int load(driver_args *args)
 int verify_name(char *str)
 {
     char valid_ch[]="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,/![]|+";
-    if(strlen(str)>11||strlen(str)==0) {
+    if(strlenk(str)>11||strlenk(str)==0) {
         //printf("length not valid\n");
         return 0;
     }
@@ -154,7 +154,7 @@ void format_name(char *str)
         }
     }
     v[12]='\0';
-    strcpy(str,v);
+    strcpyk(str,v);
 }
 int req_cluster()
 {
@@ -211,14 +211,14 @@ void add_dot_and_ddot_dir(dir_entry dir)
     read_sec(a_clu_of_dir,cluster+clu_sec_balance,\
     superblock.secPerClu);
     //.
-    strcpy(a_clu_of_dir[0].name,".       ");
-    strcpy(a_clu_of_dir[0].extension,"   ");
+    strcpyk(a_clu_of_dir[0].name,".       ");
+    strcpyk(a_clu_of_dir[0].extension,"   ");
     a_clu_of_dir[0].fistCluNum=dir.fistCluNum;
     a_clu_of_dir[0].len=0;
     set_attr(&a_clu_of_dir[0],ATTR_DIR);
     //..
-    strcpy(a_clu_of_dir[1].name,"..      ");
-    strcpy(a_clu_of_dir[1].extension,"   ");
+    strcpyk(a_clu_of_dir[1].name,"..      ");
+    strcpyk(a_clu_of_dir[1].extension,"   ");
     a_clu_of_dir[1].fistCluNum=cur_dir.fistCluNum;
     a_clu_of_dir[1].len=0;
     set_attr(&a_clu_of_dir[1],ATTR_DIR);
@@ -345,8 +345,8 @@ int mkdir(driver_args *arg)
             {
                 memset(&a_clu_of_dir[i],0,sizeof(dir_entry));
                 memset(a_clu_of_dir[i].name,' ',11);
-                strcpy(a_clu_of_dir[i].name,name);
-                a_clu_of_dir[i].name[strlen(name)]=' ';
+                strcpyk(a_clu_of_dir[i].name,name);
+                a_clu_of_dir[i].name[strlenk(name)]=' ';
                 int clu=req_cluster();
                 if(clu==-1)//check
                 {
@@ -763,25 +763,25 @@ int cd(char *name)
 /*
 int enter_dir(char *path)
 {
-    char *dir=strtok(path,'/');
+    char *dir=strtokk(path,'/');
     while(dir!=NULL)
     {
         if(find(NULL) == -1)
             return 0;
         cd(dir);
-        dir=strtok(NULL,'/');
+        dir=strtokk(NULL,'/');
     }
     return 0;
 }*/
 void get_fname(char *path,char *name)
 {
-    char *prev,*ptr=strtok(path,'/');
+    char *prev,*ptr=strtokk(path,'/');
     while(ptr!=NULL)
     {
         prev=ptr;
-        ptr=strtok(NULL,'/');
+        ptr=strtokk(NULL,'/');
     }
-    strcpy(name,prev);
+    strcpyk(name,prev);
 }
 char buf[1024];
 int read_file(driver_args* args)

@@ -37,7 +37,8 @@ void drelse(struct dir_entry* d)
 int dentry_cmp(struct dir_entry* a, struct dir_entry* b)
 {
     while (a && b) {
-        if (strcmp(a->name, b->name) != 0) return a->name_length - b->name_length;
+        if (strcmpk(a->name, b->name) != 0)
+            return a->name_length - b->name_length;
         a = a->parent;
         b = b->parent;
         if (a->parent == a && b->parent == b) {
@@ -63,7 +64,9 @@ void mark_use(struct dir_entry* d)
             drelse(dropped);
         }
     }
-    for (; mk > 0; mk--) { history_dentry[mk] = history_dentry[mk - 1]; }
+    for (; mk > 0; mk--) {
+        history_dentry[mk] = history_dentry[mk - 1];
+    }
     history_dentry[0] = d;
 }
 struct dir_entry* path_walk(char* name, unsigned long flags)
@@ -73,13 +76,17 @@ struct dir_entry* path_walk(char* name, unsigned long flags)
     struct dir_entry* parent     = droot;
     struct dir_entry* path       = NULL;
 
-    while (*name == '/') name++;
+    while (*name == '/')
+        name++;
 
-    if (!*name) { return parent; }
+    if (!*name) {
+        return parent;
+    }
 
     for (;;) {
         tmpname = name;
-        while (*name && (*name != '/')) name++;
+        while (*name && (*name != '/'))
+            name++;
         tmpnamelen = name - tmpname;
         if (parent->mount_point) {
             //有挂载点，则进入挂载文件系统的文件树
@@ -88,9 +95,12 @@ struct dir_entry* path_walk(char* name, unsigned long flags)
         //先在缓存中寻找已有的dentry
         //寻找名字为tmpname的dentry
         struct List* lp = parent->subdirs_list.next;
-        if (lp) path = (void*)lp - ((void*)&path->child_node - (void*)path);
+        if (lp)
+            path = (void*)lp - ((void*)&path->child_node - (void*)path);
         while (path) {
-            if (memcmp(tmpname, path->name, tmpnamelen) == 0) { break; }
+            if (memcmp(tmpname, path->name, tmpnamelen) == 0) {
+                break;
+            }
             // lp=&path->child_node;
             // lp=lp->next;
             path = list_next(path, &path->child_node);
@@ -108,7 +118,7 @@ struct dir_entry* path_walk(char* name, unsigned long flags)
             path = parent->dir_inode->inode_ops->lookup(parent->dir_inode, path);
 
             if (path == NULL) {
-                printf("can not find file or dir:%s\n", name);
+                printfk("can not find file or dir:%s\n", name);
                 // kmfree(path->name);
                 // kmfree(path);
                 return NULL;
@@ -125,17 +135,23 @@ struct dir_entry* path_walk(char* name, unsigned long flags)
 
         //标记这个dentry刚刚使用过
         mark_use(path);
-        if (!*name) goto last_component;
-        while (*name == '/') name++;
-        if (!*name) goto last_slash;
+        if (!*name)
+            goto last_component;
+        while (*name == '/')
+            name++;
+        if (!*name)
+            goto last_slash;
         parent = path;
     }
 
 last_slash:
 last_component:
 
-    if (flags & 1) { return parent; }
-    if (path->mount_point) path = path->mount_point->sb->root;
+    if (flags & 1) {
+        return parent;
+    }
+    if (path->mount_point)
+        path = path->mount_point->sb->root;
     return path;
 }
 
@@ -144,7 +160,8 @@ int fill_dentry(void* buf, char* name, long namelen, long type, long offset)
 {
     struct dirent* dent = (struct dirent*)buf;
 
-    if ((unsigned long)buf < PAGE_4K_SIZE) return -EFAULT;
+    if ((unsigned long)buf < PAGE_4K_SIZE)
+        return -EFAULT;
 
     memcpy(name, dent->d_name, namelen);
     dent->d_namelen = namelen;
@@ -162,7 +179,9 @@ struct super_block* mount_fs(char* name, struct Disk_Partition_Table_Entry* DPTE
     struct file_system_type* p = NULL;
 
     for (p = &filesystem; p; p = p->next)
-        if (!strcmp(p->name, name)) { return p->read_superblock(DPTE, buf); }
+        if (!strcmpk(p->name, name)) {
+            return p->read_superblock(DPTE, buf);
+        }
     return 0;
 }
 int mount_fs_on(struct dir_entry* d_to_mount, struct super_block* fs)
@@ -191,7 +210,8 @@ unsigned long register_filesystem(struct file_system_type* fs)
     struct file_system_type* p = NULL;
 
     for (p = &filesystem; p; p = p->next)
-        if (!strcmp(fs->name, p->name)) return 0;
+        if (!strcmpk(fs->name, p->name))
+            return 0;
 
     fs->next        = filesystem.next;
     filesystem.next = fs;
@@ -221,7 +241,7 @@ struct dir_entry* root_lookup(struct index_node* parent_inode, struct dir_entry*
     struct List*      p   = tmp->subdirs_list.next;
     while (p) {
         struct dir_entry* dp = p->data;
-        if (strcmp(dp->name, dest_dentry->name) == 0) {
+        if (strcmpk(dp->name, dest_dentry->name) == 0) {
             kmfree(dest_dentry);
             return dp;
         }
@@ -248,7 +268,7 @@ void                         init_rootfs()
     ir->private_index_info=droot; */
 
     droot->name = droot + 1;   //紧凑跟在后面
-    strcpy(droot->name, "/");
+    strcpyk(droot->name, "/");
     droot->name_length = 1;
     droot->parent      = droot;
     list_init(&droot->subdirs_list);
@@ -260,7 +280,9 @@ void                         init_rootfs()
     // TODO 以后要直接拿设备号，这个设备号通过devman创建设备文件（节点）分配。
     ROOT_DEV = dev_ramdisk << 4;
 
-    for (int i = 0; i < 48; i++) { history_dentry[i] = 0; }
+    for (int i = 0; i < 48; i++) {
+        history_dentry[i] = 0;
+    }
 }
 
 struct dir_entry* create_node(char* pathname, mode_t mode, unsigned short dev)
@@ -275,14 +297,16 @@ struct dir_entry* create_node(char* pathname, mode_t mode, unsigned short dev)
     memcpy(path, pathname, pplen);
     path[pplen]              = '\0';
     struct dir_entry* parent = path_walk(path, 0);
-    if (!parent) { return NULL; }
+    if (!parent) {
+        return NULL;
+    }
     p++;
     kmfree(path);
     struct dir_entry*  new_noded = kmalloc(0, PAGE_4K_SIZE);
     struct index_node* new_nodei = new_noded + 1;
     new_noded->name              = new_nodei + 1;
-    new_noded->name_length       = strlen(p);
-    strcpy(new_noded->name, p);
+    new_noded->name_length       = strlenk(p);
+    strcpyk(new_noded->name, p);
     new_noded->dir_inode   = new_nodei;
     new_noded->dir_ops     = parent->dir_ops;
     new_noded->mount_point = 0;
@@ -321,9 +345,13 @@ void list_add(struct List* entry, struct List* new)   ////add to the tail of the
 int remove(char* pathname)
 {
     struct dir_entry* target = path_walk(pathname, 0);
-    if (!target) { return -ENOENT; }
+    if (!target) {
+        return -ENOENT;
+    }
     //检查是否正在被使用
-    if (target->link || target->mount_point) { return -EBUSY; }
+    if (target->link || target->mount_point) {
+        return -EBUSY;
+    }
 
     //删除文件
     target->dir_inode->inode_ops->rmdir(target->dir_inode, target);
@@ -331,7 +359,8 @@ int remove(char* pathname)
     //在vfs中删除
     drelse(target);
     struct index_node* inode = target->dir_inode;
-    if (inode->private_index_info) kmfree(inode->private_index_info);
+    if (inode->private_index_info)
+        kmfree(inode->private_index_info);
     kmfree(inode);
     return 0;
 }

@@ -58,57 +58,19 @@ void com_putchar(unsigned short ch, int com_base)
 
 void com_puts(char* s, int com_port)
 {
-    for (; *s; s++) { com_putchar(*s, com_port); }
+    for (; *s; s++) {
+        com_putchar(*s, com_port);
+    }
 }
 
 void comprintf(char* fmt, ...)
 {
-    if (strlen(fmt) >= 1024) return;   //一次性输出不了太长
-    //这里不使用kmalloc
-    char* tmp = combuf;
-    memset(tmp, 0, sizeof(combuf));
-    // count num of args
-    char* pstr = fmt;
-    char* prev = fmt;
-
     va_list vargs;
     va_start(vargs, fmt);
-    pstr = fmt;
-    for (; *pstr != '\0'; pstr++) {
-        if (*pstr == '%' && *(pstr + 1) != '\0') {
-            pstr++;
-            if (*pstr == 'x') {
-                long v = va_arg(vargs, long);
-                sprint_hex(tmp, v);
-            }
-            if (*pstr == 'l') {
-                unsigned long long v = va_arg(vargs, unsigned long long);
-                sprint_hex(tmp, v);
-            }
-            else if (*pstr == 's') {
-                char* v = va_arg(vargs, char*);
-                sprintn(tmp, v);
-            }
-            else if (*pstr == 'd') {
-                char* v = va_arg(vargs, char*);
-                sprint_decimal(tmp, v);
-            }
-            else if (*pstr == 'c') {
-                char v = va_arg(vargs, char);
-                sprintchar(tmp, v);
-            }
-            else if (*pstr == 'p') {
-                int v = va_arg(vargs, addr_t);
-                sprint_hex(tmp, v);
-            }
-            else {
-                sprintchar(tmp, *pstr);
-            }
-        }
-        else {
-            sprintchar(tmp, *pstr);
-        }
-    }
+    if (strlenk(fmt) >= 1024)
+        return;   //一次性输出不了太长
+    memset(combuf, 0, 1024);
+    vsnprintfk(combuf, 1024, fmt, vargs);
     va_end(vargs);
-    com_puts(tmp, PORT_COM1);
+    com_puts(combuf, PORT_COM1);
 }

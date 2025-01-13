@@ -30,7 +30,7 @@ diff --git a/knl/main.c b/knl/main.c
 Index: knl/com.c
 IDEA additional info:
 Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
-<+>//\r\n// Created by Oniar_Pie on 2024/9/27.\r\n//\r\n#include <stdarg.h>\r\n#include \"com.h\"\r\n#include \"int.h\"\r\n#include \"str.h\"\r\n#include \"memory.h\"\r\n\r\n\r\nvoid init_com(int base_port){\r\n    /* disable all interrupts */\r\n    outb(base_port + COM_REG_IER, 0x00);\r\n    \r\n    /* enable DLAB to set bound rate divisor */\r\n    outb(base_port + COM_REG_LCR, 0x80);\r\n    \r\n    /* set divisor to 38400 baud */\r\n    outb(base_port + COM_REG_DLL, 0x03);\r\n    outb(base_port + COM_REG_DLM, 0x00);\r\n    \r\n    /* 8 data bits, parity off, 1 stop bit, DLAB latch off */\r\n    outb(base_port + COM_REG_LCR, 0x03);\r\n    \r\n    /* enable FIFO */\r\n    outb(base_port + COM_REG_FCR, 0x87);//0xc7\r\n\r\n    /* enable IRQs, set RTS/DSR */\r\n    outb(base_port + COM_REG_MCR, 0x0B);\r\n    \r\n    /* set in loopback mode and test serial chip */\r\n//    outb(base_port + COM_REG_MCR, 0x1E);\r\n//\r\n//    /* write a byte to test serial chip */\r\n//    outb(base_port + COM_REG_TX, 0xae);\r\n//\r\n//    /* check if serial is faulty */\r\n//    if (inb(base_port + COM_REG_RX) != 0xae) {\r\n//        return;\r\n//    }\r\n    \r\n    /* set in normal mode */\r\n    outb(base_port + COM_REG_MCR, 0x0F);\r\n}\r\nvoid com_putchar(unsigned short ch,int com_base)\r\n{\r\n    unsigned char res;\r\n    /* wait for the port to be ready */\r\n    do {\r\n        res = inb(com_base + COM_REG_LSR);\r\n        res &= 0x20;\r\n    } while (res == 0);\r\n    outb(com_base, ch);\r\n}\r\n\r\nvoid com_puts(char* s,int com_port){\r\n    for(;*s;s++){\r\n        com_putchar(*s,com_port);\r\n    }\r\n}\r\nvoid comprintf(char* fmt,va_list args){\r\n    if(strlen(fmt)>=1024)\r\n        return;//一次性输出不了太长\r\n    char* tmp=(char*)vmalloc();\r\n    sprintf(tmp,fmt,args);\r\n    com_puts(tmp,PORT_COM1);\r\n    vmfree(tmp);\r\n}
+<+>//\r\n// Created by Oniar_Pie on 2024/9/27.\r\n//\r\n#include <stdarg.h>\r\n#include \"com.h\"\r\n#include \"int.h\"\r\n#include \"str.h\"\r\n#include \"memory.h\"\r\n\r\n\r\nvoid init_com(int base_port){\r\n    /* disable all interrupts */\r\n    outb(base_port + COM_REG_IER, 0x00);\r\n    \r\n    /* enable DLAB to set bound rate divisor */\r\n    outb(base_port + COM_REG_LCR, 0x80);\r\n    \r\n    /* set divisor to 38400 baud */\r\n    outb(base_port + COM_REG_DLL, 0x03);\r\n    outb(base_port + COM_REG_DLM, 0x00);\r\n    \r\n    /* 8 data bits, parity off, 1 stop bit, DLAB latch off */\r\n    outb(base_port + COM_REG_LCR, 0x03);\r\n    \r\n    /* enable FIFO */\r\n    outb(base_port + COM_REG_FCR, 0x87);//0xc7\r\n\r\n    /* enable IRQs, set RTS/DSR */\r\n    outb(base_port + COM_REG_MCR, 0x0B);\r\n    \r\n    /* set in loopback mode and test serial chip */\r\n//    outb(base_port + COM_REG_MCR, 0x1E);\r\n//\r\n//    /* write a byte to test serial chip */\r\n//    outb(base_port + COM_REG_TX, 0xae);\r\n//\r\n//    /* check if serial is faulty */\r\n//    if (inb(base_port + COM_REG_RX) != 0xae) {\r\n//        return;\r\n//    }\r\n    \r\n    /* set in normal mode */\r\n    outb(base_port + COM_REG_MCR, 0x0F);\r\n}\r\nvoid com_putchar(unsigned short ch,int com_base)\r\n{\r\n    unsigned char res;\r\n    /* wait for the port to be ready */\r\n    do {\r\n        res = inb(com_base + COM_REG_LSR);\r\n        res &= 0x20;\r\n    } while (res == 0);\r\n    outb(com_base, ch);\r\n}\r\n\r\nvoid com_puts(char* s,int com_port){\r\n    for(;*s;s++){\r\n        com_putchar(*s,com_port);\r\n    }\r\n}\r\nvoid comprintf(char* fmt,va_list args){\r\n    if(strlenk(fmt)>=1024)\r\n        return;//一次性输出不了太长\r\n    char* tmp=(char*)vmalloc();\r\n    sprintf(tmp,fmt,args);\r\n    com_puts(tmp,PORT_COM1);\r\n    vmfree(tmp);\r\n}
 Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 <+>UTF-8
 ===================================================================
@@ -87,7 +87,7 @@ diff --git a/knl/com.c b/knl/com.c
  }
 -void comprintf(char* fmt,va_list args){
 +void __attribute__((regparm(0))) comprintf(char* fmt,...){
-     if(strlen(fmt)>=1024)
+     if(strlenk(fmt)>=1024)
          return;//一次性输出不了太长
 -    char* tmp=(char*)vmalloc();
 -    sprintf(tmp,fmt,args);
@@ -128,7 +128,7 @@ diff --git a/knl/com.c b/knl/com.c
 Index: com/str.c
 IDEA additional info:
 Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
-<+>#include \"str.h\"\r\n#include <stdarg.h>\r\nvoid strcpy(unsigned char* dest, unsigned char *buf){\r\n    while(*buf!='\\0'){\r\n        *(dest++)=*(buf++);\r\n    }\r\n    *dest='\\0';\r\n}\r\nstatic char strtokkee[512],*strtokkeeptr=strtokkee;\r\nstatic int tokptr=0;\r\nstatic char retbuf[512],*retbptr=retbuf;\r\nchar* strtok(char *str,char splitter){\r\n    //limit: cannot cut string longer than 512\r\n    if(str!=(void*)0){\r\n        //cut for the first time\r\n        strcpy(strtokkee,str);\r\n        char* ptr=strtokkee;\r\n        for(tokptr=0;strtokkee[tokptr]!=splitter&&strtokkee[tokptr]!='\\0';tokptr=(tokptr+1)%512);\r\n        strtokkee[tokptr]='\\0';\r\n        tokptr=(tokptr+1)%512;\r\n        return ptr;\r\n    }\r\n    //go on cutting\r\n    int c=0;\r\n    char* ptr=strtokkee+tokptr;\r\n    for(;strtokkee[tokptr]!=splitter&&strtokkee[tokptr]!='\\0';tokptr=(tokptr+1)%512,c++);\r\n    strtokkee[tokptr]='\\0';\r\n    tokptr=(tokptr+1)%512;\r\n    if(c)\r\n        return ptr;\r\n    else\r\n        return (void*)0;\r\n}\r\nint strcmp(char *s1,char *s2)\r\n{\r\n\twhile(*s1!='\\0'&&*s2!='\\0'){\r\n\t\tif(*s1>*s2)\r\n\t\t\treturn 1;\r\n\t\telse if(*s1<*s2)\r\n\t\t\treturn -1;\r\n\t\ts1++;\r\n\t\ts2++;\r\n\t}\r\n\tif(*s1==*s2)\r\n\t\treturn 0;\r\n}\r\n\r\nint strlen(char *str)\r\n{\r\n    int l=0;\r\n    for(;*str!='\\0';str++,l++);\r\n    return l;\r\n}\r\n\r\nvoid sprintf(char *dist, char *str,...)\r\n{\r\n\r\n    //count num of args\r\n    char *pstr=str;\r\n    char *prev=str;\r\n    int argnum=0;\r\n    while (*pstr!='\\n')\r\n    {\r\n        if(*pstr=='%'&&*prev!='%')\r\n            argnum++;\r\n        prev=pstr;\r\n        pstr++;\r\n    }\r\n\r\n    va_list vargs;\r\n    va_start(vargs,str);\r\n    pstr=str;\r\n    for(;*pstr!='\\0';pstr++){\r\n        if(*pstr=='%'&&*(pstr+1)!='\\0'){\r\n            pstr++;\r\n            if(*pstr=='x'){\r\n                int v=va_arg(vargs,int);\r\n                sprint_hex(dist,v);\r\n            }else if(*pstr=='s'){\r\n                char* v=va_arg(vargs,char*);\r\n                sprintn(dist,v);\r\n            }else if(*pstr=='d'){\r\n                char* v=va_arg(vargs,char*);\r\n                sprint_decimal(dist,v);\r\n            }else if(*pstr=='c'){\r\n                char v=va_arg(vargs,char);\r\n                sprintchar(dist,v);\r\n            }else{\r\n                sprintchar(dist,*pstr);\r\n            }\r\n        }else{\r\n            sprintchar(dist,*pstr);\r\n        }\r\n    }\r\n    va_end(vargs);\r\n}\r\nvoid sprintchar(char *dist,char c)\r\n{\r\n    while(*dist!='\\0')\r\n        dist++;\r\n    *dist++=c;\r\n    *dist='\\0';\r\n}\r\nvoid sprint_decimal(char *dist,int c)\r\n{\r\n    unsigned char st[22];\r\n    int p=0;\r\n    while(p<sizeof(unsigned long)*2){\r\n        unsigned char a=c%10+'0';\r\n        st[p++]=a;\r\n        c/=10;\r\n    }\r\n    while(p>0)\r\n    {\r\n        sprintchar(dist,st[--p]);\r\n    }\r\n}\r\nvoid sprint_hex(char *dist,unsigned int c)\r\n{\r\n    unsigned char st[10];\r\n    int p=0;\r\n    while(p<10){\r\n        unsigned char a=c%16;\r\n        if(a>9)a+='a'-10;\r\n        else a+='0';\r\n        st[p++]=a;\r\n        c/=16;\r\n    }\r\n    while(p>0)\r\n    {\r\n        sprintchar(dist,st[--p]);\r\n    }\r\n}\r\nvoid sprintn(char *dist,char *str)\r\n{\r\n    while(*str!='\\0')\r\n    {\r\n        sprintchar(dist,*str++);\r\n    }\r\n}
+<+>#include \"str.h\"\r\n#include <stdarg.h>\r\nvoid strcpyk(unsigned char* dest, unsigned char *buf){\r\n    while(*buf!='\\0'){\r\n        *(dest++)=*(buf++);\r\n    }\r\n    *dest='\\0';\r\n}\r\nstatic char strtokkee[512],*strtokkeeptr=strtokkee;\r\nstatic int tokptr=0;\r\nstatic char retbuf[512],*retbptr=retbuf;\r\nchar* strtokk(char *str,char splitter){\r\n    //limit: cannot cut string longer than 512\r\n    if(str!=(void*)0){\r\n        //cut for the first time\r\n        strcpyk(strtokkee,str);\r\n        char* ptr=strtokkee;\r\n        for(tokptr=0;strtokkee[tokptr]!=splitter&&strtokkee[tokptr]!='\\0';tokptr=(tokptr+1)%512);\r\n        strtokkee[tokptr]='\\0';\r\n        tokptr=(tokptr+1)%512;\r\n        return ptr;\r\n    }\r\n    //go on cutting\r\n    int c=0;\r\n    char* ptr=strtokkee+tokptr;\r\n    for(;strtokkee[tokptr]!=splitter&&strtokkee[tokptr]!='\\0';tokptr=(tokptr+1)%512,c++);\r\n    strtokkee[tokptr]='\\0';\r\n    tokptr=(tokptr+1)%512;\r\n    if(c)\r\n        return ptr;\r\n    else\r\n        return (void*)0;\r\n}\r\nint strcmpk(char *s1,char *s2)\r\n{\r\n\twhile(*s1!='\\0'&&*s2!='\\0'){\r\n\t\tif(*s1>*s2)\r\n\t\t\treturn 1;\r\n\t\telse if(*s1<*s2)\r\n\t\t\treturn -1;\r\n\t\ts1++;\r\n\t\ts2++;\r\n\t}\r\n\tif(*s1==*s2)\r\n\t\treturn 0;\r\n}\r\n\r\nint strlenk(char *str)\r\n{\r\n    int l=0;\r\n    for(;*str!='\\0';str++,l++);\r\n    return l;\r\n}\r\n\r\nvoid sprintf(char *dist, char *str,...)\r\n{\r\n\r\n    //count num of args\r\n    char *pstr=str;\r\n    char *prev=str;\r\n    int argnum=0;\r\n    while (*pstr!='\\n')\r\n    {\r\n        if(*pstr=='%'&&*prev!='%')\r\n            argnum++;\r\n        prev=pstr;\r\n        pstr++;\r\n    }\r\n\r\n    va_list vargs;\r\n    va_start(vargs,str);\r\n    pstr=str;\r\n    for(;*pstr!='\\0';pstr++){\r\n        if(*pstr=='%'&&*(pstr+1)!='\\0'){\r\n            pstr++;\r\n            if(*pstr=='x'){\r\n                int v=va_arg(vargs,int);\r\n                sprint_hex(dist,v);\r\n            }else if(*pstr=='s'){\r\n                char* v=va_arg(vargs,char*);\r\n                strcat(dist,v);\r\n            }else if(*pstr=='d'){\r\n                char* v=va_arg(vargs,char*);\r\n                sprint_decimal(dist,v);\r\n            }else if(*pstr=='c'){\r\n                char v=va_arg(vargs,char);\r\n                sprintchar(dist,v);\r\n            }else{\r\n                sprintchar(dist,*pstr);\r\n            }\r\n        }else{\r\n            sprintchar(dist,*pstr);\r\n        }\r\n    }\r\n    va_end(vargs);\r\n}\r\nvoid sprintchar(char *dist,char c)\r\n{\r\n    while(*dist!='\\0')\r\n        dist++;\r\n    *dist++=c;\r\n    *dist='\\0';\r\n}\r\nvoid sprint_decimal(char *dist,int c)\r\n{\r\n    unsigned char st[22];\r\n    int p=0;\r\n    while(p<sizeof(unsigned long)*2){\r\n        unsigned char a=c%10+'0';\r\n        st[p++]=a;\r\n        c/=10;\r\n    }\r\n    while(p>0)\r\n    {\r\n        sprintchar(dist,st[--p]);\r\n    }\r\n}\r\nvoid sprint_hex(char *dist,unsigned int c)\r\n{\r\n    unsigned char st[10];\r\n    int p=0;\r\n    while(p<10){\r\n        unsigned char a=c%16;\r\n        if(a>9)a+='a'-10;\r\n        else a+='0';\r\n        st[p++]=a;\r\n        c/=16;\r\n    }\r\n    while(p>0)\r\n    {\r\n        sprintchar(dist,st[--p]);\r\n    }\r\n}\r\nvoid strcat(char *dist,char *str)\r\n{\r\n    while(*str!='\\0')\r\n    {\r\n        sprintchar(dist,*str++);\r\n    }\r\n}
 Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 <+>UTF-8
 ===================================================================
@@ -1457,10 +1457,10 @@ diff --git a/knl.s b/knl.s
 -  800dbd:	0f 29 6d d0          	movaps XMMWORD PTR [rbp-0x30],xmm5
 -  800dc1:	0f 29 75 e0          	movaps XMMWORD PTR [rbp-0x20],xmm6
 -  800dc5:	0f 29 7d f0          	movaps XMMWORD PTR [rbp-0x10],xmm7
--    if(strlen(format)>=1024)
+-    if(strlenk(format)>=1024)
 -  800dc9:	48 8b 85 28 ff ff ff 	mov    rax,QWORD PTR [rbp-0xd8]
 -  800dd0:	48 89 c7             	mov    rdi,rax
--  800dd3:	e8 2f c4 00 00       	call   80d207 <strlen>
+-  800dd3:	e8 2f c4 00 00       	call   80d207 <strlenk>
 -  800dd8:	3d ff 03 00 00       	cmp    eax,0x3ff
 -  800ddd:	0f 8f 97 00 00 00    	jg     800e7a <printf+0x10e>
 +  800d84:	f3 0f 1e fa          	endbr64 
@@ -1483,10 +1483,10 @@ diff --git a/knl.s b/knl.s
 +  800dd5:	0f 29 6d d0          	movaps XMMWORD PTR [rbp-0x30],xmm5
 +  800dd9:	0f 29 75 e0          	movaps XMMWORD PTR [rbp-0x20],xmm6
 +  800ddd:	0f 29 7d f0          	movaps XMMWORD PTR [rbp-0x10],xmm7
-+    if(strlen(fmt)>=1024)
++    if(strlenk(fmt)>=1024)
 +  800de1:	48 8b 85 e8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x118]
 +  800de8:	48 89 c7             	mov    rdi,rax
-+  800deb:	e8 52 cc 00 00       	call   80da42 <strlen>
++  800deb:	e8 52 cc 00 00       	call   80da42 <strlenk>
 +  800df0:	3d ff 03 00 00       	cmp    eax,0x3ff
 +  800df5:	0f 8f 47 02 00 00    	jg     801042 <printf+0x2be>
          return;//一次性输出不了太长
@@ -1719,10 +1719,10 @@ diff --git a/knl.s b/knl.s
 +  80109a:	0f 29 75 e0          	movaps XMMWORD PTR [rbp-0x20],xmm6
 +  80109e:	0f 29 7d f0          	movaps XMMWORD PTR [rbp-0x10],xmm7
 +
-+    if(strlen(fmt)>=1024)
++    if(strlenk(fmt)>=1024)
 +  8010a2:	48 8b 85 e8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x118]
 +  8010a9:	48 89 c7             	mov    rdi,rax
-+  8010ac:	e8 91 c9 00 00       	call   80da42 <strlen>
++  8010ac:	e8 91 c9 00 00       	call   80da42 <strlenk>
 +  8010b1:	3d ff 03 00 00       	cmp    eax,0x3ff
 +  8010b6:	0f 8f c1 02 00 00    	jg     80137d <log+0x338>
          return;//一次性输出不了太长
@@ -4677,7 +4677,7 @@ diff --git a/knl.s b/knl.s
 +  80222a:	48 c1 e0 03          	shl    rax,0x3
 +  80222e:	48 05 48 02 40 00    	add    rax,0x400248
 +  802234:	48 89 10             	mov    QWORD PTR [rax],rdx
-             strcpy(vols[i].name,name);
+             strcpyk(vols[i].name,name);
 -  801d8d:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
 -  801d90:	48 63 d0             	movsxd rdx,eax
 -  801d93:	48 89 d0             	mov    rax,rdx
@@ -4688,7 +4688,7 @@ diff --git a/knl.s b/knl.s
 -  801da8:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
 -  801dac:	48 89 c6             	mov    rsi,rax
 -  801daf:	48 89 d7             	mov    rdi,rdx
--  801db2:	e8 31 b2 00 00       	call   80cfe8 <strcpy>
+-  801db2:	e8 31 b2 00 00       	call   80cfe8 <strcpyk>
 +  802237:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
 +  80223a:	48 63 d0             	movsxd rdx,eax
 +  80223d:	48 89 d0             	mov    rax,rdx
@@ -4699,7 +4699,7 @@ diff --git a/knl.s b/knl.s
 +  802252:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
 +  802256:	48 89 c6             	mov    rsi,rax
 +  802259:	48 89 d7             	mov    rdi,rdx
-+  80225c:	e8 c2 b5 00 00       	call   80d823 <strcpy>
++  80225c:	e8 c2 b5 00 00       	call   80d823 <strcpyk>
              return i;
 -  801db7:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
 -  801dba:	eb 13                	jmp    801dcf <reg_vol+0x109>
@@ -6151,19 +6151,19 @@ diff --git a/knl.s b/knl.s
 +  802a14:	89 55 9c             	mov    DWORD PTR [rbp-0x64],edx
 +  802a17:	48 89 4d 90          	mov    QWORD PTR [rbp-0x70],rcx
 +  802a1b:	4c 89 45 88          	mov    QWORD PTR [rbp-0x78],r8
-     strcpy(d->name,name);
+     strcpyk(d->name,name);
 -  802575:	48 8b 45 a8          	mov    rax,QWORD PTR [rbp-0x58]
 -  802579:	48 8b 00             	mov    rax,QWORD PTR [rax]
 -  80257c:	48 8b 55 a0          	mov    rdx,QWORD PTR [rbp-0x60]
 -  802580:	48 89 d6             	mov    rsi,rdx
 -  802583:	48 89 c7             	mov    rdi,rax
--  802586:	e8 5d aa 00 00       	call   80cfe8 <strcpy>
+-  802586:	e8 5d aa 00 00       	call   80cfe8 <strcpyk>
 +  802a1f:	48 8b 45 a8          	mov    rax,QWORD PTR [rbp-0x58]
 +  802a23:	48 8b 00             	mov    rax,QWORD PTR [rax]
 +  802a26:	48 8b 55 a0          	mov    rdx,QWORD PTR [rbp-0x60]
 +  802a2a:	48 89 d6             	mov    rsi,rdx
 +  802a2d:	48 89 c7             	mov    rdi,rax
-+  802a30:	e8 ee ad 00 00       	call   80d823 <strcpy>
++  802a30:	e8 ee ad 00 00       	call   80d823 <strcpyk>
      d->name_length=namelen;
 -  80258b:	48 8b 45 a8          	mov    rax,QWORD PTR [rbp-0x58]
 -  80258f:	8b 55 9c             	mov    edx,DWORD PTR [rbp-0x64]
@@ -6513,12 +6513,12 @@ diff --git a/knl.s b/knl.s
 +  802c36:	48 89 55 98          	mov    QWORD PTR [rbp-0x68],rdx
 +  802c3a:	48 89 4d 90          	mov    QWORD PTR [rbp-0x70],rcx
 +  802c3e:	4c 89 45 88          	mov    QWORD PTR [rbp-0x78],r8
-     make_dentry(d,name, strlen(name),root_sb->root,&dev_dir_dops);
+     make_dentry(d,name, strlenk(name),root_sb->root,&dev_dir_dops);
 -  802798:	48 8b 05 a9 5b c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc25ba9]        # 428348 <root_sb>
 -  80279f:	48 8b 18             	mov    rbx,QWORD PTR [rax]
 -  8027a2:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
 -  8027a6:	48 89 c7             	mov    rdi,rax
--  8027a9:	e8 59 aa 00 00       	call   80d207 <strlen>
+-  8027a9:	e8 59 aa 00 00       	call   80d207 <strlenk>
 -  8027ae:	89 c2                	mov    edx,eax
 -  8027b0:	48 8b 75 98          	mov    rsi,QWORD PTR [rbp-0x68]
 -  8027b4:	48 8b 45 a8          	mov    rax,QWORD PTR [rbp-0x58]
@@ -6530,7 +6530,7 @@ diff --git a/knl.s b/knl.s
 +  802c49:	48 8b 18             	mov    rbx,QWORD PTR [rax]
 +  802c4c:	48 8b 45 98          	mov    rax,QWORD PTR [rbp-0x68]
 +  802c50:	48 89 c7             	mov    rdi,rax
-+  802c53:	e8 ea ad 00 00       	call   80da42 <strlen>
++  802c53:	e8 ea ad 00 00       	call   80da42 <strlenk>
 +  802c58:	89 c2                	mov    edx,eax
 +  802c5a:	48 8b 75 98          	mov    rsi,QWORD PTR [rbp-0x68]
 +  802c5e:	48 8b 45 a8          	mov    rax,QWORD PTR [rbp-0x58]
@@ -7123,10 +7123,10 @@ diff --git a/knl.s b/knl.s
 +  8030a0:	48 8b 40 10          	mov    rax,QWORD PTR [rax+0x10]
 +  8030a4:	48 8b 00             	mov    rax,QWORD PTR [rax]
 +  8030a7:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
-     char* p=name+ strlen(name)-1;
+     char* p=name+ strlenk(name)-1;
 -  802c01:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 -  802c05:	48 89 c7             	mov    rdi,rax
--  802c08:	e8 fa a5 00 00       	call   80d207 <strlen>
+-  802c08:	e8 fa a5 00 00       	call   80d207 <strlenk>
 -  802c0d:	48 98                	cdqe   
 -  802c0f:	48 8d 50 ff          	lea    rdx,[rax-0x1]
 -  802c13:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
@@ -7134,7 +7134,7 @@ diff --git a/knl.s b/knl.s
 -  802c1a:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
 +  8030ab:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 +  8030af:	48 89 c7             	mov    rdi,rax
-+  8030b2:	e8 8b a9 00 00       	call   80da42 <strlen>
++  8030b2:	e8 8b a9 00 00       	call   80da42 <strlenk>
 +  8030b7:	48 98                	cdqe   
 +  8030b9:	48 8d 50 ff          	lea    rdx,[rax-0x1]
 +  8030bd:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
@@ -7201,17 +7201,17 @@ diff --git a/knl.s b/knl.s
 +  80311f:	48 89 c7             	mov    rdi,rax
 +  803122:	e8 65 9d 00 00       	call   80ce8c <init_tty>
 +  803127:	eb 31                	jmp    80315a <open_dev+0xd2>
-     }else if(strcmp(name,"console")==0){
+     }else if(strcmpk(name,"console")==0){
 -  802c7f:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 -  802c83:	be 90 55 81 00       	mov    esi,0x815590
 -  802c88:	48 89 c7             	mov    rdi,rax
--  802c8b:	e8 f8 a4 00 00       	call   80d188 <strcmp>
+-  802c8b:	e8 f8 a4 00 00       	call   80d188 <strcmpk>
 -  802c90:	85 c0                	test   eax,eax
 -  802c92:	75 15                	jne    802ca9 <open_dev+0xcb>
 +  803129:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 +  80312d:	be 28 5e 81 00       	mov    esi,0x815e28
 +  803132:	48 89 c7             	mov    rdi,rax
-+  803135:	e8 89 a8 00 00       	call   80d9c3 <strcmp>
++  803135:	e8 89 a8 00 00       	call   80d9c3 <strcmpk>
 +  80313a:	85 c0                	test   eax,eax
 +  80313c:	75 15                	jne    803153 <open_dev+0xcb>
          return open_framebuffer(inode,filp);
@@ -7262,10 +7262,10 @@ diff --git a/knl.s b/knl.s
 +  803174:	48 8b 40 10          	mov    rax,QWORD PTR [rax+0x10]
 +  803178:	48 8b 00             	mov    rax,QWORD PTR [rax]
 +  80317b:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
-     char* p=name+ strlen(name)-1;
+     char* p=name+ strlenk(name)-1;
 -  802cd5:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 -  802cd9:	48 89 c7             	mov    rdi,rax
--  802cdc:	e8 26 a5 00 00       	call   80d207 <strlen>
+-  802cdc:	e8 26 a5 00 00       	call   80d207 <strlenk>
 -  802ce1:	48 98                	cdqe   
 -  802ce3:	48 8d 50 ff          	lea    rdx,[rax-0x1]
 -  802ce7:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
@@ -7273,7 +7273,7 @@ diff --git a/knl.s b/knl.s
 -  802cee:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
 +  80317f:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 +  803183:	48 89 c7             	mov    rdi,rax
-+  803186:	e8 b7 a8 00 00       	call   80da42 <strlen>
++  803186:	e8 b7 a8 00 00       	call   80da42 <strlenk>
 +  80318b:	48 98                	cdqe   
 +  80318d:	48 8d 50 ff          	lea    rdx,[rax-0x1]
 +  803191:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
@@ -7340,17 +7340,17 @@ diff --git a/knl.s b/knl.s
 +  8031f3:	48 89 c7             	mov    rdi,rax
 +  8031f6:	e8 16 9c 00 00       	call   80ce11 <close_tty>
 +  8031fb:	eb 31                	jmp    80322e <close_dev+0xd2>
-     }else if(strcmp(name,"console")==0){
+     }else if(strcmpk(name,"console")==0){
 -  802d53:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 -  802d57:	be 90 55 81 00       	mov    esi,0x815590
 -  802d5c:	48 89 c7             	mov    rdi,rax
--  802d5f:	e8 24 a4 00 00       	call   80d188 <strcmp>
+-  802d5f:	e8 24 a4 00 00       	call   80d188 <strcmpk>
 -  802d64:	85 c0                	test   eax,eax
 -  802d66:	75 15                	jne    802d7d <close_dev+0xcb>
 +  8031fd:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 +  803201:	be 28 5e 81 00       	mov    esi,0x815e28
 +  803206:	48 89 c7             	mov    rdi,rax
-+  803209:	e8 b5 a7 00 00       	call   80d9c3 <strcmp>
++  803209:	e8 b5 a7 00 00       	call   80d9c3 <strcmpk>
 +  80320e:	85 c0                	test   eax,eax
 +  803210:	75 15                	jne    803227 <close_dev+0xcb>
          return close_framebuffer(inode,filp);
@@ -7406,10 +7406,10 @@ diff --git a/knl.s b/knl.s
 +  803250:	48 8b 40 10          	mov    rax,QWORD PTR [rax+0x10]
 +  803254:	48 8b 00             	mov    rax,QWORD PTR [rax]
 +  803257:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
-     char* p=name+ strlen(name)-1;
+     char* p=name+ strlenk(name)-1;
 -  802db1:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 -  802db5:	48 89 c7             	mov    rdi,rax
--  802db8:	e8 4a a4 00 00       	call   80d207 <strlen>
+-  802db8:	e8 4a a4 00 00       	call   80d207 <strlenk>
 -  802dbd:	48 98                	cdqe   
 -  802dbf:	48 8d 50 ff          	lea    rdx,[rax-0x1]
 -  802dc3:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
@@ -7417,7 +7417,7 @@ diff --git a/knl.s b/knl.s
 -  802dca:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
 +  80325b:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 +  80325f:	48 89 c7             	mov    rdi,rax
-+  803262:	e8 db a7 00 00       	call   80da42 <strlen>
++  803262:	e8 db a7 00 00       	call   80da42 <strlenk>
 +  803267:	48 98                	cdqe   
 +  803269:	48 8d 50 ff          	lea    rdx,[rax-0x1]
 +  80326d:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
@@ -7486,17 +7486,17 @@ diff --git a/knl.s b/knl.s
 +  8032d4:	48 89 c7             	mov    rdi,rax
 +  8032d7:	e8 9e 9c 00 00       	call   80cf7a <read_tty>
 +  8032dc:	eb 36                	jmp    803314 <read_dev+0xe4>
-     }else if(strcmp(name,"console")==0){
+     }else if(strcmpk(name,"console")==0){
 -  802e34:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 -  802e38:	be 90 55 81 00       	mov    esi,0x815590
 -  802e3d:	48 89 c7             	mov    rdi,rax
--  802e40:	e8 43 a3 00 00       	call   80d188 <strcmp>
+-  802e40:	e8 43 a3 00 00       	call   80d188 <strcmpk>
 -  802e45:	85 c0                	test   eax,eax
 -  802e47:	75 1a                	jne    802e63 <read_dev+0xdd>
 +  8032de:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 +  8032e2:	be 28 5e 81 00       	mov    esi,0x815e28
 +  8032e7:	48 89 c7             	mov    rdi,rax
-+  8032ea:	e8 d4 a6 00 00       	call   80d9c3 <strcmp>
++  8032ea:	e8 d4 a6 00 00       	call   80d9c3 <strcmpk>
 +  8032ef:	85 c0                	test   eax,eax
 +  8032f1:	75 1a                	jne    80330d <read_dev+0xdd>
          return read_framebuffer(filp,buf,count,position);
@@ -7554,10 +7554,10 @@ diff --git a/knl.s b/knl.s
 +  803336:	48 8b 40 10          	mov    rax,QWORD PTR [rax+0x10]
 +  80333a:	48 8b 00             	mov    rax,QWORD PTR [rax]
 +  80333d:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
-     char* p=name+ strlen(name)-1;
+     char* p=name+ strlenk(name)-1;
 -  802e97:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 -  802e9b:	48 89 c7             	mov    rdi,rax
--  802e9e:	e8 64 a3 00 00       	call   80d207 <strlen>
+-  802e9e:	e8 64 a3 00 00       	call   80d207 <strlenk>
 -  802ea3:	48 98                	cdqe   
 -  802ea5:	48 8d 50 ff          	lea    rdx,[rax-0x1]
 -  802ea9:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
@@ -7565,7 +7565,7 @@ diff --git a/knl.s b/knl.s
 -  802eb0:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
 +  803341:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 +  803345:	48 89 c7             	mov    rdi,rax
-+  803348:	e8 f5 a6 00 00       	call   80da42 <strlen>
++  803348:	e8 f5 a6 00 00       	call   80da42 <strlenk>
 +  80334d:	48 98                	cdqe   
 +  80334f:	48 8d 50 ff          	lea    rdx,[rax-0x1]
 +  803353:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
@@ -7634,17 +7634,17 @@ diff --git a/knl.s b/knl.s
 +  8033ba:	48 89 c7             	mov    rdi,rax
 +  8033bd:	e8 65 9c 00 00       	call   80d027 <write_tty>
 +  8033c2:	eb 36                	jmp    8033fa <write_dev+0xe4>
-     }else if(strcmp(name,"console")==0){
+     }else if(strcmpk(name,"console")==0){
 -  802f1a:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 -  802f1e:	be 90 55 81 00       	mov    esi,0x815590
 -  802f23:	48 89 c7             	mov    rdi,rax
--  802f26:	e8 5d a2 00 00       	call   80d188 <strcmp>
+-  802f26:	e8 5d a2 00 00       	call   80d188 <strcmpk>
 -  802f2b:	85 c0                	test   eax,eax
 -  802f2d:	75 1a                	jne    802f49 <write_dev+0xdd>
 +  8033c4:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 +  8033c8:	be 28 5e 81 00       	mov    esi,0x815e28
 +  8033cd:	48 89 c7             	mov    rdi,rax
-+  8033d0:	e8 ee a5 00 00       	call   80d9c3 <strcmp>
++  8033d0:	e8 ee a5 00 00       	call   80d9c3 <strcmpk>
 +  8033d5:	85 c0                	test   eax,eax
 +  8033d7:	75 1a                	jne    8033f3 <write_dev+0xdd>
          return write_framebuffer(filp,buf,count,position);
@@ -7702,10 +7702,10 @@ diff --git a/knl.s b/knl.s
 +  80341c:	48 8b 40 10          	mov    rax,QWORD PTR [rax+0x10]
 +  803420:	48 8b 00             	mov    rax,QWORD PTR [rax]
 +  803423:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
-     char* p=name+ strlen(name)-1;
+     char* p=name+ strlenk(name)-1;
 -  802f7d:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 -  802f81:	48 89 c7             	mov    rdi,rax
--  802f84:	e8 7e a2 00 00       	call   80d207 <strlen>
+-  802f84:	e8 7e a2 00 00       	call   80d207 <strlenk>
 -  802f89:	48 98                	cdqe   
 -  802f8b:	48 8d 50 ff          	lea    rdx,[rax-0x1]
 -  802f8f:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
@@ -7713,7 +7713,7 @@ diff --git a/knl.s b/knl.s
 -  802f96:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
 +  803427:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 +  80342b:	48 89 c7             	mov    rdi,rax
-+  80342e:	e8 0f a6 00 00       	call   80da42 <strlen>
++  80342e:	e8 0f a6 00 00       	call   80da42 <strlenk>
 +  803433:	48 98                	cdqe   
 +  803435:	48 8d 50 ff          	lea    rdx,[rax-0x1]
 +  803439:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
@@ -7782,17 +7782,17 @@ diff --git a/knl.s b/knl.s
 +  8034a0:	48 89 c7             	mov    rdi,rax
 +  8034a3:	e8 47 9c 00 00       	call   80d0ef <ioctl_tty>
 +  8034a8:	eb 36                	jmp    8034e0 <ioctl_dev+0xe4>
-     }else if(strcmp(name,"console")==0){
+     }else if(strcmpk(name,"console")==0){
 -  803000:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 -  803004:	be 90 55 81 00       	mov    esi,0x815590
 -  803009:	48 89 c7             	mov    rdi,rax
--  80300c:	e8 77 a1 00 00       	call   80d188 <strcmp>
+-  80300c:	e8 77 a1 00 00       	call   80d188 <strcmpk>
 -  803011:	85 c0                	test   eax,eax
 -  803013:	75 1a                	jne    80302f <ioctl_dev+0xdd>
 +  8034aa:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 +  8034ae:	be 28 5e 81 00       	mov    esi,0x815e28
 +  8034b3:	48 89 c7             	mov    rdi,rax
-+  8034b6:	e8 08 a5 00 00       	call   80d9c3 <strcmp>
++  8034b6:	e8 08 a5 00 00       	call   80d9c3 <strcmpk>
 +  8034bb:	85 c0                	test   eax,eax
 +  8034bd:	75 1a                	jne    8034d9 <ioctl_dev+0xdd>
          return ioctl_framebuffer(inode,filp,cmd,arg);
@@ -8495,7 +8495,7 @@ diff --git a/knl.s b/knl.s
 +  803939:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
 +  803940:	eb 6c                	jmp    8039ae <sys_find_dev+0x85>
      {
-         if(devs[i].flag!=DEV_FLAG_EMPTY&&strcmp(name,devs[i].name)==0)
+         if(devs[i].flag!=DEV_FLAG_EMPTY&&strcmpk(name,devs[i].name)==0)
 -  803498:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
 -  80349b:	48 63 d0             	movsxd rdx,eax
 -  80349e:	48 89 d0             	mov    rax,rdx
@@ -8522,7 +8522,7 @@ diff --git a/knl.s b/knl.s
 -  8034e8:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
 -  8034ec:	48 89 d6             	mov    rsi,rdx
 -  8034ef:	48 89 c7             	mov    rdi,rax
--  8034f2:	e8 91 9c 00 00       	call   80d188 <strcmp>
+-  8034f2:	e8 91 9c 00 00       	call   80d188 <strcmpk>
 -  8034f7:	85 c0                	test   eax,eax
 -  8034f9:	75 05                	jne    803500 <sys_find_dev+0x81>
 +  803942:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
@@ -8551,7 +8551,7 @@ diff --git a/knl.s b/knl.s
 +  803992:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
 +  803996:	48 89 d6             	mov    rsi,rdx
 +  803999:	48 89 c7             	mov    rdi,rax
-+  80399c:	e8 22 a0 00 00       	call   80d9c3 <strcmp>
++  80399c:	e8 22 a0 00 00       	call   80d9c3 <strcmpk>
 +  8039a1:	85 c0                	test   eax,eax
 +  8039a3:	75 05                	jne    8039aa <sys_find_dev+0x81>
              return i;
@@ -8602,7 +8602,7 @@ diff --git a/knl.s b/knl.s
 -  80352f:	eb 67                	jmp    803598 <sys_operate_dev+0x87>
 +  8039d9:	eb 67                	jmp    803a42 <sys_operate_dev+0x87>
      {
-         if(devs[i].flag!=DEV_FLAG_EMPTY&&strcmp(name,devs[i].name)==0)
+         if(devs[i].flag!=DEV_FLAG_EMPTY&&strcmpk(name,devs[i].name)==0)
 -  803531:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
 -  803534:	48 63 d0             	movsxd rdx,eax
 -  803537:	48 89 d0             	mov    rax,rdx
@@ -8629,7 +8629,7 @@ diff --git a/knl.s b/knl.s
 -  803581:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
 -  803585:	48 89 d6             	mov    rsi,rdx
 -  803588:	48 89 c7             	mov    rdi,rax
--  80358b:	e8 f8 9b 00 00       	call   80d188 <strcmp>
+-  80358b:	e8 f8 9b 00 00       	call   80d188 <strcmpk>
 -  803590:	85 c0                	test   eax,eax
 -  803592:	74 0c                	je     8035a0 <sys_operate_dev+0x8f>
 +  8039db:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
@@ -8658,7 +8658,7 @@ diff --git a/knl.s b/knl.s
 +  803a2b:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
 +  803a2f:	48 89 d6             	mov    rsi,rdx
 +  803a32:	48 89 c7             	mov    rdi,rax
-+  803a35:	e8 89 9f 00 00       	call   80d9c3 <strcmp>
++  803a35:	e8 89 9f 00 00       	call   80d9c3 <strcmpk>
 +  803a3a:	85 c0                	test   eax,eax
 +  803a3c:	74 0c                	je     803a4a <sys_operate_dev+0x8f>
      for(;i<MAX_DEVICES;i++)
@@ -17947,17 +17947,17 @@ diff --git a/knl.s b/knl.s
 +  807679:	48 89 85 38 ff ff ff 	mov    QWORD PTR [rbp-0xc8],rax
              //此处应有加载dll代码
              int dlli;
-             if(strcmp(dllname,"sys.dll")==0)//加载系统dll的部分由内核已经完成
+             if(strcmpk(dllname,"sys.dll")==0)//加载系统dll的部分由内核已经完成
 -  8070c0:	48 8b 85 38 ff ff ff 	mov    rax,QWORD PTR [rbp-0xc8]
 -  8070c7:	be 7f 56 81 00       	mov    esi,0x81567f
 -  8070cc:	48 89 c7             	mov    rdi,rax
--  8070cf:	e8 b4 60 00 00       	call   80d188 <strcmp>
+-  8070cf:	e8 b4 60 00 00       	call   80d188 <strcmpk>
 -  8070d4:	85 c0                	test   eax,eax
 -  8070d6:	75 09                	jne    8070e1 <load_pe+0x356>
 +  807680:	48 8b 85 38 ff ff ff 	mov    rax,QWORD PTR [rbp-0xc8]
 +  807687:	be 6c 5f 81 00       	mov    esi,0x815f6c
 +  80768c:	48 89 c7             	mov    rdi,rax
-+  80768f:	e8 2f 63 00 00       	call   80d9c3 <strcmp>
++  80768f:	e8 2f 63 00 00       	call   80d9c3 <strcmpk>
 +  807694:	85 c0                	test   eax,eax
 +  807696:	75 09                	jne    8076a1 <load_pe+0x356>
              {
@@ -18180,7 +18180,7 @@ diff --git a/knl.s b/knl.s
 -  807248:	eb 7a                	jmp    8072c4 <load_pe+0x539>
 +  807808:	eb 7a                	jmp    807884 <load_pe+0x539>
                      {
-                         if(strcmp(import_by_name_p,fnames[i])==0)
+                         if(strcmpk(import_by_name_p,fnames[i])==0)
 -  80724a:	8b 45 c4             	mov    eax,DWORD PTR [rbp-0x3c]
 -  80724d:	48 98                	cdqe   
 -  80724f:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
@@ -18191,7 +18191,7 @@ diff --git a/knl.s b/knl.s
 -  807264:	48 8b 85 e8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x118]
 -  80726b:	48 89 d6             	mov    rsi,rdx
 -  80726e:	48 89 c7             	mov    rdi,rax
--  807271:	e8 12 5f 00 00       	call   80d188 <strcmp>
+-  807271:	e8 12 5f 00 00       	call   80d188 <strcmpk>
 -  807276:	85 c0                	test   eax,eax
 -  807278:	75 46                	jne    8072c0 <load_pe+0x535>
 +  80780a:	8b 45 c4             	mov    eax,DWORD PTR [rbp-0x3c]
@@ -18204,7 +18204,7 @@ diff --git a/knl.s b/knl.s
 +  807824:	48 8b 85 e8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x118]
 +  80782b:	48 89 d6             	mov    rsi,rdx
 +  80782e:	48 89 c7             	mov    rdi,rax
-+  807831:	e8 8d 61 00 00       	call   80d9c3 <strcmp>
++  807831:	e8 8d 61 00 00       	call   80d9c3 <strcmpk>
 +  807836:	85 c0                	test   eax,eax
 +  807838:	75 46                	jne    807880 <load_pe+0x535>
                          {
@@ -20854,13 +20854,13 @@ diff --git a/knl.s b/knl.s
 +  808738:	48 c7 45 f8 20 e2 80 	mov    QWORD PTR [rbp-0x8],0x80e220
 +  80873f:	00 
 +  808740:	eb 40                	jmp    808782 <mount_fs+0x6a>
-         if(!strcmp(p->name,name))
+         if(!strcmpk(p->name,name))
 -  808172:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 -  808176:	48 8b 00             	mov    rax,QWORD PTR [rax]
 -  808179:	48 8b 55 e8          	mov    rdx,QWORD PTR [rbp-0x18]
 -  80817d:	48 89 d6             	mov    rsi,rdx
 -  808180:	48 89 c7             	mov    rdi,rax
--  808183:	e8 00 50 00 00       	call   80d188 <strcmp>
+-  808183:	e8 00 50 00 00       	call   80d188 <strcmpk>
 -  808188:	85 c0                	test   eax,eax
 -  80818a:	75 1a                	jne    8081a6 <mount_fs+0x5e>
 +  808742:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
@@ -20868,7 +20868,7 @@ diff --git a/knl.s b/knl.s
 +  808749:	48 8b 55 e8          	mov    rdx,QWORD PTR [rbp-0x18]
 +  80874d:	48 89 d6             	mov    rsi,rdx
 +  808750:	48 89 c7             	mov    rdi,rax
-+  808753:	e8 6b 52 00 00       	call   80d9c3 <strcmp>
++  808753:	e8 6b 52 00 00       	call   80d9c3 <strcmpk>
 +  808758:	85 c0                	test   eax,eax
 +  80875a:	75 1a                	jne    808776 <mount_fs+0x5e>
          {
@@ -20938,14 +20938,14 @@ diff --git a/knl.s b/knl.s
 +  8087a8:	48 c7 45 f8 20 e2 80 	mov    QWORD PTR [rbp-0x8],0x80e220
 +  8087af:	00 
 +  8087b0:	eb 30                	jmp    8087e2 <register_filesystem+0x52>
-         if(!strcmp(fs->name,p->name))
+         if(!strcmpk(fs->name,p->name))
 -  8081e2:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 -  8081e6:	48 8b 10             	mov    rdx,QWORD PTR [rax]
 -  8081e9:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
 -  8081ed:	48 8b 00             	mov    rax,QWORD PTR [rax]
 -  8081f0:	48 89 d6             	mov    rsi,rdx
 -  8081f3:	48 89 c7             	mov    rdi,rax
--  8081f6:	e8 8d 4f 00 00       	call   80d188 <strcmp>
+-  8081f6:	e8 8d 4f 00 00       	call   80d188 <strcmpk>
 -  8081fb:	85 c0                	test   eax,eax
 -  8081fd:	75 07                	jne    808206 <register_filesystem+0x46>
 +  8087b2:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
@@ -20954,7 +20954,7 @@ diff --git a/knl.s b/knl.s
 +  8087bd:	48 8b 00             	mov    rax,QWORD PTR [rax]
 +  8087c0:	48 89 d6             	mov    rsi,rdx
 +  8087c3:	48 89 c7             	mov    rdi,rax
-+  8087c6:	e8 f8 51 00 00       	call   80d9c3 <strcmp>
++  8087c6:	e8 f8 51 00 00       	call   80d9c3 <strcmpk>
 +  8087cb:	85 c0                	test   eax,eax
 +  8087cd:	75 07                	jne    8087d6 <register_filesystem+0x46>
              return 0;
@@ -21118,14 +21118,14 @@ diff --git a/knl.s b/knl.s
 +  8088a3:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 +  8088a7:	48 8b 40 08          	mov    rax,QWORD PTR [rax+0x8]
 +  8088ab:	48 89 45 e8          	mov    QWORD PTR [rbp-0x18],rax
-         if(strcmp(dp->name,dest_dentry->name)==0){
+         if(strcmpk(dp->name,dest_dentry->name)==0){
 -  8082df:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
 -  8082e3:	48 8b 10             	mov    rdx,QWORD PTR [rax]
 -  8082e6:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
 -  8082ea:	48 8b 00             	mov    rax,QWORD PTR [rax]
 -  8082ed:	48 89 d6             	mov    rsi,rdx
 -  8082f0:	48 89 c7             	mov    rdi,rax
--  8082f3:	e8 90 4e 00 00       	call   80d188 <strcmp>
+-  8082f3:	e8 90 4e 00 00       	call   80d188 <strcmpk>
 -  8082f8:	85 c0                	test   eax,eax
 -  8082fa:	75 12                	jne    80830e <root_lookup+0x69>
 +  8088af:	48 8b 45 d0          	mov    rax,QWORD PTR [rbp-0x30]
@@ -21134,7 +21134,7 @@ diff --git a/knl.s b/knl.s
 +  8088ba:	48 8b 00             	mov    rax,QWORD PTR [rax]
 +  8088bd:	48 89 d6             	mov    rsi,rdx
 +  8088c0:	48 89 c7             	mov    rdi,rax
-+  8088c3:	e8 fb 50 00 00       	call   80d9c3 <strcmp>
++  8088c3:	e8 fb 50 00 00       	call   80d9c3 <strcmpk>
 +  8088c8:	85 c0                	test   eax,eax
 +  8088ca:	75 12                	jne    8088de <root_lookup+0x69>
              vmfree(dest_dentry);
@@ -21288,19 +21288,19 @@ diff --git a/knl.s b/knl.s
 +  8089c3:	48 8b 55 f8          	mov    rdx,QWORD PTR [rbp-0x8]
 +  8089c7:	48 83 c2 38          	add    rdx,0x38
 +  8089cb:	48 89 10             	mov    QWORD PTR [rax],rdx
-     strcpy(root_sb->root->name,"/");
+     strcpyk(root_sb->root->name,"/");
 -  8083fe:	48 8b 05 43 ff c1 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc1ff43]        # 428348 <root_sb>
 -  808405:	48 8b 00             	mov    rax,QWORD PTR [rax]
 -  808408:	48 8b 00             	mov    rax,QWORD PTR [rax]
 -  80840b:	be af 56 81 00       	mov    esi,0x8156af
 -  808410:	48 89 c7             	mov    rdi,rax
--  808413:	e8 d0 4b 00 00       	call   80cfe8 <strcpy>
+-  808413:	e8 d0 4b 00 00       	call   80cfe8 <strcpyk>
 +  8089ce:	48 8b 05 73 01 c2 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc20173]        # 428b48 <root_sb>
 +  8089d5:	48 8b 00             	mov    rax,QWORD PTR [rax]
 +  8089d8:	48 8b 00             	mov    rax,QWORD PTR [rax]
 +  8089db:	be 9c 5f 81 00       	mov    esi,0x815f9c
 +  8089e0:	48 89 c7             	mov    rdi,rax
-+  8089e3:	e8 3b 4e 00 00       	call   80d823 <strcpy>
++  8089e3:	e8 3b 4e 00 00       	call   80d823 <strcpyk>
      root_sb->root->name_length=1;
 -  808418:	48 8b 05 29 ff c1 ff 	mov    rax,QWORD PTR [rip+0xffffffffffc1ff29]        # 428348 <root_sb>
 -  80841f:	48 8b 00             	mov    rax,QWORD PTR [rax]
@@ -21493,15 +21493,15 @@ diff --git a/knl.s b/knl.s
 +  808b0d:	be 00 00 00 00       	mov    esi,0x0
 +  808b12:	48 89 c7             	mov    rdi,rax
 +  808b15:	e8 ba 4c 00 00       	call   80d7d4 <memset>
-     pathlen = strlen(filename);
+     pathlen = strlenk(filename);
 -  80854a:	48 8b 85 68 ff ff ff 	mov    rax,QWORD PTR [rbp-0x98]
 -  808551:	48 89 c7             	mov    rdi,rax
--  808554:	e8 ae 4c 00 00       	call   80d207 <strlen>
+-  808554:	e8 ae 4c 00 00       	call   80d207 <strlenk>
 -  808559:	48 98                	cdqe   
 -  80855b:	48 89 45 d0          	mov    QWORD PTR [rbp-0x30],rax
 +  808b1a:	48 8b 85 68 ff ff ff 	mov    rax,QWORD PTR [rbp-0x98]
 +  808b21:	48 89 c7             	mov    rdi,rax
-+  808b24:	e8 19 4f 00 00       	call   80da42 <strlen>
++  808b24:	e8 19 4f 00 00       	call   80da42 <strlenk>
 +  808b29:	48 98                	cdqe   
 +  808b2b:	48 89 45 d0          	mov    QWORD PTR [rbp-0x30],rax
      if(pathlen <= 0)
@@ -21544,17 +21544,17 @@ diff --git a/knl.s b/knl.s
 +  808b64:	48 c7 c0 db ff ff ff 	mov    rax,0xffffffffffffffdb
 +  808b6b:	e9 b5 04 00 00       	jmp    809025 <sys_open+0x595>
      }
-     strcpy(path,filename);
+     strcpyk(path,filename);
 -  8085a0:	48 8b 95 68 ff ff ff 	mov    rdx,QWORD PTR [rbp-0x98]
 -  8085a7:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
 -  8085ab:	48 89 d6             	mov    rsi,rdx
 -  8085ae:	48 89 c7             	mov    rdi,rax
--  8085b1:	e8 32 4a 00 00       	call   80cfe8 <strcpy>
+-  8085b1:	e8 32 4a 00 00       	call   80cfe8 <strcpyk>
 +  808b70:	48 8b 95 68 ff ff ff 	mov    rdx,QWORD PTR [rbp-0x98]
 +  808b77:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
 +  808b7b:	48 89 d6             	mov    rsi,rdx
 +  808b7e:	48 89 c7             	mov    rdi,rax
-+  808b81:	e8 9d 4c 00 00       	call   80d823 <strcpy>
++  808b81:	e8 9d 4c 00 00       	call   80d823 <strcpyk>
  
      dentry = path_walk(path,0);
 -  8085b6:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
@@ -21577,10 +21577,10 @@ diff --git a/knl.s b/knl.s
              return -ENOENT;
          //创建文件
          //找到上一级目录
-         char* p=path+strlen(path)-1;
+         char* p=path+strlenk(path)-1;
 -  8085d6:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
 -  8085da:	48 89 c7             	mov    rdi,rax
--  8085dd:	e8 25 4c 00 00       	call   80d207 <strlen>
+-  8085dd:	e8 25 4c 00 00       	call   80d207 <strlenk>
 -  8085e2:	48 98                	cdqe   
 -  8085e4:	48 8d 50 ff          	lea    rdx,[rax-0x1]
 -  8085e8:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
@@ -21588,7 +21588,7 @@ diff --git a/knl.s b/knl.s
 -  8085ef:	48 89 45 e0          	mov    QWORD PTR [rbp-0x20],rax
 +  808ba6:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
 +  808baa:	48 89 c7             	mov    rdi,rax
-+  808bad:	e8 90 4e 00 00       	call   80da42 <strlen>
++  808bad:	e8 90 4e 00 00       	call   80da42 <strlenk>
 +  808bb2:	48 98                	cdqe   
 +  808bb4:	48 8d 50 ff          	lea    rdx,[rax-0x1]
 +  808bb8:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
@@ -23348,15 +23348,15 @@ diff --git a/knl.s b/knl.s
 +  80960a:	be 00 00 00 00       	mov    esi,0x0
 +  80960f:	48 89 c7             	mov    rdi,rax
 +  809612:	e8 bd 41 00 00       	call   80d7d4 <memset>
-     pathlen = strlen(filename);
+     pathlen = strlenk(filename);
 -  809047:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
 -  80904b:	48 89 c7             	mov    rdi,rax
--  80904e:	e8 b4 41 00 00       	call   80d207 <strlen>
+-  80904e:	e8 b4 41 00 00       	call   80d207 <strlenk>
 -  809053:	48 98                	cdqe   
 -  809055:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
 +  809617:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
 +  80961b:	48 89 c7             	mov    rdi,rax
-+  80961e:	e8 1f 44 00 00       	call   80da42 <strlen>
++  80961e:	e8 1f 44 00 00       	call   80da42 <strlenk>
 +  809623:	48 98                	cdqe   
 +  809625:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
      if(pathlen <= 0)
@@ -23399,17 +23399,17 @@ diff --git a/knl.s b/knl.s
 +  80965e:	48 c7 c0 db ff ff ff 	mov    rax,0xffffffffffffffdb
 +  809665:	eb 64                	jmp    8096cb <sys_chdir+0x122>
      }
-     strcpy(filename,path);
+     strcpyk(filename,path);
 -  809097:	48 8b 55 f8          	mov    rdx,QWORD PTR [rbp-0x8]
 -  80909b:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
 -  80909f:	48 89 d6             	mov    rsi,rdx
 -  8090a2:	48 89 c7             	mov    rdi,rax
--  8090a5:	e8 3e 3f 00 00       	call   80cfe8 <strcpy>
+-  8090a5:	e8 3e 3f 00 00       	call   80cfe8 <strcpyk>
 +  809667:	48 8b 55 f8          	mov    rdx,QWORD PTR [rbp-0x8]
 +  80966b:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
 +  80966f:	48 89 d6             	mov    rsi,rdx
 +  809672:	48 89 c7             	mov    rdi,rax
-+  809675:	e8 a9 41 00 00       	call   80d823 <strcpy>
++  809675:	e8 a9 41 00 00       	call   80d823 <strcpyk>
  
      dentry = path_walk(path,0);
 -  8090aa:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
@@ -33983,15 +33983,15 @@ diff --git a/knl.s b/knl.s
 +  80d498:	0f 29 6d d0          	movaps XMMWORD PTR [rbp-0x30],xmm5
 +  80d49c:	0f 29 75 e0          	movaps XMMWORD PTR [rbp-0x20],xmm6
 +  80d4a0:	0f 29 7d f0          	movaps XMMWORD PTR [rbp-0x10],xmm7
-     if(strlen(fmt)>=1024)
+     if(strlenk(fmt)>=1024)
 -  80ce8b:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
 -  80ce8f:	48 89 c7             	mov    rdi,rax
--  80ce92:	e8 70 03 00 00       	call   80d207 <strlen>
+-  80ce92:	e8 70 03 00 00       	call   80d207 <strlenk>
 -  80ce97:	3d ff 03 00 00       	cmp    eax,0x3ff
 -  80ce9c:	7f 49                	jg     80cee7 <comprintf+0x70>
 +  80d4a4:	48 8b 85 e8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x118]
 +  80d4ab:	48 89 c7             	mov    rdi,rax
-+  80d4ae:	e8 8f 05 00 00       	call   80da42 <strlen>
++  80d4ae:	e8 8f 05 00 00       	call   80da42 <strlenk>
 +  80d4b3:	3d ff 03 00 00       	cmp    eax,0x3ff
 +  80d4b8:	0f 8f 64 02 00 00    	jg     80d722 <comprintf+0x2db>
          return;//一次性输出不了太长
@@ -34411,11 +34411,11 @@ diff --git a/knl.s b/knl.s
 +  80d821:	5d                   	pop    rbp
 +  80d822:	c3                   	ret    
  
--000000000080cfe8 <strcpy>:
-+000000000080d823 <strcpy>:
+-000000000080cfe8 <strcpyk>:
++000000000080d823 <strcpyk>:
  #include "str.h"
  #include <stdarg.h>
- void strcpy(unsigned char* dest, unsigned char *buf){
+ void strcpyk(unsigned char* dest, unsigned char *buf){
 -  80cfe8:	f3 0f 1e fa          	endbr64 
 -  80cfec:	55                   	push   rbp
 -  80cfed:	48 89 e5             	mov    rbp,rsp
@@ -34427,8 +34427,8 @@ diff --git a/knl.s b/knl.s
 +  80d82b:	48 89 7d f8          	mov    QWORD PTR [rbp-0x8],rdi
 +  80d82f:	48 89 75 f0          	mov    QWORD PTR [rbp-0x10],rsi
      while(*buf!='\0'){
--  80cff8:	eb 1d                	jmp    80d017 <strcpy+0x2f>
-+  80d833:	eb 1d                	jmp    80d852 <strcpy+0x2f>
+-  80cff8:	eb 1d                	jmp    80d017 <strcpyk+0x2f>
++  80d833:	eb 1d                	jmp    80d852 <strcpyk+0x2f>
          *(dest++)=*(buf++);
 -  80cffa:	48 8b 55 f0          	mov    rdx,QWORD PTR [rbp-0x10]
 -  80cffe:	48 8d 42 01          	lea    rax,[rdx+0x1]
@@ -34450,11 +34450,11 @@ diff --git a/knl.s b/knl.s
 -  80d017:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
 -  80d01b:	0f b6 00             	movzx  eax,BYTE PTR [rax]
 -  80d01e:	84 c0                	test   al,al
--  80d020:	75 d8                	jne    80cffa <strcpy+0x12>
+-  80d020:	75 d8                	jne    80cffa <strcpyk+0x12>
 +  80d852:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
 +  80d856:	0f b6 00             	movzx  eax,BYTE PTR [rax]
 +  80d859:	84 c0                	test   al,al
-+  80d85b:	75 d8                	jne    80d835 <strcpy+0x12>
++  80d85b:	75 d8                	jne    80d835 <strcpyk+0x12>
      }
      *dest='\0';
 -  80d022:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
@@ -34469,12 +34469,12 @@ diff --git a/knl.s b/knl.s
 +  80d865:	5d                   	pop    rbp
 +  80d866:	c3                   	ret    
  
--000000000080d02c <strtok>:
-+000000000080d867 <strtok>:
+-000000000080d02c <strtokk>:
++000000000080d867 <strtokk>:
  static char strtokkee[512],*strtokkeeptr=strtokkee;
  static int tokptr=0;
  static char retbuf[512],*retbptr=retbuf;
- char* strtok(char *str,char splitter){
+ char* strtokk(char *str,char splitter){
 -  80d02c:	f3 0f 1e fa          	endbr64 
 -  80d030:	55                   	push   rbp
 -  80d031:	48 89 e5             	mov    rbp,rsp
@@ -34492,19 +34492,19 @@ diff --git a/knl.s b/knl.s
      //limit: cannot cut string longer than 512
      if(str!=(void*)0){
 -  80d041:	48 83 7d d8 00       	cmp    QWORD PTR [rbp-0x28],0x0
--  80d046:	0f 84 9c 00 00 00    	je     80d0e8 <strtok+0xbc>
+-  80d046:	0f 84 9c 00 00 00    	je     80d0e8 <strtokk+0xbc>
 +  80d87c:	48 83 7d d8 00       	cmp    QWORD PTR [rbp-0x28],0x0
-+  80d881:	0f 84 9c 00 00 00    	je     80d923 <strtok+0xbc>
++  80d881:	0f 84 9c 00 00 00    	je     80d923 <strtokk+0xbc>
          //cut for the first time
-         strcpy(strtokkee,str);
+         strcpyk(strtokkee,str);
 -  80d04c:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
 -  80d050:	48 89 c6             	mov    rsi,rax
 -  80d053:	bf 20 b3 42 00       	mov    edi,0x42b320
--  80d058:	e8 8b ff ff ff       	call   80cfe8 <strcpy>
+-  80d058:	e8 8b ff ff ff       	call   80cfe8 <strcpyk>
 +  80d887:	48 8b 45 d8          	mov    rax,QWORD PTR [rbp-0x28]
 +  80d88b:	48 89 c6             	mov    rsi,rax
 +  80d88e:	bf 20 bb 42 00       	mov    edi,0x42bb20
-+  80d893:	e8 8b ff ff ff       	call   80d823 <strcpy>
++  80d893:	e8 8b ff ff ff       	call   80d823 <strcpyk>
          char* ptr=strtokkee;
 -  80d05d:	48 c7 45 e8 20 b3 42 	mov    QWORD PTR [rbp-0x18],0x42b320
 -  80d064:	00 
@@ -34513,7 +34513,7 @@ diff --git a/knl.s b/knl.s
          for(tokptr=0;strtokkee[tokptr]!=splitter&&strtokkee[tokptr]!='\0';tokptr=(tokptr+1)%512);
 -  80d065:	c7 05 b1 e4 c1 ff 00 	mov    DWORD PTR [rip+0xffffffffffc1e4b1],0x0        # 42b520 <tokptr>
 -  80d06c:	00 00 00 
--  80d06f:	eb 1c                	jmp    80d08d <strtok+0x61>
+-  80d06f:	eb 1c                	jmp    80d08d <strtokk+0x61>
 -  80d071:	8b 05 a9 e4 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc1e4a9]        # 42b520 <tokptr>
 -  80d077:	83 c0 01             	add    eax,0x1
 -  80d07a:	99                   	cdq    
@@ -34526,15 +34526,15 @@ diff --git a/knl.s b/knl.s
 -  80d093:	48 98                	cdqe   
 -  80d095:	0f b6 80 20 b3 42 00 	movzx  eax,BYTE PTR [rax+0x42b320]
 -  80d09c:	38 45 d4             	cmp    BYTE PTR [rbp-0x2c],al
--  80d09f:	74 13                	je     80d0b4 <strtok+0x88>
+-  80d09f:	74 13                	je     80d0b4 <strtokk+0x88>
 -  80d0a1:	8b 05 79 e4 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc1e479]        # 42b520 <tokptr>
 -  80d0a7:	48 98                	cdqe   
 -  80d0a9:	0f b6 80 20 b3 42 00 	movzx  eax,BYTE PTR [rax+0x42b320]
 -  80d0b0:	84 c0                	test   al,al
--  80d0b2:	75 bd                	jne    80d071 <strtok+0x45>
+-  80d0b2:	75 bd                	jne    80d071 <strtokk+0x45>
 +  80d8a0:	c7 05 76 e4 c1 ff 00 	mov    DWORD PTR [rip+0xffffffffffc1e476],0x0        # 42bd20 <tokptr>
 +  80d8a7:	00 00 00 
-+  80d8aa:	eb 1c                	jmp    80d8c8 <strtok+0x61>
++  80d8aa:	eb 1c                	jmp    80d8c8 <strtokk+0x61>
 +  80d8ac:	8b 05 6e e4 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc1e46e]        # 42bd20 <tokptr>
 +  80d8b2:	83 c0 01             	add    eax,0x1
 +  80d8b5:	99                   	cdq    
@@ -34547,12 +34547,12 @@ diff --git a/knl.s b/knl.s
 +  80d8ce:	48 98                	cdqe   
 +  80d8d0:	0f b6 80 20 bb 42 00 	movzx  eax,BYTE PTR [rax+0x42bb20]
 +  80d8d7:	38 45 d4             	cmp    BYTE PTR [rbp-0x2c],al
-+  80d8da:	74 13                	je     80d8ef <strtok+0x88>
++  80d8da:	74 13                	je     80d8ef <strtokk+0x88>
 +  80d8dc:	8b 05 3e e4 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc1e43e]        # 42bd20 <tokptr>
 +  80d8e2:	48 98                	cdqe   
 +  80d8e4:	0f b6 80 20 bb 42 00 	movzx  eax,BYTE PTR [rax+0x42bb20]
 +  80d8eb:	84 c0                	test   al,al
-+  80d8ed:	75 bd                	jne    80d8ac <strtok+0x45>
++  80d8ed:	75 bd                	jne    80d8ac <strtokk+0x45>
          strtokkee[tokptr]='\0';
 -  80d0b4:	8b 05 66 e4 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc1e466]        # 42b520 <tokptr>
 -  80d0ba:	48 98                	cdqe   
@@ -34579,9 +34579,9 @@ diff --git a/knl.s b/knl.s
 +  80d914:	89 05 06 e4 c1 ff    	mov    DWORD PTR [rip+0xffffffffffc1e406],eax        # 42bd20 <tokptr>
          return ptr;
 -  80d0df:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
--  80d0e3:	e9 9e 00 00 00       	jmp    80d186 <strtok+0x15a>
+-  80d0e3:	e9 9e 00 00 00       	jmp    80d186 <strtokk+0x15a>
 +  80d91a:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
-+  80d91e:	e9 9e 00 00 00       	jmp    80d9c1 <strtok+0x15a>
++  80d91e:	e9 9e 00 00 00       	jmp    80d9c1 <strtokk+0x15a>
      }
      //go on cutting
      int c=0;
@@ -34597,7 +34597,7 @@ diff --git a/knl.s b/knl.s
 +  80d932:	48 05 20 bb 42 00    	add    rax,0x42bb20
 +  80d938:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
      for(;strtokkee[tokptr]!=splitter&&strtokkee[tokptr]!='\0';tokptr=(tokptr+1)%512,c++);
--  80d101:	eb 20                	jmp    80d123 <strtok+0xf7>
+-  80d101:	eb 20                	jmp    80d123 <strtokk+0xf7>
 -  80d103:	8b 05 17 e4 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc1e417]        # 42b520 <tokptr>
 -  80d109:	83 c0 01             	add    eax,0x1
 -  80d10c:	99                   	cdq    
@@ -34611,13 +34611,13 @@ diff --git a/knl.s b/knl.s
 -  80d129:	48 98                	cdqe   
 -  80d12b:	0f b6 80 20 b3 42 00 	movzx  eax,BYTE PTR [rax+0x42b320]
 -  80d132:	38 45 d4             	cmp    BYTE PTR [rbp-0x2c],al
--  80d135:	74 13                	je     80d14a <strtok+0x11e>
+-  80d135:	74 13                	je     80d14a <strtokk+0x11e>
 -  80d137:	8b 05 e3 e3 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc1e3e3]        # 42b520 <tokptr>
 -  80d13d:	48 98                	cdqe   
 -  80d13f:	0f b6 80 20 b3 42 00 	movzx  eax,BYTE PTR [rax+0x42b320]
 -  80d146:	84 c0                	test   al,al
--  80d148:	75 b9                	jne    80d103 <strtok+0xd7>
-+  80d93c:	eb 20                	jmp    80d95e <strtok+0xf7>
+-  80d148:	75 b9                	jne    80d103 <strtokk+0xd7>
++  80d93c:	eb 20                	jmp    80d95e <strtokk+0xf7>
 +  80d93e:	8b 05 dc e3 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc1e3dc]        # 42bd20 <tokptr>
 +  80d944:	83 c0 01             	add    eax,0x1
 +  80d947:	99                   	cdq    
@@ -34631,12 +34631,12 @@ diff --git a/knl.s b/knl.s
 +  80d964:	48 98                	cdqe   
 +  80d966:	0f b6 80 20 bb 42 00 	movzx  eax,BYTE PTR [rax+0x42bb20]
 +  80d96d:	38 45 d4             	cmp    BYTE PTR [rbp-0x2c],al
-+  80d970:	74 13                	je     80d985 <strtok+0x11e>
++  80d970:	74 13                	je     80d985 <strtokk+0x11e>
 +  80d972:	8b 05 a8 e3 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc1e3a8]        # 42bd20 <tokptr>
 +  80d978:	48 98                	cdqe   
 +  80d97a:	0f b6 80 20 bb 42 00 	movzx  eax,BYTE PTR [rax+0x42bb20]
 +  80d981:	84 c0                	test   al,al
-+  80d983:	75 b9                	jne    80d93e <strtok+0xd7>
++  80d983:	75 b9                	jne    80d93e <strtokk+0xd7>
      strtokkee[tokptr]='\0';
 -  80d14a:	8b 05 d0 e3 c1 ff    	mov    eax,DWORD PTR [rip+0xffffffffffc1e3d0]        # 42b520 <tokptr>
 -  80d150:	48 98                	cdqe   
@@ -34663,14 +34663,14 @@ diff --git a/knl.s b/knl.s
 +  80d9aa:	89 05 70 e3 c1 ff    	mov    DWORD PTR [rip+0xffffffffffc1e370],eax        # 42bd20 <tokptr>
      if(c)
 -  80d175:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
--  80d179:	74 06                	je     80d181 <strtok+0x155>
+-  80d179:	74 06                	je     80d181 <strtokk+0x155>
 +  80d9b0:	83 7d fc 00          	cmp    DWORD PTR [rbp-0x4],0x0
-+  80d9b4:	74 06                	je     80d9bc <strtok+0x155>
++  80d9b4:	74 06                	je     80d9bc <strtokk+0x155>
          return ptr;
 -  80d17b:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
--  80d17f:	eb 05                	jmp    80d186 <strtok+0x15a>
+-  80d17f:	eb 05                	jmp    80d186 <strtokk+0x15a>
 +  80d9b6:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
-+  80d9ba:	eb 05                	jmp    80d9c1 <strtok+0x15a>
++  80d9ba:	eb 05                	jmp    80d9c1 <strtokk+0x15a>
      else
          return (void*)0;
 -  80d181:	b8 00 00 00 00       	mov    eax,0x0
@@ -34681,9 +34681,9 @@ diff --git a/knl.s b/knl.s
 +  80d9c1:	c9                   	leave  
 +  80d9c2:	c3                   	ret    
  
--000000000080d188 <strcmp>:
-+000000000080d9c3 <strcmp>:
- int strcmp(char *s1,char *s2)
+-000000000080d188 <strcmpk>:
++000000000080d9c3 <strcmpk>:
+ int strcmpk(char *s1,char *s2)
  {
 -  80d188:	f3 0f 1e fa          	endbr64 
 -  80d18c:	55                   	push   rbp
@@ -34696,44 +34696,44 @@ diff --git a/knl.s b/knl.s
 +  80d9cb:	48 89 7d f8          	mov    QWORD PTR [rbp-0x8],rdi
 +  80d9cf:	48 89 75 f0          	mov    QWORD PTR [rbp-0x10],rsi
  	while(*s1!='\0'&&*s2!='\0'){
--  80d198:	eb 3c                	jmp    80d1d6 <strcmp+0x4e>
-+  80d9d3:	eb 3c                	jmp    80da11 <strcmp+0x4e>
+-  80d198:	eb 3c                	jmp    80d1d6 <strcmpk+0x4e>
++  80d9d3:	eb 3c                	jmp    80da11 <strcmpk+0x4e>
  		if(*s1>*s2)
 -  80d19a:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 -  80d19e:	0f b6 10             	movzx  edx,BYTE PTR [rax]
 -  80d1a1:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
 -  80d1a5:	0f b6 00             	movzx  eax,BYTE PTR [rax]
 -  80d1a8:	38 c2                	cmp    dl,al
--  80d1aa:	7e 07                	jle    80d1b3 <strcmp+0x2b>
+-  80d1aa:	7e 07                	jle    80d1b3 <strcmpk+0x2b>
 +  80d9d5:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 +  80d9d9:	0f b6 10             	movzx  edx,BYTE PTR [rax]
 +  80d9dc:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
 +  80d9e0:	0f b6 00             	movzx  eax,BYTE PTR [rax]
 +  80d9e3:	38 c2                	cmp    dl,al
-+  80d9e5:	7e 07                	jle    80d9ee <strcmp+0x2b>
++  80d9e5:	7e 07                	jle    80d9ee <strcmpk+0x2b>
  			return 1;
 -  80d1ac:	b8 01 00 00 00       	mov    eax,0x1
--  80d1b1:	eb 52                	jmp    80d205 <strcmp+0x7d>
+-  80d1b1:	eb 52                	jmp    80d205 <strcmpk+0x7d>
 +  80d9e7:	b8 01 00 00 00       	mov    eax,0x1
-+  80d9ec:	eb 52                	jmp    80da40 <strcmp+0x7d>
++  80d9ec:	eb 52                	jmp    80da40 <strcmpk+0x7d>
  		else if(*s1<*s2)
 -  80d1b3:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 -  80d1b7:	0f b6 10             	movzx  edx,BYTE PTR [rax]
 -  80d1ba:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
 -  80d1be:	0f b6 00             	movzx  eax,BYTE PTR [rax]
 -  80d1c1:	38 c2                	cmp    dl,al
--  80d1c3:	7d 07                	jge    80d1cc <strcmp+0x44>
+-  80d1c3:	7d 07                	jge    80d1cc <strcmpk+0x44>
 +  80d9ee:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 +  80d9f2:	0f b6 10             	movzx  edx,BYTE PTR [rax]
 +  80d9f5:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
 +  80d9f9:	0f b6 00             	movzx  eax,BYTE PTR [rax]
 +  80d9fc:	38 c2                	cmp    dl,al
-+  80d9fe:	7d 07                	jge    80da07 <strcmp+0x44>
++  80d9fe:	7d 07                	jge    80da07 <strcmpk+0x44>
  			return -1;
 -  80d1c5:	b8 ff ff ff ff       	mov    eax,0xffffffff
--  80d1ca:	eb 39                	jmp    80d205 <strcmp+0x7d>
+-  80d1ca:	eb 39                	jmp    80d205 <strcmpk+0x7d>
 +  80da00:	b8 ff ff ff ff       	mov    eax,0xffffffff
-+  80da05:	eb 39                	jmp    80da40 <strcmp+0x7d>
++  80da05:	eb 39                	jmp    80da40 <strcmpk+0x7d>
  		s1++;
 -  80d1cc:	48 83 45 f8 01       	add    QWORD PTR [rbp-0x8],0x1
 +  80da07:	48 83 45 f8 01       	add    QWORD PTR [rbp-0x8],0x1
@@ -34744,19 +34744,19 @@ diff --git a/knl.s b/knl.s
 -  80d1d6:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 -  80d1da:	0f b6 00             	movzx  eax,BYTE PTR [rax]
 -  80d1dd:	84 c0                	test   al,al
--  80d1df:	74 0b                	je     80d1ec <strcmp+0x64>
+-  80d1df:	74 0b                	je     80d1ec <strcmpk+0x64>
 -  80d1e1:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
 -  80d1e5:	0f b6 00             	movzx  eax,BYTE PTR [rax]
 -  80d1e8:	84 c0                	test   al,al
--  80d1ea:	75 ae                	jne    80d19a <strcmp+0x12>
+-  80d1ea:	75 ae                	jne    80d19a <strcmpk+0x12>
 +  80da11:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 +  80da15:	0f b6 00             	movzx  eax,BYTE PTR [rax]
 +  80da18:	84 c0                	test   al,al
-+  80da1a:	74 0b                	je     80da27 <strcmp+0x64>
++  80da1a:	74 0b                	je     80da27 <strcmpk+0x64>
 +  80da1c:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
 +  80da20:	0f b6 00             	movzx  eax,BYTE PTR [rax]
 +  80da23:	84 c0                	test   al,al
-+  80da25:	75 ae                	jne    80d9d5 <strcmp+0x12>
++  80da25:	75 ae                	jne    80d9d5 <strcmpk+0x12>
  	}
  	if(*s1==*s2)
 -  80d1ec:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
@@ -34764,28 +34764,28 @@ diff --git a/knl.s b/knl.s
 -  80d1f3:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
 -  80d1f7:	0f b6 00             	movzx  eax,BYTE PTR [rax]
 -  80d1fa:	38 c2                	cmp    dl,al
--  80d1fc:	75 07                	jne    80d205 <strcmp+0x7d>
+-  80d1fc:	75 07                	jne    80d205 <strcmpk+0x7d>
 +  80da27:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
 +  80da2b:	0f b6 10             	movzx  edx,BYTE PTR [rax]
 +  80da2e:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
 +  80da32:	0f b6 00             	movzx  eax,BYTE PTR [rax]
 +  80da35:	38 c2                	cmp    dl,al
-+  80da37:	75 07                	jne    80da40 <strcmp+0x7d>
++  80da37:	75 07                	jne    80da40 <strcmpk+0x7d>
  		return 0;
 -  80d1fe:	b8 00 00 00 00       	mov    eax,0x0
--  80d203:	eb 00                	jmp    80d205 <strcmp+0x7d>
+-  80d203:	eb 00                	jmp    80d205 <strcmpk+0x7d>
 +  80da39:	b8 00 00 00 00       	mov    eax,0x0
-+  80da3e:	eb 00                	jmp    80da40 <strcmp+0x7d>
++  80da3e:	eb 00                	jmp    80da40 <strcmpk+0x7d>
  }
 -  80d205:	5d                   	pop    rbp
 -  80d206:	c3                   	ret    
 +  80da40:	5d                   	pop    rbp
 +  80da41:	c3                   	ret    
  
--000000000080d207 <strlen>:
-+000000000080da42 <strlen>:
+-000000000080d207 <strlenk>:
++000000000080da42 <strlenk>:
  
- int strlen(char *str)
+ int strlenk(char *str)
  {
 -  80d207:	f3 0f 1e fa          	endbr64 
 -  80d20b:	55                   	push   rbp
@@ -34799,20 +34799,20 @@ diff --git a/knl.s b/knl.s
 -  80d213:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
 +  80da4e:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0
      for(;*str!='\0';str++,l++);
--  80d21a:	eb 09                	jmp    80d225 <strlen+0x1e>
+-  80d21a:	eb 09                	jmp    80d225 <strlenk+0x1e>
 -  80d21c:	48 83 45 e8 01       	add    QWORD PTR [rbp-0x18],0x1
 -  80d221:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
 -  80d225:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
 -  80d229:	0f b6 00             	movzx  eax,BYTE PTR [rax]
 -  80d22c:	84 c0                	test   al,al
--  80d22e:	75 ec                	jne    80d21c <strlen+0x15>
-+  80da55:	eb 09                	jmp    80da60 <strlen+0x1e>
+-  80d22e:	75 ec                	jne    80d21c <strlenk+0x15>
++  80da55:	eb 09                	jmp    80da60 <strlenk+0x1e>
 +  80da57:	48 83 45 e8 01       	add    QWORD PTR [rbp-0x18],0x1
 +  80da5c:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
 +  80da60:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
 +  80da64:	0f b6 00             	movzx  eax,BYTE PTR [rax]
 +  80da67:	84 c0                	test   al,al
-+  80da69:	75 ec                	jne    80da57 <strlen+0x15>
++  80da69:	75 ec                	jne    80da57 <strlenk+0x15>
      return l;
 -  80d230:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
 +  80da6b:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
@@ -35078,17 +35078,17 @@ diff --git a/knl.s b/knl.s
 +  80dc65:	48 89 95 10 ff ff ff 	mov    QWORD PTR [rbp-0xf0],rdx
 +  80dc6c:	48 8b 00             	mov    rax,QWORD PTR [rax]
 +  80dc6f:	48 89 85 28 ff ff ff 	mov    QWORD PTR [rbp-0xd8],rax
-                 sprintn(dist,v);
+                 strcat(dist,v);
 -  80d43b:	48 8b 95 28 ff ff ff 	mov    rdx,QWORD PTR [rbp-0xd8]
 -  80d442:	48 8b 85 f8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x108]
 -  80d449:	48 89 d6             	mov    rsi,rdx
 -  80d44c:	48 89 c7             	mov    rdi,rax
--  80d44f:	e8 5a 02 00 00       	call   80d6ae <sprintn>
+-  80d44f:	e8 5a 02 00 00       	call   80d6ae <strcat>
 +  80dc76:	48 8b 95 28 ff ff ff 	mov    rdx,QWORD PTR [rbp-0xd8]
 +  80dc7d:	48 8b 85 f8 fe ff ff 	mov    rax,QWORD PTR [rbp-0x108]
 +  80dc84:	48 89 d6             	mov    rsi,rdx
 +  80dc87:	48 89 c7             	mov    rdi,rax
-+  80dc8a:	e8 5a 02 00 00       	call   80dee9 <sprintn>
++  80dc8a:	e8 5a 02 00 00       	call   80dee9 <strcat>
              if(*pstr=='x'){
 -  80d454:	e9 c2 00 00 00       	jmp    80d51b <sprintf+0x2e6>
 +  80dc8f:	e9 c2 00 00 00       	jmp    80dd56 <sprintf+0x2e6>
@@ -35528,9 +35528,9 @@ diff --git a/knl.s b/knl.s
 +  80dee7:	c9                   	leave  
 +  80dee8:	c3                   	ret    
  
--000000000080d6ae <sprintn>:
-+000000000080dee9 <sprintn>:
- void sprintn(char *dist,char *str)
+-000000000080d6ae <strcat>:
++000000000080dee9 <strcat>:
+ void strcat(char *dist,char *str)
  {
 -  80d6ae:	f3 0f 1e fa          	endbr64 
 -  80d6b2:	55                   	push   rbp
@@ -35545,8 +35545,8 @@ diff --git a/knl.s b/knl.s
 +  80def5:	48 89 7d f8          	mov    QWORD PTR [rbp-0x8],rdi
 +  80def9:	48 89 75 f0          	mov    QWORD PTR [rbp-0x10],rsi
      while(*str!='\0')
--  80d6c2:	eb 20                	jmp    80d6e4 <sprintn+0x36>
-+  80defd:	eb 20                	jmp    80df1f <sprintn+0x36>
+-  80d6c2:	eb 20                	jmp    80d6e4 <strcat+0x36>
++  80defd:	eb 20                	jmp    80df1f <strcat+0x36>
      {
          sprintchar(dist,*str++);
 -  80d6c4:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
@@ -35571,11 +35571,11 @@ diff --git a/knl.s b/knl.s
 -  80d6e4:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
 -  80d6e8:	0f b6 00             	movzx  eax,BYTE PTR [rax]
 -  80d6eb:	84 c0                	test   al,al
--  80d6ed:	75 d5                	jne    80d6c4 <sprintn+0x16>
+-  80d6ed:	75 d5                	jne    80d6c4 <strcat+0x16>
 +  80df1f:	48 8b 45 f0          	mov    rax,QWORD PTR [rbp-0x10]
 +  80df23:	0f b6 00             	movzx  eax,BYTE PTR [rax]
 +  80df26:	84 c0                	test   al,al
-+  80df28:	75 d5                	jne    80deff <sprintn+0x16>
++  80df28:	75 d5                	jne    80deff <strcat+0x16>
      }
 -  80d6ef:	90                   	nop
 -  80d6f0:	90                   	nop
@@ -35965,7 +35965,7 @@ diff --git a/include/log.h b/include/log.h
 Index: knl/proc.c
 IDEA additional info:
 Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
-<+>//\r\n// Created by Oniar_Pie on 2023/11/9.\r\n//\r\n#include \"vfs.h\"\r\n#include \"proc.h\"\r\n#include \"memory.h\"\r\n#include \"pe.h\"\r\n#include \"int.h\"\r\n#include \"mem.h\"\r\n#include \"log.h\"\r\n#include \"kb.h\"\r\n#include \"sys/unistd.h\"\r\n#include \"syscall.h\"\r\n#include \"tty.h\"\r\n#include \"fcntl.h\"\r\n\r\nstruct process task[MAX_PROC_COUNT];\r\nstruct process* current;\r\nTSS scene_saver;\r\nTSS *tss=0x108000;\r\nint cur_proc=0;\r\nint pidd=0;\r\nint palloc_paddr=0;\r\nstatic pid_t sidd=0;\r\nvoid init_proc(){\r\n    //task=(struct process*)get_global_var(TASK_PCBS_ADDR);//[MAX_TASKS];;\r\n    for(int i=0;i<MAX_PROC_COUNT;i++){\r\n        task[i].pid=-1;\r\n        task[i].stat=TASK_EMPTY;\r\n        task[i].parent_pid=-1;\r\n    }\r\n    cur_proc=0;//proc zero\r\n    current=task;\r\n    pidd=1;\r\n     //===============创建0号进程======================\r\n    int zi=create_proc();\r\n    task[zi].stat=TASK_READY;\r\n\r\n\r\n    //__asm__ volatile(\"lldt %0\"::\"m\"(xi));\r\n    //__asm__ volatile(\"ltr %0\"::\"m\"(zi));\r\n    set_tss(0x400000,0x400000,0x400000,0x800000,0x800000,0x800000,0x800000,0x800000,0x800000,0x800000);\r\n    //IA32_INTERRUPT_SSP_TABLE_ADDR，准备IST\r\n    wrmsr(0x6a8,tss->rsvd2);\r\n    //把内核代码段选择子写到MSR寄存器中准备用于特权级转换(sysexit，现在没用)\r\n    wrmsr(0x174,0x8);\r\n    //准备用于特权级转换(sysret，正在使用)\r\n    wrmsr(0xc0000081,0x0020000800000000ul);\r\n\r\n    comprintf(\"proc init set.\\r\\ntss.ist=0x%x\\r\\n\",tss->ists[0]);\r\n    //创建一个测试进程\r\n//    create_test_proc();\r\n}\r\nvoid create_test_proc(){\r\n\r\n    int index=req_proc();\r\n    task[index].stat=TASK_READY;\r\n    int currsp=0x9fc00-1;\r\n    __asm__ volatile(\"mov %%rsp,%0\":\"=m\"(currsp));\r\n    set_proc(0, 0, 0, 0, 0x10, 0x8, 0x10, 0x10, 0x10, 0x10,\r\n             0x7e00- sizeof(stack_store_regs), 0, 0, 0, (long)ret_sys_call, 0, index);\r\n    task[index].tss.rsp0=0x400000;\r\n    task[index].mem_struct.stack_top=0x7e00;\r\n    task[index].mem_struct.stack_bottom=0x6e00;\r\n    task[index].mem_struct.heap_top=0x1101000;\r\n    task[index].mem_struct.heap_base=0x1100000;\r\n\r\n    //把还原现场时用到的堆栈设置好\r\n    stack_store_regs *str= (stack_store_regs *) (0x7e00 - sizeof(stack_store_regs));\r\n    str->rax=0;\r\n    str->rbx=0;\r\n    str->rcx=proc_zero;//sysret采用的返回地址\r\n    str->rdx=0;\r\n    str->rsi=0;\r\n    str->rdi=0;\r\n    str->r15=0;\r\n    str->r14=0;\r\n    str->r13=0;\r\n    str->r12=0;\r\n    str->r11=0x200;\r\n    str->r10=0;\r\n    str->r9=0;\r\n    str->r8=0;\r\n    str->rip=proc_zero;\r\n    str->cs=0x8;\r\n    str->rflags=0x00200206;\r\n    str->rsp=0x7e00;\r\n    str->ss=0x2b;\r\n    str->ds=0x2b;\r\n    str->es=0x2b;\r\n\r\n}\r\nint create_proc()\r\n{\r\n    int index=req_proc();\r\n    struct process *pz=&task[index];\r\n    if(index==-1)return -1;\r\n    int currsp=0x9fc00-1;\r\n    __asm__ volatile(\"mov %%rsp,%0\":\"=m\"(currsp));\r\n    //默认DPL=3\r\n    //set_proc(0,0,0,0,0x23,0x1b,0x23,0x23,0x23,0x23,curesp,0,0,0,0,index);\r\n    set_proc(0, 0, 0, 0, 0x10, 0x8, 0x10, 0x10, 0x10, 0x10,\r\n             currsp, 0, 0, 0, (long)proc_zero, 0, index);\r\n//    task[index].tss.eip=(long)proc_zero;\r\n    extern struct dir_entry* dtty;\r\n    //stdin stdout stderr\r\n    //这里绕开了sys open，这样是为了尽量快\r\n    extern struct file ftty;\r\n    addr_t filplate=vmalloc();\r\n    pz->openf[0]=&ftty;\r\n    pz->openf[1]=&ftty;\r\n    pz->openf[2]=&ftty;\r\n\r\n    return index;\r\n}\r\nint req_proc(){\r\n    int num=0;\r\n    while(task[num].pid!=-1 && task[num].stat != TASK_EMPTY && \\\r\n    num<=MAX_PROC_COUNT){\r\n        num++;\r\n    }\r\n    if(num>=MAX_PROC_COUNT)\r\n        return -1;\r\n    task[num].pid=pidd++;\r\n    task[num].stat=TASK_ZOMBIE;\r\n    task[num].utime=0;\r\n    task[num].priority=0;\r\n    return num;\r\n}\r\nvoid set_proc(long rax, long rbx, long rcx, long rdx, long es, long cs, long ss, long ds, long fs, long gs, long rsp,\r\n              long rbp, long rsi, long rdi, long rip, long rflags, int proc_nr) {\r\n    struct process* proc=&task[proc_nr];\r\n    proc->regs.rax=rax;\r\n    proc->regs.rbx=rbx;\r\n    proc->regs.rcx=rcx;\r\n    proc->regs.rdx=rdx;\r\n    proc->regs.es=es;\r\n    proc->regs.cs=cs;\r\n    proc->regs.ss=ss;\r\n    proc->regs.ds=ds;\r\n    proc->regs.fs=fs;\r\n    proc->regs.gs=gs;\r\n    proc->regs.rsp=rsp;\r\n    proc->regs.rbp=rbp;\r\n    proc->regs.rsi=rsi;\r\n    proc->regs.rdi=rdi;\r\n    proc->regs.rflags=0x202;//设置为默认值:0b 0010 0000 0010\r\n    //能接受中断\r\n    proc->regs.rip=rip;\r\n\r\n    proc->regs.cs=cs;\r\n    proc->regs.ds=ds;\r\n    proc->regs.es=es;\r\n    proc->regs.cr3=PML4_ADDR;//get_phyaddr(n1);//暂时先搞成全局\r\n    proc->pml4=PML4_ADDR;\r\n\r\n\r\n}\r\nvoid proc_zero()\r\n{\r\n//    __asm__ volatile(\"mov $27,%rax\\n\"\r\n//                 \".byte 0x48\\n\"\r\n//                 \"syscall\");\r\n//    long rax;\r\n//    __asm__ volatile(\"\":\"=a\"(rax));\r\n//    if(rax==0){\r\n//        printf(\"child proc ret:%d\\n\",rax);\r\n//    }else{\r\n//        printf(\"parent proc ret:%d\\n\",rax);\r\n//    }\r\n    while (1)\r\n    {\r\n        char c= sys_analyse_key();\r\n        putchar(c);\r\n    }\r\n}\r\nvoid save_rsp(){\r\n    //在时钟中断context下\r\n    addr_t * p=INT_STACK_TOP-16;\r\n    current->regs.rsp=*p;\r\n}\r\nvoid manage_proc(){\r\n    if(cur_proc!=-1)\r\n        task[cur_proc].utime++;\r\n    if(cur_proc==-1||task[cur_proc].utime>MAX_UTIME||\\\r\n    task[cur_proc].stat != TASK_READY){\r\n        if(cur_proc!=-1)\r\n            task[cur_proc].utime=0;\r\n        //find\r\n        int i=cur_proc+1;\r\n        int times=0;\r\n        //轮询，直到有一个符合条件\r\n        while(times<10){\r\n            if(task[i].pid!=-1 && task[i].stat == TASK_READY && i != cur_proc){\r\n                break;\r\n            }\r\n            i++;\r\n            if(i>=MAX_TASKS){\r\n                times++;\r\n                i=0;\r\n            }\r\n        }\r\n        if(times==10)return;//超过十次尝试都没有，暂时不切换\r\n        //switch\r\n        task[cur_proc].stat=TASK_READY;\r\n        task[i].stat=TASK_RUNNING;\r\n        switch_to(&task[cur_proc], &task[i]);\r\n    }\r\n    return;\r\n}\r\n\r\nvoid switch_proc_tss(int pnr)\r\n{\r\n    int sel=_TSS_IND(pnr)*8;\r\n    cur_proc=pnr;\r\n    switch_proc_asm(sel);\r\n}\r\nvoid switch_proc(int pnr){\r\n    //printf(\"switching proc to %d\\n\",pnr);\r\n    //printf(\"eip:%x\\n\",task[pnr].tss.eip);\r\n    struct process p=task[pnr];\r\n    save_context(&task[cur_proc].tss);\r\n//    //重新设置0号进程\r\n//    task[0].tss.eip=proc_zero;\r\n//    task[0].tss.cr3=PAGE_INDEX_ADDR;\r\n//    task[0].tss.eflags=0x202;\r\n    cur_proc=pnr;\r\n    int sel=_TSS_IND(pnr)*8;\r\n    switch_to(NULL, &task[pnr].tss);\r\n    //__asm__ volatile(\"push %0\":\"=r\"(task[pnr].tss.eip));\r\n    //switch_proc_asm(pnr*8+0x8*3);\r\n}\r\nvoid save_context(TSS *tss)\r\n{\r\n//    tss->eip=scene_saver.eip;\r\n//    tss->eax=scene_saver.eax;\r\n//    tss->ebx=scene_saver.ebx;\r\n//    tss->ecx=scene_saver.ecx;\r\n//    tss->edx=scene_saver.edx;\r\n//    tss->esi=scene_saver.esi;\r\n//    tss->edi=scene_saver.edi;\r\n//    tss->eflags=scene_saver.eflags;\r\n//    tss->esp=scene_saver.esp;\r\n//    tss->ebp=scene_saver.ebp;\r\n}\r\n\r\n/* int exec(char *path,int priority)\r\n{\r\n    //enter_dir(path);\r\n    char name[20];\r\n    //get_fname(path,name);\r\n    strcpy(name,path);\r\n    if(!verify_name(name))\r\n    {\r\n        //printf(\"err: invalid file name\\n\");\r\n        return -1;\r\n    }\r\n    format_name(name);\r\n    //printf(\"final format:%s\\n\",name);\r\n    if(load_pe_header(name)==-1)\r\n    {\r\n        puts(\"err: shell not found\");\r\n        return -1;\r\n    }\r\n    IMAGE_NT_HEADERS32* h32=load_ntheader(name);\r\n    dir_entry f=get_peentry();\r\n    int index=create_proc();\r\n    task[index].priority=priority;\r\n    if(priority<3)\r\n    {\r\n        task[index].tss.es=0x10;\r\n        task[index].tss.ds=0x10;\r\n        task[index].tss.ss=0x10;\r\n        task[index].tss.gs=0x10;\r\n        task[index].tss.fs=0x10;\r\n        task[index].tss.cs=0x8;\r\n    }\r\n    //printf(\"index:%d\\n\",index);\r\n    if(index==-1)\r\n    {\r\n        puts(\"err:failed to req proc.\");\r\n        return -1;\r\n    }\r\n    int shell_addr=h32->OptionalHeader.AddressOfEntryPoint+\\\r\n    h32->OptionalHeader.ImageBase;\r\n    task[index].tss.eip=shell_addr;\r\n    //printf(\"EIP:%x===\\n\",shell_addr);\r\n    //readFile(f,f.len,shell_addr);\r\n    //为新进程分配内存页\r\n    //计算所需的页\r\n    int prog_size=h32->OptionalHeader.SizeOfImage;\r\n    int page_count=prog_size/4096+prog_size%4096==0?0:1;\r\n    int page_index_item_count=page_count/1024+page_count%1024==0?0:1;\r\n    int start_pgind_item=shell_addr/PAGE_INDEX_SIZE;\r\n    //\r\n    int pgind_n=req_a_page();\r\n    if(pgind_n==-1)\r\n    {\r\n        puts(\"err: failed to req pgind\");\r\n        return -1;\r\n    }\r\n    page_item *pgind=get_phyaddr(pgind_n);\r\n    task[index].tss.cr3=pgind;\r\n    //printf(\"the cr3 should be:%x\\n\",pgind);\r\n    //分配内核页目录\r\n    set_page_item(pgind,PAGE_TABLE_ADDR,PAGE_PRESENT);\r\n    //alloc pgind\r\n    pgind+=start_pgind_item;\r\n    for(int i=0;i<page_index_item_count;i++)\r\n    {\r\n        //alloc page table\r\n        int pgtbln=req_a_page();\r\n        if(pgtbln==-1)\r\n        {\r\n            puts(\"err: failed to req pgtbl\");\r\n            return -1;\r\n        }\r\n        page_item* pgtbladdr=get_phyaddr(pgtbln);\r\n        set_page_item(pgind++,pgtbladdr,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL);\r\n        for(int j=0;j<page_count&&j<1024;j++)\r\n        {\r\n            int pg=req_a_page();\r\n            if(pg==-1)\r\n            {\r\n                puts(\"err: failed to req pg\");\r\n                return -1;\r\n            }\r\n            unsigned int pgaddr=get_phyaddr(pg);\r\n            page_item *pp=pgtbladdr;\r\n            set_page_item(pgtbladdr++,pgaddr,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL);\r\n            //printf(\"page alloc:%x at %x\\n\",*pp,pgtbladdr-1);\r\n        }\r\n        page_count-=1024;\r\n    }\r\n    //sys_read sections\r\n    IMAGE_NT_HEADERS32 copynth;\r\n    memcpy(&copynth,h32,sizeof(copynth));\r\n    h32=&copynth;\r\n    IMAGE_SECTION_HEADER* psec=get_secheader(name);\r\n    int data_start=sizeof(IMAGE_DOS_HEADER)+sizeof(IMAGE_NT_HEADERS32)+\\\r\n    h32->FileHeader.NumberOfSections*sizeof(IMAGE_SECTION_HEADER);\r\n    int align=h32->OptionalHeader.FileAlignment;\r\n    data_start=data_start%align?data_start-data_start%align+align:data_start;\r\n    //printf(\"datastart:%x\\n\",data_start);\r\n    //printf(\"number of sec:%d\\n\",h32->FileHeader.NumberOfSections);\r\n    for(int i=0;i<h32->FileHeader.NumberOfSections;i++,psec++)\r\n    {\r\n        ////printf(\"[SEC %s]\\n\",psec->Name);\r\n        int disca=psec->Characteristics&IMAGE_SCN_MEM_DISCARDABLE;\r\n        if(disca)\r\n            continue;\r\n        int pgind_i=psec->VirtualAddress/PAGE_INDEX_SIZE;\r\n        //printf(\"pgind_i:%x\\n\",pgind_i);\r\n        int pg_i=psec->VirtualAddress%PAGE_INDEX_SIZE/PAGE_SIZE;\r\n        page_item *pgindp=task[index].tss.cr3;\r\n        pgindp+=pgind_i;\r\n        page_item *pgp=*pgindp&0xfffff000;\r\n        //printf(\"page index item at %x refers to the page table at %x\\n\",pgindp,pgp);\r\n        //printf(\"RVA:%x\\n\",psec->VirtualAddress);\r\n        //printf(\"RVA in page:%x\\n\",psec->VirtualAddress%PAGE_SIZE); \r\n        //printf(\"Section Size:%x\\n\",psec->SizeOfRawData);\r\n        int load_addr=*pgp&0xfffff000;\r\n        load_addr+=psec->VirtualAddress%PAGE_SIZE;\r\n        //printf(\"loading sec to %x\\n\",load_addr);\r\n        int fpos=psec->PointerToRawData;\r\n        //printf(\"ptr to data:%x\\n\",fpos);\r\n        int data_size=psec->SizeOfRawData;\r\n        data_size+=4096-data_size%4096;\r\n        int sec_rn=read_file(f,load_addr,fpos,data_size);\r\n        if(sec_rn==-1)\r\n        {\r\n            //printf(\"err: sys_read file failure\\n\");\r\n            return -1;\r\n        }else\r\n            //printf(\"[fs]sys_read %d secs.\\n\",sec_rn);\r\n    }\r\n    //申请栈内存空间,设置esp\r\n    int stack_size=h32->OptionalHeader.SizeOfStackCommit;\r\n    if(stack_size>0x1000)stack_size=0x1000;\r\n    int stack_laddr=palloc(index,stack_size);\r\n    int stack_paddr=palloc_paddr;\r\n    task[index].tss.esp=stack_laddr+stack_size;\r\n    //入栈main函数的参数和ret所需\r\n    task[index].tss.esp-=12;\r\n    proc_ret_stack *pstack=stack_paddr+stack_size-12;\r\n    pstack->argc=0;\r\n    pstack->argv=0;\r\n    pstack->proc_end_addr=proc_end;\r\n    int *pptr=pstack;\r\n    //printf(\"stack dat:%x %x %x\\n\",*pptr,*(pptr+1),*(pptr+2));\r\n    //printf(\"esp :%x\\n\",task[index].tss.esp);\r\n    //填充ldt\r\n    /* fill_ldt_desc(stack_laddr,stack_size/4096,SEG_PRESENT|SEG_W|SEG_NON_SYS_GATE|\\\r\n    SEG_R|SEG_4KB_GRANUALITY,&task[index].ldt[3]);\r\n    fill_ldt_desc(h32->OptionalHeader.ImageBase,h32->OptionalHeader.SizeOfImage/4096,\\\r\n    SEG_CONFORMING|SEG_X|SEG_PRESENT|SEG_R|SEG_NON_SYS_GATE|SEG_4KB_GRANUALITY,&task[index].ldt[1]);\r\n    fill_ldt_desc(h32->OptionalHeader.ImageBase,h32->OptionalHeader.SizeOfImage/4096,\\\r\n    SEG_W|SEG_PRESENT|SEG_R|SEG_NON_SYS_GATE|SEG_4KB_GRANUALITY,&task[index].ldt[2]);\r\n    fill_desc(task[index].ldt,sizeof(task[index].ldt),SEG_SYS_LDT|SEG_PRESENT,\\\r\n    _LDT_IND(index)); \r\n    task[index].stat=TASK_READY;\r\n    return index;\r\n} */\r\n//为指定进程申请新的内存，并返回这块内存的线性地址。\r\nvoid* palloc(int proc_index,int size)\r\n{\r\n    int page_c=size/4096+size%4096?1:0;\r\n    int c=0;\r\n    void *ptr=NULL;\r\n    page_item *pgind=NULL;//task[proc_index].tss.cr3;\r\n    pgind++;\r\n    for(int i=1;i<1024;i++)\r\n    {\r\n        page_item* tblp=*pgind&0xfffff000;\r\n        for(int j=0;j<1024;j++)\r\n        {\r\n            int v=*tblp&PAGE_PRESENT;\r\n            if(!v)\r\n            {\r\n                int new_pg=req_a_page();\r\n                if(new_pg==-1)\r\n                {\r\n                    //修改ldt,增加数据空间\r\n                    unsigned int size=task[proc_index].ldt[2].limit_lo16;\r\n                    size+=(task[proc_index].ldt[2].attr&0xf)<<16;\r\n                    size+=c;\r\n                    task[proc_index].ldt[2].limit_lo16=size&0xffff;\r\n                    int tmp_attr=task[proc_index].ldt[2].attr;\r\n                    tmp_attr&=0xfff0;\r\n                    tmp_attr+=(size>>16)&0xf;\r\n                    task[proc_index].ldt[2].attr=tmp_attr;\r\n                    return ptr;//失败了，只能申请一部分的内存或者返回NULL\r\n                }\r\n                int addr=get_phyaddr(new_pg);\r\n                set_page_item(tblp,addr,PAGE_PRESENT|\\\r\n                PAGE_RWX|PAGE_FOR_ALL);\r\n                int laddr=i*0x400000+j*0x1000;//线性地址\r\n                if(ptr==NULL)\r\n                {\r\n                   // ptr=laddr;\r\n                    palloc_paddr=addr;\r\n                }\r\n                page_c--;\r\n                c++;\r\n                if(page_c==0)\r\n                {\r\n                    //修改ldt,增加数据空间\r\n                    unsigned int size=task[proc_index].ldt[2].limit_lo16;\r\n                    size+=(task[proc_index].ldt[2].attr&0xf)<<16;\r\n                    size+=c;\r\n                    task[proc_index].ldt[2].limit_lo16=size&0xffff;\r\n                    int tmp_attr=task[proc_index].ldt[2].attr;\r\n                    tmp_attr&=0xfff0;\r\n                    tmp_attr+=(size>>16)&0xf;\r\n                    task[proc_index].ldt[2].attr=tmp_attr;\r\n                    return ptr;\r\n                }\r\n            }\r\n            tblp++;\r\n        }\r\n        pgind++;\r\n    }\r\n    return NULL;\r\n}\r\n//为当前进程申请新的内存，并返回这块内存的线性地址。\r\nvoid* malloc(int size)\r\n{\r\n    return palloc(cur_proc,size);\r\n}\r\nvoid proc_end()\r\n{\r\n    int ret;\r\n    __asm__ volatile(\"mov %%eax,%0\":\"=m\"(ret));\r\n    //printf(\"proc #%d ended with retv %d.\\n\",cur_proc,ret);\r\n    //切换堆栈\r\n    //__asm__ volatile(\"mov %0,%%rsp\"::\"r\"(task[0].tss.esp));\r\n    del_proc(cur_proc);\r\n    if(task[cur_proc].parent_pid!=-1){\r\n        task[task[cur_proc].parent_pid].stat=TASK_READY;\r\n        switch_proc_tss(task[cur_proc].parent_pid);\r\n    }\r\n    else\r\n        switch_proc_tss(0);\r\n    //syscall(SYSCALL_DEL_PROC,cur_proc,0,0,0,0);\r\n}\r\nvoid del_proc(int pnr)\r\n{\r\n    task[pnr].stat=TASK_ZOMBIE;\r\n//    task[pnr].pid=-1;\r\n    //释放申请的页面\r\n    release_mmap(&task[pnr]);\r\n    //释放存放页目录的页面\r\n    vmfree(task[pnr].pml4);\r\n    //关闭打开的文件\r\n    for(int i=3;i<MAX_PROC_OPENF;i++){\r\n        if(task[pnr].openf[i]){\r\n            sys_close(i);\r\n        }\r\n    }\r\n    //三个std判断一下是否是会话leader，是的话再关闭\r\n    if(task[pnr].sid==task[pnr].pid){\r\n        //tty和console断联\r\n        sys_ioctl(0,TTY_DISCONNECT,0);\r\n        sys_close(0);\r\n        sys_close(1);\r\n        sys_close(2);\r\n        //然后,关闭所有前台进程组的进程\r\n        for(int i=0;i<MAX_TASKS;i++){\r\n            if(task[i].gpid==task[pnr].pid){\r\n                //TODO:发送SIGHUP信号使进程终结\r\n            }\r\n        }\r\n    }\r\n    //TODO 给子进程发送SIGHUP信号结束他们\r\n    //\r\n    //从进程中解除cr3,tss和ldt\r\n    //switch_proc_tss(task[pnr]);\r\n}\r\n\r\nint set_proc_stat(int pid,int stat)\r\n{\r\n    if(pid==-1)return -1;\r\n    int i=0;\r\n    for(;task[i].pid!=pid;i++);\r\n    if(i==MAX_PROC_COUNT)return -1;\r\n    task[i].stat=stat;\r\n    //如果这就是正在运行的进程，那么马上停止\r\n    if(cur_proc==i)\r\n        task[cur_proc].utime=MAX_UTIME;\r\n    return 0;\r\n}\r\n/* \r\nint exec_call(char * path,int priority)\r\n{\r\n    int tski=exec(path, priority);\r\n    if(tski==-1)return -1;\r\n    task[cur_proc].stat=TASK_SUSPENDED;\r\n    \r\n    task[tski].parent_pid=cur_proc;//设置父进程，这样进程结束后就能返回到父进程。\r\n\r\n    int tss=_TSS_IND(tski)*8;\r\n\r\n    switch_proc_tss(tski);\r\n\r\n    return 0;\r\n} */\r\n\r\n//int add_proc_openf(struct index_node *entry)\r\n//{\r\n//    for(int i=0;i<MAX_PROC_OPENF;i++){\r\n//        if(task[cur_proc].openf[i]==NULL)\r\n//        {\r\n//            task[cur_proc].openf[i]=entry;\r\n//            return 0;\r\n//        }\r\n//    }\r\n//    return -1;//full\r\n//}\r\n/*\r\n * 进程结束。\r\n * */\r\nint sys_exit(int code)\r\n{\r\n    current->exit_code=code;\r\n    del_proc(cur_proc);\r\n    while(1)\r\n        manage_proc();\r\n    return code;\r\n}\r\n/*int load_dll_at(char *path,int addr)\r\n{\r\n    extern dir_entry cur_dir;\r\n    //第一页用作存储头\r\n    req_page_at(addr,1);\r\n    dir_entry f,dir=cur_dir;\r\n    get_entry(path,&f,dir);\r\n    //内核函数不检错\r\n    read_file(f,addr,0,4096);\r\n    PIMAGE_DOS_HEADER dh=addr;\r\n    PIMAGE_NT_HEADERS32 nth=addr+dh->e_lfanew;\r\n    PIMAGE_SECTION_HEADER sh=(u32)nth+sizeof(IMAGE_NT_HEADERS32);\r\n    int oldbase=nth->OptionalHeader.ImageBase;\r\n    int msize=nth->OptionalHeader.SizeOfImage;\r\n    req_page_at(addr,msize/4096);\r\n    //读section\r\n    for(int i=0;i<nth->FileHeader.NumberOfSections;i++)\r\n    {\r\n        u32 chars=sh[i].Characteristics;\r\n        if(chars&IMAGE_SCN_MEM_DISCARDABLE)continue;//可以抛弃\r\n        read_file(f,addr+sh[i].VirtualAddress,\\\r\n        sh[i].PointerToRawData,sh[i].SizeOfRawData);\r\n    }\r\n    //重定位\r\n    PIMAGE_BASE_RELOCATION relp=0;\r\n    if(nth->OptionalHeader.DataDirectory[5].Size==0)goto dllmain;\r\n    relp=(u32)(nth->OptionalHeader.DataDirectory[5].VirtualAddress\\\r\n                                +(u32)addr);\r\n    IMAGE_BASE_RELOCATION emptyr={0};\r\n    u16 *reloc=relp+sizeof(IMAGE_BASE_RELOCATION);\r\n    u16 *rtype=reloc+1;\r\n    while(memcmp(relp,&emptyr,sizeof(IMAGE_BASE_RELOCATION))!=0){\r\n        int pgva=relp->VirtualAddress+addr;\r\n        for(int i=0;i<relp->SizeOfBlock/4;i++)\r\n        {\r\n            if(*rtype==IMAGE_REL_BASED_ABSOLUTE)continue;//不用重定位\r\n            int *at=*reloc+pgva;//要重定位的数据的地址\r\n            *at=*at-oldbase+addr;\r\n            //下一个\r\n            reloc+=2;\r\n            rtype+=2;\r\n        }\r\n        relp=(int)relp+0x1000;\r\n    }\r\ndllmain:\r\n    //重定位完毕，准备调用DllMain\r\n    typedef int (*DllMain)(void*,u32,void*);\r\n    DllMain dllmain=nth->OptionalHeader.AddressOfEntryPoint+addr;\r\n    dllmain(NULL,0,NULL);\r\n    \r\n}*/\r\n\r\nint reg_proc(addr_t entry, struct index_node *cwd, struct index_node *exef)\r\n{\r\n    \r\n    int i=req_proc();\r\n    if(i==-1)return -1;\r\n\r\n    //栈顶设置在了4G处\r\n    set_proc(0, 0, 0, 0, DS_USER, CS_USER, DS_USER, DS_USER\\\r\n, DS_USER, DS_USER, STACK_TOP, 0, 0, 0, entry, 0, i);\r\n    task[i].pml4=vmalloc();\r\n    task[i].pml4[0]=vmalloc();\r\n    unsigned long *pdpt=task[i].pml4;\r\n    //pdpt第一项(0-1GB)设置为内核空间，这样才能访问中断\r\n    set_1gb_pdpt(pdpt,0,PAGE_PRESENT|PAGE_RWX);\r\n\r\n    //申请一项pd,里面申请一2mb页用于堆栈\r\n    addr_t *stackb=vmalloc();\r\n    pdpt[3]=(unsigned long)stackb|PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX;//3-4G分配栈空间\r\n    set_2mb_pde(stackb + 511, get_phyaddr(req_a_page()), PAGE_FOR_ALL|PAGE_RWX);\r\n    task[i].regs.cr3=task[i].pml4;\r\n\r\n    task[i].stat=TASK_READY;\r\n    task[i].cwd=cwd;\r\n    task[i].exef=exef;\r\n\r\n    return i;\r\n\r\n/*\r\n    //文件头基地址获取\r\n    PIMAGE_DOS_HEADER dh=base;\r\n    PIMAGE_NT_HEADERS32 nth=base+dh->e_lfanew;\r\n    set_proc(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,i);\r\n    task[i].tss.eip=nth->OptionalHeader.AddressOfEntryPoint+base;\r\n    //申请内存存放页目录\r\n    int pgind_addr=get_phyaddr(req_a_page());\r\n    page_item *pgind=pgind_addr;\r\n    set_page_item(pgind,PAGE_INDEX_ADDR,PAGE_PRESENT);//内核页\r\n    set_page_item(pgind+7,PAGE_INDEX_ADDR+7*4,PAGE_PRESENT);//系统页\r\n    int pgn=nth->OptionalHeader.SizeOfImage/4096;\r\n    int vbase=nth->OptionalHeader.ImageBase;\r\n    //设置程序所在的页面\r\n    int pgin=pgn<1024?1:pgn/1024;\r\n    int pgii=vbase/4096/1024;//开始的页目录索引号\r\n    int pgn_used=0;\r\n    for(int j=0;j<pgin;j++)\r\n    {\r\n        page_item *phy=get_phyaddr(req_a_page());\r\n        //先设置页目录\r\n        set_page_item(pgind+pgii+j,phy,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL);\r\n        //再设置页表\r\n        for(int k=0;k<1024;k++)\r\n        {\r\n            if(pgn_used>=pgn)break;\r\n            set_page_item(phy,base+pgn_used*4096,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL);\r\n            phy++;\r\n            pgn_used++;\r\n        }        \r\n    }\r\n    //写入cr3\r\n    task[i].tss.cr3=pgind;\r\n    task[i].tss.es=0x10;\r\n    task[i].tss.ds=0x10;\r\n    task[i].tss.ss=0x10;\r\n    task[i].tss.gs=0x10;\r\n    task[i].tss.fs=0x10;\r\n    task[i].tss.cs=0x8;\r\n    \r\n    //申请栈内存空间,设置esp\r\n    int stack_size=nth->OptionalHeader.SizeOfStackCommit;\r\n    if(stack_size>0x1000)stack_size=0x1000;\r\n    int stack_laddr=palloc(i,stack_size);\r\n    int stack_paddr=palloc_paddr;\r\n    task[i].tss.esp=stack_laddr+stack_size;\r\n    //入栈main函数的参数和ret所需\r\n    task[i].tss.esp-=12;\r\n    proc_ret_stack *pstack=stack_paddr+stack_size-12;\r\n    pstack->argc=0;\r\n    pstack->argv=0;\r\n    pstack->proc_end_addr=proc_end;\r\n    int *pptr=pstack;*/\r\n}\r\n\r\nvoid * sys_malloc(int size)\r\n{\r\n    //\r\n    int n=size/CHUNK_SIZE+size%CHUNK_SIZE?1:0;\r\n    chunk_header *hp=(chunk_header*)task[cur_proc].mem_struct.heap_base;\r\n    while (hp->next!=NULL&&hp->alloc==0&&hp->pgn>=n)\r\n        hp=hp->next;\r\n    if(hp->pgn<n)\r\n    {\r\n        //上抬heap top\r\n        if(task[cur_proc].mem_struct.heap_top+CHUNK_SIZE*n>=HEAP_MAXTOP)\r\n        {\r\n            //超过顶部\r\n            return NULL;\r\n        }\r\n        int needed=n-hp->pgn;\r\n        char* p=task[cur_proc].mem_struct.heap_top;\r\n        for(int i=0;i<needed*CHUNK_SIZE/PAGE_SIZE;i++)\r\n        {\r\n            *p=0;//触发缺页中断\r\n            p+=PAGE_SIZE;\r\n        }\r\n    }\r\n    if(hp->pgn>n)\r\n    {\r\n        //在后面新建一个头\r\n        char *p=hp;\r\n        p+=(n+1)*CHUNK_SIZE;//算上存储头一个\r\n        chunk_header *np=p;\r\n        np->pgn=hp->pgn-n-1;\r\n        np->next=hp->next;\r\n        np->prev=hp;\r\n        hp->next=np;\r\n    }\r\n    hp->alloc=1;//分配完毕\r\n    return (char*)hp+CHUNK_SIZE;//返回后边的第一个数据块地址\r\n}\r\nint sys_free(int ptr)\r\n{\r\n    chunk_header *hp=ptr-CHUNK_SIZE;//回退到头\r\n    hp->alloc=0;    //合并\r\n    //向后合并\r\n    chunk_header *p=hp->next;\r\n    while(p!=NULL)\r\n    {\r\n        if(p->alloc==0)\r\n        {\r\n            hp->pgn+=p->pgn+1;//把区域合并\r\n        }else\r\n            break;\r\n        p=p->next;\r\n    }\r\n    //向前合并\r\n    p=hp->prev;\r\n    while(p!=NULL)\r\n    {\r\n        if(p->alloc==0)\r\n        {\r\n            p->pgn+=hp->pgn+1;//把区域合并\r\n        }else\r\n            break;\r\n        p=p->prev;\r\n    }\r\n    //合并完成\r\n    return 0;\r\n}\r\n\r\nvoid switch_to(struct process *from, struct process *to) {\r\n    cur_proc=to-task;\r\n    current=&task[cur_proc];\r\n    __asm__ volatile(\"mov %0,%%rax\\n\"\r\n                 \"mov %%rax,%%cr3\\n\":\"=m\"(to->pml4));\r\n    __asm__ volatile(\"mov %%rsp,%0\\r\\n\"\r\n                 \"lea done(%%rip),%%rax\\r\\n\"\r\n                 \"mov %%rax,%1\\r\\n\"\r\n                 \"mov %%fs,%2\\r\\n\"\r\n                 \"mov %%gs,%3\\r\\n\"\r\n                 \"mov %6,%%rsp\\r\\n\"\r\n                 \"pushq %7\\r\\n\"\r\n                 \"jmp __switch_to\\r\\n\"\r\n                 \"done:\\r\\n\"\r\n                 \"nop\":\"=m\"(from->regs.rsp),\"=m\"(from->regs.rip),\r\n                 \"=m\"(from->regs.fs),\"=m\"(from->regs.gs):\r\n                \"m\"(to->regs.fs),\"m\"(to->regs.gs),\"m\"(to->regs.rsp),\"m\"(to->regs.rip),\r\n                \"D\"(from),\"S\"(to));\r\n\r\n}\r\nvoid __switch_to(struct process *from, struct process *to) {\r\n    set_tss(to->tss.rsp0,tss->rsp1,tss->rsp2,tss->ists[0],tss->ists[1],\r\n            tss->ists[2],tss->ists[3],tss->ists[4],tss->ists[5],tss->ists[6]);\r\n    __asm__ volatile(\"mov %%fs,%0\\r\\n\"\r\n                 \"mov %%gs,%1\\r\\n\"\r\n                 \"mov %2,%%fs\\r\\n\"\r\n                 \"mov %3,%%gs\\r\\n\"\r\n                 \"sti\":\"=m\"(to->regs.fs),\"=m\"(to->regs.gs):\r\n                 \"m\"(from->regs.fs),\"m\"(from->regs.gs));\r\n}\r\n\r\nvoid set_tss(u64 rsp0,u64 rsp1,u64 rsp2,u64 ist0,u64 ist1,u64 ist2,u64 ist3,u64 ist4,u64 ist5,u64 ist6){\r\n    tss->rsp0=rsp0;\r\n    tss->rsp1=rsp1;\r\n    tss->rsp2=rsp2;\r\n    tss->ists[0]=ist0;\r\n    tss->ists[1]=ist1;\r\n    tss->ists[2]=ist2;\r\n    tss->ists[3]=ist3;\r\n    tss->ists[4]=ist4;\r\n    tss->ists[5]=ist5;\r\n    tss->ists[6]=ist6;\r\n}\r\n\r\nint fork_child_ret(){\r\n    return 0;\r\n\r\n}\r\n\r\nint sys_fork(void){\r\n    int pid=req_proc();\r\n    if(pid==-1)return -1;\r\n    task[pid].regs=current->regs;\r\n    //使得子程序处于刚调用完系统调用的状态\r\n    task[pid].regs.rip=ret_normal_proc;\r\n    task[pid].regs.rsp-=sizeof(stack_store_regs);\r\n    task[pid].sid=current->sid;\r\n    task[pid].gpid=current->gpid;\r\n    stack_store_regs *r=task[pid].regs.rsp;\r\n    r->rax=0;\r\n    r->ds=DS_USER;\r\n    r->ss=DS_USER;\r\n    r->es=DS_USER;\r\n    r->rax=task[pid].regs.rax;\r\n    r->rbx=task[pid].regs.rbx;\r\n    r->rcx=task[pid].regs.rcx;\r\n    r->rdx=task[pid].regs.rdx;\r\n    r->rsi=task[pid].regs.rsi;\r\n    r->rdi=task[pid].regs.rdi;\r\n\r\n    r->r8 =task[pid].regs.r8 ;\r\n    r->r9 =task[pid].regs.r9 ;\r\n    r->r10=task[pid].regs.r10;\r\n    r->r11=task[pid].regs.r11;\r\n    r->r12=task[pid].regs.r12;\r\n    r->r13=task[pid].regs.r13;\r\n    r->r14=task[pid].regs.r14;\r\n    r->r15=task[pid].regs.r15;\r\n\r\n    __asm__ volatile(\"mov %%r10,%0\"::\"m\"(r->rip));\r\n\r\n    task[pid].tss=current->tss;\r\n    task[pid].stat=TASK_READY;\r\n    task[pid].parent_pid=cur_proc;\r\n    //设置父子关系以及初始化子进程的的list节点\r\n    list_init(&task[pid].node);\r\n    task[pid].child_procs=NULL;\r\n    task[pid].node.data=&task[pid];\r\n    list_add(current->child_procs,&task[pid].node);\r\n    //复制打开文件\r\n    memcpy(task[pid].openf,current->openf,sizeof(struct file*)*MAX_PROC_OPENF);\r\n    task[pid].utime=0;\r\n    task[pid].mem_struct=current->mem_struct;\r\n    //根据是子进程还是父进程设置返回值的不同\r\n\r\n    //TODO:设置新堆栈\r\n    //复制父进程的内存映射到子进程，然后重新映射并复制子进程的堆栈和数据段\r\n    copy_mmap(current,&task[pid]);\r\n    //复制完毕，开始更改堆栈\r\n    //栈\r\n    /*\r\n     * 这里使用vmalloc是一个权宜之策。\r\n     * 本来是分配用户空间内存的，但是这样的话当前进程内存空间下就访问不到这个新申请的内存了（除非mmap一下），\r\n     * 方便以前先用vmalloc。\r\n     * */\r\n    addr_t stk=task[pid].mem_struct.stack_top-PAGE_4K_SIZE;\r\n    for(;stk>=task[pid].mem_struct.stack_bottom;stk-=PAGE_4K_SIZE){\r\n        addr_t new_stkpg=vmalloc();\r\n        memcpy(new_stkpg,stk,PAGE_4K_SIZE);//把当前进程的栈空间复制到新栈里面\r\n        //把新的页面映射到进程页表里\r\n        smmap(new_stkpg,stk,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,task[pid].pml4);\r\n    }\r\n    //中断使用的栈空间\r\n    addr_t intstk=INT_STACK_TOP-PAGE_4K_SIZE;\r\n    int f=1;\r\n    for(;intstk>=INT_STACK_BASE;intstk-=PAGE_4K_SIZE){\r\n        addr_t new_stkpg=vmalloc();\r\n        memcpy(new_stkpg,intstk,PAGE_4K_SIZE);//把当前进程的栈空间复制到新栈里面\r\n        if(f){\r\n            f=0;\r\n            addr_t *raxp=new_stkpg+PAGE_4K_SIZE-56;//指向中断堆栈，里面存着rax的值\r\n            *raxp=0;//这样进程切换到子进程的done标签，从时钟中断返回弹出堆栈的时候rax弹出来的就是0，成为返回值。\r\n        }\r\n        //把新的页面映射到进程页表里\r\n        smmap(new_stkpg,intstk,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,task[pid].pml4);\r\n    }\r\n    //堆\r\n    addr_t hp=task[pid].mem_struct.heap_top-PAGE_4K_SIZE;\r\n    for(;hp>=task[pid].mem_struct.heap_base;hp-=PAGE_4K_SIZE){\r\n        addr_t new_hppg=vmalloc();\r\n        memcpy(new_hppg,hp,PAGE_4K_SIZE);//把当前进程的栈空间复制到新栈里面\r\n        //把新的页面映射到进程页表里\r\n        smmap(new_hppg,hp,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,task[pid].pml4);\r\n    }\r\n    //父进程运行到这里\r\n    return pid;\r\n}\r\n//释放进程页表映射的内存，内核空间除外。\r\nvoid release_mmap(struct process* p){\r\n    page_item * pml4p=p->pml4;\r\n    //复制pdpt\r\n    page_item *pml4e= pml4p;\r\n    for(int i=0;i<512;i++)\r\n    {\r\n        if(pml4e[i]&PAGE_PRESENT){\r\n            page_item *pdpte=pml4e[i]&PAGE_4K_MASK;\r\n            int j=i==0?1:0;//低1GB的空间不释放（内核空间）\r\n            for(;j<512;j++)\r\n            {\r\n                if(pdpte[j]&PAGE_PRESENT&&!(pdpte[j]&PDPTE_1GB)){\r\n                    page_item *pde=pdpte[j]&PAGE_4K_MASK;\r\n                    for(int k=0;k<512;k++)\r\n                    {\r\n                        if(pde[k]&PAGE_PRESENT&&!(pde[k]&PDE_4MB)){\r\n                            page_item *pte=pde[k]&PAGE_4K_MASK;\r\n                            for(int l=0;l<512;l++){\r\n                                if(pte[l]&PAGE_PRESENT){\r\n                                    //释放申请的物理内存\r\n                                    //TODO:这里有一个问题：目前fork时候堆栈空间使用的是vmalloc内存，这样的话free_page是释放不了的。\r\n                                    free_page(pte[l]&PAGE_4K_MASK);\r\n                                }\r\n                            }\r\n                            //里面的项释放完了，这一项指向的vmalloc内存可以释放了\r\n                            vmfree(pde[k]&PAGE_4K_MASK);\r\n                        }else if((pde[k]&PAGE_PRESENT)&&(pde[k]&PDE_4MB)){\r\n                            //释放2MB页\r\n                            free_pages_at(pde[k]&PAGE_4K_MASK,512);\r\n                        }\r\n                    }\r\n                    //这一页pde的内容释放完了，这一项指向的vmalloc可以释放了\r\n                    vmfree(pdpte[j]&PAGE_4K_MASK);\r\n                }//1GB先不写，目前还没有初始化之后动态申请1GB页的\r\n\r\n            }\r\n            //这一页pdpte的内容释放完了，这一项指向的vmalloc可以释放了\r\n            vmfree(pml4e[i]&PAGE_4K_MASK);\r\n        }\r\n    }\r\n}\r\nvoid copy_mmap(struct process* from, struct process *to){\r\n    page_item * pml4p=vmalloc();\r\n    memcpy(pml4p,from->regs.cr3,PAGE_4K_SIZE);//复制pml4\r\n    to->regs.cr3=pml4p;\r\n    to->pml4=pml4p;\r\n    //复制pdpt\r\n\r\n    page_item *pml4e= pml4p;\r\n    for(int i=0;i<512;i++)\r\n    {\r\n        if(pml4e[i]&PAGE_PRESENT){\r\n            addr_t old_data=pml4e[i];//旧的数据，里面保存了属性和要拷贝的数据的地址\r\n            pml4e[i]=vmalloc()|(old_data&~PAGE_4K_MASK);\r\n            memcpy(pml4e[i]&PAGE_4K_MASK,old_data&PAGE_4K_MASK,PAGE_4K_SIZE);//把老的数据拷贝到新的页面里\r\n            page_item *pdpte=pml4e[i]&PAGE_4K_MASK;\r\n            for(int j=0;j<512;j++)\r\n            {\r\n                if(pdpte[j]&PAGE_PRESENT&&!(pdpte[j]&PDPTE_1GB)){\r\n                    addr_t old_data2=pdpte[j];//旧的数据，里面保存了属性和要拷贝的数据的地址\r\n                    pdpte[j]=vmalloc()|(old_data2&~PAGE_4K_MASK);\r\n                    memcpy(pdpte[j]&PAGE_4K_MASK,old_data2&PAGE_4K_MASK,PAGE_4K_SIZE);//把老的数据拷贝到新的页面里\r\n                    page_item *pde=pdpte[j]&PAGE_4K_MASK;\r\n                    for(int k=0;k<512;k++)\r\n                    {\r\n                        if(pde[k]&PAGE_PRESENT&&!(pde[k]&PDE_4MB)){\r\n                            addr_t old_data3=pde[k];//旧的数据，里面保存了属性和要拷贝的数据的地址\r\n                            pde[k]=vmalloc()|(old_data3&~PAGE_4K_MASK);\r\n                            memcpy(pde[k]&PAGE_4K_MASK,old_data3&PAGE_4K_MASK,PAGE_4K_SIZE);//把老的数据拷贝到新的页面里\r\n                        }\r\n                    }\r\n                }\r\n            }\r\n        }\r\n    }\r\n}\r\n\r\npid_t getpgrp(void){\r\n    return current->gpid;\r\n}\r\n\r\nint getpgid(pid_t pid,gid_t gid){\r\n    if(pid==0)\r\n        return current->gpid;\r\n    for (int i = 0; i <MAX_TASKS; ++i) {\r\n        if(task[i].pid==pid)\r\n            return task[i].gpid;\r\n    }\r\n    return -1;\r\n}\r\nint setpgid(pid_t pid,gid_t gid){\r\n    if(pid==0)\r\n    {\r\n        if(current->sid==current->pid)\r\n            return -1;\r\n        current->gpid=gid;\r\n        return 0;\r\n    }\r\n    for (int i = 0; i <MAX_TASKS; ++i) {\r\n        if(task[i].pid==pid)\r\n        {\r\n            if(task[i].sid==task[i].pid)\r\n                return -1;\r\n            task[i].gpid=gid;\r\n            return 0;\r\n        }\r\n    }\r\n    return -1;\r\n}\r\n\r\npid_t setsid(void){\r\n    current->sid=current->pid;\r\n}\r\npid_t getsid(pid_t pid){\r\n    if(pid==0)\r\n        return current->sid;\r\n    for (int i = 0; i <MAX_TASKS; ++i) {\r\n        if(task[i].pid==pid)\r\n            return task[i].sid;\r\n    }\r\n    return -1;\r\n}\r\nint tcsetpgrp(int fildes,pid_t pgid_id){\r\n    //当前controlling terminal断联\r\n    sys_ioctl(fildes,TTY_DISCONNECT,0);\r\n    int sid= getsid(0);//获取session id\r\n    struct process* new_fgl=NULL;\r\n    for (int i = 0; i <MAX_TASKS; ++i) {\r\n        if(task[i].stat == TASK_ZOMBIE||task[i].stat == TASK_EMPTY)continue;\r\n        if(task[i].sid==sid){\r\n            task[i].fg_pgid=pgid_id;\r\n            if(task[i].pid==pgid_id){\r\n                //这是新前台进程组的leader\r\n                new_fgl=&task[i];\r\n            }\r\n        }\r\n    }\r\n    //新leader把tty连接\r\n    new_fgl->openf[new_fgl->tty_fd]->f_ops->ioctl(new_fgl->openf[fildes]->dentry->dir_inode,new_fgl->openf[fildes]\\\r\n    ,TTY_CONNECT,0);\r\n}\r\npid_t tcgetpgrp(int fildes){\r\n    return current->fg_pgid;\r\n}\r\n//===============\r\n\r\nint sys_ioctl(int fildes, int request, unsigned long args){\r\n    current->openf[fildes]->f_ops->ioctl(current->openf[fildes]->dentry->dir_inode,current->openf[fildes]\\\r\n    ,request,args);\r\n}
+<+>//\r\n// Created by Oniar_Pie on 2023/11/9.\r\n//\r\n#include \"vfs.h\"\r\n#include \"proc.h\"\r\n#include \"memory.h\"\r\n#include \"pe.h\"\r\n#include \"int.h\"\r\n#include \"mem.h\"\r\n#include \"log.h\"\r\n#include \"kb.h\"\r\n#include \"sys/unistd.h\"\r\n#include \"syscall.h\"\r\n#include \"tty.h\"\r\n#include \"fcntl.h\"\r\n\r\nstruct process task[MAX_PROC_COUNT];\r\nstruct process* current;\r\nTSS scene_saver;\r\nTSS *tss=0x108000;\r\nint cur_proc=0;\r\nint pidd=0;\r\nint palloc_paddr=0;\r\nstatic pid_t sidd=0;\r\nvoid init_proc(){\r\n    //task=(struct process*)get_global_var(TASK_PCBS_ADDR);//[MAX_TASKS];;\r\n    for(int i=0;i<MAX_PROC_COUNT;i++){\r\n        task[i].pid=-1;\r\n        task[i].stat=TASK_EMPTY;\r\n        task[i].parent_pid=-1;\r\n    }\r\n    cur_proc=0;//proc zero\r\n    current=task;\r\n    pidd=1;\r\n     //===============创建0号进程======================\r\n    int zi=create_proc();\r\n    task[zi].stat=TASK_READY;\r\n\r\n\r\n    //__asm__ volatile(\"lldt %0\"::\"m\"(xi));\r\n    //__asm__ volatile(\"ltr %0\"::\"m\"(zi));\r\n    set_tss(0x400000,0x400000,0x400000,0x800000,0x800000,0x800000,0x800000,0x800000,0x800000,0x800000);\r\n    //IA32_INTERRUPT_SSP_TABLE_ADDR，准备IST\r\n    wrmsr(0x6a8,tss->rsvd2);\r\n    //把内核代码段选择子写到MSR寄存器中准备用于特权级转换(sysexit，现在没用)\r\n    wrmsr(0x174,0x8);\r\n    //准备用于特权级转换(sysret，正在使用)\r\n    wrmsr(0xc0000081,0x0020000800000000ul);\r\n\r\n    comprintf(\"proc init set.\\r\\ntss.ist=0x%x\\r\\n\",tss->ists[0]);\r\n    //创建一个测试进程\r\n//    create_test_proc();\r\n}\r\nvoid create_test_proc(){\r\n\r\n    int index=req_proc();\r\n    task[index].stat=TASK_READY;\r\n    int currsp=0x9fc00-1;\r\n    __asm__ volatile(\"mov %%rsp,%0\":\"=m\"(currsp));\r\n    set_proc(0, 0, 0, 0, 0x10, 0x8, 0x10, 0x10, 0x10, 0x10,\r\n             0x7e00- sizeof(stack_store_regs), 0, 0, 0, (long)ret_sys_call, 0, index);\r\n    task[index].tss.rsp0=0x400000;\r\n    task[index].mem_struct.stack_top=0x7e00;\r\n    task[index].mem_struct.stack_bottom=0x6e00;\r\n    task[index].mem_struct.heap_top=0x1101000;\r\n    task[index].mem_struct.heap_base=0x1100000;\r\n\r\n    //把还原现场时用到的堆栈设置好\r\n    stack_store_regs *str= (stack_store_regs *) (0x7e00 - sizeof(stack_store_regs));\r\n    str->rax=0;\r\n    str->rbx=0;\r\n    str->rcx=proc_zero;//sysret采用的返回地址\r\n    str->rdx=0;\r\n    str->rsi=0;\r\n    str->rdi=0;\r\n    str->r15=0;\r\n    str->r14=0;\r\n    str->r13=0;\r\n    str->r12=0;\r\n    str->r11=0x200;\r\n    str->r10=0;\r\n    str->r9=0;\r\n    str->r8=0;\r\n    str->rip=proc_zero;\r\n    str->cs=0x8;\r\n    str->rflags=0x00200206;\r\n    str->rsp=0x7e00;\r\n    str->ss=0x2b;\r\n    str->ds=0x2b;\r\n    str->es=0x2b;\r\n\r\n}\r\nint create_proc()\r\n{\r\n    int index=req_proc();\r\n    struct process *pz=&task[index];\r\n    if(index==-1)return -1;\r\n    int currsp=0x9fc00-1;\r\n    __asm__ volatile(\"mov %%rsp,%0\":\"=m\"(currsp));\r\n    //默认DPL=3\r\n    //set_proc(0,0,0,0,0x23,0x1b,0x23,0x23,0x23,0x23,curesp,0,0,0,0,index);\r\n    set_proc(0, 0, 0, 0, 0x10, 0x8, 0x10, 0x10, 0x10, 0x10,\r\n             currsp, 0, 0, 0, (long)proc_zero, 0, index);\r\n//    task[index].tss.eip=(long)proc_zero;\r\n    extern struct dir_entry* dtty;\r\n    //stdin stdout stderr\r\n    //这里绕开了sys open，这样是为了尽量快\r\n    extern struct file ftty;\r\n    addr_t filplate=vmalloc();\r\n    pz->openf[0]=&ftty;\r\n    pz->openf[1]=&ftty;\r\n    pz->openf[2]=&ftty;\r\n\r\n    return index;\r\n}\r\nint req_proc(){\r\n    int num=0;\r\n    while(task[num].pid!=-1 && task[num].stat != TASK_EMPTY && \\\r\n    num<=MAX_PROC_COUNT){\r\n        num++;\r\n    }\r\n    if(num>=MAX_PROC_COUNT)\r\n        return -1;\r\n    task[num].pid=pidd++;\r\n    task[num].stat=TASK_ZOMBIE;\r\n    task[num].utime=0;\r\n    task[num].priority=0;\r\n    return num;\r\n}\r\nvoid set_proc(long rax, long rbx, long rcx, long rdx, long es, long cs, long ss, long ds, long fs, long gs, long rsp,\r\n              long rbp, long rsi, long rdi, long rip, long rflags, int proc_nr) {\r\n    struct process* proc=&task[proc_nr];\r\n    proc->regs.rax=rax;\r\n    proc->regs.rbx=rbx;\r\n    proc->regs.rcx=rcx;\r\n    proc->regs.rdx=rdx;\r\n    proc->regs.es=es;\r\n    proc->regs.cs=cs;\r\n    proc->regs.ss=ss;\r\n    proc->regs.ds=ds;\r\n    proc->regs.fs=fs;\r\n    proc->regs.gs=gs;\r\n    proc->regs.rsp=rsp;\r\n    proc->regs.rbp=rbp;\r\n    proc->regs.rsi=rsi;\r\n    proc->regs.rdi=rdi;\r\n    proc->regs.rflags=0x202;//设置为默认值:0b 0010 0000 0010\r\n    //能接受中断\r\n    proc->regs.rip=rip;\r\n\r\n    proc->regs.cs=cs;\r\n    proc->regs.ds=ds;\r\n    proc->regs.es=es;\r\n    proc->regs.cr3=PML4_ADDR;//get_phyaddr(n1);//暂时先搞成全局\r\n    proc->pml4=PML4_ADDR;\r\n\r\n\r\n}\r\nvoid proc_zero()\r\n{\r\n//    __asm__ volatile(\"mov $27,%rax\\n\"\r\n//                 \".byte 0x48\\n\"\r\n//                 \"syscall\");\r\n//    long rax;\r\n//    __asm__ volatile(\"\":\"=a\"(rax));\r\n//    if(rax==0){\r\n//        printf(\"child proc ret:%d\\n\",rax);\r\n//    }else{\r\n//        printf(\"parent proc ret:%d\\n\",rax);\r\n//    }\r\n    while (1)\r\n    {\r\n        char c= sys_analyse_key();\r\n        putchar(c);\r\n    }\r\n}\r\nvoid save_rsp(){\r\n    //在时钟中断context下\r\n    addr_t * p=INT_STACK_TOP-16;\r\n    current->regs.rsp=*p;\r\n}\r\nvoid manage_proc(){\r\n    if(cur_proc!=-1)\r\n        task[cur_proc].utime++;\r\n    if(cur_proc==-1||task[cur_proc].utime>MAX_UTIME||\\\r\n    task[cur_proc].stat != TASK_READY){\r\n        if(cur_proc!=-1)\r\n            task[cur_proc].utime=0;\r\n        //find\r\n        int i=cur_proc+1;\r\n        int times=0;\r\n        //轮询，直到有一个符合条件\r\n        while(times<10){\r\n            if(task[i].pid!=-1 && task[i].stat == TASK_READY && i != cur_proc){\r\n                break;\r\n            }\r\n            i++;\r\n            if(i>=MAX_TASKS){\r\n                times++;\r\n                i=0;\r\n            }\r\n        }\r\n        if(times==10)return;//超过十次尝试都没有，暂时不切换\r\n        //switch\r\n        task[cur_proc].stat=TASK_READY;\r\n        task[i].stat=TASK_RUNNING;\r\n        switch_to(&task[cur_proc], &task[i]);\r\n    }\r\n    return;\r\n}\r\n\r\nvoid switch_proc_tss(int pnr)\r\n{\r\n    int sel=_TSS_IND(pnr)*8;\r\n    cur_proc=pnr;\r\n    switch_proc_asm(sel);\r\n}\r\nvoid switch_proc(int pnr){\r\n    //printf(\"switching proc to %d\\n\",pnr);\r\n    //printf(\"eip:%x\\n\",task[pnr].tss.eip);\r\n    struct process p=task[pnr];\r\n    save_context(&task[cur_proc].tss);\r\n//    //重新设置0号进程\r\n//    task[0].tss.eip=proc_zero;\r\n//    task[0].tss.cr3=PAGE_INDEX_ADDR;\r\n//    task[0].tss.eflags=0x202;\r\n    cur_proc=pnr;\r\n    int sel=_TSS_IND(pnr)*8;\r\n    switch_to(NULL, &task[pnr].tss);\r\n    //__asm__ volatile(\"push %0\":\"=r\"(task[pnr].tss.eip));\r\n    //switch_proc_asm(pnr*8+0x8*3);\r\n}\r\nvoid save_context(TSS *tss)\r\n{\r\n//    tss->eip=scene_saver.eip;\r\n//    tss->eax=scene_saver.eax;\r\n//    tss->ebx=scene_saver.ebx;\r\n//    tss->ecx=scene_saver.ecx;\r\n//    tss->edx=scene_saver.edx;\r\n//    tss->esi=scene_saver.esi;\r\n//    tss->edi=scene_saver.edi;\r\n//    tss->eflags=scene_saver.eflags;\r\n//    tss->esp=scene_saver.esp;\r\n//    tss->ebp=scene_saver.ebp;\r\n}\r\n\r\n/* int exec(char *path,int priority)\r\n{\r\n    //enter_dir(path);\r\n    char name[20];\r\n    //get_fname(path,name);\r\n    strcpyk(name,path);\r\n    if(!verify_name(name))\r\n    {\r\n        //printf(\"err: invalid file name\\n\");\r\n        return -1;\r\n    }\r\n    format_name(name);\r\n    //printf(\"final format:%s\\n\",name);\r\n    if(load_pe_header(name)==-1)\r\n    {\r\n        puts(\"err: shell not found\");\r\n        return -1;\r\n    }\r\n    IMAGE_NT_HEADERS32* h32=load_ntheader(name);\r\n    dir_entry f=get_peentry();\r\n    int index=create_proc();\r\n    task[index].priority=priority;\r\n    if(priority<3)\r\n    {\r\n        task[index].tss.es=0x10;\r\n        task[index].tss.ds=0x10;\r\n        task[index].tss.ss=0x10;\r\n        task[index].tss.gs=0x10;\r\n        task[index].tss.fs=0x10;\r\n        task[index].tss.cs=0x8;\r\n    }\r\n    //printf(\"index:%d\\n\",index);\r\n    if(index==-1)\r\n    {\r\n        puts(\"err:failed to req proc.\");\r\n        return -1;\r\n    }\r\n    int shell_addr=h32->OptionalHeader.AddressOfEntryPoint+\\\r\n    h32->OptionalHeader.ImageBase;\r\n    task[index].tss.eip=shell_addr;\r\n    //printf(\"EIP:%x===\\n\",shell_addr);\r\n    //readFile(f,f.len,shell_addr);\r\n    //为新进程分配内存页\r\n    //计算所需的页\r\n    int prog_size=h32->OptionalHeader.SizeOfImage;\r\n    int page_count=prog_size/4096+prog_size%4096==0?0:1;\r\n    int page_index_item_count=page_count/1024+page_count%1024==0?0:1;\r\n    int start_pgind_item=shell_addr/PAGE_INDEX_SIZE;\r\n    //\r\n    int pgind_n=req_a_page();\r\n    if(pgind_n==-1)\r\n    {\r\n        puts(\"err: failed to req pgind\");\r\n        return -1;\r\n    }\r\n    page_item *pgind=get_phyaddr(pgind_n);\r\n    task[index].tss.cr3=pgind;\r\n    //printf(\"the cr3 should be:%x\\n\",pgind);\r\n    //分配内核页目录\r\n    set_page_item(pgind,PAGE_TABLE_ADDR,PAGE_PRESENT);\r\n    //alloc pgind\r\n    pgind+=start_pgind_item;\r\n    for(int i=0;i<page_index_item_count;i++)\r\n    {\r\n        //alloc page table\r\n        int pgtbln=req_a_page();\r\n        if(pgtbln==-1)\r\n        {\r\n            puts(\"err: failed to req pgtbl\");\r\n            return -1;\r\n        }\r\n        page_item* pgtbladdr=get_phyaddr(pgtbln);\r\n        set_page_item(pgind++,pgtbladdr,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL);\r\n        for(int j=0;j<page_count&&j<1024;j++)\r\n        {\r\n            int pg=req_a_page();\r\n            if(pg==-1)\r\n            {\r\n                puts(\"err: failed to req pg\");\r\n                return -1;\r\n            }\r\n            unsigned int pgaddr=get_phyaddr(pg);\r\n            page_item *pp=pgtbladdr;\r\n            set_page_item(pgtbladdr++,pgaddr,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL);\r\n            //printf(\"page alloc:%x at %x\\n\",*pp,pgtbladdr-1);\r\n        }\r\n        page_count-=1024;\r\n    }\r\n    //sys_read sections\r\n    IMAGE_NT_HEADERS32 copynth;\r\n    memcpy(&copynth,h32,sizeof(copynth));\r\n    h32=&copynth;\r\n    IMAGE_SECTION_HEADER* psec=get_secheader(name);\r\n    int data_start=sizeof(IMAGE_DOS_HEADER)+sizeof(IMAGE_NT_HEADERS32)+\\\r\n    h32->FileHeader.NumberOfSections*sizeof(IMAGE_SECTION_HEADER);\r\n    int align=h32->OptionalHeader.FileAlignment;\r\n    data_start=data_start%align?data_start-data_start%align+align:data_start;\r\n    //printf(\"datastart:%x\\n\",data_start);\r\n    //printf(\"number of sec:%d\\n\",h32->FileHeader.NumberOfSections);\r\n    for(int i=0;i<h32->FileHeader.NumberOfSections;i++,psec++)\r\n    {\r\n        ////printf(\"[SEC %s]\\n\",psec->Name);\r\n        int disca=psec->Characteristics&IMAGE_SCN_MEM_DISCARDABLE;\r\n        if(disca)\r\n            continue;\r\n        int pgind_i=psec->VirtualAddress/PAGE_INDEX_SIZE;\r\n        //printf(\"pgind_i:%x\\n\",pgind_i);\r\n        int pg_i=psec->VirtualAddress%PAGE_INDEX_SIZE/PAGE_SIZE;\r\n        page_item *pgindp=task[index].tss.cr3;\r\n        pgindp+=pgind_i;\r\n        page_item *pgp=*pgindp&0xfffff000;\r\n        //printf(\"page index item at %x refers to the page table at %x\\n\",pgindp,pgp);\r\n        //printf(\"RVA:%x\\n\",psec->VirtualAddress);\r\n        //printf(\"RVA in page:%x\\n\",psec->VirtualAddress%PAGE_SIZE); \r\n        //printf(\"Section Size:%x\\n\",psec->SizeOfRawData);\r\n        int load_addr=*pgp&0xfffff000;\r\n        load_addr+=psec->VirtualAddress%PAGE_SIZE;\r\n        //printf(\"loading sec to %x\\n\",load_addr);\r\n        int fpos=psec->PointerToRawData;\r\n        //printf(\"ptr to data:%x\\n\",fpos);\r\n        int data_size=psec->SizeOfRawData;\r\n        data_size+=4096-data_size%4096;\r\n        int sec_rn=read_file(f,load_addr,fpos,data_size);\r\n        if(sec_rn==-1)\r\n        {\r\n            //printf(\"err: sys_read file failure\\n\");\r\n            return -1;\r\n        }else\r\n            //printf(\"[fs]sys_read %d secs.\\n\",sec_rn);\r\n    }\r\n    //申请栈内存空间,设置esp\r\n    int stack_size=h32->OptionalHeader.SizeOfStackCommit;\r\n    if(stack_size>0x1000)stack_size=0x1000;\r\n    int stack_laddr=palloc(index,stack_size);\r\n    int stack_paddr=palloc_paddr;\r\n    task[index].tss.esp=stack_laddr+stack_size;\r\n    //入栈main函数的参数和ret所需\r\n    task[index].tss.esp-=12;\r\n    proc_ret_stack *pstack=stack_paddr+stack_size-12;\r\n    pstack->argc=0;\r\n    pstack->argv=0;\r\n    pstack->proc_end_addr=proc_end;\r\n    int *pptr=pstack;\r\n    //printf(\"stack dat:%x %x %x\\n\",*pptr,*(pptr+1),*(pptr+2));\r\n    //printf(\"esp :%x\\n\",task[index].tss.esp);\r\n    //填充ldt\r\n    /* fill_ldt_desc(stack_laddr,stack_size/4096,SEG_PRESENT|SEG_W|SEG_NON_SYS_GATE|\\\r\n    SEG_R|SEG_4KB_GRANUALITY,&task[index].ldt[3]);\r\n    fill_ldt_desc(h32->OptionalHeader.ImageBase,h32->OptionalHeader.SizeOfImage/4096,\\\r\n    SEG_CONFORMING|SEG_X|SEG_PRESENT|SEG_R|SEG_NON_SYS_GATE|SEG_4KB_GRANUALITY,&task[index].ldt[1]);\r\n    fill_ldt_desc(h32->OptionalHeader.ImageBase,h32->OptionalHeader.SizeOfImage/4096,\\\r\n    SEG_W|SEG_PRESENT|SEG_R|SEG_NON_SYS_GATE|SEG_4KB_GRANUALITY,&task[index].ldt[2]);\r\n    fill_desc(task[index].ldt,sizeof(task[index].ldt),SEG_SYS_LDT|SEG_PRESENT,\\\r\n    _LDT_IND(index)); \r\n    task[index].stat=TASK_READY;\r\n    return index;\r\n} */\r\n//为指定进程申请新的内存，并返回这块内存的线性地址。\r\nvoid* palloc(int proc_index,int size)\r\n{\r\n    int page_c=size/4096+size%4096?1:0;\r\n    int c=0;\r\n    void *ptr=NULL;\r\n    page_item *pgind=NULL;//task[proc_index].tss.cr3;\r\n    pgind++;\r\n    for(int i=1;i<1024;i++)\r\n    {\r\n        page_item* tblp=*pgind&0xfffff000;\r\n        for(int j=0;j<1024;j++)\r\n        {\r\n            int v=*tblp&PAGE_PRESENT;\r\n            if(!v)\r\n            {\r\n                int new_pg=req_a_page();\r\n                if(new_pg==-1)\r\n                {\r\n                    //修改ldt,增加数据空间\r\n                    unsigned int size=task[proc_index].ldt[2].limit_lo16;\r\n                    size+=(task[proc_index].ldt[2].attr&0xf)<<16;\r\n                    size+=c;\r\n                    task[proc_index].ldt[2].limit_lo16=size&0xffff;\r\n                    int tmp_attr=task[proc_index].ldt[2].attr;\r\n                    tmp_attr&=0xfff0;\r\n                    tmp_attr+=(size>>16)&0xf;\r\n                    task[proc_index].ldt[2].attr=tmp_attr;\r\n                    return ptr;//失败了，只能申请一部分的内存或者返回NULL\r\n                }\r\n                int addr=get_phyaddr(new_pg);\r\n                set_page_item(tblp,addr,PAGE_PRESENT|\\\r\n                PAGE_RWX|PAGE_FOR_ALL);\r\n                int laddr=i*0x400000+j*0x1000;//线性地址\r\n                if(ptr==NULL)\r\n                {\r\n                   // ptr=laddr;\r\n                    palloc_paddr=addr;\r\n                }\r\n                page_c--;\r\n                c++;\r\n                if(page_c==0)\r\n                {\r\n                    //修改ldt,增加数据空间\r\n                    unsigned int size=task[proc_index].ldt[2].limit_lo16;\r\n                    size+=(task[proc_index].ldt[2].attr&0xf)<<16;\r\n                    size+=c;\r\n                    task[proc_index].ldt[2].limit_lo16=size&0xffff;\r\n                    int tmp_attr=task[proc_index].ldt[2].attr;\r\n                    tmp_attr&=0xfff0;\r\n                    tmp_attr+=(size>>16)&0xf;\r\n                    task[proc_index].ldt[2].attr=tmp_attr;\r\n                    return ptr;\r\n                }\r\n            }\r\n            tblp++;\r\n        }\r\n        pgind++;\r\n    }\r\n    return NULL;\r\n}\r\n//为当前进程申请新的内存，并返回这块内存的线性地址。\r\nvoid* malloc(int size)\r\n{\r\n    return palloc(cur_proc,size);\r\n}\r\nvoid proc_end()\r\n{\r\n    int ret;\r\n    __asm__ volatile(\"mov %%eax,%0\":\"=m\"(ret));\r\n    //printf(\"proc #%d ended with retv %d.\\n\",cur_proc,ret);\r\n    //切换堆栈\r\n    //__asm__ volatile(\"mov %0,%%rsp\"::\"r\"(task[0].tss.esp));\r\n    del_proc(cur_proc);\r\n    if(task[cur_proc].parent_pid!=-1){\r\n        task[task[cur_proc].parent_pid].stat=TASK_READY;\r\n        switch_proc_tss(task[cur_proc].parent_pid);\r\n    }\r\n    else\r\n        switch_proc_tss(0);\r\n    //syscall(SYSCALL_DEL_PROC,cur_proc,0,0,0,0);\r\n}\r\nvoid del_proc(int pnr)\r\n{\r\n    task[pnr].stat=TASK_ZOMBIE;\r\n//    task[pnr].pid=-1;\r\n    //释放申请的页面\r\n    release_mmap(&task[pnr]);\r\n    //释放存放页目录的页面\r\n    vmfree(task[pnr].pml4);\r\n    //关闭打开的文件\r\n    for(int i=3;i<MAX_PROC_OPENF;i++){\r\n        if(task[pnr].openf[i]){\r\n            sys_close(i);\r\n        }\r\n    }\r\n    //三个std判断一下是否是会话leader，是的话再关闭\r\n    if(task[pnr].sid==task[pnr].pid){\r\n        //tty和console断联\r\n        sys_ioctl(0,TTY_DISCONNECT,0);\r\n        sys_close(0);\r\n        sys_close(1);\r\n        sys_close(2);\r\n        //然后,关闭所有前台进程组的进程\r\n        for(int i=0;i<MAX_TASKS;i++){\r\n            if(task[i].gpid==task[pnr].pid){\r\n                //TODO:发送SIGHUP信号使进程终结\r\n            }\r\n        }\r\n    }\r\n    //TODO 给子进程发送SIGHUP信号结束他们\r\n    //\r\n    //从进程中解除cr3,tss和ldt\r\n    //switch_proc_tss(task[pnr]);\r\n}\r\n\r\nint set_proc_stat(int pid,int stat)\r\n{\r\n    if(pid==-1)return -1;\r\n    int i=0;\r\n    for(;task[i].pid!=pid;i++);\r\n    if(i==MAX_PROC_COUNT)return -1;\r\n    task[i].stat=stat;\r\n    //如果这就是正在运行的进程，那么马上停止\r\n    if(cur_proc==i)\r\n        task[cur_proc].utime=MAX_UTIME;\r\n    return 0;\r\n}\r\n/* \r\nint exec_call(char * path,int priority)\r\n{\r\n    int tski=exec(path, priority);\r\n    if(tski==-1)return -1;\r\n    task[cur_proc].stat=TASK_SUSPENDED;\r\n    \r\n    task[tski].parent_pid=cur_proc;//设置父进程，这样进程结束后就能返回到父进程。\r\n\r\n    int tss=_TSS_IND(tski)*8;\r\n\r\n    switch_proc_tss(tski);\r\n\r\n    return 0;\r\n} */\r\n\r\n//int add_proc_openf(struct index_node *entry)\r\n//{\r\n//    for(int i=0;i<MAX_PROC_OPENF;i++){\r\n//        if(task[cur_proc].openf[i]==NULL)\r\n//        {\r\n//            task[cur_proc].openf[i]=entry;\r\n//            return 0;\r\n//        }\r\n//    }\r\n//    return -1;//full\r\n//}\r\n/*\r\n * 进程结束。\r\n * */\r\nint sys_exit(int code)\r\n{\r\n    current->exit_code=code;\r\n    del_proc(cur_proc);\r\n    while(1)\r\n        manage_proc();\r\n    return code;\r\n}\r\n/*int load_dll_at(char *path,int addr)\r\n{\r\n    extern dir_entry cur_dir;\r\n    //第一页用作存储头\r\n    req_page_at(addr,1);\r\n    dir_entry f,dir=cur_dir;\r\n    get_entry(path,&f,dir);\r\n    //内核函数不检错\r\n    read_file(f,addr,0,4096);\r\n    PIMAGE_DOS_HEADER dh=addr;\r\n    PIMAGE_NT_HEADERS32 nth=addr+dh->e_lfanew;\r\n    PIMAGE_SECTION_HEADER sh=(u32)nth+sizeof(IMAGE_NT_HEADERS32);\r\n    int oldbase=nth->OptionalHeader.ImageBase;\r\n    int msize=nth->OptionalHeader.SizeOfImage;\r\n    req_page_at(addr,msize/4096);\r\n    //读section\r\n    for(int i=0;i<nth->FileHeader.NumberOfSections;i++)\r\n    {\r\n        u32 chars=sh[i].Characteristics;\r\n        if(chars&IMAGE_SCN_MEM_DISCARDABLE)continue;//可以抛弃\r\n        read_file(f,addr+sh[i].VirtualAddress,\\\r\n        sh[i].PointerToRawData,sh[i].SizeOfRawData);\r\n    }\r\n    //重定位\r\n    PIMAGE_BASE_RELOCATION relp=0;\r\n    if(nth->OptionalHeader.DataDirectory[5].Size==0)goto dllmain;\r\n    relp=(u32)(nth->OptionalHeader.DataDirectory[5].VirtualAddress\\\r\n                                +(u32)addr);\r\n    IMAGE_BASE_RELOCATION emptyr={0};\r\n    u16 *reloc=relp+sizeof(IMAGE_BASE_RELOCATION);\r\n    u16 *rtype=reloc+1;\r\n    while(memcmp(relp,&emptyr,sizeof(IMAGE_BASE_RELOCATION))!=0){\r\n        int pgva=relp->VirtualAddress+addr;\r\n        for(int i=0;i<relp->SizeOfBlock/4;i++)\r\n        {\r\n            if(*rtype==IMAGE_REL_BASED_ABSOLUTE)continue;//不用重定位\r\n            int *at=*reloc+pgva;//要重定位的数据的地址\r\n            *at=*at-oldbase+addr;\r\n            //下一个\r\n            reloc+=2;\r\n            rtype+=2;\r\n        }\r\n        relp=(int)relp+0x1000;\r\n    }\r\ndllmain:\r\n    //重定位完毕，准备调用DllMain\r\n    typedef int (*DllMain)(void*,u32,void*);\r\n    DllMain dllmain=nth->OptionalHeader.AddressOfEntryPoint+addr;\r\n    dllmain(NULL,0,NULL);\r\n    \r\n}*/\r\n\r\nint reg_proc(addr_t entry, struct index_node *cwd, struct index_node *exef)\r\n{\r\n    \r\n    int i=req_proc();\r\n    if(i==-1)return -1;\r\n\r\n    //栈顶设置在了4G处\r\n    set_proc(0, 0, 0, 0, DS_USER, CS_USER, DS_USER, DS_USER\\\r\n, DS_USER, DS_USER, STACK_TOP, 0, 0, 0, entry, 0, i);\r\n    task[i].pml4=vmalloc();\r\n    task[i].pml4[0]=vmalloc();\r\n    unsigned long *pdpt=task[i].pml4;\r\n    //pdpt第一项(0-1GB)设置为内核空间，这样才能访问中断\r\n    set_1gb_pdpt(pdpt,0,PAGE_PRESENT|PAGE_RWX);\r\n\r\n    //申请一项pd,里面申请一2mb页用于堆栈\r\n    addr_t *stackb=vmalloc();\r\n    pdpt[3]=(unsigned long)stackb|PAGE_PRESENT|PAGE_FOR_ALL|PAGE_RWX;//3-4G分配栈空间\r\n    set_2mb_pde(stackb + 511, get_phyaddr(req_a_page()), PAGE_FOR_ALL|PAGE_RWX);\r\n    task[i].regs.cr3=task[i].pml4;\r\n\r\n    task[i].stat=TASK_READY;\r\n    task[i].cwd=cwd;\r\n    task[i].exef=exef;\r\n\r\n    return i;\r\n\r\n/*\r\n    //文件头基地址获取\r\n    PIMAGE_DOS_HEADER dh=base;\r\n    PIMAGE_NT_HEADERS32 nth=base+dh->e_lfanew;\r\n    set_proc(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,i);\r\n    task[i].tss.eip=nth->OptionalHeader.AddressOfEntryPoint+base;\r\n    //申请内存存放页目录\r\n    int pgind_addr=get_phyaddr(req_a_page());\r\n    page_item *pgind=pgind_addr;\r\n    set_page_item(pgind,PAGE_INDEX_ADDR,PAGE_PRESENT);//内核页\r\n    set_page_item(pgind+7,PAGE_INDEX_ADDR+7*4,PAGE_PRESENT);//系统页\r\n    int pgn=nth->OptionalHeader.SizeOfImage/4096;\r\n    int vbase=nth->OptionalHeader.ImageBase;\r\n    //设置程序所在的页面\r\n    int pgin=pgn<1024?1:pgn/1024;\r\n    int pgii=vbase/4096/1024;//开始的页目录索引号\r\n    int pgn_used=0;\r\n    for(int j=0;j<pgin;j++)\r\n    {\r\n        page_item *phy=get_phyaddr(req_a_page());\r\n        //先设置页目录\r\n        set_page_item(pgind+pgii+j,phy,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL);\r\n        //再设置页表\r\n        for(int k=0;k<1024;k++)\r\n        {\r\n            if(pgn_used>=pgn)break;\r\n            set_page_item(phy,base+pgn_used*4096,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL);\r\n            phy++;\r\n            pgn_used++;\r\n        }        \r\n    }\r\n    //写入cr3\r\n    task[i].tss.cr3=pgind;\r\n    task[i].tss.es=0x10;\r\n    task[i].tss.ds=0x10;\r\n    task[i].tss.ss=0x10;\r\n    task[i].tss.gs=0x10;\r\n    task[i].tss.fs=0x10;\r\n    task[i].tss.cs=0x8;\r\n    \r\n    //申请栈内存空间,设置esp\r\n    int stack_size=nth->OptionalHeader.SizeOfStackCommit;\r\n    if(stack_size>0x1000)stack_size=0x1000;\r\n    int stack_laddr=palloc(i,stack_size);\r\n    int stack_paddr=palloc_paddr;\r\n    task[i].tss.esp=stack_laddr+stack_size;\r\n    //入栈main函数的参数和ret所需\r\n    task[i].tss.esp-=12;\r\n    proc_ret_stack *pstack=stack_paddr+stack_size-12;\r\n    pstack->argc=0;\r\n    pstack->argv=0;\r\n    pstack->proc_end_addr=proc_end;\r\n    int *pptr=pstack;*/\r\n}\r\n\r\nvoid * sys_malloc(int size)\r\n{\r\n    //\r\n    int n=size/CHUNK_SIZE+size%CHUNK_SIZE?1:0;\r\n    chunk_header *hp=(chunk_header*)task[cur_proc].mem_struct.heap_base;\r\n    while (hp->next!=NULL&&hp->alloc==0&&hp->pgn>=n)\r\n        hp=hp->next;\r\n    if(hp->pgn<n)\r\n    {\r\n        //上抬heap top\r\n        if(task[cur_proc].mem_struct.heap_top+CHUNK_SIZE*n>=HEAP_MAXTOP)\r\n        {\r\n            //超过顶部\r\n            return NULL;\r\n        }\r\n        int needed=n-hp->pgn;\r\n        char* p=task[cur_proc].mem_struct.heap_top;\r\n        for(int i=0;i<needed*CHUNK_SIZE/PAGE_SIZE;i++)\r\n        {\r\n            *p=0;//触发缺页中断\r\n            p+=PAGE_SIZE;\r\n        }\r\n    }\r\n    if(hp->pgn>n)\r\n    {\r\n        //在后面新建一个头\r\n        char *p=hp;\r\n        p+=(n+1)*CHUNK_SIZE;//算上存储头一个\r\n        chunk_header *np=p;\r\n        np->pgn=hp->pgn-n-1;\r\n        np->next=hp->next;\r\n        np->prev=hp;\r\n        hp->next=np;\r\n    }\r\n    hp->alloc=1;//分配完毕\r\n    return (char*)hp+CHUNK_SIZE;//返回后边的第一个数据块地址\r\n}\r\nint sys_free(int ptr)\r\n{\r\n    chunk_header *hp=ptr-CHUNK_SIZE;//回退到头\r\n    hp->alloc=0;    //合并\r\n    //向后合并\r\n    chunk_header *p=hp->next;\r\n    while(p!=NULL)\r\n    {\r\n        if(p->alloc==0)\r\n        {\r\n            hp->pgn+=p->pgn+1;//把区域合并\r\n        }else\r\n            break;\r\n        p=p->next;\r\n    }\r\n    //向前合并\r\n    p=hp->prev;\r\n    while(p!=NULL)\r\n    {\r\n        if(p->alloc==0)\r\n        {\r\n            p->pgn+=hp->pgn+1;//把区域合并\r\n        }else\r\n            break;\r\n        p=p->prev;\r\n    }\r\n    //合并完成\r\n    return 0;\r\n}\r\n\r\nvoid switch_to(struct process *from, struct process *to) {\r\n    cur_proc=to-task;\r\n    current=&task[cur_proc];\r\n    __asm__ volatile(\"mov %0,%%rax\\n\"\r\n                 \"mov %%rax,%%cr3\\n\":\"=m\"(to->pml4));\r\n    __asm__ volatile(\"mov %%rsp,%0\\r\\n\"\r\n                 \"lea done(%%rip),%%rax\\r\\n\"\r\n                 \"mov %%rax,%1\\r\\n\"\r\n                 \"mov %%fs,%2\\r\\n\"\r\n                 \"mov %%gs,%3\\r\\n\"\r\n                 \"mov %6,%%rsp\\r\\n\"\r\n                 \"pushq %7\\r\\n\"\r\n                 \"jmp __switch_to\\r\\n\"\r\n                 \"done:\\r\\n\"\r\n                 \"nop\":\"=m\"(from->regs.rsp),\"=m\"(from->regs.rip),\r\n                 \"=m\"(from->regs.fs),\"=m\"(from->regs.gs):\r\n                \"m\"(to->regs.fs),\"m\"(to->regs.gs),\"m\"(to->regs.rsp),\"m\"(to->regs.rip),\r\n                \"D\"(from),\"S\"(to));\r\n\r\n}\r\nvoid __switch_to(struct process *from, struct process *to) {\r\n    set_tss(to->tss.rsp0,tss->rsp1,tss->rsp2,tss->ists[0],tss->ists[1],\r\n            tss->ists[2],tss->ists[3],tss->ists[4],tss->ists[5],tss->ists[6]);\r\n    __asm__ volatile(\"mov %%fs,%0\\r\\n\"\r\n                 \"mov %%gs,%1\\r\\n\"\r\n                 \"mov %2,%%fs\\r\\n\"\r\n                 \"mov %3,%%gs\\r\\n\"\r\n                 \"sti\":\"=m\"(to->regs.fs),\"=m\"(to->regs.gs):\r\n                 \"m\"(from->regs.fs),\"m\"(from->regs.gs));\r\n}\r\n\r\nvoid set_tss(u64 rsp0,u64 rsp1,u64 rsp2,u64 ist0,u64 ist1,u64 ist2,u64 ist3,u64 ist4,u64 ist5,u64 ist6){\r\n    tss->rsp0=rsp0;\r\n    tss->rsp1=rsp1;\r\n    tss->rsp2=rsp2;\r\n    tss->ists[0]=ist0;\r\n    tss->ists[1]=ist1;\r\n    tss->ists[2]=ist2;\r\n    tss->ists[3]=ist3;\r\n    tss->ists[4]=ist4;\r\n    tss->ists[5]=ist5;\r\n    tss->ists[6]=ist6;\r\n}\r\n\r\nint fork_child_ret(){\r\n    return 0;\r\n\r\n}\r\n\r\nint sys_fork(void){\r\n    int pid=req_proc();\r\n    if(pid==-1)return -1;\r\n    task[pid].regs=current->regs;\r\n    //使得子程序处于刚调用完系统调用的状态\r\n    task[pid].regs.rip=ret_normal_proc;\r\n    task[pid].regs.rsp-=sizeof(stack_store_regs);\r\n    task[pid].sid=current->sid;\r\n    task[pid].gpid=current->gpid;\r\n    stack_store_regs *r=task[pid].regs.rsp;\r\n    r->rax=0;\r\n    r->ds=DS_USER;\r\n    r->ss=DS_USER;\r\n    r->es=DS_USER;\r\n    r->rax=task[pid].regs.rax;\r\n    r->rbx=task[pid].regs.rbx;\r\n    r->rcx=task[pid].regs.rcx;\r\n    r->rdx=task[pid].regs.rdx;\r\n    r->rsi=task[pid].regs.rsi;\r\n    r->rdi=task[pid].regs.rdi;\r\n\r\n    r->r8 =task[pid].regs.r8 ;\r\n    r->r9 =task[pid].regs.r9 ;\r\n    r->r10=task[pid].regs.r10;\r\n    r->r11=task[pid].regs.r11;\r\n    r->r12=task[pid].regs.r12;\r\n    r->r13=task[pid].regs.r13;\r\n    r->r14=task[pid].regs.r14;\r\n    r->r15=task[pid].regs.r15;\r\n\r\n    __asm__ volatile(\"mov %%r10,%0\"::\"m\"(r->rip));\r\n\r\n    task[pid].tss=current->tss;\r\n    task[pid].stat=TASK_READY;\r\n    task[pid].parent_pid=cur_proc;\r\n    //设置父子关系以及初始化子进程的的list节点\r\n    list_init(&task[pid].node);\r\n    task[pid].child_procs=NULL;\r\n    task[pid].node.data=&task[pid];\r\n    list_add(current->child_procs,&task[pid].node);\r\n    //复制打开文件\r\n    memcpy(task[pid].openf,current->openf,sizeof(struct file*)*MAX_PROC_OPENF);\r\n    task[pid].utime=0;\r\n    task[pid].mem_struct=current->mem_struct;\r\n    //根据是子进程还是父进程设置返回值的不同\r\n\r\n    //TODO:设置新堆栈\r\n    //复制父进程的内存映射到子进程，然后重新映射并复制子进程的堆栈和数据段\r\n    copy_mmap(current,&task[pid]);\r\n    //复制完毕，开始更改堆栈\r\n    //栈\r\n    /*\r\n     * 这里使用vmalloc是一个权宜之策。\r\n     * 本来是分配用户空间内存的，但是这样的话当前进程内存空间下就访问不到这个新申请的内存了（除非mmap一下），\r\n     * 方便以前先用vmalloc。\r\n     * */\r\n    addr_t stk=task[pid].mem_struct.stack_top-PAGE_4K_SIZE;\r\n    for(;stk>=task[pid].mem_struct.stack_bottom;stk-=PAGE_4K_SIZE){\r\n        addr_t new_stkpg=vmalloc();\r\n        memcpy(new_stkpg,stk,PAGE_4K_SIZE);//把当前进程的栈空间复制到新栈里面\r\n        //把新的页面映射到进程页表里\r\n        smmap(new_stkpg,stk,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,task[pid].pml4);\r\n    }\r\n    //中断使用的栈空间\r\n    addr_t intstk=INT_STACK_TOP-PAGE_4K_SIZE;\r\n    int f=1;\r\n    for(;intstk>=INT_STACK_BASE;intstk-=PAGE_4K_SIZE){\r\n        addr_t new_stkpg=vmalloc();\r\n        memcpy(new_stkpg,intstk,PAGE_4K_SIZE);//把当前进程的栈空间复制到新栈里面\r\n        if(f){\r\n            f=0;\r\n            addr_t *raxp=new_stkpg+PAGE_4K_SIZE-56;//指向中断堆栈，里面存着rax的值\r\n            *raxp=0;//这样进程切换到子进程的done标签，从时钟中断返回弹出堆栈的时候rax弹出来的就是0，成为返回值。\r\n        }\r\n        //把新的页面映射到进程页表里\r\n        smmap(new_stkpg,intstk,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,task[pid].pml4);\r\n    }\r\n    //堆\r\n    addr_t hp=task[pid].mem_struct.heap_top-PAGE_4K_SIZE;\r\n    for(;hp>=task[pid].mem_struct.heap_base;hp-=PAGE_4K_SIZE){\r\n        addr_t new_hppg=vmalloc();\r\n        memcpy(new_hppg,hp,PAGE_4K_SIZE);//把当前进程的栈空间复制到新栈里面\r\n        //把新的页面映射到进程页表里\r\n        smmap(new_hppg,hp,PAGE_PRESENT|PAGE_RWX|PAGE_FOR_ALL,task[pid].pml4);\r\n    }\r\n    //父进程运行到这里\r\n    return pid;\r\n}\r\n//释放进程页表映射的内存，内核空间除外。\r\nvoid release_mmap(struct process* p){\r\n    page_item * pml4p=p->pml4;\r\n    //复制pdpt\r\n    page_item *pml4e= pml4p;\r\n    for(int i=0;i<512;i++)\r\n    {\r\n        if(pml4e[i]&PAGE_PRESENT){\r\n            page_item *pdpte=pml4e[i]&PAGE_4K_MASK;\r\n            int j=i==0?1:0;//低1GB的空间不释放（内核空间）\r\n            for(;j<512;j++)\r\n            {\r\n                if(pdpte[j]&PAGE_PRESENT&&!(pdpte[j]&PDPTE_1GB)){\r\n                    page_item *pde=pdpte[j]&PAGE_4K_MASK;\r\n                    for(int k=0;k<512;k++)\r\n                    {\r\n                        if(pde[k]&PAGE_PRESENT&&!(pde[k]&PDE_4MB)){\r\n                            page_item *pte=pde[k]&PAGE_4K_MASK;\r\n                            for(int l=0;l<512;l++){\r\n                                if(pte[l]&PAGE_PRESENT){\r\n                                    //释放申请的物理内存\r\n                                    //TODO:这里有一个问题：目前fork时候堆栈空间使用的是vmalloc内存，这样的话free_page是释放不了的。\r\n                                    free_page(pte[l]&PAGE_4K_MASK);\r\n                                }\r\n                            }\r\n                            //里面的项释放完了，这一项指向的vmalloc内存可以释放了\r\n                            vmfree(pde[k]&PAGE_4K_MASK);\r\n                        }else if((pde[k]&PAGE_PRESENT)&&(pde[k]&PDE_4MB)){\r\n                            //释放2MB页\r\n                            free_pages_at(pde[k]&PAGE_4K_MASK,512);\r\n                        }\r\n                    }\r\n                    //这一页pde的内容释放完了，这一项指向的vmalloc可以释放了\r\n                    vmfree(pdpte[j]&PAGE_4K_MASK);\r\n                }//1GB先不写，目前还没有初始化之后动态申请1GB页的\r\n\r\n            }\r\n            //这一页pdpte的内容释放完了，这一项指向的vmalloc可以释放了\r\n            vmfree(pml4e[i]&PAGE_4K_MASK);\r\n        }\r\n    }\r\n}\r\nvoid copy_mmap(struct process* from, struct process *to){\r\n    page_item * pml4p=vmalloc();\r\n    memcpy(pml4p,from->regs.cr3,PAGE_4K_SIZE);//复制pml4\r\n    to->regs.cr3=pml4p;\r\n    to->pml4=pml4p;\r\n    //复制pdpt\r\n\r\n    page_item *pml4e= pml4p;\r\n    for(int i=0;i<512;i++)\r\n    {\r\n        if(pml4e[i]&PAGE_PRESENT){\r\n            addr_t old_data=pml4e[i];//旧的数据，里面保存了属性和要拷贝的数据的地址\r\n            pml4e[i]=vmalloc()|(old_data&~PAGE_4K_MASK);\r\n            memcpy(pml4e[i]&PAGE_4K_MASK,old_data&PAGE_4K_MASK,PAGE_4K_SIZE);//把老的数据拷贝到新的页面里\r\n            page_item *pdpte=pml4e[i]&PAGE_4K_MASK;\r\n            for(int j=0;j<512;j++)\r\n            {\r\n                if(pdpte[j]&PAGE_PRESENT&&!(pdpte[j]&PDPTE_1GB)){\r\n                    addr_t old_data2=pdpte[j];//旧的数据，里面保存了属性和要拷贝的数据的地址\r\n                    pdpte[j]=vmalloc()|(old_data2&~PAGE_4K_MASK);\r\n                    memcpy(pdpte[j]&PAGE_4K_MASK,old_data2&PAGE_4K_MASK,PAGE_4K_SIZE);//把老的数据拷贝到新的页面里\r\n                    page_item *pde=pdpte[j]&PAGE_4K_MASK;\r\n                    for(int k=0;k<512;k++)\r\n                    {\r\n                        if(pde[k]&PAGE_PRESENT&&!(pde[k]&PDE_4MB)){\r\n                            addr_t old_data3=pde[k];//旧的数据，里面保存了属性和要拷贝的数据的地址\r\n                            pde[k]=vmalloc()|(old_data3&~PAGE_4K_MASK);\r\n                            memcpy(pde[k]&PAGE_4K_MASK,old_data3&PAGE_4K_MASK,PAGE_4K_SIZE);//把老的数据拷贝到新的页面里\r\n                        }\r\n                    }\r\n                }\r\n            }\r\n        }\r\n    }\r\n}\r\n\r\npid_t getpgrp(void){\r\n    return current->gpid;\r\n}\r\n\r\nint getpgid(pid_t pid,gid_t gid){\r\n    if(pid==0)\r\n        return current->gpid;\r\n    for (int i = 0; i <MAX_TASKS; ++i) {\r\n        if(task[i].pid==pid)\r\n            return task[i].gpid;\r\n    }\r\n    return -1;\r\n}\r\nint setpgid(pid_t pid,gid_t gid){\r\n    if(pid==0)\r\n    {\r\n        if(current->sid==current->pid)\r\n            return -1;\r\n        current->gpid=gid;\r\n        return 0;\r\n    }\r\n    for (int i = 0; i <MAX_TASKS; ++i) {\r\n        if(task[i].pid==pid)\r\n        {\r\n            if(task[i].sid==task[i].pid)\r\n                return -1;\r\n            task[i].gpid=gid;\r\n            return 0;\r\n        }\r\n    }\r\n    return -1;\r\n}\r\n\r\npid_t setsid(void){\r\n    current->sid=current->pid;\r\n}\r\npid_t getsid(pid_t pid){\r\n    if(pid==0)\r\n        return current->sid;\r\n    for (int i = 0; i <MAX_TASKS; ++i) {\r\n        if(task[i].pid==pid)\r\n            return task[i].sid;\r\n    }\r\n    return -1;\r\n}\r\nint tcsetpgrp(int fildes,pid_t pgid_id){\r\n    //当前controlling terminal断联\r\n    sys_ioctl(fildes,TTY_DISCONNECT,0);\r\n    int sid= getsid(0);//获取session id\r\n    struct process* new_fgl=NULL;\r\n    for (int i = 0; i <MAX_TASKS; ++i) {\r\n        if(task[i].stat == TASK_ZOMBIE||task[i].stat == TASK_EMPTY)continue;\r\n        if(task[i].sid==sid){\r\n            task[i].fg_pgid=pgid_id;\r\n            if(task[i].pid==pgid_id){\r\n                //这是新前台进程组的leader\r\n                new_fgl=&task[i];\r\n            }\r\n        }\r\n    }\r\n    //新leader把tty连接\r\n    new_fgl->openf[new_fgl->tty_fd]->f_ops->ioctl(new_fgl->openf[fildes]->dentry->dir_inode,new_fgl->openf[fildes]\\\r\n    ,TTY_CONNECT,0);\r\n}\r\npid_t tcgetpgrp(int fildes){\r\n    return current->fg_pgid;\r\n}\r\n//===============\r\n\r\nint sys_ioctl(int fildes, int request, unsigned long args){\r\n    current->openf[fildes]->f_ops->ioctl(current->openf[fildes]->dentry->dir_inode,current->openf[fildes]\\\r\n    ,request,args);\r\n}
 Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 <+>UTF-8
 ===================================================================
@@ -36070,7 +36070,7 @@ diff --git a/knl/proc.c b/knl/proc.c
 Index: include/str.h
 IDEA additional info:
 Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
-<+>#pragma once\r\nvoid strcpy(unsigned char* dest, unsigned char *buf);\r\nchar* strtok(char *str,char splitter);\r\nint strcmp(char *s1,char *s2);\r\nint strlen(char *str);\r\n\r\n\r\nvoid sprintf(char *dist,char *str,...);\r\nvoid sprintchar(char *dist,char c);\r\nvoid sprint_decimal(char *dist,int n);\r\nvoid sprint_hex(char *dist,unsigned int n);\r\nvoid sprintn(char *dist,char *str);
+<+>#pragma once\r\nvoid strcpyk(unsigned char* dest, unsigned char *buf);\r\nchar* strtokk(char *str,char splitter);\r\nint strcmpk(char *s1,char *s2);\r\nint strlenk(char *str);\r\n\r\n\r\nvoid sprintf(char *dist,char *str,...);\r\nvoid sprintchar(char *dist,char c);\r\nvoid sprint_decimal(char *dist,int n);\r\nvoid sprint_hex(char *dist,unsigned int n);\r\nvoid strcat(char *dist,char *str);
 Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 <+>UTF-8
 ===================================================================
@@ -36082,10 +36082,10 @@ diff --git a/include/str.h b/include/str.h
 +
 +#include <stdarg.h>
 +
- void strcpy(unsigned char* dest, unsigned char *buf);
- char* strtok(char *str,char splitter);
- int strcmp(char *s1,char *s2);
- int strlen(char *str);
+ void strcpyk(unsigned char* dest, unsigned char *buf);
+ char* strtokk(char *str,char splitter);
+ int strcmpk(char *s1,char *s2);
+ int strlenk(char *str);
  
  
 -void sprintf(char *dist,char *str,...);
@@ -36111,7 +36111,7 @@ new file mode 100644
 Index: knl/log.c
 IDEA additional info:
 Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
-<+>#include <log.h>\r\n#include <stdarg.h>\r\n#include \"framebuffer.h\"\r\n#include \"memory.h\"\r\n#include \"str.h\"\r\n\r\nstatic unsigned char* video;\r\nstatic int xpos,ypos;\r\n/* 将整数 D 转换为字符串并保存在 BUF 中。如果 BASE 为 'd'，则 D 为十进制，如果 BASE 为 'x'，则 D 为十六进制。 */\r\n\r\nint init_logging()\r\n{\r\n    video=0xb8000;\r\n    xpos=0;\r\n    ypos=0;\r\n}\r\n\r\nvoid itoa (char *buf, int base, int d)\r\n{\r\n    char *p = buf;\r\n    char *p1, *p2;\r\n    unsigned long ud = d;\r\n    int divisor = 10;\r\n \r\n    /* 如果指定了 %d 并且 D 是负数，在开始添上负号。 */\r\n    if (base == 'd' && d < 0)\r\n    {\r\n        *p++ = '-';\r\n        buf++;\r\n        ud = -d;\r\n    }\r\n    else if (base == 'x')\r\n        divisor = 16;\r\n \r\n    /* 用 DIVISOR 去除 UD 直到 UD == 0。 */\r\n    do\r\n    {\r\n        int remainder = ud % divisor;\r\n \r\n        *p++ = (remainder < 10) ? remainder + '0' : remainder + 'a' - 10;\r\n    }\r\n    while (ud /= divisor);\r\n \r\n    /* 在字符串尾添上终结符。 */\r\n    *p = 0;\r\n \r\n    /* 反转 BUF。 */\r\n    p1 = buf;\r\n    p2 = p - 1;\r\n    while (p1 < p2)\r\n    {\r\n        char tmp = *p1;\r\n        *p1 = *p2;\r\n        *p2 = tmp;\r\n        p1++;\r\n        p2--;\r\n    }\r\n}\r\n \r\n/* 在屏幕上输出字符 C 。 */\r\nvoid putchar (char c)\r\n{\r\n    char s[2]={c,'\\0'};\r\n    print(s);\r\n    return;\r\n    if (c == '\\n' || c == '\\r')\r\n    {\r\nnewline:\r\n        xpos = 0;\r\n        ypos++;\r\n        if (ypos >= LINES)\r\n            ypos = 0;\r\n        return;\r\n    }\r\n \r\n    *(video + (xpos + ypos * COLUMNS) * 2) = c & 0xFF;\r\n    *(video + (xpos + ypos * COLUMNS) * 2 + 1) = ATTRIBUTE;\r\n \r\n    xpos++;\r\n    if (xpos >= COLUMNS)\r\n        goto newline;\r\n}\r\n \r\n/* 格式化字符串并在屏幕上输出，就像 libc 函数 printf 一样。 */\r\nvoid printf (const char *format,...)\r\n{\r\n    if(strlen(format)>=1024)\r\n        return;//一次性输出不了太长\r\n    char* tmp=(char*)vmalloc();\r\n    va_list vargs;\r\n    va_start(vargs,format);\r\n    sprintf(tmp,format,vargs);\r\n    va_end(vargs);\r\n    print(tmp);\r\n    comprintf(tmp);\r\n    vmfree(tmp);\r\n//    char **arg = (char **) &format;\r\n//    char c;\r\n//    char buf[20];\r\n//\r\n//    arg++;\r\n//\r\n//    while ((c = *format++) != 0)\r\n//    {\r\n//        if (c != '%')\r\n//            putchar (c);\r\n//        else\r\n//        {\r\n//            char *p;\r\n//\r\n//            c = *format++;\r\n//            switch (c)\r\n//            {\r\n//            case 'd':\r\n//            case 'u':\r\n//            case 'x':\r\n//                itoa (buf, c, *((int *) arg++));\r\n//                p = buf;\r\n//                goto string;\r\n//                break;\r\n//\r\n//            case 's':\r\n//                p = *arg++;\r\n//                if (! p)\r\n//                    p = \"(null)\";\r\n//\r\n//string:\r\n//                while (*p)\r\n//                    putchar (*p++);\r\n//                break;\r\n//\r\n//            default:\r\n//                putchar (*((int *) arg++));\r\n//                break;\r\n//            }\r\n//        }\r\n//    }\r\n}\r\n
+<+>#include <log.h>\r\n#include <stdarg.h>\r\n#include \"framebuffer.h\"\r\n#include \"memory.h\"\r\n#include \"str.h\"\r\n\r\nstatic unsigned char* video;\r\nstatic int xpos,ypos;\r\n/* 将整数 D 转换为字符串并保存在 BUF 中。如果 BASE 为 'd'，则 D 为十进制，如果 BASE 为 'x'，则 D 为十六进制。 */\r\n\r\nint init_logging()\r\n{\r\n    video=0xb8000;\r\n    xpos=0;\r\n    ypos=0;\r\n}\r\n\r\nvoid itoa (char *buf, int base, int d)\r\n{\r\n    char *p = buf;\r\n    char *p1, *p2;\r\n    unsigned long ud = d;\r\n    int divisor = 10;\r\n \r\n    /* 如果指定了 %d 并且 D 是负数，在开始添上负号。 */\r\n    if (base == 'd' && d < 0)\r\n    {\r\n        *p++ = '-';\r\n        buf++;\r\n        ud = -d;\r\n    }\r\n    else if (base == 'x')\r\n        divisor = 16;\r\n \r\n    /* 用 DIVISOR 去除 UD 直到 UD == 0。 */\r\n    do\r\n    {\r\n        int remainder = ud % divisor;\r\n \r\n        *p++ = (remainder < 10) ? remainder + '0' : remainder + 'a' - 10;\r\n    }\r\n    while (ud /= divisor);\r\n \r\n    /* 在字符串尾添上终结符。 */\r\n    *p = 0;\r\n \r\n    /* 反转 BUF。 */\r\n    p1 = buf;\r\n    p2 = p - 1;\r\n    while (p1 < p2)\r\n    {\r\n        char tmp = *p1;\r\n        *p1 = *p2;\r\n        *p2 = tmp;\r\n        p1++;\r\n        p2--;\r\n    }\r\n}\r\n \r\n/* 在屏幕上输出字符 C 。 */\r\nvoid putchar (char c)\r\n{\r\n    char s[2]={c,'\\0'};\r\n    print(s);\r\n    return;\r\n    if (c == '\\n' || c == '\\r')\r\n    {\r\nnewline:\r\n        xpos = 0;\r\n        ypos++;\r\n        if (ypos >= LINES)\r\n            ypos = 0;\r\n        return;\r\n    }\r\n \r\n    *(video + (xpos + ypos * COLUMNS) * 2) = c & 0xFF;\r\n    *(video + (xpos + ypos * COLUMNS) * 2 + 1) = ATTRIBUTE;\r\n \r\n    xpos++;\r\n    if (xpos >= COLUMNS)\r\n        goto newline;\r\n}\r\n \r\n/* 格式化字符串并在屏幕上输出，就像 libc 函数 printf 一样。 */\r\nvoid printf (const char *format,...)\r\n{\r\n    if(strlenk(format)>=1024)\r\n        return;//一次性输出不了太长\r\n    char* tmp=(char*)vmalloc();\r\n    va_list vargs;\r\n    va_start(vargs,format);\r\n    sprintf(tmp,format,vargs);\r\n    va_end(vargs);\r\n    print(tmp);\r\n    comprintf(tmp);\r\n    vmfree(tmp);\r\n//    char **arg = (char **) &format;\r\n//    char c;\r\n//    char buf[20];\r\n//\r\n//    arg++;\r\n//\r\n//    while ((c = *format++) != 0)\r\n//    {\r\n//        if (c != '%')\r\n//            putchar (c);\r\n//        else\r\n//        {\r\n//            char *p;\r\n//\r\n//            c = *format++;\r\n//            switch (c)\r\n//            {\r\n//            case 'd':\r\n//            case 'u':\r\n//            case 'x':\r\n//                itoa (buf, c, *((int *) arg++));\r\n//                p = buf;\r\n//                goto string;\r\n//                break;\r\n//\r\n//            case 's':\r\n//                p = *arg++;\r\n//                if (! p)\r\n//                    p = \"(null)\";\r\n//\r\n//string:\r\n//                while (*p)\r\n//                    putchar (*p++);\r\n//                break;\r\n//\r\n//            default:\r\n//                putchar (*((int *) arg++));\r\n//                break;\r\n//            }\r\n//        }\r\n//    }\r\n}\r\n
 Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 <+>UTF-8
 ===================================================================
@@ -36149,8 +36149,8 @@ diff --git a/knl/log.c b/knl/log.c
 -void printf (const char *format,...)
 +void __attribute__((regparm(0))) printf (const char *fmt,...)
  {
--    if(strlen(format)>=1024)
-+    if(strlen(fmt)>=1024)
+-    if(strlenk(format)>=1024)
++    if(strlenk(fmt)>=1024)
          return;//一次性输出不了太长
 -    char* tmp=(char*)vmalloc();
 +    char *pstr=fmt;
@@ -36233,7 +36233,7 @@ diff --git a/knl/log.c b/knl/log.c
 +
 +void __attribute__((regparm(0))) log(char* fmt,...){
 +
-+    if(strlen(fmt)>=1024)
++    if(strlenk(fmt)>=1024)
 +        return;//一次性输出不了太长
 +    char *pstr=fmt;
 +    va_list vargs;

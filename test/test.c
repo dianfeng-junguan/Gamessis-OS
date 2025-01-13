@@ -2,12 +2,10 @@
 // Created by Oniar_Pie on 2024/11/15.
 //
 #include "fcntl.h"
-#include "stdio.h"
 #include "syscall.h"
-// #include <cstdio>
 #include "sys/wait.h"
-#include <stdio.h>
-#include <string.h>
+#include "c/stdio.h"
+#include "c/string.h"
 #include <sys/unistd.h>
 
 
@@ -19,7 +17,7 @@ int __main() {}
 // int   __stack_chk_fail() {}
 int main(int argc, char** argv)
 {
-    // write(2, as, strlen(as));
+    // write(2, as, strlenk(as));
     char* prepared_environ = {"os=gms"};
     puts("Gamessis OS shell\n");
     char cmd[128] = {0};

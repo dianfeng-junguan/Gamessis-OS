@@ -15,100 +15,105 @@
 #include <vfs.h>
 #include "sys/stat.h"
 
-static int rhead=0,rtail=0;
-static int dev_dfd=-1;
-struct file_operations devfs_fops={
-    .open=open_dev,.close=close_dev,.ioctl=ioctl_dev,.read=read_dev,.write=write_dev
-};
-struct dir_entry_operations dev_dir_dops={
+static int             rhead = 0, rtail = 0;
+static int             dev_dfd    = -1;
+struct file_operations devfs_fops = {
+    .open = open_dev, .close = close_dev, .ioctl = ioctl_dev, .read = read_dev, .write = write_dev};
+struct dir_entry_operations dev_dir_dops = {
 
 };
-static int devd_fd=-1;
-void make_dentry(struct dir_entry* d,char* name,int namelen,struct dir_entry* parent,struct dir_entry_operations* dops){
-    strcpy(d->name,name);
-    d->name_length=namelen;
+static int devd_fd = -1;
+void       make_dentry(struct dir_entry* d, char* name, int namelen, struct dir_entry* parent,
+                       struct dir_entry_operations* dops)
+{
+    strcpyk(d->name, name);
+    d->name_length = namelen;
     //添加dentry的操作方法，这样能够查找设备
-    d->dir_ops=dops;
+    d->dir_ops = dops;
     list_init(&d->subdirs_list);
     list_init(&d->child_node);
-    d->child_node.data=d;
-    d->parent=parent;
-    list_add(&parent->subdirs_list,&d->child_node);
+    d->child_node.data = d;
+    d->parent          = parent;
+    list_add(&parent->subdirs_list, &d->child_node);
 }
-void make_inode(struct index_node* i,struct index_node_operations* iops,struct file_operations* fops,unsigned long attr,struct super_block* sb){
-    i->f_ops=fops;
-    i->attribute=attr;
-    i->sb=sb;
-    i->file_size=0;
-    i->inode_ops=iops;
+void make_inode(struct index_node* i, struct index_node_operations* iops,
+                struct file_operations* fops, unsigned long attr, struct super_block* sb)
+{
+    i->f_ops     = fops;
+    i->attribute = attr;
+    i->sb        = sb;
+    i->file_size = 0;
+    i->inode_ops = iops;
 }
 /*
  * 创建/dev文件夹，添加必要的设备文件。
  * 这个/dev文件夹的dentry和inode等数据由devman管理，根文件系统切换时，这个文件夹会跟着挂载到新文件系统的根目录下。
  * */
-void make_devf(struct dir_entry* d,struct index_node* i,char* name,struct dir_entry* dir_dev,struct file_operations* fops){
-    make_dentry(d,name, strlen(name),dir_dev,&dev_dir_dops);
-    d->dir_inode=i;
-    make_inode(i,dir_dev->dir_inode->inode_ops,fops,FS_ATTR_DEVICE,root_sb);
+void make_devf(struct dir_entry* d, struct index_node* i, char* name, struct dir_entry* dir_dev,
+               struct file_operations* fops)
+{
+    make_dentry(d, name, strlenk(name), dir_dev, &dev_dir_dops);
+    d->dir_inode = i;
+    make_inode(i, dir_dev->dir_inode->inode_ops, fops, FS_ATTR_DEVICE, root_sb);
     // list_add(&dir_dev->subdirs_list,&d->child_node);//添加到/dev下
 }
-struct dir_entry* devfs_lookup(struct index_node* parent_inode,struct dir_entry* dest_dentry){
-    //TODO 待完成
-    //dev下的设备文件dentry都是存在于内存中的，不应该调用lookup到存储介质中寻找
+struct dir_entry* devfs_lookup(struct index_node* parent_inode, struct dir_entry* dest_dentry)
+{
+    // TODO 待完成
+    // dev下的设备文件dentry都是存在于内存中的，不应该调用lookup到存储介质中寻找
     comprintf("devfs:warning: trying to lookup under /dev\n");
     return NULL;
 }
 
-long devfs_create(struct index_node * inode,struct dir_entry * dentry,int mode){
+long devfs_create(struct index_node* inode, struct dir_entry* dentry, int mode)
+{
     return 0;
 }
-struct dir_entry_operations devfs_dops={
-    //TODO 待完成
-    
-};
-struct index_node_operations devfs_iops={
-    .lookup=devfs_lookup,
-    .create=devfs_create
-    //TODO 待完成
-};
-struct super_block_operations devfs_sops={
-    //TODO 待完成
-    
-};
-struct super_block* devfs_read_superblock(struct Disk_Partition_Table_Entry *PDTE,void *buf){
-    struct super_block* sb=kmalloc(0,PAGE_4K_SIZE);
-    sb->dev=0;//不存在具体的存储设备
-    sb->p_dev=0;
-    sb->root=sb+1;
-    sb->sb_ops=&devfs_sops;
+struct dir_entry_operations devfs_dops = {
+    // TODO 待完成
 
-    sb->root->dir_inode=sb->root+1;
-    sb->root->dir_ops=&devfs_dops;
+};
+struct index_node_operations devfs_iops = {
+    .lookup = devfs_lookup, .create = devfs_create
+    // TODO 待完成
+};
+struct super_block_operations devfs_sops = {
+    // TODO 待完成
+
+};
+struct super_block* devfs_read_superblock(struct Disk_Partition_Table_Entry* PDTE, void* buf)
+{
+    struct super_block* sb = kmalloc(0, PAGE_4K_SIZE);
+    sb->dev                = 0;   //不存在具体的存储设备
+    sb->p_dev              = 0;
+    sb->root               = sb + 1;
+    sb->sb_ops             = &devfs_sops;
+
+    sb->root->dir_inode = sb->root + 1;
+    sb->root->dir_ops   = &devfs_dops;
     list_init(&sb->root->child_node);
     list_init(&sb->root->subdirs_list);
-    sb->root->name=kmalloc(0, 4);
-    strcpy(sb->root->name, "dev");
-    sb->root->name_length=3;
+    sb->root->name = kmalloc(0, 4);
+    strcpyk(sb->root->name, "dev");
+    sb->root->name_length = 3;
 
-    sb->root->dir_inode->dev=0;
-    sb->root->dir_inode->inode_ops=&devfs_iops;
-    sb->root->dir_inode->sb=sb;
-    sb->root->dir_inode->file_size=0;
-    sb->root->dir_inode->f_ops=&devfs_fops;
-    sb->root->dir_inode->blocks=0;
-    sb->root->dir_inode->attribute|=FS_ATTR_DIR;
-    sb->root->dir_inode->private_index_info=0;
+    sb->root->dir_inode->dev       = 0;
+    sb->root->dir_inode->inode_ops = &devfs_iops;
+    sb->root->dir_inode->sb        = sb;
+    sb->root->dir_inode->file_size = 0;
+    sb->root->dir_inode->f_ops     = &devfs_fops;
+    sb->root->dir_inode->blocks    = 0;
+    sb->root->dir_inode->attribute |= FS_ATTR_DIR;
+    sb->root->dir_inode->private_index_info = 0;
 
     return sb;
 }
-struct dir_entry* ddev=NULL,*dmnt,*dconsole,*dhd0,*dtty,*dramdisk;
-struct file ftty;
-struct file_system_type fs_devfs={
-    .name="devfs",
-    .next=0,
-    .read_superblock=devfs_read_superblock
-};
-int create_device(char *path,unsigned short dev){
+struct dir_entry *      ddev = NULL, *dmnt, *dconsole, *dhd0, *dtty, *dramdisk;
+struct file             ftty;
+struct file_system_type fs_devfs = {
+    .name = "devfs", .next = 0, .read_superblock = devfs_read_superblock};
+int create_device(char* path, unsigned short dev)
+{
     // struct dir_entry* newf=create_node(path,)
 }
 int init_devfs()
@@ -132,30 +137,30 @@ int init_devfs()
     imnt->private_index_info=dmnt; */
 
     register_filesystem(&fs_devfs);
-    struct super_block *sb_devfs=mount_fs("devfs",0,0);
-    ddev=path_walk("/dev",0);
-    mount_fs_on(ddev,sb_devfs);
-    
-    struct dir_entry* rt_devfs=sb_devfs->root;
+    struct super_block* sb_devfs = mount_fs("devfs", 0, 0);
+    ddev                         = path_walk("/dev", 0);
+    mount_fs_on(ddev, sb_devfs);
 
-    
+    struct dir_entry* rt_devfs = sb_devfs->root;
+
+
     //创建几个设备文件
-    //console-framebuffer.c
+    // console-framebuffer.c
     // dconsole= (struct dir_entry *) kmalloc(0,PAGE_4K_SIZE);
     // struct index_node* iconsole=dconsole+1;
     // dconsole->name=iconsole+1;
     // iconsole->dev=0x10000;
     // make_devf(dconsole,iconsole,"console",rt_devfs,&devfs_fops);
     create_node("/dev/console", S_IFCHR, 0x10000);
-    //hd0-disk.c
+    // hd0-disk.c
     // dhd0= (struct dir_entry *) kmalloc(0,PAGE_4K_SIZE);
     // struct index_node* ihd0=dhd0+1;
     // dhd0->name=ihd0+1;
     // ihd0->dev=dev_hd<<8;
     // make_devf(dhd0,ihd0,"hd0",rt_devfs,&devfs_fops);
     extern int dev_hd;
-    create_node("/dev/hd0", S_IFBLK, dev_hd<<4);
-    //tty-tty.c
+    create_node("/dev/hd0", S_IFBLK, dev_hd << 4);
+    // tty-tty.c
     // dtty= (struct dir_entry *) kmalloc(0,PAGE_4K_SIZE);
     // struct index_node* itty=dtty+1;
     // dtty->name=itty+1;
@@ -165,115 +170,122 @@ int init_devfs()
     //初始化一下
     // tty_fops.open(itty,&ftty);
 
-    //ramdisk- ramdisk.c
+    // ramdisk- ramdisk.c
     // dramdisk= (struct dir_entry *) kmalloc(0,PAGE_4K_SIZE);
     // struct index_node* iramdisk=dramdisk+1;
     // dramdisk->name=iramdisk+1;
     // iramdisk->dev=dev_ramdisk<<8;
     // make_devf(dramdisk,iramdisk,"ram",rt_devfs,&devfs_fops);
-    create_node("/dev/ram", S_IFBLK, dev_ramdisk<<4);
-
+    create_node("/dev/ram", S_IFBLK, dev_ramdisk << 4);
 }
 //
-long open_dev(struct index_node * inode,struct file * filp){
+long open_dev(struct index_node* inode, struct file* filp)
+{
     //查看文件名
-    char* name=filp->dentry->name;
-    char* p=name+ strlen(name)-1;
-    for(;*p!='/'&&p>=name;p--);
-    if(p>=name)
-        name=p+1;
-    if(memcmp(name,"tty",3)==0){
-        return open_tty(inode,filp);
-    }else if(strcmp(name,"console")==0){
-        return open_framebuffer(inode,filp);
+    char* name = filp->dentry->name;
+    char* p    = name + strlenk(name) - 1;
+    for (; *p != '/' && p >= name; p--)
+        ;
+    if (p >= name)
+        name = p + 1;
+    if (memcmp(name, "tty", 3) == 0) {
+        return open_tty(inode, filp);
+    }
+    else if (strcmpk(name, "console") == 0) {
+        return open_framebuffer(inode, filp);
     }
     return -1;
 }
-long close_dev(struct index_node * inode,struct file * filp){
+long close_dev(struct index_node* inode, struct file* filp)
+{
     //查看文件名
-    char* name=filp->dentry->name;
-    char* p=name+ strlen(name)-1;
-    for(;*p!='/'&&p>=name;p--);
-    if(p>=name)
-        name=p+1;
-    if(memcmp(name,"tty",3)==0){
-        return close_tty(inode,filp);
-    }else if(strcmp(name,"console")==0){
-        return close_framebuffer(inode,filp);
+    char* name = filp->dentry->name;
+    char* p    = name + strlenk(name) - 1;
+    for (; *p != '/' && p >= name; p--)
+        ;
+    if (p >= name)
+        name = p + 1;
+    if (memcmp(name, "tty", 3) == 0) {
+        return close_tty(inode, filp);
+    }
+    else if (strcmpk(name, "console") == 0) {
+        return close_framebuffer(inode, filp);
     }
     return -1;
-
 }
-long read_dev(struct file * filp,char * buf,unsigned long count,long * position){
+long read_dev(struct file* filp, char* buf, unsigned long count, long* position)
+{
     //判断是不是块设备文件
-    struct index_node* i_dev=filp->dentry->dir_inode;
-    if(IS_BLKDEV(i_dev->dev)){
+    struct index_node* i_dev = filp->dentry->dir_inode;
+    if (IS_BLKDEV(i_dev->dev)) {
         //这里需要调用缓冲区层的函数读取块设备
-        return blkdev_read(i_dev->dev,*position,count,buf);
+        return blkdev_read(i_dev->dev, *position, count, buf);
     }
-    
+
     //查看文件名
-    char* name=filp->dentry->name;
-    char* p=name+ strlen(name)-1;
-    for(;*p!='/'&&p>=name;p--);
-    if(p>=name)
-        name=p+1;
-    if(memcmp(name,"tty",3)==0){
-        return read_tty(filp,buf,count,position);
-    }else if(strcmp(name,"console")==0){
-        return read_framebuffer(filp,buf,count,position);
+    char* name = filp->dentry->name;
+    char* p    = name + strlenk(name) - 1;
+    for (; *p != '/' && p >= name; p--)
+        ;
+    if (p >= name)
+        name = p + 1;
+    if (memcmp(name, "tty", 3) == 0) {
+        return read_tty(filp, buf, count, position);
+    }
+    else if (strcmpk(name, "console") == 0) {
+        return read_framebuffer(filp, buf, count, position);
     }
     return -1;
-
 }
-long write_dev(struct file * filp,char * buf,unsigned long count,long * position){
+long write_dev(struct file* filp, char* buf, unsigned long count, long* position)
+{
     //判断是不是块设备文件
-    struct index_node* idev=filp->dentry->dir_inode;
-    if(IS_BLKDEV(idev->dev)){
+    struct index_node* idev = filp->dentry->dir_inode;
+    if (IS_BLKDEV(idev->dev)) {
         //这里需要调用缓冲区层的函数写块设备
-        return blkdev_write(idev->dev,*position,count,buf);
+        return blkdev_write(idev->dev, *position, count, buf);
     }
 
     //查看文件名
-    char* name=filp->dentry->name;
-    char* p=name+ strlen(name)-1;
-    for(;*p!='/'&&p>=name;p--);
-    if(p>=name)
-        name=p+1;
-    if(memcmp(name,"tty",3)==0){
-        return write_tty(filp,buf,count,position);
-    }else if(strcmp(name,"console")==0){
-        return write_framebuffer(filp,buf,count,position);
+    char* name = filp->dentry->name;
+    char* p    = name + strlenk(name) - 1;
+    for (; *p != '/' && p >= name; p--)
+        ;
+    if (p >= name)
+        name = p + 1;
+    if (memcmp(name, "tty", 3) == 0) {
+        return write_tty(filp, buf, count, position);
+    }
+    else if (strcmpk(name, "console") == 0) {
+        return write_framebuffer(filp, buf, count, position);
     }
     return -1;
-
 }
-long ioctl_dev(struct index_node * inode,struct file * filp,unsigned long cmd,unsigned long arg){
+long ioctl_dev(struct index_node* inode, struct file* filp, unsigned long cmd, unsigned long arg)
+{
     //判断是不是块设备文件
-    struct index_node* idev=filp->dentry->dir_inode;
-    if(IS_BLKDEV(idev->dev)){
+    struct index_node* idev = filp->dentry->dir_inode;
+    if (IS_BLKDEV(idev->dev)) {
         //这里需要调用缓冲区层的函数ioctl块设备
         return 1;
     }
     //查看文件名
-    char* name=filp->dentry->name;
-    char* p=name+ strlen(name)-1;
-    for(;*p!='/'&&p>=name;p--);
-    if(p>=name)
-        name=p+1;
-    if(memcmp(name,"tty",3)==0){
+    char* name = filp->dentry->name;
+    char* p    = name + strlenk(name) - 1;
+    for (; *p != '/' && p >= name; p--)
+        ;
+    if (p >= name)
+        name = p + 1;
+    if (memcmp(name, "tty", 3) == 0) {
         return ioctl_tty(inode, filp, cmd, arg);
-    }else if(strcmp(name,"console")==0){
-        return ioctl_framebuffer(inode,filp,cmd,arg);
+    }
+    else if (strcmpk(name, "console") == 0) {
+        return ioctl_framebuffer(inode, filp, cmd, arg);
     }
     return -1;
-
 }
-int load_driver(char *path)
-{
-    
-}
-/* 
+int load_driver(char* path) {}
+/*
 int reg_device(device* dev)
 {
     //TODO:查重
@@ -298,11 +310,11 @@ int reg_device(device* dev)
     case DEV_TYPE_BLKDEV:
         p=dev_tree[DEVTREE_BLKDEVI];pp=&dev_tree[DEVTREE_BLKDEVI];
         break;
-    
+
     case DEV_TYPE_CHRDEV:
         p=dev_tree[DEVTREE_CHRDEVI];pp=&dev_tree[DEVTREE_CHRDEVI];
         break;
-        
+
     case DEV_TYPE_OTHERS:
         p=dev_tree[DEVTREE_OTHERDEVI];pp=&dev_tree[DEVTREE_OTHERDEVI];
         break;
@@ -324,7 +336,7 @@ int reg_device(device* dev)
     case DEV_STYPE_HD:
         neo->operi=OPERATIONS_HD;
         break;
-    
+
     case DEV_STYPE_MOUSE:
         neo->operi=OPERATIONS_MOUSE;
         break;
@@ -359,7 +371,7 @@ int sys_find_dev(char *name)
 {
     for(int i=0;i<MAX_DEVICES;i++)
     {
-        if(devs[i].flag!=DEV_FLAG_EMPTY&&strcmp(name,devs[i].name)==0)
+        if(devs[i].flag!=DEV_FLAG_EMPTY&&strcmpk(name,devs[i].name)==0)
             return i;
     }
     return -1;
@@ -370,7 +382,7 @@ int sys_operate_dev(char *name,int func,driver_args* args)
     int i=0;
     for(;i<MAX_DEVICES;i++)
     {
-        if(devs[i].flag!=DEV_FLAG_EMPTY&&strcmp(name,devs[i].name)==0)
+        if(devs[i].flag!=DEV_FLAG_EMPTY&&strcmpk(name,devs[i].name)==0)
             break;
     }
     if(i==MAX_DEVICES)return -1;
@@ -476,7 +488,7 @@ int do_req()
             //如果还在运行（DONE的状态不能直接覆盖，因为里面的运行结果可能还没被拿走）
         }
     }
-    
+
     return 0;
 }
 

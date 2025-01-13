@@ -21,7 +21,7 @@
 
 unsigned long sys_putstring(char* string)
 {
-    printf(string);
+    printfk(string);
     return 0;
 }
 
@@ -36,12 +36,12 @@ unsigned long sys_open(char* filename, int flags)
     int               fd      = -1;
     int               i;
 
-    //	printf("sys_open\n");
+    //	printfk("sys_open\n");
     path = (char*)kmalloc(0, PAGE_4K_SIZE);
     if (path == NULL)
         return -ENOMEM;
     memset(path, 0, PAGE_4K_SIZE);
-    pathlen = strnlen(filename, PAGE_4K_SIZE);
+    pathlen = strnlenk(filename, PAGE_4K_SIZE);
     if (pathlen <= 0) {
         kmfree(path);
         return -EFAULT;
@@ -50,7 +50,7 @@ unsigned long sys_open(char* filename, int flags)
         kmfree(path);
         return -ENAMETOOLONG;
     }
-    strcpy(path, filename);
+    strcpyk(path, filename);
 
     dentry = path_walk(path, 0);
 
@@ -60,7 +60,7 @@ unsigned long sys_open(char* filename, int flags)
         //创建文件
         // TODO 创建文件改为更正规的方法
         //找到上一级目录
-        char* p = path + strlen(path) - 1;
+        char* p = path + strlenk(path) - 1;
         for (; *p != '/' && p > path; p--)
             ;
         *p                       = '\0';
@@ -136,7 +136,7 @@ unsigned long sys_close(int fd)
 {
     struct file* filp = NULL;
 
-    //	printf("sys_close:%d\n",fd);
+    //	printfk("sys_close:%d\n",fd);
     if (fd < 0 || fd >= MAX_TASKS)
         return -EBADF;
 
@@ -155,7 +155,7 @@ unsigned long sys_read(int fd, void* buf, long count)
     struct file*  filp = NULL;
     unsigned long ret  = 0;
 
-    //	printf("sys_read:%d\n",fd);
+    //	printfk("sys_read:%d\n",fd);
     if (fd < 0 || fd >= MAX_TASKS)
         return -EBADF;
     if (count < 0)
@@ -172,7 +172,7 @@ unsigned long sys_write(int fd, void* buf, long count)
     struct file*  filp = NULL;
     unsigned long ret  = 0;
 
-    //	printf("sys_write:%d\n",fd);
+    //	printfk("sys_write:%d\n",fd);
     if (fd < 0 || fd >= MAX_TASKS)
         return -EBADF;
     if (count < 0)
@@ -190,7 +190,7 @@ unsigned long sys_lseek(int filds, long offset, int whence)
     struct file*  filp = NULL;
     unsigned long ret  = 0;
 
-    //	printf("sys_lseek:%d\n",filds);
+    //	printfk("sys_lseek:%d\n",filds);
     if (filds < 0 || filds >= MAX_TASKS)
         return -EBADF;
     if (whence < 0 || whence >= SEEK_MAX)
@@ -206,7 +206,7 @@ unsigned long sys_tell(int fd)
     struct file*  filp = NULL;
     unsigned long ret  = 0;
 
-    //	printf("sys_lseek:%d\n",filds);
+    //	printfk("sys_lseek:%d\n",filds);
     if (fd < 0 || fd >= MAX_TASKS)
         return -EBADF;
 
@@ -217,14 +217,14 @@ unsigned long sys_tell(int fd)
 // unsigned long sys_fork()
 //{
 //    TSS *regs = (TSS*)current->tss.rsp0 -1;
-//    printf("sys_fork\n");
+//    printfk("sys_fork\n");
 //    //return do_fork(regs,0,regs->rsp,0);
 //}
 
 unsigned long sys_vfork()
 {
     regs_t* regs = (regs_t*)current->tss.rsp0 - 1;
-    printf("sys_vfork\n");
+    printfk("sys_vfork\n");
     return sys_fork();
     // return do_fork(regs,CLONE_VM | CLONE_FS | CLONE_SIGNAL,regs->rsp,0);
 }
@@ -236,12 +236,12 @@ unsigned long sys_vfork()
 //    long error = 0;
 //    regs_t *regs = (regs_t *)current->tss.rsp0 -1;
 //
-//    printf("execute\n");
+//    printfk("execute\n");
 //    pathname = (char *)vmalloc();
 //    if(pathname == NULL)
 //        return -ENOMEM;
 //    memset(pathname,0,PAGE_4K_SIZE);
-//    pathlen = strlen((char *)regs->rdi);
+//    pathlen = strlenk((char *)regs->rdi);
 //    if(pathlen <= 0)
 //    {
 //        vmfree(pathname);
@@ -252,7 +252,7 @@ unsigned long sys_vfork()
 //        vmfree(pathname);
 //        return -ENAMETOOLONG;
 //    }
-//    strcpy((char *)regs->rdi,pathname);
+//    strcpyk((char *)regs->rdi,pathname);
 //
 //    error = execute(pathname);//regs,pathname,(char **)regs->rsi,NULL
 //
@@ -262,7 +262,7 @@ unsigned long sys_vfork()
 
 // unsigned long sys_exit(int exit_code)
 //{
-//    printf("sys_exit\n");
+//    printfk("sys_exit\n");
 //    //return do_exit(exit_code);
 //}
 
@@ -337,7 +337,7 @@ unsigned long sys_wait4(unsigned long pid, int* status, int options, void* rusag
     //    struct task_struct *child = NULL;
     //    struct task_struct *tsk = NULL;
     //
-    //    printf("sys_wait4\n");
+    //    printfk("sys_wait4\n");
     //    for(tsk = &init_task_union.task;tsk->next != &init_task_union.task;tsk = tsk->next)
     //    {
     //        if(tsk->next->pid == pid)
@@ -374,8 +374,8 @@ unsigned long sys_brk(unsigned long brk)
 {
     unsigned long new_brk = PAGE_4K_ALIGN(brk);
 
-    //	printf("sys_brk\n");
-    //	printf("brk:%#018lx,new_brk:%#018lx,current->mm->end_brk:%#018lx\n",brk,new_brk,current->mm->end_brk);
+    //	printfk("sys_brk\n");
+    //	printfk("brk:%#018lx,new_brk:%#018lx,current->mm->end_brk:%#018lx\n",brk,new_brk,current->mm->end_brk);
     if (new_brk == 0)
         return current->mem_struct.heap_base;
     if (new_brk < current->mem_struct.heap_base)
@@ -413,13 +413,13 @@ void* sys_sbrk(long long increment)
 
 unsigned long sys_reboot(unsigned long cmd, void* arg)
 {
-    printf("sys_reboot\n");
+    printfk("sys_reboot\n");
     switch (cmd) {
     case SYSTEM_REBOOT: outb(0x64, 0xFE); break;
 
-    case SYSTEM_POWEROFF: printf("sys_reboot cmd SYSTEM_POWEROFF\n"); break;
+    case SYSTEM_POWEROFF: printfk("sys_reboot cmd SYSTEM_POWEROFF\n"); break;
 
-    default: printf("sys_reboot cmd ERROR!\n"); break;
+    default: printfk("sys_reboot cmd ERROR!\n"); break;
     }
     return 0;
 }
@@ -431,8 +431,8 @@ unsigned long sys_chdir(char* filename)
     long              pathlen = 0;
     struct dir_entry* dentry  = NULL;
 
-    printf("sys_chdir\n");
-    pathlen = strlen(filename);
+    printfk("sys_chdir\n");
+    pathlen = strlenk(filename);
     path    = (char*)kmalloc(0, pathlen);
 
     if (path == NULL)
@@ -446,7 +446,7 @@ unsigned long sys_chdir(char* filename)
         kmfree(path);
         return -ENAMETOOLONG;
     }
-    strcpy(filename, path);
+    strcpyk(filename, path);
 
     dentry = path_walk(path, 0);
     kmfree(path);
@@ -463,7 +463,7 @@ unsigned long sys_getdents(int fd, void* dirent, long count)
     struct file*  filp = NULL;
     unsigned long ret  = 0;
 
-    //	printf("sys_getdents:%d\n",fd);
+    //	printfk("sys_getdents:%d\n",fd);
     if (fd < 0 || fd > MAX_TASKS)
         return -EBADF;
     if (count < 0)

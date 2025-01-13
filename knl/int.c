@@ -96,7 +96,7 @@ void set_gate(u8 index, addr_t offset, u16 selector, u16 attr)
 void die()
 {
     com_puts("sys died.\n", PORT_COM1);
-    printf("sys died.\n");
+    printfk("sys died.\n");
     while (1) {
         // __asm__ volatile("hlt\n");
     }

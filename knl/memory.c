@@ -108,7 +108,11 @@ stat_t smmap(addr_t pa, addr_t la, u32 attr, page_item* pml4p)
     pt = (page_item*)(((addr_t)pt & ~0xff) | KNL_BASE);
 
     //在pt中找到la指向的page
-    pt[la % PDE_SIZE / PAGE_4K_SIZE] = pa | attr;   //映射
+    int index = la % PDE_SIZE / PAGE_4K_SIZE;
+    pt[index] = pa | attr;   //映射
+    //必要的代码，不然页表来不及更新，后面的内存操作就会出问题。
+    __asm__ volatile("mov %cr3,%rax\n mov %rax,%cr3\n");
+
     // comprintf("mapped %l(pa) to %l(la)\n", pa, la);
     return NORMAL;
 }
@@ -230,7 +234,7 @@ mmap_struct* get_mmap(off_t addr)
 malloc_hdr* get_pmhdr(off_t pm)
 {
     malloc_hdr* mp = pmhdrs;
-    for (; mp && mp->base != pm; mp = mp->next) {
+    for (; mp && !(mp->base <= pm && mp->base + mp->len > pm); mp = mp->next) {
         // comprintf("phdr:%l,next=%l\n",mp,mp->next);
     }
     return mp;
@@ -267,11 +271,20 @@ void page_err(long* int_stk)
             int   pgn   = (mtop - mbase) / PAGE_4K_SIZE;
             //在进程的页表中申请新页
             void* pm = pmalloc(pgn * PAGE_4K_SIZE);
+            comprintf("page err reqed new pm:%l\n", pm);
             for (int i = 0; i < pgn; i++) {
                 addr_t dest_la = mbase + i * PAGE_4K_SIZE;
                 smmap(pm + i * PAGE_4K_SIZE, dest_la, attr, current->pml4);
             }
             mp->pmhdr = get_pmhdr(pm);   //填写pmhdr
+            if (!mp->pmhdr) {
+                comprintf("FATAL err:pmalloc met a NULL pmhdr\n");
+                die();
+            }
+            comprintf("merged pmhdr:&pmhdr=%l,base=%l,len=%l\n",
+                      mp->pmhdr,
+                      mp->pmhdr->base,
+                      mp->pmhdr->len);
             //读取文件
             if (mp->file) {
                 int fd = mp->fd;
@@ -800,20 +813,35 @@ void* do_mmap(void* addr, size_t len, int prot, int flags, int fildes, off_t off
     mmps->flags  = prot | (flags & MAP_SHARED ? MMAP_FLAG_S : 0);
     return addr;
 }
+static addr_t vbase = 0;
+static size_t vlen  = 0;
+static addr_t pbase = 0;
+static int    attr  = 0;
+
+#define MAX_ITEMS 512
+#define PGE_ATTR(x) ((x)&0xfff)
+#define LADDR(i, j, k, l) (((i)*0x8000000000ul + (j)*0x40000000ul + (k)*0x200000 + (l)*0x1000))
+#define TABLE(x, i) ((x)[i] & PAGE_4K_MASK | KNL_BASE)
+void information(page_item entry, size_t size, int i, int j, int k, int l)
+{
+    if (PGE_ATTR(entry) != attr || pbase + vlen != (entry)&PAGE_4K_MASK) {
+        if (attr & PAGE_PRESENT)
+            comprintf("(la)%l->(pa)%l,(len)%l,(attr)%l\n", vbase, pbase, vlen, attr);
+        vlen  = PAGE_4K_SIZE;
+        vbase = LADDR(i, j, k, l);
+        pbase = (entry)&PAGE_4K_MASK;
+        attr  = PGE_ATTR(entry);
+    }
+    else {
+        vlen += (size);
+    }
+}
 /*
 显示内存映射。
 */
 void print_mmap(page_item* pml4p)
 {
 //从pml4中找到la所属的pml4项目，即属于第几个512GB
-#define MAX_ITEMS 512
-#define PGE_ATTR(x) ((x)&0xfff)
-#define LADDR(i, j, k, l) (((i)*0x8000000000ul + (j)*0x40000000ul + (k)*0x200000 + (l)*0x1000))
-#define TABLE(x, i) ((x)[i] & PAGE_4K_MASK | KNL_BASE)
-    addr_t vbase = 0;
-    size_t vlen  = 0;
-    addr_t pbase = 0;
-    int    attr  = 0;
 #define INFORMATION(entry, size, i, j, k, l)                                              \
     do {                                                                                  \
         if (PGE_ATTR(entry) != attr || pbase + vlen != (entry)&PAGE_4K_MASK) {            \
@@ -829,6 +857,10 @@ void print_mmap(page_item* pml4p)
         }                                                                                 \
     } while (0)
     ;
+    vlen  = 0;
+    vbase = 0;
+    pbase = 0;
+    attr  = 0;
     comprintf("The mapping:\n");
     for (int i = 0; i < MAX_ITEMS; i++) {
         if (!(pml4p[i] & PAGE_PRESENT))
@@ -838,7 +870,7 @@ void print_mmap(page_item* pml4p)
             if ((pdpte[j] & PAGE_PRESENT) == 0)
                 continue;
             if (pdpte[j] & PDPTE_1GB) {
-                INFORMATION(pdpte[j], PDPTE_SIZE, i, j, 0, 0);
+                information(pdpte[j], PDPTE_SIZE, i, j, 0, 0);
                 continue;
             }
             page_item* pde = TABLE(pdpte, j);
@@ -846,16 +878,56 @@ void print_mmap(page_item* pml4p)
                 if ((pde[k] & PAGE_PRESENT) == 0)
                     continue;
                 if (pde[k] & PDE_2MB) {
-                    INFORMATION(pde[k], PDE_SIZE, i, j, k, 0);
+                    information(pde[k], PDE_SIZE, i, j, k, 0);
                     continue;
                 }
                 page_item* pt = TABLE(pde, k);
                 for (int l = 0; l < MAX_ITEMS; l++) {
-                    INFORMATION(pt[l], PAGE_4K_SIZE, i, j, k, l);
+                    information(pt[l], PAGE_4K_SIZE, i, j, k, l);
                 }
             }
         }
     }
     if (attr & PAGE_PRESENT)
         comprintf("(la)%l->(pa)%l,(len)%l,(attr)%l\n", vbase, pbase, vlen, attr);
+}
+//显示某个线性地址对应的一页的映射信息
+void print_mmap_entry(page_item* pml4p, addr_t la)
+{
+
+    //从pml4中找到la所属的pml4项目，即属于第几个512GB
+    // canonical 高地址判断
+    if (la > 0x7ffffffffffful) {
+        la &= ~0xffff000000000000ul;
+    }
+    page_item* pdptp = (page_item*)(pml4p[la / PML4E_SIZE]);   //指向的pdpt表
+    if (!((unsigned long long)pdptp & PAGE_PRESENT)) {
+        comprintf("%x hasn't been mapped yet.", la);
+        return;
+    }
+    pdptp = (page_item*)(((addr_t)pdptp & ~0xff) | KNL_BASE);
+
+    //在这个512GB（一张pdpt表）中找到la所属的pdpt项目，找到指向的pd
+    int        pdpti = la % PML4E_SIZE / PDPTE_SIZE;
+    page_item* pdp   = (page_item*)pdptp[pdpti];   //指向的pd
+    //检查pdptp是否被占用
+    if (!((unsigned long long)pdp & PAGE_PRESENT)) {
+        comprintf("%x hasn't been mapped yet.", la);
+        return;
+    }
+    pdp = (page_item*)(((addr_t)(pdp) & ~0xff) | KNL_BASE);
+
+    //在pd中找到la指向的pt
+    page_item* pt = (page_item*)pdp[la % PDPTE_SIZE / PDE_SIZE];
+    if (!((unsigned long long)pt & PAGE_PRESENT)) {
+        comprintf("%x hasn't been mapped yet.", la);
+        return;
+    }
+    pt = (page_item*)(((addr_t)pt & ~0xff) | KNL_BASE);
+
+    //在pt中找到la指向的page
+    page_item cont = pt[la % PDE_SIZE / PAGE_4K_SIZE];   //映射
+    addr_t    pa   = cont & PAGE_4K_MASK;
+    int       attr = cont & !~PAGE_4K_MASK;
+    comprintf("mapped %l(pa) to %l(la),attr=%x\n", pa, la, attr);
 }

@@ -150,8 +150,8 @@ char* copy_to_stack(long* stktop, char** argv)
     char* p = stktop;
     int   i = 0;
     for (; argv[i] && verify_area(argv[i], 1, PROT_READ); i++) {
-        p -= strlen(argv[i]) + 1;
-        strcpy(p, argv[i]);
+        p -= strlenk(argv[i]) + 1;
+        strcpyk(p, argv[i]);
     }
     if (argv[i]) {
         // argv里面存在非法的指针，需要手动添加NULL尾
@@ -201,11 +201,11 @@ int sys_execve(char* path, char** argv, char** environ)
     //参数放栈
     int tot_argsz = 0;
     for (int i = 0; i < argc; i++) {
-        int tmpsz = strlen(argv[i]) + 1;
+        int tmpsz = strlenk(argv[i]) + 1;
         tot_argsz += tmpsz + 8;
     }
     for (int i = 0; environ[i] && verify_area(environ[i], 1, PROT_READ); i++) {
-        int tmpsz = strlen(environ[i]) + 1;
+        int tmpsz = strlenk(environ[i]) + 1;
         tot_argsz += tmpsz + 8;
     }
     //初始需要的栈大小为argv指向的字符串大小之和+argv指针数组大小+
@@ -376,7 +376,7 @@ int load_pe(struct process* proc)
             char* dllname = impdes->Name + nbase;
             //此处应有加载dll代码
             int dlli;
-            if (strcmp(dllname, "sys.dll") == 0)   //加载系统dll的部分由内核已经完成
+            if (strcmpk(dllname, "sys.dll") == 0)   //加载系统dll的部分由内核已经完成
             {
                 dllp = 0x1c00000;
             }
@@ -414,7 +414,7 @@ int load_pe(struct process* proc)
                     import_by_name_p += 2;                //跳过开头两字节序号
                     int i = 0;
                     for (; i < funcn; i++) {
-                        if (strcmp(import_by_name_p, fnames[i]) == 0) {
+                        if (strcmpk(import_by_name_p, fnames[i]) == 0) {
                             int ordi = funcords[i];
                             *iataddrs = funcaddrs[ordi] + dllp;   //导入表中的IAT内容修改成地址
                         }
