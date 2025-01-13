@@ -148,23 +148,28 @@ int init_proc0()
     extern off_t _knl_text_start, _knl_text_end;
     comprintf("_knl_text_start:%l,_knl_text_end:%l\n", &_knl_text_start, &_knl_text_end);
     sys_mmap(KNL_BASE,
-             _knl_text_start - KNL_BASE,
+             (size_t)&_knl_text_start - KNL_BASE,
              PROT_READ | PROT_WRITE,
              MAP_FIXED | MAP_PRIVATE | MAP_ANNONYMOUS,
              0,
              0);
-    sys_mmap(_knl_text_start,
-             _knl_text_end - _knl_text_start,
+    sys_mmap((size_t)&_knl_text_start,
+             (size_t)&_knl_text_end - (size_t)&_knl_text_start,
              PROT_READ | PROT_EXEC,
              MAP_FIXED | MAP_PRIVATE | MAP_ANNONYMOUS,
              0,
              0);
-    sys_mmap(_knl_text_end,
-             0x40000000 - _knl_text_end,
+    sys_mmap((size_t)&_knl_text_end,
+             0x40000000 - ((size_t)&_knl_text_end - (size_t)&_knl_text_start),
              PROT_READ | PROT_WRITE,
              MAP_FIXED | MAP_PRIVATE | MAP_ANNONYMOUS,
              0,
              0);
+    //测试代码
+    comprintf("proc0 mmaps\n");
+    for (mmap_struct* mp = pz->mmaps; mp; mp = list_next(mp, &mp->node)) {
+        comprintf("base=%x,len=%x\n", mp->base, mp->len);
+    }
     //映射framebuffer
     extern struct multiboot_tag_framebuffer framebuffer;
     size_t size = framebuffer.common.framebuffer_height * framebuffer.common.framebuffer_pitch;
@@ -1219,8 +1224,7 @@ int chk_mmap(off_t base, size_t mem_size)
     for (; mp; mp = list_next(mp, &mp->node)) {
         off_t mpbase = mp->base, mptop = mpbase + mp->len;
         off_t top = base + mem_size;
-        if (mpbase >= base && mpbase < top || mptop >= base && mptop < top ||
-            base >= mpbase && top < mptop)
+        if (!(base >= mptop || top <= mpbase))
             return 0;
     }
     return 1;

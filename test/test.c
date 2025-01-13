@@ -15,7 +15,7 @@ int a = 1, b = 2, c = 0;
 
 int __main() {}
 // int   __stack_chk_fail() {}
-int main(int argc, char** argv)
+int main(int argc, char** argv, char** environ)
 {
     // write(2, as, strlenk(as));
     char* prepared_environ = {"os=gms"};
@@ -42,7 +42,7 @@ int main(int argc, char** argv)
                 printf("forked, ready to execve\n");
                 if (execve(cmd, argv, environ) == -1) {
                     printf("cannot find file:%s\n", cmd);
-                    break;
+                    continue;
                 }
             }
             printf("forked. pid=%d\n", pid);

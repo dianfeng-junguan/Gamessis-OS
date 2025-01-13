@@ -135,7 +135,8 @@ int verify_area(void* addr, int len, int prot);
 ///@param flen 映射的文件内容大小
 void* do_mmap(void* addr, size_t len, int prot, int flags, int fildes, off_t off, size_t flen);
 
-void print_mmap(page_item* pml4p);
-void print_mmap_entry(page_item* pml4p, addr_t la);
+void        print_mmap(page_item* pml4p);
+void        print_mmap_entry(page_item* pml4p, addr_t la);
+malloc_hdr* get_pmhdr(off_t pm);
 
 extern addr_t usr_mem_pa;

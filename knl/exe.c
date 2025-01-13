@@ -143,32 +143,125 @@ int execute(char* path, char** argv)
     // int pi= reg_proc(proc_start, &opened[cwd_fno], &opened[fno]);
     return 0;
 }
-//将参数从内核空间拷贝到进程栈中。args必须以一个NULL结尾。
-//返回一个指向参数底部的指针。
-char* copy_to_stack(long* stktop, char** argv)
+///将参数从内核空间拷贝到进程栈中，然后将指针数组本身也拷贝过去。args必须以一个NULL结尾。
+///需要保证stktop有足够的空间。
+///@return 返回数据底部
+///@p arrsz argv数组项数（不包括NULL尾）
+///@p new_arr 传入一个指针，函数会把指向的值设置为新的argv的地址。
+char* copy_to_stack(addr_t* stktop, char** argv, size_t arrsz, addr_t* new_arr)
 {
-    char* p = stktop;
-    int   i = 0;
-    for (; argv[i] && verify_area(argv[i], 1, PROT_READ); i++) {
+    addr_t* arr = stktop - arrsz - 1;   //指向填充argv的位置
+    char*   p   = arr;
+    int     i   = 0;
+    for (; argv[i] && i < 512; i++) {
         p -= strlenk(argv[i]) + 1;
         strcpyk(p, argv[i]);
+        arr[i] = p;
     }
+    arr[i] = 0;   //添加NULL结尾
     if (argv[i]) {
         // argv里面存在非法的指针，需要手动添加NULL尾
         comprintf("copy_to_stack:invalid argv/environ[%d]:%l,truncated\n", i, argv[i]);
         *p = NULL;
     }
+    *new_arr = arr;
     return p;
+}
+//检查指针是否指向一个实际存在的内存（标准是可读）
+#define VALID_POINTER(p) verify_area(p, 1, PROT_READ)
+//检查文件路径是否长度合法而且是合法指针
+#define VALID_PATH(path) \
+    (strnlenk(path, RECOMMENDED_MAXSTRLEN) < RECOMMENDED_MAXSTRLEN && VALID_POINTER(path))
+/**
+检查一个指针数组是否是合法的。
+合法的依据是，数组指向一个合法内存，长度不超过512，里面的每一个指针都是合法指针，以NULL结尾。
+ */
+int valid_pointer_array(char** arr)
+{
+    if (!VALID_POINTER(arr)) {
+        return 0;
+    }
+    int i = 0;
+    for (; i < 512 && arr[i]; i++) {
+        if (!VALID_POINTER(arr[i])) {
+            return 0;
+        }
+    }
+    if (arr[i]) {
+        //不是0结尾的
+        return 0;
+    }
+    return 1;
+}
+/**
+获取指针数组长度。不检查是否是合法指针数组。
+长度不会计入结尾的NULL。
+ */
+int pointer_array_len(char** arr, int maxlen)
+{
+    int l = 0;
+    for (; l < maxlen && arr[l]; l++) {}
+    return l;
 }
 int sys_execve(char* path, char** argv, char** environ)
 {
+
     cli();
-    int fno = -1, cwd_fno = -1;
-    int argc = 0;
+    //防御性编程，检查三个指针的有效性。
+    if (!valid_pointer_array(argv) || !valid_pointer_array(environ) || !VALID_PATH(path)) {
+        comprintf("sys_execve: params invalid.\n");
+        return -1;
+    }
+    //拷贝三个指针的数据，因为之后就会释放用户区内存
+    char* path_copy = kmalloc(0, PAGE_4K_SIZE);
+    strncpyk(path_copy, path, RECOMMENDED_MAXSTRLEN);
+    path = path_copy;
+    //指针数组先拷贝数组，然后拷贝数组指向的内容
+    int   argc = 0, environc = 0, arg_memsz = 0, environ_memsz = 0;
+    char* argv_copy = kmalloc(0, PAGE_4K_SIZE);
+
+    memcpy(argv_copy, argv, (argc = pointer_array_len(argv, 512)) * sizeof(char*));
+    char* environ_copy = kmalloc(0, PAGE_4K_SIZE);
+    memcpy(environ_copy, environ, (environc = pointer_array_len(environ, 512)) * sizeof(char*));
+    argv    = argv_copy;   //替换原来的指针数组
+    environ = environ_copy;
+    //简单粗暴的拷贝
+    for (int i = 0; i < argc; i++) {
+        size_t argl = strnlenk(argv[i], RECOMMENDED_MAXSTRLEN);
+        arg_memsz += argl;
+        char* move_to = kmalloc(0, argl);
+        strncpyk(move_to, argv[i], RECOMMENDED_MAXSTRLEN);
+        argv[i] = move_to;
+    }
+    for (int i = 0; i < environc; i++) {
+        size_t argl = strnlenk(environ[i], RECOMMENDED_MAXSTRLEN);
+        environ_memsz += argl;
+        char* move_to = kmalloc(0, argl);
+        strncpyk(move_to, environ[i], RECOMMENDED_MAXSTRLEN);
+        environ[i] = move_to;
+    }
+    //拷贝完成
+    int exec_result = do_execve(path_copy, argv_copy, environ_copy, argc, environc);
+
+    //释放拷贝到内核空间的argv和environ
+    for (int i = 0; i < argc; i++) {
+        kmfree(argv[i]);
+    }
+    for (int i = 0; i < environc; i++) {
+        kmfree(environ[i]);
+    }
+    kmfree(argv);
+    kmfree(environ);
+    kmfree(path);
+    return exec_result;
+}
+int do_execve(char* path, char** argv, char** environ, int argc, int environc)
+{
+    int    fno = -1, cwd_fno = -1;
+    size_t arg_memsz     = argc * sizeof(addr_t);
+    size_t environ_memsz = environc * sizeof(addr_t);
     if ((fno = sys_open(path, O_EXEC)) < 0)
         return -ENOENT;
-    for (int i = 0; argv[i] && verify_area(argv[i], 1, PROT_READ); i++, argc++)
-        ;
     //重新设置进程数据
     //清空原来的页表
     release_mmap(current);
@@ -186,6 +279,16 @@ int sys_execve(char* path, char** argv, char** environ)
     off_t entry   = load_elf(fno);
     if (entry == -1) {
         comprintf("failed execve, errcode:%d\n", current->regs.errcode);
+        //释放拷贝到内核空间的argv和environ
+        for (int i = 0; i < argc; i++) {
+            kmfree(argv[i]);
+        }
+        for (int i = 0; i < environc; i++) {
+            kmfree(environ[i]);
+        }
+        kmfree(argv);
+        kmfree(environ);
+        kmfree(path);
         return -1;
     }
     //之后page err还需要这个fno
@@ -199,41 +302,22 @@ int sys_execve(char* path, char** argv, char** environ)
     //计算argv和environ所需要的栈的空间
     //
     //参数放栈
-    int tot_argsz = 0;
-    for (int i = 0; i < argc; i++) {
-        int tmpsz = strlenk(argv[i]) + 1;
-        tot_argsz += tmpsz + 8;
-    }
-    if (verify_area(environ, 1, PROT_READ)) {
-        for (int i = 0; environ[i] && verify_area(environ[i], 1, PROT_READ); i++) {
-            int tmpsz = strlenk(environ[i]) + 1;
-            tot_argsz += tmpsz + 8;
-        }
-    }
-    //初始需要的栈大小为argv指向的字符串大小之和+argv指针数组大小+
-    // argc+一个main函数返回地址+一个rbp入栈空间
-    if (tot_argsz >= PAGE_4K_SIZE) {
-        int needed = (tot_argsz + PAGE_4K_SIZE - 1) / PAGE_4K_SIZE - 1;
-        for (int i = 0; i < needed; i++) {
-            smmap(pmalloc(PAGE_4K_SIZE),
-                  STACK_TOP - PAGE_4K_SIZE * (i + 1),
-                  PAGE_PRESENT | PAGE_RWX | PAGE_FOR_ALL,
-                  current->pml4);
-        }
-    }
+    int tot_argsz = arg_memsz + environ_memsz + 16;   //结尾两个NULL还要16字节
+    int needed    = (tot_argsz + PAGE_4K_SIZE - 1) / PAGE_4K_SIZE;
+    do_mmap(STACK_TOP - PAGE_4K_SIZE * (needed),
+            needed * PAGE_4K_SIZE,
+            PROT_READ | PROT_WRITE,
+            MAP_ANNONYMOUS | MAP_FIXED | MAP_IMMEDIATE,
+            0,
+            0,
+            0);
 
     //拷贝argv
-    long* p = copy_to_stack(STACK_TOP, argv);
-    p -= argc + 1;
-    memcpy(p, argv, (argc + 1) * 8);
+    addr_t  argv_cp    = 0;
+    addr_t  environ_cp = 0;
+    addr_t* p          = copy_to_stack(STACK_TOP, argv, argc, &argv_cp);
     //拷贝environ
-    long* ep = copy_to_stack(p, environ);
-    int   i  = 0;
-    for (; environ[i] && verify_area(environ, 1, PROT_READ); i++)
-        ;
-    i++;
-    ep -= i;
-    memcpy(ep, environ, i * 8);
+    addr_t* ep = copy_to_stack(p, environ, environc, &environ_cp);
 
     // argp_aryp指向的是argv指针数组的地址，应该把用户栈设在这里
     unsigned long* stp = ep;
@@ -249,26 +333,28 @@ int sys_execve(char* path, char** argv, char** environ)
         //设置回开头，不然dl还得自己设置
         sys_lseek(fno, 0, SEEK_SET);
         rs->rdi = fno;
-        rs->rsi = 0;
-        rs->rdx = argc;
-        rs->r10 = p;
-        rs->rbx = ep;
+        rs->rsi = argv_cp;
+        rs->rdx = environ_cp;
+        // rcx被syscall用了，所以最多只能传3个参数
     }
     else {
         rs->rdi = argc;
-        rs->rsi = p;
-        rs->r10 = ep;
+        rs->rsi = argv_cp;
+        rs->rdx = environ_cp;
     }
     //设置线程控制块TCB，需要立即加载内存
-    smmap(pmalloc(PAGE_4K_SIZE), STACK_TOP, PAGE_PRESENT | PAGE_RWX | PAGE_FOR_ALL, current->pml4);
+    do_mmap(STACK_TOP,
+            PAGE_4K_SIZE,
+            PROT_READ | PROT_WRITE,
+            MAP_ANNONYMOUS | MAP_FIXED | MAP_PRIVATE | MAP_IMMEDIATE,
+            0,
+            0,
+            0);
     // sys_mmap(STACK_TOP, PAGE_4K_SIZE, PROT_READ | PROT_WRITE, MAP_ANNONYMOUS | MAP_FIXED, 0, 0);
     tcbhead_t* tcb        = STACK_TOP;
     tcb->stack_guard      = STACK_PROTECTOR;
     current->regs.fs_base = STACK_TOP;
     wrmsr(MSR_FS_BASE, STACK_TOP);
-    //以下部分是临时测试代码
-    //    int (*pmain)(int argc,char **argv)=(int (*)(int, char **)) entry;
-    //    pmain(argc, (char **) rs->rdi);
     return 0;
 }
 int exec_call(char* path)

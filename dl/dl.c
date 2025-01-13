@@ -19,10 +19,10 @@ id_t        get_modid(void)
     static id_t modid_d = 0;
     return modid_d++;
 }
-int dlmain(int fno, void* load_offset, int argc, char** argv, char** environ)
+int dlmain(int fno, char** argv, char** environ)
 {
     //完成自我重定位（自举）
-    dlid = dl_init(load_offset);
+    dlid = dl_init(0);
 
     //这部分是因为c库的malloc需要这个变量，但是现在又不能直接设置入口函数为entry
     extern unsigned long long __heap_base;
@@ -35,6 +35,8 @@ int dlmain(int fno, void* load_offset, int argc, char** argv, char** environ)
     if (entry == -1) {
         return -1;
     }
+    int argc = 1;   //计数argv
+    for (; argv[argc - 1]; argc++) {}
     //跳转到程序入口
     int (*main)(int, char**, char**) = entry;
     main(argc, argv, environ);
@@ -349,10 +351,14 @@ int load_elfso(int fildes)
         if (relaptr && relaentsz && relasz)   // RELA
             for (int j = 0; j < relasz / relaentsz; j++)
                 fill_reloc(relaptr + offset + j * relaentsz, elfid, mod->p_symbol, 1);
-        if (pltrel == DT_REL)
-            jmprelaentsz = relentsz, pltrel = 0;
-        else
-            jmprelaentsz = relaentsz, pltrel = 1;
+        if (pltrel == DT_REL) {
+            jmprelaentsz = relentsz;
+            pltrel       = 0;
+        }
+        else {
+            jmprelaentsz = relaentsz;
+            pltrel       = 1;
+        }
         if (bind_now && jmprelptr && jmprelaentsz && jmprelsz)   // PLTREL
             for (int j = 0; j < jmprelsz / jmprelaentsz; j++)
                 fill_reloc(jmprelptr + offset + j * jmprelaentsz, elfid, mod->p_symbol, pltrel);
@@ -361,7 +367,7 @@ int load_elfso(int fildes)
         }
         else {
             //编译器有的时候不给relasz或者relsz
-            mod->s_relentsz = pltrel == DT_RELA ? sizeof(Elf64_Rela) : sizeof(Elf64_Rel);
+            mod->s_relentsz = (pltrel ? sizeof(Elf64_Rela) : sizeof(Elf64_Rel));
         }
         if (init) {
             //调用模块入口函数

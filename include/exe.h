@@ -27,6 +27,7 @@ typedef struct
  * */
 int execute(char* path, char** argv);
 //从新文件加载程序代替现有进程的程序映像。
+int do_execve(char* path, char** argv, char** environ, int argc, int environc);
 int sys_execve(char* path, char** argv, char** environ);
 /*
  * 立即调用一个程序（会阻塞当前进程）

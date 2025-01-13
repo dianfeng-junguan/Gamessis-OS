@@ -601,9 +601,9 @@ int pmfree(void* addr, size_t len)
             */
             mhdr_merge(prev->prev, prev);
         }
-        // if (prev->next) {   //向后合并
-        //     mhdr_merge(prev, prev->next);
-        // }
+        if (prev->next) {   //向后合并
+            mhdr_merge(prev, prev->next);
+        }
         return 1;
     }
     return 0;
@@ -797,6 +797,21 @@ void* do_mmap(void* addr, size_t len, int prot, int flags, int fildes, off_t off
         current->mmaps = mmps;
     else
         list_add(&current->mmaps->node, &mmps->node);
+    if (flags & MAP_IMMEDIATE) {
+        int pgc  = (len + PAGE_4K_SIZE - 1) / PAGE_4K_SIZE;
+        int attr = PAGE_PRESENT;
+        if (prot & PROT_WRITE || prot & PROT_EXEC) {
+            attr |= PAGE_RWX;
+        }
+        if (!(flags & MAP_KERNEL)) {
+            attr |= PAGE_FOR_ALL;
+        }
+        for (int i = 0; i < pgc; i++) {
+            addr_t      stk_pm    = pmalloc(PAGE_4K_SIZE);
+            malloc_hdr* stk_pmhdr = get_pmhdr(stk_pm);
+            smmap(stk_pm, addr + i * PAGE_4K_SIZE, attr, current->pml4);
+        }
+    }
     //设置mmap struct
     mmps->base = addr;
     mmps->len  = len;
