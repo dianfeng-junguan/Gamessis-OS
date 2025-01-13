@@ -174,7 +174,7 @@ int sys_execve(char* path, char** argv, char** environ)
     release_mmap(current);
     //释放映射数据结构
     for (mmap_struct* mp = current->mmaps; mp; mp = list_next(mp, &mp->node)) {
-        if (mp->pmhdr)
+        if (mp->pmhdr)   //这里的pmfree不是立即释放物理内存，只是减少引用次数，fork来的内存因为父进程还有用所以不会马上被释放
             pmfree(mp->pmhdr->base, mp->pmhdr->len);
         kmfree(mp);
     }
@@ -204,9 +204,11 @@ int sys_execve(char* path, char** argv, char** environ)
         int tmpsz = strlenk(argv[i]) + 1;
         tot_argsz += tmpsz + 8;
     }
-    for (int i = 0; environ[i] && verify_area(environ[i], 1, PROT_READ); i++) {
-        int tmpsz = strlenk(environ[i]) + 1;
-        tot_argsz += tmpsz + 8;
+    if (verify_area(environ, 1, PROT_READ)) {
+        for (int i = 0; environ[i] && verify_area(environ[i], 1, PROT_READ); i++) {
+            int tmpsz = strlenk(environ[i]) + 1;
+            tot_argsz += tmpsz + 8;
+        }
     }
     //初始需要的栈大小为argv指向的字符串大小之和+argv指针数组大小+
     // argc+一个main函数返回地址+一个rbp入栈空间

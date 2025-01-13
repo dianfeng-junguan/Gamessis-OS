@@ -77,6 +77,12 @@ typedef unsigned int page_item;
 #    define PF_SHADOW_STK_ACCESS 64
 #    define PF_HLAT 128
 #    define PF_SGX (0x8000)
+
+//刷新cr3，做完修改当前页表的操作之后都要加上
+#    define REFRESH_CR3()                                                               \
+        do {                                                                            \
+            __asm__ volatile("push %rax\n mov %cr3,%rax\n mov %rax,%cr3\n pop %rax\n"); \
+        } while (0);
 typedef unsigned long long page_item;
 #endif
 //内存页的分配-不是指页表

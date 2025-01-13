@@ -111,7 +111,7 @@ stat_t smmap(addr_t pa, addr_t la, u32 attr, page_item* pml4p)
     int index = la % PDE_SIZE / PAGE_4K_SIZE;
     pt[index] = pa | attr;   //映射
     //必要的代码，不然页表来不及更新，后面的内存操作就会出问题。
-    __asm__ volatile("mov %cr3,%rax\n mov %rax,%cr3\n");
+    REFRESH_CR3();
 
     // comprintf("mapped %l(pa) to %l(la)\n", pa, la);
     return NORMAL;
@@ -561,10 +561,11 @@ void* pmalloc(size_t size)
         // comprintf("pmalloc at %l, size:%l. type=%l\n", mh->base, size, mh->type);
         void* retv = mh->base;
         //向前合并属性相同的分配头
+        // TODO 这里不能合并，因为分配头可能有不用的引用，合并就会丢失信息
         malloc_hdr* fin = mhdr_merge(mh->prev, mh);
         // comprintf(
         //     "now the merged pmalloc base=%l,len=%l,type=%l\n", fin->base, fin->len, fin->type);
-        fin->link++;
+        mh->link++;
         return retv;
     }
     comprintf("failed pmalloc\n");
@@ -576,6 +577,7 @@ void* pmalloc(size_t size)
 }
 int pmfree(void* addr, size_t len)
 {
+    len              = PAGE_4K_ALIGN(len);
     malloc_hdr* prev = pmalloc_mhdr;
     for (malloc_hdr* mh = pmalloc_mhdr; mh; mh = mh->next) {
         if (mh->base < addr) {
@@ -592,16 +594,15 @@ int pmfree(void* addr, size_t len)
         prev->type = MEM_TYPE_AVAILABLE;
         prev->flag = 0;
         //合并空闲项
-        mhdr_merge(prev->prev, prev);
-        // malloc_hdr* mp;
-        // for(mp=prev;mp->prev&&prev->type==MEM_TYPE_AVAILABLE;mp=mp->prev);
-        // while (mp->next&&mp->next==MEM_TYPE_AVAILABLE)
-        // {
-        //     mp->len+=mp->next->len;
-        //     //drop the next
-        //     mp->next->type=-1;
-        //     mp->next->prev=mp;
-        //     mp->next=mp->next->next;
+        if (prev->prev) {
+            /**
+            这里的向前合并主要是考虑了prev没有被实际上分割成两半的情况，这时候prev之前
+            有可能是空闲块，所以要合并。如果被分割了，那么这个操作自然不会起效。
+            */
+            mhdr_merge(prev->prev, prev);
+        }
+        // if (prev->next) {   //向后合并
+        //     mhdr_merge(prev, prev->next);
         // }
         return 1;
     }

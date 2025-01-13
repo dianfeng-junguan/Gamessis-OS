@@ -1078,7 +1078,7 @@ int sys_fork(void)
             task[pid].mmaps = new_mp;
         }
         else {
-            list_add(task[pid].mmaps, new_mp);
+            list_add(&task[pid].mmaps->node, &new_mp->node);
         }
     }
 
@@ -1129,6 +1129,9 @@ void release_pm(struct process* p)
             kmfree(pml4e[i] & PAGE_4K_MASK | KNL_BASE);
         }
     }
+    if (p == current) {
+        REFRESH_CR3();
+    }
 }
 //释放进程低地址页表项，但是不释放物理内存。
 void release_mmap(struct process* p)
@@ -1161,6 +1164,9 @@ void release_mmap(struct process* p)
             //这一页pdpte的内容释放完了，这一项指向的vmalloc可以释放了
             kmfree(pml4e[i] & PAGE_4K_MASK | KNL_BASE);
         }
+    }
+    if (p == current) {
+        REFRESH_CR3();
     }
 }
 //拷贝页表。页表指向的物理地址没有改变，需要后面自己更改。
