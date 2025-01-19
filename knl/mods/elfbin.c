@@ -13,7 +13,7 @@ exec_format* elf_format;
     @brief 加载obj类型文件。
  */
 int  elf_load_obj(struct file* fp, exec_image* image);
-void fill_reloc(void* relp, struct Elf64_Shdr* shdrs, Elf64_Ehdr* ehdr, struct Elf64_Sym* symtab,
+void fill_reloc(void* relp, struct Elf64_Shdr* shdrs, Elf64_Ehdr* ehdr, int symtabi,
                 exec_image* img, int rel_shndx, int rela);
 int  elf_binload_init()
 {
@@ -132,13 +132,13 @@ ready:
             //重定位
             Elf64_Rel* rel = sh[i].sh_addr;
             for (int j = 0; j < sh[i].sh_size / sh[i].sh_entsize; j++) {
-                fill_reloc(&rel[j], sh, ehdr, sh[sh[i].sh_link].sh_addr, image, i, 0);
+                fill_reloc(&rel[j], sh, ehdr, sh[i].sh_link, image, i, 0);
             }
         }
         else if (sh[i].sh_type == SHT_RELA && sh[sh[i].sh_info].sh_flags & SHF_ALLOC) {
             Elf64_Rela* rela = sh[i].sh_addr;
             for (int j = 0; j < sh[i].sh_size / sh[i].sh_entsize; j++) {
-                fill_reloc(&rela[j], sh, ehdr, sh[sh[i].sh_link].sh_addr, image, i, 1);
+                fill_reloc(&rela[j], sh, ehdr, sh[i].sh_link, image, i, 1);
             }
         }
     }
@@ -269,13 +269,13 @@ unsigned long long get_sym_addr_mod(struct Elf64_Sym* sym, unsigned long symi,
     return symaddr;
 }
 //填充重定位项
-void fill_reloc(void* relp, struct Elf64_Shdr* shdrs, Elf64_Ehdr* ehdr, struct Elf64_Sym* symtab,
+void fill_reloc(void* relp, struct Elf64_Shdr* shdrs, Elf64_Ehdr* ehdr, int symtabi,
                 exec_image* img, int rel_shndx, int rela)
 {
     Elf64_Rela*        rel  = relp;
     int                symi = ELF64_R_SYM(rel->r_info), type = ELF64_R_TYPE(rel->r_info);
-    unsigned long long sym_off =
-        get_sym_addr_mod(symtab, symi, shdrs, shdrs[ehdr->e_shstrndx].sh_addr);
+    unsigned long long sym_off = get_sym_addr_mod(
+        shdrs[symtabi].sh_addr, symi, shdrs, shdrs[shdrs[symtabi].sh_link].sh_addr);
     unsigned long long load_base = img->base + sizeof(Elf64_Ehdr);
     if (ehdr->e_type == ET_REL) {
         //可重定位文件offset计算方式有所不同

@@ -112,7 +112,7 @@ binload_addr_t get_kernel_symbol(char* name)
         _binary_bin_kallsyms_bin_end[] __attribute__((weak));
     ksym *             sym = _binary_bin_kallsyms_bin_start, *bef = sym;
     unsigned long long func_belonged = sym->addr;   //所属函数
-    while (sym < _binary_bin_kallsyms_bin_end && strncmpk(sym + 1, name, 4096) != 0) {
+    while (sym < _binary_bin_kallsyms_bin_end && strncmpk(sym + 1, name, sym->namelen) != 0) {
         bef           = sym;
         func_belonged = sym->addr;
         int namelen   = sym->namelen;
