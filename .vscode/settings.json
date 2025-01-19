@@ -37,7 +37,7 @@
         "mman.h": "c",
         "stddef.h": "c",
         "stdio.h": "c",
-        "stdint.h": "c",
+        "c/stdint.h": "c",
         "wctype.h": "c",
         "stdarg.h": "c",
         "mem.h": "c",
@@ -64,5 +64,6 @@
     ],
     "clang-tidy.fixOnSave": false,
     "terminal.integrated.suggest.enabled": true,
-    "terminal.integrated.defaultProfile.windows": null
+    "terminal.integrated.defaultProfile.windows": null,
+    "journal.base": "${workspaceFolder}/log"
 }

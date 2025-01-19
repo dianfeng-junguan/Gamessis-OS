@@ -25,3 +25,9 @@ log/
 *.txt
 
 disas/
+
+.clangd
+
+.clangd-format
+
+.clangd-tidy

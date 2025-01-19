@@ -20,6 +20,9 @@
 #include "ramdisk.h"
 #include "ramfs.h"
 #include "tty.h"
+#include "driverman.h"
+#include "drvload.h"
+#include "elfbin.h"
 
 int  manage_proc_lock = 1;
 void main(unsigned int magic, void* addr)
@@ -150,6 +153,11 @@ void main(unsigned int magic, void* addr)
     init_ramdisk();
     init_rootfs();
     init_proc();
+
+    init_driver_man();
+    init_drvload();
+    init_binload();
+    elf_binload_init();
     //===============创建0号进程======================
     init_proc0();
     DISK1_FAT32_FS_init();
@@ -157,6 +165,10 @@ void main(unsigned int magic, void* addr)
 
     further_init_proc0();
 
+    mod_obj* obj = load_module("/tmp.o");
+    if (obj) {
+        comprintf("load_module succeeded\n");
+    }
     // init_ramfs();
 
     //自带驱动

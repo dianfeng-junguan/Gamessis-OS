@@ -518,3 +518,33 @@ int sys_chk_mmap(off_t base, size_t mem_size)
 {
     return chk_mmap(base, mem_size);
 }
+
+int kopen(char* path, struct file* fp)
+{
+    int fd = sys_open(path, O_RDWR);
+    if (fd <= 0) {
+        return -1;
+    }
+    memcpy(fp, current->openf[fd], sizeof(struct file));
+    return 0;
+}
+int kclose(struct file* fp)
+{
+    if (fp && fp->f_ops && fp->f_ops->close)
+        fp->f_ops->close(fp->dentry->dir_inode, fp);
+    else
+        return -1;
+    fp->dentry->link--;
+    return 0;
+}
+int kread(struct file* fp, unsigned long long offset, size_t len, char* buf)
+{
+    if (!fp || !fp->f_ops || !fp->f_ops->read) {
+        return -1;
+    }
+    int ret      = -1;
+    fp->position = offset;
+    if (fp->f_ops && fp->f_ops->read)
+        ret = fp->f_ops->read(fp, buf, len, &fp->position);
+    return 0;
+}

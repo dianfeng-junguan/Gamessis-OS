@@ -26,7 +26,8 @@ __attribute__((always_inline)) inline void list_add_to_behind(
 {
     new->next = entry->next;
     new->prev = entry;
-    if (new->next) new->next->prev = new;
+    if (new->next)
+        new->next->prev = new;
     entry->next = new;
 }
 void list_add(struct List* entry, struct List* new);
@@ -38,14 +39,17 @@ __attribute__((always_inline)) inline void* list_next(
 {
     void* offset_in_struct = (void*)list_as_member - stru;
     void* next_node        = list_as_member->next;
-    if (!next_node) return NULL;
+    if (!next_node)
+        return NULL;
     return (next_node - offset_in_struct);
 }
 __attribute__((always_inline)) inline void list_drop(struct List* entry)
 {
     //从链表中删除
-    if (entry->prev) entry->prev->next = entry->next;
-    if (entry->next) entry->next->prev = entry->prev;
+    if (entry->prev)
+        entry->prev->next = entry->next;
+    if (entry->next)
+        entry->next->prev = entry->prev;
 }
 
 struct Disk_Partition_Table_Entry
@@ -228,6 +232,12 @@ extern struct super_block* root_sb;
 void mark_use(struct dir_entry* d);
 //挂载临时根文件系统，用于初始化/dev等文件夹。
 void init_rootfs();
+
+
+// TODO 待完成 内核打开文件函数，返回函数执行状态，设置传入的file参数。
+int kopen(char* path, struct file* fp);
+int kclose(struct file* fp);
+int kread(struct file* fp, unsigned long long offset, size_t len, char* buf);
 
 extern struct dir_entry* droot;
 extern int               ROOT_DEV;

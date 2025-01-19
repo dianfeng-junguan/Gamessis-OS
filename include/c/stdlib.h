@@ -3,33 +3,33 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include <wctype.h> //TODO: remove need for this? due to wchar_t
+#include <wctype.h>   //TODO: remove need for this? due to wchar_t
 
 #ifdef __cplusplus
 extern "C" {
-#endif //__cplusplus
+#endif   //__cplusplus
 
 #pragma mark - definitions & types -
 
 /// Division type for integers
 typedef struct
 {
-	int quot; /**< The quotient */
-	int rem; /**< The remainder */
+    int quot; /**< The quotient */
+    int rem;  /**< The remainder */
 } div_t;
 
 /// Division type for long integers
 typedef struct
 {
-	long quot; /**< The quotient */
-	long rem; /**< The remainder */
+    long quot; /**< The quotient */
+    long rem;  /**< The remainder */
 } ldiv_t;
 
 /// Division type for long long integers
 typedef struct
 {
-	long long quot; /**< The quotient */
-	long long rem; /**< The remainder */
+    long long quot; /**< The quotient */
+    long long rem;  /**< The remainder */
 } lldiv_t;
 
 /*! Expands to 1. Indicates program execution execution status. */
@@ -52,7 +52,7 @@ typedef struct
 // TODO
 
 void abort(void) __attribute__((noreturn));
-int atexit(void (*)(void));
+int  atexit(void (*)(void));
 void exit(int) __attribute__((noreturn));
 
 /** TODO: CLEANUP DOC
@@ -61,9 +61,9 @@ void exit(int) __attribute__((noreturn));
  * exit does). No object destructors, nor functions registered by atexit or at_quick_exit are called
  */
 void _Exit(int) __attribute__((noreturn));
-int at_quick_exit(void (*)(void));
+int  at_quick_exit(void (*)(void));
 void quick_exit(int) __attribute__((noreturn));
-int cxa_atexit(void (*)(void*), void*, void*);
+int  cxa_atexit(void (*)(void*), void*, void*);
 
 #ifndef DISABLE_UNIMPLEMENTED_LIBC_APIS
 // Unsupported in bare metal environments:
@@ -78,9 +78,9 @@ int system(const char*);
 #pragma mark - Multibyte APIs -
 
 #ifndef DISABLE_UNIMPLEMENTED_LIBC_APIS
-int mblen(const char*, size_t);
-int mbtowc(wchar_t* __restrict, const char* __restrict, size_t);
-int wctomb(char*, wchar_t);
+int    mblen(const char*, size_t);
+int    mbtowc(wchar_t* __restrict, const char* __restrict, size_t);
+int    wctomb(char*, wchar_t);
 size_t mbstowcs(wchar_t* __restrict, const char* __restrict, size_t);
 size_t wcstombs(char* __restrict, const wchar_t* __restrict, size_t);
 #endif
@@ -625,7 +625,7 @@ int heapsort(void* vbase, size_t nmemb, size_t size, int (*compar)(const void*, 
  *
  * */
 int heapsort_r(void* vbase, size_t nmemb, size_t size, void* thunk,
-			   int (*compar)(void*, const void*, const void*));
+               int (*compar)(void*, const void*, const void*));
 
 /**
  * @brief Finds an element equal to element pointed to by key in an array pointed to by ptr.
@@ -649,7 +649,7 @@ int heapsort_r(void* vbase, size_t nmemb, size_t size, void* thunk,
  *  null pointer if such element has not been found.
  * */
 void* bsearch(const void* key, const void* ptr, size_t count, size_t size,
-			  int (*comp)(const void*, const void*));
+              int (*comp)(const void*, const void*));
 
 /**
  * @brief Sorts the given array pointed to by ptr in ascending order.
@@ -674,7 +674,7 @@ void* bsearch(const void* key, const void* ptr, size_t count, size_t size,
  *  The function must not modify the objects passed to it and must return consistent
  * */
 void qsort_r(void* a, size_t n, size_t es, void* thunk,
-			 int (*cmp)(void*, const void*, const void*));
+             int (*cmp)(void*, const void*, const void*));
 
 /**
  * @brief Sorts the given array pointed to by ptr in ascending order.
@@ -810,9 +810,9 @@ void* reallocf(void* ptr, size_t size);
 int posix_memalign(void** memptr, size_t alignment, size_t size);
 #endif
 
-#if(defined(__ISO_C_VISIBLE) && __ISO_C_VISIBLE >= 2011) ||  \
-	(defined(__STDC_VERSION) && __STDC_VERSION >= 20112L) || \
-	(defined(__cplusplus) && __cplusplus >= 201103L)
+#if (defined(__ISO_C_VISIBLE) && __ISO_C_VISIBLE >= 2011) || \
+    (defined(__STDC_VERSION) && __STDC_VERSION >= 20112L) || \
+    (defined(__cplusplus) && __cplusplus >= 201103L)
 /** C11 Aligned Memory Allocation
  *
  * @param align Specifies the alignment. Must be a valid alignment supported by the
@@ -828,6 +828,6 @@ void* aligned_alloc(size_t align, size_t size);
 
 #ifdef __cplusplus
 }
-#endif //__cplusplus
+#endif   //__cplusplus
 
-#endif // STDLIB_H_
+#endif   // STDLIB_H_

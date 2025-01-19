@@ -14,3 +14,13 @@ void putchar(char c);
 
 void printfk(const char* format, ...);
 void comprintf(char* fmt, ...);
+
+#ifdef DEBUG
+#    define debug_log(s, ...)             \
+        do {                              \
+            printf("[%s]", __FUNCTION__); \
+            printf(s, ##__VA_ARGS__);     \
+        } while (0);
+#else
+#    define debug_log(s, ...)
+#endif
