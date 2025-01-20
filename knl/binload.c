@@ -3,6 +3,7 @@
 #include "vfs.h"
 #include "mem.h"
 #include "str.h"
+#include "log.h"
 exec_format* formats;
 
 
@@ -108,16 +109,17 @@ typedef struct
 } __attribute__((packed)) ksym;
 binload_addr_t get_kernel_symbol(char* name)
 {
-    extern char _binary_bin_kallsyms_bin_start[] __attribute__((weak)),
-        _binary_bin_kallsyms_bin_end[] __attribute__((weak));
+    extern char        _binary_bin_kallsyms_bin_start[], _binary_bin_kallsyms_bin_end[];
     ksym *             sym = _binary_bin_kallsyms_bin_start, *bef = sym;
     unsigned long long func_belonged = sym->addr;   //所属函数
     while (sym < _binary_bin_kallsyms_bin_end && strncmpk(sym + 1, name, sym->namelen) != 0) {
+        // comprintf("ksym %s at %x\n", sym + 1, sym->addr);
         bef           = sym;
         func_belonged = sym->addr;
         int namelen   = sym->namelen;
         sym += 1;
-        sym = (unsigned long long)sym + namelen;
+        sym = (unsigned long long)sym + namelen + 1;
     }
+    comprintf("looking for %s ksym and got %x\n", name, sym->addr);
     return sym->addr;
 }

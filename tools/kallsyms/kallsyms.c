@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include <int.h>
+#include <ksym.h>
 int main(int argc, char** argv)
 {
     if (argc == 1) {
@@ -15,9 +15,9 @@ int main(int argc, char** argv)
         int  r = fscanf(f, "%llx %c %s\n", &sym.addr, &sym.type, string);
         if (r != 3 && r == EOF)
             break;
-        sym.namelen = strlenk(string);
+        sym.namelen = strlen(string);
         fwrite(&sym, sizeof(sym), 1, w);
-        fputs(string, w);
+        fwrite(string, sym.namelen + 1, 1, w);
     }
     memset(&sym, 0, sizeof(sym));
     fclose(f);

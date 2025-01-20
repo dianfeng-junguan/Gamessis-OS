@@ -319,11 +319,11 @@ void fill_reloc(void* relp, struct Elf64_Shdr* shdrs, Elf64_Ehdr* ehdr, int symt
         break;
     case R_X86_64_PC32:   // S+A-P
         if (rela)
-            *(unsigned int*)v_rel = rel->r_addend + sym_off - (unsigned long long)v_rel;
+            *(unsigned int*)v_rel = rel->r_addend + sym_off - (unsigned long long)v_rel - 4;
         else
-            *(unsigned int*)v_rel += sym_off - (unsigned long long)v_rel;
+            *(unsigned int*)v_rel += sym_off - (unsigned long long)v_rel - 4;
         break;
     default: break;
     }
-    debug_log("sym %d after reloc: %llx\n", symi, *v_rel);
+    // comprintf("sym %d after reloc: %x\n", symi, *v_rel);
 }
