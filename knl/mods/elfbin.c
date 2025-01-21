@@ -284,45 +284,34 @@ void fill_reloc(void* relp, struct Elf64_Shdr* shdrs, Elf64_Ehdr* ehdr, int symt
         load_base = shdrs[shndx].sh_addr;
     }
     unsigned long long got = img->info;
+    unsigned long long plt = img->info;   //未使用，未完成这部分
     //这里假定获取符号的地址是正确的，可以不修改符号表，而是通过记录模块整体加载地址，
     //来加上偏移量获取正确的符号地址
-    unsigned long long* v_rel = rel->r_offset + load_base;
+    unsigned long long* v_rel    = rel->r_offset + load_base;
+    unsigned long long  addend   = rela ? rel->r_addend : *v_rel;
+    unsigned int        addend32 = rela ? rel->r_addend : (unsigned int)*v_rel;
     switch (type) {
     case R_X86_64_GLOB_DAT:
     case R_X86_64_JUMP_SLOT: *v_rel = sym_off; break;
-    case R_X86_64_RELATIVE:
-        if (rela)
-            *v_rel = rel->r_addend + load_base;
-        else
-            *v_rel += load_base;
+    case R_X86_64_RELATIVE: *v_rel = addend + load_base; break;
+    case R_X86_64_32: *(unsigned int*)v_rel = sym_off + addend32; break;
+    case R_X86_64_GOTPC32:
+        *(unsigned int*)v_rel = got + addend32 - (unsigned long long)v_rel;
         break;
-    case R_X86_64_GOTPC:
-        if (ehdr->e_type == ET_REL) {   // R_X86_64_32
-            if (rela)
-                *(unsigned int*)v_rel = sym_off + rel->r_addend;
-            else
-                *(unsigned int*)v_rel += sym_off;
-        }
-        else {
-            if (rela)
-                *v_rel = got + rel->r_addend - rel->r_offset;
-            else
-                *v_rel += got - (unsigned long long)rel;
-        }
+    case R_X86_64_32S: *v_rel = (long long)(int)sym_off + addend; break;
+    case R_X86_64_64: *v_rel = addend + sym_off; break;
+    case R_X86_64_PC32:
+        *(unsigned int*)v_rel = addend32 + sym_off - (unsigned long long)v_rel - 4;
+        break;   // S+A-P
+    case R_X86_64_GOTPC64: *v_rel = got + addend - rel->r_offset; break;
+    case R_X86_64_GOTOFF64:   // S +A -GOT
+        *v_rel = sym_off + addend - got;
         break;
-    case R_X86_64_32S:
-    case R_X86_64_64:
-        if (rela)
-            *v_rel = rel->r_addend + sym_off;
-        else
-            *v_rel += sym_off;
+    case R_X86_64_PLTOFF64:   // S +A -PLT
+        *v_rel = sym_off + addend - plt;
         break;
-    case R_X86_64_PC32:   // S+A-P
-        if (rela)
-            *(unsigned int*)v_rel = rel->r_addend + sym_off - (unsigned long long)v_rel - 4;
-        else
-            *(unsigned int*)v_rel += sym_off - (unsigned long long)v_rel - 4;
-        break;
+
+
     default: break;
     }
     // comprintf("sym %d after reloc: %x\n", symi, *v_rel);

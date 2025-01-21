@@ -7,18 +7,24 @@
 #pragma pack(1)
 typedef unsigned int Elf32_Addr,Elf32_Off,Elf32_Word;
 typedef unsigned short Elf32_Half;
-#define R_X86_64_PLT32 4
-#define R_X86_64_32 10
-#define R_X86_64_32S 11
 #define R_X86_64_64 1
 #define R_X86_64_PC32 2
-#define R_X86_64_RELATIVE 8
+#define R_X86_64_GOT32 3
+#define R_X86_64_PLT32 4
+#define R_X86_64_COPY 5
 #define R_X86_64_GLOB_DAT 6
 #define R_X86_64_JUMP_SLOT 7
-#define R_X86_64_GOTOFF 9
-#define R_X86_64_GOTPC 10
-#define R_X86_64_GOT32 3
-#define R_X86_64_COPY 5
+#define R_X86_64_RELATIVE 8
+#define R_X86_64_GOTPCREL 9
+#define R_X86_64_32 10
+#define R_X86_64_32S 11
+#define R_X86_64_PC64 24
+#define R_X86_64_GOTOFF64 25
+#define R_X86_64_GOTPC32 26
+
+#define R_X86_64_GOTPC64 29
+#define R_X86_64_PLTOFF64 31
+#define R_X86_64_RELATIVE64 38
 #define EI_NIDENT 16
 /* These constants define the different elf file types */
 #define ET_NONE   0
