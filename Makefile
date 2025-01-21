@@ -1,6 +1,11 @@
 .PHONY: boot mount umount run knl cpknl com grub all
-CFLAGS = -w -g -no-pie -fno-pic -fno-stack-protector -I include -m64 -mcmodel=large 
+CFLAGS = -w -g -fno-pie -fno-pic -nostdlib -fno-stack-protector -nostartfiles \
+-I include -m64 -O0 -fno-strict-aliasing -mcmodel=large -fPIC
+ASMFLAGS=-g -f elf64 -w-zext-reloc -w-zeroing
+SETUPFLAGS=-g -f elf32 -w-zext-reloc -w-zeroing
+OBJCOPY=objcopy
 BOOT = boot.efi
+ASM=nasm
 CC=gcc
 BUILD=bin
 LD=ld
@@ -28,9 +33,7 @@ k:
 	make knl
 	sync
 	make cpknl
-knl:
-	@bash knl.sh
-	@objcopy -O elf64-x86-64 -B i386 -I binary res/font.psf bin/font.o
+knl:protoknl font
 	objcopy rd.img bin/rd.o -B i386 -O elf64-x86-64 -I binary
 	@ld -T knl.lds -o bin/gmsknl.elf $(KNL_OFILES) $(MODS_OFILES) $(COM_OFILES) --emit-relocs
 	make kallsyms
@@ -39,6 +42,8 @@ knl:
 	@cp bin/gmsknl.elf bin/gmsknlm.elf
 	@objcopy bin/gmsknl.elf -I binary -O elf64-x86-64 bin/gmsknl.o -B i386
 	@objdump -l -S -d bin/gmsknl.elf -M intel > disas/knl.s
+font: res/font.psf
+	@objcopy -O elf64-x86-64 -B i386 -I binary res/font.psf bin/font.o
 boot:
 	@gcc -w -e main -nostdlib \
         -fno-builtin -Wl,--subsystem,10 -o bin/boot.efi boot/boot.c \
