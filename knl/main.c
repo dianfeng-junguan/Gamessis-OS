@@ -173,10 +173,6 @@ void main(unsigned int magic, void* addr)
 
     further_init_proc0();
 
-    mod_obj* obj = load_module("/tmp.o");
-    if (obj) {
-        comprintf("load_module succeeded\n");
-    }
     // init_ramfs();
 
     //自带驱动comprintfk(fmt, ##__VA_ARGS__)

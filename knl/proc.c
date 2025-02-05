@@ -576,7 +576,7 @@ void del_proc(int pnr)
     //释放申请的页面
     release_pm(&task[pnr]);
     //释放存放页目录的页面
-    kmfree(task[pnr].pml4);
+    kfree(task[pnr].pml4);
     //关闭打开的文件
     for (int i = 3; i < MAX_PROC_OPENF; i++) {
         if (task[pnr].openf[i]) {
@@ -588,11 +588,11 @@ void del_proc(int pnr)
         // TODO 这里没有考虑公共映射，直接释放了，以后实现so共享映射的时候应该要修改
         mmap_struct* mp = l;
         sys_munmap(mp->base, mp->len);
-        kmfree(l);
+        kfree(l);
     }
     //释放信号队列
     for (struct List* l = task[pnr].signal_queue; l; l = l->next) {
-        kmfree(l);
+        kfree(l);
     }
     //三个std判断一下是否是会话leader，是的话再关闭
     if (task[pnr].sid == task[pnr].pid) {
@@ -1119,7 +1119,7 @@ void release_pm(struct process* p)
                                 }
                             }
                             //里面的项释放完了，这一项指向的vmalloc内存可以释放了
-                            kmfree(pde[k] & PAGE_4K_MASK | KNL_BASE);
+                            kfree(pde[k] & PAGE_4K_MASK | KNL_BASE);
                         }
                         else if ((pde[k] & PAGE_PRESENT) && (pde[k] & PDE_2MB)) {
                             //释放2MB页
@@ -1127,11 +1127,11 @@ void release_pm(struct process* p)
                         }
                     }
                     //这一页pde的内容释放完了，这一项指向的vmalloc可以释放了
-                    kmfree(pdpte[j] & PAGE_4K_MASK | KNL_BASE);
+                    kfree(pdpte[j] & PAGE_4K_MASK | KNL_BASE);
                 }   // 1GB先不写，目前还没有初始化之后动态申请1GB页的
             }
             //这一页pdpte的内容释放完了，这一项指向的vmalloc可以释放了
-            kmfree(pml4e[i] & PAGE_4K_MASK | KNL_BASE);
+            kfree(pml4e[i] & PAGE_4K_MASK | KNL_BASE);
         }
     }
     if (p == current) {
@@ -1155,7 +1155,7 @@ void release_mmap(struct process* p)
                         if (pde[k] & PAGE_PRESENT && !(pde[k] & PDE_2MB)) {
                             page_item* pte = pde[k] & PAGE_4K_MASK | KNL_BASE;
                             //里面的项释放完了，这一项指向的vmalloc内存可以释放了
-                            kmfree(pde[k] & PAGE_4K_MASK | KNL_BASE);
+                            kfree(pde[k] & PAGE_4K_MASK | KNL_BASE);
                         }
                         else if ((pde[k] & PAGE_PRESENT) && (pde[k] & PDE_2MB)) {
                             //释放2MB页
@@ -1163,11 +1163,11 @@ void release_mmap(struct process* p)
                         }
                     }
                     //这一页pde的内容释放完了，这一项指向的vmalloc可以释放了
-                    kmfree(pdpte[j] & PAGE_4K_MASK | KNL_BASE);
+                    kfree(pdpte[j] & PAGE_4K_MASK | KNL_BASE);
                 }   // 1GB先不写，目前还没有初始化之后动态申请1GB页的
             }
             //这一页pdpte的内容释放完了，这一项指向的vmalloc可以释放了
-            kmfree(pml4e[i] & PAGE_4K_MASK | KNL_BASE);
+            kfree(pml4e[i] & PAGE_4K_MASK | KNL_BASE);
         }
     }
     if (p == current) {

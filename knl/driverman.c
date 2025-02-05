@@ -34,7 +34,7 @@ stat_t driver_man_exit()
             }
         }
     }
-    kmfree(drivers);
+    kfree(drivers);
     return DRIVER_RETV_SUCCESS;
 }
 //返回驱动被分配的id。如果注册失败，返回负数的错误码。负责调用初始化函数
@@ -112,7 +112,7 @@ int drv_ioctl(int drv, int command, int block, unsigned long long arg)
         //返回的结果是通过arg里面的指针传递的，这里不传递
         //下一项内容
         drivers[drv].queue = done_req->next;
-        kmfree(done_req);
+        kfree(done_req);
         //设置为准备好下一个请求的状态
         drivers[drv].stat = DRIVER_STAT_AVAILABLE;
     }
@@ -127,16 +127,23 @@ int drv_ioctl(int drv, int command, int block, unsigned long long arg)
     new_req->waiting      = current;
     new_req->block_waiter = block ? 1 : 0;   //防止传入一些乱七八糟的参数
     new_req->next         = NULL;
-    //将新请求添加到链表之后
     if (!drivers[drv].queue) {
         drivers[drv].queue = new_req;
     }
     else {
-        //加到链表结尾
-        for (driver_request* p = drivers[drv].queue;; p = p->next) {
-            if (!p->next) {
-                p->next = new_req;
-                break;
+        if (drivers[drv].queue < KNL_BASE) {
+            //内核空间里有时候会出现奇怪的bug，这里先忽略掉
+            KPRINTF("catch a bug: drivers[drv].queue<KNL_BASE.\nnow ignore it.\n");
+            drivers[drv].queue = new_req;
+        }
+        else {
+            //将新请求添加到链表之后
+            //加到链表结尾
+            for (driver_request* p = drivers[drv].queue;; p = p->next) {
+                if (!p->next) {
+                    p->next = new_req;
+                    break;
+                }
             }
         }
     }

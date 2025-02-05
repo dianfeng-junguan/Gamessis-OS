@@ -245,14 +245,14 @@ int sys_execve(char* path, char** argv, char** environ)
 
     //释放拷贝到内核空间的argv和environ
     for (int i = 0; i < argc; i++) {
-        kmfree(argv[i]);
+        kfree(argv[i]);
     }
     for (int i = 0; i < environc; i++) {
-        kmfree(environ[i]);
+        kfree(environ[i]);
     }
-    kmfree(argv);
-    kmfree(environ);
-    kmfree(path);
+    kfree(argv);
+    kfree(environ);
+    kfree(path);
     return exec_result;
 }
 int do_execve(char* path, char** argv, char** environ, int argc, int environc)
@@ -269,7 +269,7 @@ int do_execve(char* path, char** argv, char** environ, int argc, int environc)
     for (mmap_struct* mp = current->mmaps; mp; mp = list_next(mp, &mp->node)) {
         if (mp->pmhdr)   //这里的pmfree不是立即释放物理内存，只是减少引用次数，fork来的内存因为父进程还有用所以不会马上被释放
             pmfree(mp->pmhdr->base, mp->pmhdr->len);
-        kmfree(mp);
+        kfree(mp);
     }
     current->mmaps = NULL;
     // current->regs.rsp=STACK_TOP;//清空栈
@@ -281,14 +281,14 @@ int do_execve(char* path, char** argv, char** environ, int argc, int environc)
         comprintf("failed execve, errcode:%d\n", current->regs.errcode);
         //释放拷贝到内核空间的argv和environ
         for (int i = 0; i < argc; i++) {
-            kmfree(argv[i]);
+            kfree(argv[i]);
         }
         for (int i = 0; i < environc; i++) {
-            kmfree(environ[i]);
+            kfree(environ[i]);
         }
-        kmfree(argv);
-        kmfree(environ);
-        kmfree(path);
+        kfree(argv);
+        kfree(environ);
+        kfree(path);
         return -1;
     }
     //之后page err还需要这个fno
@@ -744,7 +744,7 @@ ready:
             int fd      = sys_open("/dl.so", O_EXEC);
             current->dl = ehdr;
             fildes      = fd;
-            kmfree(shla);   // section header 缓存可能需要更大，所以要重新分配
+            kfree(shla);   // section header 缓存可能需要更大，所以要重新分配
             elf = current->openf[fd];
             goto ready;
         }
@@ -759,8 +759,8 @@ ready:
     current->mem_struct.stack_top = STACK_TOP;
     off_t entry                   = 0;
     entry                         = ehdr->e_entry;
-    kmfree(tmpla);
-    // kmfree(shla);
+    kfree(tmpla);
+    // kfree(shla);
     //从系统调用返回
     return entry;
 }

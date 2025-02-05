@@ -89,5 +89,5 @@ void printfk(const char* format, ...)
     va_end(vargs);
     print(tmp);
     comprintf(tmp);
-    kmfree(tmp);
+    kfree(tmp);
 }

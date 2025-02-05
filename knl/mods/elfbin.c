@@ -142,8 +142,8 @@ ready:
             }
         }
     }
-tokmfree:
-    kmfree(shla);
+tokfree:
+    kfree(shla);
     entry = image->base + sizeof(Elf64_Ehdr) + ehdr->e_entry;
     return entry;
 }
@@ -171,7 +171,7 @@ int elf_get_header_info(struct file* fp, exec_image* image)
         size_t      phtotsz = ehdr->e_phentsize * ehdr->e_phnum;
         Elf64_Phdr* phs     = kmalloc(0, phtotsz);
         if (kread(fp, ehdr->e_phoff, phtotsz, phs) < 0) {
-            kmfree(phs);
+            kfree(phs);
             vret = -1;
             goto ret;
         }
@@ -185,7 +185,7 @@ int elf_get_header_info(struct file* fp, exec_image* image)
             }
         }
         image->base = lowest;
-        kmfree(phs);
+        kfree(phs);
         break;
     case ET_DYN:
         image->type = BIN_TYPE_DYN;
@@ -199,7 +199,7 @@ int elf_get_header_info(struct file* fp, exec_image* image)
         size_t             shtotsz = ehdr->e_shentsize * ehdr->e_shnum;
         struct Elf64_Shdr* shs     = kmalloc(0, shtotsz);
         if (kread(fp, ehdr->e_shoff, shtotsz, shs) < 0) {
-            kmfree(shs);
+            kfree(shs);
             vret = -1;
             goto ret;
         }
@@ -239,13 +239,13 @@ int elf_get_header_info(struct file* fp, exec_image* image)
         }
 
         image->memsz += sizeof(Elf64_Ehdr) + toalloc;
-        kmfree(shs);
+        kfree(shs);
 
         break;
     }
     debug_log("calced tot taking 0x%llx bytes.\n", image->memsz);
 ret:
-    kmfree(ehdr);
+    kfree(ehdr);
     return vret;
 }
 

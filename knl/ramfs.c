@@ -82,7 +82,7 @@ long read_ramfs(struct file* filp, char* buf, unsigned long count, long* positio
     ioctlarg.buf   = tmpbuf;
     drv_ioctl(dev_ramdisk, DRIVER_CMD_READ, 1, &ioctlarg);
     memcpy(buf, tmpbuf + (*position % 512), count);
-    kmfree(tmpbuf);
+    kfree(tmpbuf);
     *position += count;
     ioctlarg.buf = buf;
     /* int len= (char*)_binary_bin_test_elf_end - (char*)_binary_bin_test_elf_start - *position;

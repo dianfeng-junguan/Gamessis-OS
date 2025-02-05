@@ -11,6 +11,11 @@
 #include "devman.h"
 #include "volume.h"
 #include <sys/unistd.h>
+/**
+ * @brief 读取扇区数据
+ * @param dev 设备号
+ * @param offset 扇区字节偏移
+ */
 int read_block(unsigned short dev, off_t offset, size_t count, char* buf)
 {
     struct
@@ -20,15 +25,15 @@ int read_block(unsigned short dev, off_t offset, size_t count, char* buf)
         char* buf;
     } ioctlarg;
     ioctlarg.lba   = offset / 512;
-    ioctlarg.count = count;
+    ioctlarg.count = (count + 511) / 512;
     char* tmpbuf   = (char*)kmalloc(0, count);
     ioctlarg.buf   = tmpbuf;
     if (drv_ioctl(dev, DRIVER_CMD_READ, 1, &ioctlarg) < 0) {
-        kmfree(tmpbuf);
+        kfree(tmpbuf);
         return -1;
     }
     memcpy(buf + offset % 512, tmpbuf, count * 512);
-    kmfree(tmpbuf);
+    kfree(tmpbuf);
     return 0;
 }
 int write_block(unsigned short dev, off_t offset, size_t count, char* buf)
@@ -40,7 +45,7 @@ int write_block(unsigned short dev, off_t offset, size_t count, char* buf)
         char* buf;
     } ioctlarg;
     ioctlarg.lba   = offset / 512;
-    ioctlarg.count = count;
+    ioctlarg.count = count / 512;
     ioctlarg.buf   = buf;
     if (drv_ioctl(dev, DRIVER_CMD_WRITE, 1, &ioctlarg) < 0) {
         return -1;
@@ -56,7 +61,7 @@ unsigned int DISK1_FAT32_read_FAT_Entry(struct FAT32_sb_info* fsbi, unsigned int
     read_block(ROOT_DEV, sector * 512, fat_size, buf);
     // comprintf("DISK1_FAT32_read_FAT_Entry fat_entry:%x,%x\n",fat_entry,buf[fat_entry & 0x7f]);
     for (int i = 0; i < fat_size; i++) {
-        kmfree((void*)buf + PAGE_4K_SIZE * i);
+        kfree((void*)buf + PAGE_4K_SIZE * i);
     }
     unsigned int fatr = buf[fat_entry & 0x7f] & 0x0fffffff;
     return fatr;
@@ -77,7 +82,7 @@ unsigned long DISK1_FAT32_write_FAT_Entry(struct FAT32_sb_info* fsbi, unsigned i
         off_t off = (fsbi->FAT1_firstsector + fsbi->sector_per_FAT * i + (fat_entry >> 7)) * 512;
         write_block(ROOT_DEV, off, 512, buf);
     }
-    kmfree(buf);
+    kfree(buf);
     // brelse(bh);
 
     return 1;
@@ -148,7 +153,7 @@ long FAT32_read(struct file* filp, char* buf, unsigned long count, long* positio
         *position += length;
     } while (index && (cluster = DISK1_FAT32_read_FAT_Entry(fsbi, cluster)));
 
-    kmfree(buffer);
+    kfree(buffer);
     if (!index)
         retval = count;
     return retval;
@@ -201,7 +206,7 @@ long FAT32_write(struct file* filp, char* buf, unsigned long count, long* positi
             cluster = DISK1_FAT32_read_FAT_Entry(fsbi, cluster);
 
     if (!cluster) {
-        kmfree(buffer);
+        kfree(buffer);
         return -ENOSPC;
     }
 
@@ -257,7 +262,7 @@ long FAT32_write(struct file* filp, char* buf, unsigned long count, long* positi
         if (next_cluster >= 0x0ffffff8) {
             next_cluster = FAT32_find_available_cluster(fsbi);
             if (!next_cluster) {
-                kmfree(buffer);
+                kfree(buffer);
                 return -ENOSPC;
             }
 
@@ -274,7 +279,7 @@ long FAT32_write(struct file* filp, char* buf, unsigned long count, long* positi
         filp->dentry->dir_inode->sb->sb_ops->write_inode(filp->dentry->dir_inode);
     }
 
-    kmfree(buffer);
+    kfree(buffer);
     if (!index)
         retval = count;
     return retval;
@@ -342,7 +347,7 @@ next_cluster:
     if (read_block(
             filp->dentry->dir_inode->dev, sector * 512, fsbi->sector_per_cluster * 512, buf) < 0) {
         comprintf("FAT32 FS(readdir) read disk ERROR!!!!!!!!!!\n");
-        kmfree(buf);
+        kfree(buf);
         return NULL;
     }
 
@@ -426,7 +431,7 @@ next_cluster:
     if (cluster < 0x0ffffff7)
         goto next_cluster;
 
-    kmfree(buf);
+    kfree(buf);
     return NULL;
 
 find_lookup_success:
@@ -473,7 +478,7 @@ next_cluster:
     comprintf("lookup cluster:0x%x,sector:0x%x\r\n", cluster, sector);
     if (read_block(parent_inode->dev, sector * 512, fsbi->sector_per_cluster * 512, buf) < 0) {
         comprintf("FAT32 FS(lookup) read disk ERROR!!!!!!!!!!\n");
-        kmfree(buf);
+        kfree(buf);
         return NULL;
     }
 
@@ -631,7 +636,7 @@ next_cluster:
     if (cluster < 0x0ffffff7)
         goto next_cluster;
 
-    kmfree(buf);
+    kfree(buf);
     return NULL;
 
 find_lookup_success:
@@ -643,6 +648,7 @@ find_lookup_success:
     p->sb        = parent_inode->sb;
     p->f_ops     = &FAT32_file_ops;
     p->inode_ops = &FAT32_inode_ops;
+    p->dev       = parent_inode->dev;
 
     p->private_index_info = (struct FAT32_inode_info*)kmalloc(0, (sizeof(struct FAT32_inode_info)));
     memset(p->private_index_info, 0, sizeof(struct FAT32_inode_info));
@@ -662,7 +668,7 @@ find_lookup_success:
     }
     p->link                = 1;
     dest_dentry->dir_inode = p;
-    kmfree(buf);
+    kfree(buf);
     return dest_dentry;
 }
 
@@ -712,11 +718,11 @@ void fat32_write_superblock(struct super_block* sb) {}
 
 void fat32_put_superblock(struct super_block* sb)
 {
-    kmfree(sb->private_sb_info);
-    kmfree(sb->root->dir_inode->private_index_info);
-    kmfree(sb->root->dir_inode);
-    kmfree(sb->root);
-    kmfree(sb);
+    kfree(sb->private_sb_info);
+    kfree(sb->root->dir_inode->private_index_info);
+    kfree(sb->root->dir_inode);
+    kfree(sb->root);
+    kfree(sb);
 }
 
 void fat32_write_inode(struct index_node* inode)
@@ -744,7 +750,7 @@ void fat32_write_inode(struct index_node* inode)
     fdentry->DIR_FstClusHI = (fdentry->DIR_FstClusHI & 0xf000) | (finode->first_cluster >> 16);
 
     write_block(inode->dev, sector * 512, fsbi->sector_per_cluster * 512, buf);
-    kmfree(buf);
+    kfree(buf);
 }
 
 struct super_block_operations FAT32_sb_ops = {
@@ -828,6 +834,7 @@ struct super_block* fat32_read_superblock(volume* vol, void* buf)
     ////fat32 root inode
     sbp->root->dir_inode->private_index_info =
         (struct FAT32_inode_info*)kmalloc(0, (sizeof(struct FAT32_inode_info)));
+    sbp->root->dir_inode->dev = ROOT_DEV;
     memset(sbp->root->dir_inode->private_index_info, 0, sizeof(struct FAT32_inode_info));
     finode                  = (struct FAT32_inode_info*)sbp->root->dir_inode->private_index_info;
     finode->first_cluster   = fbs->BPB_RootClus;
@@ -850,18 +857,9 @@ struct file_system_type FAT32_fs_type = {
 };
 int init_fat32_fs(volume* vol)
 {
+    register_filesystem(&FAT32_fs_type);
     char* buf = kmalloc(0, 512);
-    struct
-    {
-        int   lba;
-        int   count;
-        char* buf;
-    } ioctlarg;
-    ioctlarg.lba   = vol->start_sector;
-    ioctlarg.count = 1;
-    ioctlarg.buf   = buf;
-    drv_ioctl(ROOT_DEV, DRIVER_CMD_READ, 1, &ioctlarg);
-    // read_block(ROOT_DEV, vol->start_sector * 512, 512, buf);
+    read_block(ROOT_DEV, vol->start_sector * 512, 512, buf);
     //挂载新文件系统到/
     struct super_block* fat32_sb = mount_fs("FAT32", vol, buf);   // not dev node
 

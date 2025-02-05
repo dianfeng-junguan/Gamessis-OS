@@ -86,7 +86,7 @@ int unregister_volume_list(volume_list *list);
 #define STRLEN(str) strlen(str)
 #else
 #define KMALLOC(size) kmalloc(0, size)
-#define KFREE(ptr) kmfree(ptr)
+#define KFREE(ptr) kfree(ptr)
 #define KPRINTF(fmt, ...) comprintfk(KERN_INFO fmt, ##__VA_ARGS__)
 #define STRNCPY(dst, src, len) strncpyk(dst, src, len)
 #define STRCMP(str1, str2) strcmpk(str1, str2)

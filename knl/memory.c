@@ -215,7 +215,7 @@ addr_t kmallocat(addr_t addr, int pgc)
     return addr;
 }
 
-int _kmfree(addr_t ptr)
+int _kfree(addr_t ptr)
 {
     int num        = ptr / PAGE_SIZE;
     int n          = num / 32;
@@ -494,7 +494,7 @@ malloc_hdr* mhdr_merge(malloc_hdr* prev, malloc_hdr* next)
         next->base = 0;
         next->len  = 0;
         next->flag = 0;
-        // kmfree(next);
+        // kfree(next);
         // comprintf("merged mhdr: base %l new size%l\n", prev->base, prev->len);
     }
     return prev;
@@ -526,7 +526,7 @@ void* kmalloc(off_t addr, size_t size)
     die();
     return NULL;
 }
-int kmfree(off_t addr)
+int kfree(off_t addr)
 {
     for (malloc_hdr* mh = kmalloc_mhdr; mh; mh = mh->next) {
         if (mh->base != addr)

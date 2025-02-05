@@ -17,7 +17,8 @@ void   write_textbuf(char ch, tty_t* tty);
 // dev:完整的设备号
 tty_t* get_tty(int dev)
 {
-    if (dev < 0 || dev >= MAX_TTYS) return NULL;
+    if (dev < 0 || dev >= MAX_TTYS)
+        return NULL;
     return l_tty + (dev & 0xff);
 }
 struct file_operations tty_fops = {
@@ -30,10 +31,10 @@ long close_tty(struct index_node* inode, struct file* filp)
     stdbuf_t*     bi   = &opbf->stdin_buf;
     stdbuf_t*     bo   = &opbf->stdout_buf;
     stdbuf_t*     be   = &opbf->stderr_buf;
-    kmfree((addr_t)bi);
-    kmfree((addr_t)bo);
-    kmfree((addr_t)be);
-    // kmfree((addr_t) filp->private_data);
+    kfree((addr_t)bi);
+    kfree((addr_t)bo);
+    kfree((addr_t)be);
+    // kfree((addr_t) filp->private_data);
     return 0;
 }
 
@@ -84,8 +85,10 @@ long read_tty(struct file* filp, char* buf, unsigned long count, long* position)
     stdbuf_t*     b    = &opbf->stdin_buf;
     int           i    = 0;
     while (i < count) {
-        if (b->rptr == b->size) b->rptr = 0;
-        if (b->rptr == b->wptr) continue;
+        if (b->rptr == b->size)
+            b->rptr = 0;
+        if (b->rptr == b->wptr)
+            continue;
         buf[i++] = b->data[b->rptr];
         b->rptr++;
     }
@@ -99,7 +102,8 @@ long write_tty(struct file* filp, char* buf, unsigned long count, long* position
     int           saved_wptr = b->wptr;
     tty_t*        tty        = get_tty(filp->dentry->dir_inode->dev);
     while (i < count) {
-        if (b->wptr == b->size) b->wptr = 0;
+        if (b->wptr == b->size)
+            b->wptr = 0;
         b->data[b->wptr] = buf[i];
         b->wptr++;
         write_textbuf(buf[i], tty);
@@ -129,7 +133,8 @@ long ioctl_tty(struct index_node* inode, struct file* filp, unsigned long cmd, u
     switch (cmd) {
     case TTY_WSTDERR:
         while (i < count) {
-            if (b->wptr == b->size) b->wptr = 0;
+            if (b->wptr == b->size)
+                b->wptr = 0;
             b->data[b->wptr] = buf[i++];
             b->wptr++;
         }
@@ -138,16 +143,19 @@ long ioctl_tty(struct index_node* inode, struct file* filp, unsigned long cmd, u
         break;
     case TTY_CONNECT:
         fd = sys_open("dev/console", O_WRONLY | O_CREAT | O_EXCL);
-        if (fd == -1) return -1;
+        if (fd == -1)
+            return -1;
         ((tty_openbufs*)filp->private_data)->console_fd = fd;
         break;
     case TTY_DISCONNECT:
         fd = ((tty_openbufs*)filp->private_data)->console_fd;
-        if (fd == -1) return -1;
+        if (fd == -1)
+            return -1;
         sys_close(fd);
     case TTY_WSTDIN:
         while (i < count) {
-            if (ib->wptr == ib->size) ib->wptr = 0;
+            if (ib->wptr == ib->size)
+                ib->wptr = 0;
             ib->data[ib->wptr] = buf[i++];
             ib->wptr++;
         }
@@ -294,8 +302,10 @@ int key_proc()
     case 0x3a: switch_key(CTLK_CAPSLOCK, &tty->ctl_kmap); break;
     case 0xe0:
     case 0xe1:
-        if (scan2 == 0x48) scr_up();
-        if (scan2 == 0x50) scr_down();
+        if (scan2 == 0x48)
+            scr_up();
+        if (scan2 == 0x50)
+            scr_down();
         break;
     default: break;
     }
@@ -326,7 +336,8 @@ void flush_textbuf(tty_t* tty)
 {
     framebuffer_set_curpos(0, 0);
     int tot = tty->chars_height * tty->chars_width, len = tot, dis = txtbf_distance(tty);
-    if (len > dis) len = dis;
+    if (len > dis)
+        len = dis;
     int i = 0;
     for (; i < len; i++) {
         char c = tty->text_buf[(tty->text_buf_head + i) % tty->text_buf_size];
@@ -349,7 +360,8 @@ int register_tty(tty_t* tty)
             break;
         }
     }
-    if (!target) return -ENOMEM;
+    if (!target)
+        return -ENOMEM;
     target->chars_height = tty->chars_height;
     target->chars_width  = tty->chars_width;
 
@@ -364,6 +376,6 @@ int register_tty(tty_t* tty)
 }
 int unreigster_tty(int dev)
 {
-    kmfree(l_tty[dev & 0xff].text_buf);
+    kfree(l_tty[dev & 0xff].text_buf);
     l_tty[dev & 0xff].text_buf = NULL;
 }

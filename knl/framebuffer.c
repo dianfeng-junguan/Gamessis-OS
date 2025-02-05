@@ -133,7 +133,9 @@ void offset_cursor(int dx, int dy)
         fb_cursor_x -= max_ch_nr_x;
         fb_cursor_y++;
     }
-    if (fb_cursor_y < 0) { fb_cursor_y = 0; }
+    if (fb_cursor_y < 0) {
+        fb_cursor_y = 0;
+    }
     else if (fb_cursor_y >= max_ch_nr_y) {
         fb_cursor_y = 0;
     }
@@ -141,7 +143,9 @@ void offset_cursor(int dx, int dy)
 void draw_letter(int x, volatile int y, int size, char c)
 {
     u8* glyph = glyph_table;
-    if (c < glyph_nr) { glyph += c * bytes_per_glyph; }
+    if (c < glyph_nr) {
+        glyph += c * bytes_per_glyph;
+    }
     /* output the font to frame buffer */
     for (u32 ch_y = 0; ch_y < font_height; ch_y++) {
         u8 mask = 1 << 7;
@@ -151,13 +155,17 @@ void draw_letter(int x, volatile int y, int size, char c)
             int  py  = y + ch_y * size;
             int* ptr = FRAMEBUFFER_ADDR + py * framebuffer.common.framebuffer_pitch +
                        px * framebuffer.common.framebuffer_bpp / 8;
-            if ((*(glyph + ch_x / 8) & mask) != 0) { *ptr = -1; }
+            if ((*(glyph + ch_x / 8) & mask) != 0) {
+                *ptr = -1;
+            }
             else {
                 *ptr = 0;
             }
 
             mask >>= 1;
-            if (ch_x % 8 == 0) { mask = 1 << 7; }
+            if (ch_x % 8 == 0) {
+                mask = 1 << 7;
+            }
         }
 
         glyph += font_width_bytes;
@@ -167,7 +175,8 @@ void print_textbuffer()
 {
     int c = 0;
     for (int i = txtbfh; i != txtbft; i = (i + 1) % max_chs) {
-        if (text_buffer[i] == '\0') break;
+        if (text_buffer[i] == '\0')
+            break;
         if (text_buffer[i] == '\n') {
             //剩下用空格填满
             for (; fb_cursor_x < max_ch_nr_x; fb_cursor_x++)
@@ -194,7 +203,8 @@ void print_textbuffer()
                     text_buffer[i]);
         fb_cursor_x += 1;
         c++;
-        if (c >= max_chs) break;
+        if (c >= max_chs)
+            break;
     }
 }
 //向上滚动一行
@@ -202,7 +212,8 @@ void scr_up()
 {
     for (; text_buffer[txtbfh] != '\n' && txtbfh != txtbft; txtbfh = (txtbfh + 1) % max_chs)
         ;
-    if ((txtbfh + 1) % max_chs != txtbft) txtbfh = (txtbfh + 1) % max_chs;
+    if ((txtbfh + 1) % max_chs != txtbft)
+        txtbfh = (txtbfh + 1) % max_chs;
     fb_cursor_x         = 0;
     fb_cursor_y         = 0;
     text_buffer[txtbft] = '\0';
@@ -230,7 +241,8 @@ void scr_down()
     text_buffer[txtbft] = '\0';
     while (*p && p != text_buffer + txtbft && *p != '\n') {
         p--;
-        if (p == text_buffer) p = text_buffer + max_chs - 1;
+        if (p == text_buffer)
+            p = text_buffer + max_chs - 1;
     }
     p = text_buffer + (p - text_buffer + 1) % max_chs;
     print(p);
@@ -251,7 +263,8 @@ void print(char* s)
     // }
     for (; *s; s++) {
         text_buffer[txtbft++] = *s;
-        if (txtbft == max_chs) txtbft = 0;
+        if (txtbft == max_chs)
+            txtbft = 0;
         if (*s == '\n') {
             //剩下用空格填满
             for (; fb_cursor_x < max_ch_nr_x; fb_cursor_x++)
@@ -268,7 +281,8 @@ void print(char* s)
             fb_cursor_y += 1;
             fb_cursor_x = 0;
         }
-        if (*s == '\n') continue;
+        if (*s == '\n')
+            continue;
         if (fb_cursor_y >= max_ch_nr_y - 1) {
             fb_cursor_y = max_ch_nr_y - 1;
             scr_up();
@@ -310,7 +324,8 @@ void printl(char* s, int len)
 {
     for (int i = 0; i < len; i++, *s++) {
         text_buffer[txtbft++] = *s;
-        if (txtbft == max_chs) txtbft = 0;
+        if (txtbft == max_chs)
+            txtbft = 0;
         if (*s == '\n') {
             //剩下用空格填满
             for (; fb_cursor_x < max_ch_nr_x; fb_cursor_x++)
@@ -327,7 +342,8 @@ void printl(char* s, int len)
             fb_cursor_y += 1;
             fb_cursor_x = 0;
         }
-        if (*s == '\n') continue;
+        if (*s == '\n')
+            continue;
         if (fb_cursor_y >= max_ch_nr_y - 1) {
             fb_cursor_y = max_ch_nr_y - 1;
             scr_up();
@@ -364,7 +380,7 @@ long write_framebuffer(struct file* filp, char* buf, unsigned long count, long* 
         print(tmp);
         p += PAGE_4K_SIZE - 1;
     }
-    kmfree(tmp);
+    kfree(tmp);
     return 0;
 }
 long ioctl_framebuffer(struct index_node* inode, struct file* filp, unsigned long cmd,

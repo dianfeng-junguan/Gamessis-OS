@@ -58,7 +58,7 @@ volume *get_volume_by_name( char *name);
 #define STRCMP(str1, str2) strcmp(str1, str2)
 #else
 #define KMALLOC(size) kmalloc(0, size)
-#define KFREE(ptr) kmfree(ptr)
+#define KFREE(ptr) kfree(ptr)
 #define KPRINTF(fmt, ...) do{comprintf("[%s]:%s() at line %d:",__FILE__,__FUNCTION__,__LINE__);comprintf(fmt, ##__VA_ARGS__);}while(0);
 #define STRCMP(str1, str2) strcmpk(str1, str2)
 #endif

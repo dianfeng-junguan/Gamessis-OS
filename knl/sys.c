@@ -43,11 +43,11 @@ unsigned long sys_open(char* filename, int flags)
     memset(path, 0, PAGE_4K_SIZE);
     pathlen = strnlenk(filename, PAGE_4K_SIZE);
     if (pathlen <= 0) {
-        kmfree(path);
+        kfree(path);
         return -EFAULT;
     }
     else if (pathlen >= PAGE_4K_SIZE) {
-        kmfree(path);
+        kfree(path);
         return -ENAMETOOLONG;
     }
     strcpyk(path, filename);
@@ -84,7 +84,7 @@ unsigned long sys_open(char* filename, int flags)
         dentry->dir_inode->attribute = FS_ATTR_FILE;
     }
     dentry->link++;   //这样哪怕长时间不path walk，也不会被释放
-    // kmfree(path);
+    // kfree(path);
 
     if ((flags & O_DIRECTORY) && (dentry->dir_inode->attribute != FS_ATTR_DIR))
         return -ENOTDIR;
@@ -105,7 +105,7 @@ unsigned long sys_open(char* filename, int flags)
     if (filp->f_ops && filp->f_ops->open)
         error = filp->f_ops->open(dentry->dir_inode, filp);
     if (error != 1) {
-        kmfree(filp);
+        kfree(filp);
         return -EFAULT;
     }
 
@@ -123,7 +123,7 @@ unsigned long sys_open(char* filename, int flags)
             break;
         }
     if (i == MAX_TASKS) {
-        kmfree(filp);
+        kfree(filp);
         //// reclaim struct index_node & struct dir_entry
         return -EMFILE;
     }
@@ -144,7 +144,7 @@ unsigned long sys_close(int fd)
     if (filp->f_ops && filp->f_ops->close)
         filp->f_ops->close(filp->dentry->dir_inode, filp);
     filp->dentry->link--;
-    kmfree(filp);
+    kfree(filp);
     current->openf[fd] = NULL;
 
     return 0;
@@ -439,17 +439,17 @@ unsigned long sys_chdir(char* filename)
         return -ENOMEM;
     memset(path, 0, PAGE_4K_SIZE);
     if (pathlen <= 0) {
-        kmfree(path);
+        kfree(path);
         return -EFAULT;
     }
     else if (pathlen >= PAGE_4K_SIZE) {
-        kmfree(path);
+        kfree(path);
         return -ENAMETOOLONG;
     }
     strcpyk(filename, path);
 
     dentry = path_walk(path, 0);
-    kmfree(path);
+    kfree(path);
 
     if (dentry == NULL)
         return -ENOENT;

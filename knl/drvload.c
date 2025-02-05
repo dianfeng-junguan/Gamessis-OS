@@ -37,7 +37,7 @@ int free_module(mod_obj* obj)
         return -1;
     }
     mods[i].flags = 0;
-    kmfree(obj->img);
+    kfree(obj->img);
     obj->img = NULL;
     if (mods[i].fp) {
         kclose(obj->fp);
@@ -54,7 +54,7 @@ int unload_module(mod_obj* obj)
     }
     mods[i].flags = 0;
     binload_release_image(obj->img);
-    kmfree(obj->img);
+    kfree(obj->img);
     obj->img = NULL;
     if (mods[i].fp) {
         kclose(obj->fp);
@@ -108,7 +108,7 @@ mod_obj* load_module(char* path)
 
     return spare;   //成功
 relsimg:
-    //这个函数会自己把占用的km释放掉，不用再kmfree
+    //这个函数会自己把占用的km释放掉，不用再kfree
     binload_release_image(spare->img);
 relsmod:
     free_module(spare);

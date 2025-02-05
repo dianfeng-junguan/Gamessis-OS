@@ -123,7 +123,7 @@ void page_err(long* int_stk);
 //*addr参数已经废弃不用。
 void*  kmalloc(off_t addr, size_t size);
 addr_t kmallocat(addr_t addr, int pgc);
-int    kmfree(off_t addr);
+int    kfree(off_t addr);
 int    chk_vm(int base, int pgn);
 
 int init_paging();

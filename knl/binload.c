@@ -97,7 +97,7 @@ binload_addr_t binload_get_symbol(exec_image* img, char* name)
 int binload_release_image(exec_image* img)
 {
     //释放
-    kmfree((void*)img->base);
+    kfree((void*)img->base);
     return 0;
 }
 

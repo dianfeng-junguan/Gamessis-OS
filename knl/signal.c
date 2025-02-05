@@ -30,7 +30,9 @@ int send_signal(pid_t pid, int sig)
 
 int mask_signal(int sig, int should_block)
 {
-    if (should_block) { return set_sigmask(current, sig); }
+    if (should_block) {
+        return set_sigmask(current, sig);
+    }
     return reset_sigmask(current, sig);
 }
 int sig_masked(int sig)
@@ -45,7 +47,8 @@ int signal_handler_end(int sig)
 {
     int code = 0;
     //这两个信号代表不正常结束
-    if (sig == SIGABORT || sig == SIGINT) code = -1;
+    if (sig == SIGABORT || sig == SIGINT)
+        code = -1;
     sys_exit(code);
     return -1;
 }
@@ -55,7 +58,9 @@ int do_signals()
 {
     struct List* sig = current->signal_queue;
     for (; sig; sig = sig->next) {
-        if (!unmaskable(sig->data) && sig_masked(sig->data)) { continue; }
+        if (!unmaskable(sig->data) && sig_masked(sig->data)) {
+            continue;
+        }
         // TODO 非常临时的代码，只是用来快速处理终结信号的
         switch ((int)sig->data) {
         case SIGHUP:
@@ -65,13 +70,15 @@ int do_signals()
         case SIGSTOP:
         case SIGINT: signal_handler_end(sig->data); break;
         case SIGCHLD:   //有结束的子进程
-            if (current->stat == TASK_SUSPENDED) current->stat = TASK_READY;
+            if (current->stat == TASK_SUSPENDED)
+                current->stat = TASK_READY;
             break;
         default: default_signal_handler(sig->data); break;
         }
-        if (current->signal_queue == sig) current->signal_queue = current->signal_queue->next;
+        if (current->signal_queue == sig)
+            current->signal_queue = current->signal_queue->next;
         list_drop(sig);
-        kmfree(sig);
+        kfree(sig);
     }
     return 0;
 }
@@ -79,7 +86,8 @@ int do_signals()
 int reset_sigmask(pid_t pid, int signal)
 {
     struct process* p = get_proc(pid);
-    if (!p) return 0;
+    if (!p)
+        return 0;
     p->sigmask &= ~(1 << signal);
     return 1;
 }

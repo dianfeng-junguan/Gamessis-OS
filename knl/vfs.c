@@ -27,13 +27,13 @@ void drelse(struct dir_entry* d)
     d->dir_ops->iput(d, d->dir_inode);
     //释放
     list_drop(&d->child_node);
-    kmfree(d->name);
+    kfree(d->name);
     d->dir_inode->link--;
     if (!d->dir_inode->link) {
-        kmfree(d->dir_inode->private_index_info);
-        kmfree(d->dir_inode);   //释放inode
+        kfree(d->dir_inode->private_index_info);
+        kfree(d->dir_inode);   //释放inode
     }
-    kmfree(d);
+    kfree(d);
 }
 int dentry_cmp(struct dir_entry* a, struct dir_entry* b)
 {
@@ -120,8 +120,8 @@ struct dir_entry* path_walk(char* name, unsigned long flags)
 
             if (path == NULL) {
                 printfk("can not find file or dir:%s\n", name);
-                // kmfree(path->name);
-                // kmfree(path);
+                // kfree(path->name);
+                // kfree(path);
                 return NULL;
             }
             //        list_init(&path->child_node);
@@ -243,12 +243,12 @@ struct dir_entry* root_lookup(struct index_node* parent_inode, struct dir_entry*
     while (p) {
         struct dir_entry* dp = p->data;
         if (strcmpk(dp->name, dest_dentry->name) == 0) {
-            kmfree(dest_dentry);
+            kfree(dest_dentry);
             return dp;
         }
         p = p->next;
     }
-    kmfree(dest_dentry);
+    kfree(dest_dentry);
     return NULL;
 }
 struct index_node_operations root_iops = {.lookup = root_lookup};
@@ -302,7 +302,7 @@ struct dir_entry* create_node(char* pathname, mode_t mode, unsigned short dev)
         return NULL;
     }
     p++;
-    kmfree(path);
+    kfree(path);
     struct dir_entry*  new_noded = kmalloc(0, PAGE_4K_SIZE);
     struct index_node* new_nodei = new_noded + 1;
     new_noded->name              = new_nodei + 1;
@@ -361,7 +361,7 @@ int remove(char* pathname)
     drelse(target);
     struct index_node* inode = target->dir_inode;
     if (inode->private_index_info)
-        kmfree(inode->private_index_info);
-    kmfree(inode);
+        kfree(inode->private_index_info);
+    kfree(inode);
     return 0;
 }
