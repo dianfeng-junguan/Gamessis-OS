@@ -175,13 +175,13 @@ int fill_dentry(void* buf, char* name, long namelen, long type, long offset)
 struct super_block*     root_sb    = NULL;
 struct file_system_type filesystem = {"filesystem", 0};
 
-struct super_block* mount_fs(char* name, struct Disk_Partition_Table_Entry* DPTE, void* buf)
+struct super_block* mount_fs(char* name, volume* vol, void* buf)
 {
     struct file_system_type* p = NULL;
 
     for (p = &filesystem; p; p = p->next)
         if (!strcmpk(p->name, name)) {
-            return p->read_superblock(DPTE, buf);
+            return p->read_superblock(vol, buf);
         }
     return 0;
 }
@@ -279,7 +279,7 @@ void                         init_rootfs()
     // root_sb->dev=dev_ramdisk<<8;
     // root_sb->p_dev=&bd_ramdisk;
     // TODO 以后要直接拿设备号，这个设备号通过devman创建设备文件（节点）分配。
-    ROOT_DEV = dev_ramdisk << 4;
+    ROOT_DEV = dev_ramdisk;
 
     for (int i = 0; i < 48; i++) {
         history_dentry[i] = 0;

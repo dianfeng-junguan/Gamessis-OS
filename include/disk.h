@@ -24,7 +24,6 @@
 #define MAX_DISK_CHKTIME 10
 // #include "devdrv.h"
 #include "vfs.h"
-#include <blk_dev.h>
 
 typedef struct{
     int func;	//调用功能号

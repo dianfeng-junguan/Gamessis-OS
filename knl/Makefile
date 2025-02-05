@@ -2,14 +2,14 @@ knlsrc=knl
 knlmodsrc=knl/mods
 loadersrc=loader
 modobj = kb.o disk.o fat32.o \
-				tty.o elfbin.o
+				tty.o elfbin.o scanner.o
 modobjasm=diska.o
 kernelobj = int.o main.o log.o \
 			memory.o devman.o proc.o \
 			gdt.o clock.o exe.o \
 			framebuffer.o vfs.o sys.o ramfs.o ramdisk.o \
-			blk_dev.o blk_buf.o signal.o driverman.o \
-			binload.o drvload.o com.o
+			signal.o driverman.o \
+			binload.o drvload.o com.o volume.o
 loaderobj=reloc.o
 loaderobjasm64= setup64.o
 kernelobjasm=inta.o gdta.o clocka.o syscalla.o int_handlera.o

@@ -1,22 +1,73 @@
 #include "disk.h"
+#include "driverman.h"
 #include "int.h"
 #include "devman.h"
 #include "syscall.h"
 #include <log.h>
-#include <blk_dev.h>
 #define NULL ((void*)0)
 struct request*        r_running = NULL;
 struct file_operations hd_fops   = {
     // TODO:hd规范化
 };
-disk_req       disk_reqs[MAX_DISK_REQUEST_COUNT];
-disk_req*      running_req = NULL;
-static int     head = 0, tail = 0;
-struct blk_dev bd_hd  = {.do_request = hd_do_req};
-int            dev_hd = -1, last_chk_res = 0;
-int            init_disk()
+struct disk_ioctlarg
 {
-    if ((dev_hd = reg_blkdev(&bd_hd)) < 0)
+    int          diski;      //硬盘号
+    unsigned int lba;        //起始扇区
+    int          sec_n;      //读写扇区数
+    char*        mem_addr;   //读写缓冲区地址
+    //接下来部分传参不使用
+    int status;
+    int cmd;
+} current_ioctlarg;
+disk_req   disk_reqs[MAX_DISK_REQUEST_COUNT];
+disk_req*  running_req = NULL;
+static int head = 0, tail = 0;
+// struct blk_dev bd_hd  = {.do_request = hd_do_req};
+int dev_hd = -1, last_chk_res = 0;
+
+int disk_mod_init(int devid)
+{
+    return 0;
+}
+
+int disk_mod_exit()
+{
+    return 0;
+}
+/**
+    @brief 异步读硬盘
+    参数格式如下：
+    int diski:硬盘号
+    unsigned int lba:起始扇区
+    int sec_n:读写扇区数
+    char* mem_addr:读写缓冲区地址
+    返回值：0表示成功，-1表示失败
+ */
+int disk_mod_ioctl(int cmd, unsigned long long arg)
+{
+    struct disk_ioctlarg* ioctlarg   = (struct disk_ioctlarg*)arg;
+    int                   diski      = ioctlarg->diski;
+    int                   sector     = ioctlarg->lba;
+    int                   nr_sectors = ioctlarg->sec_n;
+    char*                 buffer     = ioctlarg->mem_addr;
+    current_ioctlarg.diski           = diski;
+    current_ioctlarg.lba             = sector;
+    current_ioctlarg.sec_n           = nr_sectors;
+    current_ioctlarg.mem_addr        = buffer;
+    current_ioctlarg.status          = 1;
+    current_ioctlarg.cmd             = cmd;
+    switch (cmd) {
+    case DRIVER_CMD_READ: async_read_disk(diski, sector, nr_sectors, buffer); break;
+    case DRIVER_CMD_WRITE: async_write_disk(diski, sector, nr_sectors, buffer); break;
+    case DRVF_CHK: async_check_disk(diski); break;
+    default: return -1;
+    }
+}
+int init_disk()
+{
+    // if ((dev_hd = reg_blkdev(&bd_hd)) < 0)
+    //     return -1;
+    if ((dev_hd = register_driver(disk_mod_init, disk_mod_exit, disk_mod_ioctl)) < 0)
         return -1;
     // disk_devi= reg_device(&dev_disk);
     // disk_drvi= reg_driver(&drv_disk);
@@ -24,8 +75,45 @@ int            init_disk()
     // hd_iterate();
     return 0;
 }
-
 int disk_int_handler_c()
+{
+    if (!current_ioctlarg.status) {
+        comprintf("err:null running dreq\n");
+        return 1;   //同步读写硬盘
+    }
+    short* p    = current_ioctlarg.mem_addr;
+    int    port = PORT_DISK_MAJOR;
+    if (current_ioctlarg.diski == DISK_SLAVE_MAJOR || current_ioctlarg.diski == DISK_SLAVE_SLAVE)
+        port = PORT_DISK_SLAVE;
+    switch (current_ioctlarg.cmd) {
+    case DRIVER_CMD_READ:
+        for (int i = 0; i < current_ioctlarg.sec_n * 256; i++) {
+            *p++ = inw(port);
+        }
+        break;
+    case DRIVER_CMD_WRITE:
+        for (int i = 0; i < current_ioctlarg.sec_n * 256; i++)
+            outw(port, *p++);
+        break;
+    case DRVF_CHK:
+        char  stat = inb(port + 7);
+        short dat  = inw(port);
+        if (1) {
+            last_chk_res = DISK_CHK_OK;
+        }
+        else {
+            char err = inb(port + 1);   //错误原因
+            printfk("checking disk err:%x\nresetting hd\n", err);
+            last_chk_res = DISK_CHK_ERR;
+        }
+        break;
+    default: return -1;
+    }
+    current_ioctlarg.status = 0;
+    change_driver_stat(dev_hd, DRIVER_STAT_DONE);
+    return 0;
+}
+/* int disk_int_handler_c_old()
 {
     if (r_running == NULL) {
         comprintf("err:null running dreq\n");
@@ -69,7 +157,7 @@ int disk_int_handler_c()
     //执行下一个请求
     hd_do_req(blk_devs[dev_hd].current_request);
     return 0;
-}
+} */
 int async_reset_disk(int disk)
 {
     outb(PORT_DISK_CONTROL, DISK_CMD_RESET);
@@ -215,7 +303,7 @@ int async_check_disk(int disk)
 }
 
 //接口函数：负责接收VFS的请求然后执行
-int hd_do_req(struct request* req)
+/* int hd_do_req(struct request* req)
 {
     if (!req)
         return -1;
@@ -232,4 +320,4 @@ int hd_do_req(struct request* req)
     default: return -1;
     }
     return 0;
-}
+} */

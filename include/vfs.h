@@ -6,8 +6,9 @@
 #define GMS_VFS_H
 #include "typename.h"
 #include "sys/types.h"
+#include "volume.h"
 #define MAX_MOUNTPOINTS 24
-// #include <blk_dev.h>
+
 struct List
 {
     struct List* prev;
@@ -51,7 +52,6 @@ __attribute__((always_inline)) inline void list_drop(struct List* entry)
     if (entry->next)
         entry->next->prev = entry->prev;
 }
-
 struct Disk_Partition_Table_Entry
 {
     unsigned char  flags;
@@ -77,7 +77,7 @@ struct file_system_type
 {
     char* name;
     int   fs_flags;
-    struct super_block* (*read_superblock)(struct Disk_Partition_Table_Entry* DPTE, void* buf);
+    struct super_block* (*read_superblock)(volume* DPTE, void* buf);
     struct file_system_type* next;
 };
 typedef struct _mount_point
@@ -94,7 +94,7 @@ int mount_fs_on(struct dir_entry* d_to_mount, struct super_block* fs);
 /// @param d_mp 被挂载的目录。
 /// @return 错误码，成功为1
 int                 umount_fs(struct dir_entry* d_mp);
-struct super_block* mount_fs(char* name, struct Disk_Partition_Table_Entry* DPTE, void* buf);
+struct super_block* mount_fs(char* name, volume* DPTE, void* buf);
 unsigned long       register_filesystem(struct file_system_type* fs);
 unsigned long       unregister_filesystem(struct file_system_type* fs);
 
@@ -111,8 +111,8 @@ struct super_block
 
     unsigned short dev;   //设备号
 
-    struct blk_dev* p_dev;
-    void*           private_sb_info;
+    // struct blk_dev* p_dev;
+    void* private_sb_info;
 };
 
 struct index_node

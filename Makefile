@@ -14,15 +14,15 @@ include test/test.mk
 include usrlib/lib.mk
 include dl/dl.mk
 include tools/kallsyms/kallsyms.mk
-KNL_OFILES = bin/int.o bin/main.o bin/log.o \
-			bin/memory.o bin/devman.o bin/proc.o bin/inta.o \
-			bin/gdt.o bin/gdta.o bin/clock.o bin/clocka.o bin/exe.o \
-			bin/syscalla.o bin/framebuffer.o bin/vfs.o bin/sys.o bin/ramfs.o bin/ramdisk.o \
-			bin/blk_dev.o bin/blk_buf.o bin/kallsyms.o bin/signal.o bin/int_handlera.o bin/driverman.o \
-			bin/binload.o bin/drvload.o
-MODS_OFILES = bin/mods/kb.o bin/mods/disk.o bin/mods/diska.o bin/mods/fat32.o \
-				bin/mods/tty.o bin/com.o bin/rd.o bin/mods/elfbin.o#bin/test.o
-COM_OFILES = bin/mem.o bin/str.o bin/types.o bin/proca.o bin/font.o
+KNL_OFILES = int.o main.o log.o \
+			memory.o devman.o proc.o inta.o \
+			gdt.o gdta.o clock.o clocka.o exe.o \
+			syscalla.o framebuffer.o vfs.o sys.o ramfs.o ramdisk.o \
+			kallsyms.o signal.o int_handlera.o driverman.o \
+			binload.o drvload.o volume.o
+MODS_OFILES = kb.o disk.o diska.o fat32.o \
+				tty.o com.o rd.o elfbin.o scanner.o#test.o
+COM_OFILES = mem.o str.o types.o proca.o font.o
 PH_MODIFIER = /mnt/d/Code/Python/elfph/elf.py
 QEMU_LOG = -d int,cpu_reset,guest_errors,page -D log/log.txt
 all:
@@ -35,9 +35,9 @@ k:
 	make cpknl
 knl:protoknl font
 	objcopy rd.img bin/rd.o -B i386 -O elf64-x86-64 -I binary
-	@ld -T knl.lds -o bin/gmsknl.elf $(KNL_OFILES) $(MODS_OFILES) $(COM_OFILES) --emit-relocs
+	@ld -T knl.lds -o bin/gmsknl.elf $(addprefix $(BUILD)/,$(KNL_OFILES)) $(addprefix $(BUILD)/,$(MODS_OFILES)) $(addprefix $(BUILD)/,$(COM_OFILES)) --emit-relocs
 	make kallsyms
-	@ld -T knl.lds -o bin/gmsknl.elf $(KNL_OFILES) $(MODS_OFILES) $(COM_OFILES) --emit-relocs
+	@ld -T knl.lds -o bin/gmsknl.elf $(addprefix $(BUILD)/,$(KNL_OFILES)) $(addprefix $(BUILD)/,$(MODS_OFILES)) $(addprefix $(BUILD)/,$(COM_OFILES)) --emit-relocs
 	debugedit bin/gmsknl.elf -b /mnt/d/Code/Comprehensive/OS/workspace/64 -d D://Code/Comprehensive/OS/workspace/64
 	@cp bin/gmsknl.elf bin/gmsknlm.elf
 	@objcopy bin/gmsknl.elf -I binary -O elf64-x86-64 bin/gmsknl.o -B i386

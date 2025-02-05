@@ -65,5 +65,7 @@ stat_t change_driver_stat(id_t id,stat_t stat);
 //驱动管理模块初始化
 stat_t init_driver_man();
 stat_t driver_man_exit();
+
+int drv_ioctl(int drv, int command, int block, unsigned long long arg);
 #define MAX_DRIVERS 128
 

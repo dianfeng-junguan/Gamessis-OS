@@ -12,8 +12,8 @@
 #include <disk.h>
 #include <fat32.h>
 #include <kb.h>
-#include "blk_buf.h"
 #include "com.h"
+#include "scanner.h"
 #include "syscall.h"
 #include "fcntl.h"
 #include "exe.h"
@@ -147,20 +147,28 @@ void main(unsigned int magic, void* addr)
     init_paging();
     init_gdt();
 
-    init_blkdev();
-    init_blkbuf();
+    init_driver_man();
     // init_disk();
     init_ramdisk();
     init_rootfs();
     init_proc();
 
-    init_driver_man();
     init_drvload();
     init_binload();
     elf_binload_init();
     //===============创建0号进程======================
     init_proc0();
-    DISK1_FAT32_FS_init();
+    init_volumeman();
+    volume_list* vlist = scan_disk(ROOT_DEV);
+    if (vlist && vlist->head && vlist->head->vol) {
+        comprintf("volume scan succeeded\n");
+        register_volume_list(vlist);
+        init_fat32_fs(vlist->head->vol);
+    }
+    else {
+        //备用
+        DISK1_FAT32_FS_init();
+    }
     init_devfs();
 
     further_init_proc0();
@@ -171,7 +179,7 @@ void main(unsigned int magic, void* addr)
     }
     // init_ramfs();
 
-    //自带驱动
+    //自带驱动comprintfk(fmt, ##__VA_ARGS__)
     // init_tty();
     // init_kb();
     //    init_disk();

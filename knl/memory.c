@@ -1,5 +1,5 @@
 #include "memory.h"
-#include "blk_dev.h"
+
 #include "errno.h"
 #include "framebuffer.h"
 #include "int.h"
@@ -14,6 +14,10 @@
 #include "vfs.h"
 
 
+#define SECTOR_SIZE 512
+#define TO_BLKN(n) (((n) + 4095) / 4096)
+#define TO_MPGN(n) (((n) + 4095) / 4096)
+#define TO_SECN(n) (((n) + 511) / 512)
 malloc_hdr* mhdr_split(malloc_hdr* target, off_t split_point, malloc_hdr* array, size_t arraylen);
 malloc_hdr* mhdr_merge(malloc_hdr* prev, malloc_hdr* next);
 // page bitmap. refers to pages of mem.

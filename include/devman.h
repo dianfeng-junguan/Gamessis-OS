@@ -2,15 +2,15 @@
 // #include "devdrv.h"
 #include "vfs.h"
 #define NR_REQS 32
-#define IS_BLKDEV(dev) (dev&0x10000==0)
-#define IS_CHRDEV(dev) (dev&0x10000!=0)
-#define REQ_STAT_EMPTY 0	
-#define	REQ_STAT_READY 1
+#define IS_BLKDEV(dev) (dev & 0x10000 == 0)
+#define IS_CHRDEV(dev) (dev & 0x10000 != 0)
+#define REQ_STAT_EMPTY 0
+#define REQ_STAT_READY 1
 #define REQ_STAT_WORKING 2
 #define REQ_STAT_DONE 3
-#define REQ_STAT_ERR 4	
-int init_devfs();
-struct super_block* devfs_read_superblock(struct Disk_Partition_Table_Entry *PDTE,void *buf);
+#define REQ_STAT_ERR 4
+int                 init_devfs();
+struct super_block* devfs_read_superblock(volume* PDTE, void* buf);
 // int reg_device(device *dev);
 // int reg_driver(driver *drv);
 int dispose_device(int dev);
@@ -19,9 +19,9 @@ int dispose_device(int dev);
 // device *get_dev(int devi);
 // driver *get_drv(int drvi);
 
-int load_driver(char *path);
+int load_driver(char* path);
 
-int sys_find_dev(char *name);
+int sys_find_dev(char* name);
 // int call_drv_func(int drv_n,int func_n,driver_args* args);
 // int sys_operate_dev(char *name,int func,driver_args* args);
 //发送一个操作设备的申请
@@ -32,9 +32,9 @@ void clear_req(int reqi);
 int do_req();
 
 
-long open_dev(struct index_node * inode,struct file * filp);
-long close_dev(struct index_node * inode,struct file * filp);
-long read_dev(struct file * filp,char * buf,unsigned long count,long * position);
-long write_dev(struct file * filp,char * buf,unsigned long count,long * position);
-long ioctl_dev(struct index_node * inode,struct file * filp,unsigned long cmd,unsigned long arg);
-extern struct dir_entry* ddev,*dmnt;
+long open_dev(struct index_node* inode, struct file* filp);
+long close_dev(struct index_node* inode, struct file* filp);
+long read_dev(struct file* filp, char* buf, unsigned long count, long* position);
+long write_dev(struct file* filp, char* buf, unsigned long count, long* position);
+long ioctl_dev(struct index_node* inode, struct file* filp, unsigned long cmd, unsigned long arg);
+extern struct dir_entry *ddev, *dmnt;

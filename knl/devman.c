@@ -1,5 +1,7 @@
 #include "devman.h"
-#include "blk_dev.h"
+
+#include "driverman.h"
+#include "ramdisk.h"
 #include "syscall.h"
 #include "memory.h"
 #include "str.h"
@@ -11,7 +13,6 @@
 #include "mem.h"
 #include "framebuffer.h"
 #include "log.h"
-#include <blk_buf.h>
 #include <vfs.h>
 #include "sys/stat.h"
 
@@ -81,13 +82,13 @@ struct super_block_operations devfs_sops = {
     // TODO 待完成
 
 };
-struct super_block* devfs_read_superblock(struct Disk_Partition_Table_Entry* PDTE, void* buf)
+struct super_block* devfs_read_superblock(volume* PDTE, void* buf)
 {
     struct super_block* sb = kmalloc(0, PAGE_4K_SIZE);
     sb->dev                = 0;   //不存在具体的存储设备
-    sb->p_dev              = 0;
-    sb->root               = sb + 1;
-    sb->sb_ops             = &devfs_sops;
+    // sb->p_dev              = 0;
+    sb->root   = sb + 1;
+    sb->sb_ops = &devfs_sops;
 
     sb->root->dir_inode = sb->root + 1;
     sb->root->dir_ops   = &devfs_dops;
@@ -215,31 +216,51 @@ long close_dev(struct index_node* inode, struct file* filp)
 }
 long read_dev(struct file* filp, char* buf, unsigned long count, long* position)
 {
-    //判断是不是块设备文件
-    struct index_node* i_dev = filp->dentry->dir_inode;
-    if (IS_BLKDEV(i_dev->dev)) {
-        //这里需要调用缓冲区层的函数读取块设备
-        return blkdev_read(i_dev->dev, *position, count, buf);
-    }
+    struct
+    {
+        long  pos;
+        long  count;
+        char* buf;
+    } ioctlarg;
+    ioctlarg.pos   = *position;
+    ioctlarg.count = count;
+    ioctlarg.buf   = buf;
+    return drv_ioctl(filp->dentry->dir_inode->dev, DRIVER_CMD_READ, 1, &ioctlarg);
+    // //判断是不是块设备文件
+    // struct index_node* i_dev = filp->dentry->dir_inode;
+    // if (IS_BLKDEV(i_dev->dev)) {
+    //     //这里需要调用缓冲区层的函数读取块设备
+    //     return blkdev_read(i_dev->dev, *position, count, buf);
+    // }
 
-    //查看文件名
-    char* name = filp->dentry->name;
-    char* p    = name + strlenk(name) - 1;
-    for (; *p != '/' && p >= name; p--)
-        ;
-    if (p >= name)
-        name = p + 1;
-    if (memcmp(name, "tty", 3) == 0) {
-        return read_tty(filp, buf, count, position);
-    }
-    else if (strcmpk(name, "console") == 0) {
-        return read_framebuffer(filp, buf, count, position);
-    }
+    // //查看文件名
+    // char* name = filp->dentry->name;
+    // char* p    = name + strlenk(name) - 1;
+    // for (; *p != '/' && p >= name; p--)
+    //     ;
+    // if (p >= name)
+    //     name = p + 1;
+    // if (memcmp(name, "tty", 3) == 0) {
+    //     return read_tty(filp, buf, count, position);
+    // }
+    // else if (strcmpk(name, "console") == 0) {
+    //     return read_framebuffer(filp, buf, count, position);
+    // }
     return -1;
 }
 long write_dev(struct file* filp, char* buf, unsigned long count, long* position)
 {
-    //判断是不是块设备文件
+    struct
+    {
+        long  pos;
+        long  count;
+        char* buf;
+    } ioctlarg;
+    ioctlarg.pos   = *position;
+    ioctlarg.count = count;
+    ioctlarg.buf   = buf;
+    return drv_ioctl(filp->dentry->dir_inode->dev, DRIVER_CMD_WRITE, 1, &ioctlarg);
+    /* //判断是不是块设备文件
     struct index_node* idev = filp->dentry->dir_inode;
     if (IS_BLKDEV(idev->dev)) {
         //这里需要调用缓冲区层的函数写块设备
@@ -259,11 +280,12 @@ long write_dev(struct file* filp, char* buf, unsigned long count, long* position
     else if (strcmpk(name, "console") == 0) {
         return write_framebuffer(filp, buf, count, position);
     }
-    return -1;
+    return -1; */
 }
 long ioctl_dev(struct index_node* inode, struct file* filp, unsigned long cmd, unsigned long arg)
 {
-    //判断是不是块设备文件
+    return drv_ioctl(filp->dentry->dir_inode->dev, cmd, 1, arg);
+    /* //判断是不是块设备文件
     struct index_node* idev = filp->dentry->dir_inode;
     if (IS_BLKDEV(idev->dev)) {
         //这里需要调用缓冲区层的函数ioctl块设备
@@ -282,7 +304,7 @@ long ioctl_dev(struct index_node* inode, struct file* filp, unsigned long cmd, u
     else if (strcmpk(name, "console") == 0) {
         return ioctl_framebuffer(inode, filp, cmd, arg);
     }
-    return -1;
+    return -1; */
 }
 int load_driver(char* path) {}
 /*
