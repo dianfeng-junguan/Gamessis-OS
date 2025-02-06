@@ -17,6 +17,7 @@
 #include "int.h"
 #include <sys/mman.h>
 #include "sys/stat.h"
+#include "dirent.h"
 
 
 unsigned long sys_putstring(char* string)
@@ -446,7 +447,7 @@ unsigned long sys_chdir(char* filename)
         kfree(path);
         return -ENAMETOOLONG;
     }
-    strcpyk(filename, path);
+    strcpyk(path, filename);
 
     dentry = path_walk(path, 0);
     kfree(path);
@@ -455,6 +456,7 @@ unsigned long sys_chdir(char* filename)
         return -ENOENT;
     if (dentry->dir_inode->attribute != FS_ATTR_DIR)
         return -ENOTDIR;
+    current->cwd = dentry;
     return 0;
 }
 
@@ -548,3 +550,52 @@ int kread(struct file* fp, unsigned long long offset, size_t len, char* buf)
         ret = fp->f_ops->read(fp, buf, len, &fp->position);
     return 0;
 }
+/**
+    @brief 填充目录项
+    @param buf  目录项缓冲区，注意其中的name必须预留足够空间
+    @param name 目录项名称
+    @param namelen 目录项名称长度
+    @param type 目录项类型
+    @param offset 目录项在文件中的偏移
+    @return 0
+ */
+int default_fill_dentry(void* buf, char* name, long namelen, long type, long offset)
+{
+    struct dirent* de = (struct dirent*)buf;
+    memset(de, 0, sizeof(struct dirent));
+    de->d_offset  = offset;
+    de->d_type    = type;
+    de->d_namelen = namelen;
+    memcpy(de->d_name, name, namelen);
+    return 0;
+}
+int sys_readdir(int fd, struct dirent* result)
+{
+    if (fd < 0 || fd >= MAX_PROC_OPENF) {
+        return -EBADF;
+    }
+    struct file* filp = current->openf[fd];
+    return do_readdir(filp, result);
+}
+int do_readdir(struct file* dirp, struct dirent* result)
+{
+    if (!dirp || !dirp->f_ops || !dirp->f_ops->readdir) {
+        return -1;
+    }
+    int ret = -1;
+    if (dirp->f_ops && dirp->f_ops->readdir)
+        ret = dirp->f_ops->readdir(dirp, result, default_fill_dentry);
+    return ret;
+}
+// int sys_mkdir(char* path, mode_t mode)
+// {
+//     return do_mkdir(path, mode);
+// }
+// int sys_rmdir(char* path)
+// {
+//     return do_rmdir(path);
+// }
+// int sys_rename(char* oldpath, char* newpath)
+// {
+//     return do_rename(oldpath, newpath);
+// }

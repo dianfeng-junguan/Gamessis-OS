@@ -8,6 +8,7 @@
 #include "memory.h"
 #include "log.h"
 #include "mem.h"
+#include "proc.h"
 #include "str.h"
 #include "sys/types.h"
 #include <ramdisk.h>
@@ -74,7 +75,7 @@ struct dir_entry* path_walk(char* name, unsigned long flags)
 {
     char*             tmpname    = NULL;
     int               tmpnamelen = 0;
-    struct dir_entry* parent     = droot;
+    struct dir_entry* parent     = *name == '/' ? droot : current->cwd;
     struct dir_entry* path       = NULL;
 
     while (*name == '/')

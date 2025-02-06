@@ -1,5 +1,5 @@
 #include "sys/types.h"
-
+#include "dirent.h"
 #define SYSCALL_REG_DEV 0
 #define SYSCALL_DISPOSE_DEV 1
 #define SYSCALL_REG_DRV 2
@@ -36,6 +36,8 @@
 #define SYSCALL_REMOVE 34
 #define SYSCALL_SBRK 35
 #define SYSCALL_CHKMMAP 36
+#define SYSCALL_READDIR 37
+#define SYSCALL_CHDIR 38
 #define SYSCALL_KB_READC 100
 
 
@@ -107,6 +109,15 @@ void* sys_mmap(void* addr, size_t len, int prot, int flags, int fildes, off_t of
 int           sys_munmap(void* addr, size_t len);
 unsigned long sys_brk(unsigned long brk);
 void*         sys_sbrk(long long increment);
+/**
+    @brief 读取一个目录，获取里面的文件信息。
+    @param dirp 目录文件句柄
+    @param entry 目录项
+    @param result 指向内含下一个文件的指针，如果没有或者已经到结尾则为NULL
+    @return 成功返回0，失败返回-1
+ */
+int do_readdir(struct file* dirp, struct dirent* result);
+int sys_readdir(int fd, struct dirent* result);
 /*
 创建文件，可以是FIFO，常规文件，目录和设备文件。除了FIFO，其他类型创建前会检查进程权限（未完成）
 */

@@ -200,23 +200,23 @@ struct process
 
     proc_mem_arr mem_struct;
 
-    descriptor   ldt[5];
-    unsigned int has_console;
-    unsigned int parent_pid;
-    unsigned int page[8];
-    addr_t*      pml4;   // pml4
-    struct file* cwd;
-    struct file* exef;
-    struct file* openf[MAX_PROC_OPENF];
-    TSS          tss;
-    regs_t       regs;
-    mmap_struct* mmaps;          //内存空间的映射
-    struct List  node;           //本进程的节点
-    struct List* child_procs;    //子进程
-    struct List* signal_queue;   //等待处理的信号
-    void*        dl;             // dl的文件描述符
-    sigset_t     sigmask;        //信号屏蔽位图
-} __attribute__((packed));       // 208 bytes
+    descriptor        ldt[5];
+    unsigned int      has_console;
+    unsigned int      parent_pid;
+    unsigned int      page[8];
+    addr_t*           pml4;   // pml4
+    struct dir_entry* cwd;
+    struct file*      exef;
+    struct file*      openf[MAX_PROC_OPENF];
+    TSS               tss;
+    regs_t            regs;
+    mmap_struct*      mmaps;          //内存空间的映射
+    struct List       node;           //本进程的节点
+    struct List*      child_procs;    //子进程
+    struct List*      signal_queue;   //等待处理的信号
+    void*             dl;             // dl的文件描述符
+    sigset_t          sigmask;        //信号屏蔽位图
+} __attribute__((packed));            // 208 bytes
 #endif
 typedef struct
 {

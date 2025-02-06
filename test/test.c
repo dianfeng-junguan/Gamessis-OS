@@ -20,11 +20,12 @@ int main(int argc, char** argv, char** environ)
     // write(2, as, strlenk(as));
     char* prepared_environ = {"os=gms"};
     puts("Gamessis OS shell\n");
-    char cmd[128] = {0};
+    char cmd[128]  = {0};
+    char path[128] = "/";
     while (1) {
         memset(cmd, 0, 128);
         int p = 0;
-        printf("shell:>");
+        printf("%s:>", path);
         // write(2, "shell:>", 7);
         gets(cmd);
         puts(cmd);
@@ -34,6 +35,34 @@ int main(int argc, char** argv, char** environ)
         }
         else if (strcmp(cmd, "exit") == 0) {
             break;
+        }
+        else if (strcmp(cmd, "ls") == 0) {
+            // ls
+            DIR*           dp = opendir(".");
+            struct dirent* dirp;
+            if (!dp) {
+                printf("error opening directory\n");
+                continue;
+            }
+            while ((dirp = readdir(dp)) != NULL) {
+                printf("%s\n", dirp->d_name);
+            }
+            close(dp);
+        }
+        else if (strcmp(cmd, "cd") == 0) {
+            // cd
+            char tmppath[128] = {0};
+            printf("enter path:");
+            // write(2, "enter path:", 11);
+            gets(tmppath);
+            // TODO chdir待完成
+            if (chdir(tmppath) == -1) {
+                printf("cannot find directory:%s\n", tmppath);
+                continue;
+            }
+            printf("current directory:%s\n", tmppath);
+            strcat(path, tmppath);
+            strcat(path, "/");
         }
         else {
             printf("trying to execute...\n");

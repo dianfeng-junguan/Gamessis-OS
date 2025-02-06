@@ -275,7 +275,7 @@ void page_err(long* int_stk)
             int   pgn   = (mtop - mbase) / PAGE_4K_SIZE;
             //在进程的页表中申请新页
             void* pm = pmalloc(pgn * PAGE_4K_SIZE);
-            comprintf("page err reqed new pm:%l\n", pm);
+            // comprintf("page err reqed new pm:%l\n", pm);
             for (int i = 0; i < pgn; i++) {
                 addr_t dest_la = mbase + i * PAGE_4K_SIZE;
                 smmap(pm + i * PAGE_4K_SIZE, dest_la, attr, current->pml4);
@@ -285,10 +285,10 @@ void page_err(long* int_stk)
                 comprintf("FATAL err:pmalloc met a NULL pmhdr\n");
                 die();
             }
-            comprintf("merged pmhdr:&pmhdr=%l,base=%l,len=%l\n",
-                      mp->pmhdr,
-                      mp->pmhdr->base,
-                      mp->pmhdr->len);
+            // comprintf("merged pmhdr:&pmhdr=%l,base=%l,len=%l\n",
+            //           mp->pmhdr,
+            //           mp->pmhdr->base,
+            //           mp->pmhdr->len);
             //读取文件
             if (mp->file) {
                 int fd = mp->fd;

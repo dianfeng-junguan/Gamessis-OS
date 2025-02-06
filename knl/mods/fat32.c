@@ -338,7 +338,7 @@ long FAT32_readdir(struct file* filp, void* dirent, filldir_t filler)
         cluster = DISK1_FAT32_read_FAT_Entry(fsbi, cluster);
         if (cluster > 0x0ffffff7) {
             comprintf("FAT32 FS(readdir) cluster didn`t exist\n");
-            return NULL;
+            return -1;
         }
     }
 
@@ -348,7 +348,7 @@ next_cluster:
             filp->dentry->dir_inode->dev, sector * 512, fsbi->sector_per_cluster * 512, buf) < 0) {
         comprintf("FAT32 FS(readdir) read disk ERROR!!!!!!!!!!\n");
         kfree(buf);
-        return NULL;
+        return -1;
     }
 
     tmpdentry = (struct FAT32_Directory*)(buf + filp->position % fsbi->bytes_per_cluster);
@@ -432,7 +432,7 @@ next_cluster:
         goto next_cluster;
 
     kfree(buf);
-    return NULL;
+    return -1;
 
 find_lookup_success:
 
