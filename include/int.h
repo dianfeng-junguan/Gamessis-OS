@@ -83,14 +83,14 @@ void default_int_proc();
 void breakpoint();
 void overflow();
 void bounds();
-void undefined_operator();
+void undefined_operator(unsigned long long* rbp);
 void coprocessor_notexist();
 void double_ints();
 void coprocessor_seg_overbound();
 void invalid_tss();
 void segment_notexist();
 void stackseg_overbound();
-void general_protect(long* int_stk);
+void general_protect(long long rbp);
 void coprocessor_err();
 
 void _divide_err();

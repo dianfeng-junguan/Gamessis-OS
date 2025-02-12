@@ -16,7 +16,7 @@
  * @param dev 设备号
  * @param offset 扇区字节偏移
  */
-int read_block(unsigned short dev, off_t offset, size_t count, char* buf)
+int read_block(unsigned short dev, off_t offset, size_t len, char* buf)
 {
     struct
     {
@@ -25,17 +25,25 @@ int read_block(unsigned short dev, off_t offset, size_t count, char* buf)
         char* buf;
     } ioctlarg;
     ioctlarg.lba   = offset / 512;
-    ioctlarg.count = (count + 511) / 512;
-    char* tmpbuf   = (char*)kmalloc(0, count);
+    ioctlarg.count = (len + 511) / 512;
+    char* tmpbuf   = (char*)kmalloc(0, len);
     ioctlarg.buf   = tmpbuf;
     if (drv_ioctl(dev, DRIVER_CMD_READ, 1, &ioctlarg) < 0) {
         kfree(tmpbuf);
         return -1;
     }
-    memcpy(buf + offset % 512, tmpbuf, count * 512);
+    memcpy(buf + offset % 512, tmpbuf, len);
     kfree(tmpbuf);
     return 0;
 }
+/**
+ * @brief 写入扇区数据，只支持以扇区为单位的整块写入，请不要用来部分地修改扇区数据
+ * @param dev 设备号
+ * @param offset 扇区字节偏移
+ * @param count 写入字节数
+ * @param buf 写入数据缓冲区
+ * @return 0 成功，-1 失败
+ */
 int write_block(unsigned short dev, off_t offset, size_t count, char* buf)
 {
     struct

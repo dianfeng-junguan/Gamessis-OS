@@ -729,7 +729,7 @@ dllmain:
 
 }*/
 
-int reg_proc(addr_t entry, struct index_node* cwd, struct index_node* exef)
+int reg_proc(addr_t entry, struct dir_entry* cwd, struct index_node* exef)
 {
 
     int i = req_proc();
@@ -905,6 +905,7 @@ void switch_to(struct process* from, struct process* to)
                      : "=m"(to->regs.cr3));
     __asm__ volatile("mov %%rsp,%0\r\n"
                      "lea done(%%rip),%%rax\r\n"
+                     "mov %%rbp,%1\r\n"
                      "mov %%rax,%2\r\n"
                      "mov %%fs,%3\r\n"
                      "mov %%gs,%4\r\n"
@@ -914,11 +915,21 @@ void switch_to(struct process* from, struct process* to)
                        "=m"(from->regs.rip),
                        "=m"(from->regs.fs),
                        "=m"(from->regs.gs));
+    // __asm__ volatile("mov %0,%%rsp\r\n"
+    //                  "pushq %1\r\n mov %2,%%rdi\r\n mov %3,%%rsi\r\n"
+    //                  "jmp __switch_to\r\n"
+    //                  "done:\r\n"
+    //                  "nop\r\n" ::"m"(to->regs.rsp),
+    //                  "m"(to->regs.rip),
+    //                  "m"(from),
+    //                  "m"(to));
     __asm__ volatile("mov %0,%%rsp\r\n"
-                     "pushq %1\r\n mov %2,%%rdi\r\n mov %3,%%rsi\r\n"
+                     "pushq %2\r\n mov %3,%%rdi\r\n mov %4,%%rsi\r\n"
+                     "mov %1,%%rbp\r\n"
                      "jmp __switch_to\r\n"
                      "done:\r\n"
                      "nop\r\n" ::"m"(to->regs.rsp),
+                     "m"(to->regs.rbp),
                      "m"(to->regs.rip),
                      "m"(from),
                      "m"(to));

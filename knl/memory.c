@@ -117,7 +117,7 @@ stat_t smmap(addr_t pa, addr_t la, u32 attr, page_item* pml4p)
     //必要的代码，不然页表来不及更新，后面的内存操作就会出问题。
     REFRESH_CR3();
 
-    // comprintf("mapped %l(pa) to %l(la)\n", pa, la);
+    comprintf("mapped %l(pa) to %l(la)\n", pa, la);
     return NORMAL;
 }
 
@@ -243,12 +243,13 @@ malloc_hdr* get_pmhdr(off_t pm)
     }
     return mp;
 }
-void page_err(long* int_stk)
+void page_err(unsigned long long* rbp)
 {
     cli();
     comprintf("page err\n");
-    off_t err_code = int_stk[0], l_addr = 0;
-    off_t addr = int_stk[1];
+    unsigned long long* int_stk  = current->tss.ists[0];
+    off_t               err_code = int_stk[0], l_addr = 0;
+    off_t               addr = int_stk[1];
     __asm__ volatile("mov %%cr2,%%rax\nmov %%rax,%0\n" : "=m"(l_addr));   //试图访问的地址
 
     if (!(err_code & PF_LEVEL_VIOLATION)) {
@@ -322,7 +323,7 @@ void page_err(long* int_stk)
             comprintf("instruction fetch\n");
         if (err_code & PF_PROTECT_KEY)
             comprintf("data access not allowed by protection key\n");
-        backtrace(int_stk);
+        backtrace(rbp);
         comprintf("page err caused by level protection\n");
         sys_exit(-1);
     }

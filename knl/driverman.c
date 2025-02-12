@@ -164,3 +164,23 @@ int drv_ioctl(int drv, int command, int block, unsigned long long arg)
     }
     return 0;   // success
 }
+
+int next_request(int drvid)
+{
+    drvid--;
+    if (drvid < 0 || drvid > 127 || drivers[drvid].stat == DRIVER_STAT_UNREGISTERED) {
+        return -DRIVER_RETV_NONEXISTENT;
+    }
+    //恢复相应等待的进程
+    driver_request* done_req = drivers[drvid].queue;
+    if (done_req->block_waiter) {   //是阻塞类型的请求
+        wake_up(done_req->waiting);
+    }
+    //返回的结果是通过arg里面的指针传递的，这里不传递
+    //下一项内容
+    drivers[drvid].queue = done_req->next;
+    kfree(done_req);
+    //设置为准备好下一个请求的状态
+    drivers[drvid].stat = DRIVER_STAT_AVAILABLE;
+    return 0;
+}

@@ -93,6 +93,7 @@ int ramdisk_mod_ioctl(int cmd, unsigned long long arg)
     default: break;
     }
     change_driver_stat(dev_ramdisk, DRIVER_STAT_DONE);
+    next_request(dev_ramdisk);
     return 0;
 }
 void init_ramdisk()

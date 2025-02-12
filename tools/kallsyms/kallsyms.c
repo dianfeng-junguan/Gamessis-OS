@@ -15,9 +15,11 @@ int main(int argc, char** argv)
         int  r = fscanf(f, "%llx %c %s\n", &sym.addr, &sym.type, string);
         if (r != 3 && r == EOF)
             break;
-        sym.namelen = strlen(string);
-        fwrite(&sym, sizeof(sym), 1, w);
-        fwrite(string, sym.namelen + 1, 1, w);
+        if (sym.type != 'a') {
+            sym.namelen = strlen(string);
+            fwrite(&sym, sizeof(sym), 1, w);
+            fwrite(string, sym.namelen + 1, 1, w);
+        }
     }
     memset(&sym, 0, sizeof(sym));
     fclose(f);

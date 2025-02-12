@@ -20,9 +20,7 @@
             "program": "${workspaceFolder}/bin/gmsknl.elf",
             "args": [
                 "-ex",
-                "\"add-symbol-file bin/test.elf\"",
-                "-ex",
-                "\"watch current->openf[3]\""
+                "\"add-symbol-file ${workspaceFolder}/bin/test.elf\"",
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

@@ -126,10 +126,10 @@ void bounds()
 {
     comprintf("bounds\n");
 }
-void undefined_operator(long* int_stk)
+void undefined_operator(unsigned long long* rbp)
 {
     comprintf("undef operator\nprogram has run to a non-code area.\n");
-    backtrace(int_stk);
+    backtrace(rbp);
     die();
 }
 void coprocessor_notexist()
@@ -156,16 +156,17 @@ void stackseg_overbound()
 {
     comprintf("stack seg overbound\n");
 }
-void general_protect(long* int_stk)
+void general_protect(long long rbp)
 {
     com_puts("general protect.", PORT_COM1);
-    long addr = int_stk[1], err_code = int_stk[0];
+    long long* int_stk = current->tss.ists[0] - 48;
+    long       addr = int_stk[1], err_code = int_stk[0];
     // __asm__ volatile("mov 16(%%rbp),%0" : "=r"(addr));
     // __asm__ volatile("mov 24(%%rbp),%0" : "=r"(err_code));
     comprintf("err code(seg descriptor):%x\n", err_code);
     comprintf("problem process pid:%d\n", current->pid);
     comprintf("occurred at %x\n", addr);
-    backtrace(int_stk);
+    backtrace(rbp);
 
     //处理问题进程
     if (current->pid == 1) {
@@ -245,7 +246,7 @@ ksym* get_ksym(off_t addr)
         func_belonged = sym->addr;
         int namelen   = sym->namelen;
         sym += 1;
-        sym = (off_t)sym + namelen;
+        sym = (off_t)sym + namelen + 1;
     }
     return bef;
 }
@@ -265,20 +266,19 @@ int print_ksym(off_t addr)
         return 1;
     }
 }
-void backtrace(off_t* ret_stack)
+void backtrace(unsigned long long* rbp)
 {
     // off_t* ret_stack = 0;
     // __asm__ volatile("mov %%rbp,%0" : "=m"(ret_stack));
-    ret_stack  = ret_stack[4];
-    off_t addr = ret_stack[1];   //第一级返回函数地址
+    // ret_stack  = current->tss.ists[0] - 48;
     comprintf("Backtrace:\n");
-    print_ksym(addr);
+    print_ksym(rbp[1]);
+    rbp = rbp[0];
     //回到用户栈，回溯
-    ret_stack = ret_stack[0];
     for (int i = 0; i < 10; i++) {
-        if (ret_stack < KNL_BASE)
+        if (rbp < KNL_BASE)
             break;   //超过栈顶
-        print_ksym(ret_stack[1]);
-        ret_stack = ret_stack[0];
+        print_ksym(rbp[1]);
+        rbp = rbp[0];
     }
 }

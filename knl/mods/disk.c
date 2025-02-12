@@ -111,6 +111,7 @@ int disk_int_handler_c()
     }
     current_ioctlarg.status = 0;
     change_driver_stat(dev_hd, DRIVER_STAT_DONE);
+    next_request(dev_hd);
     return 0;
 }
 /* int disk_int_handler_c_old()

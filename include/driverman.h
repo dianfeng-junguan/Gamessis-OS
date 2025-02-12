@@ -67,5 +67,13 @@ stat_t init_driver_man();
 stat_t driver_man_exit();
 
 int drv_ioctl(int drv, int command, int block, unsigned long long arg);
+
+
+/**
+    @brief 立即丢弃当前请求进入下一个请求，不会改变驱动的状态。对于一些驱动，可能需要在完成任务之后马上标记请求完成并清理，就需要调用这个函数避免
+    下一次调用ioctl的时候重复唤醒进程
+
+*/
+int next_request(int drvid);
 #define MAX_DRIVERS 128
 

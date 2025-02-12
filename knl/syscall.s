@@ -89,9 +89,15 @@ _syscall:
     push rax
     push rdx
     call store_rip
+
+    mov rdi,rbp
+    call store_rbp
+    
     pop rdx
     pop rax
     pop r11
+
+
     
     pop rdi
     ; push rdi
