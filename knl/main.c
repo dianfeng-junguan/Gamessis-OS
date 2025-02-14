@@ -148,7 +148,8 @@ void main(unsigned int magic, void* addr)
     init_gdt();
 
     init_driver_man();
-    // init_disk();
+    init_disk();
+    init_scanner();
     init_ramdisk();
     init_rootfs();
     init_proc();
@@ -183,6 +184,10 @@ void main(unsigned int magic, void* addr)
     manage_proc_lock = 0;
 
     move_to_user_mode();
+
+    //扫描硬盘
+    extern int dev_scanner, dev_hd;
+    do_syscall(SYSCALL_DRV_IOCTL, dev_scanner, 1, 1, dev_hd, 0, 0);
     int shell = 0, stat_loc = 0;
     if ((shell = do_syscall(SYSCALL_FORK, 0, 0, 0, 0, 0, 0)) == 0) {
         char* argv[]    = {"/test.elf", "gamessis os", 0};

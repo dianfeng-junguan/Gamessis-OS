@@ -3,6 +3,7 @@
 //
 #include "vfs.h"
 #include "dirent.h"
+#include "driverman.h"
 #include "errno.h"
 #include "int.h"
 #include "memory.h"
@@ -201,6 +202,38 @@ struct super_block* mount_fs(char* name, volume* vol, void* buf)
         }
     return 0;
 }
+struct super_block* try_mount_fs(volume* vol)
+{
+    struct file_system_type* p      = NULL;
+    void*                    buffer = kmalloc(0, PAGE_4K_SIZE);
+    struct _ioctlarg
+    {
+        unsigned int lba;         //起始扇区
+        int          sec_n;       //读写扇区数
+        char*        mem_addr;    //读写缓冲区地址
+        int          non_async;   //非异步模式
+        int          diski;       //硬盘号
+        //接下来部分传参不使用
+        int status;
+        int cmd;
+    } ioctlarg;
+    ioctlarg.lba       = 0;
+    ioctlarg.sec_n     = 1;
+    ioctlarg.mem_addr  = buffer;
+    ioctlarg.non_async = 0;
+    ioctlarg.diski     = vol->dev;
+    if (drv_ioctl(vol->dev, DRIVER_CMD_READ, 2, &ioctlarg) < 0) {
+        return -1;
+    }
+    for (p = &filesystem; p; p = p->next) {
+        struct super_block* sbp = p->read_superblock(vol, ioctlarg.mem_addr);
+        if (sbp) {
+            return sbp;
+        }
+    }
+    return 0;
+}
+
 int mount_fs_on(struct dir_entry* d_to_mount, struct super_block* fs)
 {
     for (int i = 0; i < MAX_MOUNTPOINTS; i++) {
@@ -305,6 +338,7 @@ void                         init_rootfs()
     // root_sb->dev=dev_ramdisk<<8;
     // root_sb->p_dev=&bd_ramdisk;
     // TODO 以后要直接拿设备号，这个设备号通过devman创建设备文件（节点）分配。
+    extern int dev_hd;
     ROOT_DEV = dev_ramdisk;
 
     for (int i = 0; i < 48; i++) {

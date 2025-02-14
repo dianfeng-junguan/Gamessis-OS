@@ -3,6 +3,7 @@
 #include "mem.h"
 #include "log.h"
 #include "proc.h"
+#include "int.h"
 driver_t* drivers;
 ///内部管理函数，卸载驱动
 ///@param index 数组下标
@@ -161,7 +162,19 @@ int drv_ioctl(int drv, int command, int block, unsigned long long arg)
 #else
         drivers[drv].driver_ioctl(todo->command, todo->arg);
 #endif
+        // block==2是特殊的阻塞，要求函数本身等待请求完成，一般只有内核初始化时使用
+        if (block == 2) {
+            extern int manage_proc_lock;
+            manage_proc_lock = 1;
+            sti();
+            while (drivers[drv].stat == DRIVER_STAT_BUSY) {
+                // schedule();
+            }
+            manage_proc_lock = 0;
+            cli();
+        }
     }
+
     return 0;   // success
 }
 

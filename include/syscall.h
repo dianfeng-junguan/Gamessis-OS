@@ -39,6 +39,7 @@
 #define SYSCALL_READDIR 37
 #define SYSCALL_CHDIR 38
 #define SYSCALL_RENAME 39
+#define SYSCALL_DRV_IOCTL 40
 #define SYSCALL_KB_READC 100
 
 
@@ -71,12 +72,13 @@ __attribute__((__always_inline__)) inline int do_syscall(long func, long a1, lon
                                                          long a4, long a5, long a6)
 {
     //     __asm__ volatile("push %rbp\n");
-    __asm__ volatile(".byte 0x48\n"
+    __asm__ volatile("mov %4,%%r10\n"
+                     ".byte 0x48\n"
                      "syscall" ::"a"(func),
                      "D"(a1),
                      "S"(a2),
                      "d"(a3),
-                     "c"(a4),
+                     "m"(a4),
                      "r"(a5),
                      "r"(a6));
     //     __asm__ volatile("pop %rbp\n");

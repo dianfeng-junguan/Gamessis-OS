@@ -73,6 +73,7 @@ int register_volume_list(volume_list *list);
  */
 int unregister_volume_list(volume_list *list);
 
+int init_scanner();
 #define GPT_TABLE_SECTOR_COUNT 32
 
 #ifdef DEBUG

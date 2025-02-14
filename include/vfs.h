@@ -95,6 +95,12 @@ int mount_fs_on(struct dir_entry* d_to_mount, struct super_block* fs);
 /// @return 错误码，成功为1
 int                 umount_fs(struct dir_entry* d_mp);
 struct super_block* mount_fs(char* name, volume* DPTE, void* buf);
+/**
+    @brief 尝试挂载文件系统。
+    @param vol 卷
+    @return 超级块指针，失败为NULL
+*/
+struct super_block* try_mount_fs(volume* vol);
 unsigned long       register_filesystem(struct file_system_type* fs);
 unsigned long       unregister_filesystem(struct file_system_type* fs);
 

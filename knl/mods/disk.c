@@ -11,10 +11,11 @@ struct file_operations hd_fops   = {
 };
 struct disk_ioctlarg
 {
-    int          diski;      //硬盘号
-    unsigned int lba;        //起始扇区
-    int          sec_n;      //读写扇区数
-    char*        mem_addr;   //读写缓冲区地址
+    unsigned int lba;         //起始扇区
+    int          sec_n;       //读写扇区数
+    char*        mem_addr;    //读写缓冲区地址
+    int          non_async;   //非异步模式
+    int          diski;       //硬盘号
     //接下来部分传参不使用
     int status;
     int cmd;
@@ -57,10 +58,28 @@ int disk_mod_ioctl(int cmd, unsigned long long arg)
     current_ioctlarg.status          = 1;
     current_ioctlarg.cmd             = cmd;
     switch (cmd) {
-    case DRIVER_CMD_READ: async_read_disk(diski, sector, nr_sectors, buffer); break;
-    case DRIVER_CMD_WRITE: async_write_disk(diski, sector, nr_sectors, buffer); break;
+    case DRIVER_CMD_READ:
+        if (ioctlarg->non_async) {
+            read_disk(diski, sector, nr_sectors, buffer);
+        }
+        else {
+            async_read_disk(diski, sector, nr_sectors, buffer);
+        }
+        break;
+    case DRIVER_CMD_WRITE:
+        if (ioctlarg->non_async) {
+            write_disk(diski, sector, nr_sectors, buffer);
+        }
+        else {
+            async_write_disk(diski, sector, nr_sectors, buffer);
+        }
+        break;
     case DRVF_CHK: async_check_disk(diski); break;
     default: return -1;
+    }
+    if (ioctlarg->non_async) {
+        change_driver_stat(dev_hd, DRIVER_STAT_DONE);
+        next_request(dev_hd);
     }
 }
 int init_disk()
@@ -252,13 +271,13 @@ int read_disk(int disk, int lba, int secn, char* dest)
     // request(disk,DISKREQ_READ,lba,secn,dest);
     int ret = read_disk_asm(lba, secn, dest);
     //    chk_result(ret);
-    if (running_req) {
+    /* if (running_req) {
 
         // running_req->stat=REQ_STAT_DONE;
         // running_req->args->stat=REQ_STAT_EMPTY;
     }
     // set_proc_stat(running_req->pid,TASK_READY);
-    running_req = NULL;
+    running_req = NULL; */
     return ret;
 }
 int write_disk(int disk, int lba, int secn, char* src)
@@ -266,12 +285,12 @@ int write_disk(int disk, int lba, int secn, char* src)
     // request(disk,DISKREQ_WRITE,lba,secn,src);
     int ret = write_disk_asm(lba, secn, src);
     //    chk_result(ret);
-    if (running_req) {
+    /* if (running_req) {
 
         // running_req->stat=REQ_STAT_DONE;
         // running_req->args->stat=REQ_STAT_EMPTY;
     }
-    running_req = NULL;
+    running_req = NULL; */
     return ret;
 }
 

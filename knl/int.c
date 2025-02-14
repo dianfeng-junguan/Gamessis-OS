@@ -2,6 +2,7 @@
 #include "clock.h"
 #include "com.h"
 #include "devman.h"
+#include "driverman.h"
 #include "exe.h"
 #include "kb.h"
 #include "memory.h"
@@ -225,11 +226,16 @@ int syscall(long a, long b, long c, long d, long e, long f)
     case SYSCALL_CHDIR: retv = sys_chdir(a); break;
     case SYSCALL_RENAME: retv = sys_rename(a, b); break;
     case SYSCALL_REMOVE: retv = sys_remove(a); break;
+    case SYSCALL_DRV_IOCTL: retv = drv_ioctl(a, b, c, d); break;
     }
     // __asm__ volatile("mov %0,%%eax\r\n mov %1,%%ebx\r\n mov %2,%%ecx\r\n mov %3,%%edx\r\n mov %4,%%esi\r\n mov %5,%%edi"\
     // ::"m"(func),"m"(a),"m"(b),"m"(c),"m"(d),"m"(e));
     // __asm__ volatile("int $0x80\r\n leave\r\n ret");
     do_signals();
+    //处理信号之后，可能进程状态被改变,需要重新调度。
+    while (current && current->stat == TASK_SUSPENDED) {
+        schedule();
+    }
     return retv;
 }
 void wrmsr(unsigned long address, unsigned long value)
