@@ -141,5 +141,7 @@ extern struct index_node_operations  FAT32_inode_ops;
 extern struct file_operations        FAT32_file_ops;
 extern struct dir_entry_operations   FAT32_dentry_ops;
 extern struct super_block_operations FAT32_sb_ops;
-
+#define MAX_SHORT_NAME_LENGTH 11
+#define MAX_LONG_NAME_LENGTH 255
+#define MAX_LONG_NAME_ENTRIES 20
 #endif

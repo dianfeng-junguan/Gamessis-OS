@@ -197,3 +197,33 @@ char* strncatk(char* dist, char* str, size_t len)
     *dist = '\0';
     return ret;
 }
+// 自定义 strchr 函数
+char* strchrk(const char* s, int c)
+{
+    while (*s != '\0') {
+        if (*s == (char)c) {
+            return (char*)s;
+        }
+        s++;
+    }
+    // 如果字符是 '\0'，且原字符串的结束符位置就是要找的
+    if (c == '\0') {
+        return (char*)s;
+    }
+    return NULL;
+}
+char* strrchrk(const char* s, int c)
+{
+    const char* last_occurrence = NULL;
+    while (*s != '\0') {
+        if (*s == (char)c) {
+            last_occurrence = s;
+        }
+        s++;
+    }
+    // 如果字符是 '\0'，返回字符串结束符的指针
+    if (c == '\0') {
+        return (char*)s;
+    }
+    return (char*)last_occurrence;
+}

@@ -239,6 +239,15 @@ int kopen(char* path, struct file* fp);
 int kclose(struct file* fp);
 int kread(struct file* fp, unsigned long long offset, size_t len, char* buf);
 
+/**
+    @brief 将路径转换为绝对路径。
+    @param path 路径
+    @param output 输出缓冲区
+    @param max_path_len 输出缓冲区长度
+    @return 错误码，成功为0
+*/
+int to_abs_path(char* path, char* output, size_t max_path_len);
+
 extern struct dir_entry* droot;
 extern int               ROOT_DEV;
 #endif   // GMS_VFS_H

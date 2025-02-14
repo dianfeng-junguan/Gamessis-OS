@@ -223,6 +223,8 @@ int syscall(long a, long b, long c, long d, long e, long f)
     case SYSCALL_SBRK: retv = sys_sbrk(a); break;
     case SYSCALL_READDIR: retv = sys_readdir(a, b); break;
     case SYSCALL_CHDIR: retv = sys_chdir(a); break;
+    case SYSCALL_RENAME: retv = sys_rename(a, b); break;
+    case SYSCALL_REMOVE: retv = sys_remove(a); break;
     }
     // __asm__ volatile("mov %0,%%eax\r\n mov %1,%%ebx\r\n mov %2,%%ecx\r\n mov %3,%%edx\r\n mov %4,%%esi\r\n mov %5,%%edi"\
     // ::"m"(func),"m"(a),"m"(b),"m"(c),"m"(d),"m"(e));

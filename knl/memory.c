@@ -117,7 +117,7 @@ stat_t smmap(addr_t pa, addr_t la, u32 attr, page_item* pml4p)
     //必要的代码，不然页表来不及更新，后面的内存操作就会出问题。
     REFRESH_CR3();
 
-    comprintf("mapped %l(pa) to %l(la)\n", pa, la);
+    // comprintf("mapped %l(pa) to %l(la)\n", pa, la);
     return NORMAL;
 }
 

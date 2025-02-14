@@ -22,3 +22,5 @@ void  sprint_conv(char* dist, unsigned long long num, int base);
 char* strcatk(char* dist, char* str);
 //限长的拼接字符串。强烈建议使用这个代替strcat。
 char* strncatk(char* dist, char* str, size_t len);
+char* strchrk(const char* s, int c);
+char* strrchrk(const char* s, int c);

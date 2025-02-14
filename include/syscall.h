@@ -38,6 +38,7 @@
 #define SYSCALL_CHKMMAP 36
 #define SYSCALL_READDIR 37
 #define SYSCALL_CHDIR 38
+#define SYSCALL_RENAME 39
 #define SYSCALL_KB_READC 100
 
 
@@ -94,6 +95,8 @@ unsigned long sys_lseek(int filds, long offset, int whence);
 unsigned long sys_wait(pid_t pid, int* stat_loc, int options);
 int           sys_ioctl(int fildes, int request, unsigned long args);
 int           sys_remove(char* pathname);
+int           sys_rename(char* oldpath, char* newpath);
+
 
 int sys_chk_mmap(off_t base, size_t mem_size);
 /// @brief 建立文件内容到内存空间的映射。
@@ -122,3 +125,5 @@ int sys_readdir(int fd, struct dirent* result);
 创建文件，可以是FIFO，常规文件，目录和设备文件。除了FIFO，其他类型创建前会检查进程权限（未完成）
 */
 int sys_mknod(const char* path, mode_t mode, dev_t dev);
+
+unsigned long sys_chdir(char* filename);

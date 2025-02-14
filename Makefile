@@ -22,7 +22,7 @@ KNL_OFILES = int.o main.o log.o \
 			binload.o drvload.o volume.o
 MODS_OFILES = kb.o disk.o diska.o fat32.o \
 				tty.o com.o rd.o elfbin.o scanner.o#test.o
-COM_OFILES = mem.o str.o types.o proca.o font.o
+COM_OFILES = mem.o str.o types.o proca.o font.o wchar.o
 PH_MODIFIER = /mnt/d/Code/Python/elfph/elf.py
 QEMU_LOG = -d int,cpu_reset,guest_errors,page -D log/log.txt
 all:
@@ -57,6 +57,7 @@ com:
 	@gcc -c com/str.c -o bin/str.o $(CFLAGS)
 	@gcc -c com/syscall.c -o bin/syscall.o $(CFLAGS)
 	@gcc -c com/types.c -o bin/types.o $(CFLAGS)
+	@gcc -c com/wchar.c -o bin/wchar.o $(CFLAGS)
 cpknl_old:
 	@make mount
 	@sudo cp bin/gmsknl.elf /mnt/gmsknl

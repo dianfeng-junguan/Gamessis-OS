@@ -43,24 +43,29 @@ unsigned long sys_open(char* filename, int flags)
 
     //	printfk("sys_open\n");
     //如果是相对路径，则需要找到当前进程的工作目录
-    char* cwdspace = KMALLOC(PAGE_4K_SIZE);
+    /* char* cwdspace = KMALLOC(PAGE_4K_SIZE);
     char* cwd      = cwdspace + PAGE_4K_SIZE - 1;
     *cwd           = '\0';
     if (filename[0] != '/' && filename[0] != '\\') {
         for (struct dir_entry* p = current->cwd; p->parent && p->parent != p; p = p->parent) {
-            cwd -= strlenk(p->name) + 1;
+            cwd--;
             memcpy(cwd, "/", 1);
+            cwd -= strlenk(p->name);
             memcpy(cwd, p->name, p->name_length);
             if (cwd < cwdspace) {
                 KFREE(cwdspace);
                 return -EFAULT;
             }
         }
-        cwd -= +1;
+        cwd -= 1;
         *cwd = '/';
     }
-
-
+    if (strlenk(cwd) == 0) {
+        //根目录
+        cwd--;
+        strcpyk(cwd, "/");
+    }
+ */
     path = (char*)kmalloc(0, PAGE_4K_SIZE);
     if (path == NULL)
         return -ENOMEM;
@@ -70,7 +75,7 @@ unsigned long sys_open(char* filename, int flags)
         kfree(path);
         return -EFAULT;
     }
-    else if (pathlen + strlenk(cwd) >= PAGE_4K_SIZE) {
+    /* else if (pathlen + strlenk(cwd) >= PAGE_4K_SIZE) {
         kfree(path);
         return -ENAMETOOLONG;
     }
@@ -82,8 +87,21 @@ unsigned long sys_open(char* filename, int flags)
     else {
         strcpyk(path, filename);
     }
-
+    if (strcmpk(filename, ".") == 0) {
+        dentry = current->cwd;
+    }
+    else if (strcmpk(filename, "..") == 0) {
+        dentry = current->cwd->parent;
+    }
+    else {
+        dentry = path_walk(path, 0);
+    } */
+    if (to_abs_path(filename, path, RECOMMENDED_MAXSTRLEN) == -ENAMETOOLONG) {
+        kfree(path);
+        return -ENAMETOOLONG;
+    }
     dentry = path_walk(path, 0);
+
     if (dentry && flags & O_EXCL) {
         //文件已经存在
         kfree(path);
@@ -204,9 +222,9 @@ unsigned long sys_read(int fd, void* buf, long count)
         return -EINVAL;
 
     filp = current->openf[fd];
-    if (filp->position >= filp->dentry->dir_inode->file_size) {
-        return 0;
-    }
+    // if (filp->position >= filp->dentry->dir_inode->file_size) {
+    //     return 0;
+    // }
     if (filp->f_ops && filp->f_ops->read)
         ret = filp->f_ops->read(filp, buf, count, &filp->position);
     return ret;
@@ -495,7 +513,11 @@ unsigned long sys_chdir(char* filename)
         kfree(path);
         return -ENAMETOOLONG;
     }
-    strcpyk(path, filename);
+    if (to_abs_path(filename, path, RECOMMENDED_MAXSTRLEN) < 0) {
+        kfree(path);
+        return -ENAMETOOLONG;
+    }
+    // strcpyk(path, filename);
 
     dentry = path_walk(path, 0);
     kfree(path);

@@ -55,14 +55,108 @@ int main(int argc, char** argv, char** environ)
             printf("enter path:");
             // write(2, "enter path:", 11);
             gets(tmppath);
-            // TODO chdir待完成
             if (chdir(tmppath) == -1) {
                 printf("cannot find directory:%s\n", tmppath);
                 continue;
             }
+
+            //修改tmppath
+            //要考虑..和.的情况
+            //..的时候，要路径缩短
+            //.的时候，不用动
+            if (strcmp(path, "..") == 0) {
+                char* p = tmppath + strlen(tmppath) - 1;
+                while (p > tmppath && *p == '/') {
+                    *p-- = 0;
+                }
+                while (p > tmppath && *(p) != '/') {
+                    *p-- = 0;
+                }
+            }
+            else if (strcmp(path, ".") == 0) {
+                continue;
+            }
+            else {
+                strcat(tmppath, path);
+                strcat(tmppath, "/");
+            }
             printf("current directory:%s\n", tmppath);
-            strcat(path, tmppath);
-            strcat(path, "/");
+        }
+        else if (strcmp(cmd, "touch") == 0) {
+            char path[100] = {0};
+            printf("input path:");
+            gets(path);
+            int fd = creat(path, O_CREAT);
+            if (fd < 0) {
+                printf("create file %s failed\n", path);
+            }
+            else {
+                printf("create file %s success\n", path);
+                close(fd);
+            }
+        }
+        else if (strcmp(cmd, "rm") == 0) {
+            char path[100] = {0};
+            printf("input path:");
+            gets(path);
+            int stat = remove(path);
+            if (stat < 0) {
+                printf("remove file/dir %s failed\n", path);
+            }
+            else {
+                printf("remove file/dir %s success\n", path);
+            }
+        }
+        else if (strcmp(cmd, "mv") == 0) {
+            char src[100] = {0};
+            char dst[100] = {0};
+            printf("input src path:");
+            gets(src);
+            printf("input dst path:");
+            gets(dst);
+            int stat = rename(src, dst);
+            if (stat < 0) {
+                printf("move file/dir %s to %s failed\n", src, dst);
+            }
+            else {
+                printf("move file/dir %s to %s success\n", src, dst);
+            }
+        }
+        else if (strcmp(cmd, "cat") == 0) {
+            char path[100] = {0};
+            printf("input path:");
+            gets(path);
+            int fd = open(path, O_RDONLY);
+            if (fd < 0) {
+                printf("open file %s failed\n", path);
+            }
+            else {
+                char buffer[100] = {0};
+                int  len         = 0;
+                while ((len = read(fd, buffer, 100)) > 0) {
+                    printf("%s", buffer);
+                }
+                puts("");
+                close(fd);
+            }
+        }
+        else if (strcmp(cmd, "write") == 0) {
+            char path[100] = {0};
+            printf("input path:");
+            gets(path);
+            int fd = open(path, O_WRONLY);
+            if (fd < 0) {
+                printf("open file %s failed\n", path);
+            }
+            else {
+                char buffer[100] = {0};
+                printf("input content:");
+                gets(buffer);
+                int len = strlen(buffer);
+                write(fd, buffer, len);
+                printf("write %d bytes to file %s success\n", len, path);
+                close(fd);
+            }
         }
         else {
             printf("trying to execute...\n");

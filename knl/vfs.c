@@ -388,3 +388,86 @@ int remove(char* pathname)
     drelse(target);
     return 0;
 }
+
+int to_abs_path(char* path, char* output, size_t max_path_len)
+{
+    char* cwdspace = KMALLOC(PAGE_4K_SIZE);
+    char* cwd      = cwdspace + PAGE_4K_SIZE - 1;
+    int   retv     = 0;
+    *cwd           = '\0';
+    if (path[0] != '/' && path[0] != '\\') {
+        for (struct dir_entry* p = current->cwd; p->parent && p->parent != p; p = p->parent) {
+            cwd--;
+            memcpy(cwd, "/", 1);
+            cwd -= strlenk(p->name);
+            memcpy(cwd, p->name, p->name_length);
+            if (cwd < cwdspace) {
+                retv = -EFAULT;
+                goto end;
+            }
+        }
+        cwd -= 1;
+        *cwd = '/';
+    }
+    else {
+        strncpyk(output, path, max_path_len);
+        goto end;
+    }
+    if (strlenk(cwd) == 0) {
+        //根目录
+        cwd--;
+        strcpyk(cwd, "/");
+    }
+    strcpyk(output, cwd);
+    //开始分析path
+    char* p          = path;
+    char* op         = output + strlenk(cwd);
+    int   slash_flag = 0;
+    while (*p && op < output + max_path_len) {
+        if (*p == '/' || *p == '\\') {
+            p++;
+            if (!slash_flag) {
+                *op++      = '/';
+                slash_flag = 1;
+            }
+            continue;
+        }
+        else {
+            slash_flag = 0;
+        }
+        if (p[0] == '.' && p[1] == '.') {
+            //上级目录
+            while (op > output && !*op) {
+                op--;
+            }
+            if (op == output) {
+                *op++ = '/';
+                goto backdone;
+            }
+            while (*op == '/' || *op == '\\') {
+                *op-- = 0;
+            }
+            while (op > output && *op != '/') {
+                *op-- = 0;
+            }
+        backdone:
+            p += 2;
+        }
+        else if (p[0] == '.') {
+            //同级目录
+            p++;
+            continue;
+        }
+        else {
+            //普通文件或目录
+            *op++ = *p++;
+        }
+    }
+    if (p - path >= max_path_len && *p) {
+        //长度过长被截断
+        retv = -ENAMETOOLONG;
+    }
+end:
+    kfree(cwdspace);
+    return retv;
+}

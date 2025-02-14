@@ -9,6 +9,7 @@
 #include "vfs.h"
 #include "volume.h"
 #include "sys/stat.h"
+#include "kwchar.h"
 #ifdef DEBUG
 #    include <stdio.h>
 #    include <string.h>
@@ -469,17 +470,17 @@ void generate_short_name(char* full_name, char* short_name)
     // 这里简化处理，实际需要实现8.3格式的短文件名生成
     // 例如：生成一个短文件名ABCDEF~1.TXT
     memset(short_name, ' ', 11);
-    strncpy(short_name, full_name, 8);
+    strncpyk(short_name, full_name, 8);
     for (int i = 0; i < 8; i++) {
         if (short_name[i] == '\0') {
             short_name[i] = ' ';
         }
     }
 
-    char* ext = strrchr(full_name, '.');
+    char* ext = strrchrk(full_name, '.');
     if (ext && ext != full_name) {
         ext++;
-        strncpy(short_name + 8, ext, 3);
+        strncpyk(short_name + 8, ext, 3);
         for (int i = 8; i < 11; i++) {
             if (short_name[i] == '\0') {
                 short_name[i] = ' ';
@@ -644,9 +645,9 @@ done:
 // 此函数用于将输入的名称处理成符合 FAT32 短文件名比较的格式
 void process_fat32_short_name(const char* input, char* output)
 {
-    const char* dot          = strchr(input, '.');
-    size_t      filename_len = (dot != NULL) ? (dot - input) : strlen(input);
-    size_t      ext_len      = (dot != NULL) ? strlen(dot + 1) : 0;
+    const char* dot          = strchrk(input, '.');
+    size_t      filename_len = (dot != NULL) ? (dot - input) : strlenk(input);
+    size_t      ext_len      = (dot != NULL) ? strlenk(dot + 1) : 0;
 
     // 处理文件名部分
     for (size_t i = 0; i < filename_len && i < 8; i++) {
@@ -693,7 +694,7 @@ int compare_fat32_short_names(const char* name1, const char* name2)
     process_fat32_short_name(name2, processed_name2);
 
     // 比较处理后的名称
-    return strcmp(processed_name1, processed_name2) == 0;
+    return strcmpk(processed_name1, processed_name2) == 0;
 }
 
 /**
@@ -759,7 +760,7 @@ long FAT32_create(struct index_node* parent_inode, struct dir_entry* dentry, int
         memset(long_entries, 0, sizeof(struct FAT32_LongDirectory) * num_long_entries);
         wchar_t* long_name_unicode = (wchar_t*)kmalloc(0, (num_long_entries + 1) * 13 * 2);
         memset(long_name_unicode, 0, (num_long_entries + 1) * 13 * 2);
-        int long_name_unicode_len = mbstowcs(long_name_unicode, full_name, num_long_entries * 13);
+        int long_name_unicode_len = mbstowcsk(long_name_unicode, full_name, num_long_entries * 13);
 #ifdef DEBUG
         wprintf(L"long name converted to unicode: %s\n", long_name_unicode);
 #endif

@@ -35,6 +35,8 @@
 #define	O_NOFOLLOW	00100000	/* Do not follow symbolic links */
 
 
+#include "sys/types.h"
 int open(const char *path, int oflag);
 int close(int fildes);
+int creat(const char* name, mode_t mode);
 #endif //GMS_FCNTL_H
