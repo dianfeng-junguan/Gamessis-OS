@@ -24,6 +24,16 @@ struct dir_entry* history_dentry[48];
 
 void drelse(struct dir_entry* d)
 {
+    //删除在histrory_dentry中的记录
+    for (int i = 0; i < 48; i++) {
+        if (history_dentry[i] == d) {
+            for (int j = i; history_dentry[j] && j < 47; j++) {
+                history_dentry[j] = history_dentry[j + 1];
+            }
+            history_dentry[47] = NULL;
+            break;
+        }
+    }
     //同步inode到介质中
     d->dir_ops->iput(d, d->dir_inode);
     //释放
@@ -31,7 +41,9 @@ void drelse(struct dir_entry* d)
     kfree(d->name);
     d->dir_inode->link--;
     if (!d->dir_inode->link) {
-        kfree(d->dir_inode->private_index_info);
+        if (d->dir_inode->private_index_info) {
+            kfree(d->dir_inode->private_index_info);
+        }
         kfree(d->dir_inode);   //释放inode
     }
     kfree(d);
@@ -76,7 +88,10 @@ struct dir_entry* path_walk(char* name, unsigned long flags)
     char*             tmpname    = NULL;
     int               tmpnamelen = 0;
     struct dir_entry* parent     = *name == '/' ? droot : current->cwd;
-    struct dir_entry* path       = NULL;
+    if (parent->mount_point) {   //避免直接返回没有实际信息的形式根目录
+        parent = parent->mount_point->sb->root;
+    }
+    struct dir_entry* path = NULL;
 
     while (*name == '/')
         name++;
@@ -277,6 +292,16 @@ void                         init_rootfs()
     list_init(&droot->child_node);
     droot->child_node.data = droot;
 
+    //创建inode
+    struct index_node* inode  = kmalloc(0, sizeof(struct index_node));
+    droot->dir_inode          = inode;
+    inode->sb                 = root_sb;
+    inode->attribute          = FS_ATTR_DIR;
+    inode->file_size          = 0;
+    inode->inode_ops          = &root_iops;
+    inode->f_ops              = NULL;
+    inode->private_index_info = droot;
+
     // root_sb->dev=dev_ramdisk<<8;
     // root_sb->p_dev=&bd_ramdisk;
     // TODO 以后要直接拿设备号，这个设备号通过devman创建设备文件（节点）分配。
@@ -292,13 +317,13 @@ struct dir_entry* create_node(char* pathname, mode_t mode, unsigned short dev)
     char* p = pathname;
     for (; *p; p++)
         ;
-    for (; *p != '/'; p--)
+    for (; p > pathname && *p != '/'; p--)
         ;
     int   pplen = p - pathname;
     char* path  = kmalloc(0, pplen + 1);
     memcpy(path, pathname, pplen);
     path[pplen]              = '\0';
-    struct dir_entry* parent = path_walk(path, 0);
+    struct dir_entry* parent = path_walk(path, 1);
     if (!parent) {
         return NULL;
     }
@@ -313,6 +338,7 @@ struct dir_entry* create_node(char* pathname, mode_t mode, unsigned short dev)
     new_noded->dir_ops     = parent->dir_ops;
     new_noded->mount_point = 0;
     new_noded->link        = 0;
+    new_noded->parent      = parent;
     list_init(&new_noded->child_node);
     list_init(&new_noded->subdirs_list);
     new_noded->child_node.data = new_noded;
@@ -327,14 +353,14 @@ struct dir_entry* create_node(char* pathname, mode_t mode, unsigned short dev)
     new_nodei->blocks             = 0;
     new_nodei->file_size          = 0;
     new_nodei->mode               = mode;
-    if (mode & S_IFBLK || mode & S_IFCHR)
+    if (mode == S_IFBLK || mode == S_IFCHR)
         new_nodei->attribute = FS_ATTR_DEVICE;
-    else if (mode & S_IFDIR)
+    else if (mode == S_IFDIR)
         new_nodei->attribute = FS_ATTR_DIR;
     else
         new_nodei->attribute = FS_ATTR_FILE;
 
-    parent->dir_inode->inode_ops->create(new_nodei, new_noded, 0);
+    parent->dir_inode->inode_ops->create(parent->dir_inode, new_noded, mode);
     return new_noded;
 }
 void list_add(struct List* entry, struct List* new)   ////add to the tail of the link
@@ -356,13 +382,9 @@ int remove(char* pathname)
     }
 
     //删除文件
-    target->dir_inode->inode_ops->rmdir(target->dir_inode, target);
+    target->dir_inode->inode_ops->rmdir(target->parent->dir_inode, target);
 
     //在vfs中删除
     drelse(target);
-    struct index_node* inode = target->dir_inode;
-    if (inode->private_index_info)
-        kfree(inode->private_index_info);
-    kfree(inode);
     return 0;
 }

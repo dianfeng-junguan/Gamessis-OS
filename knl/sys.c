@@ -18,7 +18,11 @@
 #include <sys/mman.h>
 #include "sys/stat.h"
 #include "dirent.h"
+#include "volume.h"
 
+// #ifdef DEBUG
+// typedef int mode_t;
+// #endif
 
 unsigned long sys_putstring(char* string)
 {
@@ -38,6 +42,25 @@ unsigned long sys_open(char* filename, int flags)
     int               i;
 
     //	printfk("sys_open\n");
+    //如果是相对路径，则需要找到当前进程的工作目录
+    char* cwdspace = KMALLOC(PAGE_4K_SIZE);
+    char* cwd      = cwdspace + PAGE_4K_SIZE - 1;
+    *cwd           = '\0';
+    if (filename[0] != '/' && filename[0] != '\\') {
+        for (struct dir_entry* p = current->cwd; p->parent && p->parent != p; p = p->parent) {
+            cwd -= strlenk(p->name) + 1;
+            memcpy(cwd, "/", 1);
+            memcpy(cwd, p->name, p->name_length);
+            if (cwd < cwdspace) {
+                KFREE(cwdspace);
+                return -EFAULT;
+            }
+        }
+        cwd -= +1;
+        *cwd = '/';
+    }
+
+
     path = (char*)kmalloc(0, PAGE_4K_SIZE);
     if (path == NULL)
         return -ENOMEM;
@@ -47,50 +70,68 @@ unsigned long sys_open(char* filename, int flags)
         kfree(path);
         return -EFAULT;
     }
-    else if (pathlen >= PAGE_4K_SIZE) {
+    else if (pathlen + strlenk(cwd) >= PAGE_4K_SIZE) {
         kfree(path);
         return -ENAMETOOLONG;
     }
-    strcpyk(path, filename);
+    if (filename[0] != '/' && filename[0] != '\\') {
+        //相对路径
+        strcpyk(path, cwd);
+        strcatk(path, filename);
+    }
+    else {
+        strcpyk(path, filename);
+    }
 
     dentry = path_walk(path, 0);
-
+    if (dentry && flags & O_EXCL) {
+        //文件已经存在
+        kfree(path);
+        return -EEXIST;
+    }
     if (dentry == NULL) {
-        // if(!flags&O_CREAT)
-        return -ENOENT;
+        if (flags & O_CREAT == 0)
+            return -ENOENT;
         //创建文件
-        // TODO 创建文件改为更正规的方法
         //找到上一级目录
         char* p = path + strlenk(path) - 1;
         for (; *p != '/' && p > path; p--)
             ;
         *p                       = '\0';
-        struct dir_entry* parent = path_walk(path, O_DIRECTORY);
+        struct dir_entry* parent = path_walk(path, 1);
         if (parent == NULL)
             return -ENOENT;   //上级目录也不在
-        //创建新的文件
-        dentry = (struct dir_entry*)kmalloc(0, sizeof(struct dir_entry));
-        list_init(&dentry->subdirs_list);
-        list_init(&dentry->child_node);
-        dentry->child_node.data = dentry;
-        list_add(&parent->subdirs_list, &dentry->child_node);
-        dentry->parent               = parent;
-        dentry->dir_inode            = dentry + 1;   //放在后面
-        dentry->dir_inode->file_size = 0;
-        //继承操作方法
-        dentry->dir_inode->f_ops     = parent->dir_inode->f_ops;
-        dentry->dir_inode->inode_ops = parent->dir_inode->inode_ops;
-        dentry->dir_ops              = parent->dir_ops;
-        //这样的创建文件只能创建普通文件，设备文件要通过devman创建
-        dentry->dir_inode->attribute = FS_ATTR_FILE;
+        mode_t mode = 0;
+        if (flags & O_WRONLY)
+            mode |= S_IWUSR;
+        if (flags & O_RDWR)
+            mode |= S_IRWXU;
+        if (flags & O_APPEND)
+            mode |= S_IWUSR;
+        if (flags & O_DIRECTORY) {
+            mode |= S_IFDIR;
+        }
+        else {
+            mode |= S_IFREG;
+        }
+        if (!mode) {
+            kfree(path);
+            return -EINVAL;
+        }
+        dentry = create_node(path, mode, parent->dir_inode->dev);
+        if (!dentry) {
+            kfree(path);
+            return -EFAULT;
+        }
     }
-    dentry->link++;   //这样哪怕长时间不path walk，也不会被释放
     // kfree(path);
 
     if ((flags & O_DIRECTORY) && (dentry->dir_inode->attribute != FS_ATTR_DIR))
         return -ENOTDIR;
     if (!(flags & O_DIRECTORY) && (dentry->dir_inode->attribute == FS_ATTR_DIR))
         return -EISDIR;
+
+    dentry->link++;   //这样哪怕长时间不path walk，也不会被释放
 
     filp = (struct file*)kmalloc(0, sizeof(struct file));
     memset(filp, 0, sizeof(struct file));
@@ -163,6 +204,9 @@ unsigned long sys_read(int fd, void* buf, long count)
         return -EINVAL;
 
     filp = current->openf[fd];
+    if (filp->position >= filp->dentry->dir_inode->file_size) {
+        return 0;
+    }
     if (filp->f_ops && filp->f_ops->read)
         ret = filp->f_ops->read(filp, buf, count, &filp->position);
     return ret;
@@ -262,10 +306,10 @@ unsigned long sys_vfork()
 //}
 
 // unsigned long sys_exit(int exit_code)
-//{
-//    printfk("sys_exit\n");
-//    //return do_exit(exit_code);
-//}
+// {
+//     printfk("sys_exit\n");
+//     // return do_exit(exit_code);
+// }
 
 /*
     rusage reserved
@@ -376,7 +420,11 @@ unsigned long sys_brk(unsigned long brk)
     unsigned long new_brk = PAGE_4K_ALIGN(brk);
 
     //	printfk("sys_brk\n");
-    //	printfk("brk:%#018lx,new_brk:%#018lx,current->mm->end_brk:%#018lx\n",brk,new_brk,current->mm->end_brk);
+    //
+    // printfk("brk:%#018lx,new_brk:%#018lx,current->mm->end_brk:%#018lx\n",
+    //         brk,
+    //         new_brk,
+    //         current->mm->end_brk);
     if (new_brk == 0)
         return current->mem_struct.heap_base;
     if (new_brk < current->mem_struct.heap_base)
@@ -460,6 +508,11 @@ unsigned long sys_chdir(char* filename)
     return 0;
 }
 
+int sys_remove(char* pathname)
+{
+    remove(pathname);
+}
+
 unsigned long sys_getdents(int fd, void* dirent, long count)
 {
     struct file*  filp = NULL;
@@ -496,7 +549,7 @@ void* sys_mmap(void* addr, size_t len, int prot, int flags, int fildes, off_t of
     return do_mmap(addr, len, prot, flags, fildes, off, len);
 }
 
-/*
+/**
 TODO
 创建文件，可以是FIFO，常规文件，目录和设备文件。除了FIFO，其他类型创建前会检查进程权限（未完成）
 */
@@ -511,10 +564,6 @@ int sys_mknod(const char* path, mode_t mode, dev_t dev)
     return 0;
 }
 
-int sys_remove(char* pathname)
-{
-    remove(pathname);
-}
 
 int sys_chk_mmap(off_t base, size_t mem_size)
 {
@@ -550,6 +599,7 @@ int kread(struct file* fp, unsigned long long offset, size_t len, char* buf)
         ret = fp->f_ops->read(fp, buf, len, &fp->position);
     return 0;
 }
+
 /**
     @brief 填充目录项
     @param buf  目录项缓冲区，注意其中的name必须预留足够空间
@@ -567,6 +617,7 @@ int default_fill_dentry(void* buf, char* name, long namelen, long type, long off
     de->d_type    = type;
     de->d_namelen = namelen;
     memcpy(de->d_name, name, namelen);
+    de->d_name[namelen] = '\0';
     return 0;
 }
 int sys_readdir(int fd, struct dirent* result)
@@ -595,7 +646,32 @@ int do_readdir(struct file* dirp, struct dirent* result)
 // {
 //     return do_rmdir(path);
 // }
-// int sys_rename(char* oldpath, char* newpath)
-// {
-//     return do_rename(oldpath, newpath);
-// }
+int sys_rename(char* oldpath, char* newpath)
+{
+    struct dir_entry* old_dentry = path_walk(oldpath, 0);
+    if (old_dentry == NULL) {
+        return -ENOENT;
+    }
+    //构造新的dentry和inode
+    int mode = S_IFREG;
+
+    switch (old_dentry->dir_inode->attribute) {
+    case FS_ATTR_DIR: mode = S_IFDIR; break;
+    case FS_ATTR_FILE: mode = S_IFREG; break;
+    case FS_ATTR_DEVICE: mode = S_IFBLK; break;
+    default: return -EINVAL;
+    }
+    //创建数据结构
+    struct dir_entry*  new_dentry = kmalloc(0, sizeof(struct dir_entry));
+    struct index_node* new_inode  = kmalloc(0, sizeof(struct index_node));
+    new_dentry->dir_inode         = new_inode;
+    new_dentry->parent            = old_dentry->parent;
+    new_dentry->name              = kmalloc(0, strlenk(newpath) + 1);
+    strcpyk(new_dentry->name, newpath);
+    new_inode->attribute          = old_dentry->dir_inode->attribute;
+    new_inode->sb                 = old_dentry->dir_inode->sb;
+    new_inode->private_index_info = old_dentry->dir_inode->private_index_info;
+
+    return old_dentry->dir_inode->inode_ops->rename(
+        old_dentry->dir_inode, old_dentry, new_dentry->dir_inode, new_dentry);
+}

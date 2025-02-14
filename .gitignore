@@ -31,3 +31,5 @@ disas/
 .clangd-format
 
 .clangd-tidy
+
+subproj/thinfat32
