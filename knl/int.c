@@ -182,6 +182,37 @@ void coprocessor_err()
     comprintf("coprocessor err\n");
 }
 
+syscall_func_t syscall_table[MAX_SYSCALLS] = {
+    [0 ... MAX_SYSCALLS - 1] = (syscall_func_t)blank_syscall,
+    [SYSCALL_EXIT]           = (syscall_func_t)sys_exit,
+    [SYSCALL_OPEN]           = (syscall_func_t)sys_open,
+    [SYSCALL_CLOSE]          = (syscall_func_t)sys_close,
+    [SYSCALL_READ]           = (syscall_func_t)sys_read,
+    [SYSCALL_WRITE]          = (syscall_func_t)sys_write,
+    [SYSCALL_SEEK]           = (syscall_func_t)sys_lseek,
+    [SYSCALL_TELL]           = (syscall_func_t)sys_tell,
+    [SYSCALL_EXIT]           = (syscall_func_t)sys_exit,
+    [SYSCALL_CALL]           = (syscall_func_t)exec_call,
+    [SYSCALL_BRK]            = (syscall_func_t)sys_brk,
+    [SYSCALL_FREE]           = (syscall_func_t)sys_free,
+    [SYSCALL_FORK]           = (syscall_func_t)sys_fork,
+    [SYSCALL_EXECVE]         = (syscall_func_t)sys_execve,
+    [SYSCALL_WAIT]           = (syscall_func_t)sys_wait,
+    [SYSCALL_MMAP]           = (syscall_func_t)sys_mmap,
+    [SYSCALL_MUNMAP]         = (syscall_func_t)sys_munmap,
+    [SYSCALL_MKNOD]          = (syscall_func_t)sys_mknod,
+    [SYSCALL_CHKMMAP]        = (syscall_func_t)sys_chk_mmap,
+    [SYSCALL_SBRK]           = (syscall_func_t)sys_sbrk,
+    [SYSCALL_READDIR]        = (syscall_func_t)sys_readdir,
+    [SYSCALL_CHDIR]          = (syscall_func_t)sys_chdir,
+    [SYSCALL_RENAME]         = (syscall_func_t)sys_rename,
+    [SYSCALL_REMOVE]         = (syscall_func_t)sys_remove,
+    [SYSCALL_DRV_IOCTL]      = (syscall_func_t)drv_ioctl,
+};
+int blank_syscall()
+{
+    return 0;
+}
 /*
 normal
 system call number:	rax
@@ -202,35 +233,10 @@ int syscall(long a, long b, long c, long d, long e, long f)
 {
     unsigned long num;
     __asm__ volatile("" : "=a"(num));   //这样rax中存的参数就到这了
-    int retv = 0;
-    switch (num) {
-    case SYSCALL_OPEN: retv = sys_open(a, b); break;
-    case SYSCALL_CLOSE: retv = sys_close(a); break;
-    case SYSCALL_READ: retv = sys_read(a, b, c); break;
-    case SYSCALL_WRITE: retv = sys_write(a, b, c); break;
-    case SYSCALL_SEEK: retv = sys_lseek(a, b, c); break;
-    case SYSCALL_TELL: retv = sys_tell(a); break;
-    case SYSCALL_EXIT: retv = sys_exit(a); break;
-    case SYSCALL_CALL: exec_call(a); break;
-    case SYSCALL_BRK: retv = sys_brk(a); break;
-    case SYSCALL_FREE: retv = sys_free(a); break;
-    case SYSCALL_FORK: retv = sys_fork(); break;
-    case SYSCALL_EXECVE: retv = sys_execve(a, b, c); break;
-    case SYSCALL_WAIT: retv = sys_wait(a, b, c); break;
-    case SYSCALL_MMAP: retv = sys_mmap(a, b, c, d, e, f); break;
-    case SYSCALL_MUNMAP: retv = sys_munmap(a, b); break;
-    case SYSCALL_MKNOD: retv = sys_mknod(a, b, c); break;
-    case SYSCALL_CHKMMAP: retv = sys_chk_mmap(a, b); break;
-    case SYSCALL_SBRK: retv = sys_sbrk(a); break;
-    case SYSCALL_READDIR: retv = sys_readdir(a, b); break;
-    case SYSCALL_CHDIR: retv = sys_chdir(a); break;
-    case SYSCALL_RENAME: retv = sys_rename(a, b); break;
-    case SYSCALL_REMOVE: retv = sys_remove(a); break;
-    case SYSCALL_DRV_IOCTL: retv = drv_ioctl(a, b, c, d); break;
+    if (num >= MAX_SYSCALLS) {
+        return -1;
     }
-    // __asm__ volatile("mov %0,%%eax\r\n mov %1,%%ebx\r\n mov %2,%%ecx\r\n mov %3,%%edx\r\n mov %4,%%esi\r\n mov %5,%%edi"\
-    // ::"m"(func),"m"(a),"m"(b),"m"(c),"m"(d),"m"(e));
-    // __asm__ volatile("int $0x80\r\n leave\r\n ret");
+    int retv = syscall_table[num](a, b, c, d, e, f);
     do_signals();
     //处理信号之后，可能进程状态被改变,需要重新调度。
     while (current && current->stat == TASK_SUSPENDED) {

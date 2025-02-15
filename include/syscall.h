@@ -68,6 +68,8 @@
 #define SYSTEM_REBOOT (1UL << 0)
 #define SYSTEM_POWEROFF (1UL << 1)
 
+#define MAX_SYSCALLS 100
+typedef int (*syscall_func_t)();
 __attribute__((__always_inline__)) inline int do_syscall(long func, long a1, long a2, long a3,
                                                          long a4, long a5, long a6)
 {
@@ -94,6 +96,7 @@ unsigned long sys_close(int fd);
 unsigned long sys_read(int fd, void* buf, long count);
 unsigned long sys_write(int fd, void* buf, long count);
 unsigned long sys_lseek(int filds, long offset, int whence);
+unsigned long sys_tell(int fd);
 unsigned long sys_wait(pid_t pid, int* stat_loc, int options);
 int           sys_ioctl(int fildes, int request, unsigned long args);
 int           sys_remove(char* pathname);
@@ -127,5 +130,6 @@ int sys_readdir(int fd, struct dirent* result);
 创建文件，可以是FIFO，常规文件，目录和设备文件。除了FIFO，其他类型创建前会检查进程权限（未完成）
 */
 int sys_mknod(const char* path, mode_t mode, dev_t dev);
+int blank_syscall();
 
 unsigned long sys_chdir(char* filename);
