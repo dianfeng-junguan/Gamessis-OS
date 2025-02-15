@@ -9,7 +9,6 @@
 #include <sys/unistd.h>
 
 
-
 int a = 1, b = 2, c = 0;
 // unsigned long long __bss_start__ = 0, __bss_end__ = 0;
 
@@ -157,6 +156,9 @@ int main(int argc, char** argv, char** environ)
                 printf("write %d bytes to file %s success\n", len, path);
                 close(fd);
             }
+        }
+        else if (strcmp(cmd, "reboot") == 0) {
+            do_syscall(41, 1, 0, 0, 0, 0, 0);
         }
         else {
             printf("trying to execute...\n");

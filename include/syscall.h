@@ -40,6 +40,7 @@
 #define SYSCALL_CHDIR 38
 #define SYSCALL_RENAME 39
 #define SYSCALL_DRV_IOCTL 40
+#define SYSCALL_REBOOT 41
 #define SYSCALL_KB_READC 100
 
 
@@ -101,6 +102,7 @@ unsigned long sys_wait(pid_t pid, int* stat_loc, int options);
 int           sys_ioctl(int fildes, int request, unsigned long args);
 int           sys_remove(char* pathname);
 int           sys_rename(char* oldpath, char* newpath);
+unsigned long sys_reboot(unsigned long cmd, void* arg);
 
 
 int sys_chk_mmap(off_t base, size_t mem_size);
