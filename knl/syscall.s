@@ -10,6 +10,9 @@ extern syscall
 extern current
 extern store_rip
 extern store_rbp
+extern save_float
+extern restore_float
+%include "context.inc"
 REQ_READ_DISK       EQU 0
 REQ_WRITE_DISK      EQU 1
 REQ_SYNC_READ_DISK  EQU 2
@@ -49,21 +52,9 @@ _syscall:
     mov qword [rsp+24],rcx
     mov rcx,[rsp]
 
-    push rax
-    push rbx
-    push rcx
-    push rdx
-    push rdi
-    push rsi
+    SAVE_GENERALS
 
-    push r8
-    push r9
-    push r10
-    push r11
-    push r12
-    push r13
-    push r14
-    push r15
+
 
     mov ax,es
     push rax
@@ -73,7 +64,8 @@ _syscall:
     mov ax,0x10
     mov es,ax
     mov ds,ax
-
+    
+    ;恢复rax的值
     mov rax,[rsp+15*8]
     ;r11和rcx里面分别存储着rflags和rip
     push r11
@@ -81,30 +73,24 @@ _syscall:
 
     ;r10里面存放着第四个参数
     xchg rcx,r10
+
+    SAVE_VOLATILES
+    call save_float
+    
     ;把返回地址存到pcb(regs.rip)
     push rdi
     mov rdi,r10
 
-    push r11
-    push rax
-    push rdx
     call store_rip
 
     mov rdi,rbp
     call store_rbp
-    
-    pop rdx
-    pop rax
-    pop r11
-
-
-    
     pop rdi
-    ; push rdi
-    ; mov rdi,current
-    ; mov rdi,[rdi]
-    ; mov qword [rdi+0x26c],r10
-    ; pop rdi
+    
+    RESTORE_VOLATILES
+
+
+    
 
     call syscall
     xchg r10,rcx
@@ -118,22 +104,11 @@ _syscall_sysret:
     pop rbx
     mov es,bx
 
-    pop r15
-    pop r14
-    pop r13
-    pop r12
-    pop r11
-    pop r10
-    pop r9
-    pop r8
+    SAVE_VOLATILES
+    call restore_float
+    RESTORE_VOLATILES
 
-    pop rsi
-    pop rdi
-    pop rdx
-    pop rcx
-    pop rbx
-    ;rax不用恢复：里面存储了系统调用的返回值。
-    add rsp,8
+    RESTORE_GENERALS_BUT_RAX
     ;pop rax
 
     ;不用把rsp的值放回到tss.rsp0

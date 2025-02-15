@@ -184,11 +184,12 @@ int init_proc0()
     list_init(&pz->node);
     pz->node.data = pz;
 
-    pz->gpid    = pz->pid;
-    pz->sid     = pz->pid;
-    pz->fg_pgid = pz->pid;
-    pz->in_bgpg = 0;
-    pz->stat    = TASK_READY;
+    pz->gpid            = pz->pid;
+    pz->sid             = pz->pid;
+    pz->fg_pgid         = pz->pid;
+    pz->in_bgpg         = 0;
+    pz->stat            = TASK_READY;
+    pz->regs.float_regs = kmalloc(0, 512);
 
     //设置tcb
     smmap(pmalloc(PAGE_4K_SIZE), STACK_TOP, PAGE_PRESENT | PAGE_RWX | PAGE_FOR_ALL, PML4_ADDR);
@@ -245,11 +246,12 @@ void set_proc(long rax, long rbx, long rcx, long rdx, long es, long cs, long ss,
     //能接受中断
     proc->regs.rip = rip;
 
-    proc->regs.cs  = cs;
-    proc->regs.ds  = ds;
-    proc->regs.es  = es;
-    proc->regs.cr3 = PML4_ADDR;   // get_phyaddr(n1);//暂时先搞成全局
-    proc->pml4     = PML4_ADDR;
+    proc->regs.cs         = cs;
+    proc->regs.ds         = ds;
+    proc->regs.es         = es;
+    proc->regs.cr3        = PML4_ADDR;   // get_phyaddr(n1);//暂时先搞成全局
+    proc->pml4            = PML4_ADDR;
+    proc->regs.float_regs = kmalloc(0, 512);
 }
 void proc_zero()
 {
@@ -618,7 +620,8 @@ void del_proc(int pnr)
     //向父进程发送信号告知进程结束
     if (current->parent_pid > 0)
         send_signal(current->parent_pid, SIGCHLD);
-    //
+    //释放浮点寄存器上下文
+    kfree(task[pnr].regs.float_regs);
     //从进程中解除cr3,tss和ldt
     // switch_proc_tss(task[pnr]);
 }
@@ -1071,7 +1074,8 @@ int sys_fork(void)
     task[pid].tss.ists[5] = new_stkpg + PAGE_4K_SIZE;
     task[pid].tss.ists[6] = new_stkpg + PAGE_4K_SIZE;
 
-
+    //分配浮点寄存器上下文
+    task[pid].regs.float_regs = kmalloc(0, 512);
     //堆
     addr_t hp = task[pid].mem_struct.heap_top - PAGE_4K_SIZE;
     for (; hp >= task[pid].mem_struct.heap_base; hp -= PAGE_4K_SIZE) {

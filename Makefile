@@ -1,7 +1,7 @@
 .PHONY: boot mount umount run knl cpknl com grub all
 CFLAGS = -w -g -fno-pie -fno-pic -nostdlib -fno-stack-protector -nostartfiles \
 -I include -m64 -O0 -fno-strict-aliasing -mcmodel=large -fPIC
-ASMFLAGS=-g -f elf64 -w-zext-reloc -w-zeroing
+ASMFLAGS=-g -f elf64 -w-zext-reloc -w-zeroing -Iinclude
 SETUPFLAGS=-g -f elf32 -w-zext-reloc -w-zeroing
 OBJCOPY=objcopy
 BOOT = boot.efi
@@ -19,12 +19,12 @@ KNL_OFILES = int.o main.o log.o \
 			gdt.o gdta.o clock.o clocka.o exe.o \
 			syscalla.o framebuffer.o vfs.o sys.o ramfs.o ramdisk.o \
 			kallsyms.o signal.o int_handlera.o driverman.o \
-			binload.o drvload.o volume.o
+			binload.o drvload.o volume.o floata.o float.o  callinga.o
 MODS_OFILES = kb.o disk.o diska.o fat32.o \
 				tty.o com.o rd.o elfbin.o scanner.o#test.o
 COM_OFILES = mem.o str.o types.o proca.o font.o wchar.o
 PH_MODIFIER = /mnt/d/Code/Python/elfph/elf.py
-QEMU_LOG = -d int,cpu_reset,guest_errors,page -D log/log.txt
+QEMU_LOG = -d int,cpu_reset,guest_errors,page -D log/log.txt -cpu qemu64,+sse4.1,+sse4.2,+sse3,+ssse3
 all:
 	make knl
 	make loader

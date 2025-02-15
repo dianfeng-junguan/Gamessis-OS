@@ -165,12 +165,13 @@ int drv_ioctl(int drv, int command, int block, unsigned long long arg)
         // block==2是特殊的阻塞，要求函数本身等待请求完成，一般只有内核初始化时使用
         if (block == 2) {
             extern int manage_proc_lock;
-            manage_proc_lock = 1;
+            // manage_proc_lock = 1;
             sti();
             while (drivers[drv].stat == DRIVER_STAT_BUSY) {
+                // FIXME 加schedule会出bug
                 // schedule();
             }
-            manage_proc_lock = 0;
+            // manage_proc_lock = 0;
             cli();
         }
     }

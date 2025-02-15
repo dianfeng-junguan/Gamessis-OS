@@ -23,6 +23,7 @@
 #include "driverman.h"
 #include "drvload.h"
 #include "elfbin.h"
+#include "float.h"
 
 int  manage_proc_lock = 1;
 void main(unsigned int magic, void* addr)
@@ -133,6 +134,8 @@ void main(unsigned int magic, void* addr)
     tag = (struct multiboot_tag*)((multiboot_uint8_t*)tag + ((tag->size + 7) & ~7));
     init_memory();
     init_int();
+    if (is_sse_supported())
+        init_sse();
     init_console();
     init_framebuffer();
     // printf("Total mbi size 0x%x\n", (unsigned)tag - addr);

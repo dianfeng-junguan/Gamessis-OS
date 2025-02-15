@@ -7,26 +7,23 @@ extern scene_saver
 extern gdt
 extern manage_proc_lock
 extern save_rsp
+extern save_float
+extern restore_float
+%include "context.inc"
 clock:
     cli
 
-    push rax
-    push rbx
-    push rcx
-    push rdx
-    push rdi
-    push rsi
-
-    push r8
-    push r9
-    push r10
-    push r11
-    push r12
-    push r13
-    push r14
-    push r15
-
+    SAVE_GENERALS
+    
+    ;易变寄存器入栈
+    SAVE_VOLATILES
+    
+    call save_float
     call save_rsp
+
+    RESTORE_VOLATILES
+
+
 
     mov ax,es
     push rax
@@ -47,20 +44,10 @@ clock_ret:
     pop rax
     mov es,ax
 
-    pop r15
-    pop r14
-    pop r13
-    pop r12
-    pop r11
-    pop r10
-    pop r9
-    pop r8
-
-    pop rsi
-    pop rdi
-    pop rdx
-    pop rcx
-    pop rbx
-    pop rax
-
+    
+    SAVE_VOLATILES
+    call restore_float
+    RESTORE_VOLATILES
+    
+    RESTORE_GENERALS
     iretq

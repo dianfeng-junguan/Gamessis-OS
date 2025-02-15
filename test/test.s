@@ -25,10 +25,10 @@ int main(int argc, char** argv, char** environ)
   40003b:	f3 0f 1e fa          	endbr64 
   40003f:	55                   	push   rbp
   400040:	48 89 e5             	mov    rbp,rsp
-  400043:	48 81 ec 70 02 00 00 	sub    rsp,0x270
-  40004a:	89 bd ac fd ff ff    	mov    DWORD PTR [rbp-0x254],edi
-  400050:	48 89 b5 a0 fd ff ff 	mov    QWORD PTR [rbp-0x260],rsi
-  400057:	48 89 95 98 fd ff ff 	mov    QWORD PTR [rbp-0x268],rdx
+  400043:	48 81 ec 50 02 00 00 	sub    rsp,0x250
+  40004a:	89 bd cc fd ff ff    	mov    DWORD PTR [rbp-0x234],edi
+  400050:	48 89 b5 c0 fd ff ff 	mov    QWORD PTR [rbp-0x240],rsi
+  400057:	48 89 95 b8 fd ff ff 	mov    QWORD PTR [rbp-0x248],rdx
     // write(2, as, strlenk(as));
     char* prepared_environ = {"os=gms"};
   40005e:	48 8d 05 8b 54 00 00 	lea    rax,[rip+0x548b]        # 4054f0 <b+0x4>
@@ -38,912 +38,913 @@ int main(int argc, char** argv, char** environ)
   400070:	48 89 c7             	mov    rdi,rax
   400073:	e8 58 14 00 00       	call   4014d0 <puts>
     char cmd[128]  = {0};
-  400078:	48 c7 85 30 ff ff ff 	mov    QWORD PTR [rbp-0xd0],0x0
+  400078:	48 c7 85 38 ff ff ff 	mov    QWORD PTR [rbp-0xc8],0x0
   40007f:	00 00 00 00 
-  400083:	48 c7 85 38 ff ff ff 	mov    QWORD PTR [rbp-0xc8],0x0
+  400083:	48 c7 85 40 ff ff ff 	mov    QWORD PTR [rbp-0xc0],0x0
   40008a:	00 00 00 00 
-  40008e:	48 c7 85 40 ff ff ff 	mov    QWORD PTR [rbp-0xc0],0x0
+  40008e:	48 c7 85 48 ff ff ff 	mov    QWORD PTR [rbp-0xb8],0x0
   400095:	00 00 00 00 
-  400099:	48 c7 85 48 ff ff ff 	mov    QWORD PTR [rbp-0xb8],0x0
+  400099:	48 c7 85 50 ff ff ff 	mov    QWORD PTR [rbp-0xb0],0x0
   4000a0:	00 00 00 00 
-  4000a4:	48 c7 85 50 ff ff ff 	mov    QWORD PTR [rbp-0xb0],0x0
+  4000a4:	48 c7 85 58 ff ff ff 	mov    QWORD PTR [rbp-0xa8],0x0
   4000ab:	00 00 00 00 
-  4000af:	48 c7 85 58 ff ff ff 	mov    QWORD PTR [rbp-0xa8],0x0
+  4000af:	48 c7 85 60 ff ff ff 	mov    QWORD PTR [rbp-0xa0],0x0
   4000b6:	00 00 00 00 
-  4000ba:	48 c7 85 60 ff ff ff 	mov    QWORD PTR [rbp-0xa0],0x0
+  4000ba:	48 c7 85 68 ff ff ff 	mov    QWORD PTR [rbp-0x98],0x0
   4000c1:	00 00 00 00 
-  4000c5:	48 c7 85 68 ff ff ff 	mov    QWORD PTR [rbp-0x98],0x0
+  4000c5:	48 c7 85 70 ff ff ff 	mov    QWORD PTR [rbp-0x90],0x0
   4000cc:	00 00 00 00 
-  4000d0:	48 c7 85 70 ff ff ff 	mov    QWORD PTR [rbp-0x90],0x0
+  4000d0:	48 c7 85 78 ff ff ff 	mov    QWORD PTR [rbp-0x88],0x0
   4000d7:	00 00 00 00 
-  4000db:	48 c7 85 78 ff ff ff 	mov    QWORD PTR [rbp-0x88],0x0
-  4000e2:	00 00 00 00 
-  4000e6:	48 c7 45 80 00 00 00 	mov    QWORD PTR [rbp-0x80],0x0
-  4000ed:	00 
-  4000ee:	48 c7 45 88 00 00 00 	mov    QWORD PTR [rbp-0x78],0x0
-  4000f5:	00 
-  4000f6:	48 c7 45 90 00 00 00 	mov    QWORD PTR [rbp-0x70],0x0
-  4000fd:	00 
-  4000fe:	48 c7 45 98 00 00 00 	mov    QWORD PTR [rbp-0x68],0x0
-  400105:	00 
-  400106:	48 c7 45 a0 00 00 00 	mov    QWORD PTR [rbp-0x60],0x0
-  40010d:	00 
-  40010e:	48 c7 45 a8 00 00 00 	mov    QWORD PTR [rbp-0x58],0x0
-  400115:	00 
+  4000db:	48 c7 45 80 00 00 00 	mov    QWORD PTR [rbp-0x80],0x0
+  4000e2:	00 
+  4000e3:	48 c7 45 88 00 00 00 	mov    QWORD PTR [rbp-0x78],0x0
+  4000ea:	00 
+  4000eb:	48 c7 45 90 00 00 00 	mov    QWORD PTR [rbp-0x70],0x0
+  4000f2:	00 
+  4000f3:	48 c7 45 98 00 00 00 	mov    QWORD PTR [rbp-0x68],0x0
+  4000fa:	00 
+  4000fb:	48 c7 45 a0 00 00 00 	mov    QWORD PTR [rbp-0x60],0x0
+  400102:	00 
+  400103:	48 c7 45 a8 00 00 00 	mov    QWORD PTR [rbp-0x58],0x0
+  40010a:	00 
+  40010b:	48 c7 45 b0 00 00 00 	mov    QWORD PTR [rbp-0x50],0x0
+  400112:	00 
     char path[128] = "/";
-  400116:	48 c7 85 b0 fe ff ff 	mov    QWORD PTR [rbp-0x150],0x2f
-  40011d:	2f 00 00 00 
-  400121:	48 c7 85 b8 fe ff ff 	mov    QWORD PTR [rbp-0x148],0x0
-  400128:	00 00 00 00 
-  40012c:	48 c7 85 c0 fe ff ff 	mov    QWORD PTR [rbp-0x140],0x0
-  400133:	00 00 00 00 
-  400137:	48 c7 85 c8 fe ff ff 	mov    QWORD PTR [rbp-0x138],0x0
-  40013e:	00 00 00 00 
-  400142:	48 c7 85 d0 fe ff ff 	mov    QWORD PTR [rbp-0x130],0x0
-  400149:	00 00 00 00 
-  40014d:	48 c7 85 d8 fe ff ff 	mov    QWORD PTR [rbp-0x128],0x0
-  400154:	00 00 00 00 
-  400158:	48 c7 85 e0 fe ff ff 	mov    QWORD PTR [rbp-0x120],0x0
-  40015f:	00 00 00 00 
-  400163:	48 c7 85 e8 fe ff ff 	mov    QWORD PTR [rbp-0x118],0x0
-  40016a:	00 00 00 00 
-  40016e:	48 c7 85 f0 fe ff ff 	mov    QWORD PTR [rbp-0x110],0x0
-  400175:	00 00 00 00 
-  400179:	48 c7 85 f8 fe ff ff 	mov    QWORD PTR [rbp-0x108],0x0
-  400180:	00 00 00 00 
-  400184:	48 c7 85 00 ff ff ff 	mov    QWORD PTR [rbp-0x100],0x0
-  40018b:	00 00 00 00 
-  40018f:	48 c7 85 08 ff ff ff 	mov    QWORD PTR [rbp-0xf8],0x0
-  400196:	00 00 00 00 
-  40019a:	48 c7 85 10 ff ff ff 	mov    QWORD PTR [rbp-0xf0],0x0
-  4001a1:	00 00 00 00 
-  4001a5:	48 c7 85 18 ff ff ff 	mov    QWORD PTR [rbp-0xe8],0x0
-  4001ac:	00 00 00 00 
-  4001b0:	48 c7 85 20 ff ff ff 	mov    QWORD PTR [rbp-0xe0],0x0
-  4001b7:	00 00 00 00 
-  4001bb:	48 c7 85 28 ff ff ff 	mov    QWORD PTR [rbp-0xd8],0x0
-  4001c2:	00 00 00 00 
+  400113:	48 c7 85 b8 fe ff ff 	mov    QWORD PTR [rbp-0x148],0x2f
+  40011a:	2f 00 00 00 
+  40011e:	48 c7 85 c0 fe ff ff 	mov    QWORD PTR [rbp-0x140],0x0
+  400125:	00 00 00 00 
+  400129:	48 c7 85 c8 fe ff ff 	mov    QWORD PTR [rbp-0x138],0x0
+  400130:	00 00 00 00 
+  400134:	48 c7 85 d0 fe ff ff 	mov    QWORD PTR [rbp-0x130],0x0
+  40013b:	00 00 00 00 
+  40013f:	48 c7 85 d8 fe ff ff 	mov    QWORD PTR [rbp-0x128],0x0
+  400146:	00 00 00 00 
+  40014a:	48 c7 85 e0 fe ff ff 	mov    QWORD PTR [rbp-0x120],0x0
+  400151:	00 00 00 00 
+  400155:	48 c7 85 e8 fe ff ff 	mov    QWORD PTR [rbp-0x118],0x0
+  40015c:	00 00 00 00 
+  400160:	48 c7 85 f0 fe ff ff 	mov    QWORD PTR [rbp-0x110],0x0
+  400167:	00 00 00 00 
+  40016b:	48 c7 85 f8 fe ff ff 	mov    QWORD PTR [rbp-0x108],0x0
+  400172:	00 00 00 00 
+  400176:	48 c7 85 00 ff ff ff 	mov    QWORD PTR [rbp-0x100],0x0
+  40017d:	00 00 00 00 
+  400181:	48 c7 85 08 ff ff ff 	mov    QWORD PTR [rbp-0xf8],0x0
+  400188:	00 00 00 00 
+  40018c:	48 c7 85 10 ff ff ff 	mov    QWORD PTR [rbp-0xf0],0x0
+  400193:	00 00 00 00 
+  400197:	48 c7 85 18 ff ff ff 	mov    QWORD PTR [rbp-0xe8],0x0
+  40019e:	00 00 00 00 
+  4001a2:	48 c7 85 20 ff ff ff 	mov    QWORD PTR [rbp-0xe0],0x0
+  4001a9:	00 00 00 00 
+  4001ad:	48 c7 85 28 ff ff ff 	mov    QWORD PTR [rbp-0xd8],0x0
+  4001b4:	00 00 00 00 
+  4001b8:	48 c7 85 30 ff ff ff 	mov    QWORD PTR [rbp-0xd0],0x0
+  4001bf:	00 00 00 00 
     while (1) {
         memset(cmd, 0, 128);
-  4001c6:	48 8d 85 30 ff ff ff 	lea    rax,[rbp-0xd0]
-  4001cd:	ba 80 00 00 00       	mov    edx,0x80
-  4001d2:	be 00 00 00 00       	mov    esi,0x0
-  4001d7:	48 89 c7             	mov    rdi,rax
-  4001da:	e8 a1 13 00 00       	call   401580 <memset>
+  4001c3:	48 8d 85 38 ff ff ff 	lea    rax,[rbp-0xc8]
+  4001ca:	ba 80 00 00 00       	mov    edx,0x80
+  4001cf:	be 00 00 00 00       	mov    esi,0x0
+  4001d4:	48 89 c7             	mov    rdi,rax
+  4001d7:	e8 a4 13 00 00       	call   401580 <memset>
         int p = 0;
-  4001df:	c7 45 ec 00 00 00 00 	mov    DWORD PTR [rbp-0x14],0x0
+  4001dc:	c7 45 ec 00 00 00 00 	mov    DWORD PTR [rbp-0x14],0x0
         printf("%s:>", path);
-  4001e6:	48 8d 85 b0 fe ff ff 	lea    rax,[rbp-0x150]
-  4001ed:	48 89 c6             	mov    rsi,rax
-  4001f0:	48 8d 05 13 53 00 00 	lea    rax,[rip+0x5313]        # 40550a <b+0x1e>
-  4001f7:	48 89 c7             	mov    rdi,rax
-  4001fa:	b8 00 00 00 00       	mov    eax,0x0
-  4001ff:	e8 7c 36 00 00       	call   403880 <printf>
+  4001e3:	48 8d 85 b8 fe ff ff 	lea    rax,[rbp-0x148]
+  4001ea:	48 89 c6             	mov    rsi,rax
+  4001ed:	48 8d 05 16 53 00 00 	lea    rax,[rip+0x5316]        # 40550a <b+0x1e>
+  4001f4:	48 89 c7             	mov    rdi,rax
+  4001f7:	b8 00 00 00 00       	mov    eax,0x0
+  4001fc:	e8 7f 36 00 00       	call   403880 <printf>
         // write(2, "shell:>", 7);
         gets(cmd);
-  400204:	48 8d 85 30 ff ff ff 	lea    rax,[rbp-0xd0]
-  40020b:	48 89 c7             	mov    rdi,rax
-  40020e:	e8 1d 13 00 00       	call   401530 <gets>
+  400201:	48 8d 85 38 ff ff ff 	lea    rax,[rbp-0xc8]
+  400208:	48 89 c7             	mov    rdi,rax
+  40020b:	e8 20 13 00 00       	call   401530 <gets>
         puts(cmd);
-  400213:	48 8d 85 30 ff ff ff 	lea    rax,[rbp-0xd0]
-  40021a:	48 89 c7             	mov    rdi,rax
-  40021d:	e8 ae 12 00 00       	call   4014d0 <puts>
+  400210:	48 8d 85 38 ff ff ff 	lea    rax,[rbp-0xc8]
+  400217:	48 89 c7             	mov    rdi,rax
+  40021a:	e8 b1 12 00 00       	call   4014d0 <puts>
         // write(2, cmd, p);
         if (strcmp(cmd, "version") == 0) {
-  400222:	48 8d 85 30 ff ff ff 	lea    rax,[rbp-0xd0]
-  400229:	48 8d 15 df 52 00 00 	lea    rdx,[rip+0x52df]        # 40550f <b+0x23>
-  400230:	48 89 d6             	mov    rsi,rdx
-  400233:	48 89 c7             	mov    rdi,rax
-  400236:	e8 15 14 00 00       	call   401650 <strcmp>
-  40023b:	85 c0                	test   eax,eax
-  40023d:	75 14                	jne    400253 <main+0x218>
+  40021f:	48 8d 85 38 ff ff ff 	lea    rax,[rbp-0xc8]
+  400226:	48 8d 15 e2 52 00 00 	lea    rdx,[rip+0x52e2]        # 40550f <b+0x23>
+  40022d:	48 89 d6             	mov    rsi,rdx
+  400230:	48 89 c7             	mov    rdi,rax
+  400233:	e8 18 14 00 00       	call   401650 <strcmp>
+  400238:	85 c0                	test   eax,eax
+  40023a:	75 14                	jne    400250 <main+0x215>
             puts("Gamessis OS 1.0.\n");
-  40023f:	48 8d 05 d1 52 00 00 	lea    rax,[rip+0x52d1]        # 405517 <b+0x2b>
-  400246:	48 89 c7             	mov    rdi,rax
-  400249:	e8 82 12 00 00       	call   4014d0 <puts>
-  40024e:	e9 73 ff ff ff       	jmp    4001c6 <main+0x18b>
+  40023c:	48 8d 05 d4 52 00 00 	lea    rax,[rip+0x52d4]        # 405517 <b+0x2b>
+  400243:	48 89 c7             	mov    rdi,rax
+  400246:	e8 85 12 00 00       	call   4014d0 <puts>
+  40024b:	e9 73 ff ff ff       	jmp    4001c3 <main+0x188>
         }
         else if (strcmp(cmd, "exit") == 0) {
-  400253:	48 8d 85 30 ff ff ff 	lea    rax,[rbp-0xd0]
-  40025a:	48 8d 15 c8 52 00 00 	lea    rdx,[rip+0x52c8]        # 405529 <b+0x3d>
-  400261:	48 89 d6             	mov    rsi,rdx
-  400264:	48 89 c7             	mov    rdi,rax
-  400267:	e8 e4 13 00 00       	call   401650 <strcmp>
-  40026c:	85 c0                	test   eax,eax
-  40026e:	0f 84 2a 0c 00 00    	je     400e9e <main+0xe63>
+  400250:	48 8d 85 38 ff ff ff 	lea    rax,[rbp-0xc8]
+  400257:	48 8d 15 cb 52 00 00 	lea    rdx,[rip+0x52cb]        # 405529 <b+0x3d>
+  40025e:	48 89 d6             	mov    rsi,rdx
+  400261:	48 89 c7             	mov    rdi,rax
+  400264:	e8 e7 13 00 00       	call   401650 <strcmp>
+  400269:	85 c0                	test   eax,eax
+  40026b:	0f 84 2a 0c 00 00    	je     400e9b <main+0xe60>
             break;
         }
         else if (strcmp(cmd, "ls") == 0) {
-  400274:	48 8d 85 30 ff ff ff 	lea    rax,[rbp-0xd0]
-  40027b:	48 8d 15 ac 52 00 00 	lea    rdx,[rip+0x52ac]        # 40552e <b+0x42>
-  400282:	48 89 d6             	mov    rsi,rdx
-  400285:	48 89 c7             	mov    rdi,rax
-  400288:	e8 c3 13 00 00       	call   401650 <strcmp>
-  40028d:	85 c0                	test   eax,eax
-  40028f:	75 79                	jne    40030a <main+0x2cf>
+  400271:	48 8d 85 38 ff ff ff 	lea    rax,[rbp-0xc8]
+  400278:	48 8d 15 af 52 00 00 	lea    rdx,[rip+0x52af]        # 40552e <b+0x42>
+  40027f:	48 89 d6             	mov    rsi,rdx
+  400282:	48 89 c7             	mov    rdi,rax
+  400285:	e8 c6 13 00 00       	call   401650 <strcmp>
+  40028a:	85 c0                	test   eax,eax
+  40028c:	75 79                	jne    400307 <main+0x2cc>
             // ls
             DIR*           dp = opendir(".");
-  400291:	48 8d 05 99 52 00 00 	lea    rax,[rip+0x5299]        # 405531 <b+0x45>
-  400298:	48 89 c7             	mov    rdi,rax
-  40029b:	e8 70 0e 00 00       	call   401110 <opendir>
-  4002a0:	48 89 45 c0          	mov    QWORD PTR [rbp-0x40],rax
+  40028e:	48 8d 05 9c 52 00 00 	lea    rax,[rip+0x529c]        # 405531 <b+0x45>
+  400295:	48 89 c7             	mov    rdi,rax
+  400298:	e8 73 0e 00 00       	call   401110 <opendir>
+  40029d:	48 89 45 c0          	mov    QWORD PTR [rbp-0x40],rax
             struct dirent* dirp;
             if (!dp) {
-  4002a4:	48 83 7d c0 00       	cmp    QWORD PTR [rbp-0x40],0x0
-  4002a9:	75 38                	jne    4002e3 <main+0x2a8>
+  4002a1:	48 83 7d c0 00       	cmp    QWORD PTR [rbp-0x40],0x0
+  4002a6:	75 38                	jne    4002e0 <main+0x2a5>
                 printf("error opening directory\n");
-  4002ab:	48 8d 05 81 52 00 00 	lea    rax,[rip+0x5281]        # 405533 <b+0x47>
-  4002b2:	48 89 c7             	mov    rdi,rax
-  4002b5:	b8 00 00 00 00       	mov    eax,0x0
-  4002ba:	e8 c1 35 00 00       	call   403880 <printf>
+  4002a8:	48 8d 05 84 52 00 00 	lea    rax,[rip+0x5284]        # 405533 <b+0x47>
+  4002af:	48 89 c7             	mov    rdi,rax
+  4002b2:	b8 00 00 00 00       	mov    eax,0x0
+  4002b7:	e8 c4 35 00 00       	call   403880 <printf>
                 continue;
-  4002bf:	e9 d5 0b 00 00       	jmp    400e99 <main+0xe5e>
+  4002bc:	e9 d5 0b 00 00       	jmp    400e96 <main+0xe5b>
             }
             while ((dirp = readdir(dp)) != NULL) {
                 printf("%s\n", dirp->d_name);
-  4002c4:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
-  4002c8:	48 83 c0 18          	add    rax,0x18
-  4002cc:	48 89 c6             	mov    rsi,rax
-  4002cf:	48 8d 05 76 52 00 00 	lea    rax,[rip+0x5276]        # 40554c <b+0x60>
-  4002d6:	48 89 c7             	mov    rdi,rax
-  4002d9:	b8 00 00 00 00       	mov    eax,0x0
-  4002de:	e8 9d 35 00 00       	call   403880 <printf>
+  4002c1:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
+  4002c5:	48 83 c0 18          	add    rax,0x18
+  4002c9:	48 89 c6             	mov    rsi,rax
+  4002cc:	48 8d 05 79 52 00 00 	lea    rax,[rip+0x5279]        # 40554c <b+0x60>
+  4002d3:	48 89 c7             	mov    rdi,rax
+  4002d6:	b8 00 00 00 00       	mov    eax,0x0
+  4002db:	e8 a0 35 00 00       	call   403880 <printf>
             while ((dirp = readdir(dp)) != NULL) {
-  4002e3:	48 8b 45 c0          	mov    rax,QWORD PTR [rbp-0x40]
-  4002e7:	48 89 c7             	mov    rdi,rax
-  4002ea:	e8 a3 0f 00 00       	call   401292 <readdir>
-  4002ef:	48 89 45 b8          	mov    QWORD PTR [rbp-0x48],rax
-  4002f3:	48 83 7d b8 00       	cmp    QWORD PTR [rbp-0x48],0x0
-  4002f8:	75 ca                	jne    4002c4 <main+0x289>
+  4002e0:	48 8b 45 c0          	mov    rax,QWORD PTR [rbp-0x40]
+  4002e4:	48 89 c7             	mov    rdi,rax
+  4002e7:	e8 a6 0f 00 00       	call   401292 <readdir>
+  4002ec:	48 89 45 b8          	mov    QWORD PTR [rbp-0x48],rax
+  4002f0:	48 83 7d b8 00       	cmp    QWORD PTR [rbp-0x48],0x0
+  4002f5:	75 ca                	jne    4002c1 <main+0x286>
             }
             close(dp);
-  4002fa:	48 8b 45 c0          	mov    rax,QWORD PTR [rbp-0x40]
-  4002fe:	89 c7                	mov    edi,eax
-  400300:	e8 6b 0c 00 00       	call   400f70 <close>
-  400305:	e9 bc fe ff ff       	jmp    4001c6 <main+0x18b>
+  4002f7:	48 8b 45 c0          	mov    rax,QWORD PTR [rbp-0x40]
+  4002fb:	89 c7                	mov    edi,eax
+  4002fd:	e8 6e 0c 00 00       	call   400f70 <close>
+  400302:	e9 bc fe ff ff       	jmp    4001c3 <main+0x188>
         }
         else if (strcmp(cmd, "cd") == 0) {
-  40030a:	48 8d 85 30 ff ff ff 	lea    rax,[rbp-0xd0]
-  400311:	48 8d 15 38 52 00 00 	lea    rdx,[rip+0x5238]        # 405550 <b+0x64>
-  400318:	48 89 d6             	mov    rsi,rdx
-  40031b:	48 89 c7             	mov    rdi,rax
-  40031e:	e8 2d 13 00 00       	call   401650 <strcmp>
-  400323:	85 c0                	test   eax,eax
-  400325:	0f 85 1a 02 00 00    	jne    400545 <main+0x50a>
+  400307:	48 8d 85 38 ff ff ff 	lea    rax,[rbp-0xc8]
+  40030e:	48 8d 15 3b 52 00 00 	lea    rdx,[rip+0x523b]        # 405550 <b+0x64>
+  400315:	48 89 d6             	mov    rsi,rdx
+  400318:	48 89 c7             	mov    rdi,rax
+  40031b:	e8 30 13 00 00       	call   401650 <strcmp>
+  400320:	85 c0                	test   eax,eax
+  400322:	0f 85 1a 02 00 00    	jne    400542 <main+0x507>
             // cd
             char tmppath[128] = {0};
-  40032b:	48 c7 85 20 fe ff ff 	mov    QWORD PTR [rbp-0x1e0],0x0
-  400332:	00 00 00 00 
-  400336:	48 c7 85 28 fe ff ff 	mov    QWORD PTR [rbp-0x1d8],0x0
-  40033d:	00 00 00 00 
-  400341:	48 c7 85 30 fe ff ff 	mov    QWORD PTR [rbp-0x1d0],0x0
-  400348:	00 00 00 00 
-  40034c:	48 c7 85 38 fe ff ff 	mov    QWORD PTR [rbp-0x1c8],0x0
-  400353:	00 00 00 00 
-  400357:	48 c7 85 40 fe ff ff 	mov    QWORD PTR [rbp-0x1c0],0x0
-  40035e:	00 00 00 00 
-  400362:	48 c7 85 48 fe ff ff 	mov    QWORD PTR [rbp-0x1b8],0x0
-  400369:	00 00 00 00 
-  40036d:	48 c7 85 50 fe ff ff 	mov    QWORD PTR [rbp-0x1b0],0x0
-  400374:	00 00 00 00 
-  400378:	48 c7 85 58 fe ff ff 	mov    QWORD PTR [rbp-0x1a8],0x0
-  40037f:	00 00 00 00 
-  400383:	48 c7 85 60 fe ff ff 	mov    QWORD PTR [rbp-0x1a0],0x0
-  40038a:	00 00 00 00 
-  40038e:	48 c7 85 68 fe ff ff 	mov    QWORD PTR [rbp-0x198],0x0
-  400395:	00 00 00 00 
-  400399:	48 c7 85 70 fe ff ff 	mov    QWORD PTR [rbp-0x190],0x0
-  4003a0:	00 00 00 00 
-  4003a4:	48 c7 85 78 fe ff ff 	mov    QWORD PTR [rbp-0x188],0x0
-  4003ab:	00 00 00 00 
-  4003af:	48 c7 85 80 fe ff ff 	mov    QWORD PTR [rbp-0x180],0x0
-  4003b6:	00 00 00 00 
-  4003ba:	48 c7 85 88 fe ff ff 	mov    QWORD PTR [rbp-0x178],0x0
-  4003c1:	00 00 00 00 
-  4003c5:	48 c7 85 90 fe ff ff 	mov    QWORD PTR [rbp-0x170],0x0
-  4003cc:	00 00 00 00 
-  4003d0:	48 c7 85 98 fe ff ff 	mov    QWORD PTR [rbp-0x168],0x0
-  4003d7:	00 00 00 00 
+  400328:	48 c7 85 34 fe ff ff 	mov    QWORD PTR [rbp-0x1cc],0x0
+  40032f:	00 00 00 00 
+  400333:	48 c7 85 3c fe ff ff 	mov    QWORD PTR [rbp-0x1c4],0x0
+  40033a:	00 00 00 00 
+  40033e:	48 c7 85 44 fe ff ff 	mov    QWORD PTR [rbp-0x1bc],0x0
+  400345:	00 00 00 00 
+  400349:	48 c7 85 4c fe ff ff 	mov    QWORD PTR [rbp-0x1b4],0x0
+  400350:	00 00 00 00 
+  400354:	48 c7 85 54 fe ff ff 	mov    QWORD PTR [rbp-0x1ac],0x0
+  40035b:	00 00 00 00 
+  40035f:	48 c7 85 5c fe ff ff 	mov    QWORD PTR [rbp-0x1a4],0x0
+  400366:	00 00 00 00 
+  40036a:	48 c7 85 64 fe ff ff 	mov    QWORD PTR [rbp-0x19c],0x0
+  400371:	00 00 00 00 
+  400375:	48 c7 85 6c fe ff ff 	mov    QWORD PTR [rbp-0x194],0x0
+  40037c:	00 00 00 00 
+  400380:	48 c7 85 74 fe ff ff 	mov    QWORD PTR [rbp-0x18c],0x0
+  400387:	00 00 00 00 
+  40038b:	48 c7 85 7c fe ff ff 	mov    QWORD PTR [rbp-0x184],0x0
+  400392:	00 00 00 00 
+  400396:	48 c7 85 84 fe ff ff 	mov    QWORD PTR [rbp-0x17c],0x0
+  40039d:	00 00 00 00 
+  4003a1:	48 c7 85 8c fe ff ff 	mov    QWORD PTR [rbp-0x174],0x0
+  4003a8:	00 00 00 00 
+  4003ac:	48 c7 85 94 fe ff ff 	mov    QWORD PTR [rbp-0x16c],0x0
+  4003b3:	00 00 00 00 
+  4003b7:	48 c7 85 9c fe ff ff 	mov    QWORD PTR [rbp-0x164],0x0
+  4003be:	00 00 00 00 
+  4003c2:	48 c7 85 a4 fe ff ff 	mov    QWORD PTR [rbp-0x15c],0x0
+  4003c9:	00 00 00 00 
+  4003cd:	48 c7 85 ac fe ff ff 	mov    QWORD PTR [rbp-0x154],0x0
+  4003d4:	00 00 00 00 
             printf("enter path:");
-  4003db:	48 8d 05 71 51 00 00 	lea    rax,[rip+0x5171]        # 405553 <b+0x67>
-  4003e2:	48 89 c7             	mov    rdi,rax
-  4003e5:	b8 00 00 00 00       	mov    eax,0x0
-  4003ea:	e8 91 34 00 00       	call   403880 <printf>
+  4003d8:	48 8d 05 74 51 00 00 	lea    rax,[rip+0x5174]        # 405553 <b+0x67>
+  4003df:	48 89 c7             	mov    rdi,rax
+  4003e2:	b8 00 00 00 00       	mov    eax,0x0
+  4003e7:	e8 94 34 00 00       	call   403880 <printf>
             // write(2, "enter path:", 11);
             gets(tmppath);
-  4003ef:	48 8d 85 20 fe ff ff 	lea    rax,[rbp-0x1e0]
-  4003f6:	48 89 c7             	mov    rdi,rax
-  4003f9:	e8 32 11 00 00       	call   401530 <gets>
+  4003ec:	48 8d 85 34 fe ff ff 	lea    rax,[rbp-0x1cc]
+  4003f3:	48 89 c7             	mov    rdi,rax
+  4003f6:	e8 35 11 00 00       	call   401530 <gets>
             if (chdir(tmppath) == -1) {
-  4003fe:	48 8d 85 20 fe ff ff 	lea    rax,[rbp-0x1e0]
-  400405:	48 89 c7             	mov    rdi,rax
-  400408:	e8 23 0f 00 00       	call   401330 <chdir>
-  40040d:	83 f8 ff             	cmp    eax,0xffffffff
-  400410:	75 23                	jne    400435 <main+0x3fa>
+  4003fb:	48 8d 85 34 fe ff ff 	lea    rax,[rbp-0x1cc]
+  400402:	48 89 c7             	mov    rdi,rax
+  400405:	e8 26 0f 00 00       	call   401330 <chdir>
+  40040a:	83 f8 ff             	cmp    eax,0xffffffff
+  40040d:	75 23                	jne    400432 <main+0x3f7>
                 printf("cannot find directory:%s\n", tmppath);
-  400412:	48 8d 85 20 fe ff ff 	lea    rax,[rbp-0x1e0]
-  400419:	48 89 c6             	mov    rsi,rax
-  40041c:	48 8d 05 3c 51 00 00 	lea    rax,[rip+0x513c]        # 40555f <b+0x73>
-  400423:	48 89 c7             	mov    rdi,rax
-  400426:	b8 00 00 00 00       	mov    eax,0x0
-  40042b:	e8 50 34 00 00       	call   403880 <printf>
+  40040f:	48 8d 85 34 fe ff ff 	lea    rax,[rbp-0x1cc]
+  400416:	48 89 c6             	mov    rsi,rax
+  400419:	48 8d 05 3f 51 00 00 	lea    rax,[rip+0x513f]        # 40555f <b+0x73>
+  400420:	48 89 c7             	mov    rdi,rax
+  400423:	b8 00 00 00 00       	mov    eax,0x0
+  400428:	e8 53 34 00 00       	call   403880 <printf>
                 continue;
-  400430:	e9 64 0a 00 00       	jmp    400e99 <main+0xe5e>
+  40042d:	e9 64 0a 00 00       	jmp    400e96 <main+0xe5b>
 
             //修改tmppath
             //要考虑..和.的情况
             //..的时候，要路径缩短
             //.的时候，不用动
             if (strcmp(path, "..") == 0) {
-  400435:	48 8d 85 b0 fe ff ff 	lea    rax,[rbp-0x150]
-  40043c:	48 8d 15 36 51 00 00 	lea    rdx,[rip+0x5136]        # 405579 <b+0x8d>
-  400443:	48 89 d6             	mov    rsi,rdx
-  400446:	48 89 c7             	mov    rdi,rax
-  400449:	e8 02 12 00 00       	call   401650 <strcmp>
-  40044e:	85 c0                	test   eax,eax
-  400450:	75 75                	jne    4004c7 <main+0x48c>
+  400432:	48 8d 85 b8 fe ff ff 	lea    rax,[rbp-0x148]
+  400439:	48 8d 15 39 51 00 00 	lea    rdx,[rip+0x5139]        # 405579 <b+0x8d>
+  400440:	48 89 d6             	mov    rsi,rdx
+  400443:	48 89 c7             	mov    rdi,rax
+  400446:	e8 05 12 00 00       	call   401650 <strcmp>
+  40044b:	85 c0                	test   eax,eax
+  40044d:	75 75                	jne    4004c4 <main+0x489>
                 char* p = tmppath + strlen(tmppath) - 1;
-  400452:	48 8d 85 20 fe ff ff 	lea    rax,[rbp-0x1e0]
-  400459:	48 89 c7             	mov    rdi,rax
-  40045c:	e8 3f 12 00 00       	call   4016a0 <strlen>
-  400461:	48 8d 50 ff          	lea    rdx,[rax-0x1]
-  400465:	48 8d 85 20 fe ff ff 	lea    rax,[rbp-0x1e0]
-  40046c:	48 01 d0             	add    rax,rdx
-  40046f:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
+  40044f:	48 8d 85 34 fe ff ff 	lea    rax,[rbp-0x1cc]
+  400456:	48 89 c7             	mov    rdi,rax
+  400459:	e8 42 12 00 00       	call   4016a0 <strlen>
+  40045e:	48 8d 50 ff          	lea    rdx,[rax-0x1]
+  400462:	48 8d 85 34 fe ff ff 	lea    rax,[rbp-0x1cc]
+  400469:	48 01 d0             	add    rax,rdx
+  40046c:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
                 while (p > tmppath && *p == '/') {
-  400473:	eb 0f                	jmp    400484 <main+0x449>
+  400470:	eb 0f                	jmp    400481 <main+0x446>
                     *p-- = 0;
-  400475:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  400479:	48 8d 50 ff          	lea    rdx,[rax-0x1]
-  40047d:	48 89 55 f8          	mov    QWORD PTR [rbp-0x8],rdx
-  400481:	c6 00 00             	mov    BYTE PTR [rax],0x0
+  400472:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  400476:	48 8d 50 ff          	lea    rdx,[rax-0x1]
+  40047a:	48 89 55 f8          	mov    QWORD PTR [rbp-0x8],rdx
+  40047e:	c6 00 00             	mov    BYTE PTR [rax],0x0
                 while (p > tmppath && *p == '/') {
-  400484:	48 8d 85 20 fe ff ff 	lea    rax,[rbp-0x1e0]
-  40048b:	48 39 45 f8          	cmp    QWORD PTR [rbp-0x8],rax
-  40048f:	76 1c                	jbe    4004ad <main+0x472>
-  400491:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  400495:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  400498:	3c 2f                	cmp    al,0x2f
-  40049a:	74 d9                	je     400475 <main+0x43a>
+  400481:	48 8d 85 34 fe ff ff 	lea    rax,[rbp-0x1cc]
+  400488:	48 39 45 f8          	cmp    QWORD PTR [rbp-0x8],rax
+  40048c:	76 1c                	jbe    4004aa <main+0x46f>
+  40048e:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  400492:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  400495:	3c 2f                	cmp    al,0x2f
+  400497:	74 d9                	je     400472 <main+0x437>
                 }
                 while (p > tmppath && *(p) != '/') {
-  40049c:	eb 0f                	jmp    4004ad <main+0x472>
+  400499:	eb 0f                	jmp    4004aa <main+0x46f>
                     *p-- = 0;
-  40049e:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  4004a2:	48 8d 50 ff          	lea    rdx,[rax-0x1]
-  4004a6:	48 89 55 f8          	mov    QWORD PTR [rbp-0x8],rdx
-  4004aa:	c6 00 00             	mov    BYTE PTR [rax],0x0
+  40049b:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  40049f:	48 8d 50 ff          	lea    rdx,[rax-0x1]
+  4004a3:	48 89 55 f8          	mov    QWORD PTR [rbp-0x8],rdx
+  4004a7:	c6 00 00             	mov    BYTE PTR [rax],0x0
                 while (p > tmppath && *(p) != '/') {
-  4004ad:	48 8d 85 20 fe ff ff 	lea    rax,[rbp-0x1e0]
-  4004b4:	48 39 45 f8          	cmp    QWORD PTR [rbp-0x8],rax
-  4004b8:	76 68                	jbe    400522 <main+0x4e7>
-  4004ba:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
-  4004be:	0f b6 00             	movzx  eax,BYTE PTR [rax]
-  4004c1:	3c 2f                	cmp    al,0x2f
-  4004c3:	75 d9                	jne    40049e <main+0x463>
-  4004c5:	eb 5b                	jmp    400522 <main+0x4e7>
+  4004aa:	48 8d 85 34 fe ff ff 	lea    rax,[rbp-0x1cc]
+  4004b1:	48 39 45 f8          	cmp    QWORD PTR [rbp-0x8],rax
+  4004b5:	76 68                	jbe    40051f <main+0x4e4>
+  4004b7:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
+  4004bb:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  4004be:	3c 2f                	cmp    al,0x2f
+  4004c0:	75 d9                	jne    40049b <main+0x460>
+  4004c2:	eb 5b                	jmp    40051f <main+0x4e4>
                 }
             }
             else if (strcmp(path, ".") == 0) {
-  4004c7:	48 8d 85 b0 fe ff ff 	lea    rax,[rbp-0x150]
-  4004ce:	48 8d 15 5c 50 00 00 	lea    rdx,[rip+0x505c]        # 405531 <b+0x45>
-  4004d5:	48 89 d6             	mov    rsi,rdx
-  4004d8:	48 89 c7             	mov    rdi,rax
-  4004db:	e8 70 11 00 00       	call   401650 <strcmp>
-  4004e0:	85 c0                	test   eax,eax
-  4004e2:	0f 84 b0 09 00 00    	je     400e98 <main+0xe5d>
+  4004c4:	48 8d 85 b8 fe ff ff 	lea    rax,[rbp-0x148]
+  4004cb:	48 8d 15 5f 50 00 00 	lea    rdx,[rip+0x505f]        # 405531 <b+0x45>
+  4004d2:	48 89 d6             	mov    rsi,rdx
+  4004d5:	48 89 c7             	mov    rdi,rax
+  4004d8:	e8 73 11 00 00       	call   401650 <strcmp>
+  4004dd:	85 c0                	test   eax,eax
+  4004df:	0f 84 b0 09 00 00    	je     400e95 <main+0xe5a>
                 continue;
             }
             else {
                 strcat(tmppath, path);
-  4004e8:	48 8d 95 b0 fe ff ff 	lea    rdx,[rbp-0x150]
-  4004ef:	48 8d 85 20 fe ff ff 	lea    rax,[rbp-0x1e0]
-  4004f6:	48 89 d6             	mov    rsi,rdx
-  4004f9:	48 89 c7             	mov    rdi,rax
-  4004fc:	e8 0f 11 00 00       	call   401610 <strcat>
+  4004e5:	48 8d 95 b8 fe ff ff 	lea    rdx,[rbp-0x148]
+  4004ec:	48 8d 85 34 fe ff ff 	lea    rax,[rbp-0x1cc]
+  4004f3:	48 89 d6             	mov    rsi,rdx
+  4004f6:	48 89 c7             	mov    rdi,rax
+  4004f9:	e8 12 11 00 00       	call   401610 <strcat>
                 strcat(tmppath, "/");
-  400501:	48 8d 85 20 fe ff ff 	lea    rax,[rbp-0x1e0]
-  400508:	48 89 c7             	mov    rdi,rax
-  40050b:	e8 90 11 00 00       	call   4016a0 <strlen>
-  400510:	48 89 c2             	mov    rdx,rax
-  400513:	48 8d 85 20 fe ff ff 	lea    rax,[rbp-0x1e0]
-  40051a:	48 01 d0             	add    rax,rdx
-  40051d:	66 c7 00 2f 00       	mov    WORD PTR [rax],0x2f
+  4004fe:	48 8d 85 34 fe ff ff 	lea    rax,[rbp-0x1cc]
+  400505:	48 89 c7             	mov    rdi,rax
+  400508:	e8 93 11 00 00       	call   4016a0 <strlen>
+  40050d:	48 89 c2             	mov    rdx,rax
+  400510:	48 8d 85 34 fe ff ff 	lea    rax,[rbp-0x1cc]
+  400517:	48 01 d0             	add    rax,rdx
+  40051a:	66 c7 00 2f 00       	mov    WORD PTR [rax],0x2f
             }
             printf("current directory:%s\n", tmppath);
-  400522:	48 8d 85 20 fe ff ff 	lea    rax,[rbp-0x1e0]
-  400529:	48 89 c6             	mov    rsi,rax
-  40052c:	48 8d 05 49 50 00 00 	lea    rax,[rip+0x5049]        # 40557c <b+0x90>
-  400533:	48 89 c7             	mov    rdi,rax
-  400536:	b8 00 00 00 00       	mov    eax,0x0
-  40053b:	e8 40 33 00 00       	call   403880 <printf>
-  400540:	e9 81 fc ff ff       	jmp    4001c6 <main+0x18b>
+  40051f:	48 8d 85 34 fe ff ff 	lea    rax,[rbp-0x1cc]
+  400526:	48 89 c6             	mov    rsi,rax
+  400529:	48 8d 05 4c 50 00 00 	lea    rax,[rip+0x504c]        # 40557c <b+0x90>
+  400530:	48 89 c7             	mov    rdi,rax
+  400533:	b8 00 00 00 00       	mov    eax,0x0
+  400538:	e8 43 33 00 00       	call   403880 <printf>
+  40053d:	e9 81 fc ff ff       	jmp    4001c3 <main+0x188>
         }
         else if (strcmp(cmd, "touch") == 0) {
-  400545:	48 8d 85 30 ff ff ff 	lea    rax,[rbp-0xd0]
-  40054c:	48 8d 15 3f 50 00 00 	lea    rdx,[rip+0x503f]        # 405592 <b+0xa6>
-  400553:	48 89 d6             	mov    rsi,rdx
-  400556:	48 89 c7             	mov    rdi,rax
-  400559:	e8 f2 10 00 00       	call   401650 <strcmp>
-  40055e:	85 c0                	test   eax,eax
-  400560:	0f 85 1e 01 00 00    	jne    400684 <main+0x649>
+  400542:	48 8d 85 38 ff ff ff 	lea    rax,[rbp-0xc8]
+  400549:	48 8d 15 42 50 00 00 	lea    rdx,[rip+0x5042]        # 405592 <b+0xa6>
+  400550:	48 89 d6             	mov    rsi,rdx
+  400553:	48 89 c7             	mov    rdi,rax
+  400556:	e8 f5 10 00 00       	call   401650 <strcmp>
+  40055b:	85 c0                	test   eax,eax
+  40055d:	0f 85 1e 01 00 00    	jne    400681 <main+0x646>
             char path[100] = {0};
-  400566:	48 c7 85 20 fe ff ff 	mov    QWORD PTR [rbp-0x1e0],0x0
-  40056d:	00 00 00 00 
-  400571:	48 c7 85 28 fe ff ff 	mov    QWORD PTR [rbp-0x1d8],0x0
-  400578:	00 00 00 00 
-  40057c:	48 c7 85 30 fe ff ff 	mov    QWORD PTR [rbp-0x1d0],0x0
-  400583:	00 00 00 00 
-  400587:	48 c7 85 38 fe ff ff 	mov    QWORD PTR [rbp-0x1c8],0x0
-  40058e:	00 00 00 00 
-  400592:	48 c7 85 40 fe ff ff 	mov    QWORD PTR [rbp-0x1c0],0x0
-  400599:	00 00 00 00 
-  40059d:	48 c7 85 48 fe ff ff 	mov    QWORD PTR [rbp-0x1b8],0x0
-  4005a4:	00 00 00 00 
-  4005a8:	48 c7 85 50 fe ff ff 	mov    QWORD PTR [rbp-0x1b0],0x0
-  4005af:	00 00 00 00 
-  4005b3:	48 c7 85 58 fe ff ff 	mov    QWORD PTR [rbp-0x1a8],0x0
-  4005ba:	00 00 00 00 
-  4005be:	48 c7 85 60 fe ff ff 	mov    QWORD PTR [rbp-0x1a0],0x0
-  4005c5:	00 00 00 00 
-  4005c9:	48 c7 85 68 fe ff ff 	mov    QWORD PTR [rbp-0x198],0x0
-  4005d0:	00 00 00 00 
-  4005d4:	48 c7 85 70 fe ff ff 	mov    QWORD PTR [rbp-0x190],0x0
-  4005db:	00 00 00 00 
-  4005df:	48 c7 85 78 fe ff ff 	mov    QWORD PTR [rbp-0x188],0x0
-  4005e6:	00 00 00 00 
-  4005ea:	c7 85 80 fe ff ff 00 	mov    DWORD PTR [rbp-0x180],0x0
-  4005f1:	00 00 00 
+  400563:	48 c7 85 34 fe ff ff 	mov    QWORD PTR [rbp-0x1cc],0x0
+  40056a:	00 00 00 00 
+  40056e:	48 c7 85 3c fe ff ff 	mov    QWORD PTR [rbp-0x1c4],0x0
+  400575:	00 00 00 00 
+  400579:	48 c7 85 44 fe ff ff 	mov    QWORD PTR [rbp-0x1bc],0x0
+  400580:	00 00 00 00 
+  400584:	48 c7 85 4c fe ff ff 	mov    QWORD PTR [rbp-0x1b4],0x0
+  40058b:	00 00 00 00 
+  40058f:	48 c7 85 54 fe ff ff 	mov    QWORD PTR [rbp-0x1ac],0x0
+  400596:	00 00 00 00 
+  40059a:	48 c7 85 5c fe ff ff 	mov    QWORD PTR [rbp-0x1a4],0x0
+  4005a1:	00 00 00 00 
+  4005a5:	48 c7 85 64 fe ff ff 	mov    QWORD PTR [rbp-0x19c],0x0
+  4005ac:	00 00 00 00 
+  4005b0:	48 c7 85 6c fe ff ff 	mov    QWORD PTR [rbp-0x194],0x0
+  4005b7:	00 00 00 00 
+  4005bb:	48 c7 85 74 fe ff ff 	mov    QWORD PTR [rbp-0x18c],0x0
+  4005c2:	00 00 00 00 
+  4005c6:	48 c7 85 7c fe ff ff 	mov    QWORD PTR [rbp-0x184],0x0
+  4005cd:	00 00 00 00 
+  4005d1:	48 c7 85 84 fe ff ff 	mov    QWORD PTR [rbp-0x17c],0x0
+  4005d8:	00 00 00 00 
+  4005dc:	48 c7 85 8c fe ff ff 	mov    QWORD PTR [rbp-0x174],0x0
+  4005e3:	00 00 00 00 
+  4005e7:	c7 85 94 fe ff ff 00 	mov    DWORD PTR [rbp-0x16c],0x0
+  4005ee:	00 00 00 
             printf("input path:");
-  4005f4:	48 8d 05 9d 4f 00 00 	lea    rax,[rip+0x4f9d]        # 405598 <b+0xac>
-  4005fb:	48 89 c7             	mov    rdi,rax
-  4005fe:	b8 00 00 00 00       	mov    eax,0x0
-  400603:	e8 78 32 00 00       	call   403880 <printf>
+  4005f1:	48 8d 05 a0 4f 00 00 	lea    rax,[rip+0x4fa0]        # 405598 <b+0xac>
+  4005f8:	48 89 c7             	mov    rdi,rax
+  4005fb:	b8 00 00 00 00       	mov    eax,0x0
+  400600:	e8 7b 32 00 00       	call   403880 <printf>
             gets(path);
-  400608:	48 8d 85 20 fe ff ff 	lea    rax,[rbp-0x1e0]
-  40060f:	48 89 c7             	mov    rdi,rax
-  400612:	e8 19 0f 00 00       	call   401530 <gets>
+  400605:	48 8d 85 34 fe ff ff 	lea    rax,[rbp-0x1cc]
+  40060c:	48 89 c7             	mov    rdi,rax
+  40060f:	e8 1c 0f 00 00       	call   401530 <gets>
             int fd = creat(path, O_CREAT);
-  400617:	48 8d 85 20 fe ff ff 	lea    rax,[rbp-0x1e0]
-  40061e:	be 40 00 00 00       	mov    esi,0x40
-  400623:	48 89 c7             	mov    rdi,rax
-  400626:	e8 7a 0d 00 00       	call   4013a5 <creat>
-  40062b:	89 45 cc             	mov    DWORD PTR [rbp-0x34],eax
+  400614:	48 8d 85 34 fe ff ff 	lea    rax,[rbp-0x1cc]
+  40061b:	be 40 00 00 00       	mov    esi,0x40
+  400620:	48 89 c7             	mov    rdi,rax
+  400623:	e8 7d 0d 00 00       	call   4013a5 <creat>
+  400628:	89 45 cc             	mov    DWORD PTR [rbp-0x34],eax
             if (fd < 0) {
-  40062e:	83 7d cc 00          	cmp    DWORD PTR [rbp-0x34],0x0
-  400632:	79 23                	jns    400657 <main+0x61c>
+  40062b:	83 7d cc 00          	cmp    DWORD PTR [rbp-0x34],0x0
+  40062f:	79 23                	jns    400654 <main+0x619>
                 printf("create file %s failed\n", path);
-  400634:	48 8d 85 20 fe ff ff 	lea    rax,[rbp-0x1e0]
-  40063b:	48 89 c6             	mov    rsi,rax
-  40063e:	48 8d 05 5f 4f 00 00 	lea    rax,[rip+0x4f5f]        # 4055a4 <b+0xb8>
-  400645:	48 89 c7             	mov    rdi,rax
-  400648:	b8 00 00 00 00       	mov    eax,0x0
-  40064d:	e8 2e 32 00 00       	call   403880 <printf>
-  400652:	e9 6f fb ff ff       	jmp    4001c6 <main+0x18b>
+  400631:	48 8d 85 34 fe ff ff 	lea    rax,[rbp-0x1cc]
+  400638:	48 89 c6             	mov    rsi,rax
+  40063b:	48 8d 05 62 4f 00 00 	lea    rax,[rip+0x4f62]        # 4055a4 <b+0xb8>
+  400642:	48 89 c7             	mov    rdi,rax
+  400645:	b8 00 00 00 00       	mov    eax,0x0
+  40064a:	e8 31 32 00 00       	call   403880 <printf>
+  40064f:	e9 6f fb ff ff       	jmp    4001c3 <main+0x188>
             }
             else {
                 printf("create file %s success\n", path);
-  400657:	48 8d 85 20 fe ff ff 	lea    rax,[rbp-0x1e0]
-  40065e:	48 89 c6             	mov    rsi,rax
-  400661:	48 8d 05 53 4f 00 00 	lea    rax,[rip+0x4f53]        # 4055bb <b+0xcf>
-  400668:	48 89 c7             	mov    rdi,rax
-  40066b:	b8 00 00 00 00       	mov    eax,0x0
-  400670:	e8 0b 32 00 00       	call   403880 <printf>
+  400654:	48 8d 85 34 fe ff ff 	lea    rax,[rbp-0x1cc]
+  40065b:	48 89 c6             	mov    rsi,rax
+  40065e:	48 8d 05 56 4f 00 00 	lea    rax,[rip+0x4f56]        # 4055bb <b+0xcf>
+  400665:	48 89 c7             	mov    rdi,rax
+  400668:	b8 00 00 00 00       	mov    eax,0x0
+  40066d:	e8 0e 32 00 00       	call   403880 <printf>
                 close(fd);
-  400675:	8b 45 cc             	mov    eax,DWORD PTR [rbp-0x34]
-  400678:	89 c7                	mov    edi,eax
-  40067a:	e8 f1 08 00 00       	call   400f70 <close>
-  40067f:	e9 42 fb ff ff       	jmp    4001c6 <main+0x18b>
+  400672:	8b 45 cc             	mov    eax,DWORD PTR [rbp-0x34]
+  400675:	89 c7                	mov    edi,eax
+  400677:	e8 f4 08 00 00       	call   400f70 <close>
+  40067c:	e9 42 fb ff ff       	jmp    4001c3 <main+0x188>
             }
         }
         else if (strcmp(cmd, "rm") == 0) {
-  400684:	48 8d 85 30 ff ff ff 	lea    rax,[rbp-0xd0]
-  40068b:	48 8d 15 41 4f 00 00 	lea    rdx,[rip+0x4f41]        # 4055d3 <b+0xe7>
-  400692:	48 89 d6             	mov    rsi,rdx
-  400695:	48 89 c7             	mov    rdi,rax
-  400698:	e8 b3 0f 00 00       	call   401650 <strcmp>
-  40069d:	85 c0                	test   eax,eax
-  40069f:	0f 85 0f 01 00 00    	jne    4007b4 <main+0x779>
+  400681:	48 8d 85 38 ff ff ff 	lea    rax,[rbp-0xc8]
+  400688:	48 8d 15 44 4f 00 00 	lea    rdx,[rip+0x4f44]        # 4055d3 <b+0xe7>
+  40068f:	48 89 d6             	mov    rsi,rdx
+  400692:	48 89 c7             	mov    rdi,rax
+  400695:	e8 b6 0f 00 00       	call   401650 <strcmp>
+  40069a:	85 c0                	test   eax,eax
+  40069c:	0f 85 0f 01 00 00    	jne    4007b1 <main+0x776>
             char path[100] = {0};
-  4006a5:	48 c7 85 20 fe ff ff 	mov    QWORD PTR [rbp-0x1e0],0x0
-  4006ac:	00 00 00 00 
-  4006b0:	48 c7 85 28 fe ff ff 	mov    QWORD PTR [rbp-0x1d8],0x0
-  4006b7:	00 00 00 00 
-  4006bb:	48 c7 85 30 fe ff ff 	mov    QWORD PTR [rbp-0x1d0],0x0
-  4006c2:	00 00 00 00 
-  4006c6:	48 c7 85 38 fe ff ff 	mov    QWORD PTR [rbp-0x1c8],0x0
-  4006cd:	00 00 00 00 
-  4006d1:	48 c7 85 40 fe ff ff 	mov    QWORD PTR [rbp-0x1c0],0x0
-  4006d8:	00 00 00 00 
-  4006dc:	48 c7 85 48 fe ff ff 	mov    QWORD PTR [rbp-0x1b8],0x0
-  4006e3:	00 00 00 00 
-  4006e7:	48 c7 85 50 fe ff ff 	mov    QWORD PTR [rbp-0x1b0],0x0
-  4006ee:	00 00 00 00 
-  4006f2:	48 c7 85 58 fe ff ff 	mov    QWORD PTR [rbp-0x1a8],0x0
-  4006f9:	00 00 00 00 
-  4006fd:	48 c7 85 60 fe ff ff 	mov    QWORD PTR [rbp-0x1a0],0x0
-  400704:	00 00 00 00 
-  400708:	48 c7 85 68 fe ff ff 	mov    QWORD PTR [rbp-0x198],0x0
-  40070f:	00 00 00 00 
-  400713:	48 c7 85 70 fe ff ff 	mov    QWORD PTR [rbp-0x190],0x0
-  40071a:	00 00 00 00 
-  40071e:	48 c7 85 78 fe ff ff 	mov    QWORD PTR [rbp-0x188],0x0
-  400725:	00 00 00 00 
-  400729:	c7 85 80 fe ff ff 00 	mov    DWORD PTR [rbp-0x180],0x0
-  400730:	00 00 00 
+  4006a2:	48 c7 85 34 fe ff ff 	mov    QWORD PTR [rbp-0x1cc],0x0
+  4006a9:	00 00 00 00 
+  4006ad:	48 c7 85 3c fe ff ff 	mov    QWORD PTR [rbp-0x1c4],0x0
+  4006b4:	00 00 00 00 
+  4006b8:	48 c7 85 44 fe ff ff 	mov    QWORD PTR [rbp-0x1bc],0x0
+  4006bf:	00 00 00 00 
+  4006c3:	48 c7 85 4c fe ff ff 	mov    QWORD PTR [rbp-0x1b4],0x0
+  4006ca:	00 00 00 00 
+  4006ce:	48 c7 85 54 fe ff ff 	mov    QWORD PTR [rbp-0x1ac],0x0
+  4006d5:	00 00 00 00 
+  4006d9:	48 c7 85 5c fe ff ff 	mov    QWORD PTR [rbp-0x1a4],0x0
+  4006e0:	00 00 00 00 
+  4006e4:	48 c7 85 64 fe ff ff 	mov    QWORD PTR [rbp-0x19c],0x0
+  4006eb:	00 00 00 00 
+  4006ef:	48 c7 85 6c fe ff ff 	mov    QWORD PTR [rbp-0x194],0x0
+  4006f6:	00 00 00 00 
+  4006fa:	48 c7 85 74 fe ff ff 	mov    QWORD PTR [rbp-0x18c],0x0
+  400701:	00 00 00 00 
+  400705:	48 c7 85 7c fe ff ff 	mov    QWORD PTR [rbp-0x184],0x0
+  40070c:	00 00 00 00 
+  400710:	48 c7 85 84 fe ff ff 	mov    QWORD PTR [rbp-0x17c],0x0
+  400717:	00 00 00 00 
+  40071b:	48 c7 85 8c fe ff ff 	mov    QWORD PTR [rbp-0x174],0x0
+  400722:	00 00 00 00 
+  400726:	c7 85 94 fe ff ff 00 	mov    DWORD PTR [rbp-0x16c],0x0
+  40072d:	00 00 00 
             printf("input path:");
-  400733:	48 8d 05 5e 4e 00 00 	lea    rax,[rip+0x4e5e]        # 405598 <b+0xac>
-  40073a:	48 89 c7             	mov    rdi,rax
-  40073d:	b8 00 00 00 00       	mov    eax,0x0
-  400742:	e8 39 31 00 00       	call   403880 <printf>
+  400730:	48 8d 05 61 4e 00 00 	lea    rax,[rip+0x4e61]        # 405598 <b+0xac>
+  400737:	48 89 c7             	mov    rdi,rax
+  40073a:	b8 00 00 00 00       	mov    eax,0x0
+  40073f:	e8 3c 31 00 00       	call   403880 <printf>
             gets(path);
-  400747:	48 8d 85 20 fe ff ff 	lea    rax,[rbp-0x1e0]
-  40074e:	48 89 c7             	mov    rdi,rax
-  400751:	e8 da 0d 00 00       	call   401530 <gets>
+  400744:	48 8d 85 34 fe ff ff 	lea    rax,[rbp-0x1cc]
+  40074b:	48 89 c7             	mov    rdi,rax
+  40074e:	e8 dd 0d 00 00       	call   401530 <gets>
             int stat = remove(path);
-  400756:	48 8d 85 20 fe ff ff 	lea    rax,[rbp-0x1e0]
-  40075d:	48 89 c7             	mov    rdi,rax
-  400760:	e8 6b 09 00 00       	call   4010d0 <remove>
-  400765:	89 45 d0             	mov    DWORD PTR [rbp-0x30],eax
+  400753:	48 8d 85 34 fe ff ff 	lea    rax,[rbp-0x1cc]
+  40075a:	48 89 c7             	mov    rdi,rax
+  40075d:	e8 6e 09 00 00       	call   4010d0 <remove>
+  400762:	89 45 d0             	mov    DWORD PTR [rbp-0x30],eax
             if (stat < 0) {
-  400768:	83 7d d0 00          	cmp    DWORD PTR [rbp-0x30],0x0
-  40076c:	79 23                	jns    400791 <main+0x756>
+  400765:	83 7d d0 00          	cmp    DWORD PTR [rbp-0x30],0x0
+  400769:	79 23                	jns    40078e <main+0x753>
                 printf("remove file/dir %s failed\n", path);
-  40076e:	48 8d 85 20 fe ff ff 	lea    rax,[rbp-0x1e0]
-  400775:	48 89 c6             	mov    rsi,rax
-  400778:	48 8d 05 57 4e 00 00 	lea    rax,[rip+0x4e57]        # 4055d6 <b+0xea>
-  40077f:	48 89 c7             	mov    rdi,rax
-  400782:	b8 00 00 00 00       	mov    eax,0x0
-  400787:	e8 f4 30 00 00       	call   403880 <printf>
-  40078c:	e9 35 fa ff ff       	jmp    4001c6 <main+0x18b>
+  40076b:	48 8d 85 34 fe ff ff 	lea    rax,[rbp-0x1cc]
+  400772:	48 89 c6             	mov    rsi,rax
+  400775:	48 8d 05 5a 4e 00 00 	lea    rax,[rip+0x4e5a]        # 4055d6 <b+0xea>
+  40077c:	48 89 c7             	mov    rdi,rax
+  40077f:	b8 00 00 00 00       	mov    eax,0x0
+  400784:	e8 f7 30 00 00       	call   403880 <printf>
+  400789:	e9 35 fa ff ff       	jmp    4001c3 <main+0x188>
             }
             else {
                 printf("remove file/dir %s success\n", path);
-  400791:	48 8d 85 20 fe ff ff 	lea    rax,[rbp-0x1e0]
-  400798:	48 89 c6             	mov    rsi,rax
-  40079b:	48 8d 05 4f 4e 00 00 	lea    rax,[rip+0x4e4f]        # 4055f1 <b+0x105>
-  4007a2:	48 89 c7             	mov    rdi,rax
-  4007a5:	b8 00 00 00 00       	mov    eax,0x0
-  4007aa:	e8 d1 30 00 00       	call   403880 <printf>
-  4007af:	e9 12 fa ff ff       	jmp    4001c6 <main+0x18b>
+  40078e:	48 8d 85 34 fe ff ff 	lea    rax,[rbp-0x1cc]
+  400795:	48 89 c6             	mov    rsi,rax
+  400798:	48 8d 05 52 4e 00 00 	lea    rax,[rip+0x4e52]        # 4055f1 <b+0x105>
+  40079f:	48 89 c7             	mov    rdi,rax
+  4007a2:	b8 00 00 00 00       	mov    eax,0x0
+  4007a7:	e8 d4 30 00 00       	call   403880 <printf>
+  4007ac:	e9 12 fa ff ff       	jmp    4001c3 <main+0x188>
             }
         }
         else if (strcmp(cmd, "mv") == 0) {
-  4007b4:	48 8d 85 30 ff ff ff 	lea    rax,[rbp-0xd0]
-  4007bb:	48 8d 15 4b 4e 00 00 	lea    rdx,[rip+0x4e4b]        # 40560d <b+0x121>
-  4007c2:	48 89 d6             	mov    rsi,rdx
-  4007c5:	48 89 c7             	mov    rdi,rax
-  4007c8:	e8 83 0e 00 00       	call   401650 <strcmp>
-  4007cd:	85 c0                	test   eax,eax
-  4007cf:	0f 85 d8 01 00 00    	jne    4009ad <main+0x972>
+  4007b1:	48 8d 85 38 ff ff ff 	lea    rax,[rbp-0xc8]
+  4007b8:	48 8d 15 4e 4e 00 00 	lea    rdx,[rip+0x4e4e]        # 40560d <b+0x121>
+  4007bf:	48 89 d6             	mov    rsi,rdx
+  4007c2:	48 89 c7             	mov    rdi,rax
+  4007c5:	e8 86 0e 00 00       	call   401650 <strcmp>
+  4007ca:	85 c0                	test   eax,eax
+  4007cc:	0f 85 d8 01 00 00    	jne    4009aa <main+0x96f>
             char src[100] = {0};
-  4007d5:	48 c7 85 b0 fd ff ff 	mov    QWORD PTR [rbp-0x250],0x0
-  4007dc:	00 00 00 00 
-  4007e0:	48 c7 85 b8 fd ff ff 	mov    QWORD PTR [rbp-0x248],0x0
-  4007e7:	00 00 00 00 
-  4007eb:	48 c7 85 c0 fd ff ff 	mov    QWORD PTR [rbp-0x240],0x0
-  4007f2:	00 00 00 00 
-  4007f6:	48 c7 85 c8 fd ff ff 	mov    QWORD PTR [rbp-0x238],0x0
-  4007fd:	00 00 00 00 
-  400801:	48 c7 85 d0 fd ff ff 	mov    QWORD PTR [rbp-0x230],0x0
-  400808:	00 00 00 00 
-  40080c:	48 c7 85 d8 fd ff ff 	mov    QWORD PTR [rbp-0x228],0x0
-  400813:	00 00 00 00 
-  400817:	48 c7 85 e0 fd ff ff 	mov    QWORD PTR [rbp-0x220],0x0
-  40081e:	00 00 00 00 
-  400822:	48 c7 85 e8 fd ff ff 	mov    QWORD PTR [rbp-0x218],0x0
-  400829:	00 00 00 00 
-  40082d:	48 c7 85 f0 fd ff ff 	mov    QWORD PTR [rbp-0x210],0x0
-  400834:	00 00 00 00 
-  400838:	48 c7 85 f8 fd ff ff 	mov    QWORD PTR [rbp-0x208],0x0
-  40083f:	00 00 00 00 
-  400843:	48 c7 85 00 fe ff ff 	mov    QWORD PTR [rbp-0x200],0x0
-  40084a:	00 00 00 00 
-  40084e:	48 c7 85 08 fe ff ff 	mov    QWORD PTR [rbp-0x1f8],0x0
-  400855:	00 00 00 00 
-  400859:	c7 85 10 fe ff ff 00 	mov    DWORD PTR [rbp-0x1f0],0x0
-  400860:	00 00 00 
+  4007d2:	48 c7 85 d0 fd ff ff 	mov    QWORD PTR [rbp-0x230],0x0
+  4007d9:	00 00 00 00 
+  4007dd:	48 c7 85 d8 fd ff ff 	mov    QWORD PTR [rbp-0x228],0x0
+  4007e4:	00 00 00 00 
+  4007e8:	48 c7 85 e0 fd ff ff 	mov    QWORD PTR [rbp-0x220],0x0
+  4007ef:	00 00 00 00 
+  4007f3:	48 c7 85 e8 fd ff ff 	mov    QWORD PTR [rbp-0x218],0x0
+  4007fa:	00 00 00 00 
+  4007fe:	48 c7 85 f0 fd ff ff 	mov    QWORD PTR [rbp-0x210],0x0
+  400805:	00 00 00 00 
+  400809:	48 c7 85 f8 fd ff ff 	mov    QWORD PTR [rbp-0x208],0x0
+  400810:	00 00 00 00 
+  400814:	48 c7 85 00 fe ff ff 	mov    QWORD PTR [rbp-0x200],0x0
+  40081b:	00 00 00 00 
+  40081f:	48 c7 85 08 fe ff ff 	mov    QWORD PTR [rbp-0x1f8],0x0
+  400826:	00 00 00 00 
+  40082a:	48 c7 85 10 fe ff ff 	mov    QWORD PTR [rbp-0x1f0],0x0
+  400831:	00 00 00 00 
+  400835:	48 c7 85 18 fe ff ff 	mov    QWORD PTR [rbp-0x1e8],0x0
+  40083c:	00 00 00 00 
+  400840:	48 c7 85 20 fe ff ff 	mov    QWORD PTR [rbp-0x1e0],0x0
+  400847:	00 00 00 00 
+  40084b:	48 c7 85 28 fe ff ff 	mov    QWORD PTR [rbp-0x1d8],0x0
+  400852:	00 00 00 00 
+  400856:	c7 85 30 fe ff ff 00 	mov    DWORD PTR [rbp-0x1d0],0x0
+  40085d:	00 00 00 
             char dst[100] = {0};
-  400863:	48 c7 85 20 fe ff ff 	mov    QWORD PTR [rbp-0x1e0],0x0
-  40086a:	00 00 00 00 
-  40086e:	48 c7 85 28 fe ff ff 	mov    QWORD PTR [rbp-0x1d8],0x0
-  400875:	00 00 00 00 
-  400879:	48 c7 85 30 fe ff ff 	mov    QWORD PTR [rbp-0x1d0],0x0
-  400880:	00 00 00 00 
-  400884:	48 c7 85 38 fe ff ff 	mov    QWORD PTR [rbp-0x1c8],0x0
-  40088b:	00 00 00 00 
-  40088f:	48 c7 85 40 fe ff ff 	mov    QWORD PTR [rbp-0x1c0],0x0
-  400896:	00 00 00 00 
-  40089a:	48 c7 85 48 fe ff ff 	mov    QWORD PTR [rbp-0x1b8],0x0
-  4008a1:	00 00 00 00 
-  4008a5:	48 c7 85 50 fe ff ff 	mov    QWORD PTR [rbp-0x1b0],0x0
-  4008ac:	00 00 00 00 
-  4008b0:	48 c7 85 58 fe ff ff 	mov    QWORD PTR [rbp-0x1a8],0x0
-  4008b7:	00 00 00 00 
-  4008bb:	48 c7 85 60 fe ff ff 	mov    QWORD PTR [rbp-0x1a0],0x0
-  4008c2:	00 00 00 00 
-  4008c6:	48 c7 85 68 fe ff ff 	mov    QWORD PTR [rbp-0x198],0x0
-  4008cd:	00 00 00 00 
-  4008d1:	48 c7 85 70 fe ff ff 	mov    QWORD PTR [rbp-0x190],0x0
-  4008d8:	00 00 00 00 
-  4008dc:	48 c7 85 78 fe ff ff 	mov    QWORD PTR [rbp-0x188],0x0
-  4008e3:	00 00 00 00 
-  4008e7:	c7 85 80 fe ff ff 00 	mov    DWORD PTR [rbp-0x180],0x0
-  4008ee:	00 00 00 
+  400860:	48 c7 85 34 fe ff ff 	mov    QWORD PTR [rbp-0x1cc],0x0
+  400867:	00 00 00 00 
+  40086b:	48 c7 85 3c fe ff ff 	mov    QWORD PTR [rbp-0x1c4],0x0
+  400872:	00 00 00 00 
+  400876:	48 c7 85 44 fe ff ff 	mov    QWORD PTR [rbp-0x1bc],0x0
+  40087d:	00 00 00 00 
+  400881:	48 c7 85 4c fe ff ff 	mov    QWORD PTR [rbp-0x1b4],0x0
+  400888:	00 00 00 00 
+  40088c:	48 c7 85 54 fe ff ff 	mov    QWORD PTR [rbp-0x1ac],0x0
+  400893:	00 00 00 00 
+  400897:	48 c7 85 5c fe ff ff 	mov    QWORD PTR [rbp-0x1a4],0x0
+  40089e:	00 00 00 00 
+  4008a2:	48 c7 85 64 fe ff ff 	mov    QWORD PTR [rbp-0x19c],0x0
+  4008a9:	00 00 00 00 
+  4008ad:	48 c7 85 6c fe ff ff 	mov    QWORD PTR [rbp-0x194],0x0
+  4008b4:	00 00 00 00 
+  4008b8:	48 c7 85 74 fe ff ff 	mov    QWORD PTR [rbp-0x18c],0x0
+  4008bf:	00 00 00 00 
+  4008c3:	48 c7 85 7c fe ff ff 	mov    QWORD PTR [rbp-0x184],0x0
+  4008ca:	00 00 00 00 
+  4008ce:	48 c7 85 84 fe ff ff 	mov    QWORD PTR [rbp-0x17c],0x0
+  4008d5:	00 00 00 00 
+  4008d9:	48 c7 85 8c fe ff ff 	mov    QWORD PTR [rbp-0x174],0x0
+  4008e0:	00 00 00 00 
+  4008e4:	c7 85 94 fe ff ff 00 	mov    DWORD PTR [rbp-0x16c],0x0
+  4008eb:	00 00 00 
             printf("input src path:");
-  4008f1:	48 8d 05 18 4d 00 00 	lea    rax,[rip+0x4d18]        # 405610 <b+0x124>
-  4008f8:	48 89 c7             	mov    rdi,rax
-  4008fb:	b8 00 00 00 00       	mov    eax,0x0
-  400900:	e8 7b 2f 00 00       	call   403880 <printf>
+  4008ee:	48 8d 05 1b 4d 00 00 	lea    rax,[rip+0x4d1b]        # 405610 <b+0x124>
+  4008f5:	48 89 c7             	mov    rdi,rax
+  4008f8:	b8 00 00 00 00       	mov    eax,0x0
+  4008fd:	e8 7e 2f 00 00       	call   403880 <printf>
             gets(src);
-  400905:	48 8d 85 b0 fd ff ff 	lea    rax,[rbp-0x250]
-  40090c:	48 89 c7             	mov    rdi,rax
-  40090f:	e8 1c 0c 00 00       	call   401530 <gets>
+  400902:	48 8d 85 d0 fd ff ff 	lea    rax,[rbp-0x230]
+  400909:	48 89 c7             	mov    rdi,rax
+  40090c:	e8 1f 0c 00 00       	call   401530 <gets>
             printf("input dst path:");
-  400914:	48 8d 05 05 4d 00 00 	lea    rax,[rip+0x4d05]        # 405620 <b+0x134>
-  40091b:	48 89 c7             	mov    rdi,rax
-  40091e:	b8 00 00 00 00       	mov    eax,0x0
-  400923:	e8 58 2f 00 00       	call   403880 <printf>
+  400911:	48 8d 05 08 4d 00 00 	lea    rax,[rip+0x4d08]        # 405620 <b+0x134>
+  400918:	48 89 c7             	mov    rdi,rax
+  40091b:	b8 00 00 00 00       	mov    eax,0x0
+  400920:	e8 5b 2f 00 00       	call   403880 <printf>
             gets(dst);
-  400928:	48 8d 85 20 fe ff ff 	lea    rax,[rbp-0x1e0]
-  40092f:	48 89 c7             	mov    rdi,rax
-  400932:	e8 f9 0b 00 00       	call   401530 <gets>
+  400925:	48 8d 85 34 fe ff ff 	lea    rax,[rbp-0x1cc]
+  40092c:	48 89 c7             	mov    rdi,rax
+  40092f:	e8 fc 0b 00 00       	call   401530 <gets>
             int stat = rename(src, dst);
-  400937:	48 8d 95 20 fe ff ff 	lea    rdx,[rbp-0x1e0]
-  40093e:	48 8d 85 b0 fd ff ff 	lea    rax,[rbp-0x250]
-  400945:	48 89 d6             	mov    rsi,rdx
-  400948:	48 89 c7             	mov    rdi,rax
-  40094b:	e8 fc 0a 00 00       	call   40144c <rename>
-  400950:	89 45 d4             	mov    DWORD PTR [rbp-0x2c],eax
+  400934:	48 8d 95 34 fe ff ff 	lea    rdx,[rbp-0x1cc]
+  40093b:	48 8d 85 d0 fd ff ff 	lea    rax,[rbp-0x230]
+  400942:	48 89 d6             	mov    rsi,rdx
+  400945:	48 89 c7             	mov    rdi,rax
+  400948:	e8 ff 0a 00 00       	call   40144c <rename>
+  40094d:	89 45 d4             	mov    DWORD PTR [rbp-0x2c],eax
             if (stat < 0) {
-  400953:	83 7d d4 00          	cmp    DWORD PTR [rbp-0x2c],0x0
-  400957:	79 2a                	jns    400983 <main+0x948>
+  400950:	83 7d d4 00          	cmp    DWORD PTR [rbp-0x2c],0x0
+  400954:	79 2a                	jns    400980 <main+0x945>
                 printf("move file/dir %s to %s failed\n", src, dst);
-  400959:	48 8d 95 20 fe ff ff 	lea    rdx,[rbp-0x1e0]
-  400960:	48 8d 85 b0 fd ff ff 	lea    rax,[rbp-0x250]
-  400967:	48 89 c6             	mov    rsi,rax
-  40096a:	48 8d 05 bf 4c 00 00 	lea    rax,[rip+0x4cbf]        # 405630 <b+0x144>
-  400971:	48 89 c7             	mov    rdi,rax
-  400974:	b8 00 00 00 00       	mov    eax,0x0
-  400979:	e8 02 2f 00 00       	call   403880 <printf>
-  40097e:	e9 43 f8 ff ff       	jmp    4001c6 <main+0x18b>
+  400956:	48 8d 95 34 fe ff ff 	lea    rdx,[rbp-0x1cc]
+  40095d:	48 8d 85 d0 fd ff ff 	lea    rax,[rbp-0x230]
+  400964:	48 89 c6             	mov    rsi,rax
+  400967:	48 8d 05 c2 4c 00 00 	lea    rax,[rip+0x4cc2]        # 405630 <b+0x144>
+  40096e:	48 89 c7             	mov    rdi,rax
+  400971:	b8 00 00 00 00       	mov    eax,0x0
+  400976:	e8 05 2f 00 00       	call   403880 <printf>
+  40097b:	e9 43 f8 ff ff       	jmp    4001c3 <main+0x188>
             }
             else {
                 printf("move file/dir %s to %s success\n", src, dst);
-  400983:	48 8d 95 20 fe ff ff 	lea    rdx,[rbp-0x1e0]
-  40098a:	48 8d 85 b0 fd ff ff 	lea    rax,[rbp-0x250]
-  400991:	48 89 c6             	mov    rsi,rax
-  400994:	48 8d 05 b5 4c 00 00 	lea    rax,[rip+0x4cb5]        # 405650 <b+0x164>
-  40099b:	48 89 c7             	mov    rdi,rax
-  40099e:	b8 00 00 00 00       	mov    eax,0x0
-  4009a3:	e8 d8 2e 00 00       	call   403880 <printf>
-  4009a8:	e9 19 f8 ff ff       	jmp    4001c6 <main+0x18b>
+  400980:	48 8d 95 34 fe ff ff 	lea    rdx,[rbp-0x1cc]
+  400987:	48 8d 85 d0 fd ff ff 	lea    rax,[rbp-0x230]
+  40098e:	48 89 c6             	mov    rsi,rax
+  400991:	48 8d 05 b8 4c 00 00 	lea    rax,[rip+0x4cb8]        # 405650 <b+0x164>
+  400998:	48 89 c7             	mov    rdi,rax
+  40099b:	b8 00 00 00 00       	mov    eax,0x0
+  4009a0:	e8 db 2e 00 00       	call   403880 <printf>
+  4009a5:	e9 19 f8 ff ff       	jmp    4001c3 <main+0x188>
             }
         }
         else if (strcmp(cmd, "cat") == 0) {
-  4009ad:	48 8d 85 30 ff ff ff 	lea    rax,[rbp-0xd0]
-  4009b4:	48 8d 15 b5 4c 00 00 	lea    rdx,[rip+0x4cb5]        # 405670 <b+0x184>
-  4009bb:	48 89 d6             	mov    rsi,rdx
-  4009be:	48 89 c7             	mov    rdi,rax
-  4009c1:	e8 8a 0c 00 00       	call   401650 <strcmp>
-  4009c6:	85 c0                	test   eax,eax
-  4009c8:	0f 85 e6 01 00 00    	jne    400bb4 <main+0xb79>
+  4009aa:	48 8d 85 38 ff ff ff 	lea    rax,[rbp-0xc8]
+  4009b1:	48 8d 15 b8 4c 00 00 	lea    rdx,[rip+0x4cb8]        # 405670 <b+0x184>
+  4009b8:	48 89 d6             	mov    rsi,rdx
+  4009bb:	48 89 c7             	mov    rdi,rax
+  4009be:	e8 8d 0c 00 00       	call   401650 <strcmp>
+  4009c3:	85 c0                	test   eax,eax
+  4009c5:	0f 85 e6 01 00 00    	jne    400bb1 <main+0xb76>
             char path[100] = {0};
-  4009ce:	48 c7 85 b0 fd ff ff 	mov    QWORD PTR [rbp-0x250],0x0
-  4009d5:	00 00 00 00 
-  4009d9:	48 c7 85 b8 fd ff ff 	mov    QWORD PTR [rbp-0x248],0x0
-  4009e0:	00 00 00 00 
-  4009e4:	48 c7 85 c0 fd ff ff 	mov    QWORD PTR [rbp-0x240],0x0
-  4009eb:	00 00 00 00 
-  4009ef:	48 c7 85 c8 fd ff ff 	mov    QWORD PTR [rbp-0x238],0x0
-  4009f6:	00 00 00 00 
-  4009fa:	48 c7 85 d0 fd ff ff 	mov    QWORD PTR [rbp-0x230],0x0
-  400a01:	00 00 00 00 
-  400a05:	48 c7 85 d8 fd ff ff 	mov    QWORD PTR [rbp-0x228],0x0
-  400a0c:	00 00 00 00 
-  400a10:	48 c7 85 e0 fd ff ff 	mov    QWORD PTR [rbp-0x220],0x0
-  400a17:	00 00 00 00 
-  400a1b:	48 c7 85 e8 fd ff ff 	mov    QWORD PTR [rbp-0x218],0x0
-  400a22:	00 00 00 00 
-  400a26:	48 c7 85 f0 fd ff ff 	mov    QWORD PTR [rbp-0x210],0x0
-  400a2d:	00 00 00 00 
-  400a31:	48 c7 85 f8 fd ff ff 	mov    QWORD PTR [rbp-0x208],0x0
-  400a38:	00 00 00 00 
-  400a3c:	48 c7 85 00 fe ff ff 	mov    QWORD PTR [rbp-0x200],0x0
-  400a43:	00 00 00 00 
-  400a47:	48 c7 85 08 fe ff ff 	mov    QWORD PTR [rbp-0x1f8],0x0
-  400a4e:	00 00 00 00 
-  400a52:	c7 85 10 fe ff ff 00 	mov    DWORD PTR [rbp-0x1f0],0x0
-  400a59:	00 00 00 
+  4009cb:	48 c7 85 d0 fd ff ff 	mov    QWORD PTR [rbp-0x230],0x0
+  4009d2:	00 00 00 00 
+  4009d6:	48 c7 85 d8 fd ff ff 	mov    QWORD PTR [rbp-0x228],0x0
+  4009dd:	00 00 00 00 
+  4009e1:	48 c7 85 e0 fd ff ff 	mov    QWORD PTR [rbp-0x220],0x0
+  4009e8:	00 00 00 00 
+  4009ec:	48 c7 85 e8 fd ff ff 	mov    QWORD PTR [rbp-0x218],0x0
+  4009f3:	00 00 00 00 
+  4009f7:	48 c7 85 f0 fd ff ff 	mov    QWORD PTR [rbp-0x210],0x0
+  4009fe:	00 00 00 00 
+  400a02:	48 c7 85 f8 fd ff ff 	mov    QWORD PTR [rbp-0x208],0x0
+  400a09:	00 00 00 00 
+  400a0d:	48 c7 85 00 fe ff ff 	mov    QWORD PTR [rbp-0x200],0x0
+  400a14:	00 00 00 00 
+  400a18:	48 c7 85 08 fe ff ff 	mov    QWORD PTR [rbp-0x1f8],0x0
+  400a1f:	00 00 00 00 
+  400a23:	48 c7 85 10 fe ff ff 	mov    QWORD PTR [rbp-0x1f0],0x0
+  400a2a:	00 00 00 00 
+  400a2e:	48 c7 85 18 fe ff ff 	mov    QWORD PTR [rbp-0x1e8],0x0
+  400a35:	00 00 00 00 
+  400a39:	48 c7 85 20 fe ff ff 	mov    QWORD PTR [rbp-0x1e0],0x0
+  400a40:	00 00 00 00 
+  400a44:	48 c7 85 28 fe ff ff 	mov    QWORD PTR [rbp-0x1d8],0x0
+  400a4b:	00 00 00 00 
+  400a4f:	c7 85 30 fe ff ff 00 	mov    DWORD PTR [rbp-0x1d0],0x0
+  400a56:	00 00 00 
             printf("input path:");
-  400a5c:	48 8d 05 35 4b 00 00 	lea    rax,[rip+0x4b35]        # 405598 <b+0xac>
-  400a63:	48 89 c7             	mov    rdi,rax
-  400a66:	b8 00 00 00 00       	mov    eax,0x0
-  400a6b:	e8 10 2e 00 00       	call   403880 <printf>
+  400a59:	48 8d 05 38 4b 00 00 	lea    rax,[rip+0x4b38]        # 405598 <b+0xac>
+  400a60:	48 89 c7             	mov    rdi,rax
+  400a63:	b8 00 00 00 00       	mov    eax,0x0
+  400a68:	e8 13 2e 00 00       	call   403880 <printf>
             gets(path);
-  400a70:	48 8d 85 b0 fd ff ff 	lea    rax,[rbp-0x250]
-  400a77:	48 89 c7             	mov    rdi,rax
-  400a7a:	e8 b1 0a 00 00       	call   401530 <gets>
+  400a6d:	48 8d 85 d0 fd ff ff 	lea    rax,[rbp-0x230]
+  400a74:	48 89 c7             	mov    rdi,rax
+  400a77:	e8 b4 0a 00 00       	call   401530 <gets>
             int fd = open(path, O_RDONLY);
-  400a7f:	48 8d 85 b0 fd ff ff 	lea    rax,[rbp-0x250]
-  400a86:	be 00 00 00 00       	mov    esi,0x0
-  400a8b:	48 89 c7             	mov    rdi,rax
-  400a8e:	e8 cd 04 00 00       	call   400f60 <open>
-  400a93:	89 45 dc             	mov    DWORD PTR [rbp-0x24],eax
+  400a7c:	48 8d 85 d0 fd ff ff 	lea    rax,[rbp-0x230]
+  400a83:	be 00 00 00 00       	mov    esi,0x0
+  400a88:	48 89 c7             	mov    rdi,rax
+  400a8b:	e8 d0 04 00 00       	call   400f60 <open>
+  400a90:	89 45 dc             	mov    DWORD PTR [rbp-0x24],eax
             if (fd < 0) {
-  400a96:	83 7d dc 00          	cmp    DWORD PTR [rbp-0x24],0x0
-  400a9a:	79 23                	jns    400abf <main+0xa84>
+  400a93:	83 7d dc 00          	cmp    DWORD PTR [rbp-0x24],0x0
+  400a97:	79 23                	jns    400abc <main+0xa81>
                 printf("open file %s failed\n", path);
-  400a9c:	48 8d 85 b0 fd ff ff 	lea    rax,[rbp-0x250]
-  400aa3:	48 89 c6             	mov    rsi,rax
-  400aa6:	48 8d 05 c7 4b 00 00 	lea    rax,[rip+0x4bc7]        # 405674 <b+0x188>
-  400aad:	48 89 c7             	mov    rdi,rax
-  400ab0:	b8 00 00 00 00       	mov    eax,0x0
-  400ab5:	e8 c6 2d 00 00       	call   403880 <printf>
-  400aba:	e9 07 f7 ff ff       	jmp    4001c6 <main+0x18b>
+  400a99:	48 8d 85 d0 fd ff ff 	lea    rax,[rbp-0x230]
+  400aa0:	48 89 c6             	mov    rsi,rax
+  400aa3:	48 8d 05 ca 4b 00 00 	lea    rax,[rip+0x4bca]        # 405674 <b+0x188>
+  400aaa:	48 89 c7             	mov    rdi,rax
+  400aad:	b8 00 00 00 00       	mov    eax,0x0
+  400ab2:	e8 c9 2d 00 00       	call   403880 <printf>
+  400ab7:	e9 07 f7 ff ff       	jmp    4001c3 <main+0x188>
             }
             else {
                 char buffer[100] = {0};
-  400abf:	48 c7 85 20 fe ff ff 	mov    QWORD PTR [rbp-0x1e0],0x0
-  400ac6:	00 00 00 00 
-  400aca:	48 c7 85 28 fe ff ff 	mov    QWORD PTR [rbp-0x1d8],0x0
-  400ad1:	00 00 00 00 
-  400ad5:	48 c7 85 30 fe ff ff 	mov    QWORD PTR [rbp-0x1d0],0x0
-  400adc:	00 00 00 00 
-  400ae0:	48 c7 85 38 fe ff ff 	mov    QWORD PTR [rbp-0x1c8],0x0
-  400ae7:	00 00 00 00 
-  400aeb:	48 c7 85 40 fe ff ff 	mov    QWORD PTR [rbp-0x1c0],0x0
-  400af2:	00 00 00 00 
-  400af6:	48 c7 85 48 fe ff ff 	mov    QWORD PTR [rbp-0x1b8],0x0
-  400afd:	00 00 00 00 
-  400b01:	48 c7 85 50 fe ff ff 	mov    QWORD PTR [rbp-0x1b0],0x0
-  400b08:	00 00 00 00 
-  400b0c:	48 c7 85 58 fe ff ff 	mov    QWORD PTR [rbp-0x1a8],0x0
-  400b13:	00 00 00 00 
-  400b17:	48 c7 85 60 fe ff ff 	mov    QWORD PTR [rbp-0x1a0],0x0
-  400b1e:	00 00 00 00 
-  400b22:	48 c7 85 68 fe ff ff 	mov    QWORD PTR [rbp-0x198],0x0
-  400b29:	00 00 00 00 
-  400b2d:	48 c7 85 70 fe ff ff 	mov    QWORD PTR [rbp-0x190],0x0
-  400b34:	00 00 00 00 
-  400b38:	48 c7 85 78 fe ff ff 	mov    QWORD PTR [rbp-0x188],0x0
-  400b3f:	00 00 00 00 
-  400b43:	c7 85 80 fe ff ff 00 	mov    DWORD PTR [rbp-0x180],0x0
-  400b4a:	00 00 00 
+  400abc:	48 c7 85 34 fe ff ff 	mov    QWORD PTR [rbp-0x1cc],0x0
+  400ac3:	00 00 00 00 
+  400ac7:	48 c7 85 3c fe ff ff 	mov    QWORD PTR [rbp-0x1c4],0x0
+  400ace:	00 00 00 00 
+  400ad2:	48 c7 85 44 fe ff ff 	mov    QWORD PTR [rbp-0x1bc],0x0
+  400ad9:	00 00 00 00 
+  400add:	48 c7 85 4c fe ff ff 	mov    QWORD PTR [rbp-0x1b4],0x0
+  400ae4:	00 00 00 00 
+  400ae8:	48 c7 85 54 fe ff ff 	mov    QWORD PTR [rbp-0x1ac],0x0
+  400aef:	00 00 00 00 
+  400af3:	48 c7 85 5c fe ff ff 	mov    QWORD PTR [rbp-0x1a4],0x0
+  400afa:	00 00 00 00 
+  400afe:	48 c7 85 64 fe ff ff 	mov    QWORD PTR [rbp-0x19c],0x0
+  400b05:	00 00 00 00 
+  400b09:	48 c7 85 6c fe ff ff 	mov    QWORD PTR [rbp-0x194],0x0
+  400b10:	00 00 00 00 
+  400b14:	48 c7 85 74 fe ff ff 	mov    QWORD PTR [rbp-0x18c],0x0
+  400b1b:	00 00 00 00 
+  400b1f:	48 c7 85 7c fe ff ff 	mov    QWORD PTR [rbp-0x184],0x0
+  400b26:	00 00 00 00 
+  400b2a:	48 c7 85 84 fe ff ff 	mov    QWORD PTR [rbp-0x17c],0x0
+  400b31:	00 00 00 00 
+  400b35:	48 c7 85 8c fe ff ff 	mov    QWORD PTR [rbp-0x174],0x0
+  400b3c:	00 00 00 00 
+  400b40:	c7 85 94 fe ff ff 00 	mov    DWORD PTR [rbp-0x16c],0x0
+  400b47:	00 00 00 
                 int  len         = 0;
-  400b4d:	c7 45 d8 00 00 00 00 	mov    DWORD PTR [rbp-0x28],0x0
+  400b4a:	c7 45 d8 00 00 00 00 	mov    DWORD PTR [rbp-0x28],0x0
                 while ((len = read(fd, buffer, 100)) > 0) {
-  400b54:	eb 1e                	jmp    400b74 <main+0xb39>
+  400b51:	eb 1e                	jmp    400b71 <main+0xb36>
                     printf("%s", buffer);
-  400b56:	48 8d 85 20 fe ff ff 	lea    rax,[rbp-0x1e0]
-  400b5d:	48 89 c6             	mov    rsi,rax
-  400b60:	48 8d 05 22 4b 00 00 	lea    rax,[rip+0x4b22]        # 405689 <b+0x19d>
-  400b67:	48 89 c7             	mov    rdi,rax
-  400b6a:	b8 00 00 00 00       	mov    eax,0x0
-  400b6f:	e8 0c 2d 00 00       	call   403880 <printf>
+  400b53:	48 8d 85 34 fe ff ff 	lea    rax,[rbp-0x1cc]
+  400b5a:	48 89 c6             	mov    rsi,rax
+  400b5d:	48 8d 05 25 4b 00 00 	lea    rax,[rip+0x4b25]        # 405689 <b+0x19d>
+  400b64:	48 89 c7             	mov    rdi,rax
+  400b67:	b8 00 00 00 00       	mov    eax,0x0
+  400b6c:	e8 0f 2d 00 00       	call   403880 <printf>
                 while ((len = read(fd, buffer, 100)) > 0) {
-  400b74:	48 8d 8d 20 fe ff ff 	lea    rcx,[rbp-0x1e0]
-  400b7b:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
-  400b7e:	ba 64 00 00 00       	mov    edx,0x64
-  400b83:	48 89 ce             	mov    rsi,rcx
-  400b86:	89 c7                	mov    edi,eax
-  400b88:	e8 f3 03 00 00       	call   400f80 <read>
-  400b8d:	89 45 d8             	mov    DWORD PTR [rbp-0x28],eax
-  400b90:	83 7d d8 00          	cmp    DWORD PTR [rbp-0x28],0x0
-  400b94:	7f c0                	jg     400b56 <main+0xb1b>
+  400b71:	48 8d 8d 34 fe ff ff 	lea    rcx,[rbp-0x1cc]
+  400b78:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
+  400b7b:	ba 64 00 00 00       	mov    edx,0x64
+  400b80:	48 89 ce             	mov    rsi,rcx
+  400b83:	89 c7                	mov    edi,eax
+  400b85:	e8 f6 03 00 00       	call   400f80 <read>
+  400b8a:	89 45 d8             	mov    DWORD PTR [rbp-0x28],eax
+  400b8d:	83 7d d8 00          	cmp    DWORD PTR [rbp-0x28],0x0
+  400b91:	7f c0                	jg     400b53 <main+0xb18>
                 }
                 puts("");
-  400b96:	48 8d 05 ef 4a 00 00 	lea    rax,[rip+0x4aef]        # 40568c <b+0x1a0>
-  400b9d:	48 89 c7             	mov    rdi,rax
-  400ba0:	e8 2b 09 00 00       	call   4014d0 <puts>
+  400b93:	48 8d 05 f2 4a 00 00 	lea    rax,[rip+0x4af2]        # 40568c <b+0x1a0>
+  400b9a:	48 89 c7             	mov    rdi,rax
+  400b9d:	e8 2e 09 00 00       	call   4014d0 <puts>
                 close(fd);
-  400ba5:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
-  400ba8:	89 c7                	mov    edi,eax
-  400baa:	e8 c1 03 00 00       	call   400f70 <close>
-  400baf:	e9 12 f6 ff ff       	jmp    4001c6 <main+0x18b>
+  400ba2:	8b 45 dc             	mov    eax,DWORD PTR [rbp-0x24]
+  400ba5:	89 c7                	mov    edi,eax
+  400ba7:	e8 c4 03 00 00       	call   400f70 <close>
+  400bac:	e9 12 f6 ff ff       	jmp    4001c3 <main+0x188>
             }
         }
         else if (strcmp(cmd, "write") == 0) {
-  400bb4:	48 8d 85 30 ff ff ff 	lea    rax,[rbp-0xd0]
-  400bbb:	48 8d 15 cb 4a 00 00 	lea    rdx,[rip+0x4acb]        # 40568d <b+0x1a1>
-  400bc2:	48 89 d6             	mov    rsi,rdx
-  400bc5:	48 89 c7             	mov    rdi,rax
-  400bc8:	e8 83 0a 00 00       	call   401650 <strcmp>
-  400bcd:	85 c0                	test   eax,eax
-  400bcf:	0f 85 fd 01 00 00    	jne    400dd2 <main+0xd97>
+  400bb1:	48 8d 85 38 ff ff ff 	lea    rax,[rbp-0xc8]
+  400bb8:	48 8d 15 ce 4a 00 00 	lea    rdx,[rip+0x4ace]        # 40568d <b+0x1a1>
+  400bbf:	48 89 d6             	mov    rsi,rdx
+  400bc2:	48 89 c7             	mov    rdi,rax
+  400bc5:	e8 86 0a 00 00       	call   401650 <strcmp>
+  400bca:	85 c0                	test   eax,eax
+  400bcc:	0f 85 fd 01 00 00    	jne    400dcf <main+0xd94>
             char path[100] = {0};
-  400bd5:	48 c7 85 b0 fd ff ff 	mov    QWORD PTR [rbp-0x250],0x0
-  400bdc:	00 00 00 00 
-  400be0:	48 c7 85 b8 fd ff ff 	mov    QWORD PTR [rbp-0x248],0x0
-  400be7:	00 00 00 00 
-  400beb:	48 c7 85 c0 fd ff ff 	mov    QWORD PTR [rbp-0x240],0x0
-  400bf2:	00 00 00 00 
-  400bf6:	48 c7 85 c8 fd ff ff 	mov    QWORD PTR [rbp-0x238],0x0
-  400bfd:	00 00 00 00 
-  400c01:	48 c7 85 d0 fd ff ff 	mov    QWORD PTR [rbp-0x230],0x0
-  400c08:	00 00 00 00 
-  400c0c:	48 c7 85 d8 fd ff ff 	mov    QWORD PTR [rbp-0x228],0x0
-  400c13:	00 00 00 00 
-  400c17:	48 c7 85 e0 fd ff ff 	mov    QWORD PTR [rbp-0x220],0x0
-  400c1e:	00 00 00 00 
-  400c22:	48 c7 85 e8 fd ff ff 	mov    QWORD PTR [rbp-0x218],0x0
-  400c29:	00 00 00 00 
-  400c2d:	48 c7 85 f0 fd ff ff 	mov    QWORD PTR [rbp-0x210],0x0
-  400c34:	00 00 00 00 
-  400c38:	48 c7 85 f8 fd ff ff 	mov    QWORD PTR [rbp-0x208],0x0
-  400c3f:	00 00 00 00 
-  400c43:	48 c7 85 00 fe ff ff 	mov    QWORD PTR [rbp-0x200],0x0
-  400c4a:	00 00 00 00 
-  400c4e:	48 c7 85 08 fe ff ff 	mov    QWORD PTR [rbp-0x1f8],0x0
-  400c55:	00 00 00 00 
-  400c59:	c7 85 10 fe ff ff 00 	mov    DWORD PTR [rbp-0x1f0],0x0
-  400c60:	00 00 00 
+  400bd2:	48 c7 85 d0 fd ff ff 	mov    QWORD PTR [rbp-0x230],0x0
+  400bd9:	00 00 00 00 
+  400bdd:	48 c7 85 d8 fd ff ff 	mov    QWORD PTR [rbp-0x228],0x0
+  400be4:	00 00 00 00 
+  400be8:	48 c7 85 e0 fd ff ff 	mov    QWORD PTR [rbp-0x220],0x0
+  400bef:	00 00 00 00 
+  400bf3:	48 c7 85 e8 fd ff ff 	mov    QWORD PTR [rbp-0x218],0x0
+  400bfa:	00 00 00 00 
+  400bfe:	48 c7 85 f0 fd ff ff 	mov    QWORD PTR [rbp-0x210],0x0
+  400c05:	00 00 00 00 
+  400c09:	48 c7 85 f8 fd ff ff 	mov    QWORD PTR [rbp-0x208],0x0
+  400c10:	00 00 00 00 
+  400c14:	48 c7 85 00 fe ff ff 	mov    QWORD PTR [rbp-0x200],0x0
+  400c1b:	00 00 00 00 
+  400c1f:	48 c7 85 08 fe ff ff 	mov    QWORD PTR [rbp-0x1f8],0x0
+  400c26:	00 00 00 00 
+  400c2a:	48 c7 85 10 fe ff ff 	mov    QWORD PTR [rbp-0x1f0],0x0
+  400c31:	00 00 00 00 
+  400c35:	48 c7 85 18 fe ff ff 	mov    QWORD PTR [rbp-0x1e8],0x0
+  400c3c:	00 00 00 00 
+  400c40:	48 c7 85 20 fe ff ff 	mov    QWORD PTR [rbp-0x1e0],0x0
+  400c47:	00 00 00 00 
+  400c4b:	48 c7 85 28 fe ff ff 	mov    QWORD PTR [rbp-0x1d8],0x0
+  400c52:	00 00 00 00 
+  400c56:	c7 85 30 fe ff ff 00 	mov    DWORD PTR [rbp-0x1d0],0x0
+  400c5d:	00 00 00 
             printf("input path:");
-  400c63:	48 8d 05 2e 49 00 00 	lea    rax,[rip+0x492e]        # 405598 <b+0xac>
-  400c6a:	48 89 c7             	mov    rdi,rax
-  400c6d:	b8 00 00 00 00       	mov    eax,0x0
-  400c72:	e8 09 2c 00 00       	call   403880 <printf>
+  400c60:	48 8d 05 31 49 00 00 	lea    rax,[rip+0x4931]        # 405598 <b+0xac>
+  400c67:	48 89 c7             	mov    rdi,rax
+  400c6a:	b8 00 00 00 00       	mov    eax,0x0
+  400c6f:	e8 0c 2c 00 00       	call   403880 <printf>
             gets(path);
-  400c77:	48 8d 85 b0 fd ff ff 	lea    rax,[rbp-0x250]
-  400c7e:	48 89 c7             	mov    rdi,rax
-  400c81:	e8 aa 08 00 00       	call   401530 <gets>
+  400c74:	48 8d 85 d0 fd ff ff 	lea    rax,[rbp-0x230]
+  400c7b:	48 89 c7             	mov    rdi,rax
+  400c7e:	e8 ad 08 00 00       	call   401530 <gets>
             int fd = open(path, O_WRONLY);
-  400c86:	48 8d 85 b0 fd ff ff 	lea    rax,[rbp-0x250]
-  400c8d:	be 01 00 00 00       	mov    esi,0x1
-  400c92:	48 89 c7             	mov    rdi,rax
-  400c95:	e8 c6 02 00 00       	call   400f60 <open>
-  400c9a:	89 45 e4             	mov    DWORD PTR [rbp-0x1c],eax
+  400c83:	48 8d 85 d0 fd ff ff 	lea    rax,[rbp-0x230]
+  400c8a:	be 01 00 00 00       	mov    esi,0x1
+  400c8f:	48 89 c7             	mov    rdi,rax
+  400c92:	e8 c9 02 00 00       	call   400f60 <open>
+  400c97:	89 45 e4             	mov    DWORD PTR [rbp-0x1c],eax
             if (fd < 0) {
-  400c9d:	83 7d e4 00          	cmp    DWORD PTR [rbp-0x1c],0x0
-  400ca1:	79 23                	jns    400cc6 <main+0xc8b>
+  400c9a:	83 7d e4 00          	cmp    DWORD PTR [rbp-0x1c],0x0
+  400c9e:	79 23                	jns    400cc3 <main+0xc88>
                 printf("open file %s failed\n", path);
-  400ca3:	48 8d 85 b0 fd ff ff 	lea    rax,[rbp-0x250]
-  400caa:	48 89 c6             	mov    rsi,rax
-  400cad:	48 8d 05 c0 49 00 00 	lea    rax,[rip+0x49c0]        # 405674 <b+0x188>
-  400cb4:	48 89 c7             	mov    rdi,rax
-  400cb7:	b8 00 00 00 00       	mov    eax,0x0
-  400cbc:	e8 bf 2b 00 00       	call   403880 <printf>
-  400cc1:	e9 00 f5 ff ff       	jmp    4001c6 <main+0x18b>
+  400ca0:	48 8d 85 d0 fd ff ff 	lea    rax,[rbp-0x230]
+  400ca7:	48 89 c6             	mov    rsi,rax
+  400caa:	48 8d 05 c3 49 00 00 	lea    rax,[rip+0x49c3]        # 405674 <b+0x188>
+  400cb1:	48 89 c7             	mov    rdi,rax
+  400cb4:	b8 00 00 00 00       	mov    eax,0x0
+  400cb9:	e8 c2 2b 00 00       	call   403880 <printf>
+  400cbe:	e9 00 f5 ff ff       	jmp    4001c3 <main+0x188>
             }
             else {
                 char buffer[100] = {0};
-  400cc6:	48 c7 85 20 fe ff ff 	mov    QWORD PTR [rbp-0x1e0],0x0
-  400ccd:	00 00 00 00 
-  400cd1:	48 c7 85 28 fe ff ff 	mov    QWORD PTR [rbp-0x1d8],0x0
-  400cd8:	00 00 00 00 
-  400cdc:	48 c7 85 30 fe ff ff 	mov    QWORD PTR [rbp-0x1d0],0x0
-  400ce3:	00 00 00 00 
-  400ce7:	48 c7 85 38 fe ff ff 	mov    QWORD PTR [rbp-0x1c8],0x0
-  400cee:	00 00 00 00 
-  400cf2:	48 c7 85 40 fe ff ff 	mov    QWORD PTR [rbp-0x1c0],0x0
-  400cf9:	00 00 00 00 
-  400cfd:	48 c7 85 48 fe ff ff 	mov    QWORD PTR [rbp-0x1b8],0x0
-  400d04:	00 00 00 00 
-  400d08:	48 c7 85 50 fe ff ff 	mov    QWORD PTR [rbp-0x1b0],0x0
-  400d0f:	00 00 00 00 
-  400d13:	48 c7 85 58 fe ff ff 	mov    QWORD PTR [rbp-0x1a8],0x0
-  400d1a:	00 00 00 00 
-  400d1e:	48 c7 85 60 fe ff ff 	mov    QWORD PTR [rbp-0x1a0],0x0
-  400d25:	00 00 00 00 
-  400d29:	48 c7 85 68 fe ff ff 	mov    QWORD PTR [rbp-0x198],0x0
-  400d30:	00 00 00 00 
-  400d34:	48 c7 85 70 fe ff ff 	mov    QWORD PTR [rbp-0x190],0x0
-  400d3b:	00 00 00 00 
-  400d3f:	48 c7 85 78 fe ff ff 	mov    QWORD PTR [rbp-0x188],0x0
-  400d46:	00 00 00 00 
-  400d4a:	c7 85 80 fe ff ff 00 	mov    DWORD PTR [rbp-0x180],0x0
-  400d51:	00 00 00 
+  400cc3:	48 c7 85 34 fe ff ff 	mov    QWORD PTR [rbp-0x1cc],0x0
+  400cca:	00 00 00 00 
+  400cce:	48 c7 85 3c fe ff ff 	mov    QWORD PTR [rbp-0x1c4],0x0
+  400cd5:	00 00 00 00 
+  400cd9:	48 c7 85 44 fe ff ff 	mov    QWORD PTR [rbp-0x1bc],0x0
+  400ce0:	00 00 00 00 
+  400ce4:	48 c7 85 4c fe ff ff 	mov    QWORD PTR [rbp-0x1b4],0x0
+  400ceb:	00 00 00 00 
+  400cef:	48 c7 85 54 fe ff ff 	mov    QWORD PTR [rbp-0x1ac],0x0
+  400cf6:	00 00 00 00 
+  400cfa:	48 c7 85 5c fe ff ff 	mov    QWORD PTR [rbp-0x1a4],0x0
+  400d01:	00 00 00 00 
+  400d05:	48 c7 85 64 fe ff ff 	mov    QWORD PTR [rbp-0x19c],0x0
+  400d0c:	00 00 00 00 
+  400d10:	48 c7 85 6c fe ff ff 	mov    QWORD PTR [rbp-0x194],0x0
+  400d17:	00 00 00 00 
+  400d1b:	48 c7 85 74 fe ff ff 	mov    QWORD PTR [rbp-0x18c],0x0
+  400d22:	00 00 00 00 
+  400d26:	48 c7 85 7c fe ff ff 	mov    QWORD PTR [rbp-0x184],0x0
+  400d2d:	00 00 00 00 
+  400d31:	48 c7 85 84 fe ff ff 	mov    QWORD PTR [rbp-0x17c],0x0
+  400d38:	00 00 00 00 
+  400d3c:	48 c7 85 8c fe ff ff 	mov    QWORD PTR [rbp-0x174],0x0
+  400d43:	00 00 00 00 
+  400d47:	c7 85 94 fe ff ff 00 	mov    DWORD PTR [rbp-0x16c],0x0
+  400d4e:	00 00 00 
                 printf("input content:");
-  400d54:	48 8d 05 38 49 00 00 	lea    rax,[rip+0x4938]        # 405693 <b+0x1a7>
-  400d5b:	48 89 c7             	mov    rdi,rax
-  400d5e:	b8 00 00 00 00       	mov    eax,0x0
-  400d63:	e8 18 2b 00 00       	call   403880 <printf>
+  400d51:	48 8d 05 3b 49 00 00 	lea    rax,[rip+0x493b]        # 405693 <b+0x1a7>
+  400d58:	48 89 c7             	mov    rdi,rax
+  400d5b:	b8 00 00 00 00       	mov    eax,0x0
+  400d60:	e8 1b 2b 00 00       	call   403880 <printf>
                 gets(buffer);
-  400d68:	48 8d 85 20 fe ff ff 	lea    rax,[rbp-0x1e0]
-  400d6f:	48 89 c7             	mov    rdi,rax
-  400d72:	e8 b9 07 00 00       	call   401530 <gets>
+  400d65:	48 8d 85 34 fe ff ff 	lea    rax,[rbp-0x1cc]
+  400d6c:	48 89 c7             	mov    rdi,rax
+  400d6f:	e8 bc 07 00 00       	call   401530 <gets>
                 int len = strlen(buffer);
-  400d77:	48 8d 85 20 fe ff ff 	lea    rax,[rbp-0x1e0]
-  400d7e:	48 89 c7             	mov    rdi,rax
-  400d81:	e8 1a 09 00 00       	call   4016a0 <strlen>
-  400d86:	89 45 e0             	mov    DWORD PTR [rbp-0x20],eax
+  400d74:	48 8d 85 34 fe ff ff 	lea    rax,[rbp-0x1cc]
+  400d7b:	48 89 c7             	mov    rdi,rax
+  400d7e:	e8 1d 09 00 00       	call   4016a0 <strlen>
+  400d83:	89 45 e0             	mov    DWORD PTR [rbp-0x20],eax
                 write(fd, buffer, len);
-  400d89:	8b 45 e0             	mov    eax,DWORD PTR [rbp-0x20]
-  400d8c:	48 63 d0             	movsxd rdx,eax
-  400d8f:	48 8d 8d 20 fe ff ff 	lea    rcx,[rbp-0x1e0]
-  400d96:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
-  400d99:	48 89 ce             	mov    rsi,rcx
-  400d9c:	89 c7                	mov    edi,eax
-  400d9e:	e8 ed 01 00 00       	call   400f90 <write>
+  400d86:	8b 45 e0             	mov    eax,DWORD PTR [rbp-0x20]
+  400d89:	48 63 d0             	movsxd rdx,eax
+  400d8c:	48 8d 8d 34 fe ff ff 	lea    rcx,[rbp-0x1cc]
+  400d93:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
+  400d96:	48 89 ce             	mov    rsi,rcx
+  400d99:	89 c7                	mov    edi,eax
+  400d9b:	e8 f0 01 00 00       	call   400f90 <write>
                 printf("write %d bytes to file %s success\n", len, path);
-  400da3:	48 8d 95 b0 fd ff ff 	lea    rdx,[rbp-0x250]
-  400daa:	8b 45 e0             	mov    eax,DWORD PTR [rbp-0x20]
-  400dad:	89 c6                	mov    esi,eax
-  400daf:	48 8d 05 f2 48 00 00 	lea    rax,[rip+0x48f2]        # 4056a8 <b+0x1bc>
-  400db6:	48 89 c7             	mov    rdi,rax
-  400db9:	b8 00 00 00 00       	mov    eax,0x0
-  400dbe:	e8 bd 2a 00 00       	call   403880 <printf>
+  400da0:	48 8d 95 d0 fd ff ff 	lea    rdx,[rbp-0x230]
+  400da7:	8b 45 e0             	mov    eax,DWORD PTR [rbp-0x20]
+  400daa:	89 c6                	mov    esi,eax
+  400dac:	48 8d 05 f5 48 00 00 	lea    rax,[rip+0x48f5]        # 4056a8 <b+0x1bc>
+  400db3:	48 89 c7             	mov    rdi,rax
+  400db6:	b8 00 00 00 00       	mov    eax,0x0
+  400dbb:	e8 c0 2a 00 00       	call   403880 <printf>
                 close(fd);
-  400dc3:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
-  400dc6:	89 c7                	mov    edi,eax
-  400dc8:	e8 a3 01 00 00       	call   400f70 <close>
-  400dcd:	e9 f4 f3 ff ff       	jmp    4001c6 <main+0x18b>
+  400dc0:	8b 45 e4             	mov    eax,DWORD PTR [rbp-0x1c]
+  400dc3:	89 c7                	mov    edi,eax
+  400dc5:	e8 a6 01 00 00       	call   400f70 <close>
+  400dca:	e9 f4 f3 ff ff       	jmp    4001c3 <main+0x188>
             }
         }
         else {
             printf("trying to execute...\n");
-  400dd2:	48 8d 05 f2 48 00 00 	lea    rax,[rip+0x48f2]        # 4056cb <b+0x1df>
-  400dd9:	48 89 c7             	mov    rdi,rax
-  400ddc:	b8 00 00 00 00       	mov    eax,0x0
-  400de1:	e8 9a 2a 00 00       	call   403880 <printf>
+  400dcf:	48 8d 05 f5 48 00 00 	lea    rax,[rip+0x48f5]        # 4056cb <b+0x1df>
+  400dd6:	48 89 c7             	mov    rdi,rax
+  400dd9:	b8 00 00 00 00       	mov    eax,0x0
+  400dde:	e8 9d 2a 00 00       	call   403880 <printf>
             int pid = 0;
-  400de6:	c7 45 e8 00 00 00 00 	mov    DWORD PTR [rbp-0x18],0x0
+  400de3:	c7 45 e8 00 00 00 00 	mov    DWORD PTR [rbp-0x18],0x0
             if ((pid = fork()) == 0) {
-  400ded:	e8 6e 02 00 00       	call   401060 <fork>
-  400df2:	89 45 e8             	mov    DWORD PTR [rbp-0x18],eax
-  400df5:	83 7d e8 00          	cmp    DWORD PTR [rbp-0x18],0x0
-  400df9:	75 5c                	jne    400e57 <main+0xe1c>
+  400dea:	e8 71 02 00 00       	call   401060 <fork>
+  400def:	89 45 e8             	mov    DWORD PTR [rbp-0x18],eax
+  400df2:	83 7d e8 00          	cmp    DWORD PTR [rbp-0x18],0x0
+  400df6:	75 5c                	jne    400e54 <main+0xe19>
                 printf("forked, ready to execve\n");
-  400dfb:	48 8d 05 df 48 00 00 	lea    rax,[rip+0x48df]        # 4056e1 <b+0x1f5>
-  400e02:	48 89 c7             	mov    rdi,rax
-  400e05:	b8 00 00 00 00       	mov    eax,0x0
-  400e0a:	e8 71 2a 00 00       	call   403880 <printf>
+  400df8:	48 8d 05 e2 48 00 00 	lea    rax,[rip+0x48e2]        # 4056e1 <b+0x1f5>
+  400dff:	48 89 c7             	mov    rdi,rax
+  400e02:	b8 00 00 00 00       	mov    eax,0x0
+  400e07:	e8 74 2a 00 00       	call   403880 <printf>
                 if (execve(cmd, argv, environ) == -1) {
-  400e0f:	48 8b 95 98 fd ff ff 	mov    rdx,QWORD PTR [rbp-0x268]
-  400e16:	48 8b 8d a0 fd ff ff 	mov    rcx,QWORD PTR [rbp-0x260]
-  400e1d:	48 8d 85 30 ff ff ff 	lea    rax,[rbp-0xd0]
-  400e24:	48 89 ce             	mov    rsi,rcx
-  400e27:	48 89 c7             	mov    rdi,rax
-  400e2a:	e8 41 02 00 00       	call   401070 <execve>
-  400e2f:	83 f8 ff             	cmp    eax,0xffffffff
-  400e32:	75 23                	jne    400e57 <main+0xe1c>
+  400e0c:	48 8b 95 b8 fd ff ff 	mov    rdx,QWORD PTR [rbp-0x248]
+  400e13:	48 8b 8d c0 fd ff ff 	mov    rcx,QWORD PTR [rbp-0x240]
+  400e1a:	48 8d 85 38 ff ff ff 	lea    rax,[rbp-0xc8]
+  400e21:	48 89 ce             	mov    rsi,rcx
+  400e24:	48 89 c7             	mov    rdi,rax
+  400e27:	e8 44 02 00 00       	call   401070 <execve>
+  400e2c:	83 f8 ff             	cmp    eax,0xffffffff
+  400e2f:	75 23                	jne    400e54 <main+0xe19>
                     printf("cannot find file:%s\n", cmd);
-  400e34:	48 8d 85 30 ff ff ff 	lea    rax,[rbp-0xd0]
-  400e3b:	48 89 c6             	mov    rsi,rax
-  400e3e:	48 8d 05 b5 48 00 00 	lea    rax,[rip+0x48b5]        # 4056fa <b+0x20e>
-  400e45:	48 89 c7             	mov    rdi,rax
-  400e48:	b8 00 00 00 00       	mov    eax,0x0
-  400e4d:	e8 2e 2a 00 00       	call   403880 <printf>
-  400e52:	e9 6f f3 ff ff       	jmp    4001c6 <main+0x18b>
+  400e31:	48 8d 85 38 ff ff ff 	lea    rax,[rbp-0xc8]
+  400e38:	48 89 c6             	mov    rsi,rax
+  400e3b:	48 8d 05 b8 48 00 00 	lea    rax,[rip+0x48b8]        # 4056fa <b+0x20e>
+  400e42:	48 89 c7             	mov    rdi,rax
+  400e45:	b8 00 00 00 00       	mov    eax,0x0
+  400e4a:	e8 31 2a 00 00       	call   403880 <printf>
+  400e4f:	e9 6f f3 ff ff       	jmp    4001c3 <main+0x188>
                     continue;
                 }
             }
             printf("forked. pid=%d\n", pid);
-  400e57:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
-  400e5a:	89 c6                	mov    esi,eax
-  400e5c:	48 8d 05 ac 48 00 00 	lea    rax,[rip+0x48ac]        # 40570f <b+0x223>
-  400e63:	48 89 c7             	mov    rdi,rax
-  400e66:	b8 00 00 00 00       	mov    eax,0x0
-  400e6b:	e8 10 2a 00 00       	call   403880 <printf>
+  400e54:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  400e57:	89 c6                	mov    esi,eax
+  400e59:	48 8d 05 af 48 00 00 	lea    rax,[rip+0x48af]        # 40570f <b+0x223>
+  400e60:	48 89 c7             	mov    rdi,rax
+  400e63:	b8 00 00 00 00       	mov    eax,0x0
+  400e68:	e8 13 2a 00 00       	call   403880 <printf>
             int loc = 0;
-  400e70:	c7 85 ac fe ff ff 00 	mov    DWORD PTR [rbp-0x154],0x0
-  400e77:	00 00 00 
+  400e6d:	c7 85 b4 fe ff ff 00 	mov    DWORD PTR [rbp-0x14c],0x0
+  400e74:	00 00 00 
 
             waitpid(pid, &loc, 0);
-  400e7a:	48 8d 8d ac fe ff ff 	lea    rcx,[rbp-0x154]
-  400e81:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
-  400e84:	ba 00 00 00 00       	mov    edx,0x0
-  400e89:	48 89 ce             	mov    rsi,rcx
-  400e8c:	89 c7                	mov    edi,eax
-  400e8e:	e8 ed 01 00 00       	call   401080 <waitpid>
-  400e93:	e9 2e f3 ff ff       	jmp    4001c6 <main+0x18b>
+  400e77:	48 8d 8d b4 fe ff ff 	lea    rcx,[rbp-0x14c]
+  400e7e:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+  400e81:	ba 00 00 00 00       	mov    edx,0x0
+  400e86:	48 89 ce             	mov    rsi,rcx
+  400e89:	89 c7                	mov    edi,eax
+  400e8b:	e8 f0 01 00 00       	call   401080 <waitpid>
+  400e90:	e9 2e f3 ff ff       	jmp    4001c3 <main+0x188>
                 continue;
-  400e98:	90                   	nop
+  400e95:	90                   	nop
     while (1) {
-  400e99:	e9 28 f3 ff ff       	jmp    4001c6 <main+0x18b>
+  400e96:	e9 28 f3 ff ff       	jmp    4001c3 <main+0x188>
             break;
-  400e9e:	90                   	nop
+  400e9b:	90                   	nop
     }
 
 
     // do_syscall(SYSCAll_WRITE, 2, (int) "test exe running.\n", 0, 0, 0,0);
 
     return 0;
-  400e9f:	b8 00 00 00 00       	mov    eax,0x0
-  400ea4:	c9                   	leave  
-  400ea5:	c3                   	ret    
-  400ea6:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
-  400ead:	00 00 00 
+  400e9c:	b8 00 00 00 00       	mov    eax,0x0
+  400ea1:	c9                   	leave  
+  400ea2:	c3                   	ret    
+  400ea3:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
+  400eaa:	00 00 00 
+  400ead:	0f 1f 00             	nop    DWORD PTR [rax]
 
 0000000000400eb0 <reg_dev>:
   400eb0:	55                   	push   rbp

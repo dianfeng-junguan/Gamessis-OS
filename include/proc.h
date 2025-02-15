@@ -115,6 +115,8 @@ typedef struct
     long r8, r9, r10, r11, r12, r13, r14, r15;
     long errcode;
     long fs_base, gs_base;
+    // float regs需要16字节对齐，需要kmalloc分配
+    void* float_regs;
 } regs_t;
 //在时钟中断和系统调用发生的时候，对栈里面保存现场用的入栈数据。此结构体还用于创建进程时方便构建一个这样的现场。
 typedef struct
