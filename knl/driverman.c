@@ -5,6 +5,7 @@
 #include "proc.h"
 #include "int.h"
 driver_t* drivers;
+int       _drv_ioctl_block_type = 0;
 ///内部管理函数，卸载驱动
 ///@param index 数组下标
 stat_t drvman_unreg(int index)
@@ -19,6 +20,7 @@ stat_t drvman_unreg(int index)
 //驱动管理模块的初始化函数
 stat_t init_driver_man()
 {
+    _drv_ioctl_block_type = 0;
     if ((drivers = kmalloc(0, MAX_DRIVERS * sizeof(driver_t))) == NULL) {
         return -1;
     }
@@ -91,7 +93,10 @@ stat_t change_driver_stat(id_t id, stat_t stat)
     drivers[id].stat = stat;
     return DRIVER_RETV_SUCCESS;
 }
-
+int turn_on_special_block_type()
+{
+    _drv_ioctl_block_type = 1;
+}
 //向指定驱动发送请求
 int drv_ioctl(int drv, int command, int block, unsigned long long arg)
 {

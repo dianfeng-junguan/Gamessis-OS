@@ -9,6 +9,10 @@ typedef int drvret_t ;//驱动器的函数执行状态类型（标注成功还�
 #define DRIVER_CMD_READ 0
 #define DRIVER_CMD_WRITE 1
 #define DRIVER_CMD_EXIT 2
+#define DRIVER_CMD_INITDEV 3
+#define DRIVER_CMD_RM 4
+#define DRIVER_CMD_OPEN 5
+#define DRIVER_CMD_CLOSE 6
 //以下是一些常用的驱动状态
 #define DRIVER_STAT_UNREGISTERED 0
 #define DRIVER_STAT_AVAILABLE 1
@@ -75,5 +79,10 @@ int drv_ioctl(int drv, int command, int block, unsigned long long arg);
 
 */
 int next_request(int drvid);
+/**
+    @brief 开启特殊的ioctl阻塞模式，对下一次drv_ioctl有效。对于一些驱动，在处理ioctl的时候需要直接在drv_ioctl函数中阻塞等待，建议只在内核初始化的时候调用一次
+*/
+int turn_on_special_block_type();
+
 #define MAX_DRIVERS 128
 

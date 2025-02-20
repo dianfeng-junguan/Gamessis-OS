@@ -1,5 +1,7 @@
+#include "ioctlarg.h"
 #include "tty.h"
 #include "com.h"
+#include "driverman.h"
 #include "int.h"
 #include "memory.h"
 #include "framebuffer.h"
@@ -19,15 +21,16 @@ tty_t* get_tty(int dev)
 {
     if (dev < 0 || dev >= MAX_TTYS)
         return NULL;
-    return l_tty + (dev & 0xff);
+    for (int i = 0; i < MAX_TTYS; i++) {
+        if (l_tty[i].dev == dev)
+            return l_tty + i;
+    }
+    return NULL;
 }
-struct file_operations tty_fops = {
-    .open = open_tty, .close = close_tty, .write = write_tty, .read = read_tty, .ioctl = ioctl_tty};
-
-long close_tty(struct index_node* inode, struct file* filp)
+long close_tty(int dev)
 {
-
-    tty_openbufs* opbf = get_tty(filp->dentry->dir_inode->dev);
+    tty_t*        tty  = get_tty(dev);
+    tty_openbufs* opbf = tty->stds;
     stdbuf_t*     bi   = &opbf->stdin_buf;
     stdbuf_t*     bo   = &opbf->stdout_buf;
     stdbuf_t*     be   = &opbf->stderr_buf;
@@ -35,15 +38,23 @@ long close_tty(struct index_node* inode, struct file* filp)
     kfree((addr_t)bo);
     kfree((addr_t)be);
     // kfree((addr_t) filp->private_data);
-    return 0;
+    return 1;
 }
 
 //打开文件
-long open_tty(struct index_node* inode, struct file* filp)
+long open_tty(int dev)
 {
-    int    dev   = inode->dev;
-    tty_t* t_tty = &l_tty[dev & 0xff];
+    tty_t* t_tty = NULL;
 
+    for (int i = 0; i < MAX_TTYS; i++) {
+        if (l_tty[i].dev == dev) {
+            t_tty = l_tty + i;
+            break;
+        }
+    }
+    if (!t_tty) {
+        return -ENOMEM;
+    }
     tty_openbufs* ntty = (tty_openbufs*)kmalloc(0, PAGE_4K_SIZE);
     //创建三个缓冲区
     ntty->stdin_buf.data  = (char*)kmalloc(0, PAGE_4K_SIZE);
@@ -59,24 +70,18 @@ long open_tty(struct index_node* inode, struct file* filp)
     ntty->stdout_buf.size = PAGE_4K_SIZE;
     ntty->stderr_buf.size = PAGE_4K_SIZE;
     //设置inode文件操作方式为tty方式
-    inode->f_ops = &tty_fops;
-    filp->f_ops  = &tty_fops;
-    ntty->next   = NULL;
+    // inode->f_ops = &tty_fops;
+    // filp->f_ops  = &tty_fops;
+    ntty->next = NULL;
     // filp->private_data=ntty;
 
     t_tty->stds = ntty;
     return 1;
 }
 
-long read_tty(struct file* filp, char* buf, unsigned long count, long* position)
+long read_tty(int dev, char* buf, unsigned long count, long* position)
 {
-    sti();   //读取tty的时候可能会需要等待，此时允许其他中断。
-    // comprintf("read tty\n");
-    if (filp < KNL_BASE) {
-        comprintf("read tty.err: filp invalid\n");
-        return -1;
-    }
-    tty_t* tty = get_tty(filp->dentry->dir_inode->dev);
+    tty_t* tty = get_tty(dev);
     if (!tty) {
         comprintf("read tty.err: tty NULL\n");
         return -1;
@@ -87,20 +92,22 @@ long read_tty(struct file* filp, char* buf, unsigned long count, long* position)
     while (i < count) {
         if (b->rptr == b->size)
             b->rptr = 0;
-        if (b->rptr == b->wptr)
-            continue;
+        if (b->rptr == b->wptr) {
+            break;   //缓冲区为空，为了不过长逗留在系统调用内先跳出
+        }
         buf[i++] = b->data[b->rptr];
         b->rptr++;
+        *position++;
     }
     return i;
 }
-long write_tty(struct file* filp, char* buf, unsigned long count, long* position)
+long write_tty(int dev, char* buf, unsigned long count, long* position)
 {
-    tty_openbufs* opbf       = get_tty(filp->dentry->dir_inode->dev)->stds;
+    tty_openbufs* opbf       = get_tty(dev)->stds;
     stdbuf_t*     b          = &opbf->stdout_buf;
     int           i          = 0;
     int           saved_wptr = b->wptr;
-    tty_t*        tty        = get_tty(filp->dentry->dir_inode->dev);
+    tty_t*        tty        = get_tty(dev);
     while (i < count) {
         if (b->wptr == b->size)
             b->wptr = 0;
@@ -108,6 +115,7 @@ long write_tty(struct file* filp, char* buf, unsigned long count, long* position
         b->wptr++;
         write_textbuf(buf[i], tty);
         i++;
+        *position++;
     }
     //刷新到framebuffer
     flush_textbuf(tty);
@@ -165,6 +173,110 @@ long ioctl_tty(struct index_node* inode, struct file* filp, unsigned long cmd, u
     return 0;
 }
 
+int tty_mod_init(int drvid)
+{
+    // dev_tty = drvid;
+}
+int      tty_mod_exit() {}
+drvret_t tty_mod_ioctl(int command, unsigned long long arg)
+{
+    /*
+    arg格式:
+    command: 0x01 - 扫描硬盘，并注册
+    arg: 设备号
+
+    */
+    int rv = 1;
+    switch (command) {
+    case DRIVER_CMD_READ:
+    {
+        int           dev      = GET_ARG(arg, 0, int);
+        char*         buf      = GET_ARG(arg, 1, char*);
+        unsigned long count    = GET_ARG(arg, 2, unsigned long);
+        long*         position = GET_ARG(arg, 3, long*);
+        rv                     = read_tty(dev, buf, count, position);
+        break;
+    }
+    case DRIVER_CMD_WRITE:
+    {
+        int           dev      = GET_ARG(arg, 0, int);
+        char*         buf      = GET_ARG(arg, 1, char*);
+        unsigned long count    = GET_ARG(arg, 2, unsigned long);
+        long*         position = GET_ARG(arg, 3, long*);
+        rv                     = write_tty(dev, buf, count, position);
+        break;
+    }
+    case DRIVER_CMD_OPEN:
+    {
+        int dev = GET_ARG(arg, 0, int);
+        rv      = open_tty(dev);
+        break;
+    }
+    case DRIVER_CMD_CLOSE:
+    {
+        int dev = GET_ARG(arg, 0, int);
+        rv      = close_tty(dev);
+        break;
+    }
+    case TTY_WSTDERR:
+    {
+        struct file*  filp       = GET_ARG(arg, 0, struct file*);
+        char*         buf        = GET_ARG(arg, 1, char*);
+        unsigned long count      = GET_ARG(arg, 2, unsigned long);
+        stdbuf_t*     b          = &((tty_openbufs*)filp->private_data)->stderr_buf;
+        stdbuf_t*     ib         = &((tty_openbufs*)filp->private_data)->stdin_buf;
+        int           i          = 0;
+        int           saved_wptr = b->wptr;
+        while (i < count) {
+            if (b->wptr == b->size)
+                b->wptr = 0;
+            b->data[b->wptr] = buf[i++];
+            b->wptr++;
+        }
+        //刷新到framebuffer
+        rv = write_framebuffer(filp, b->data + saved_wptr, count, 0);
+        break;
+    }
+    case TTY_CONNECT:
+    {
+        struct file* filp = GET_ARG(arg, 0, struct file*);
+        int          fd   = sys_open("dev/console", O_WRONLY | O_CREAT | O_EXCL);
+        if (fd == -1)
+            return -1;
+        ((tty_openbufs*)filp->private_data)->console_fd = fd;
+        break;
+    }
+    case TTY_DISCONNECT:
+    {
+        struct file* filp = GET_ARG(arg, 0, struct file*);
+        int          fd   = ((tty_openbufs*)filp->private_data)->console_fd;
+        if (fd == -1)
+            return -1;
+        rv = sys_close(fd);
+    }
+    case TTY_WSTDIN:
+    {
+        struct file*  filp  = GET_ARG(arg, 0, struct file*);
+        char*         buf   = GET_ARG(arg, 1, char*);
+        unsigned long count = GET_ARG(arg, 2, unsigned long);
+        stdbuf_t*     b     = &((tty_openbufs*)filp->private_data)->stderr_buf;
+        stdbuf_t*     ib    = &((tty_openbufs*)filp->private_data)->stdin_buf;
+        int           i     = 0;
+        while (i < count) {
+            if (ib->wptr == ib->size)
+                ib->wptr = 0;
+            ib->data[ib->wptr] = buf[i++];
+            ib->wptr++;
+        }
+        break;
+    }
+    default: rv = -1; break;
+    }
+    change_driver_stat(drv_tty, DRIVER_STAT_DONE);
+    next_request(drv_tty);
+    return rv;
+}
+
 //初始化主控制台。
 int init_console()
 {
@@ -174,9 +286,13 @@ int init_console()
         l_tty[i].text_buf      = NULL;
         l_tty[i].text_buf_head = 0;
         l_tty[i].text_buf_tail = 0;
+        l_tty[i].dev           = -1;
     }
 
     set_gate(0x21, (addr_t)key_proc, GDT_SEL_CODE, GATE_PRESENT | INT_GATE);
+    if ((drv_tty = register_driver(tty_mod_init, tty_mod_exit, tty_mod_ioctl)) < 0) {
+        return -1;
+    }
 }
 
 char to_ascii(char scan_code, int cap)
@@ -355,7 +471,7 @@ int register_tty(tty_t* tty)
     tty_t* target = NULL;
     int    i      = 0;
     for (; i < MAX_TTYS; i++) {
-        if (!l_tty[i].text_buf) {
+        if (l_tty[i].dev < 0) {
             target = l_tty + i;
             break;
         }
@@ -364,6 +480,7 @@ int register_tty(tty_t* tty)
         return -ENOMEM;
     target->chars_height = tty->chars_height;
     target->chars_width  = tty->chars_width;
+    target->dev          = tty->dev;
 
     int page_size = tty->chars_height * tty->chars_width;
 
@@ -372,10 +489,18 @@ int register_tty(tty_t* tty)
     target->text_buf_size = 2 * page_size;
     target->show          = 1;
     target->readonly      = 0;
-    return 0x10000 | i;
+    return i;
 }
 int unreigster_tty(int dev)
 {
-    kfree(l_tty[dev & 0xff].text_buf);
-    l_tty[dev & 0xff].text_buf = NULL;
+    for (int i = 0; i < MAX_TTYS; i++) {
+        if (l_tty[i].dev == dev) {
+            tty_t* t_tty = l_tty + i;
+            kfree(t_tty->text_buf);
+            t_tty->text_buf = NULL;
+            t_tty->dev      = -1;
+            return 0;
+        }
+    }
+    return -1;
 }

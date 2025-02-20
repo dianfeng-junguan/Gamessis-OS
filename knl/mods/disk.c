@@ -2,8 +2,10 @@
 #include "driverman.h"
 #include "int.h"
 #include "devman.h"
+#include "ioctlarg.h"
 #include "syscall.h"
 #include <log.h>
+#include "errno.h"
 #define NULL ((void*)0)
 struct request*        r_running = NULL;
 struct file_operations hd_fops   = {
@@ -24,8 +26,33 @@ disk_req   disk_reqs[MAX_DISK_REQUEST_COUNT];
 disk_req*  running_req = NULL;
 static int head = 0, tail = 0;
 // struct blk_dev bd_hd  = {.do_request = hd_do_req};
-int dev_hd = -1, last_chk_res = 0;
+int    drv_hd = -1, last_chk_res = 0;
+disk_t disk_desc[4] = {-1, -1, -1, -1};
 
+int reg_disk(int diski, int dev)
+{
+    if (diski < 0 || diski > 3) {
+        return -EINVAL;
+    }
+    disk_desc[diski].dev = dev;
+    return 0;
+}
+int unreg_disk(int diski)
+{
+    if (diski < 0 || diski > 3) {
+        return -EINVAL;
+    }
+    disk_desc[diski].dev = -1;
+    return 0;
+}
+int get_diski(int dev)
+{
+    for (int i = 0; i < 4; i++) {
+        if (disk_desc[i].dev == dev)
+            return i;
+    }
+    return -1;
+}
 int disk_mod_init(int devid)
 {
     return 0;
@@ -46,52 +73,58 @@ int disk_mod_exit()
  */
 int disk_mod_ioctl(int cmd, unsigned long long arg)
 {
-    struct disk_ioctlarg* ioctlarg   = (struct disk_ioctlarg*)arg;
-    int                   diski      = ioctlarg->diski;
-    int                   sector     = ioctlarg->lba;
-    int                   nr_sectors = ioctlarg->sec_n;
-    char*                 buffer     = ioctlarg->mem_addr;
-    current_ioctlarg.diski           = diski;
-    current_ioctlarg.lba             = sector;
-    current_ioctlarg.sec_n           = nr_sectors;
-    current_ioctlarg.mem_addr        = buffer;
-    current_ioctlarg.status          = 1;
-    current_ioctlarg.cmd             = cmd;
+    drvioctlarg_read* ioctlarg = (drvioctlarg_read*)arg;
+    current_ioctlarg.diski     = get_diski(ioctlarg->dev);
+    current_ioctlarg.status    = 1;
+    current_ioctlarg.cmd       = cmd;
     switch (cmd) {
     case DRIVER_CMD_READ:
-        if (ioctlarg->non_async) {
-            read_disk(diski, sector, nr_sectors, buffer);
-        }
-        else {
-            async_read_disk(diski, sector, nr_sectors, buffer);
-        }
-        break;
+    {
+        int   diski      = get_diski(ioctlarg->dev);
+        int   sector     = ioctlarg->lba;
+        int   nr_sectors = ioctlarg->nr_sectors;
+        char* buffer     = ioctlarg->buf;
+        async_read_disk(diski, sector, nr_sectors, buffer);
+        goto disk_io;
+    }
     case DRIVER_CMD_WRITE:
-        if (ioctlarg->non_async) {
-            write_disk(diski, sector, nr_sectors, buffer);
-        }
-        else {
-            async_write_disk(diski, sector, nr_sectors, buffer);
-        }
-        break;
-    case DRVF_CHK: async_check_disk(diski); break;
+    {
+        int   diski      = get_diski(ioctlarg->dev);
+        int   sector     = ioctlarg->lba;
+        int   nr_sectors = ioctlarg->nr_sectors;
+        char* buffer     = ioctlarg->buf;
+        async_write_disk(diski, sector, nr_sectors, buffer);
+        goto disk_io;
+    }
+    case DRVF_CHK: async_check_disk(get_diski(ioctlarg->dev)); break;
     default: return -1;
     }
-    if (ioctlarg->non_async) {
-        change_driver_stat(dev_hd, DRIVER_STAT_DONE);
-        next_request(dev_hd);
-    }
+    return 0;
+disk_io:
+    int   diski               = get_diski(ioctlarg->dev);
+    int   sector              = ioctlarg->lba;
+    int   nr_sectors          = ioctlarg->nr_sectors;
+    char* buffer              = ioctlarg->buf;
+    current_ioctlarg.lba      = sector;
+    current_ioctlarg.sec_n    = nr_sectors;
+    current_ioctlarg.mem_addr = buffer;
+    return 0;
+    /* if (ioctlarg->non_async) {
+        change_driver_stat(drv_hd, DRIVER_STAT_DONE);
+        next_request(drv_hd);
+    } */
 }
 int init_disk()
 {
-    // if ((dev_hd = reg_blkdev(&bd_hd)) < 0)
+    // if ((drv_hd = reg_blkdev(&bd_hd)) < 0)
     //     return -1;
-    if ((dev_hd = register_driver(disk_mod_init, disk_mod_exit, disk_mod_ioctl)) < 0)
+    if ((drv_hd = register_driver(disk_mod_init, disk_mod_exit, disk_mod_ioctl)) < 0)
         return -1;
     // disk_devi= reg_device(&dev_disk);
     // disk_drvi= reg_driver(&drv_disk);
     // dev_disk.drv=&drv_disk;
     // hd_iterate();
+    reg_disk(DISK_MAJOR_MAJOR, 1);
     return 0;
 }
 int disk_int_handler_c()
@@ -129,8 +162,8 @@ int disk_int_handler_c()
     default: return -1;
     }
     current_ioctlarg.status = 0;
-    change_driver_stat(dev_hd, DRIVER_STAT_DONE);
-    next_request(dev_hd);
+    change_driver_stat(drv_hd, DRIVER_STAT_DONE);
+    next_request(drv_hd);
     return 0;
 }
 /* int disk_int_handler_c_old()
@@ -173,9 +206,9 @@ int disk_int_handler_c()
     }
 
     r_running = NULL;
-    end_request(dev_hd);
+    end_request(drv_hd);
     //执行下一个请求
-    hd_do_req(blk_devs[dev_hd].current_request);
+    hd_do_req(blk_devs[drv_hd].current_request);
     return 0;
 } */
 int async_reset_disk(int disk)

@@ -1,7 +1,9 @@
 #include "fat32.h"
 
+#include "devman.h"
 #include "driverman.h"
 #include "errno.h"
+#include "ioctlarg.h"
 #include "log.h"
 #include "memory.h"
 #include "proc.h"
@@ -26,17 +28,13 @@
  */
 int read_block(unsigned short dev, off_t offset, size_t len, char* buf)
 {
-    struct
-    {
-        int   lba;
-        int   count;
-        char* buf;
-    } ioctlarg;
+    drvioctlarg_read ioctlarg;
     ioctlarg.lba   = offset / 512;
     ioctlarg.count = (len + 511) / 512;
+    ioctlarg.dev   = dev;
     char* tmpbuf   = (char*)kmalloc(0, len);
     ioctlarg.buf   = tmpbuf;
-    if (drv_ioctl(dev, DRIVER_CMD_READ, 1, &ioctlarg) < 0) {
+    if (dev_ioctl(dev, DRIVER_CMD_READ, 1, &ioctlarg) < 0) {
         KFREE(tmpbuf);
         return -1;
     }
@@ -55,16 +53,12 @@ int read_block(unsigned short dev, off_t offset, size_t len, char* buf)
  */
 int write_block(unsigned short dev, off_t offset, size_t count, char* buf)
 {
-    struct
-    {
-        int   lba;
-        int   count;
-        char* buf;
-    } ioctlarg;
+    drvioctlarg_read ioctlarg;
     ioctlarg.lba   = offset / 512;
     ioctlarg.count = count / 512;
     ioctlarg.buf   = buf;
-    if (drv_ioctl(dev, DRIVER_CMD_WRITE, 1, &ioctlarg) < 0) {
+    ioctlarg.dev   = dev;
+    if (dev_ioctl(dev, DRIVER_CMD_WRITE, 1, &ioctlarg) < 0) {
         return -1;
     }
     return 0;

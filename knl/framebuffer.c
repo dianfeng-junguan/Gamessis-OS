@@ -1,6 +1,7 @@
 #include <framebuffer.h>
 #include <memory.h>
 #include <typename.h>
+#include "driverman.h"
 #include "sys/types.h"
 #include "mem.h"
 #include "syscall.h"
@@ -18,7 +19,7 @@ extern char _binary_res_font_psf_end[];
 
 static u32 fb_cursor_x = 0, fb_cursor_y = 0; /* count by chars */
 static u32 max_ch_nr_x, max_ch_nr_y;
-
+int        drv_framebuffer;
 /* font info */
 
 static struct psf2_header* boot_font;
@@ -29,8 +30,24 @@ static u32                 bytes_per_glyph, glyph_nr;
 static char*               text_buffer;
 static int                 txtbfh = 0, txtbft = 0, max_chs = 0;
 int                        font_size = 1;
-int                        dev_tty;
-void                       init_framebuffer()
+int                        drv_tty;
+
+/**
+    @brief
+   framebuffer模块初始化占位函数，因为这个模块是直接编译进内核的，
+   所以是由init函数调用register_driver函数注册的，这里如果再调用init_framebuffer就死循环了。
+    @return 0
+ */
+int framebuffer_mod_init(int dev_id)
+{
+    return 0;
+}
+int framebuffer_mod_exit()
+{
+    return 0;
+}
+int  framebuffer_mod_ioctl(int cmd, unsigned long long arg) {}
+void init_framebuffer()
 {
     //映射页帧内存
     size_t w     = framebuffer.common.framebuffer_width;
@@ -46,6 +63,10 @@ void                       init_framebuffer()
         smmap(pp, p, PAGE_PRESENT | PAGE_RWX | PAGE_FOR_ALL, PML4_ADDR);
         pp += PAGE_SIZE;
         p += PAGE_SIZE;
+    }
+    if ((drv_framebuffer = register_driver(
+             framebuffer_mod_init, framebuffer_mod_exit, framebuffer_mod_ioctl)) < 0) {
+        return;
     }
 }
 void init_font()
@@ -68,8 +89,8 @@ void init_font()
     text_buffer               = kmalloc(0, max_chs);
     txtbfh                    = 0;
     txtbft                    = 0;
-    tty_t tty                 = {.chars_height = max_ch_nr_y, .chars_width = max_ch_nr_x};
-    dev_tty                   = register_tty(&tty);
+    tty_t tty                 = {.chars_height = max_ch_nr_y, .chars_width = max_ch_nr_x, .dev = 2};
+    register_tty(&tty);
 }
 void set_framebuffer(struct multiboot_tag_framebuffer tag)
 {

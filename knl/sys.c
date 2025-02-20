@@ -164,7 +164,7 @@ unsigned long sys_open(char* filename, int flags)
         filp->f_ops = dentry->dir_inode->f_ops;
     if (filp->f_ops && filp->f_ops->open)
         error = filp->f_ops->open(dentry->dir_inode, filp);
-    if (error != 1) {
+    if (error < 0) {
         kfree(filp);
         return -EFAULT;
     }

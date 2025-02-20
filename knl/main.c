@@ -136,21 +136,16 @@ void main(unsigned int magic, void* addr)
     init_int();
     if (is_sse_supported())
         init_sse();
+    init_driver_man();
+    init_devman();
     init_console();
     init_framebuffer();
-    // printf("Total mbi size 0x%x\n", (unsigned)tag - addr);
-    // char disk_count=*(char*)0x475;
-    // printf("disk count:%d\n",disk_count);
+
     init_font();
     //初始化区域
-    // fill_rect(0,0,100,100,255);
-    // print("gamessis os loaded.\nkernel:>");
-    // print("int loaded.\n");
-    //    set_tss(0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000);
     init_paging();
     init_gdt();
 
-    init_driver_man();
     init_disk();
     init_scanner();
     init_ramdisk();
@@ -162,6 +157,7 @@ void main(unsigned int magic, void* addr)
     elf_binload_init();
     //===============创建0号进程======================
     init_proc0();
+    reg_default_devices();
     init_volumeman();
     volume_list* vlist = scan_disk(ROOT_DEV);
     if (vlist && vlist->head && vlist->head->vol) {
@@ -174,7 +170,7 @@ void main(unsigned int magic, void* addr)
         DISK1_FAT32_FS_init();
     }
     init_devfs();
-
+    make_default_devfiles();
     further_init_proc0();
 
     // init_ramfs();
@@ -189,8 +185,8 @@ void main(unsigned int magic, void* addr)
     move_to_user_mode();
 
     //扫描硬盘
-    extern int dev_scanner, dev_hd;
-    do_syscall(SYSCALL_DRV_IOCTL, dev_scanner, 1, 1, dev_hd, 0, 0);
+    extern int drv_scanner, drv_hd;
+    do_syscall(SYSCALL_DRV_IOCTL, drv_scanner, 1, 1, 1, 0, 0);
     int shell = 0, stat_loc = 0;
     if ((shell = do_syscall(SYSCALL_FORK, 0, 0, 0, 0, 0, 0)) == 0) {
         char* argv[]    = {"/test.elf", "gamessis os", 0};

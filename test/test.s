@@ -110,7 +110,7 @@ int main(int argc, char** argv, char** environ)
   4001e0:	ba 80 00 00 00       	mov    edx,0x80
   4001e5:	be 00 00 00 00       	mov    esi,0x0
   4001ea:	48 89 c7             	mov    rdi,rax
-  4001ed:	e8 2e 14 00 00       	call   401620 <memset>
+  4001ed:	e8 3e 14 00 00       	call   401630 <memset>
         int p = 0;
   4001f2:	c7 45 dc 00 00 00 00 	mov    DWORD PTR [rbp-0x24],0x0
         printf("%s:>", path);
@@ -119,7 +119,7 @@ int main(int argc, char** argv, char** environ)
   400203:	48 8d 05 a0 53 00 00 	lea    rax,[rip+0x53a0]        # 4055aa <b+0x1e>
   40020a:	48 89 c7             	mov    rdi,rax
   40020d:	b8 00 00 00 00       	mov    eax,0x0
-  400212:	e8 09 37 00 00       	call   403920 <printf>
+  400212:	e8 19 37 00 00       	call   403930 <printf>
         // write(2, "shell:>", 7);
         gets(cmd);
   400217:	48 8d 85 f8 fe ff ff 	lea    rax,[rbp-0x108]
@@ -135,7 +135,7 @@ int main(int argc, char** argv, char** environ)
   40023c:	48 8d 15 6c 53 00 00 	lea    rdx,[rip+0x536c]        # 4055af <b+0x23>
   400243:	48 89 d6             	mov    rsi,rdx
   400246:	48 89 c7             	mov    rdi,rax
-  400249:	e8 a2 14 00 00       	call   4016f0 <strcmp>
+  400249:	e8 b2 14 00 00       	call   401700 <strcmp>
   40024e:	85 c0                	test   eax,eax
   400250:	75 14                	jne    400266 <main+0x22b>
             puts("Gamessis OS 1.0.\n");
@@ -149,7 +149,7 @@ int main(int argc, char** argv, char** environ)
   40026d:	48 8d 15 55 53 00 00 	lea    rdx,[rip+0x5355]        # 4055c9 <b+0x3d>
   400274:	48 89 d6             	mov    rsi,rdx
   400277:	48 89 c7             	mov    rdi,rax
-  40027a:	e8 71 14 00 00       	call   4016f0 <strcmp>
+  40027a:	e8 81 14 00 00       	call   401700 <strcmp>
   40027f:	85 c0                	test   eax,eax
   400281:	0f 84 ba 0c 00 00    	je     400f41 <main+0xf06>
             break;
@@ -159,7 +159,7 @@ int main(int argc, char** argv, char** environ)
   40028e:	48 8d 15 39 53 00 00 	lea    rdx,[rip+0x5339]        # 4055ce <b+0x42>
   400295:	48 89 d6             	mov    rsi,rdx
   400298:	48 89 c7             	mov    rdi,rax
-  40029b:	e8 50 14 00 00       	call   4016f0 <strcmp>
+  40029b:	e8 60 14 00 00       	call   401700 <strcmp>
   4002a0:	85 c0                	test   eax,eax
   4002a2:	75 79                	jne    40031d <main+0x2e2>
             // ls
@@ -176,7 +176,7 @@ int main(int argc, char** argv, char** environ)
   4002be:	48 8d 05 0e 53 00 00 	lea    rax,[rip+0x530e]        # 4055d3 <b+0x47>
   4002c5:	48 89 c7             	mov    rdi,rax
   4002c8:	b8 00 00 00 00       	mov    eax,0x0
-  4002cd:	e8 4e 36 00 00       	call   403920 <printf>
+  4002cd:	e8 5e 36 00 00       	call   403930 <printf>
                 continue;
   4002d2:	e9 65 0c 00 00       	jmp    400f3c <main+0xf01>
             }
@@ -188,7 +188,7 @@ int main(int argc, char** argv, char** environ)
   4002e2:	48 8d 05 03 53 00 00 	lea    rax,[rip+0x5303]        # 4055ec <b+0x60>
   4002e9:	48 89 c7             	mov    rdi,rax
   4002ec:	b8 00 00 00 00       	mov    eax,0x0
-  4002f1:	e8 2a 36 00 00       	call   403920 <printf>
+  4002f1:	e8 3a 36 00 00       	call   403930 <printf>
             while ((dirp = readdir(dp)) != NULL) {
   4002f6:	48 8b 45 b0          	mov    rax,QWORD PTR [rbp-0x50]
   4002fa:	48 89 c7             	mov    rdi,rax
@@ -208,7 +208,7 @@ int main(int argc, char** argv, char** environ)
   400324:	48 8d 15 c5 52 00 00 	lea    rdx,[rip+0x52c5]        # 4055f0 <b+0x64>
   40032b:	48 89 d6             	mov    rsi,rdx
   40032e:	48 89 c7             	mov    rdi,rax
-  400331:	e8 ba 13 00 00       	call   4016f0 <strcmp>
+  400331:	e8 ca 13 00 00       	call   401700 <strcmp>
   400336:	85 c0                	test   eax,eax
   400338:	0f 85 1a 02 00 00    	jne    400558 <main+0x51d>
             // cd
@@ -249,7 +249,7 @@ int main(int argc, char** argv, char** environ)
   4003ee:	48 8d 05 fe 51 00 00 	lea    rax,[rip+0x51fe]        # 4055f3 <b+0x67>
   4003f5:	48 89 c7             	mov    rdi,rax
   4003f8:	b8 00 00 00 00       	mov    eax,0x0
-  4003fd:	e8 1e 35 00 00       	call   403920 <printf>
+  4003fd:	e8 2e 35 00 00       	call   403930 <printf>
             // write(2, "enter path:", 11);
             gets(tmppath);
   400402:	48 8d 85 ec fd ff ff 	lea    rax,[rbp-0x214]
@@ -267,7 +267,7 @@ int main(int argc, char** argv, char** environ)
   40042f:	48 8d 05 c9 51 00 00 	lea    rax,[rip+0x51c9]        # 4055ff <b+0x73>
   400436:	48 89 c7             	mov    rdi,rax
   400439:	b8 00 00 00 00       	mov    eax,0x0
-  40043e:	e8 dd 34 00 00       	call   403920 <printf>
+  40043e:	e8 ed 34 00 00       	call   403930 <printf>
                 continue;
   400443:	e9 f4 0a 00 00       	jmp    400f3c <main+0xf01>
 
@@ -280,13 +280,13 @@ int main(int argc, char** argv, char** environ)
   40044f:	48 8d 15 c3 51 00 00 	lea    rdx,[rip+0x51c3]        # 405619 <b+0x8d>
   400456:	48 89 d6             	mov    rsi,rdx
   400459:	48 89 c7             	mov    rdi,rax
-  40045c:	e8 8f 12 00 00       	call   4016f0 <strcmp>
+  40045c:	e8 9f 12 00 00       	call   401700 <strcmp>
   400461:	85 c0                	test   eax,eax
   400463:	75 75                	jne    4004da <main+0x49f>
                 char* p = tmppath + strlen(tmppath) - 1;
   400465:	48 8d 85 ec fd ff ff 	lea    rax,[rbp-0x214]
   40046c:	48 89 c7             	mov    rdi,rax
-  40046f:	e8 cc 12 00 00       	call   401740 <strlen>
+  40046f:	e8 dc 12 00 00       	call   401750 <strlen>
   400474:	48 8d 50 ff          	lea    rdx,[rax-0x1]
   400478:	48 8d 85 ec fd ff ff 	lea    rax,[rbp-0x214]
   40047f:	48 01 d0             	add    rax,rdx
@@ -330,7 +330,7 @@ int main(int argc, char** argv, char** environ)
   4004e1:	48 8d 15 e9 50 00 00 	lea    rdx,[rip+0x50e9]        # 4055d1 <b+0x45>
   4004e8:	48 89 d6             	mov    rsi,rdx
   4004eb:	48 89 c7             	mov    rdi,rax
-  4004ee:	e8 fd 11 00 00       	call   4016f0 <strcmp>
+  4004ee:	e8 0d 12 00 00       	call   401700 <strcmp>
   4004f3:	85 c0                	test   eax,eax
   4004f5:	0f 84 40 0a 00 00    	je     400f3b <main+0xf00>
                 continue;
@@ -341,11 +341,11 @@ int main(int argc, char** argv, char** environ)
   400502:	48 8d 85 ec fd ff ff 	lea    rax,[rbp-0x214]
   400509:	48 89 d6             	mov    rsi,rdx
   40050c:	48 89 c7             	mov    rdi,rax
-  40050f:	e8 9c 11 00 00       	call   4016b0 <strcat>
+  40050f:	e8 ac 11 00 00       	call   4016c0 <strcat>
                 strcat(tmppath, "/");
   400514:	48 8d 85 ec fd ff ff 	lea    rax,[rbp-0x214]
   40051b:	48 89 c7             	mov    rdi,rax
-  40051e:	e8 1d 12 00 00       	call   401740 <strlen>
+  40051e:	e8 2d 12 00 00       	call   401750 <strlen>
   400523:	48 89 c2             	mov    rdx,rax
   400526:	48 8d 85 ec fd ff ff 	lea    rax,[rbp-0x214]
   40052d:	48 01 d0             	add    rax,rdx
@@ -357,7 +357,7 @@ int main(int argc, char** argv, char** environ)
   40053f:	48 8d 05 d6 50 00 00 	lea    rax,[rip+0x50d6]        # 40561c <b+0x90>
   400546:	48 89 c7             	mov    rdi,rax
   400549:	b8 00 00 00 00       	mov    eax,0x0
-  40054e:	e8 cd 33 00 00       	call   403920 <printf>
+  40054e:	e8 dd 33 00 00       	call   403930 <printf>
   400553:	e9 81 fc ff ff       	jmp    4001d9 <main+0x19e>
         }
         else if (strcmp(cmd, "touch") == 0) {
@@ -365,7 +365,7 @@ int main(int argc, char** argv, char** environ)
   40055f:	48 8d 15 cc 50 00 00 	lea    rdx,[rip+0x50cc]        # 405632 <b+0xa6>
   400566:	48 89 d6             	mov    rsi,rdx
   400569:	48 89 c7             	mov    rdi,rax
-  40056c:	e8 7f 11 00 00       	call   4016f0 <strcmp>
+  40056c:	e8 8f 11 00 00       	call   401700 <strcmp>
   400571:	85 c0                	test   eax,eax
   400573:	0f 85 1e 01 00 00    	jne    400697 <main+0x65c>
             char path[100] = {0};
@@ -399,7 +399,7 @@ int main(int argc, char** argv, char** environ)
   400607:	48 8d 05 2a 50 00 00 	lea    rax,[rip+0x502a]        # 405638 <b+0xac>
   40060e:	48 89 c7             	mov    rdi,rax
   400611:	b8 00 00 00 00       	mov    eax,0x0
-  400616:	e8 05 33 00 00       	call   403920 <printf>
+  400616:	e8 15 33 00 00       	call   403930 <printf>
             gets(path);
   40061b:	48 8d 85 ec fd ff ff 	lea    rax,[rbp-0x214]
   400622:	48 89 c7             	mov    rdi,rax
@@ -419,7 +419,7 @@ int main(int argc, char** argv, char** environ)
   400651:	48 8d 05 ec 4f 00 00 	lea    rax,[rip+0x4fec]        # 405644 <b+0xb8>
   400658:	48 89 c7             	mov    rdi,rax
   40065b:	b8 00 00 00 00       	mov    eax,0x0
-  400660:	e8 bb 32 00 00       	call   403920 <printf>
+  400660:	e8 cb 32 00 00       	call   403930 <printf>
   400665:	e9 6f fb ff ff       	jmp    4001d9 <main+0x19e>
             }
             else {
@@ -429,7 +429,7 @@ int main(int argc, char** argv, char** environ)
   400674:	48 8d 05 e0 4f 00 00 	lea    rax,[rip+0x4fe0]        # 40565b <b+0xcf>
   40067b:	48 89 c7             	mov    rdi,rax
   40067e:	b8 00 00 00 00       	mov    eax,0x0
-  400683:	e8 98 32 00 00       	call   403920 <printf>
+  400683:	e8 a8 32 00 00       	call   403930 <printf>
                 close(fd);
   400688:	8b 45 bc             	mov    eax,DWORD PTR [rbp-0x44]
   40068b:	89 c7                	mov    edi,eax
@@ -442,7 +442,7 @@ int main(int argc, char** argv, char** environ)
   40069e:	48 8d 15 ce 4f 00 00 	lea    rdx,[rip+0x4fce]        # 405673 <b+0xe7>
   4006a5:	48 89 d6             	mov    rsi,rdx
   4006a8:	48 89 c7             	mov    rdi,rax
-  4006ab:	e8 40 10 00 00       	call   4016f0 <strcmp>
+  4006ab:	e8 50 10 00 00       	call   401700 <strcmp>
   4006b0:	85 c0                	test   eax,eax
   4006b2:	0f 85 0f 01 00 00    	jne    4007c7 <main+0x78c>
             char path[100] = {0};
@@ -476,7 +476,7 @@ int main(int argc, char** argv, char** environ)
   400746:	48 8d 05 eb 4e 00 00 	lea    rax,[rip+0x4eeb]        # 405638 <b+0xac>
   40074d:	48 89 c7             	mov    rdi,rax
   400750:	b8 00 00 00 00       	mov    eax,0x0
-  400755:	e8 c6 31 00 00       	call   403920 <printf>
+  400755:	e8 d6 31 00 00       	call   403930 <printf>
             gets(path);
   40075a:	48 8d 85 ec fd ff ff 	lea    rax,[rbp-0x214]
   400761:	48 89 c7             	mov    rdi,rax
@@ -495,7 +495,7 @@ int main(int argc, char** argv, char** environ)
   40078b:	48 8d 05 e4 4e 00 00 	lea    rax,[rip+0x4ee4]        # 405676 <b+0xea>
   400792:	48 89 c7             	mov    rdi,rax
   400795:	b8 00 00 00 00       	mov    eax,0x0
-  40079a:	e8 81 31 00 00       	call   403920 <printf>
+  40079a:	e8 91 31 00 00       	call   403930 <printf>
   40079f:	e9 35 fa ff ff       	jmp    4001d9 <main+0x19e>
             }
             else {
@@ -505,7 +505,7 @@ int main(int argc, char** argv, char** environ)
   4007ae:	48 8d 05 dc 4e 00 00 	lea    rax,[rip+0x4edc]        # 405691 <b+0x105>
   4007b5:	48 89 c7             	mov    rdi,rax
   4007b8:	b8 00 00 00 00       	mov    eax,0x0
-  4007bd:	e8 5e 31 00 00       	call   403920 <printf>
+  4007bd:	e8 6e 31 00 00       	call   403930 <printf>
   4007c2:	e9 12 fa ff ff       	jmp    4001d9 <main+0x19e>
             }
         }
@@ -514,7 +514,7 @@ int main(int argc, char** argv, char** environ)
   4007ce:	48 8d 15 d8 4e 00 00 	lea    rdx,[rip+0x4ed8]        # 4056ad <b+0x121>
   4007d5:	48 89 d6             	mov    rsi,rdx
   4007d8:	48 89 c7             	mov    rdi,rax
-  4007db:	e8 10 0f 00 00       	call   4016f0 <strcmp>
+  4007db:	e8 20 0f 00 00       	call   401700 <strcmp>
   4007e0:	85 c0                	test   eax,eax
   4007e2:	0f 85 d8 01 00 00    	jne    4009c0 <main+0x985>
             char src[100] = {0};
@@ -575,7 +575,7 @@ int main(int argc, char** argv, char** environ)
   400904:	48 8d 05 a5 4d 00 00 	lea    rax,[rip+0x4da5]        # 4056b0 <b+0x124>
   40090b:	48 89 c7             	mov    rdi,rax
   40090e:	b8 00 00 00 00       	mov    eax,0x0
-  400913:	e8 08 30 00 00       	call   403920 <printf>
+  400913:	e8 18 30 00 00       	call   403930 <printf>
             gets(src);
   400918:	48 8d 85 88 fd ff ff 	lea    rax,[rbp-0x278]
   40091f:	48 89 c7             	mov    rdi,rax
@@ -584,7 +584,7 @@ int main(int argc, char** argv, char** environ)
   400927:	48 8d 05 92 4d 00 00 	lea    rax,[rip+0x4d92]        # 4056c0 <b+0x134>
   40092e:	48 89 c7             	mov    rdi,rax
   400931:	b8 00 00 00 00       	mov    eax,0x0
-  400936:	e8 e5 2f 00 00       	call   403920 <printf>
+  400936:	e8 f5 2f 00 00       	call   403930 <printf>
             gets(dst);
   40093b:	48 8d 85 ec fd ff ff 	lea    rax,[rbp-0x214]
   400942:	48 89 c7             	mov    rdi,rax
@@ -606,7 +606,7 @@ int main(int argc, char** argv, char** environ)
   40097d:	48 8d 05 4c 4d 00 00 	lea    rax,[rip+0x4d4c]        # 4056d0 <b+0x144>
   400984:	48 89 c7             	mov    rdi,rax
   400987:	b8 00 00 00 00       	mov    eax,0x0
-  40098c:	e8 8f 2f 00 00       	call   403920 <printf>
+  40098c:	e8 9f 2f 00 00       	call   403930 <printf>
   400991:	e9 43 f8 ff ff       	jmp    4001d9 <main+0x19e>
             }
             else {
@@ -617,7 +617,7 @@ int main(int argc, char** argv, char** environ)
   4009a7:	48 8d 05 42 4d 00 00 	lea    rax,[rip+0x4d42]        # 4056f0 <b+0x164>
   4009ae:	48 89 c7             	mov    rdi,rax
   4009b1:	b8 00 00 00 00       	mov    eax,0x0
-  4009b6:	e8 65 2f 00 00       	call   403920 <printf>
+  4009b6:	e8 75 2f 00 00       	call   403930 <printf>
   4009bb:	e9 19 f8 ff ff       	jmp    4001d9 <main+0x19e>
             }
         }
@@ -626,7 +626,7 @@ int main(int argc, char** argv, char** environ)
   4009c7:	48 8d 15 42 4d 00 00 	lea    rdx,[rip+0x4d42]        # 405710 <b+0x184>
   4009ce:	48 89 d6             	mov    rsi,rdx
   4009d1:	48 89 c7             	mov    rdi,rax
-  4009d4:	e8 17 0d 00 00       	call   4016f0 <strcmp>
+  4009d4:	e8 27 0d 00 00       	call   401700 <strcmp>
   4009d9:	85 c0                	test   eax,eax
   4009db:	0f 85 e6 01 00 00    	jne    400bc7 <main+0xb8c>
             char path[100] = {0};
@@ -660,7 +660,7 @@ int main(int argc, char** argv, char** environ)
   400a6f:	48 8d 05 c2 4b 00 00 	lea    rax,[rip+0x4bc2]        # 405638 <b+0xac>
   400a76:	48 89 c7             	mov    rdi,rax
   400a79:	b8 00 00 00 00       	mov    eax,0x0
-  400a7e:	e8 9d 2e 00 00       	call   403920 <printf>
+  400a7e:	e8 ad 2e 00 00       	call   403930 <printf>
             gets(path);
   400a83:	48 8d 85 88 fd ff ff 	lea    rax,[rbp-0x278]
   400a8a:	48 89 c7             	mov    rdi,rax
@@ -680,7 +680,7 @@ int main(int argc, char** argv, char** environ)
   400ab9:	48 8d 05 54 4c 00 00 	lea    rax,[rip+0x4c54]        # 405714 <b+0x188>
   400ac0:	48 89 c7             	mov    rdi,rax
   400ac3:	b8 00 00 00 00       	mov    eax,0x0
-  400ac8:	e8 53 2e 00 00       	call   403920 <printf>
+  400ac8:	e8 63 2e 00 00       	call   403930 <printf>
   400acd:	e9 07 f7 ff ff       	jmp    4001d9 <main+0x19e>
             }
             else {
@@ -721,7 +721,7 @@ int main(int argc, char** argv, char** environ)
   400b73:	48 8d 05 af 4b 00 00 	lea    rax,[rip+0x4baf]        # 405729 <b+0x19d>
   400b7a:	48 89 c7             	mov    rdi,rax
   400b7d:	b8 00 00 00 00       	mov    eax,0x0
-  400b82:	e8 99 2d 00 00       	call   403920 <printf>
+  400b82:	e8 a9 2d 00 00       	call   403930 <printf>
                 while ((len = read(fd, buffer, 100)) > 0) {
   400b87:	48 8d 8d ec fd ff ff 	lea    rcx,[rbp-0x214]
   400b8e:	8b 45 cc             	mov    eax,DWORD PTR [rbp-0x34]
@@ -749,7 +749,7 @@ int main(int argc, char** argv, char** environ)
   400bce:	48 8d 15 58 4b 00 00 	lea    rdx,[rip+0x4b58]        # 40572d <b+0x1a1>
   400bd5:	48 89 d6             	mov    rsi,rdx
   400bd8:	48 89 c7             	mov    rdi,rax
-  400bdb:	e8 10 0b 00 00       	call   4016f0 <strcmp>
+  400bdb:	e8 20 0b 00 00       	call   401700 <strcmp>
   400be0:	85 c0                	test   eax,eax
   400be2:	0f 85 fd 01 00 00    	jne    400de5 <main+0xdaa>
             char path[100] = {0};
@@ -783,7 +783,7 @@ int main(int argc, char** argv, char** environ)
   400c76:	48 8d 05 bb 49 00 00 	lea    rax,[rip+0x49bb]        # 405638 <b+0xac>
   400c7d:	48 89 c7             	mov    rdi,rax
   400c80:	b8 00 00 00 00       	mov    eax,0x0
-  400c85:	e8 96 2c 00 00       	call   403920 <printf>
+  400c85:	e8 a6 2c 00 00       	call   403930 <printf>
             gets(path);
   400c8a:	48 8d 85 88 fd ff ff 	lea    rax,[rbp-0x278]
   400c91:	48 89 c7             	mov    rdi,rax
@@ -803,7 +803,7 @@ int main(int argc, char** argv, char** environ)
   400cc0:	48 8d 05 4d 4a 00 00 	lea    rax,[rip+0x4a4d]        # 405714 <b+0x188>
   400cc7:	48 89 c7             	mov    rdi,rax
   400cca:	b8 00 00 00 00       	mov    eax,0x0
-  400ccf:	e8 4c 2c 00 00       	call   403920 <printf>
+  400ccf:	e8 5c 2c 00 00       	call   403930 <printf>
   400cd4:	e9 00 f5 ff ff       	jmp    4001d9 <main+0x19e>
             }
             else {
@@ -838,7 +838,7 @@ int main(int argc, char** argv, char** environ)
   400d67:	48 8d 05 c5 49 00 00 	lea    rax,[rip+0x49c5]        # 405733 <b+0x1a7>
   400d6e:	48 89 c7             	mov    rdi,rax
   400d71:	b8 00 00 00 00       	mov    eax,0x0
-  400d76:	e8 a5 2b 00 00       	call   403920 <printf>
+  400d76:	e8 b5 2b 00 00       	call   403930 <printf>
                 gets(buffer);
   400d7b:	48 8d 85 ec fd ff ff 	lea    rax,[rbp-0x214]
   400d82:	48 89 c7             	mov    rdi,rax
@@ -846,7 +846,7 @@ int main(int argc, char** argv, char** environ)
                 int len = strlen(buffer);
   400d8a:	48 8d 85 ec fd ff ff 	lea    rax,[rbp-0x214]
   400d91:	48 89 c7             	mov    rdi,rax
-  400d94:	e8 a7 09 00 00       	call   401740 <strlen>
+  400d94:	e8 b7 09 00 00       	call   401750 <strlen>
   400d99:	89 45 d0             	mov    DWORD PTR [rbp-0x30],eax
                 write(fd, buffer, len);
   400d9c:	8b 45 d0             	mov    eax,DWORD PTR [rbp-0x30]
@@ -863,7 +863,7 @@ int main(int argc, char** argv, char** environ)
   400dc2:	48 8d 05 7f 49 00 00 	lea    rax,[rip+0x497f]        # 405748 <b+0x1bc>
   400dc9:	48 89 c7             	mov    rdi,rax
   400dcc:	b8 00 00 00 00       	mov    eax,0x0
-  400dd1:	e8 4a 2b 00 00       	call   403920 <printf>
+  400dd1:	e8 5a 2b 00 00       	call   403930 <printf>
                 close(fd);
   400dd6:	8b 45 d4             	mov    eax,DWORD PTR [rbp-0x2c]
   400dd9:	89 c7                	mov    edi,eax
@@ -876,7 +876,7 @@ int main(int argc, char** argv, char** environ)
   400dec:	48 8d 15 78 49 00 00 	lea    rdx,[rip+0x4978]        # 40576b <b+0x1df>
   400df3:	48 89 d6             	mov    rsi,rdx
   400df6:	48 89 c7             	mov    rdi,rax
-  400df9:	e8 f2 08 00 00       	call   4016f0 <strcmp>
+  400df9:	e8 02 09 00 00       	call   401700 <strcmp>
   400dfe:	85 c0                	test   eax,eax
   400e00:	75 73                	jne    400e75 <main+0xe3a>
   400e02:	48 c7 45 a0 29 00 00 	mov    QWORD PTR [rbp-0x60],0x29
@@ -926,7 +926,7 @@ __attribute__((__always_inline__)) inline int do_syscall(long func, long a1, lon
   400e75:	48 8d 05 f6 48 00 00 	lea    rax,[rip+0x48f6]        # 405772 <b+0x1e6>
   400e7c:	48 89 c7             	mov    rdi,rax
   400e7f:	b8 00 00 00 00       	mov    eax,0x0
-  400e84:	e8 97 2a 00 00       	call   403920 <printf>
+  400e84:	e8 a7 2a 00 00       	call   403930 <printf>
             int pid = 0;
   400e89:	c7 45 d8 00 00 00 00 	mov    DWORD PTR [rbp-0x28],0x0
             if ((pid = fork()) == 0) {
@@ -938,7 +938,7 @@ __attribute__((__always_inline__)) inline int do_syscall(long func, long a1, lon
   400e9e:	48 8d 05 e3 48 00 00 	lea    rax,[rip+0x48e3]        # 405788 <b+0x1fc>
   400ea5:	48 89 c7             	mov    rdi,rax
   400ea8:	b8 00 00 00 00       	mov    eax,0x0
-  400ead:	e8 6e 2a 00 00       	call   403920 <printf>
+  400ead:	e8 7e 2a 00 00       	call   403930 <printf>
                 if (execve(cmd, argv, environ) == -1) {
   400eb2:	48 8b 95 68 fd ff ff 	mov    rdx,QWORD PTR [rbp-0x298]
   400eb9:	48 8b 8d 70 fd ff ff 	mov    rcx,QWORD PTR [rbp-0x290]
@@ -954,7 +954,7 @@ __attribute__((__always_inline__)) inline int do_syscall(long func, long a1, lon
   400ee1:	48 8d 05 b9 48 00 00 	lea    rax,[rip+0x48b9]        # 4057a1 <b+0x215>
   400ee8:	48 89 c7             	mov    rdi,rax
   400eeb:	b8 00 00 00 00       	mov    eax,0x0
-  400ef0:	e8 2b 2a 00 00       	call   403920 <printf>
+  400ef0:	e8 3b 2a 00 00       	call   403930 <printf>
   400ef5:	e9 df f2 ff ff       	jmp    4001d9 <main+0x19e>
                     continue;
                 }
@@ -965,7 +965,7 @@ __attribute__((__always_inline__)) inline int do_syscall(long func, long a1, lon
   400eff:	48 8d 05 b0 48 00 00 	lea    rax,[rip+0x48b0]        # 4057b6 <b+0x22a>
   400f06:	48 89 c7             	mov    rdi,rax
   400f09:	b8 00 00 00 00       	mov    eax,0x0
-  400f0e:	e8 0d 2a 00 00       	call   403920 <printf>
+  400f0e:	e8 1d 2a 00 00       	call   403930 <printf>
             int loc = 0;
   400f13:	c7 85 6c fe ff ff 00 	mov    DWORD PTR [rbp-0x194],0x0
   400f1a:	00 00 00 
@@ -1390,7 +1390,7 @@ DIR* opendir(const char* name)
   4011bc:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
 	DIR* dirp = (DIR*)malloc(sizeof(DIR));
   4011c0:	bf 20 00 00 00       	mov    edi,0x20
-  4011c5:	e8 96 32 00 00       	call   404460 <malloc>
+  4011c5:	e8 a6 32 00 00       	call   404470 <malloc>
   4011ca:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
 	if(dirp == NULL)
   4011ce:	48 83 7d f8 00       	cmp    QWORD PTR [rbp-0x8],0x0
@@ -1416,14 +1416,14 @@ DIR* opendir(const char* name)
 		free(dirp);
   401200:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
   401204:	48 89 c7             	mov    rdi,rax
-  401207:	e8 54 2c 00 00       	call   403e60 <free>
+  401207:	e8 64 2c 00 00       	call   403e70 <free>
 		return NULL;
   40120c:	b8 00 00 00 00       	mov    eax,0x0
   401211:	eb 72                	jmp    401285 <opendir+0xd5>
 	}
 	dirp->buf = (char*)malloc(1024);
   401213:	bf 00 04 00 00       	mov    edi,0x400
-  401218:	e8 43 32 00 00       	call   404460 <malloc>
+  401218:	e8 53 32 00 00       	call   404470 <malloc>
   40121d:	48 89 c2             	mov    rdx,rax
   401220:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
   401224:	48 89 50 08          	mov    QWORD PTR [rax+0x8],rdx
@@ -1441,7 +1441,7 @@ DIR* opendir(const char* name)
 		free(dirp);
   401242:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
   401246:	48 89 c7             	mov    rdi,rax
-  401249:	e8 12 2c 00 00       	call   403e60 <free>
+  401249:	e8 22 2c 00 00       	call   403e70 <free>
 		return NULL;
   40124e:	b8 00 00 00 00       	mov    eax,0x0
   401253:	eb 30                	jmp    401285 <opendir+0xd5>
@@ -1522,11 +1522,11 @@ __attribute__((__always_inline__))inline int do_syscall(long long func,long long
   40130f:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
   401313:	48 8b 40 08          	mov    rax,QWORD PTR [rax+0x8]
   401317:	48 89 c7             	mov    rdi,rax
-  40131a:	e8 41 2b 00 00       	call   403e60 <free>
+  40131a:	e8 51 2b 00 00       	call   403e70 <free>
 	free(dirp);
   40131f:	48 8b 45 b8          	mov    rax,QWORD PTR [rbp-0x48]
   401323:	48 89 c7             	mov    rdi,rax
-  401326:	e8 35 2b 00 00       	call   403e60 <free>
+  401326:	e8 45 2b 00 00       	call   403e70 <free>
 	return 0;
   40132b:	b8 00 00 00 00       	mov    eax,0x0
 }
@@ -1768,7 +1768,7 @@ int puts(const char* str)
   401585:	0f 1f 00             	nop    DWORD PTR [rax]
 	{
 		putchar((int)*c);
-  401588:	e8 f3 25 00 00       	call   403b80 <putchar>
+  401588:	e8 03 26 00 00       	call   403b90 <putchar>
   40158d:	41 89 dc             	mov    r12d,ebx
 	for(const char* c = str; *c != 0; c++)
   401590:	48 83 c3 01          	add    rbx,0x1
@@ -1782,7 +1782,7 @@ int puts(const char* str)
 	{
 		putchar('\n');
   40159e:	bf 0a 00 00 00       	mov    edi,0xa
-  4015a3:	e8 d8 25 00 00       	call   403b80 <putchar>
+  4015a3:	e8 e8 25 00 00       	call   403b90 <putchar>
 		r++;
   4015a8:	41 8d 44 24 02       	lea    eax,[r12+0x2]
 	}
@@ -1811,5215 +1811,5228 @@ char* gets(char* str)
   4015d0:	f3 0f 1e fa          	endbr64 
   4015d4:	41 54                	push   r12
   4015d6:	49 89 fc             	mov    r12,rdi
-  4015d9:	eb 14                	jmp    4015ef <gets+0x1f>
-  4015db:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
+	*str = 0;
+  4015d9:	c6 07 00             	mov    BYTE PTR [rdi],0x0
+  4015dc:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+	while(1)
+	{
+		read(1, str, 1);
+  4015e0:	ba 01 00 00 00       	mov    edx,0x1
+  4015e5:	4c 89 e6             	mov    rsi,r12
+  4015e8:	bf 01 00 00 00       	mov    edi,0x1
+  4015ed:	31 c0                	xor    eax,eax
+  4015ef:	e8 2c fa ff ff       	call   401020 <read>
+		if(!*str)
+  4015f4:	41 0f b6 04 24       	movzx  eax,BYTE PTR [r12]
+  4015f9:	84 c0                	test   al,al
+  4015fb:	74 e3                	je     4015e0 <gets+0x10>
+		{
+			continue;
+		}
+		if(*str == '\n')
+  4015fd:	3c 0a                	cmp    al,0xa
+  4015ff:	74 1f                	je     401620 <gets+0x50>
 			*str = '\0';
 			break;
 		}
 		else if(*str == '\b')
 		{
 			str -= 2;
-  4015e0:	3c 08                	cmp    al,0x8
-  4015e2:	49 8d 54 24 fe       	lea    rdx,[r12-0x2]
-  4015e7:	4c 0f 44 e2          	cmove  r12,rdx
+  401601:	3c 08                	cmp    al,0x8
+  401603:	49 8d 54 24 fe       	lea    rdx,[r12-0x2]
+  401608:	4c 0f 44 e2          	cmove  r12,rdx
 		}
-		str++;
-  4015eb:	49 83 c4 01          	add    r12,0x1
-		read(1, str, 1);
-  4015ef:	ba 01 00 00 00       	mov    edx,0x1
-  4015f4:	4c 89 e6             	mov    rsi,r12
-  4015f7:	bf 01 00 00 00       	mov    edi,0x1
-  4015fc:	31 c0                	xor    eax,eax
-  4015fe:	e8 1d fa ff ff       	call   401020 <read>
-		if(*str == '\n')
-  401603:	41 0f b6 04 24       	movzx  eax,BYTE PTR [r12]
-  401608:	3c 0a                	cmp    al,0xa
-  40160a:	75 d4                	jne    4015e0 <gets+0x10>
+		*str++ = 0;
+  40160c:	41 c6 04 24 00       	mov    BYTE PTR [r12],0x0
+  401611:	49 83 c4 01          	add    r12,0x1
+  401615:	eb c9                	jmp    4015e0 <gets+0x10>
+  401617:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+  40161e:	00 00 
 	}
 	return str;
-  40160c:	4c 89 e0             	mov    rax,r12
+  401620:	4c 89 e0             	mov    rax,r12
 			*str = '\0';
-  40160f:	41 c6 04 24 00       	mov    BYTE PTR [r12],0x0
-  401614:	41 5c                	pop    r12
-  401616:	c3                   	ret    
+  401623:	41 c6 04 24 00       	mov    BYTE PTR [r12],0x0
+  401628:	41 5c                	pop    r12
+  40162a:	c3                   	ret    
 
 Disassembly of section .text.memset:
 
-0000000000401620 <memset>:
+0000000000401630 <memset>:
 
 #include <stdint.h>
 #include <string.h>
 
 void* __attribute__((weak)) memset(void* dest, int c, size_t n)
 {
-  401620:	f3 0f 1e fa          	endbr64 
-  401624:	48 89 f8             	mov    rax,rdi
+  401630:	f3 0f 1e fa          	endbr64 
+  401634:	48 89 f8             	mov    rax,rdi
 
 	/* Fill head and tail with minimal branching. Each
 	 * conditional ensures that all the subsequently used
 	 * offsets are well-defined and in the dest region. */
 
 	if(!n)
-  401627:	48 85 d2             	test   rdx,rdx
-  40162a:	74 77                	je     4016a3 <memset+0x83>
+  401637:	48 85 d2             	test   rdx,rdx
+  40163a:	74 77                	je     4016b3 <memset+0x83>
 	{
 		return dest;
 	}
 
 	s[0] = s[n - 1] = (unsigned char)c;
-  40162c:	40 88 74 17 ff       	mov    BYTE PTR [rdi+rdx*1-0x1],sil
-  401631:	40 88 37             	mov    BYTE PTR [rdi],sil
+  40163c:	40 88 74 17 ff       	mov    BYTE PTR [rdi+rdx*1-0x1],sil
+  401641:	40 88 37             	mov    BYTE PTR [rdi],sil
 
 	if(n <= 2)
-  401634:	48 83 fa 02          	cmp    rdx,0x2
-  401638:	76 69                	jbe    4016a3 <memset+0x83>
+  401644:	48 83 fa 02          	cmp    rdx,0x2
+  401648:	76 69                	jbe    4016b3 <memset+0x83>
 	{
 		return dest;
 	}
 
 	s[1] = s[n - 2] = (unsigned char)c;
-  40163a:	40 88 74 17 fe       	mov    BYTE PTR [rdi+rdx*1-0x2],sil
-  40163f:	40 88 77 01          	mov    BYTE PTR [rdi+0x1],sil
+  40164a:	40 88 74 17 fe       	mov    BYTE PTR [rdi+rdx*1-0x2],sil
+  40164f:	40 88 77 01          	mov    BYTE PTR [rdi+0x1],sil
 	s[2] = s[n - 3] = (unsigned char)c;
-  401643:	40 88 74 17 fd       	mov    BYTE PTR [rdi+rdx*1-0x3],sil
-  401648:	40 88 77 02          	mov    BYTE PTR [rdi+0x2],sil
+  401653:	40 88 74 17 fd       	mov    BYTE PTR [rdi+rdx*1-0x3],sil
+  401658:	40 88 77 02          	mov    BYTE PTR [rdi+0x2],sil
 
 	if(n <= 6)
-  40164c:	48 83 fa 06          	cmp    rdx,0x6
-  401650:	76 51                	jbe    4016a3 <memset+0x83>
+  40165c:	48 83 fa 06          	cmp    rdx,0x6
+  401660:	76 51                	jbe    4016b3 <memset+0x83>
 	{
 		return dest;
 	}
 
 	s[3] = s[n - 4] = (unsigned char)c;
-  401652:	40 88 74 17 fc       	mov    BYTE PTR [rdi+rdx*1-0x4],sil
-  401657:	40 88 77 03          	mov    BYTE PTR [rdi+0x3],sil
+  401662:	40 88 74 17 fc       	mov    BYTE PTR [rdi+rdx*1-0x4],sil
+  401667:	40 88 77 03          	mov    BYTE PTR [rdi+0x3],sil
 
 	if(n <= 8)
-  40165b:	48 83 fa 08          	cmp    rdx,0x8
-  40165f:	76 42                	jbe    4016a3 <memset+0x83>
+  40166b:	48 83 fa 08          	cmp    rdx,0x8
+  40166f:	76 42                	jbe    4016b3 <memset+0x83>
 	/* Advance pointer to align it at a 4-byte boundary,
 	 * and truncate n to a multiple of 4. The previous code
 	 * already took care of any head/tail that get cut off
 	 * by the alignment. */
 
 	k = -(uintptr_t)s & 3;
-  401661:	48 f7 df             	neg    rdi
+  401671:	48 f7 df             	neg    rdi
 	n &= (unsigned long)-4;
 	n /= 4;
 
 	// Cast to void first to prevent alignment warning
 	uint32_t* ws = (uint32_t*)(void*)s;
 	uint32_t wc = c & 0xFF;
-  401664:	44 0f b6 c6          	movzx  r8d,sil
+  401674:	44 0f b6 c6          	movzx  r8d,sil
 	wc |= ((wc << 8) | (wc << 16) | (wc << 24));
-  401668:	c1 e6 18             	shl    esi,0x18
+  401678:	c1 e6 18             	shl    esi,0x18
 	k = -(uintptr_t)s & 3;
-  40166b:	83 e7 03             	and    edi,0x3
+  40167b:	83 e7 03             	and    edi,0x3
 	wc |= ((wc << 8) | (wc << 16) | (wc << 24));
-  40166e:	45 89 c1             	mov    r9d,r8d
+  40167e:	45 89 c1             	mov    r9d,r8d
 	s += k;
-  401671:	48 8d 0c 38          	lea    rcx,[rax+rdi*1]
+  401681:	48 8d 0c 38          	lea    rcx,[rax+rdi*1]
 	n -= k;
-  401675:	48 29 fa             	sub    rdx,rdi
+  401685:	48 29 fa             	sub    rdx,rdi
 	wc |= ((wc << 8) | (wc << 16) | (wc << 24));
-  401678:	44 89 c7             	mov    edi,r8d
-  40167b:	41 c1 e1 10          	shl    r9d,0x10
-  40167f:	c1 e7 08             	shl    edi,0x8
-  401682:	48 83 e2 fc          	and    rdx,0xfffffffffffffffc
-  401686:	44 09 cf             	or     edi,r9d
-  401689:	48 01 ca             	add    rdx,rcx
-  40168c:	44 09 c7             	or     edi,r8d
-  40168f:	09 fe                	or     esi,edi
+  401688:	44 89 c7             	mov    edi,r8d
+  40168b:	41 c1 e1 10          	shl    r9d,0x10
+  40168f:	c1 e7 08             	shl    edi,0x8
+  401692:	48 83 e2 fc          	and    rdx,0xfffffffffffffffc
+  401696:	44 09 cf             	or     edi,r9d
+  401699:	48 01 ca             	add    rdx,rcx
+  40169c:	44 09 c7             	or     edi,r8d
+  40169f:	09 fe                	or     esi,edi
 
 	/* Pure C fallback with no aliasing violations. */
 	for(; n; n--, ws++)
-  401691:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  4016a1:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
 	{
 		*ws = wc;
-  401698:	89 31                	mov    DWORD PTR [rcx],esi
+  4016a8:	89 31                	mov    DWORD PTR [rcx],esi
 	for(; n; n--, ws++)
-  40169a:	48 83 c1 04          	add    rcx,0x4
-  40169e:	48 39 ca             	cmp    rdx,rcx
-  4016a1:	75 f5                	jne    401698 <memset+0x78>
+  4016aa:	48 83 c1 04          	add    rcx,0x4
+  4016ae:	48 39 ca             	cmp    rdx,rcx
+  4016b1:	75 f5                	jne    4016a8 <memset+0x78>
 	}
 
 	return dest;
 }
-  4016a3:	c3                   	ret    
+  4016b3:	c3                   	ret    
 
 Disassembly of section .text.strcat:
 
-00000000004016b0 <strcat>:
+00000000004016c0 <strcat>:
  */
 
 #include <string.h>
 
 char* strcat(char* __restrict dst, const char* __restrict src)
 {
-  4016b0:	f3 0f 1e fa          	endbr64 
-  4016b4:	41 54                	push   r12
-  4016b6:	49 89 fc             	mov    r12,rdi
-  4016b9:	55                   	push   rbp
-  4016ba:	48 89 f5             	mov    rbp,rsi
-  4016bd:	53                   	push   rbx
+  4016c0:	f3 0f 1e fa          	endbr64 
+  4016c4:	41 54                	push   r12
+  4016c6:	49 89 fc             	mov    r12,rdi
+  4016c9:	55                   	push   rbp
+  4016ca:	48 89 f5             	mov    rbp,rsi
+  4016cd:	53                   	push   rbx
 	const size_t dstlen = strlen(dst);
-  4016be:	e8 7d 00 00 00       	call   401740 <strlen>
+  4016ce:	e8 7d 00 00 00       	call   401750 <strlen>
 	const size_t srclen = strlen(src);
-  4016c3:	48 89 ef             	mov    rdi,rbp
+  4016d3:	48 89 ef             	mov    rdi,rbp
 	const size_t dstlen = strlen(dst);
-  4016c6:	48 89 c3             	mov    rbx,rax
+  4016d6:	48 89 c3             	mov    rbx,rax
 	const size_t srclen = strlen(src);
-  4016c9:	e8 72 00 00 00       	call   401740 <strlen>
+  4016d9:	e8 72 00 00 00       	call   401750 <strlen>
 	//  The strcat() and strncat() functions append a copy of the null-
 	//  terminated string src to the end of the null-terminated string dst,
 	//  then add a terminating '\0'.  The string dst must have sufficient
 	//  space to hold the result.
 	memcpy(dst + dstlen, src, srclen + 1);
-  4016ce:	49 8d 3c 1c          	lea    rdi,[r12+rbx*1]
-  4016d2:	48 89 ee             	mov    rsi,rbp
-  4016d5:	48 8d 50 01          	lea    rdx,[rax+0x1]
-  4016d9:	e8 c2 2d 00 00       	call   4044a0 <memcpy>
+  4016de:	49 8d 3c 1c          	lea    rdi,[r12+rbx*1]
+  4016e2:	48 89 ee             	mov    rsi,rbp
+  4016e5:	48 8d 50 01          	lea    rdx,[rax+0x1]
+  4016e9:	e8 c2 2d 00 00       	call   4044b0 <memcpy>
 	//  The strcat() and strncat() functions return dst.
 	return dst;
 }
-  4016de:	4c 89 e0             	mov    rax,r12
-  4016e1:	5b                   	pop    rbx
-  4016e2:	5d                   	pop    rbp
-  4016e3:	41 5c                	pop    r12
-  4016e5:	c3                   	ret    
+  4016ee:	4c 89 e0             	mov    rax,r12
+  4016f1:	5b                   	pop    rbx
+  4016f2:	5d                   	pop    rbp
+  4016f3:	41 5c                	pop    r12
+  4016f5:	c3                   	ret    
 
 Disassembly of section .text.strcmp:
 
-00000000004016f0 <strcmp>:
+0000000000401700 <strcmp>:
  * Otherwise we compare the strings as normal.
  * We bail out when s1 ends (null-term)
  */
 
 int strcmp(const char* s1, const char* s2)
 {
-  4016f0:	f3 0f 1e fa          	endbr64 
+  401700:	f3 0f 1e fa          	endbr64 
 	int r = -1;
 
 	if(s1 == s2)
-  4016f4:	48 39 f7             	cmp    rdi,rsi
-  4016f7:	74 34                	je     40172d <strcmp+0x3d>
+  401704:	48 39 f7             	cmp    rdi,rsi
+  401707:	74 34                	je     40173d <strcmp+0x3d>
 		// short circuit - same string
 		return 0;
 	}
 
 	// I don't want to panic with a NULL ptr - we'll fall through and fail w/ -1
 	if(s1 != NULL && s2 != NULL)
-  4016f9:	48 85 ff             	test   rdi,rdi
-  4016fc:	74 38                	je     401736 <strcmp+0x46>
-  4016fe:	48 85 f6             	test   rsi,rsi
-  401701:	74 33                	je     401736 <strcmp+0x46>
+  401709:	48 85 ff             	test   rdi,rdi
+  40170c:	74 38                	je     401746 <strcmp+0x46>
+  40170e:	48 85 f6             	test   rsi,rsi
+  401711:	74 33                	je     401746 <strcmp+0x46>
 	{
 		// iterate through strings until they don't match or s1 ends (null-term)
 		for(; *s1 == *s2; ++s1, ++s2)
-  401703:	0f b6 17             	movzx  edx,BYTE PTR [rdi]
-  401706:	0f be 0e             	movsx  ecx,BYTE PTR [rsi]
-  401709:	38 ca                	cmp    dl,cl
-  40170b:	75 23                	jne    401730 <strcmp+0x40>
-  40170d:	b8 01 00 00 00       	mov    eax,0x1
-  401712:	eb 15                	jmp    401729 <strcmp+0x39>
-  401714:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
-  401718:	0f b6 14 07          	movzx  edx,BYTE PTR [rdi+rax*1]
-  40171c:	48 83 c0 01          	add    rax,0x1
-  401720:	0f be 4c 06 ff       	movsx  ecx,BYTE PTR [rsi+rax*1-0x1]
-  401725:	38 ca                	cmp    dl,cl
-  401727:	75 07                	jne    401730 <strcmp+0x40>
+  401713:	0f b6 17             	movzx  edx,BYTE PTR [rdi]
+  401716:	0f be 0e             	movsx  ecx,BYTE PTR [rsi]
+  401719:	38 ca                	cmp    dl,cl
+  40171b:	75 23                	jne    401740 <strcmp+0x40>
+  40171d:	b8 01 00 00 00       	mov    eax,0x1
+  401722:	eb 15                	jmp    401739 <strcmp+0x39>
+  401724:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+  401728:	0f b6 14 07          	movzx  edx,BYTE PTR [rdi+rax*1]
+  40172c:	48 83 c0 01          	add    rax,0x1
+  401730:	0f be 4c 06 ff       	movsx  ecx,BYTE PTR [rsi+rax*1-0x1]
+  401735:	38 ca                	cmp    dl,cl
+  401737:	75 07                	jne    401740 <strcmp+0x40>
 		{
 			if(*s1 == 0)
-  401729:	84 d2                	test   dl,dl
-  40172b:	75 eb                	jne    401718 <strcmp+0x28>
+  401739:	84 d2                	test   dl,dl
+  40173b:	75 eb                	jne    401728 <strcmp+0x28>
 		return 0;
-  40172d:	31 c0                	xor    eax,eax
-  40172f:	c3                   	ret    
+  40173d:	31 c0                	xor    eax,eax
+  40173f:	c3                   	ret    
 		}
 
 		// handle case where we didn't break early - set return code.
 		if(r != 0)
 		{
 			r = *(const char*)s1 - *(const char*)s2;
-  401730:	0f be c2             	movsx  eax,dl
-  401733:	29 c8                	sub    eax,ecx
+  401740:	0f be c2             	movsx  eax,dl
+  401743:	29 c8                	sub    eax,ecx
 		}
 	}
 
 	return r;
 }
-  401735:	c3                   	ret    
+  401745:	c3                   	ret    
 	int r = -1;
-  401736:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  40173b:	c3                   	ret    
+  401746:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  40174b:	c3                   	ret    
 
 Disassembly of section .text.strlen:
 
-0000000000401740 <strlen>:
+0000000000401750 <strlen>:
 		if(p[x] == '\0')                                \
 			return ((uintptr_t)p - (uintptr_t)str + x); \
 	} while(0)
 
 size_t strlen(const char* str)
 {
-  401740:	f3 0f 1e fa          	endbr64 
+  401750:	f3 0f 1e fa          	endbr64 
 	const char* p;
 	const unsigned long* lp;
 
 	/* Skip the first few bytes until we have an aligned p */
 	for(p = str; (uintptr_t)p & LONGPTR_MASK; p++)
-  401744:	48 89 fe             	mov    rsi,rdi
-  401747:	40 f6 c7 07          	test   dil,0x7
-  40174b:	75 0d                	jne    40175a <strlen+0x1a>
-  40174d:	eb 21                	jmp    401770 <strlen+0x30>
-  40174f:	90                   	nop
-  401750:	48 83 c7 01          	add    rdi,0x1
-  401754:	40 f6 c7 07          	test   dil,0x7
-  401758:	74 16                	je     401770 <strlen+0x30>
+  401754:	48 89 fe             	mov    rsi,rdi
+  401757:	40 f6 c7 07          	test   dil,0x7
+  40175b:	75 0d                	jne    40176a <strlen+0x1a>
+  40175d:	eb 21                	jmp    401780 <strlen+0x30>
+  40175f:	90                   	nop
+  401760:	48 83 c7 01          	add    rdi,0x1
+  401764:	40 f6 c7 07          	test   dil,0x7
+  401768:	74 16                	je     401780 <strlen+0x30>
 	{
 		if(*p == '\0')
-  40175a:	80 3f 00             	cmp    BYTE PTR [rdi],0x0
-  40175d:	75 f1                	jne    401750 <strlen+0x10>
+  40176a:	80 3f 00             	cmp    BYTE PTR [rdi],0x0
+  40176d:	75 f1                	jne    401760 <strlen+0x10>
 	for(lp = (const unsigned long*)(const void*)p;; lp++)
 	{
 		if((*lp - mask01) & mask80)
 		{
 			p = (const char*)(lp);
 			testbyte(0);
-  40175f:	48 89 f8             	mov    rax,rdi
-  401762:	48 29 f0             	sub    rax,rsi
-  401765:	c3                   	ret    
-  401766:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
-  40176d:	00 00 00 
+  40176f:	48 89 f8             	mov    rax,rdi
+  401772:	48 29 f0             	sub    rax,rsi
+  401775:	c3                   	ret    
+  401776:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
+  40177d:	00 00 00 
 		if((*lp - mask01) & mask80)
-  401770:	48 b9 ff fe fe fe fe 	movabs rcx,0xfefefefefefefeff
-  401777:	fe fe fe 
-  40177a:	48 ba 80 80 80 80 80 	movabs rdx,0x8080808080808080
-  401781:	80 80 80 
-  401784:	eb 38                	jmp    4017be <strlen+0x7e>
-  401786:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
-  40178d:	00 00 00 
+  401780:	48 b9 ff fe fe fe fe 	movabs rcx,0xfefefefefefefeff
+  401787:	fe fe fe 
+  40178a:	48 ba 80 80 80 80 80 	movabs rdx,0x8080808080808080
+  401791:	80 80 80 
+  401794:	eb 38                	jmp    4017ce <strlen+0x7e>
+  401796:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
+  40179d:	00 00 00 
 			testbyte(1);
-  401790:	80 7f 01 00          	cmp    BYTE PTR [rdi+0x1],0x0
-  401794:	74 3a                	je     4017d0 <strlen+0x90>
+  4017a0:	80 7f 01 00          	cmp    BYTE PTR [rdi+0x1],0x0
+  4017a4:	74 3a                	je     4017e0 <strlen+0x90>
 			testbyte(2);
-  401796:	80 7f 02 00          	cmp    BYTE PTR [rdi+0x2],0x0
-  40179a:	74 3c                	je     4017d8 <strlen+0x98>
+  4017a6:	80 7f 02 00          	cmp    BYTE PTR [rdi+0x2],0x0
+  4017aa:	74 3c                	je     4017e8 <strlen+0x98>
 			testbyte(3);
-  40179c:	80 7f 03 00          	cmp    BYTE PTR [rdi+0x3],0x0
-  4017a0:	74 3e                	je     4017e0 <strlen+0xa0>
+  4017ac:	80 7f 03 00          	cmp    BYTE PTR [rdi+0x3],0x0
+  4017b0:	74 3e                	je     4017f0 <strlen+0xa0>
 #if(LONG_BIT >= 64)
 			testbyte(4);
-  4017a2:	80 7f 04 00          	cmp    BYTE PTR [rdi+0x4],0x0
-  4017a6:	74 40                	je     4017e8 <strlen+0xa8>
+  4017b2:	80 7f 04 00          	cmp    BYTE PTR [rdi+0x4],0x0
+  4017b6:	74 40                	je     4017f8 <strlen+0xa8>
 			testbyte(5);
-  4017a8:	80 7f 05 00          	cmp    BYTE PTR [rdi+0x5],0x0
-  4017ac:	74 42                	je     4017f0 <strlen+0xb0>
+  4017b8:	80 7f 05 00          	cmp    BYTE PTR [rdi+0x5],0x0
+  4017bc:	74 42                	je     401800 <strlen+0xb0>
 			testbyte(6);
-  4017ae:	80 7f 06 00          	cmp    BYTE PTR [rdi+0x6],0x0
-  4017b2:	74 44                	je     4017f8 <strlen+0xb8>
+  4017be:	80 7f 06 00          	cmp    BYTE PTR [rdi+0x6],0x0
+  4017c2:	74 44                	je     401808 <strlen+0xb8>
 			testbyte(7);
-  4017b4:	80 7f 07 00          	cmp    BYTE PTR [rdi+0x7],0x0
-  4017b8:	74 46                	je     401800 <strlen+0xc0>
+  4017c4:	80 7f 07 00          	cmp    BYTE PTR [rdi+0x7],0x0
+  4017c8:	74 46                	je     401810 <strlen+0xc0>
 	for(lp = (const unsigned long*)(const void*)p;; lp++)
-  4017ba:	48 83 c7 08          	add    rdi,0x8
+  4017ca:	48 83 c7 08          	add    rdi,0x8
 		if((*lp - mask01) & mask80)
-  4017be:	48 8b 07             	mov    rax,QWORD PTR [rdi]
-  4017c1:	48 01 c8             	add    rax,rcx
-  4017c4:	48 85 d0             	test   rax,rdx
-  4017c7:	74 f1                	je     4017ba <strlen+0x7a>
+  4017ce:	48 8b 07             	mov    rax,QWORD PTR [rdi]
+  4017d1:	48 01 c8             	add    rax,rcx
+  4017d4:	48 85 d0             	test   rax,rdx
+  4017d7:	74 f1                	je     4017ca <strlen+0x7a>
 			testbyte(0);
-  4017c9:	80 3f 00             	cmp    BYTE PTR [rdi],0x0
-  4017cc:	75 c2                	jne    401790 <strlen+0x50>
-  4017ce:	eb 8f                	jmp    40175f <strlen+0x1f>
+  4017d9:	80 3f 00             	cmp    BYTE PTR [rdi],0x0
+  4017dc:	75 c2                	jne    4017a0 <strlen+0x50>
+  4017de:	eb 8f                	jmp    40176f <strlen+0x1f>
 			testbyte(1);
-  4017d0:	48 29 f7             	sub    rdi,rsi
-  4017d3:	48 8d 47 01          	lea    rax,[rdi+0x1]
-  4017d7:	c3                   	ret    
-			testbyte(2);
-  4017d8:	48 29 f7             	sub    rdi,rsi
-  4017db:	48 8d 47 02          	lea    rax,[rdi+0x2]
-  4017df:	c3                   	ret    
-			testbyte(3);
   4017e0:	48 29 f7             	sub    rdi,rsi
-  4017e3:	48 8d 47 03          	lea    rax,[rdi+0x3]
+  4017e3:	48 8d 47 01          	lea    rax,[rdi+0x1]
   4017e7:	c3                   	ret    
-			testbyte(4);
+			testbyte(2);
   4017e8:	48 29 f7             	sub    rdi,rsi
-  4017eb:	48 8d 47 04          	lea    rax,[rdi+0x4]
+  4017eb:	48 8d 47 02          	lea    rax,[rdi+0x2]
   4017ef:	c3                   	ret    
-			testbyte(5);
+			testbyte(3);
   4017f0:	48 29 f7             	sub    rdi,rsi
-  4017f3:	48 8d 47 05          	lea    rax,[rdi+0x5]
+  4017f3:	48 8d 47 03          	lea    rax,[rdi+0x3]
   4017f7:	c3                   	ret    
-			testbyte(6);
+			testbyte(4);
   4017f8:	48 29 f7             	sub    rdi,rsi
-  4017fb:	48 8d 47 06          	lea    rax,[rdi+0x6]
+  4017fb:	48 8d 47 04          	lea    rax,[rdi+0x4]
   4017ff:	c3                   	ret    
-			testbyte(7);
+			testbyte(5);
   401800:	48 29 f7             	sub    rdi,rsi
-  401803:	48 8d 47 07          	lea    rax,[rdi+0x7]
+  401803:	48 8d 47 05          	lea    rax,[rdi+0x5]
+  401807:	c3                   	ret    
+			testbyte(6);
+  401808:	48 29 f7             	sub    rdi,rsi
+  40180b:	48 8d 47 06          	lea    rax,[rdi+0x6]
+  40180f:	c3                   	ret    
+			testbyte(7);
+  401810:	48 29 f7             	sub    rdi,rsi
+  401813:	48 8d 47 07          	lea    rax,[rdi+0x7]
 		}
 	}
 
 	/* NOTREACHED */
 	// return (0);
 }
-  401807:	c3                   	ret    
+  401817:	c3                   	ret    
 
 Disassembly of section .text.__libc_init_array:
 
-0000000000401810 <__libc_init_array>:
+0000000000401820 <__libc_init_array>:
 	return main(argc, argv);
 }
 
 // This function may call another function which changes __stack_chk_guard
 __attribute__((no_stack_protector)) void __libc_init_array(void)
 {
-  401810:	f3 0f 1e fa          	endbr64 
-  401814:	41 54                	push   r12
+  401820:	f3 0f 1e fa          	endbr64 
+  401824:	41 54                	push   r12
 	size_t count = (size_t)(__preinit_array_end - __preinit_array_start);
-  401816:	49 c7 c4 00 00 00 00 	mov    r12,0x0
+  401826:	49 c7 c4 00 00 00 00 	mov    r12,0x0
 {
-  40181d:	55                   	push   rbp
+  40182d:	55                   	push   rbp
 	size_t count = (size_t)(__preinit_array_end - __preinit_array_start);
-  40181e:	48 c7 c5 00 00 00 00 	mov    rbp,0x0
+  40182e:	48 c7 c5 00 00 00 00 	mov    rbp,0x0
 {
-  401825:	53                   	push   rbx
+  401835:	53                   	push   rbx
 	size_t count = (size_t)(__preinit_array_end - __preinit_array_start);
-  401826:	4c 29 e5             	sub    rbp,r12
+  401836:	4c 29 e5             	sub    rbp,r12
 	for(size_t i = 0; i < count; i++)
-  401829:	48 c1 fd 03          	sar    rbp,0x3
-  40182d:	74 16                	je     401845 <__libc_init_array+0x35>
-  40182f:	31 db                	xor    ebx,ebx
-  401831:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  401839:	48 c1 fd 03          	sar    rbp,0x3
+  40183d:	74 16                	je     401855 <__libc_init_array+0x35>
+  40183f:	31 db                	xor    ebx,ebx
+  401841:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
 	{
 		__preinit_array_start[i]();
-  401838:	41 ff 14 dc          	call   QWORD PTR [r12+rbx*8]
+  401848:	41 ff 14 dc          	call   QWORD PTR [r12+rbx*8]
 	for(size_t i = 0; i < count; i++)
-  40183c:	48 83 c3 01          	add    rbx,0x1
-  401840:	48 39 dd             	cmp    rbp,rbx
-  401843:	75 f3                	jne    401838 <__libc_init_array+0x28>
+  40184c:	48 83 c3 01          	add    rbx,0x1
+  401850:	48 39 dd             	cmp    rbp,rbx
+  401853:	75 f3                	jne    401848 <__libc_init_array+0x28>
 	}
 
 	count = (size_t)(__init_array_end - __init_array_start);
-  401845:	49 c7 c4 00 00 00 00 	mov    r12,0x0
-  40184c:	48 c7 c5 00 00 00 00 	mov    rbp,0x0
-  401853:	4c 29 e5             	sub    rbp,r12
+  401855:	49 c7 c4 00 00 00 00 	mov    r12,0x0
+  40185c:	48 c7 c5 00 00 00 00 	mov    rbp,0x0
+  401863:	4c 29 e5             	sub    rbp,r12
 	for(size_t i = 0; i < count; i++)
-  401856:	48 c1 fd 03          	sar    rbp,0x3
-  40185a:	74 11                	je     40186d <__libc_init_array+0x5d>
-  40185c:	31 db                	xor    ebx,ebx
-  40185e:	66 90                	xchg   ax,ax
+  401866:	48 c1 fd 03          	sar    rbp,0x3
+  40186a:	74 11                	je     40187d <__libc_init_array+0x5d>
+  40186c:	31 db                	xor    ebx,ebx
+  40186e:	66 90                	xchg   ax,ax
 	{
 		__init_array_start[i]();
-  401860:	41 ff 14 dc          	call   QWORD PTR [r12+rbx*8]
+  401870:	41 ff 14 dc          	call   QWORD PTR [r12+rbx*8]
 	for(size_t i = 0; i < count; i++)
-  401864:	48 83 c3 01          	add    rbx,0x1
-  401868:	48 39 dd             	cmp    rbp,rbx
-  40186b:	75 f3                	jne    401860 <__libc_init_array+0x50>
+  401874:	48 83 c3 01          	add    rbx,0x1
+  401878:	48 39 dd             	cmp    rbp,rbx
+  40187b:	75 f3                	jne    401870 <__libc_init_array+0x50>
 	}
 }
-  40186d:	5b                   	pop    rbx
-  40186e:	5d                   	pop    rbp
-  40186f:	41 5c                	pop    r12
-  401871:	c3                   	ret    
+  40187d:	5b                   	pop    rbx
+  40187e:	5d                   	pop    rbp
+  40187f:	41 5c                	pop    r12
+  401881:	c3                   	ret    
 
 Disassembly of section .text.__libc_fini_array:
 
-0000000000401880 <__libc_fini_array>:
+0000000000401890 <__libc_fini_array>:
 
 void __libc_fini_array(void)
 {
-  401880:	f3 0f 1e fa          	endbr64 
-  401884:	55                   	push   rbp
-  401885:	53                   	push   rbx
-  401886:	48 83 ec 08          	sub    rsp,0x8
+  401890:	f3 0f 1e fa          	endbr64 
+  401894:	55                   	push   rbp
+  401895:	53                   	push   rbx
+  401896:	48 83 ec 08          	sub    rsp,0x8
 	size_t count = (size_t)(__fini_array_end - __fini_array_start);
-  40188a:	48 c7 c5 00 00 00 00 	mov    rbp,0x0
-  401891:	48 c7 c3 00 00 00 00 	mov    rbx,0x0
-  401898:	48 29 eb             	sub    rbx,rbp
+  40189a:	48 c7 c5 00 00 00 00 	mov    rbp,0x0
+  4018a1:	48 c7 c3 00 00 00 00 	mov    rbx,0x0
+  4018a8:	48 29 eb             	sub    rbx,rbp
 	for(size_t i = count; i > 0; i--)
-  40189b:	48 c1 fb 03          	sar    rbx,0x3
-  40189f:	74 14                	je     4018b5 <__libc_fini_array+0x35>
-  4018a1:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  4018ab:	48 c1 fb 03          	sar    rbx,0x3
+  4018af:	74 14                	je     4018c5 <__libc_fini_array+0x35>
+  4018b1:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
 	{
 		__fini_array_start[i - 1]();
-  4018a8:	48 83 eb 01          	sub    rbx,0x1
-  4018ac:	ff 54 dd 00          	call   QWORD PTR [rbp+rbx*8+0x0]
+  4018b8:	48 83 eb 01          	sub    rbx,0x1
+  4018bc:	ff 54 dd 00          	call   QWORD PTR [rbp+rbx*8+0x0]
 	for(size_t i = count; i > 0; i--)
-  4018b0:	48 85 db             	test   rbx,rbx
-  4018b3:	75 f3                	jne    4018a8 <__libc_fini_array+0x28>
+  4018c0:	48 85 db             	test   rbx,rbx
+  4018c3:	75 f3                	jne    4018b8 <__libc_fini_array+0x28>
 	}
 }
-  4018b5:	48 83 c4 08          	add    rsp,0x8
-  4018b9:	5b                   	pop    rbx
-  4018ba:	5d                   	pop    rbp
-  4018bb:	c3                   	ret    
+  4018c5:	48 83 c4 08          	add    rsp,0x8
+  4018c9:	5b                   	pop    rbx
+  4018ca:	5d                   	pop    rbp
+  4018cb:	c3                   	ret    
 
 Disassembly of section .text.CRTStartup:
 
-00000000004018c0 <CRTStartup>:
+00000000004018d0 <CRTStartup>:
 
 // This function may call another function which changes __stack_chk_guard
 __attribute__((no_stack_protector)) void CRTStartup(void)
 {
-  4018c0:	f3 0f 1e fa          	endbr64 
-  4018c4:	48 83 ec 08          	sub    rsp,0x8
+  4018d0:	f3 0f 1e fa          	endbr64 
+  4018d4:	48 83 ec 08          	sub    rsp,0x8
 	memset(&__bss_start__, 0, (uintptr_t)&__bss_end__ - (uintptr_t)&__bss_start__);
-  4018c8:	48 c7 c7 c6 57 40 00 	mov    rdi,0x4057c6
-  4018cf:	48 c7 c2 cc 57 40 00 	mov    rdx,0x4057cc
-  4018d6:	31 f6                	xor    esi,esi
-  4018d8:	48 29 fa             	sub    rdx,rdi
-  4018db:	e8 40 fd ff ff       	call   401620 <memset>
+  4018d8:	48 c7 c7 c6 57 40 00 	mov    rdi,0x4057c6
+  4018df:	48 c7 c2 cc 57 40 00 	mov    rdx,0x4057cc
+  4018e6:	31 f6                	xor    esi,esi
+  4018e8:	48 29 fa             	sub    rdx,rdi
+  4018eb:	e8 40 fd ff ff       	call   401630 <memset>
 
 	__libc_init_array();
 
 	// TODO: handle relocs?
 }
-  4018e0:	48 83 c4 08          	add    rsp,0x8
+  4018f0:	48 83 c4 08          	add    rsp,0x8
 	__libc_init_array();
-  4018e4:	e9 27 ff ff ff       	jmp    401810 <__libc_init_array>
+  4018f4:	e9 27 ff ff ff       	jmp    401820 <__libc_init_array>
 
 Disassembly of section .text.entry:
 
-00000000004018f0 <entry>:
+0000000000401900 <entry>:
 {
-  4018f0:	f3 0f 1e fa          	endbr64 
-  4018f4:	41 54                	push   r12
-  4018f6:	49 89 f4             	mov    r12,rsi
-  4018f9:	55                   	push   rbp
-  4018fa:	89 fd                	mov    ebp,edi
-  4018fc:	53                   	push   rbx
-  4018fd:	48 89 d3             	mov    rbx,rdx
+  401900:	f3 0f 1e fa          	endbr64 
+  401904:	41 54                	push   r12
+  401906:	49 89 f4             	mov    r12,rsi
+  401909:	55                   	push   rbp
+  40190a:	89 fd                	mov    ebp,edi
+  40190c:	53                   	push   rbx
+  40190d:	48 89 d3             	mov    rbx,rdx
 	CRTStartup();
-  401900:	e8 bb ff ff ff       	call   4018c0 <CRTStartup>
+  401910:	e8 bb ff ff ff       	call   4018d0 <CRTStartup>
 	environ = _environ;
-  401905:	48 c7 c0 d0 57 40 00 	mov    rax,0x4057d0
+  401915:	48 c7 c0 d0 57 40 00 	mov    rax,0x4057d0
 	__heap_base = sbrk(0);
-  40190c:	31 ff                	xor    edi,edi
+  40191c:	31 ff                	xor    edi,edi
 	environ = _environ;
-  40190e:	48 89 18             	mov    QWORD PTR [rax],rbx
+  40191e:	48 89 18             	mov    QWORD PTR [rax],rbx
 	__heap_base = sbrk(0);
-  401911:	31 c0                	xor    eax,eax
-  401913:	e8 68 f8 ff ff       	call   401180 <sbrk>
-  401918:	48 c7 c2 50 58 40 00 	mov    rdx,0x405850
+  401921:	31 c0                	xor    eax,eax
+  401923:	e8 58 f8 ff ff       	call   401180 <sbrk>
+  401928:	48 c7 c2 50 58 40 00 	mov    rdx,0x405850
 	return main(argc, argv);
-  40191f:	4c 89 e6             	mov    rsi,r12
-  401922:	89 ef                	mov    edi,ebp
+  40192f:	4c 89 e6             	mov    rsi,r12
+  401932:	89 ef                	mov    edi,ebp
 	__heap_base = sbrk(0);
-  401924:	89 02                	mov    DWORD PTR [rdx],eax
+  401934:	89 02                	mov    DWORD PTR [rdx],eax
 }
-  401926:	5b                   	pop    rbx
-  401927:	5d                   	pop    rbp
-  401928:	41 5c                	pop    r12
+  401936:	5b                   	pop    rbx
+  401937:	5d                   	pop    rbp
+  401938:	41 5c                	pop    r12
 	return main(argc, argv);
-  40192a:	e9 0c e7 ff ff       	jmp    40003b <main>
+  40193a:	e9 fc e6 ff ff       	jmp    40003b <main>
 
 Disassembly of section .text.get_bit_access:
 
-0000000000401930 <get_bit_access>:
+0000000000401940 <get_bit_access>:
 // 3. If you try to use it as C++, only C++20 supports compound literals
 static inline double_with_bit_access get_bit_access(double x)
 {
   double_with_bit_access dwba;
   dwba.F = x;
   return dwba;
-  401930:	66 48 0f 7e c0       	movq   rax,xmm0
+  401940:	66 48 0f 7e c0       	movq   rax,xmm0
 }
-  401935:	c3                   	ret    
+  401945:	c3                   	ret    
 
 Disassembly of section .text.get_sign_bit:
 
-0000000000401940 <get_sign_bit>:
+0000000000401950 <get_sign_bit>:
 
 static inline int get_sign_bit(double x)
 {
   // The sign is stored in the highest bit
   return (int) (get_bit_access(x).U >> (DOUBLE_SIZE_IN_BITS - 1));
-  401940:	e8 eb ff ff ff       	call   401930 <get_bit_access>
-  401945:	48 c1 e8 3f          	shr    rax,0x3f
+  401950:	e8 eb ff ff ff       	call   401940 <get_bit_access>
+  401955:	48 c1 e8 3f          	shr    rax,0x3f
 }
-  401949:	c3                   	ret    
+  401959:	c3                   	ret    
 
 Disassembly of section .text.get_exp2:
 
-0000000000401950 <get_exp2>:
+0000000000401960 <get_exp2>:
 {
   // The exponent in an IEEE-754 floating-point number occupies a contiguous
   // sequence of bits (e.g. 52..62 for 64-bit doubles), but with a non-trivial representation: An
   // unsigned offset from some negative value (with the extremal offset values reserved for
   // special use).
   return (int)((x.U >> DOUBLE_STORED_MANTISSA_BITS ) & DOUBLE_EXPONENT_MASK) - DOUBLE_BASE_EXPONENT;
-  401950:	48 89 f8             	mov    rax,rdi
-  401953:	48 c1 e8 34          	shr    rax,0x34
-  401957:	25 ff 07 00 00       	and    eax,0x7ff
-  40195c:	2d ff 03 00 00       	sub    eax,0x3ff
+  401960:	48 89 f8             	mov    rax,rdi
+  401963:	48 c1 e8 34          	shr    rax,0x34
+  401967:	25 ff 07 00 00       	and    eax,0x7ff
+  40196c:	2d ff 03 00 00       	sub    eax,0x3ff
 }
-  401961:	c3                   	ret    
+  401971:	c3                   	ret    
 
 Disassembly of section .text.putchar_via_gadget:
 
-0000000000401970 <putchar_via_gadget>:
+0000000000401980 <putchar_via_gadget>:
 // or alternatively, that '\0' can be passed to the function in the output
 // gadget. The former assumption holds within the printf library. It also
 // assumes that the output gadget has been properly initialized.
 static inline void putchar_via_gadget(output_gadget_t* gadget, char c)
 {
   printf_size_t write_pos = gadget->pos++;
-  401970:	8b 47 18             	mov    eax,DWORD PTR [rdi+0x18]
-  401973:	8d 50 01             	lea    edx,[rax+0x1]
-  401976:	89 57 18             	mov    DWORD PTR [rdi+0x18],edx
+  401980:	8b 47 18             	mov    eax,DWORD PTR [rdi+0x18]
+  401983:	8d 50 01             	lea    edx,[rax+0x1]
+  401986:	89 57 18             	mov    DWORD PTR [rdi+0x18],edx
     // We're _always_ increasing pos, so as to count how may characters
     // _would_ have been written if not for the max_chars limitation
   if (write_pos >= gadget->max_chars) {
-  401979:	3b 47 1c             	cmp    eax,DWORD PTR [rdi+0x1c]
-  40197c:	73 22                	jae    4019a0 <putchar_via_gadget+0x30>
+  401989:	3b 47 1c             	cmp    eax,DWORD PTR [rdi+0x1c]
+  40198c:	73 22                	jae    4019b0 <putchar_via_gadget+0x30>
     return;
   }
   if (gadget->function != NULL) {
-  40197e:	48 8b 17             	mov    rdx,QWORD PTR [rdi]
-  401981:	48 85 d2             	test   rdx,rdx
-  401984:	74 12                	je     401998 <putchar_via_gadget+0x28>
+  40198e:	48 8b 17             	mov    rdx,QWORD PTR [rdi]
+  401991:	48 85 d2             	test   rdx,rdx
+  401994:	74 12                	je     4019a8 <putchar_via_gadget+0x28>
     // No check for c == '\0' .
     gadget->function(c, gadget->extra_function_arg);
-  401986:	4c 8b 47 08          	mov    r8,QWORD PTR [rdi+0x8]
-  40198a:	40 0f be fe          	movsx  edi,sil
-  40198e:	4c 89 c6             	mov    rsi,r8
-  401991:	ff e2                	jmp    rdx
-  401993:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
+  401996:	4c 8b 47 08          	mov    r8,QWORD PTR [rdi+0x8]
+  40199a:	40 0f be fe          	movsx  edi,sil
+  40199e:	4c 89 c6             	mov    rsi,r8
+  4019a1:	ff e2                	jmp    rdx
+  4019a3:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
   }
   else {
     // it must be the case that gadget->buffer != NULL , due to the constraint
     // on output_gadget_t ; and note we're relying on write_pos being non-negative.
     gadget->buffer[write_pos] = c;
-  401998:	48 8b 57 10          	mov    rdx,QWORD PTR [rdi+0x10]
-  40199c:	40 88 34 02          	mov    BYTE PTR [rdx+rax*1],sil
+  4019a8:	48 8b 57 10          	mov    rdx,QWORD PTR [rdi+0x10]
+  4019ac:	40 88 34 02          	mov    BYTE PTR [rdx+rax*1],sil
   }
 }
-  4019a0:	c3                   	ret    
+  4019b0:	c3                   	ret    
 
 Disassembly of section .text.append_termination_with_gadget:
 
-00000000004019b0 <append_termination_with_gadget>:
+00000000004019c0 <append_termination_with_gadget>:
 
 // Possibly-write the string-terminating '\0' character
 static inline void append_termination_with_gadget(output_gadget_t* gadget)
 {
   if (gadget->function != NULL || gadget->max_chars == 0) {
-  4019b0:	48 83 3f 00          	cmp    QWORD PTR [rdi],0x0
-  4019b4:	74 0a                	je     4019c0 <append_termination_with_gadget+0x10>
+  4019c0:	48 83 3f 00          	cmp    QWORD PTR [rdi],0x0
+  4019c4:	74 0a                	je     4019d0 <append_termination_with_gadget+0x10>
   if (gadget->buffer == NULL) {
     return;
   }
   printf_size_t null_char_pos = gadget->pos < gadget->max_chars ? gadget->pos : gadget->max_chars - 1;
   gadget->buffer[null_char_pos] = '\0';
 }
-  4019b6:	c3                   	ret    
-  4019b7:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
-  4019be:	00 00 
+  4019c6:	c3                   	ret    
+  4019c7:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+  4019ce:	00 00 
   if (gadget->function != NULL || gadget->max_chars == 0) {
-  4019c0:	8b 57 1c             	mov    edx,DWORD PTR [rdi+0x1c]
-  4019c3:	85 d2                	test   edx,edx
-  4019c5:	74 ef                	je     4019b6 <append_termination_with_gadget+0x6>
+  4019d0:	8b 57 1c             	mov    edx,DWORD PTR [rdi+0x1c]
+  4019d3:	85 d2                	test   edx,edx
+  4019d5:	74 ef                	je     4019c6 <append_termination_with_gadget+0x6>
   if (gadget->buffer == NULL) {
-  4019c7:	48 8b 4f 10          	mov    rcx,QWORD PTR [rdi+0x10]
-  4019cb:	48 85 c9             	test   rcx,rcx
-  4019ce:	74 e6                	je     4019b6 <append_termination_with_gadget+0x6>
+  4019d7:	48 8b 4f 10          	mov    rcx,QWORD PTR [rdi+0x10]
+  4019db:	48 85 c9             	test   rcx,rcx
+  4019de:	74 e6                	je     4019c6 <append_termination_with_gadget+0x6>
   printf_size_t null_char_pos = gadget->pos < gadget->max_chars ? gadget->pos : gadget->max_chars - 1;
-  4019d0:	8b 47 18             	mov    eax,DWORD PTR [rdi+0x18]
-  4019d3:	8d 72 ff             	lea    esi,[rdx-0x1]
-  4019d6:	39 c2                	cmp    edx,eax
-  4019d8:	48 0f 46 c6          	cmovbe rax,rsi
+  4019e0:	8b 47 18             	mov    eax,DWORD PTR [rdi+0x18]
+  4019e3:	8d 72 ff             	lea    esi,[rdx-0x1]
+  4019e6:	39 c2                	cmp    edx,eax
+  4019e8:	48 0f 46 c6          	cmovbe rax,rsi
   gadget->buffer[null_char_pos] = '\0';
-  4019dc:	c6 04 01 00          	mov    BYTE PTR [rcx+rax*1],0x0
+  4019ec:	c6 04 01 00          	mov    BYTE PTR [rcx+rax*1],0x0
 }
-  4019e0:	c3                   	ret    
+  4019f0:	c3                   	ret    
 
 Disassembly of section .text.discarding_gadget:
 
-00000000004019f0 <discarding_gadget>:
+0000000000401a00 <discarding_gadget>:
   gadget.function = NULL;
   gadget.extra_function_arg = NULL;
   gadget.buffer = NULL;
   gadget.pos = 0;
   gadget.max_chars = 0;
   return gadget;
-  4019f0:	48 c7 07 00 00 00 00 	mov    QWORD PTR [rdi],0x0
+  401a00:	48 c7 07 00 00 00 00 	mov    QWORD PTR [rdi],0x0
 {
-  4019f7:	48 89 f8             	mov    rax,rdi
+  401a07:	48 89 f8             	mov    rax,rdi
   return gadget;
-  4019fa:	48 c7 47 08 00 00 00 	mov    QWORD PTR [rdi+0x8],0x0
-  401a01:	00 
-  401a02:	48 c7 47 10 00 00 00 	mov    QWORD PTR [rdi+0x10],0x0
-  401a09:	00 
-  401a0a:	48 c7 47 18 00 00 00 	mov    QWORD PTR [rdi+0x18],0x0
+  401a0a:	48 c7 47 08 00 00 00 	mov    QWORD PTR [rdi+0x8],0x0
   401a11:	00 
+  401a12:	48 c7 47 10 00 00 00 	mov    QWORD PTR [rdi+0x10],0x0
+  401a19:	00 
+  401a1a:	48 c7 47 18 00 00 00 	mov    QWORD PTR [rdi+0x18],0x0
+  401a21:	00 
 }
-  401a12:	c3                   	ret    
+  401a22:	c3                   	ret    
 
 Disassembly of section .text.buffer_gadget:
 
-0000000000401a20 <buffer_gadget>:
+0000000000401a30 <buffer_gadget>:
 
 static inline output_gadget_t buffer_gadget(char* buffer, size_t buffer_size)
 {
-  401a20:	48 83 ec 28          	sub    rsp,0x28
-  401a24:	49 89 f8             	mov    r8,rdi
+  401a30:	48 83 ec 28          	sub    rsp,0x28
+  401a34:	49 89 f8             	mov    r8,rdi
   printf_size_t usable_buffer_size = (buffer_size > PRINTF_MAX_POSSIBLE_BUFFER_SIZE) ?
     PRINTF_MAX_POSSIBLE_BUFFER_SIZE : (printf_size_t) buffer_size;
   output_gadget_t result = discarding_gadget();
-  401a27:	48 89 e7             	mov    rdi,rsp
-  401a2a:	e8 c1 ff ff ff       	call   4019f0 <discarding_gadget>
-  401a2f:	48 8b 4c 24 10       	mov    rcx,QWORD PTR [rsp+0x10]
-  401a34:	8b 44 24 1c          	mov    eax,DWORD PTR [rsp+0x1c]
+  401a37:	48 89 e7             	mov    rdi,rsp
+  401a3a:	e8 c1 ff ff ff       	call   401a00 <discarding_gadget>
+  401a3f:	48 8b 4c 24 10       	mov    rcx,QWORD PTR [rsp+0x10]
+  401a44:	8b 44 24 1c          	mov    eax,DWORD PTR [rsp+0x1c]
   if (buffer != NULL) {
-  401a38:	48 85 f6             	test   rsi,rsi
-  401a3b:	74 33                	je     401a70 <buffer_gadget+0x50>
-  401a3d:	b8 ff ff ff 7f       	mov    eax,0x7fffffff
-  401a42:	48 39 c2             	cmp    rdx,rax
-  401a45:	48 0f 46 c2          	cmovbe rax,rdx
+  401a48:	48 85 f6             	test   rsi,rsi
+  401a4b:	74 33                	je     401a80 <buffer_gadget+0x50>
+  401a4d:	b8 ff ff ff 7f       	mov    eax,0x7fffffff
+  401a52:	48 39 c2             	cmp    rdx,rax
+  401a55:	48 0f 46 c2          	cmovbe rax,rdx
     result.buffer = buffer;
     result.max_chars = usable_buffer_size;
   }
   return result;
-  401a49:	89 44 24 1c          	mov    DWORD PTR [rsp+0x1c],eax
-  401a4d:	66 0f 6f 04 24       	movdqa xmm0,XMMWORD PTR [rsp]
+  401a59:	89 44 24 1c          	mov    DWORD PTR [rsp+0x1c],eax
+  401a5d:	66 0f 6f 04 24       	movdqa xmm0,XMMWORD PTR [rsp]
 }
-  401a52:	4c 89 c0             	mov    rax,r8
+  401a62:	4c 89 c0             	mov    rax,r8
   return result;
-  401a55:	48 89 74 24 10       	mov    QWORD PTR [rsp+0x10],rsi
-  401a5a:	66 0f 6f 4c 24 10    	movdqa xmm1,XMMWORD PTR [rsp+0x10]
-  401a60:	41 0f 11 00          	movups XMMWORD PTR [r8],xmm0
-  401a64:	41 0f 11 48 10       	movups XMMWORD PTR [r8+0x10],xmm1
+  401a65:	48 89 74 24 10       	mov    QWORD PTR [rsp+0x10],rsi
+  401a6a:	66 0f 6f 4c 24 10    	movdqa xmm1,XMMWORD PTR [rsp+0x10]
+  401a70:	41 0f 11 00          	movups XMMWORD PTR [r8],xmm0
+  401a74:	41 0f 11 48 10       	movups XMMWORD PTR [r8+0x10],xmm1
 }
-  401a69:	48 83 c4 28          	add    rsp,0x28
-  401a6d:	c3                   	ret    
-  401a6e:	66 90                	xchg   ax,ax
+  401a79:	48 83 c4 28          	add    rsp,0x28
+  401a7d:	c3                   	ret    
+  401a7e:	66 90                	xchg   ax,ax
   output_gadget_t result = discarding_gadget();
-  401a70:	48 89 ce             	mov    rsi,rcx
-  401a73:	eb d4                	jmp    401a49 <buffer_gadget+0x29>
+  401a80:	48 89 ce             	mov    rsi,rcx
+  401a83:	eb d4                	jmp    401a59 <buffer_gadget+0x29>
 
 Disassembly of section .text.function_gadget:
 
-0000000000401a80 <function_gadget>:
+0000000000401a90 <function_gadget>:
 
 static inline output_gadget_t function_gadget(void (*function)(char, void*), void* extra_arg)
 {
-  401a80:	48 83 ec 28          	sub    rsp,0x28
-  401a84:	49 89 f8             	mov    r8,rdi
+  401a90:	48 83 ec 28          	sub    rsp,0x28
+  401a94:	49 89 f8             	mov    r8,rdi
   output_gadget_t result = discarding_gadget();
-  401a87:	48 89 e7             	mov    rdi,rsp
-  401a8a:	e8 61 ff ff ff       	call   4019f0 <discarding_gadget>
+  401a97:	48 89 e7             	mov    rdi,rsp
+  401a9a:	e8 61 ff ff ff       	call   401a00 <discarding_gadget>
   result.function = function;
   result.extra_function_arg = extra_arg;
   result.max_chars = PRINTF_MAX_POSSIBLE_BUFFER_SIZE;
   return result;
-  401a8f:	48 89 34 24          	mov    QWORD PTR [rsp],rsi
+  401a9f:	48 89 34 24          	mov    QWORD PTR [rsp],rsi
 }
-  401a93:	4c 89 c0             	mov    rax,r8
+  401aa3:	4c 89 c0             	mov    rax,r8
   return result;
-  401a96:	48 89 54 24 08       	mov    QWORD PTR [rsp+0x8],rdx
-  401a9b:	66 0f 6f 04 24       	movdqa xmm0,XMMWORD PTR [rsp]
-  401aa0:	c7 44 24 1c ff ff ff 	mov    DWORD PTR [rsp+0x1c],0x7fffffff
-  401aa7:	7f 
-  401aa8:	66 0f 6f 4c 24 10    	movdqa xmm1,XMMWORD PTR [rsp+0x10]
-  401aae:	41 0f 11 00          	movups XMMWORD PTR [r8],xmm0
-  401ab2:	41 0f 11 48 10       	movups XMMWORD PTR [r8+0x10],xmm1
+  401aa6:	48 89 54 24 08       	mov    QWORD PTR [rsp+0x8],rdx
+  401aab:	66 0f 6f 04 24       	movdqa xmm0,XMMWORD PTR [rsp]
+  401ab0:	c7 44 24 1c ff ff ff 	mov    DWORD PTR [rsp+0x1c],0x7fffffff
+  401ab7:	7f 
+  401ab8:	66 0f 6f 4c 24 10    	movdqa xmm1,XMMWORD PTR [rsp+0x10]
+  401abe:	41 0f 11 00          	movups XMMWORD PTR [r8],xmm0
+  401ac2:	41 0f 11 48 10       	movups XMMWORD PTR [r8+0x10],xmm1
 }
-  401ab7:	48 83 c4 28          	add    rsp,0x28
-  401abb:	c3                   	ret    
+  401ac7:	48 83 c4 28          	add    rsp,0x28
+  401acb:	c3                   	ret    
 
 Disassembly of section .text.extern_putchar_gadget:
 
-0000000000401ac0 <extern_putchar_gadget>:
+0000000000401ad0 <extern_putchar_gadget>:
 
 static inline output_gadget_t extern_putchar_gadget(void)
 {
-  401ac0:	48 83 ec 08          	sub    rsp,0x8
-  401ac4:	49 89 f9             	mov    r9,rdi
+  401ad0:	48 83 ec 08          	sub    rsp,0x8
+  401ad4:	49 89 f9             	mov    r9,rdi
   return function_gadget(putchar_wrapper, NULL);
-  401ac7:	48 8d 35 e2 07 00 00 	lea    rsi,[rip+0x7e2]        # 4022b0 <putchar_wrapper>
-  401ace:	31 d2                	xor    edx,edx
-  401ad0:	e8 ab ff ff ff       	call   401a80 <function_gadget>
+  401ad7:	48 8d 35 e2 07 00 00 	lea    rsi,[rip+0x7e2]        # 4022c0 <putchar_wrapper>
+  401ade:	31 d2                	xor    edx,edx
+  401ae0:	e8 ab ff ff ff       	call   401a90 <function_gadget>
 }
-  401ad5:	4c 89 c8             	mov    rax,r9
-  401ad8:	48 83 c4 08          	add    rsp,0x8
-  401adc:	c3                   	ret    
+  401ae5:	4c 89 c8             	mov    rax,r9
+  401ae8:	48 83 c4 08          	add    rsp,0x8
+  401aec:	c3                   	ret    
 
 Disassembly of section .text.strnlen_s_:
 
-0000000000401ae0 <strnlen_s_>:
+0000000000401af0 <strnlen_s_>:
 // @note strlen uses size_t, but wes only use this function with printf_size_t
 // variables - hence the signature.
 static inline printf_size_t strnlen_s_(const char* str, printf_size_t maxsize)
 {
   const char* s;
   for (s = str; *s && maxsize--; ++s);
-  401ae0:	80 3f 00             	cmp    BYTE PTR [rdi],0x0
-  401ae3:	74 33                	je     401b18 <strnlen_s_+0x38>
-  401ae5:	85 f6                	test   esi,esi
-  401ae7:	74 2f                	je     401b18 <strnlen_s_+0x38>
-  401ae9:	89 f6                	mov    esi,esi
-  401aeb:	48 89 f8             	mov    rax,rdi
-  401aee:	48 8d 14 37          	lea    rdx,[rdi+rsi*1]
-  401af2:	eb 09                	jmp    401afd <strnlen_s_+0x1d>
-  401af4:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
-  401af8:	48 39 c2             	cmp    rdx,rax
-  401afb:	74 13                	je     401b10 <strnlen_s_+0x30>
-  401afd:	48 83 c0 01          	add    rax,0x1
-  401b01:	80 38 00             	cmp    BYTE PTR [rax],0x0
-  401b04:	75 f2                	jne    401af8 <strnlen_s_+0x18>
+  401af0:	80 3f 00             	cmp    BYTE PTR [rdi],0x0
+  401af3:	74 33                	je     401b28 <strnlen_s_+0x38>
+  401af5:	85 f6                	test   esi,esi
+  401af7:	74 2f                	je     401b28 <strnlen_s_+0x38>
+  401af9:	89 f6                	mov    esi,esi
+  401afb:	48 89 f8             	mov    rax,rdi
+  401afe:	48 8d 14 37          	lea    rdx,[rdi+rsi*1]
+  401b02:	eb 09                	jmp    401b0d <strnlen_s_+0x1d>
+  401b04:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+  401b08:	48 39 c2             	cmp    rdx,rax
+  401b0b:	74 13                	je     401b20 <strnlen_s_+0x30>
+  401b0d:	48 83 c0 01          	add    rax,0x1
+  401b11:	80 38 00             	cmp    BYTE PTR [rax],0x0
+  401b14:	75 f2                	jne    401b08 <strnlen_s_+0x18>
   return (printf_size_t)(s - str);
-  401b06:	29 f8                	sub    eax,edi
-  401b08:	c3                   	ret    
-  401b09:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
-  401b10:	89 d0                	mov    eax,edx
-  401b12:	29 f8                	sub    eax,edi
-  401b14:	c3                   	ret    
-  401b15:	0f 1f 00             	nop    DWORD PTR [rax]
+  401b16:	29 f8                	sub    eax,edi
+  401b18:	c3                   	ret    
+  401b19:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  401b20:	89 d0                	mov    eax,edx
+  401b22:	29 f8                	sub    eax,edi
+  401b24:	c3                   	ret    
+  401b25:	0f 1f 00             	nop    DWORD PTR [rax]
   for (s = str; *s && maxsize--; ++s);
-  401b18:	31 c0                	xor    eax,eax
+  401b28:	31 c0                	xor    eax,eax
 }
-  401b1a:	c3                   	ret    
+  401b2a:	c3                   	ret    
 
 Disassembly of section .text.is_digit_:
 
-0000000000401b20 <is_digit_>:
+0000000000401b30 <is_digit_>:
 
 // internal test if char is a digit (0-9)
 // @return true if char is a digit
 static inline bool is_digit_(char ch)
 {
   return (ch >= '0') && (ch <= '9');
-  401b20:	83 ef 30             	sub    edi,0x30
-  401b23:	40 80 ff 09          	cmp    dil,0x9
-  401b27:	0f 96 c0             	setbe  al
+  401b30:	83 ef 30             	sub    edi,0x30
+  401b33:	40 80 ff 09          	cmp    dil,0x9
+  401b37:	0f 96 c0             	setbe  al
 }
-  401b2a:	c3                   	ret    
+  401b3a:	c3                   	ret    
 
 Disassembly of section .text.atou_:
 
-0000000000401b30 <atou_>:
+0000000000401b40 <atou_>:
 
 // internal ASCII string to printf_size_t conversion
 static printf_size_t atou_(const char** str)
 {
   printf_size_t i = 0U;
   while (is_digit_(**str)) {
-  401b30:	48 8b 17             	mov    rdx,QWORD PTR [rdi]
+  401b40:	48 8b 17             	mov    rdx,QWORD PTR [rdi]
 {
-  401b33:	48 89 fe             	mov    rsi,rdi
+  401b43:	48 89 fe             	mov    rsi,rdi
   printf_size_t i = 0U;
-  401b36:	45 31 c0             	xor    r8d,r8d
+  401b46:	45 31 c0             	xor    r8d,r8d
   while (is_digit_(**str)) {
-  401b39:	eb 19                	jmp    401b54 <atou_+0x24>
-  401b3b:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
+  401b49:	eb 19                	jmp    401b64 <atou_+0x24>
+  401b4b:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
     i = i * 10U + (printf_size_t)(*((*str)++) - '0');
-  401b40:	48 83 c2 01          	add    rdx,0x1
-  401b44:	43 8d 0c 80          	lea    ecx,[r8+r8*4]
-  401b48:	48 89 16             	mov    QWORD PTR [rsi],rdx
-  401b4b:	0f be 42 ff          	movsx  eax,BYTE PTR [rdx-0x1]
-  401b4f:	44 8d 44 48 d0       	lea    r8d,[rax+rcx*2-0x30]
+  401b50:	48 83 c2 01          	add    rdx,0x1
+  401b54:	43 8d 0c 80          	lea    ecx,[r8+r8*4]
+  401b58:	48 89 16             	mov    QWORD PTR [rsi],rdx
+  401b5b:	0f be 42 ff          	movsx  eax,BYTE PTR [rdx-0x1]
+  401b5f:	44 8d 44 48 d0       	lea    r8d,[rax+rcx*2-0x30]
   while (is_digit_(**str)) {
-  401b54:	0f be 3a             	movsx  edi,BYTE PTR [rdx]
-  401b57:	e8 c4 ff ff ff       	call   401b20 <is_digit_>
-  401b5c:	84 c0                	test   al,al
-  401b5e:	75 e0                	jne    401b40 <atou_+0x10>
+  401b64:	0f be 3a             	movsx  edi,BYTE PTR [rdx]
+  401b67:	e8 c4 ff ff ff       	call   401b30 <is_digit_>
+  401b6c:	84 c0                	test   al,al
+  401b6e:	75 e0                	jne    401b50 <atou_+0x10>
   }
   return i;
 }
-  401b60:	44 89 c0             	mov    eax,r8d
-  401b63:	c3                   	ret    
+  401b70:	44 89 c0             	mov    eax,r8d
+  401b73:	c3                   	ret    
 
 Disassembly of section .text.out_rev_:
 
-0000000000401b70 <out_rev_>:
+0000000000401b80 <out_rev_>:
 
 
 // output the specified string in reverse, taking care of any zero-padding
 static void out_rev_(output_gadget_t* output, const char* buf, printf_size_t len, printf_size_t width, printf_flags_t flags)
 {
-  401b70:	41 57                	push   r15
-  401b72:	44 89 c0             	mov    eax,r8d
-  401b75:	49 89 ff             	mov    r15,rdi
-  401b78:	41 56                	push   r14
-  401b7a:	41 55                	push   r13
-  401b7c:	41 89 d5             	mov    r13d,edx
-  401b7f:	41 54                	push   r12
-  401b81:	49 89 f4             	mov    r12,rsi
-  401b84:	55                   	push   rbp
-  401b85:	89 cd                	mov    ebp,ecx
-  401b87:	53                   	push   rbx
-  401b88:	48 83 ec 18          	sub    rsp,0x18
+  401b80:	41 57                	push   r15
+  401b82:	44 89 c0             	mov    eax,r8d
+  401b85:	49 89 ff             	mov    r15,rdi
+  401b88:	41 56                	push   r14
+  401b8a:	41 55                	push   r13
+  401b8c:	41 89 d5             	mov    r13d,edx
+  401b8f:	41 54                	push   r12
+  401b91:	49 89 f4             	mov    r12,rsi
+  401b94:	55                   	push   rbp
+  401b95:	89 cd                	mov    ebp,ecx
+  401b97:	53                   	push   rbx
+  401b98:	48 83 ec 18          	sub    rsp,0x18
   const printf_size_t start_pos = output->pos;
-  401b8c:	44 8b 77 18          	mov    r14d,DWORD PTR [rdi+0x18]
+  401b9c:	44 8b 77 18          	mov    r14d,DWORD PTR [rdi+0x18]
 {
-  401b90:	44 89 44 24 0c       	mov    DWORD PTR [rsp+0xc],r8d
+  401ba0:	44 89 44 24 0c       	mov    DWORD PTR [rsp+0xc],r8d
 
   // pad spaces up to given width
   if (!(flags & FLAGS_LEFT) && !(flags & FLAGS_ZEROPAD)) {
-  401b95:	a8 03                	test   al,0x3
-  401b97:	75 1b                	jne    401bb4 <out_rev_+0x44>
+  401ba5:	a8 03                	test   al,0x3
+  401ba7:	75 1b                	jne    401bc4 <out_rev_+0x44>
     for (printf_size_t i = len; i < width; i++) {
-  401b99:	39 ca                	cmp    edx,ecx
-  401b9b:	73 17                	jae    401bb4 <out_rev_+0x44>
-  401b9d:	89 d3                	mov    ebx,edx
-  401b9f:	90                   	nop
+  401ba9:	39 ca                	cmp    edx,ecx
+  401bab:	73 17                	jae    401bc4 <out_rev_+0x44>
+  401bad:	89 d3                	mov    ebx,edx
+  401baf:	90                   	nop
       putchar_via_gadget(output, ' ');
-  401ba0:	be 20 00 00 00       	mov    esi,0x20
-  401ba5:	4c 89 ff             	mov    rdi,r15
+  401bb0:	be 20 00 00 00       	mov    esi,0x20
+  401bb5:	4c 89 ff             	mov    rdi,r15
     for (printf_size_t i = len; i < width; i++) {
-  401ba8:	83 c3 01             	add    ebx,0x1
+  401bb8:	83 c3 01             	add    ebx,0x1
       putchar_via_gadget(output, ' ');
-  401bab:	e8 c0 fd ff ff       	call   401970 <putchar_via_gadget>
+  401bbb:	e8 c0 fd ff ff       	call   401980 <putchar_via_gadget>
     for (printf_size_t i = len; i < width; i++) {
-  401bb0:	39 dd                	cmp    ebp,ebx
-  401bb2:	75 ec                	jne    401ba0 <out_rev_+0x30>
+  401bc0:	39 dd                	cmp    ebp,ebx
+  401bc2:	75 ec                	jne    401bb0 <out_rev_+0x30>
     }
   }
 
   // reverse string
   while (len) {
-  401bb4:	41 8d 5d ff          	lea    ebx,[r13-0x1]
-  401bb8:	4c 01 e3             	add    rbx,r12
-  401bbb:	45 85 ed             	test   r13d,r13d
-  401bbe:	74 17                	je     401bd7 <out_rev_+0x67>
+  401bc4:	41 8d 5d ff          	lea    ebx,[r13-0x1]
+  401bc8:	4c 01 e3             	add    rbx,r12
+  401bcb:	45 85 ed             	test   r13d,r13d
+  401bce:	74 17                	je     401be7 <out_rev_+0x67>
     putchar_via_gadget(output, buf[--len]);
-  401bc0:	0f be 33             	movsx  esi,BYTE PTR [rbx]
-  401bc3:	4c 89 ff             	mov    rdi,r15
-  401bc6:	e8 a5 fd ff ff       	call   401970 <putchar_via_gadget>
+  401bd0:	0f be 33             	movsx  esi,BYTE PTR [rbx]
+  401bd3:	4c 89 ff             	mov    rdi,r15
+  401bd6:	e8 a5 fd ff ff       	call   401980 <putchar_via_gadget>
   while (len) {
-  401bcb:	48 89 da             	mov    rdx,rbx
-  401bce:	48 83 eb 01          	sub    rbx,0x1
-  401bd2:	49 39 d4             	cmp    r12,rdx
-  401bd5:	75 e9                	jne    401bc0 <out_rev_+0x50>
+  401bdb:	48 89 da             	mov    rdx,rbx
+  401bde:	48 83 eb 01          	sub    rbx,0x1
+  401be2:	49 39 d4             	cmp    r12,rdx
+  401be5:	75 e9                	jne    401bd0 <out_rev_+0x50>
   }
 
   // append pad spaces up to given width
   if (flags & FLAGS_LEFT) {
-  401bd7:	f6 44 24 0c 02       	test   BYTE PTR [rsp+0xc],0x2
-  401bdc:	74 2a                	je     401c08 <out_rev_+0x98>
+  401be7:	f6 44 24 0c 02       	test   BYTE PTR [rsp+0xc],0x2
+  401bec:	74 2a                	je     401c18 <out_rev_+0x98>
     while (output->pos - start_pos < width) {
-  401bde:	41 8b 57 18          	mov    edx,DWORD PTR [r15+0x18]
-  401be2:	44 29 f2             	sub    edx,r14d
-  401be5:	39 d5                	cmp    ebp,edx
-  401be7:	76 1f                	jbe    401c08 <out_rev_+0x98>
-  401be9:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  401bee:	41 8b 57 18          	mov    edx,DWORD PTR [r15+0x18]
+  401bf2:	44 29 f2             	sub    edx,r14d
+  401bf5:	39 d5                	cmp    ebp,edx
+  401bf7:	76 1f                	jbe    401c18 <out_rev_+0x98>
+  401bf9:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
       putchar_via_gadget(output, ' ');
-  401bf0:	be 20 00 00 00       	mov    esi,0x20
-  401bf5:	4c 89 ff             	mov    rdi,r15
-  401bf8:	e8 73 fd ff ff       	call   401970 <putchar_via_gadget>
+  401c00:	be 20 00 00 00       	mov    esi,0x20
+  401c05:	4c 89 ff             	mov    rdi,r15
+  401c08:	e8 73 fd ff ff       	call   401980 <putchar_via_gadget>
     while (output->pos - start_pos < width) {
-  401bfd:	41 8b 57 18          	mov    edx,DWORD PTR [r15+0x18]
-  401c01:	44 29 f2             	sub    edx,r14d
-  401c04:	39 ea                	cmp    edx,ebp
-  401c06:	72 e8                	jb     401bf0 <out_rev_+0x80>
+  401c0d:	41 8b 57 18          	mov    edx,DWORD PTR [r15+0x18]
+  401c11:	44 29 f2             	sub    edx,r14d
+  401c14:	39 ea                	cmp    edx,ebp
+  401c16:	72 e8                	jb     401c00 <out_rev_+0x80>
     }
   }
 }
-  401c08:	48 83 c4 18          	add    rsp,0x18
-  401c0c:	5b                   	pop    rbx
-  401c0d:	5d                   	pop    rbp
-  401c0e:	41 5c                	pop    r12
-  401c10:	41 5d                	pop    r13
-  401c12:	41 5e                	pop    r14
-  401c14:	41 5f                	pop    r15
-  401c16:	c3                   	ret    
+  401c18:	48 83 c4 18          	add    rsp,0x18
+  401c1c:	5b                   	pop    rbx
+  401c1d:	5d                   	pop    rbp
+  401c1e:	41 5c                	pop    r12
+  401c20:	41 5d                	pop    r13
+  401c22:	41 5e                	pop    r14
+  401c24:	41 5f                	pop    r15
+  401c26:	c3                   	ret    
 
 Disassembly of section .text.print_integer_finalization:
 
-0000000000401c20 <print_integer_finalization>:
+0000000000401c30 <print_integer_finalization>:
 
 
 // Invoked by print_integer after the actual number has been printed, performing necessary
 // work on the number's prefix (as the number is initially printed in reverse order)
 static void print_integer_finalization(output_gadget_t* output, char* buf, printf_size_t len, bool negative, numeric_base_t base, printf_size_t precision, printf_size_t width, printf_flags_t flags)
 {
-  401c20:	55                   	push   rbp
-  401c21:	44 89 c5             	mov    ebp,r8d
+  401c30:	55                   	push   rbp
+  401c31:	44 89 c5             	mov    ebp,r8d
   {
     if (!(flags & FLAGS_LEFT)) {
       if (width && (flags & FLAGS_ZEROPAD) && (negative || (flags & (FLAGS_PLUS | FLAGS_SPACE)))) {
         width--;
       }
       while ((flags & FLAGS_ZEROPAD) && (len < width) && (len < PRINTF_INTEGER_BUFFER_SIZE)) {
-  401c24:	83 fa 1f             	cmp    edx,0x1f
+  401c34:	83 fa 1f             	cmp    edx,0x1f
 {
-  401c27:	49 89 f3             	mov    r11,rsi
-  401c2a:	53                   	push   rbx
-  401c2b:	44 8b 44 24 20       	mov    r8d,DWORD PTR [rsp+0x20]
-  401c30:	89 d6                	mov    esi,edx
-  401c32:	89 cb                	mov    ebx,ecx
-  401c34:	44 8b 54 24 18       	mov    r10d,DWORD PTR [rsp+0x18]
+  401c37:	49 89 f3             	mov    r11,rsi
+  401c3a:	53                   	push   rbx
+  401c3b:	44 8b 44 24 20       	mov    r8d,DWORD PTR [rsp+0x20]
+  401c40:	89 d6                	mov    esi,edx
+  401c42:	89 cb                	mov    ebx,ecx
+  401c44:	44 8b 54 24 18       	mov    r10d,DWORD PTR [rsp+0x18]
       while ((flags & FLAGS_ZEROPAD) && (len < width) && (len < PRINTF_INTEGER_BUFFER_SIZE)) {
-  401c39:	0f 96 c0             	setbe  al
+  401c49:	0f 96 c0             	setbe  al
     if (!(flags & FLAGS_LEFT)) {
-  401c3c:	41 f6 c0 02          	test   r8b,0x2
-  401c40:	0f 85 fa 00 00 00    	jne    401d40 <print_integer_finalization+0x120>
+  401c4c:	41 f6 c0 02          	test   r8b,0x2
+  401c50:	0f 85 fa 00 00 00    	jne    401d50 <print_integer_finalization+0x120>
       if (width && (flags & FLAGS_ZEROPAD) && (negative || (flags & (FLAGS_PLUS | FLAGS_SPACE)))) {
-  401c46:	44 89 c2             	mov    edx,r8d
-  401c49:	83 e2 01             	and    edx,0x1
-  401c4c:	45 85 d2             	test   r10d,r10d
-  401c4f:	0f 84 eb 00 00 00    	je     401d40 <print_integer_finalization+0x120>
-  401c55:	85 d2                	test   edx,edx
-  401c57:	0f 84 e3 00 00 00    	je     401d40 <print_integer_finalization+0x120>
-  401c5d:	84 c9                	test   cl,cl
-  401c5f:	0f 85 cb 01 00 00    	jne    401e30 <print_integer_finalization+0x210>
-  401c65:	41 f6 c0 0c          	test   r8b,0xc
-  401c69:	0f 85 c1 01 00 00    	jne    401e30 <print_integer_finalization+0x210>
+  401c56:	44 89 c2             	mov    edx,r8d
+  401c59:	83 e2 01             	and    edx,0x1
+  401c5c:	45 85 d2             	test   r10d,r10d
+  401c5f:	0f 84 eb 00 00 00    	je     401d50 <print_integer_finalization+0x120>
+  401c65:	85 d2                	test   edx,edx
+  401c67:	0f 84 e3 00 00 00    	je     401d50 <print_integer_finalization+0x120>
+  401c6d:	84 c9                	test   cl,cl
+  401c6f:	0f 85 cb 01 00 00    	jne    401e40 <print_integer_finalization+0x210>
+  401c75:	41 f6 c0 0c          	test   r8b,0xc
+  401c79:	0f 85 c1 01 00 00    	jne    401e40 <print_integer_finalization+0x210>
       while ((flags & FLAGS_ZEROPAD) && (len < width) && (len < PRINTF_INTEGER_BUFFER_SIZE)) {
-  401c6f:	44 39 d6             	cmp    esi,r10d
-  401c72:	0f 83 c8 00 00 00    	jae    401d40 <print_integer_finalization+0x120>
-  401c78:	84 c0                	test   al,al
-  401c7a:	0f 84 c0 00 00 00    	je     401d40 <print_integer_finalization+0x120>
-  401c80:	89 f0                	mov    eax,esi
-  401c82:	89 f2                	mov    edx,esi
-  401c84:	4c 01 d8             	add    rax,r11
-  401c87:	eb 0b                	jmp    401c94 <print_integer_finalization+0x74>
-  401c89:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
-  401c90:	84 c9                	test   cl,cl
-  401c92:	74 15                	je     401ca9 <print_integer_finalization+0x89>
+  401c7f:	44 39 d6             	cmp    esi,r10d
+  401c82:	0f 83 c8 00 00 00    	jae    401d50 <print_integer_finalization+0x120>
+  401c88:	84 c0                	test   al,al
+  401c8a:	0f 84 c0 00 00 00    	je     401d50 <print_integer_finalization+0x120>
+  401c90:	89 f0                	mov    eax,esi
+  401c92:	89 f2                	mov    edx,esi
+  401c94:	4c 01 d8             	add    rax,r11
+  401c97:	eb 0b                	jmp    401ca4 <print_integer_finalization+0x74>
+  401c99:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  401ca0:	84 c9                	test   cl,cl
+  401ca2:	74 15                	je     401cb9 <print_integer_finalization+0x89>
         buf[len++] = '0';
-  401c94:	83 c2 01             	add    edx,0x1
-  401c97:	c6 00 30             	mov    BYTE PTR [rax],0x30
+  401ca4:	83 c2 01             	add    edx,0x1
+  401ca7:	c6 00 30             	mov    BYTE PTR [rax],0x30
       while ((flags & FLAGS_ZEROPAD) && (len < width) && (len < PRINTF_INTEGER_BUFFER_SIZE)) {
-  401c9a:	83 fa 1f             	cmp    edx,0x1f
-  401c9d:	0f 96 c1             	setbe  cl
-  401ca0:	48 83 c0 01          	add    rax,0x1
-  401ca4:	44 39 d2             	cmp    edx,r10d
-  401ca7:	72 e7                	jb     401c90 <print_integer_finalization+0x70>
+  401caa:	83 fa 1f             	cmp    edx,0x1f
+  401cad:	0f 96 c1             	setbe  cl
+  401cb0:	48 83 c0 01          	add    rax,0x1
+  401cb4:	44 39 d2             	cmp    edx,r10d
+  401cb7:	72 e7                	jb     401ca0 <print_integer_finalization+0x70>
       }
     }
 
     while ((len < precision) && (len < PRINTF_INTEGER_BUFFER_SIZE)) {
-  401ca9:	44 39 ca             	cmp    edx,r9d
-  401cac:	73 26                	jae    401cd4 <print_integer_finalization+0xb4>
-  401cae:	84 c9                	test   cl,cl
-  401cb0:	74 22                	je     401cd4 <print_integer_finalization+0xb4>
-  401cb2:	89 d0                	mov    eax,edx
-  401cb4:	4c 01 d8             	add    rax,r11
-  401cb7:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
-  401cbe:	00 00 
+  401cb9:	44 39 ca             	cmp    edx,r9d
+  401cbc:	73 26                	jae    401ce4 <print_integer_finalization+0xb4>
+  401cbe:	84 c9                	test   cl,cl
+  401cc0:	74 22                	je     401ce4 <print_integer_finalization+0xb4>
+  401cc2:	89 d0                	mov    eax,edx
+  401cc4:	4c 01 d8             	add    rax,r11
+  401cc7:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+  401cce:	00 00 
       buf[len++] = '0';
-  401cc0:	83 c2 01             	add    edx,0x1
-  401cc3:	c6 00 30             	mov    BYTE PTR [rax],0x30
+  401cd0:	83 c2 01             	add    edx,0x1
+  401cd3:	c6 00 30             	mov    BYTE PTR [rax],0x30
     while ((len < precision) && (len < PRINTF_INTEGER_BUFFER_SIZE)) {
-  401cc6:	48 83 c0 01          	add    rax,0x1
-  401cca:	41 39 d1             	cmp    r9d,edx
-  401ccd:	76 05                	jbe    401cd4 <print_integer_finalization+0xb4>
-  401ccf:	83 fa 1f             	cmp    edx,0x1f
-  401cd2:	76 ec                	jbe    401cc0 <print_integer_finalization+0xa0>
+  401cd6:	48 83 c0 01          	add    rax,0x1
+  401cda:	41 39 d1             	cmp    r9d,edx
+  401cdd:	76 05                	jbe    401ce4 <print_integer_finalization+0xb4>
+  401cdf:	83 fa 1f             	cmp    edx,0x1f
+  401ce2:	76 ec                	jbe    401cd0 <print_integer_finalization+0xa0>
     }
 
     if (base == BASE_OCTAL && (len > unpadded_len)) {
-  401cd4:	39 d6                	cmp    esi,edx
-  401cd6:	0f 92 c0             	setb   al
-  401cd9:	40 80 fd 08          	cmp    bpl,0x8
-  401cdd:	0f 94 c1             	sete   cl
-  401ce0:	20 c1                	and    cl,al
-  401ce2:	74 06                	je     401cea <print_integer_finalization+0xca>
+  401ce4:	39 d6                	cmp    esi,edx
+  401ce6:	0f 92 c0             	setb   al
+  401ce9:	40 80 fd 08          	cmp    bpl,0x8
+  401ced:	0f 94 c1             	sete   cl
+  401cf0:	20 c1                	and    cl,al
+  401cf2:	74 06                	je     401cfa <print_integer_finalization+0xca>
       // Since we've written some zeros, we've satisfied the alternative format leading space requirement
       flags &= ~FLAGS_HASH;
-  401ce4:	41 83 e0 ef          	and    r8d,0xffffffef
+  401cf4:	41 83 e0 ef          	and    r8d,0xffffffef
     if (base == BASE_OCTAL && (len > unpadded_len)) {
-  401ce8:	89 c8                	mov    eax,ecx
+  401cf8:	89 c8                	mov    eax,ecx
     }
   }
 
   // handle hash
   if (flags & (FLAGS_HASH | FLAGS_POINTER)) {
-  401cea:	41 f7 c0 10 20 00 00 	test   r8d,0x2010
-  401cf1:	0f 84 8c 00 00 00    	je     401d83 <print_integer_finalization+0x163>
+  401cfa:	41 f7 c0 10 20 00 00 	test   r8d,0x2010
+  401d01:	0f 84 8c 00 00 00    	je     401d93 <print_integer_finalization+0x163>
     if (!(flags & FLAGS_PRECISION) && len && ((len == precision) || (len == width))) {
-  401cf7:	41 f7 c0 00 08 00 00 	test   r8d,0x800
-  401cfe:	74 58                	je     401d58 <print_integer_finalization+0x138>
+  401d07:	41 f7 c0 00 08 00 00 	test   r8d,0x800
+  401d0e:	74 58                	je     401d68 <print_integer_finalization+0x138>
       }
       if (len && (base == BASE_HEX || base == BASE_BINARY) && (unpadded_len < len)) {
         len--; // ... and an extra one for 0x or 0b
       }
     }
     if ((base == BASE_HEX) && !(flags & FLAGS_UPPERCASE) && (len < PRINTF_INTEGER_BUFFER_SIZE)) {
-  401d00:	83 fa 1f             	cmp    edx,0x1f
-  401d03:	0f 96 c0             	setbe  al
-  401d06:	40 80 fd 10          	cmp    bpl,0x10
-  401d0a:	0f 84 30 01 00 00    	je     401e40 <print_integer_finalization+0x220>
+  401d10:	83 fa 1f             	cmp    edx,0x1f
+  401d13:	0f 96 c0             	setbe  al
+  401d16:	40 80 fd 10          	cmp    bpl,0x10
+  401d1a:	0f 84 30 01 00 00    	je     401e50 <print_integer_finalization+0x220>
       buf[len++] = 'x';
     }
     else if ((base == BASE_HEX) && (flags & FLAGS_UPPERCASE) && (len < PRINTF_INTEGER_BUFFER_SIZE)) {
       buf[len++] = 'X';
     }
     else if ((base == BASE_BINARY) && (len < PRINTF_INTEGER_BUFFER_SIZE)) {
-  401d10:	40 80 fd 02          	cmp    bpl,0x2
-  401d14:	75 0e                	jne    401d24 <print_integer_finalization+0x104>
-  401d16:	84 c0                	test   al,al
-  401d18:	74 0a                	je     401d24 <print_integer_finalization+0x104>
+  401d20:	40 80 fd 02          	cmp    bpl,0x2
+  401d24:	75 0e                	jne    401d34 <print_integer_finalization+0x104>
+  401d26:	84 c0                	test   al,al
+  401d28:	74 0a                	je     401d34 <print_integer_finalization+0x104>
       buf[len++] = 'b';
-  401d1a:	89 d0                	mov    eax,edx
-  401d1c:	83 c2 01             	add    edx,0x1
-  401d1f:	41 c6 04 03 62       	mov    BYTE PTR [r11+rax*1],0x62
+  401d2a:	89 d0                	mov    eax,edx
+  401d2c:	83 c2 01             	add    edx,0x1
+  401d2f:	41 c6 04 03 62       	mov    BYTE PTR [r11+rax*1],0x62
     }
     if (len < PRINTF_INTEGER_BUFFER_SIZE) {
-  401d24:	83 fa 20             	cmp    edx,0x20
-  401d27:	75 50                	jne    401d79 <print_integer_finalization+0x159>
+  401d34:	83 fa 20             	cmp    edx,0x20
+  401d37:	75 50                	jne    401d89 <print_integer_finalization+0x159>
       buf[len++] = ' ';
     }
   }
 
   out_rev_(output, buf, len, width, flags);
 }
-  401d29:	5b                   	pop    rbx
+  401d39:	5b                   	pop    rbx
   out_rev_(output, buf, len, width, flags);
-  401d2a:	44 89 d1             	mov    ecx,r10d
-  401d2d:	4c 89 de             	mov    rsi,r11
+  401d3a:	44 89 d1             	mov    ecx,r10d
+  401d3d:	4c 89 de             	mov    rsi,r11
 }
-  401d30:	5d                   	pop    rbp
+  401d40:	5d                   	pop    rbp
   out_rev_(output, buf, len, width, flags);
-  401d31:	e9 3a fe ff ff       	jmp    401b70 <out_rev_>
-  401d36:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
-  401d3d:	00 00 00 
+  401d41:	e9 3a fe ff ff       	jmp    401b80 <out_rev_>
+  401d46:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
+  401d4d:	00 00 00 
     while ((len < precision) && (len < PRINTF_INTEGER_BUFFER_SIZE)) {
-  401d40:	44 39 ce             	cmp    esi,r9d
-  401d43:	89 f2                	mov    edx,esi
-  401d45:	0f 92 c1             	setb   cl
-  401d48:	20 c8                	and    al,cl
-  401d4a:	0f 85 62 ff ff ff    	jne    401cb2 <print_integer_finalization+0x92>
-  401d50:	eb 98                	jmp    401cea <print_integer_finalization+0xca>
-  401d52:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
+  401d50:	44 39 ce             	cmp    esi,r9d
+  401d53:	89 f2                	mov    edx,esi
+  401d55:	0f 92 c1             	setb   cl
+  401d58:	20 c8                	and    al,cl
+  401d5a:	0f 85 62 ff ff ff    	jne    401cc2 <print_integer_finalization+0x92>
+  401d60:	eb 98                	jmp    401cfa <print_integer_finalization+0xca>
+  401d62:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
     if (!(flags & FLAGS_PRECISION) && len && ((len == precision) || (len == width))) {
-  401d58:	85 d2                	test   edx,edx
-  401d5a:	75 74                	jne    401dd0 <print_integer_finalization+0x1b0>
+  401d68:	85 d2                	test   edx,edx
+  401d6a:	75 74                	jne    401de0 <print_integer_finalization+0x1b0>
     if ((base == BASE_HEX) && !(flags & FLAGS_UPPERCASE) && (len < PRINTF_INTEGER_BUFFER_SIZE)) {
-  401d5c:	40 80 fd 10          	cmp    bpl,0x10
-  401d60:	0f 84 05 01 00 00    	je     401e6b <print_integer_finalization+0x24b>
+  401d6c:	40 80 fd 10          	cmp    bpl,0x10
+  401d70:	0f 84 05 01 00 00    	je     401e7b <print_integer_finalization+0x24b>
     else if ((base == BASE_BINARY) && (len < PRINTF_INTEGER_BUFFER_SIZE)) {
-  401d66:	40 80 fd 02          	cmp    bpl,0x2
-  401d6a:	0f 85 2e 01 00 00    	jne    401e9e <print_integer_finalization+0x27e>
+  401d76:	40 80 fd 02          	cmp    bpl,0x2
+  401d7a:	0f 85 2e 01 00 00    	jne    401eae <print_integer_finalization+0x27e>
       buf[len++] = 'b';
-  401d70:	41 c6 03 62          	mov    BYTE PTR [r11],0x62
-  401d74:	ba 01 00 00 00       	mov    edx,0x1
+  401d80:	41 c6 03 62          	mov    BYTE PTR [r11],0x62
+  401d84:	ba 01 00 00 00       	mov    edx,0x1
       buf[len++] = '0';
-  401d79:	89 d0                	mov    eax,edx
-  401d7b:	83 c2 01             	add    edx,0x1
-  401d7e:	41 c6 04 03 30       	mov    BYTE PTR [r11+rax*1],0x30
+  401d89:	89 d0                	mov    eax,edx
+  401d8b:	83 c2 01             	add    edx,0x1
+  401d8e:	41 c6 04 03 30       	mov    BYTE PTR [r11+rax*1],0x30
   if (len < PRINTF_INTEGER_BUFFER_SIZE) {
-  401d83:	83 fa 20             	cmp    edx,0x20
-  401d86:	74 a1                	je     401d29 <print_integer_finalization+0x109>
+  401d93:	83 fa 20             	cmp    edx,0x20
+  401d96:	74 a1                	je     401d39 <print_integer_finalization+0x109>
     if (negative) {
-  401d88:	84 db                	test   bl,bl
-  401d8a:	74 1c                	je     401da8 <print_integer_finalization+0x188>
+  401d98:	84 db                	test   bl,bl
+  401d9a:	74 1c                	je     401db8 <print_integer_finalization+0x188>
       buf[len++] = '-';
-  401d8c:	89 d0                	mov    eax,edx
+  401d9c:	89 d0                	mov    eax,edx
 }
-  401d8e:	5b                   	pop    rbx
+  401d9e:	5b                   	pop    rbx
       buf[len++] = '-';
-  401d8f:	83 c2 01             	add    edx,0x1
+  401d9f:	83 c2 01             	add    edx,0x1
   out_rev_(output, buf, len, width, flags);
-  401d92:	44 89 d1             	mov    ecx,r10d
+  401da2:	44 89 d1             	mov    ecx,r10d
       buf[len++] = '-';
-  401d95:	41 c6 04 03 2d       	mov    BYTE PTR [r11+rax*1],0x2d
+  401da5:	41 c6 04 03 2d       	mov    BYTE PTR [r11+rax*1],0x2d
   out_rev_(output, buf, len, width, flags);
-  401d9a:	4c 89 de             	mov    rsi,r11
+  401daa:	4c 89 de             	mov    rsi,r11
 }
-  401d9d:	5d                   	pop    rbp
+  401dad:	5d                   	pop    rbp
   out_rev_(output, buf, len, width, flags);
-  401d9e:	e9 cd fd ff ff       	jmp    401b70 <out_rev_>
-  401da3:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
+  401dae:	e9 cd fd ff ff       	jmp    401b80 <out_rev_>
+  401db3:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
     else if (flags & FLAGS_PLUS) {
-  401da8:	41 f6 c0 04          	test   r8b,0x4
-  401dac:	75 62                	jne    401e10 <print_integer_finalization+0x1f0>
+  401db8:	41 f6 c0 04          	test   r8b,0x4
+  401dbc:	75 62                	jne    401e20 <print_integer_finalization+0x1f0>
     else if (flags & FLAGS_SPACE) {
-  401dae:	41 f6 c0 08          	test   r8b,0x8
-  401db2:	0f 84 71 ff ff ff    	je     401d29 <print_integer_finalization+0x109>
+  401dbe:	41 f6 c0 08          	test   r8b,0x8
+  401dc2:	0f 84 71 ff ff ff    	je     401d39 <print_integer_finalization+0x109>
       buf[len++] = ' ';
-  401db8:	89 d0                	mov    eax,edx
-  401dba:	83 c2 01             	add    edx,0x1
-  401dbd:	41 c6 04 03 20       	mov    BYTE PTR [r11+rax*1],0x20
-  401dc2:	e9 62 ff ff ff       	jmp    401d29 <print_integer_finalization+0x109>
-  401dc7:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
-  401dce:	00 00 
+  401dc8:	89 d0                	mov    eax,edx
+  401dca:	83 c2 01             	add    edx,0x1
+  401dcd:	41 c6 04 03 20       	mov    BYTE PTR [r11+rax*1],0x20
+  401dd2:	e9 62 ff ff ff       	jmp    401d39 <print_integer_finalization+0x109>
+  401dd7:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+  401dde:	00 00 
     if (!(flags & FLAGS_PRECISION) && len && ((len == precision) || (len == width))) {
-  401dd0:	41 39 d1             	cmp    r9d,edx
-  401dd3:	74 09                	je     401dde <print_integer_finalization+0x1be>
-  401dd5:	44 39 d2             	cmp    edx,r10d
-  401dd8:	0f 85 22 ff ff ff    	jne    401d00 <print_integer_finalization+0xe0>
+  401de0:	41 39 d1             	cmp    r9d,edx
+  401de3:	74 09                	je     401dee <print_integer_finalization+0x1be>
+  401de5:	44 39 d2             	cmp    edx,r10d
+  401de8:	0f 85 22 ff ff ff    	jne    401d10 <print_integer_finalization+0xe0>
       if (unpadded_len < len) {
-  401dde:	84 c0                	test   al,al
-  401de0:	0f 85 99 00 00 00    	jne    401e7f <print_integer_finalization+0x25f>
+  401dee:	84 c0                	test   al,al
+  401df0:	0f 85 99 00 00 00    	jne    401e8f <print_integer_finalization+0x25f>
       if (len && (base == BASE_HEX || base == BASE_BINARY) && (unpadded_len < len)) {
-  401de6:	40 80 fd 10          	cmp    bpl,0x10
-  401dea:	0f 94 c0             	sete   al
-  401ded:	40 80 fd 02          	cmp    bpl,0x2
-  401df1:	0f 94 c1             	sete   cl
-  401df4:	08 c8                	or     al,cl
-  401df6:	0f 84 04 ff ff ff    	je     401d00 <print_integer_finalization+0xe0>
-  401dfc:	39 d6                	cmp    esi,edx
+  401df6:	40 80 fd 10          	cmp    bpl,0x10
+  401dfa:	0f 94 c0             	sete   al
+  401dfd:	40 80 fd 02          	cmp    bpl,0x2
+  401e01:	0f 94 c1             	sete   cl
+  401e04:	08 c8                	or     al,cl
+  401e06:	0f 84 04 ff ff ff    	je     401d10 <print_integer_finalization+0xe0>
+  401e0c:	39 d6                	cmp    esi,edx
         len--; // ... and an extra one for 0x or 0b
-  401dfe:	83 da 00             	sbb    edx,0x0
-  401e01:	e9 fa fe ff ff       	jmp    401d00 <print_integer_finalization+0xe0>
-  401e06:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
-  401e0d:	00 00 00 
+  401e0e:	83 da 00             	sbb    edx,0x0
+  401e11:	e9 fa fe ff ff       	jmp    401d10 <print_integer_finalization+0xe0>
+  401e16:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
+  401e1d:	00 00 00 
       buf[len++] = '+';  // ignore the space if the '+' exists
-  401e10:	89 d0                	mov    eax,edx
+  401e20:	89 d0                	mov    eax,edx
 }
-  401e12:	5b                   	pop    rbx
+  401e22:	5b                   	pop    rbx
       buf[len++] = '+';  // ignore the space if the '+' exists
-  401e13:	83 c2 01             	add    edx,0x1
+  401e23:	83 c2 01             	add    edx,0x1
   out_rev_(output, buf, len, width, flags);
-  401e16:	44 89 d1             	mov    ecx,r10d
+  401e26:	44 89 d1             	mov    ecx,r10d
       buf[len++] = '+';  // ignore the space if the '+' exists
-  401e19:	41 c6 04 03 2b       	mov    BYTE PTR [r11+rax*1],0x2b
+  401e29:	41 c6 04 03 2b       	mov    BYTE PTR [r11+rax*1],0x2b
   out_rev_(output, buf, len, width, flags);
-  401e1e:	4c 89 de             	mov    rsi,r11
+  401e2e:	4c 89 de             	mov    rsi,r11
 }
-  401e21:	5d                   	pop    rbp
+  401e31:	5d                   	pop    rbp
   out_rev_(output, buf, len, width, flags);
-  401e22:	e9 49 fd ff ff       	jmp    401b70 <out_rev_>
-  401e27:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
-  401e2e:	00 00 
+  401e32:	e9 49 fd ff ff       	jmp    401b80 <out_rev_>
+  401e37:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+  401e3e:	00 00 
         width--;
-  401e30:	41 83 ea 01          	sub    r10d,0x1
-  401e34:	e9 36 fe ff ff       	jmp    401c6f <print_integer_finalization+0x4f>
-  401e39:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  401e40:	41 83 ea 01          	sub    r10d,0x1
+  401e44:	e9 36 fe ff ff       	jmp    401c7f <print_integer_finalization+0x4f>
+  401e49:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
     if ((base == BASE_HEX) && !(flags & FLAGS_UPPERCASE) && (len < PRINTF_INTEGER_BUFFER_SIZE)) {
-  401e40:	44 89 c1             	mov    ecx,r8d
-  401e43:	83 e1 20             	and    ecx,0x20
-  401e46:	75 0c                	jne    401e54 <print_integer_finalization+0x234>
-  401e48:	84 c0                	test   al,al
-  401e4a:	75 60                	jne    401eac <print_integer_finalization+0x28c>
+  401e50:	44 89 c1             	mov    ecx,r8d
+  401e53:	83 e1 20             	and    ecx,0x20
+  401e56:	75 0c                	jne    401e64 <print_integer_finalization+0x234>
+  401e58:	84 c0                	test   al,al
+  401e5a:	75 60                	jne    401ebc <print_integer_finalization+0x28c>
     else if ((base == BASE_HEX) && (flags & FLAGS_UPPERCASE) && (len < PRINTF_INTEGER_BUFFER_SIZE)) {
-  401e4c:	85 c9                	test   ecx,ecx
-  401e4e:	0f 84 d0 fe ff ff    	je     401d24 <print_integer_finalization+0x104>
-  401e54:	84 c0                	test   al,al
-  401e56:	0f 84 c8 fe ff ff    	je     401d24 <print_integer_finalization+0x104>
+  401e5c:	85 c9                	test   ecx,ecx
+  401e5e:	0f 84 d0 fe ff ff    	je     401d34 <print_integer_finalization+0x104>
+  401e64:	84 c0                	test   al,al
+  401e66:	0f 84 c8 fe ff ff    	je     401d34 <print_integer_finalization+0x104>
       buf[len++] = 'b';
-  401e5c:	89 d0                	mov    eax,edx
-  401e5e:	83 c2 01             	add    edx,0x1
+  401e6c:	89 d0                	mov    eax,edx
+  401e6e:	83 c2 01             	add    edx,0x1
       buf[len++] = 'X';
-  401e61:	41 c6 04 03 58       	mov    BYTE PTR [r11+rax*1],0x58
-  401e66:	e9 b9 fe ff ff       	jmp    401d24 <print_integer_finalization+0x104>
+  401e71:	41 c6 04 03 58       	mov    BYTE PTR [r11+rax*1],0x58
+  401e76:	e9 b9 fe ff ff       	jmp    401d34 <print_integer_finalization+0x104>
     if ((base == BASE_HEX) && !(flags & FLAGS_UPPERCASE) && (len < PRINTF_INTEGER_BUFFER_SIZE)) {
-  401e6b:	41 f6 c0 20          	test   r8b,0x20
-  401e6f:	75 1f                	jne    401e90 <print_integer_finalization+0x270>
+  401e7b:	41 f6 c0 20          	test   r8b,0x20
+  401e7f:	75 1f                	jne    401ea0 <print_integer_finalization+0x270>
       buf[len++] = 'x';
-  401e71:	41 c6 03 78          	mov    BYTE PTR [r11],0x78
-  401e75:	ba 01 00 00 00       	mov    edx,0x1
-  401e7a:	e9 fa fe ff ff       	jmp    401d79 <print_integer_finalization+0x159>
+  401e81:	41 c6 03 78          	mov    BYTE PTR [r11],0x78
+  401e85:	ba 01 00 00 00       	mov    edx,0x1
+  401e8a:	e9 fa fe ff ff       	jmp    401d89 <print_integer_finalization+0x159>
       if (len && (base == BASE_HEX || base == BASE_BINARY) && (unpadded_len < len)) {
-  401e7f:	83 ea 01             	sub    edx,0x1
-  401e82:	0f 84 d4 fe ff ff    	je     401d5c <print_integer_finalization+0x13c>
-  401e88:	e9 59 ff ff ff       	jmp    401de6 <print_integer_finalization+0x1c6>
-  401e8d:	0f 1f 00             	nop    DWORD PTR [rax]
+  401e8f:	83 ea 01             	sub    edx,0x1
+  401e92:	0f 84 d4 fe ff ff    	je     401d6c <print_integer_finalization+0x13c>
+  401e98:	e9 59 ff ff ff       	jmp    401df6 <print_integer_finalization+0x1c6>
+  401e9d:	0f 1f 00             	nop    DWORD PTR [rax]
       buf[len++] = 'X';
-  401e90:	41 c6 03 58          	mov    BYTE PTR [r11],0x58
-  401e94:	ba 01 00 00 00       	mov    edx,0x1
-  401e99:	e9 db fe ff ff       	jmp    401d79 <print_integer_finalization+0x159>
+  401ea0:	41 c6 03 58          	mov    BYTE PTR [r11],0x58
+  401ea4:	ba 01 00 00 00       	mov    edx,0x1
+  401ea9:	e9 db fe ff ff       	jmp    401d89 <print_integer_finalization+0x159>
       buf[len++] = '0';
-  401e9e:	41 c6 03 30          	mov    BYTE PTR [r11],0x30
-  401ea2:	ba 01 00 00 00       	mov    edx,0x1
-  401ea7:	e9 dc fe ff ff       	jmp    401d88 <print_integer_finalization+0x168>
+  401eae:	41 c6 03 30          	mov    BYTE PTR [r11],0x30
+  401eb2:	ba 01 00 00 00       	mov    edx,0x1
+  401eb7:	e9 dc fe ff ff       	jmp    401d98 <print_integer_finalization+0x168>
       buf[len++] = 'b';
-  401eac:	89 d0                	mov    eax,edx
-  401eae:	83 c2 01             	add    edx,0x1
+  401ebc:	89 d0                	mov    eax,edx
+  401ebe:	83 c2 01             	add    edx,0x1
       buf[len++] = 'x';
-  401eb1:	41 c6 04 03 78       	mov    BYTE PTR [r11+rax*1],0x78
-  401eb6:	e9 69 fe ff ff       	jmp    401d24 <print_integer_finalization+0x104>
+  401ec1:	41 c6 04 03 78       	mov    BYTE PTR [r11+rax*1],0x78
+  401ec6:	e9 69 fe ff ff       	jmp    401d34 <print_integer_finalization+0x104>
 
 Disassembly of section .text.print_integer:
 
-0000000000401ec0 <print_integer>:
+0000000000401ed0 <print_integer>:
 
 // An internal itoa-like function
 static void print_integer(output_gadget_t* output, printf_unsigned_value_t value, bool negative, numeric_base_t base, printf_size_t precision, printf_size_t width, printf_flags_t flags)
 {
-  401ec0:	41 57                	push   r15
-  401ec2:	41 56                	push   r14
-  401ec4:	41 55                	push   r13
-  401ec6:	41 89 cd             	mov    r13d,ecx
-  401ec9:	41 54                	push   r12
-  401ecb:	49 89 fc             	mov    r12,rdi
-  401ece:	55                   	push   rbp
-  401ecf:	53                   	push   rbx
-  401ed0:	89 d3                	mov    ebx,edx
-  401ed2:	48 83 ec 28          	sub    rsp,0x28
-  401ed6:	44 8b 74 24 60       	mov    r14d,DWORD PTR [rsp+0x60]
+  401ed0:	41 57                	push   r15
+  401ed2:	41 56                	push   r14
+  401ed4:	41 55                	push   r13
+  401ed6:	41 89 cd             	mov    r13d,ecx
+  401ed9:	41 54                	push   r12
+  401edb:	49 89 fc             	mov    r12,rdi
+  401ede:	55                   	push   rbp
+  401edf:	53                   	push   rbx
+  401ee0:	89 d3                	mov    ebx,edx
+  401ee2:	48 83 ec 28          	sub    rsp,0x28
+  401ee6:	44 8b 74 24 60       	mov    r14d,DWORD PTR [rsp+0x60]
   char buf[PRINTF_INTEGER_BUFFER_SIZE];
   printf_size_t len = 0U;
 
   if (!value) {
-  401edb:	48 85 f6             	test   rsi,rsi
-  401ede:	75 48                	jne    401f28 <print_integer+0x68>
+  401eeb:	48 85 f6             	test   rsi,rsi
+  401eee:	75 48                	jne    401f38 <print_integer+0x68>
     if ( !(flags & FLAGS_PRECISION) ) {
-  401ee0:	41 f7 c6 00 08 00 00 	test   r14d,0x800
-  401ee7:	0f 85 a3 00 00 00    	jne    401f90 <print_integer+0xd0>
+  401ef0:	41 f7 c6 00 08 00 00 	test   r14d,0x800
+  401ef7:	0f 85 a3 00 00 00    	jne    401fa0 <print_integer+0xd0>
       buf[len++] = '0';
-  401eed:	c6 04 24 30          	mov    BYTE PTR [rsp],0x30
+  401efd:	c6 04 24 30          	mov    BYTE PTR [rsp],0x30
       flags &= ~FLAGS_HASH;
-  401ef1:	41 83 e6 ef          	and    r14d,0xffffffef
+  401f01:	41 83 e6 ef          	and    r14d,0xffffffef
       buf[len++] = '0';
-  401ef5:	ba 01 00 00 00       	mov    edx,0x1
+  401f05:	ba 01 00 00 00       	mov    edx,0x1
       buf[len++] = (char)(digit < 10 ? '0' + digit : (flags & FLAGS_UPPERCASE ? 'A' : 'a') + digit - 10);
       value /= base;
     } while (value && (len < PRINTF_INTEGER_BUFFER_SIZE));
   }
 
   print_integer_finalization(output, buf, len, negative, base, precision, width, flags);
-  401efa:	48 89 e6             	mov    rsi,rsp
-  401efd:	41 56                	push   r14
-  401eff:	0f b6 cb             	movzx  ecx,bl
-  401f02:	4c 89 e7             	mov    rdi,r12
-  401f05:	41 51                	push   r9
-  401f07:	45 89 c1             	mov    r9d,r8d
-  401f0a:	45 0f b6 c5          	movzx  r8d,r13b
-  401f0e:	e8 0d fd ff ff       	call   401c20 <print_integer_finalization>
+  401f0a:	48 89 e6             	mov    rsi,rsp
+  401f0d:	41 56                	push   r14
+  401f0f:	0f b6 cb             	movzx  ecx,bl
+  401f12:	4c 89 e7             	mov    rdi,r12
+  401f15:	41 51                	push   r9
+  401f17:	45 89 c1             	mov    r9d,r8d
+  401f1a:	45 0f b6 c5          	movzx  r8d,r13b
+  401f1e:	e8 0d fd ff ff       	call   401c30 <print_integer_finalization>
 }
-  401f13:	48 83 c4 38          	add    rsp,0x38
-  401f17:	5b                   	pop    rbx
-  401f18:	5d                   	pop    rbp
-  401f19:	41 5c                	pop    r12
-  401f1b:	41 5d                	pop    r13
-  401f1d:	41 5e                	pop    r14
-  401f1f:	41 5f                	pop    r15
-  401f21:	c3                   	ret    
-  401f22:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
+  401f23:	48 83 c4 38          	add    rsp,0x38
+  401f27:	5b                   	pop    rbx
+  401f28:	5d                   	pop    rbp
+  401f29:	41 5c                	pop    r12
+  401f2b:	41 5d                	pop    r13
+  401f2d:	41 5e                	pop    r14
+  401f2f:	41 5f                	pop    r15
+  401f31:	c3                   	ret    
+  401f32:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
       buf[len++] = (char)(digit < 10 ? '0' + digit : (flags & FLAGS_UPPERCASE ? 'A' : 'a') + digit - 10);
-  401f28:	44 89 f0             	mov    eax,r14d
+  401f38:	44 89 f0             	mov    eax,r14d
       const char digit = (char)(value % base);
-  401f2b:	44 0f b6 d1          	movzx  r10d,cl
-  401f2f:	48 8d 6c 24 ff       	lea    rbp,[rsp-0x1]
-  401f34:	b9 01 00 00 00       	mov    ecx,0x1
+  401f3b:	44 0f b6 d1          	movzx  r10d,cl
+  401f3f:	48 8d 6c 24 ff       	lea    rbp,[rsp-0x1]
+  401f44:	b9 01 00 00 00       	mov    ecx,0x1
       buf[len++] = (char)(digit < 10 ? '0' + digit : (flags & FLAGS_UPPERCASE ? 'A' : 'a') + digit - 10);
-  401f39:	83 e0 20             	and    eax,0x20
-  401f3c:	83 f8 01             	cmp    eax,0x1
-  401f3f:	45 19 db             	sbb    r11d,r11d
-  401f42:	41 83 e3 20          	and    r11d,0x20
-  401f46:	41 83 c3 37          	add    r11d,0x37
-  401f4a:	eb 07                	jmp    401f53 <print_integer+0x93>
-  401f4c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+  401f49:	83 e0 20             	and    eax,0x20
+  401f4c:	83 f8 01             	cmp    eax,0x1
+  401f4f:	45 19 db             	sbb    r11d,r11d
+  401f52:	41 83 e3 20          	and    r11d,0x20
+  401f56:	41 83 c3 37          	add    r11d,0x37
+  401f5a:	eb 07                	jmp    401f63 <print_integer+0x93>
+  401f5c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
       value /= base;
-  401f50:	48 89 c6             	mov    rsi,rax
+  401f60:	48 89 c6             	mov    rsi,rax
       const char digit = (char)(value % base);
-  401f53:	31 d2                	xor    edx,edx
-  401f55:	48 89 f0             	mov    rax,rsi
-  401f58:	49 f7 f2             	div    r10
+  401f63:	31 d2                	xor    edx,edx
+  401f65:	48 89 f0             	mov    rax,rsi
+  401f68:	49 f7 f2             	div    r10
       buf[len++] = (char)(digit < 10 ? '0' + digit : (flags & FLAGS_UPPERCASE ? 'A' : 'a') + digit - 10);
-  401f5b:	48 83 fa 09          	cmp    rdx,0x9
-  401f5f:	44 8d 7a 30          	lea    r15d,[rdx+0x30]
-  401f63:	41 8d 3c 13          	lea    edi,[r11+rdx*1]
-  401f67:	89 ca                	mov    edx,ecx
-  401f69:	41 0f 46 ff          	cmovbe edi,r15d
-  401f6d:	40 88 7c 0d 00       	mov    BYTE PTR [rbp+rcx*1+0x0],dil
+  401f6b:	48 83 fa 09          	cmp    rdx,0x9
+  401f6f:	44 8d 7a 30          	lea    r15d,[rdx+0x30]
+  401f73:	41 8d 3c 13          	lea    edi,[r11+rdx*1]
+  401f77:	89 ca                	mov    edx,ecx
+  401f79:	41 0f 46 ff          	cmovbe edi,r15d
+  401f7d:	40 88 7c 0d 00       	mov    BYTE PTR [rbp+rcx*1+0x0],dil
     } while (value && (len < PRINTF_INTEGER_BUFFER_SIZE));
-  401f72:	48 83 c1 01          	add    rcx,0x1
-  401f76:	4c 39 d6             	cmp    rsi,r10
-  401f79:	0f 82 7b ff ff ff    	jb     401efa <print_integer+0x3a>
-  401f7f:	83 fa 1f             	cmp    edx,0x1f
-  401f82:	76 cc                	jbe    401f50 <print_integer+0x90>
-  401f84:	e9 71 ff ff ff       	jmp    401efa <print_integer+0x3a>
-  401f89:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  401f82:	48 83 c1 01          	add    rcx,0x1
+  401f86:	4c 39 d6             	cmp    rsi,r10
+  401f89:	0f 82 7b ff ff ff    	jb     401f0a <print_integer+0x3a>
+  401f8f:	83 fa 1f             	cmp    edx,0x1f
+  401f92:	76 cc                	jbe    401f60 <print_integer+0x90>
+  401f94:	e9 71 ff ff ff       	jmp    401f0a <print_integer+0x3a>
+  401f99:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
       flags &= ~FLAGS_HASH;
-  401f90:	44 89 f0             	mov    eax,r14d
+  401fa0:	44 89 f0             	mov    eax,r14d
   printf_size_t len = 0U;
-  401f93:	31 d2                	xor    edx,edx
+  401fa3:	31 d2                	xor    edx,edx
       flags &= ~FLAGS_HASH;
-  401f95:	41 83 e6 ef          	and    r14d,0xffffffef
-  401f99:	80 f9 10             	cmp    cl,0x10
-  401f9c:	44 0f 45 f0          	cmovne r14d,eax
-  401fa0:	e9 55 ff ff ff       	jmp    401efa <print_integer+0x3a>
+  401fa5:	41 83 e6 ef          	and    r14d,0xffffffef
+  401fa9:	80 f9 10             	cmp    cl,0x10
+  401fac:	44 0f 45 f0          	cmovne r14d,eax
+  401fb0:	e9 55 ff ff ff       	jmp    401f0a <print_integer+0x3a>
 
 Disassembly of section .text.get_components:
 
-0000000000401fb0 <get_components>:
+0000000000401fc0 <get_components>:
 // into its base-10 parts: integral - before the decimal point, and fractional - after it.
 // Taken the precision into account, but does not change it even internally.
 static struct double_components get_components(double number, printf_size_t precision)
 {
   struct double_components number_;
   number_.is_negative = get_sign_bit(number);
-  401fb0:	e8 8b f9 ff ff       	call   401940 <get_sign_bit>
+  401fc0:	e8 8b f9 ff ff       	call   401950 <get_sign_bit>
 {
-  401fb5:	49 89 f8             	mov    r8,rdi
+  401fc5:	49 89 f8             	mov    r8,rdi
   number_.is_negative = get_sign_bit(number);
-  401fb8:	85 c0                	test   eax,eax
-  401fba:	0f 95 c1             	setne  cl
+  401fc8:	85 c0                	test   eax,eax
+  401fca:	0f 95 c1             	setne  cl
   double abs_number = (number_.is_negative) ? -number : number;
-  401fbd:	74 08                	je     401fc7 <get_components+0x17>
-  401fbf:	66 0f 57 05 e9 34 00 	xorpd  xmm0,XMMWORD PTR [rip+0x34e9]        # 4054b0 <powers_of_10+0x90>
-  401fc6:	00 
+  401fcd:	74 08                	je     401fd7 <get_components+0x17>
+  401fcf:	66 0f 57 05 d9 34 00 	xorpd  xmm0,XMMWORD PTR [rip+0x34d9]        # 4054b0 <powers_of_10+0x90>
+  401fd6:	00 
   number_.integral = (int_fast64_t)abs_number;
-  401fc7:	f2 48 0f 2c d0       	cvttsd2si rdx,xmm0
+  401fd7:	f2 48 0f 2c d0       	cvttsd2si rdx,xmm0
   double remainder = (abs_number - (double) number_.integral) * powers_of_10[precision];
-  401fcc:	66 0f ef d2          	pxor   xmm2,xmm2
-  401fd0:	66 0f 28 c8          	movapd xmm1,xmm0
-  401fd4:	89 f0                	mov    eax,esi
-  401fd6:	48 8d 3d 43 34 00 00 	lea    rdi,[rip+0x3443]        # 405420 <powers_of_10>
-  401fdd:	f2 0f 10 1c c7       	movsd  xmm3,QWORD PTR [rdi+rax*8]
-  401fe2:	f2 48 0f 2a d2       	cvtsi2sd xmm2,rdx
-  401fe7:	f2 0f 5c ca          	subsd  xmm1,xmm2
+  401fdc:	66 0f ef d2          	pxor   xmm2,xmm2
+  401fe0:	66 0f 28 c8          	movapd xmm1,xmm0
+  401fe4:	89 f0                	mov    eax,esi
+  401fe6:	48 8d 3d 33 34 00 00 	lea    rdi,[rip+0x3433]        # 405420 <powers_of_10>
+  401fed:	f2 0f 10 1c c7       	movsd  xmm3,QWORD PTR [rdi+rax*8]
+  401ff2:	f2 48 0f 2a d2       	cvtsi2sd xmm2,rdx
+  401ff7:	f2 0f 5c ca          	subsd  xmm1,xmm2
   number_.fractional = (int_fast64_t)remainder;
 
   remainder -= (double) number_.fractional;
-  401feb:	66 0f ef d2          	pxor   xmm2,xmm2
+  401ffb:	66 0f ef d2          	pxor   xmm2,xmm2
   double remainder = (abs_number - (double) number_.integral) * powers_of_10[precision];
-  401fef:	f2 0f 59 cb          	mulsd  xmm1,xmm3
+  401fff:	f2 0f 59 cb          	mulsd  xmm1,xmm3
   number_.fractional = (int_fast64_t)remainder;
-  401ff3:	f2 48 0f 2c c1       	cvttsd2si rax,xmm1
+  402003:	f2 48 0f 2c c1       	cvttsd2si rax,xmm1
   remainder -= (double) number_.fractional;
-  401ff8:	f2 48 0f 2a d0       	cvtsi2sd xmm2,rax
-  401ffd:	f2 0f 5c ca          	subsd  xmm1,xmm2
+  402008:	f2 48 0f 2a d0       	cvtsi2sd xmm2,rax
+  40200d:	f2 0f 5c ca          	subsd  xmm1,xmm2
 
   if (remainder > 0.5) {
-  402001:	f2 0f 10 15 b7 34 00 	movsd  xmm2,QWORD PTR [rip+0x34b7]        # 4054c0 <powers_of_10+0xa0>
-  402008:	00 
-  402009:	66 0f 2f ca          	comisd xmm1,xmm2
-  40200d:	76 51                	jbe    402060 <get_components+0xb0>
+  402011:	f2 0f 10 15 a7 34 00 	movsd  xmm2,QWORD PTR [rip+0x34a7]        # 4054c0 <powers_of_10+0xa0>
+  402018:	00 
+  402019:	66 0f 2f ca          	comisd xmm1,xmm2
+  40201d:	76 51                	jbe    402070 <get_components+0xb0>
     ++number_.fractional;
-  40200f:	48 83 c0 01          	add    rax,0x1
+  40201f:	48 83 c0 01          	add    rax,0x1
     // handle rollover, e.g. case 0.99 with precision 1 is 1.0
     if ((double) number_.fractional >= powers_of_10[precision]) {
-  402013:	66 0f ef c9          	pxor   xmm1,xmm1
-  402017:	f2 48 0f 2a c8       	cvtsi2sd xmm1,rax
-  40201c:	66 0f 2f cb          	comisd xmm1,xmm3
-  402020:	73 56                	jae    402078 <get_components+0xc8>
+  402023:	66 0f ef c9          	pxor   xmm1,xmm1
+  402027:	f2 48 0f 2a c8       	cvtsi2sd xmm1,rax
+  40202c:	66 0f 2f cb          	comisd xmm1,xmm3
+  402030:	73 56                	jae    402088 <get_components+0xc8>
   else if ((remainder == 0.5) && ((number_.fractional == 0U) || (number_.fractional & 1U))) {
     // if halfway, round up if odd OR if last digit is 0
     ++number_.fractional;
   }
 
   if (precision == 0U) {
-  402022:	85 f6                	test   esi,esi
-  402024:	75 27                	jne    40204d <get_components+0x9d>
+  402032:	85 f6                	test   esi,esi
+  402034:	75 27                	jne    40205d <get_components+0x9d>
     remainder = abs_number - (double) number_.integral;
-  402026:	66 0f ef c9          	pxor   xmm1,xmm1
-  40202a:	f2 48 0f 2a ca       	cvtsi2sd xmm1,rdx
-  40202f:	f2 0f 5c c1          	subsd  xmm0,xmm1
+  402036:	66 0f ef c9          	pxor   xmm1,xmm1
+  40203a:	f2 48 0f 2a ca       	cvtsi2sd xmm1,rdx
+  40203f:	f2 0f 5c c1          	subsd  xmm0,xmm1
     if ((!(remainder < 0.5) || (remainder > 0.5)) && (number_.integral & 1)) {
-  402033:	66 0f 2f d0          	comisd xmm2,xmm0
-  402037:	76 06                	jbe    40203f <get_components+0x8f>
-  402039:	66 0f 2f c2          	comisd xmm0,xmm2
-  40203d:	76 0e                	jbe    40204d <get_components+0x9d>
-  40203f:	48 89 d6             	mov    rsi,rdx
-  402042:	83 e6 01             	and    esi,0x1
+  402043:	66 0f 2f d0          	comisd xmm2,xmm0
+  402047:	76 06                	jbe    40204f <get_components+0x8f>
+  402049:	66 0f 2f c2          	comisd xmm0,xmm2
+  40204d:	76 0e                	jbe    40205d <get_components+0x9d>
+  40204f:	48 89 d6             	mov    rsi,rdx
+  402052:	83 e6 01             	and    esi,0x1
       // exactly 0.5 and ODD, then round up
       // 1.5 -> 2, but 2.5 -> 2
       ++number_.integral;
-  402045:	48 83 fe 01          	cmp    rsi,0x1
-  402049:	48 83 da ff          	sbb    rdx,0xffffffffffffffff
+  402055:	48 83 fe 01          	cmp    rsi,0x1
+  402059:	48 83 da ff          	sbb    rdx,0xffffffffffffffff
     }
   }
   return number_;
-  40204d:	49 89 40 08          	mov    QWORD PTR [r8+0x8],rax
+  40205d:	49 89 40 08          	mov    QWORD PTR [r8+0x8],rax
 }
-  402051:	4c 89 c0             	mov    rax,r8
+  402061:	4c 89 c0             	mov    rax,r8
   return number_;
-  402054:	49 89 10             	mov    QWORD PTR [r8],rdx
-  402057:	41 88 48 10          	mov    BYTE PTR [r8+0x10],cl
+  402064:	49 89 10             	mov    QWORD PTR [r8],rdx
+  402067:	41 88 48 10          	mov    BYTE PTR [r8+0x10],cl
 }
-  40205b:	c3                   	ret    
-  40205c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+  40206b:	c3                   	ret    
+  40206c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
   else if ((remainder == 0.5) && ((number_.fractional == 0U) || (number_.fractional & 1U))) {
-  402060:	66 0f 2e ca          	ucomisd xmm1,xmm2
-  402064:	7a bc                	jp     402022 <get_components+0x72>
-  402066:	75 ba                	jne    402022 <get_components+0x72>
-  402068:	48 85 c0             	test   rax,rax
-  40206b:	75 13                	jne    402080 <get_components+0xd0>
+  402070:	66 0f 2e ca          	ucomisd xmm1,xmm2
+  402074:	7a bc                	jp     402032 <get_components+0x72>
+  402076:	75 ba                	jne    402032 <get_components+0x72>
+  402078:	48 85 c0             	test   rax,rax
+  40207b:	75 13                	jne    402090 <get_components+0xd0>
     ++number_.fractional;
-  40206d:	48 83 c0 01          	add    rax,0x1
-  402071:	eb af                	jmp    402022 <get_components+0x72>
-  402073:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
+  40207d:	48 83 c0 01          	add    rax,0x1
+  402081:	eb af                	jmp    402032 <get_components+0x72>
+  402083:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
       ++number_.integral;
-  402078:	48 83 c2 01          	add    rdx,0x1
+  402088:	48 83 c2 01          	add    rdx,0x1
       number_.fractional = 0;
-  40207c:	31 c0                	xor    eax,eax
-  40207e:	eb a2                	jmp    402022 <get_components+0x72>
+  40208c:	31 c0                	xor    eax,eax
+  40208e:	eb a2                	jmp    402032 <get_components+0x72>
   else if ((remainder == 0.5) && ((number_.fractional == 0U) || (number_.fractional & 1U))) {
-  402080:	a8 01                	test   al,0x1
-  402082:	74 9e                	je     402022 <get_components+0x72>
-  402084:	eb e7                	jmp    40206d <get_components+0xbd>
+  402090:	a8 01                	test   al,0x1
+  402092:	74 9e                	je     402032 <get_components+0x72>
+  402094:	eb e7                	jmp    40207d <get_components+0xbd>
 
 Disassembly of section .text.bastardized_floor:
 
-0000000000402090 <bastardized_floor>:
+00000000004020a0 <bastardized_floor>:
 
 // A floor function - but one which only works for numbers whose
 // floor value is representable by an int.
 static int bastardized_floor(double x)
 {
   if (x >= 0) { return (int) x; }
-  402090:	66 0f 2f 05 20 34 00 	comisd xmm0,QWORD PTR [rip+0x3420]        # 4054b8 <powers_of_10+0x98>
-  402097:	00 
-  402098:	f2 0f 2c c0          	cvttsd2si eax,xmm0
-  40209c:	73 10                	jae    4020ae <bastardized_floor+0x1e>
+  4020a0:	66 0f 2f 05 10 34 00 	comisd xmm0,QWORD PTR [rip+0x3410]        # 4054b8 <powers_of_10+0x98>
+  4020a7:	00 
+  4020a8:	f2 0f 2c c0          	cvttsd2si eax,xmm0
+  4020ac:	73 10                	jae    4020be <bastardized_floor+0x1e>
   int n = (int) x;
   return ( ((double) n) == x ) ? n : n-1;
-  40209e:	66 0f ef c9          	pxor   xmm1,xmm1
-  4020a2:	f2 0f 2a c8          	cvtsi2sd xmm1,eax
-  4020a6:	66 0f 2e c8          	ucomisd xmm1,xmm0
-  4020aa:	7a 04                	jp     4020b0 <bastardized_floor+0x20>
-  4020ac:	75 02                	jne    4020b0 <bastardized_floor+0x20>
+  4020ae:	66 0f ef c9          	pxor   xmm1,xmm1
+  4020b2:	f2 0f 2a c8          	cvtsi2sd xmm1,eax
+  4020b6:	66 0f 2e c8          	ucomisd xmm1,xmm0
+  4020ba:	7a 04                	jp     4020c0 <bastardized_floor+0x20>
+  4020bc:	75 02                	jne    4020c0 <bastardized_floor+0x20>
 }
-  4020ae:	c3                   	ret    
-  4020af:	90                   	nop
+  4020be:	c3                   	ret    
+  4020bf:	90                   	nop
   return ( ((double) n) == x ) ? n : n-1;
-  4020b0:	83 e8 01             	sub    eax,0x1
+  4020c0:	83 e8 01             	sub    eax,0x1
 }
-  4020b3:	c3                   	ret    
+  4020c3:	c3                   	ret    
 
 Disassembly of section .text.log10_of_positive:
 
-00000000004020c0 <log10_of_positive>:
+00000000004020d0 <log10_of_positive>:
   // our input number, and need only solve log_10(M) for M between 1 and 2 (as
   // the base-2 mantissa is always 1-point-something). In that limited range, a
   // Taylor series expansion of log10(x) should serve us well enough; and we'll
   // take the mid-point, 1.5, as the point of expansion.
 
   double_with_bit_access dwba = get_bit_access(positive_number);
-  4020c0:	e8 6b f8 ff ff       	call   401930 <get_bit_access>
+  4020d0:	e8 6b f8 ff ff       	call   401940 <get_bit_access>
   // based on the algorithm by David Gay (https://www.ampl.com/netlib/fp/dtoa.c)
   int exp2 = get_exp2(dwba);
   // drop the exponent, so dwba.F comes into the range [1,2)
   dwba.U = (dwba.U & (((double_uint_t) (1) << DOUBLE_STORED_MANTISSA_BITS) - 1U)) |
-  4020c5:	48 b9 ff ff ff ff ff 	movabs rcx,0xfffffffffffff
-  4020cc:	ff 0f 00 
+  4020d5:	48 b9 ff ff ff ff ff 	movabs rcx,0xfffffffffffff
+  4020dc:	ff 0f 00 
   double_with_bit_access dwba = get_bit_access(positive_number);
-  4020cf:	48 89 c2             	mov    rdx,rax
+  4020df:	48 89 c2             	mov    rdx,rax
   int exp2 = get_exp2(dwba);
-  4020d2:	48 89 c7             	mov    rdi,rax
-  4020d5:	e8 76 f8 ff ff       	call   401950 <get_exp2>
+  4020e2:	48 89 c7             	mov    rdi,rax
+  4020e5:	e8 76 f8 ff ff       	call   401960 <get_exp2>
   dwba.U = (dwba.U & (((double_uint_t) (1) << DOUBLE_STORED_MANTISSA_BITS) - 1U)) |
-  4020da:	48 21 ca             	and    rdx,rcx
-  4020dd:	48 b9 00 00 00 00 00 	movabs rcx,0x3ff0000000000000
-  4020e4:	00 f0 3f 
+  4020ea:	48 21 ca             	and    rdx,rcx
+  4020ed:	48 b9 00 00 00 00 00 	movabs rcx,0x3ff0000000000000
+  4020f4:	00 f0 3f 
   return (
     // Taylor expansion around 1.5:
     0.1760912590556812420           // Expansion term 0: ln(1.5)            / ln(10)
     + z     * 0.2895296546021678851 // Expansion term 1: (M - 1.5)   * 2/3  / ln(10)
 #if PRINTF_LOG10_TAYLOR_TERMS > 2
     - z*z   * 0.0965098848673892950 // Expansion term 2: (M - 1.5)^2 * 2/9  / ln(10)
-  4020e7:	f2 0f 10 1d f1 33 00 	movsd  xmm3,QWORD PTR [rip+0x33f1]        # 4054e0 <powers_of_10+0xc0>
-  4020ee:	00 
+  4020f7:	f2 0f 10 1d e1 33 00 	movsd  xmm3,QWORD PTR [rip+0x33e1]        # 4054e0 <powers_of_10+0xc0>
+  4020fe:	00 
   dwba.U = (dwba.U & (((double_uint_t) (1) << DOUBLE_STORED_MANTISSA_BITS) - 1U)) |
-  4020ef:	48 09 ca             	or     rdx,rcx
+  4020ff:	48 09 ca             	or     rdx,rcx
     + z     * 0.2895296546021678851 // Expansion term 1: (M - 1.5)   * 2/3  / ln(10)
-  4020f2:	f2 0f 10 05 d6 33 00 	movsd  xmm0,QWORD PTR [rip+0x33d6]        # 4054d0 <powers_of_10+0xb0>
-  4020f9:	00 
+  402102:	f2 0f 10 05 c6 33 00 	movsd  xmm0,QWORD PTR [rip+0x33c6]        # 4054d0 <powers_of_10+0xb0>
+  402109:	00 
   double z = (dwba.F - 1.5);
-  4020fa:	66 48 0f 6e ca       	movq   xmm1,rdx
-  4020ff:	f2 0f 5c 0d c1 33 00 	subsd  xmm1,QWORD PTR [rip+0x33c1]        # 4054c8 <powers_of_10+0xa8>
-  402106:	00 
+  40210a:	66 48 0f 6e ca       	movq   xmm1,rdx
+  40210f:	f2 0f 5c 0d b1 33 00 	subsd  xmm1,QWORD PTR [rip+0x33b1]        # 4054c8 <powers_of_10+0xa8>
+  402116:	00 
     + z     * 0.2895296546021678851 // Expansion term 1: (M - 1.5)   * 2/3  / ln(10)
-  402107:	f2 0f 59 c1          	mulsd  xmm0,xmm1
+  402117:	f2 0f 59 c1          	mulsd  xmm0,xmm1
     - z*z   * 0.0965098848673892950 // Expansion term 2: (M - 1.5)^2 * 2/9  / ln(10)
-  40210b:	66 0f 28 d1          	movapd xmm2,xmm1
-  40210f:	f2 0f 59 d1          	mulsd  xmm2,xmm1
+  40211b:	66 0f 28 d1          	movapd xmm2,xmm1
+  40211f:	f2 0f 59 d1          	mulsd  xmm2,xmm1
     + z     * 0.2895296546021678851 // Expansion term 1: (M - 1.5)   * 2/3  / ln(10)
-  402113:	f2 0f 58 05 bd 33 00 	addsd  xmm0,QWORD PTR [rip+0x33bd]        # 4054d8 <powers_of_10+0xb8>
-  40211a:	00 
+  402123:	f2 0f 58 05 ad 33 00 	addsd  xmm0,QWORD PTR [rip+0x33ad]        # 4054d8 <powers_of_10+0xb8>
+  40212a:	00 
     - z*z   * 0.0965098848673892950 // Expansion term 2: (M - 1.5)^2 * 2/9  / ln(10)
-  40211b:	f2 0f 59 da          	mulsd  xmm3,xmm2
+  40212b:	f2 0f 59 da          	mulsd  xmm3,xmm2
 #if PRINTF_LOG10_TAYLOR_TERMS > 3
     + z*z*z * 0.0428932821632841311 // Expansion term 2: (M - 1.5)^3 * 8/81 / ln(10)
-  40211f:	f2 0f 59 d1          	mulsd  xmm2,xmm1
+  40212f:	f2 0f 59 d1          	mulsd  xmm2,xmm1
 #endif
 #endif
     // exact log_2 of the exponent x, with logarithm base change
     + exp2 * 0.30102999566398119521 // = exp2 * log_10(2) = exp2 * ln(2)/ln(10)
-  402123:	66 0f ef c9          	pxor   xmm1,xmm1
+  402133:	66 0f ef c9          	pxor   xmm1,xmm1
     + z*z*z * 0.0428932821632841311 // Expansion term 2: (M - 1.5)^3 * 8/81 / ln(10)
-  402127:	f2 0f 59 15 b9 33 00 	mulsd  xmm2,QWORD PTR [rip+0x33b9]        # 4054e8 <powers_of_10+0xc8>
-  40212e:	00 
+  402137:	f2 0f 59 15 a9 33 00 	mulsd  xmm2,QWORD PTR [rip+0x33a9]        # 4054e8 <powers_of_10+0xc8>
+  40213e:	00 
     + exp2 * 0.30102999566398119521 // = exp2 * log_10(2) = exp2 * ln(2)/ln(10)
-  40212f:	f2 0f 2a c8          	cvtsi2sd xmm1,eax
-  402133:	f2 0f 59 0d b5 33 00 	mulsd  xmm1,QWORD PTR [rip+0x33b5]        # 4054f0 <powers_of_10+0xd0>
-  40213a:	00 
+  40213f:	f2 0f 2a c8          	cvtsi2sd xmm1,eax
+  402143:	f2 0f 59 0d a5 33 00 	mulsd  xmm1,QWORD PTR [rip+0x33a5]        # 4054f0 <powers_of_10+0xd0>
+  40214a:	00 
     - z*z   * 0.0965098848673892950 // Expansion term 2: (M - 1.5)^2 * 2/9  / ln(10)
-  40213b:	f2 0f 5c c3          	subsd  xmm0,xmm3
+  40214b:	f2 0f 5c c3          	subsd  xmm0,xmm3
     + z*z*z * 0.0428932821632841311 // Expansion term 2: (M - 1.5)^3 * 8/81 / ln(10)
-  40213f:	f2 0f 58 c2          	addsd  xmm0,xmm2
+  40214f:	f2 0f 58 c2          	addsd  xmm0,xmm2
     + exp2 * 0.30102999566398119521 // = exp2 * log_10(2) = exp2 * ln(2)/ln(10)
-  402143:	f2 0f 58 c1          	addsd  xmm0,xmm1
+  402153:	f2 0f 58 c1          	addsd  xmm0,xmm1
   );
 }
-  402147:	c3                   	ret    
+  402157:	c3                   	ret    
 
 Disassembly of section .text.pow10_of_int:
 
-0000000000402150 <pow10_of_int>:
+0000000000402160 <pow10_of_int>:
 
 
 static double pow10_of_int(int floored_exp10)
 {
   // A crude hack for avoiding undesired behavior with barely-normal or slightly-subnormal values.
   if (floored_exp10 == DOUBLE_MAX_SUBNORMAL_EXPONENT_OF_10) {
-  402150:	81 ff cc fe ff ff    	cmp    edi,0xfffffecc
-  402156:	0f 84 b4 00 00 00    	je     402210 <pow10_of_int+0xc0>
+  402160:	81 ff cc fe ff ff    	cmp    edi,0xfffffecc
+  402166:	0f 84 b4 00 00 00    	je     402220 <pow10_of_int+0xc0>
     return DOUBLE_MAX_SUBNORMAL_POWER_OF_10;
   }
   // Compute 10^(floored_exp10) but (try to) make sure that doesn't overflow
   double_with_bit_access dwba;
   int exp2 = bastardized_floor(floored_exp10 * 3.321928094887362 + 0.5);
-  40215c:	66 0f ef d2          	pxor   xmm2,xmm2
-  402160:	f2 0f 10 05 98 33 00 	movsd  xmm0,QWORD PTR [rip+0x3398]        # 405500 <powers_of_10+0xe0>
-  402167:	00 
-  402168:	f2 0f 2a d7          	cvtsi2sd xmm2,edi
-  40216c:	f2 0f 59 c2          	mulsd  xmm0,xmm2
-  402170:	f2 0f 58 05 48 33 00 	addsd  xmm0,QWORD PTR [rip+0x3348]        # 4054c0 <powers_of_10+0xa0>
+  40216c:	66 0f ef d2          	pxor   xmm2,xmm2
+  402170:	f2 0f 10 05 88 33 00 	movsd  xmm0,QWORD PTR [rip+0x3388]        # 405500 <powers_of_10+0xe0>
   402177:	00 
-  402178:	e8 13 ff ff ff       	call   402090 <bastardized_floor>
+  402178:	f2 0f 2a d7          	cvtsi2sd xmm2,edi
+  40217c:	f2 0f 59 c2          	mulsd  xmm0,xmm2
+  402180:	f2 0f 58 05 38 33 00 	addsd  xmm0,QWORD PTR [rip+0x3338]        # 4054c0 <powers_of_10+0xa0>
+  402187:	00 
+  402188:	e8 13 ff ff ff       	call   4020a0 <bastardized_floor>
   const double z  = floored_exp10 * 2.302585092994046 - exp2 * 0.6931471805599453;
-  40217d:	f2 0f 10 0d 83 33 00 	movsd  xmm1,QWORD PTR [rip+0x3383]        # 405508 <powers_of_10+0xe8>
-  402184:	00 
-  402185:	66 0f ef c0          	pxor   xmm0,xmm0
-  402189:	f2 0f 2a c0          	cvtsi2sd xmm0,eax
-  40218d:	f2 0f 59 05 7b 33 00 	mulsd  xmm0,QWORD PTR [rip+0x337b]        # 405510 <powers_of_10+0xf0>
+  40218d:	f2 0f 10 0d 73 33 00 	movsd  xmm1,QWORD PTR [rip+0x3373]        # 405508 <powers_of_10+0xe8>
   402194:	00 
+  402195:	66 0f ef c0          	pxor   xmm0,xmm0
+  402199:	f2 0f 2a c0          	cvtsi2sd xmm0,eax
+  40219d:	f2 0f 59 05 6b 33 00 	mulsd  xmm0,QWORD PTR [rip+0x336b]        # 405510 <powers_of_10+0xf0>
+  4021a4:	00 
   const double z2 = z * z;
   dwba.U = ((double_uint_t)(exp2) + DOUBLE_BASE_EXPONENT) << DOUBLE_STORED_MANTISSA_BITS;
-  402195:	48 98                	cdqe   
+  4021a5:	48 98                	cdqe   
   const double z  = floored_exp10 * 2.302585092994046 - exp2 * 0.6931471805599453;
-  402197:	f2 0f 59 ca          	mulsd  xmm1,xmm2
+  4021a7:	f2 0f 59 ca          	mulsd  xmm1,xmm2
   dwba.U = ((double_uint_t)(exp2) + DOUBLE_BASE_EXPONENT) << DOUBLE_STORED_MANTISSA_BITS;
-  40219b:	48 05 ff 03 00 00    	add    rax,0x3ff
-  4021a1:	48 c1 e0 34          	shl    rax,0x34
+  4021ab:	48 05 ff 03 00 00    	add    rax,0x3ff
+  4021b1:	48 c1 e0 34          	shl    rax,0x34
   // compute exp(z) using continued fractions,
   // see https://en.wikipedia.org/wiki/Exponential_function#Continued_fractions_for_ex
   dwba.F *= 1 + 2 * z / (2 - z + (z2 / (6 + (z2 / (10 + z2 / 14)))));
-  4021a5:	66 48 0f 6e e8       	movq   xmm5,rax
+  4021b5:	66 48 0f 6e e8       	movq   xmm5,rax
   const double z  = floored_exp10 * 2.302585092994046 - exp2 * 0.6931471805599453;
-  4021aa:	f2 0f 5c c8          	subsd  xmm1,xmm0
+  4021ba:	f2 0f 5c c8          	subsd  xmm1,xmm0
   const double z2 = z * z;
-  4021ae:	66 0f 28 d1          	movapd xmm2,xmm1
+  4021be:	66 0f 28 d1          	movapd xmm2,xmm1
   dwba.F *= 1 + 2 * z / (2 - z + (z2 / (6 + (z2 / (10 + z2 / 14)))));
-  4021b2:	66 0f 28 c1          	movapd xmm0,xmm1
+  4021c2:	66 0f 28 c1          	movapd xmm0,xmm1
   const double z2 = z * z;
-  4021b6:	f2 0f 59 d1          	mulsd  xmm2,xmm1
+  4021c6:	f2 0f 59 d1          	mulsd  xmm2,xmm1
   dwba.F *= 1 + 2 * z / (2 - z + (z2 / (6 + (z2 / (10 + z2 / 14)))));
-  4021ba:	f2 0f 58 c1          	addsd  xmm0,xmm1
-  4021be:	66 0f 28 e2          	movapd xmm4,xmm2
-  4021c2:	f2 0f 5e 25 4e 33 00 	divsd  xmm4,QWORD PTR [rip+0x334e]        # 405518 <powers_of_10+0xf8>
-  4021c9:	00 
-  4021ca:	66 0f 28 da          	movapd xmm3,xmm2
-  4021ce:	f2 0f 58 25 4a 33 00 	addsd  xmm4,QWORD PTR [rip+0x334a]        # 405520 <powers_of_10+0x100>
-  4021d5:	00 
-  4021d6:	f2 0f 5e dc          	divsd  xmm3,xmm4
-  4021da:	f2 0f 58 1d 46 33 00 	addsd  xmm3,QWORD PTR [rip+0x3346]        # 405528 <powers_of_10+0x108>
-  4021e1:	00 
-  4021e2:	f2 0f 5e d3          	divsd  xmm2,xmm3
-  4021e6:	f2 0f 10 1d 42 33 00 	movsd  xmm3,QWORD PTR [rip+0x3342]        # 405530 <powers_of_10+0x110>
-  4021ed:	00 
-  4021ee:	f2 0f 5c d9          	subsd  xmm3,xmm1
-  4021f2:	f2 0f 58 d3          	addsd  xmm2,xmm3
-  4021f6:	f2 0f 5e c2          	divsd  xmm0,xmm2
-  4021fa:	f2 0f 58 05 36 33 00 	addsd  xmm0,QWORD PTR [rip+0x3336]        # 405538 <powers_of_10+0x118>
-  402201:	00 
-  402202:	f2 0f 59 c5          	mulsd  xmm0,xmm5
+  4021ca:	f2 0f 58 c1          	addsd  xmm0,xmm1
+  4021ce:	66 0f 28 e2          	movapd xmm4,xmm2
+  4021d2:	f2 0f 5e 25 3e 33 00 	divsd  xmm4,QWORD PTR [rip+0x333e]        # 405518 <powers_of_10+0xf8>
+  4021d9:	00 
+  4021da:	66 0f 28 da          	movapd xmm3,xmm2
+  4021de:	f2 0f 58 25 3a 33 00 	addsd  xmm4,QWORD PTR [rip+0x333a]        # 405520 <powers_of_10+0x100>
+  4021e5:	00 
+  4021e6:	f2 0f 5e dc          	divsd  xmm3,xmm4
+  4021ea:	f2 0f 58 1d 36 33 00 	addsd  xmm3,QWORD PTR [rip+0x3336]        # 405528 <powers_of_10+0x108>
+  4021f1:	00 
+  4021f2:	f2 0f 5e d3          	divsd  xmm2,xmm3
+  4021f6:	f2 0f 10 1d 32 33 00 	movsd  xmm3,QWORD PTR [rip+0x3332]        # 405530 <powers_of_10+0x110>
+  4021fd:	00 
+  4021fe:	f2 0f 5c d9          	subsd  xmm3,xmm1
+  402202:	f2 0f 58 d3          	addsd  xmm2,xmm3
+  402206:	f2 0f 5e c2          	divsd  xmm0,xmm2
+  40220a:	f2 0f 58 05 26 33 00 	addsd  xmm0,QWORD PTR [rip+0x3326]        # 405538 <powers_of_10+0x118>
+  402211:	00 
+  402212:	f2 0f 59 c5          	mulsd  xmm0,xmm5
   return dwba.F;
-  402206:	c3                   	ret    
-  402207:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
-  40220e:	00 00 
+  402216:	c3                   	ret    
+  402217:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+  40221e:	00 00 
     return DOUBLE_MAX_SUBNORMAL_POWER_OF_10;
-  402210:	f2 0f 10 05 e0 32 00 	movsd  xmm0,QWORD PTR [rip+0x32e0]        # 4054f8 <powers_of_10+0xd8>
-  402217:	00 
+  402220:	f2 0f 10 05 d0 32 00 	movsd  xmm0,QWORD PTR [rip+0x32d0]        # 4054f8 <powers_of_10+0xd8>
+  402227:	00 
 }
-  402218:	c3                   	ret    
+  402228:	c3                   	ret    
 
 Disassembly of section .text.parse_flags:
 
-0000000000402220 <parse_flags>:
+0000000000402230 <parse_flags>:
 
 // Advances the format pointer past the flags, and returns the parsed flags
 // due to the characters passed
 static printf_flags_t parse_flags(const char** format)
 {
   printf_flags_t flags = 0U;
-  402220:	45 31 c0             	xor    r8d,r8d
+  402230:	45 31 c0             	xor    r8d,r8d
   do {
     switch (**format) {
-  402223:	48 8d 0d e6 2f 00 00 	lea    rcx,[rip+0x2fe6]        # 405210 <memcpy+0xd70>
-  40222a:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
-  402230:	48 8b 17             	mov    rdx,QWORD PTR [rdi]
-  402233:	0f b6 02             	movzx  eax,BYTE PTR [rdx]
-  402236:	83 e8 20             	sub    eax,0x20
-  402239:	3c 10                	cmp    al,0x10
-  40223b:	77 13                	ja     402250 <parse_flags+0x30>
-  40223d:	0f b6 c0             	movzx  eax,al
-  402240:	48 63 04 81          	movsxd rax,DWORD PTR [rcx+rax*4]
-  402244:	48 01 c8             	add    rax,rcx
-  402247:	3e ff e0             	notrack jmp rax
-  40224a:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
+  402233:	48 8d 0d e6 2f 00 00 	lea    rcx,[rip+0x2fe6]        # 405220 <memcpy+0xd70>
+  40223a:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
+  402240:	48 8b 17             	mov    rdx,QWORD PTR [rdi]
+  402243:	0f b6 02             	movzx  eax,BYTE PTR [rdx]
+  402246:	83 e8 20             	sub    eax,0x20
+  402249:	3c 10                	cmp    al,0x10
+  40224b:	77 13                	ja     402260 <parse_flags+0x30>
+  40224d:	0f b6 c0             	movzx  eax,al
+  402250:	48 63 04 81          	movsxd rax,DWORD PTR [rcx+rax*4]
+  402254:	48 01 c8             	add    rax,rcx
+  402257:	3e ff e0             	notrack jmp rax
+  40225a:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
       case ' ': flags |= FLAGS_SPACE;   (*format)++; break;
       case '#': flags |= FLAGS_HASH;    (*format)++; break;
       default : return flags;
     }
   } while (true);
 }
-  402250:	44 89 c0             	mov    eax,r8d
-  402253:	c3                   	ret    
-  402254:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+  402260:	44 89 c0             	mov    eax,r8d
+  402263:	c3                   	ret    
+  402264:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
       case '0': flags |= FLAGS_ZEROPAD; (*format)++; break;
-  402258:	41 83 c8 01          	or     r8d,0x1
-  40225c:	48 83 c2 01          	add    rdx,0x1
-      case '+': flags |= FLAGS_PLUS;    (*format)++; break;
-  402260:	48 89 17             	mov    QWORD PTR [rdi],rdx
-  402263:	eb cb                	jmp    402230 <parse_flags+0x10>
-  402265:	0f 1f 00             	nop    DWORD PTR [rax]
-      case '-': flags |= FLAGS_LEFT;    (*format)++; break;
-  402268:	41 83 c8 02          	or     r8d,0x2
+  402268:	41 83 c8 01          	or     r8d,0x1
   40226c:	48 83 c2 01          	add    rdx,0x1
-  402270:	eb ee                	jmp    402260 <parse_flags+0x40>
-  402272:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
       case '+': flags |= FLAGS_PLUS;    (*format)++; break;
-  402278:	41 83 c8 04          	or     r8d,0x4
+  402270:	48 89 17             	mov    QWORD PTR [rdi],rdx
+  402273:	eb cb                	jmp    402240 <parse_flags+0x10>
+  402275:	0f 1f 00             	nop    DWORD PTR [rax]
+      case '-': flags |= FLAGS_LEFT;    (*format)++; break;
+  402278:	41 83 c8 02          	or     r8d,0x2
   40227c:	48 83 c2 01          	add    rdx,0x1
-  402280:	eb de                	jmp    402260 <parse_flags+0x40>
+  402280:	eb ee                	jmp    402270 <parse_flags+0x40>
   402282:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
-      case '#': flags |= FLAGS_HASH;    (*format)++; break;
-  402288:	41 83 c8 10          	or     r8d,0x10
+      case '+': flags |= FLAGS_PLUS;    (*format)++; break;
+  402288:	41 83 c8 04          	or     r8d,0x4
   40228c:	48 83 c2 01          	add    rdx,0x1
-  402290:	eb ce                	jmp    402260 <parse_flags+0x40>
+  402290:	eb de                	jmp    402270 <parse_flags+0x40>
   402292:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
-      case ' ': flags |= FLAGS_SPACE;   (*format)++; break;
-  402298:	41 83 c8 08          	or     r8d,0x8
+      case '#': flags |= FLAGS_HASH;    (*format)++; break;
+  402298:	41 83 c8 10          	or     r8d,0x10
   40229c:	48 83 c2 01          	add    rdx,0x1
-  4022a0:	eb be                	jmp    402260 <parse_flags+0x40>
+  4022a0:	eb ce                	jmp    402270 <parse_flags+0x40>
+  4022a2:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
+      case ' ': flags |= FLAGS_SPACE;   (*format)++; break;
+  4022a8:	41 83 c8 08          	or     r8d,0x8
+  4022ac:	48 83 c2 01          	add    rdx,0x1
+  4022b0:	eb be                	jmp    402270 <parse_flags+0x40>
 
 Disassembly of section .text.putchar_wrapper:
 
-00000000004022b0 <putchar_wrapper>:
+00000000004022c0 <putchar_wrapper>:
 {
-  4022b0:	f3 0f 1e fa          	endbr64 
+  4022c0:	f3 0f 1e fa          	endbr64 
   putchar_(c);
-  4022b4:	40 0f be ff          	movsx  edi,dil
-  4022b8:	e9 e3 18 00 00       	jmp    403ba0 <putchar_>
+  4022c4:	40 0f be ff          	movsx  edi,dil
+  4022c8:	e9 e3 18 00 00       	jmp    403bb0 <putchar_>
 
 Disassembly of section .text.print_broken_up_decimal.isra.0:
 
-00000000004022c0 <print_broken_up_decimal.isra.0>:
+00000000004022d0 <print_broken_up_decimal.isra.0>:
 static void print_broken_up_decimal(
-  4022c0:	41 56                	push   r14
-  4022c2:	49 89 ca             	mov    r10,rcx
-  4022c5:	41 89 d3             	mov    r11d,edx
-  4022c8:	41 55                	push   r13
-  4022ca:	45 89 c5             	mov    r13d,r8d
-  4022cd:	41 54                	push   r12
-  4022cf:	55                   	push   rbp
-  4022d0:	53                   	push   rbx
-  4022d1:	44 8b 44 24 30       	mov    r8d,DWORD PTR [rsp+0x30]
-  4022d6:	48 8b 6c 24 38       	mov    rbp,QWORD PTR [rsp+0x38]
-  4022db:	8b 4c 24 40          	mov    ecx,DWORD PTR [rsp+0x40]
+  4022d0:	41 56                	push   r14
+  4022d2:	49 89 ca             	mov    r10,rcx
+  4022d5:	41 89 d3             	mov    r11d,edx
+  4022d8:	41 55                	push   r13
+  4022da:	45 89 c5             	mov    r13d,r8d
+  4022dd:	41 54                	push   r12
+  4022df:	55                   	push   rbp
+  4022e0:	53                   	push   rbx
+  4022e1:	44 8b 44 24 30       	mov    r8d,DWORD PTR [rsp+0x30]
+  4022e6:	48 8b 6c 24 38       	mov    rbp,QWORD PTR [rsp+0x38]
+  4022eb:	8b 4c 24 40          	mov    ecx,DWORD PTR [rsp+0x40]
   if (precision != 0U) {
-  4022df:	45 85 ed             	test   r13d,r13d
-  4022e2:	0f 84 90 00 00 00    	je     402378 <print_broken_up_decimal.isra.0+0xb8>
+  4022ef:	45 85 ed             	test   r13d,r13d
+  4022f2:	0f 84 90 00 00 00    	je     402388 <print_broken_up_decimal.isra.0+0xb8>
     if ((flags & FLAGS_ADAPT_EXP) && !(flags & FLAGS_HASH) && (number_.fractional > 0)) {
-  4022e8:	44 89 c0             	mov    eax,r8d
-  4022eb:	25 10 10 00 00       	and    eax,0x1010
-  4022f0:	3d 00 10 00 00       	cmp    eax,0x1000
-  4022f5:	0f 84 05 02 00 00    	je     402500 <print_broken_up_decimal.isra.0+0x240>
-  4022fb:	41 89 cc             	mov    r12d,ecx
+  4022f8:	44 89 c0             	mov    eax,r8d
+  4022fb:	25 10 10 00 00       	and    eax,0x1010
+  402300:	3d 00 10 00 00       	cmp    eax,0x1000
+  402305:	0f 84 05 02 00 00    	je     402510 <print_broken_up_decimal.isra.0+0x240>
+  40230b:	41 89 cc             	mov    r12d,ecx
 static void print_broken_up_decimal(
-  4022fe:	89 cb                	mov    ebx,ecx
-  402300:	42 8d 4c 29 ff       	lea    ecx,[rcx+r13*1-0x1]
+  40230e:	89 cb                	mov    ebx,ecx
+  402310:	42 8d 4c 29 ff       	lea    ecx,[rcx+r13*1-0x1]
         buf[len++] = (char)('0' + number_.fractional % 10U);
-  402305:	49 bd 67 66 66 66 66 	movabs r13,0x6666666666666667
-  40230c:	66 66 66 
-  40230f:	49 01 ec             	add    r12,rbp
-  402312:	eb 43                	jmp    402357 <print_broken_up_decimal.isra.0+0x97>
-  402314:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
-  402318:	48 89 f0             	mov    rax,rsi
-  40231b:	41 89 ce             	mov    r14d,ecx
+  402315:	49 bd 67 66 66 66 66 	movabs r13,0x6666666666666667
+  40231c:	66 66 66 
+  40231f:	49 01 ec             	add    r12,rbp
+  402322:	eb 43                	jmp    402367 <print_broken_up_decimal.isra.0+0x97>
+  402324:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+  402328:	48 89 f0             	mov    rax,rsi
+  40232b:	41 89 ce             	mov    r14d,ecx
         if (!(number_.fractional /= 10U)) {
-  40231e:	49 83 c4 01          	add    r12,0x1
+  40232e:	49 83 c4 01          	add    r12,0x1
         buf[len++] = (char)('0' + number_.fractional % 10U);
-  402322:	49 f7 ed             	imul   r13
-  402325:	48 89 f0             	mov    rax,rsi
-  402328:	41 29 de             	sub    r14d,ebx
-  40232b:	83 c3 01             	add    ebx,0x1
-  40232e:	48 c1 f8 3f          	sar    rax,0x3f
-  402332:	48 c1 fa 02          	sar    rdx,0x2
-  402336:	48 29 c2             	sub    rdx,rax
-  402339:	48 8d 04 92          	lea    rax,[rdx+rdx*4]
-  40233d:	48 01 c0             	add    rax,rax
-  402340:	48 29 c6             	sub    rsi,rax
-  402343:	83 c6 30             	add    esi,0x30
-  402346:	41 88 74 24 ff       	mov    BYTE PTR [r12-0x1],sil
+  402332:	49 f7 ed             	imul   r13
+  402335:	48 89 f0             	mov    rax,rsi
+  402338:	41 29 de             	sub    r14d,ebx
+  40233b:	83 c3 01             	add    ebx,0x1
+  40233e:	48 c1 f8 3f          	sar    rax,0x3f
+  402342:	48 c1 fa 02          	sar    rdx,0x2
+  402346:	48 29 c2             	sub    rdx,rax
+  402349:	48 8d 04 92          	lea    rax,[rdx+rdx*4]
+  40234d:	48 01 c0             	add    rax,rax
+  402350:	48 29 c6             	sub    rsi,rax
+  402353:	83 c6 30             	add    esi,0x30
+  402356:	41 88 74 24 ff       	mov    BYTE PTR [r12-0x1],sil
         if (!(number_.fractional /= 10U)) {
-  40234b:	48 89 d6             	mov    rsi,rdx
-  40234e:	48 85 d2             	test   rdx,rdx
-  402351:	0f 84 f9 00 00 00    	je     402450 <print_broken_up_decimal.isra.0+0x190>
+  40235b:	48 89 d6             	mov    rsi,rdx
+  40235e:	48 85 d2             	test   rdx,rdx
+  402361:	0f 84 f9 00 00 00    	je     402460 <print_broken_up_decimal.isra.0+0x190>
       while (len < PRINTF_DECIMAL_BUFFER_SIZE) {
-  402357:	83 fb 20             	cmp    ebx,0x20
-  40235a:	75 bc                	jne    402318 <print_broken_up_decimal.isra.0+0x58>
+  402367:	83 fb 20             	cmp    ebx,0x20
+  40236a:	75 bc                	jne    402328 <print_broken_up_decimal.isra.0+0x58>
   if (!(flags & FLAGS_LEFT) && (flags & FLAGS_ZEROPAD)) {
-  40235c:	44 89 c0             	mov    eax,r8d
-  40235f:	83 e0 03             	and    eax,0x3
-  402362:	83 f8 01             	cmp    eax,0x1
-  402365:	0f 84 35 01 00 00    	je     4024a0 <print_broken_up_decimal.isra.0+0x1e0>
-  40236b:	ba 20 00 00 00       	mov    edx,0x20
-  402370:	e9 7d 00 00 00       	jmp    4023f2 <print_broken_up_decimal.isra.0+0x132>
-  402375:	0f 1f 00             	nop    DWORD PTR [rax]
+  40236c:	44 89 c0             	mov    eax,r8d
+  40236f:	83 e0 03             	and    eax,0x3
+  402372:	83 f8 01             	cmp    eax,0x1
+  402375:	0f 84 35 01 00 00    	je     4024b0 <print_broken_up_decimal.isra.0+0x1e0>
+  40237b:	ba 20 00 00 00       	mov    edx,0x20
+  402380:	e9 7d 00 00 00       	jmp    402402 <print_broken_up_decimal.isra.0+0x132>
+  402385:	0f 1f 00             	nop    DWORD PTR [rax]
     if ((flags & FLAGS_HASH) && (len < PRINTF_DECIMAL_BUFFER_SIZE)) {
-  402378:	41 f6 c0 10          	test   r8b,0x10
-  40237c:	0f 85 8e 00 00 00    	jne    402410 <print_broken_up_decimal.isra.0+0x150>
+  402388:	41 f6 c0 10          	test   r8b,0x10
+  40238c:	0f 85 8e 00 00 00    	jne    402420 <print_broken_up_decimal.isra.0+0x150>
     buf[len++] = (char)('0' + (number_.integral % 10));
-  402382:	48 bb 67 66 66 66 66 	movabs rbx,0x6666666666666667
-  402389:	66 66 66 
-  40238c:	89 ce                	mov    esi,ecx
-  40238e:	48 01 ee             	add    rsi,rbp
-  402391:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  402392:	48 bb 67 66 66 66 66 	movabs rbx,0x6666666666666667
+  402399:	66 66 66 
+  40239c:	89 ce                	mov    esi,ecx
+  40239e:	48 01 ee             	add    rsi,rbp
+  4023a1:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
   while (len < PRINTF_DECIMAL_BUFFER_SIZE) {
-  402398:	83 f9 20             	cmp    ecx,0x20
-  40239b:	74 bf                	je     40235c <print_broken_up_decimal.isra.0+0x9c>
+  4023a8:	83 f9 20             	cmp    ecx,0x20
+  4023ab:	74 bf                	je     40236c <print_broken_up_decimal.isra.0+0x9c>
     buf[len++] = (char)('0' + (number_.integral % 10));
-  40239d:	48 89 f8             	mov    rax,rdi
-  4023a0:	83 c1 01             	add    ecx,0x1
+  4023ad:	48 89 f8             	mov    rax,rdi
+  4023b0:	83 c1 01             	add    ecx,0x1
     if (!(number_.integral /= 10)) {
-  4023a3:	48 83 c6 01          	add    rsi,0x1
+  4023b3:	48 83 c6 01          	add    rsi,0x1
     buf[len++] = (char)('0' + (number_.integral % 10));
-  4023a7:	48 f7 eb             	imul   rbx
-  4023aa:	48 89 f8             	mov    rax,rdi
-  4023ad:	48 c1 f8 3f          	sar    rax,0x3f
-  4023b1:	48 c1 fa 02          	sar    rdx,0x2
-  4023b5:	48 29 c2             	sub    rdx,rax
-  4023b8:	48 8d 04 92          	lea    rax,[rdx+rdx*4]
-  4023bc:	48 01 c0             	add    rax,rax
-  4023bf:	48 29 c7             	sub    rdi,rax
-  4023c2:	83 c7 30             	add    edi,0x30
-  4023c5:	40 88 7e ff          	mov    BYTE PTR [rsi-0x1],dil
+  4023b7:	48 f7 eb             	imul   rbx
+  4023ba:	48 89 f8             	mov    rax,rdi
+  4023bd:	48 c1 f8 3f          	sar    rax,0x3f
+  4023c1:	48 c1 fa 02          	sar    rdx,0x2
+  4023c5:	48 29 c2             	sub    rdx,rax
+  4023c8:	48 8d 04 92          	lea    rax,[rdx+rdx*4]
+  4023cc:	48 01 c0             	add    rax,rax
+  4023cf:	48 29 c7             	sub    rdi,rax
+  4023d2:	83 c7 30             	add    edi,0x30
+  4023d5:	40 88 7e ff          	mov    BYTE PTR [rsi-0x1],dil
     if (!(number_.integral /= 10)) {
-  4023c9:	48 89 d7             	mov    rdi,rdx
-  4023cc:	48 85 d2             	test   rdx,rdx
-  4023cf:	75 c7                	jne    402398 <print_broken_up_decimal.isra.0+0xd8>
+  4023d9:	48 89 d7             	mov    rdi,rdx
+  4023dc:	48 85 d2             	test   rdx,rdx
+  4023df:	75 c7                	jne    4023a8 <print_broken_up_decimal.isra.0+0xd8>
   if (!(flags & FLAGS_LEFT) && (flags & FLAGS_ZEROPAD)) {
-  4023d1:	44 89 c0             	mov    eax,r8d
-  4023d4:	83 e0 03             	and    eax,0x3
-  4023d7:	83 f8 01             	cmp    eax,0x1
-  4023da:	0f 84 b8 01 00 00    	je     402598 <print_broken_up_decimal.isra.0+0x2d8>
+  4023e1:	44 89 c0             	mov    eax,r8d
+  4023e4:	83 e0 03             	and    eax,0x3
+  4023e7:	83 f8 01             	cmp    eax,0x1
+  4023ea:	0f 84 b8 01 00 00    	je     4025a8 <print_broken_up_decimal.isra.0+0x2d8>
   if (len < PRINTF_DECIMAL_BUFFER_SIZE) {
-  4023e0:	83 f9 20             	cmp    ecx,0x20
-  4023e3:	74 86                	je     40236b <print_broken_up_decimal.isra.0+0xab>
+  4023f0:	83 f9 20             	cmp    ecx,0x20
+  4023f3:	74 86                	je     40237b <print_broken_up_decimal.isra.0+0xab>
     if (number_.is_negative) {
-  4023e5:	45 84 db             	test   r11b,r11b
-  4023e8:	74 46                	je     402430 <print_broken_up_decimal.isra.0+0x170>
+  4023f5:	45 84 db             	test   r11b,r11b
+  4023f8:	74 46                	je     402440 <print_broken_up_decimal.isra.0+0x170>
       buf[len++] = '-';
-  4023ea:	c6 44 0d 00 2d       	mov    BYTE PTR [rbp+rcx*1+0x0],0x2d
-  4023ef:	8d 51 01             	lea    edx,[rcx+0x1]
+  4023fa:	c6 44 0d 00 2d       	mov    BYTE PTR [rbp+rcx*1+0x0],0x2d
+  4023ff:	8d 51 01             	lea    edx,[rcx+0x1]
 }
-  4023f2:	5b                   	pop    rbx
+  402402:	5b                   	pop    rbx
   out_rev_(output, buf, len, width, flags);
-  4023f3:	48 89 ee             	mov    rsi,rbp
-  4023f6:	44 89 c9             	mov    ecx,r9d
+  402403:	48 89 ee             	mov    rsi,rbp
+  402406:	44 89 c9             	mov    ecx,r9d
 }
-  4023f9:	5d                   	pop    rbp
+  402409:	5d                   	pop    rbp
   out_rev_(output, buf, len, width, flags);
-  4023fa:	4c 89 d7             	mov    rdi,r10
+  40240a:	4c 89 d7             	mov    rdi,r10
 }
-  4023fd:	41 5c                	pop    r12
-  4023ff:	41 5d                	pop    r13
-  402401:	41 5e                	pop    r14
+  40240d:	41 5c                	pop    r12
+  40240f:	41 5d                	pop    r13
+  402411:	41 5e                	pop    r14
   out_rev_(output, buf, len, width, flags);
-  402403:	e9 68 f7 ff ff       	jmp    401b70 <out_rev_>
-  402408:	0f 1f 84 00 00 00 00 	nop    DWORD PTR [rax+rax*1+0x0]
-  40240f:	00 
+  402413:	e9 68 f7 ff ff       	jmp    401b80 <out_rev_>
+  402418:	0f 1f 84 00 00 00 00 	nop    DWORD PTR [rax+rax*1+0x0]
+  40241f:	00 
     if ((flags & FLAGS_HASH) && (len < PRINTF_DECIMAL_BUFFER_SIZE)) {
-  402410:	83 f9 20             	cmp    ecx,0x20
-  402413:	0f 84 43 ff ff ff    	je     40235c <print_broken_up_decimal.isra.0+0x9c>
+  402420:	83 f9 20             	cmp    ecx,0x20
+  402423:	0f 84 43 ff ff ff    	je     40236c <print_broken_up_decimal.isra.0+0x9c>
       buf[len++] = '.';
-  402419:	89 c8                	mov    eax,ecx
-  40241b:	83 c1 01             	add    ecx,0x1
-  40241e:	c6 44 05 00 2e       	mov    BYTE PTR [rbp+rax*1+0x0],0x2e
-  402423:	e9 5a ff ff ff       	jmp    402382 <print_broken_up_decimal.isra.0+0xc2>
-  402428:	0f 1f 84 00 00 00 00 	nop    DWORD PTR [rax+rax*1+0x0]
-  40242f:	00 
+  402429:	89 c8                	mov    eax,ecx
+  40242b:	83 c1 01             	add    ecx,0x1
+  40242e:	c6 44 05 00 2e       	mov    BYTE PTR [rbp+rax*1+0x0],0x2e
+  402433:	e9 5a ff ff ff       	jmp    402392 <print_broken_up_decimal.isra.0+0xc2>
+  402438:	0f 1f 84 00 00 00 00 	nop    DWORD PTR [rax+rax*1+0x0]
+  40243f:	00 
     else if (flags & FLAGS_PLUS) {
-  402430:	41 f6 c0 04          	test   r8b,0x4
-  402434:	0f 85 3e 01 00 00    	jne    402578 <print_broken_up_decimal.isra.0+0x2b8>
+  402440:	41 f6 c0 04          	test   r8b,0x4
+  402444:	0f 85 3e 01 00 00    	jne    402588 <print_broken_up_decimal.isra.0+0x2b8>
     else if (flags & FLAGS_SPACE) {
-  40243a:	89 ca                	mov    edx,ecx
-  40243c:	41 f6 c0 08          	test   r8b,0x8
-  402440:	74 b0                	je     4023f2 <print_broken_up_decimal.isra.0+0x132>
+  40244a:	89 ca                	mov    edx,ecx
+  40244c:	41 f6 c0 08          	test   r8b,0x8
+  402450:	74 b0                	je     402402 <print_broken_up_decimal.isra.0+0x132>
       buf[len++] = ' ';
-  402442:	c6 44 0d 00 20       	mov    BYTE PTR [rbp+rcx*1+0x0],0x20
-  402447:	83 c2 01             	add    edx,0x1
-  40244a:	eb a6                	jmp    4023f2 <print_broken_up_decimal.isra.0+0x132>
-  40244c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+  402452:	c6 44 0d 00 20       	mov    BYTE PTR [rbp+rcx*1+0x0],0x20
+  402457:	83 c2 01             	add    edx,0x1
+  40245a:	eb a6                	jmp    402402 <print_broken_up_decimal.isra.0+0x132>
+  40245c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
       while ((len < PRINTF_DECIMAL_BUFFER_SIZE) && (count > 0U)) {
-  402450:	83 fb 1f             	cmp    ebx,0x1f
-  402453:	77 13                	ja     402468 <print_broken_up_decimal.isra.0+0x1a8>
-  402455:	45 85 f6             	test   r14d,r14d
-  402458:	89 d8                	mov    eax,ebx
-  40245a:	0f 95 c2             	setne  dl
-  40245d:	48 01 e8             	add    rax,rbp
-  402460:	84 d2                	test   dl,dl
-  402462:	75 20                	jne    402484 <print_broken_up_decimal.isra.0+0x1c4>
-  402464:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+  402460:	83 fb 1f             	cmp    ebx,0x1f
+  402463:	77 13                	ja     402478 <print_broken_up_decimal.isra.0+0x1a8>
+  402465:	45 85 f6             	test   r14d,r14d
+  402468:	89 d8                	mov    eax,ebx
+  40246a:	0f 95 c2             	setne  dl
+  40246d:	48 01 e8             	add    rax,rbp
+  402470:	84 d2                	test   dl,dl
+  402472:	75 20                	jne    402494 <print_broken_up_decimal.isra.0+0x1c4>
+  402474:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
       if (len < PRINTF_DECIMAL_BUFFER_SIZE) {
-  402468:	83 fb 20             	cmp    ebx,0x20
-  40246b:	0f 84 eb fe ff ff    	je     40235c <print_broken_up_decimal.isra.0+0x9c>
+  402478:	83 fb 20             	cmp    ebx,0x20
+  40247b:	0f 84 eb fe ff ff    	je     40236c <print_broken_up_decimal.isra.0+0x9c>
         buf[len++] = '.';
-  402471:	c6 44 1d 00 2e       	mov    BYTE PTR [rbp+rbx*1+0x0],0x2e
-  402476:	8d 4b 01             	lea    ecx,[rbx+0x1]
-  402479:	e9 04 ff ff ff       	jmp    402382 <print_broken_up_decimal.isra.0+0xc2>
-  40247e:	66 90                	xchg   ax,ax
+  402481:	c6 44 1d 00 2e       	mov    BYTE PTR [rbp+rbx*1+0x0],0x2e
+  402486:	8d 4b 01             	lea    ecx,[rbx+0x1]
+  402489:	e9 04 ff ff ff       	jmp    402392 <print_broken_up_decimal.isra.0+0xc2>
+  40248e:	66 90                	xchg   ax,ax
       while ((len < PRINTF_DECIMAL_BUFFER_SIZE) && (count > 0U)) {
-  402480:	39 ca                	cmp    edx,ecx
-  402482:	74 e4                	je     402468 <print_broken_up_decimal.isra.0+0x1a8>
+  402490:	39 ca                	cmp    edx,ecx
+  402492:	74 e4                	je     402478 <print_broken_up_decimal.isra.0+0x1a8>
         buf[len++] = '0';
-  402484:	89 da                	mov    edx,ebx
-  402486:	83 c3 01             	add    ebx,0x1
-  402489:	c6 00 30             	mov    BYTE PTR [rax],0x30
+  402494:	89 da                	mov    edx,ebx
+  402496:	83 c3 01             	add    ebx,0x1
+  402499:	c6 00 30             	mov    BYTE PTR [rax],0x30
       while ((len < PRINTF_DECIMAL_BUFFER_SIZE) && (count > 0U)) {
-  40248c:	48 83 c0 01          	add    rax,0x1
-  402490:	83 fb 1f             	cmp    ebx,0x1f
-  402493:	76 eb                	jbe    402480 <print_broken_up_decimal.isra.0+0x1c0>
-  402495:	eb d1                	jmp    402468 <print_broken_up_decimal.isra.0+0x1a8>
-  402497:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
-  40249e:	00 00 
+  40249c:	48 83 c0 01          	add    rax,0x1
+  4024a0:	83 fb 1f             	cmp    ebx,0x1f
+  4024a3:	76 eb                	jbe    402490 <print_broken_up_decimal.isra.0+0x1c0>
+  4024a5:	eb d1                	jmp    402478 <print_broken_up_decimal.isra.0+0x1a8>
+  4024a7:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+  4024ae:	00 00 
     if (width && (number_.is_negative || (flags & (FLAGS_PLUS | FLAGS_SPACE)))) {
-  4024a0:	45 85 c9             	test   r9d,r9d
-  4024a3:	0f 84 c2 fe ff ff    	je     40236b <print_broken_up_decimal.isra.0+0xab>
-  4024a9:	31 d2                	xor    edx,edx
-  4024ab:	b9 20 00 00 00       	mov    ecx,0x20
-  4024b0:	45 84 db             	test   r11b,r11b
-  4024b3:	0f 85 cf 00 00 00    	jne    402588 <print_broken_up_decimal.isra.0+0x2c8>
-  4024b9:	41 f6 c0 0c          	test   r8b,0xc
-  4024bd:	0f 85 c5 00 00 00    	jne    402588 <print_broken_up_decimal.isra.0+0x2c8>
+  4024b0:	45 85 c9             	test   r9d,r9d
+  4024b3:	0f 84 c2 fe ff ff    	je     40237b <print_broken_up_decimal.isra.0+0xab>
+  4024b9:	31 d2                	xor    edx,edx
+  4024bb:	b9 20 00 00 00       	mov    ecx,0x20
+  4024c0:	45 84 db             	test   r11b,r11b
+  4024c3:	0f 85 cf 00 00 00    	jne    402598 <print_broken_up_decimal.isra.0+0x2c8>
+  4024c9:	41 f6 c0 0c          	test   r8b,0xc
+  4024cd:	0f 85 c5 00 00 00    	jne    402598 <print_broken_up_decimal.isra.0+0x2c8>
     while ((len < width) && (len < PRINTF_DECIMAL_BUFFER_SIZE)) {
-  4024c3:	44 39 c9             	cmp    ecx,r9d
-  4024c6:	0f 83 14 ff ff ff    	jae    4023e0 <print_broken_up_decimal.isra.0+0x120>
-  4024cc:	89 c8                	mov    eax,ecx
-  4024ce:	48 01 e8             	add    rax,rbp
-  4024d1:	84 d2                	test   dl,dl
-  4024d3:	0f 84 07 ff ff ff    	je     4023e0 <print_broken_up_decimal.isra.0+0x120>
-  4024d9:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  4024d3:	44 39 c9             	cmp    ecx,r9d
+  4024d6:	0f 83 14 ff ff ff    	jae    4023f0 <print_broken_up_decimal.isra.0+0x120>
+  4024dc:	89 c8                	mov    eax,ecx
+  4024de:	48 01 e8             	add    rax,rbp
+  4024e1:	84 d2                	test   dl,dl
+  4024e3:	0f 84 07 ff ff ff    	je     4023f0 <print_broken_up_decimal.isra.0+0x120>
+  4024e9:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
       buf[len++] = '0';
-  4024e0:	83 c1 01             	add    ecx,0x1
-  4024e3:	c6 00 30             	mov    BYTE PTR [rax],0x30
+  4024f0:	83 c1 01             	add    ecx,0x1
+  4024f3:	c6 00 30             	mov    BYTE PTR [rax],0x30
     while ((len < width) && (len < PRINTF_DECIMAL_BUFFER_SIZE)) {
-  4024e6:	48 83 c0 01          	add    rax,0x1
-  4024ea:	44 39 c9             	cmp    ecx,r9d
-  4024ed:	0f 83 ed fe ff ff    	jae    4023e0 <print_broken_up_decimal.isra.0+0x120>
-  4024f3:	83 f9 1f             	cmp    ecx,0x1f
-  4024f6:	76 e8                	jbe    4024e0 <print_broken_up_decimal.isra.0+0x220>
-  4024f8:	e9 e3 fe ff ff       	jmp    4023e0 <print_broken_up_decimal.isra.0+0x120>
-  4024fd:	0f 1f 00             	nop    DWORD PTR [rax]
+  4024f6:	48 83 c0 01          	add    rax,0x1
+  4024fa:	44 39 c9             	cmp    ecx,r9d
+  4024fd:	0f 83 ed fe ff ff    	jae    4023f0 <print_broken_up_decimal.isra.0+0x120>
+  402503:	83 f9 1f             	cmp    ecx,0x1f
+  402506:	76 e8                	jbe    4024f0 <print_broken_up_decimal.isra.0+0x220>
+  402508:	e9 e3 fe ff ff       	jmp    4023f0 <print_broken_up_decimal.isra.0+0x120>
+  40250d:	0f 1f 00             	nop    DWORD PTR [rax]
     if ((flags & FLAGS_ADAPT_EXP) && !(flags & FLAGS_HASH) && (number_.fractional > 0)) {
-  402500:	48 85 f6             	test   rsi,rsi
-  402503:	0f 8e 79 fe ff ff    	jle    402382 <print_broken_up_decimal.isra.0+0xc2>
+  402510:	48 85 f6             	test   rsi,rsi
+  402513:	0f 8e 79 fe ff ff    	jle    402392 <print_broken_up_decimal.isra.0+0xc2>
         if (digit != 0) {
-  402509:	48 bb cd cc cc cc cc 	movabs rbx,0xcccccccccccccccd
-  402510:	cc cc cc 
-  402513:	48 89 f0             	mov    rax,rsi
-  402516:	48 ba 98 99 99 99 99 	movabs rdx,0x1999999999999998
-  40251d:	99 99 19 
-  402520:	48 0f af c3          	imul   rax,rbx
-  402524:	48 01 d0             	add    rax,rdx
-  402527:	48 d1 c8             	ror    rax,1
-  40252a:	48 39 d0             	cmp    rax,rdx
-  40252d:	0f 87 c8 fd ff ff    	ja     4022fb <print_broken_up_decimal.isra.0+0x3b>
-  402533:	49 be 99 99 99 99 99 	movabs r14,0x1999999999999999
-  40253a:	99 99 19 
-  40253d:	0f 1f 00             	nop    DWORD PTR [rax]
+  402519:	48 bb cd cc cc cc cc 	movabs rbx,0xcccccccccccccccd
+  402520:	cc cc cc 
+  402523:	48 89 f0             	mov    rax,rsi
+  402526:	48 ba 98 99 99 99 99 	movabs rdx,0x1999999999999998
+  40252d:	99 99 19 
+  402530:	48 0f af c3          	imul   rax,rbx
+  402534:	48 01 d0             	add    rax,rdx
+  402537:	48 d1 c8             	ror    rax,1
+  40253a:	48 39 d0             	cmp    rax,rdx
+  40253d:	0f 87 c8 fd ff ff    	ja     40230b <print_broken_up_decimal.isra.0+0x3b>
+  402543:	49 be 99 99 99 99 99 	movabs r14,0x1999999999999999
+  40254a:	99 99 19 
+  40254d:	0f 1f 00             	nop    DWORD PTR [rax]
         number_.fractional /= 10U;
-  402540:	48 89 f0             	mov    rax,rsi
-  402543:	49 89 f4             	mov    r12,rsi
+  402550:	48 89 f0             	mov    rax,rsi
+  402553:	49 89 f4             	mov    r12,rsi
         --count;
-  402546:	41 83 ed 01          	sub    r13d,0x1
+  402556:	41 83 ed 01          	sub    r13d,0x1
         number_.fractional /= 10U;
-  40254a:	48 f7 e3             	mul    rbx
-  40254d:	48 89 d6             	mov    rsi,rdx
-  402550:	48 c1 ee 03          	shr    rsi,0x3
-  402554:	48 89 f0             	mov    rax,rsi
-  402557:	48 0f af c3          	imul   rax,rbx
-  40255b:	48 d1 c8             	ror    rax,1
+  40255a:	48 f7 e3             	mul    rbx
+  40255d:	48 89 d6             	mov    rsi,rdx
+  402560:	48 c1 ee 03          	shr    rsi,0x3
+  402564:	48 89 f0             	mov    rax,rsi
+  402567:	48 0f af c3          	imul   rax,rbx
+  40256b:	48 d1 c8             	ror    rax,1
         if (digit != 0) {
-  40255e:	4c 39 f0             	cmp    rax,r14
-  402561:	76 dd                	jbe    402540 <print_broken_up_decimal.isra.0+0x280>
+  40256e:	4c 39 f0             	cmp    rax,r14
+  402571:	76 dd                	jbe    402550 <print_broken_up_decimal.isra.0+0x280>
     if (number_.fractional > 0 || !(flags & FLAGS_ADAPT_EXP) || (flags & FLAGS_HASH) ) {
-  402563:	49 83 fc 09          	cmp    r12,0x9
-  402567:	0f 8f 8e fd ff ff    	jg     4022fb <print_broken_up_decimal.isra.0+0x3b>
-  40256d:	e9 10 fe ff ff       	jmp    402382 <print_broken_up_decimal.isra.0+0xc2>
-  402572:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
+  402573:	49 83 fc 09          	cmp    r12,0x9
+  402577:	0f 8f 8e fd ff ff    	jg     40230b <print_broken_up_decimal.isra.0+0x3b>
+  40257d:	e9 10 fe ff ff       	jmp    402392 <print_broken_up_decimal.isra.0+0xc2>
+  402582:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
       buf[len++] = '+';  // ignore the space if the '+' exists
-  402578:	c6 44 0d 00 2b       	mov    BYTE PTR [rbp+rcx*1+0x0],0x2b
-  40257d:	8d 51 01             	lea    edx,[rcx+0x1]
-  402580:	e9 6d fe ff ff       	jmp    4023f2 <print_broken_up_decimal.isra.0+0x132>
-  402585:	0f 1f 00             	nop    DWORD PTR [rax]
+  402588:	c6 44 0d 00 2b       	mov    BYTE PTR [rbp+rcx*1+0x0],0x2b
+  40258d:	8d 51 01             	lea    edx,[rcx+0x1]
+  402590:	e9 6d fe ff ff       	jmp    402402 <print_broken_up_decimal.isra.0+0x132>
+  402595:	0f 1f 00             	nop    DWORD PTR [rax]
       width--;
-  402588:	41 83 e9 01          	sub    r9d,0x1
-  40258c:	e9 32 ff ff ff       	jmp    4024c3 <print_broken_up_decimal.isra.0+0x203>
-  402591:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  402598:	41 83 e9 01          	sub    r9d,0x1
+  40259c:	e9 32 ff ff ff       	jmp    4024d3 <print_broken_up_decimal.isra.0+0x203>
+  4025a1:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
     if (width && (number_.is_negative || (flags & (FLAGS_PLUS | FLAGS_SPACE)))) {
-  402598:	45 85 c9             	test   r9d,r9d
-  40259b:	0f 84 3f fe ff ff    	je     4023e0 <print_broken_up_decimal.isra.0+0x120>
+  4025a8:	45 85 c9             	test   r9d,r9d
+  4025ab:	0f 84 3f fe ff ff    	je     4023f0 <print_broken_up_decimal.isra.0+0x120>
     while ((len < width) && (len < PRINTF_DECIMAL_BUFFER_SIZE)) {
-  4025a1:	83 f9 1f             	cmp    ecx,0x1f
-  4025a4:	0f 96 c2             	setbe  dl
-  4025a7:	e9 04 ff ff ff       	jmp    4024b0 <print_broken_up_decimal.isra.0+0x1f0>
+  4025b1:	83 f9 1f             	cmp    ecx,0x1f
+  4025b4:	0f 96 c2             	setbe  dl
+  4025b7:	e9 04 ff ff ff       	jmp    4024c0 <print_broken_up_decimal.isra.0+0x1f0>
 
 Disassembly of section .text.print_decimal_number:
 
-00000000004025b0 <print_decimal_number>:
+00000000004025c0 <print_decimal_number>:
 {
-  4025b0:	41 54                	push   r12
-  4025b2:	49 89 fb             	mov    r11,rdi
-  4025b5:	41 89 f2             	mov    r10d,esi
-  4025b8:	4d 89 c4             	mov    r12,r8
-  4025bb:	55                   	push   rbp
-  4025bc:	89 cd                	mov    ebp,ecx
-  4025be:	53                   	push   rbx
-  4025bf:	89 d3                	mov    ebx,edx
-  4025c1:	48 83 ec 20          	sub    rsp,0x20
+  4025c0:	41 54                	push   r12
+  4025c2:	49 89 fb             	mov    r11,rdi
+  4025c5:	41 89 f2             	mov    r10d,esi
+  4025c8:	4d 89 c4             	mov    r12,r8
+  4025cb:	55                   	push   rbp
+  4025cc:	89 cd                	mov    ebp,ecx
+  4025ce:	53                   	push   rbx
+  4025cf:	89 d3                	mov    ebx,edx
+  4025d1:	48 83 ec 20          	sub    rsp,0x20
   struct double_components value_ = get_components(number, precision);
-  4025c5:	48 89 e7             	mov    rdi,rsp
-  4025c8:	e8 e3 f9 ff ff       	call   401fb0 <get_components>
+  4025d5:	48 89 e7             	mov    rdi,rsp
+  4025d8:	e8 e3 f9 ff ff       	call   401fc0 <get_components>
   print_broken_up_decimal(value_, output, precision, width, flags, buf, len);
-  4025cd:	48 83 ec 08          	sub    rsp,0x8
-  4025d1:	45 89 d0             	mov    r8d,r10d
-  4025d4:	4c 89 d9             	mov    rcx,r11
-  4025d7:	41 51                	push   r9
-  4025d9:	41 89 d9             	mov    r9d,ebx
-  4025dc:	41 54                	push   r12
-  4025de:	55                   	push   rbp
-  4025df:	0f b6 54 24 30       	movzx  edx,BYTE PTR [rsp+0x30]
-  4025e4:	48 8b 74 24 28       	mov    rsi,QWORD PTR [rsp+0x28]
-  4025e9:	48 8b 7c 24 20       	mov    rdi,QWORD PTR [rsp+0x20]
-  4025ee:	e8 cd fc ff ff       	call   4022c0 <print_broken_up_decimal.isra.0>
+  4025dd:	48 83 ec 08          	sub    rsp,0x8
+  4025e1:	45 89 d0             	mov    r8d,r10d
+  4025e4:	4c 89 d9             	mov    rcx,r11
+  4025e7:	41 51                	push   r9
+  4025e9:	41 89 d9             	mov    r9d,ebx
+  4025ec:	41 54                	push   r12
+  4025ee:	55                   	push   rbp
+  4025ef:	0f b6 54 24 30       	movzx  edx,BYTE PTR [rsp+0x30]
+  4025f4:	48 8b 74 24 28       	mov    rsi,QWORD PTR [rsp+0x28]
+  4025f9:	48 8b 7c 24 20       	mov    rdi,QWORD PTR [rsp+0x20]
+  4025fe:	e8 cd fc ff ff       	call   4022d0 <print_broken_up_decimal.isra.0>
 }
-  4025f3:	48 83 c4 40          	add    rsp,0x40
-  4025f7:	5b                   	pop    rbx
-  4025f8:	5d                   	pop    rbp
-  4025f9:	41 5c                	pop    r12
-  4025fb:	c3                   	ret    
+  402603:	48 83 c4 40          	add    rsp,0x40
+  402607:	5b                   	pop    rbx
+  402608:	5d                   	pop    rbp
+  402609:	41 5c                	pop    r12
+  40260b:	c3                   	ret    
 
 Disassembly of section .text.update_normalization.isra.0:
 
-0000000000402600 <update_normalization.isra.0>:
+0000000000402610 <update_normalization.isra.0>:
 static struct scaling_factor update_normalization(struct scaling_factor sf, double extra_multiplicative_factor)
-  402600:	66 0f 28 d0          	movapd xmm2,xmm0
+  402610:	66 0f 28 d0          	movapd xmm2,xmm0
   if (sf.multiply) {
-  402604:	40 84 ff             	test   dil,dil
-  402607:	74 17                	je     402620 <update_normalization.isra.0+0x20>
+  402614:	40 84 ff             	test   dil,dil
+  402617:	74 17                	je     402630 <update_normalization.isra.0+0x20>
     result.raw_factor = sf.raw_factor * extra_multiplicative_factor;
-  402609:	f2 0f 59 c8          	mulsd  xmm1,xmm0
+  402619:	f2 0f 59 c8          	mulsd  xmm1,xmm0
     result.multiply = true;
-  40260d:	ba 01 00 00 00       	mov    edx,0x1
+  40261d:	ba 01 00 00 00       	mov    edx,0x1
   return result;
-  402612:	31 c0                	xor    eax,eax
-  402614:	88 d0                	mov    al,dl
+  402622:	31 c0                	xor    eax,eax
+  402624:	88 d0                	mov    al,dl
     result.raw_factor = sf.raw_factor * extra_multiplicative_factor;
-  402616:	66 0f 28 c1          	movapd xmm0,xmm1
+  402626:	66 0f 28 c1          	movapd xmm0,xmm1
 }
-  40261a:	c3                   	ret    
-  40261b:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
+  40262a:	c3                   	ret    
+  40262b:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
 static struct scaling_factor update_normalization(struct scaling_factor sf, double extra_multiplicative_factor)
-  402620:	48 83 ec 08          	sub    rsp,0x8
+  402630:	48 83 ec 08          	sub    rsp,0x8
     int factor_exp2 = get_exp2(get_bit_access(sf.raw_factor));
-  402624:	e8 07 f3 ff ff       	call   401930 <get_bit_access>
+  402634:	e8 07 f3 ff ff       	call   401940 <get_bit_access>
     int extra_factor_exp2 = get_exp2(get_bit_access(extra_multiplicative_factor));
-  402629:	66 0f 28 c1          	movapd xmm0,xmm1
+  402639:	66 0f 28 c1          	movapd xmm0,xmm1
     int factor_exp2 = get_exp2(get_bit_access(sf.raw_factor));
-  40262d:	48 89 c7             	mov    rdi,rax
-  402630:	e8 1b f3 ff ff       	call   401950 <get_exp2>
-  402635:	89 c2                	mov    edx,eax
+  40263d:	48 89 c7             	mov    rdi,rax
+  402640:	e8 1b f3 ff ff       	call   401960 <get_exp2>
+  402645:	89 c2                	mov    edx,eax
     int extra_factor_exp2 = get_exp2(get_bit_access(extra_multiplicative_factor));
-  402637:	e8 f4 f2 ff ff       	call   401930 <get_bit_access>
-  40263c:	48 89 c7             	mov    rdi,rax
-  40263f:	e8 0c f3 ff ff       	call   401950 <get_exp2>
-  402644:	41 89 c0             	mov    r8d,eax
+  402647:	e8 f4 f2 ff ff       	call   401940 <get_bit_access>
+  40264c:	48 89 c7             	mov    rdi,rax
+  40264f:	e8 0c f3 ff ff       	call   401960 <get_exp2>
+  402654:	41 89 c0             	mov    r8d,eax
     if (PRINTF_ABS(factor_exp2) > PRINTF_ABS(extra_factor_exp2)) {
-  402647:	89 d0                	mov    eax,edx
-  402649:	f7 d8                	neg    eax
-  40264b:	0f 49 d0             	cmovns edx,eax
-  40264e:	44 89 c0             	mov    eax,r8d
-  402651:	f7 d8                	neg    eax
-  402653:	41 0f 48 c0          	cmovs  eax,r8d
-  402657:	39 c2                	cmp    edx,eax
-  402659:	7f 1d                	jg     402678 <update_normalization.isra.0+0x78>
+  402657:	89 d0                	mov    eax,edx
+  402659:	f7 d8                	neg    eax
+  40265b:	0f 49 d0             	cmovns edx,eax
+  40265e:	44 89 c0             	mov    eax,r8d
+  402661:	f7 d8                	neg    eax
+  402663:	41 0f 48 c0          	cmovs  eax,r8d
+  402667:	39 c2                	cmp    edx,eax
+  402669:	7f 1d                	jg     402688 <update_normalization.isra.0+0x78>
       result.raw_factor = extra_multiplicative_factor / sf.raw_factor;
-  40265b:	f2 0f 5e ca          	divsd  xmm1,xmm2
+  40266b:	f2 0f 5e ca          	divsd  xmm1,xmm2
       result.multiply = true;
-  40265f:	ba 01 00 00 00       	mov    edx,0x1
+  40266f:	ba 01 00 00 00       	mov    edx,0x1
   return result;
-  402664:	31 c0                	xor    eax,eax
+  402674:	31 c0                	xor    eax,eax
 }
-  402666:	48 83 c4 08          	add    rsp,0x8
+  402676:	48 83 c4 08          	add    rsp,0x8
   return result;
-  40266a:	88 d0                	mov    al,dl
+  40267a:	88 d0                	mov    al,dl
       result.raw_factor = extra_multiplicative_factor / sf.raw_factor;
-  40266c:	66 0f 28 c1          	movapd xmm0,xmm1
+  40267c:	66 0f 28 c1          	movapd xmm0,xmm1
 }
-  402670:	c3                   	ret    
-  402671:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  402680:	c3                   	ret    
+  402681:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
       result.raw_factor = sf.raw_factor / extra_multiplicative_factor;
-  402678:	f2 0f 5e d1          	divsd  xmm2,xmm1
+  402688:	f2 0f 5e d1          	divsd  xmm2,xmm1
       result.multiply = false;
-  40267c:	31 d2                	xor    edx,edx
+  40268c:	31 d2                	xor    edx,edx
   return result;
-  40267e:	31 c0                	xor    eax,eax
+  40268e:	31 c0                	xor    eax,eax
 }
-  402680:	48 83 c4 08          	add    rsp,0x8
+  402690:	48 83 c4 08          	add    rsp,0x8
   return result;
-  402684:	88 d0                	mov    al,dl
+  402694:	88 d0                	mov    al,dl
       result.raw_factor = sf.raw_factor / extra_multiplicative_factor;
-  402686:	66 0f 28 c2          	movapd xmm0,xmm2
+  402696:	66 0f 28 c2          	movapd xmm0,xmm2
 }
-  40268a:	c3                   	ret    
+  40269a:	c3                   	ret    
 
 Disassembly of section .text.unapply_scaling.isra.0:
 
-0000000000402690 <unapply_scaling.isra.0>:
+00000000004026a0 <unapply_scaling.isra.0>:
   return normalization.multiply ? normalized / normalization.raw_factor : normalized * normalization.raw_factor;
-  402690:	40 84 ff             	test   dil,dil
-  402693:	74 0b                	je     4026a0 <unapply_scaling.isra.0+0x10>
-  402695:	f2 0f 5e c1          	divsd  xmm0,xmm1
-  402699:	c3                   	ret    
-  40269a:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
-  4026a0:	f2 0f 59 c1          	mulsd  xmm0,xmm1
+  4026a0:	40 84 ff             	test   dil,dil
+  4026a3:	74 0b                	je     4026b0 <unapply_scaling.isra.0+0x10>
+  4026a5:	f2 0f 5e c1          	divsd  xmm0,xmm1
+  4026a9:	c3                   	ret    
+  4026aa:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
+  4026b0:	f2 0f 59 c1          	mulsd  xmm0,xmm1
 }
-  4026a4:	c3                   	ret    
+  4026b4:	c3                   	ret    
 
 Disassembly of section .text.apply_scaling.isra.0:
 
-00000000004026b0 <apply_scaling.isra.0>:
+00000000004026c0 <apply_scaling.isra.0>:
   return normalization.multiply ? num * normalization.raw_factor : num / normalization.raw_factor;
-  4026b0:	40 84 ff             	test   dil,dil
-  4026b3:	74 0b                	je     4026c0 <apply_scaling.isra.0+0x10>
-  4026b5:	f2 0f 59 c1          	mulsd  xmm0,xmm1
-  4026b9:	c3                   	ret    
-  4026ba:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
-  4026c0:	f2 0f 5e c1          	divsd  xmm0,xmm1
+  4026c0:	40 84 ff             	test   dil,dil
+  4026c3:	74 0b                	je     4026d0 <apply_scaling.isra.0+0x10>
+  4026c5:	f2 0f 59 c1          	mulsd  xmm0,xmm1
+  4026c9:	c3                   	ret    
+  4026ca:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
+  4026d0:	f2 0f 5e c1          	divsd  xmm0,xmm1
 }
-  4026c4:	c3                   	ret    
+  4026d4:	c3                   	ret    
 
 Disassembly of section .text.get_normalized_components.isra.0:
 
-00000000004026d0 <get_normalized_components.isra.0>:
+00000000004026e0 <get_normalized_components.isra.0>:
   bool close_to_representation_extremum = ( (-floored_exp10 + (int) precision) >= DBL_MAX_10_EXP - 1 );
-  4026d0:	89 d0                	mov    eax,edx
+  4026e0:	89 d0                	mov    eax,edx
 static struct double_components get_normalized_components(bool negative, printf_size_t precision, double non_normalized, struct scaling_factor normalization, int floored_exp10)
-  4026d2:	48 83 ec 08          	sub    rsp,0x8
-  4026d6:	49 89 f9             	mov    r9,rdi
-  4026d9:	89 cf                	mov    edi,ecx
+  4026e2:	48 83 ec 08          	sub    rsp,0x8
+  4026e6:	49 89 f9             	mov    r9,rdi
+  4026e9:	89 cf                	mov    edi,ecx
   bool close_to_representation_extremum = ( (-floored_exp10 + (int) precision) >= DBL_MAX_10_EXP - 1 );
-  4026db:	44 29 c0             	sub    eax,r8d
+  4026eb:	44 29 c0             	sub    eax,r8d
 static struct double_components get_normalized_components(bool negative, printf_size_t precision, double non_normalized, struct scaling_factor normalization, int floored_exp10)
-  4026de:	66 0f 28 d0          	movapd xmm2,xmm0
-  4026e2:	41 89 f2             	mov    r10d,esi
+  4026ee:	66 0f 28 d0          	movapd xmm2,xmm0
+  4026f2:	41 89 f2             	mov    r10d,esi
   double scaled = apply_scaling(non_normalized, normalization);
-  4026e5:	e8 c6 ff ff ff       	call   4026b0 <apply_scaling.isra.0>
+  4026f5:	e8 c6 ff ff ff       	call   4026c0 <apply_scaling.isra.0>
   if (close_to_representation_extremum) {
-  4026ea:	3d 32 01 00 00       	cmp    eax,0x132
-  4026ef:	0f 8f ab 00 00 00    	jg     4027a0 <get_normalized_components.isra.0+0xd0>
+  4026fa:	3d 32 01 00 00       	cmp    eax,0x132
+  4026ff:	0f 8f ab 00 00 00    	jg     4027b0 <get_normalized_components.isra.0+0xd0>
   components.integral = (int_fast64_t) scaled;
-  4026f5:	f2 48 0f 2c c8       	cvttsd2si rcx,xmm0
+  402705:	f2 48 0f 2c c8       	cvttsd2si rcx,xmm0
   double remainder = non_normalized - unapply_scaling((double) components.integral, normalization);
-  4026fa:	66 0f ef c0          	pxor   xmm0,xmm0
-  4026fe:	66 0f 28 ea          	movapd xmm5,xmm2
+  40270a:	66 0f ef c0          	pxor   xmm0,xmm0
+  40270e:	66 0f 28 ea          	movapd xmm5,xmm2
   double prec_power_of_10 = powers_of_10[precision];
-  402702:	89 d6                	mov    esi,edx
-  402704:	48 8d 05 15 2d 00 00 	lea    rax,[rip+0x2d15]        # 405420 <powers_of_10>
-  40270b:	66 0f 28 d9          	movapd xmm3,xmm1
+  402712:	89 d6                	mov    esi,edx
+  402714:	48 8d 05 05 2d 00 00 	lea    rax,[rip+0x2d05]        # 405420 <powers_of_10>
+  40271b:	66 0f 28 d9          	movapd xmm3,xmm1
   double remainder = non_normalized - unapply_scaling((double) components.integral, normalization);
-  40270f:	f2 48 0f 2a c1       	cvtsi2sd xmm0,rcx
-  402714:	e8 77 ff ff ff       	call   402690 <unapply_scaling.isra.0>
+  40271f:	f2 48 0f 2a c1       	cvtsi2sd xmm0,rcx
+  402724:	e8 77 ff ff ff       	call   4026a0 <unapply_scaling.isra.0>
   double prec_power_of_10 = powers_of_10[precision];
-  402719:	f2 0f 10 24 f0       	movsd  xmm4,QWORD PTR [rax+rsi*8]
+  402729:	f2 0f 10 24 f0       	movsd  xmm4,QWORD PTR [rax+rsi*8]
   double remainder = non_normalized - unapply_scaling((double) components.integral, normalization);
-  40271e:	f2 0f 5c e8          	subsd  xmm5,xmm0
+  40272e:	f2 0f 5c e8          	subsd  xmm5,xmm0
   struct scaling_factor account_for_precision = update_normalization(normalization, prec_power_of_10);
-  402722:	66 0f 28 c3          	movapd xmm0,xmm3
-  402726:	66 0f 28 cc          	movapd xmm1,xmm4
-  40272a:	e8 d1 fe ff ff       	call   402600 <update_normalization.isra.0>
-  40272f:	66 0f 28 c8          	movapd xmm1,xmm0
+  402732:	66 0f 28 c3          	movapd xmm0,xmm3
+  402736:	66 0f 28 cc          	movapd xmm1,xmm4
+  40273a:	e8 d1 fe ff ff       	call   402610 <update_normalization.isra.0>
+  40273f:	66 0f 28 c8          	movapd xmm1,xmm0
   double scaled_remainder = apply_scaling(remainder, account_for_precision);
-  402733:	89 c7                	mov    edi,eax
-  402735:	66 0f 28 c5          	movapd xmm0,xmm5
+  402743:	89 c7                	mov    edi,eax
+  402745:	66 0f 28 c5          	movapd xmm0,xmm5
   components.fractional += (scaled_remainder >= rounding_threshold);
-  402739:	31 c0                	xor    eax,eax
+  402749:	31 c0                	xor    eax,eax
   double scaled_remainder = apply_scaling(remainder, account_for_precision);
-  40273b:	e8 70 ff ff ff       	call   4026b0 <apply_scaling.isra.0>
+  40274b:	e8 70 ff ff ff       	call   4026c0 <apply_scaling.isra.0>
   scaled_remainder -= (double) components.fractional; //when precision == 0, this will not change scaled_remainder
-  402740:	66 0f ef c9          	pxor   xmm1,xmm1
+  402750:	66 0f ef c9          	pxor   xmm1,xmm1
   components.fractional = (int_fast64_t) scaled_remainder; // when precision == 0, the assigned value should be 0
-  402744:	f2 48 0f 2c d0       	cvttsd2si rdx,xmm0
+  402754:	f2 48 0f 2c d0       	cvttsd2si rdx,xmm0
   scaled_remainder -= (double) components.fractional; //when precision == 0, this will not change scaled_remainder
-  402749:	f2 48 0f 2a ca       	cvtsi2sd xmm1,rdx
-  40274e:	f2 0f 5c c1          	subsd  xmm0,xmm1
+  402759:	f2 48 0f 2a ca       	cvtsi2sd xmm1,rdx
+  40275e:	f2 0f 5c c1          	subsd  xmm0,xmm1
   components.fractional += (scaled_remainder >= rounding_threshold);
-  402752:	66 0f 2f 05 66 2d 00 	comisd xmm0,QWORD PTR [rip+0x2d66]        # 4054c0 <powers_of_10+0xa0>
-  402759:	00 
-  40275a:	0f 93 c0             	setae  al
-  40275d:	48 01 d0             	add    rax,rdx
+  402762:	66 0f 2f 05 56 2d 00 	comisd xmm0,QWORD PTR [rip+0x2d56]        # 4054c0 <powers_of_10+0xa0>
+  402769:	00 
+  40276a:	0f 93 c0             	setae  al
+  40276d:	48 01 d0             	add    rax,rdx
   if (scaled_remainder == rounding_threshold) {
-  402760:	66 0f 2e 05 58 2d 00 	ucomisd xmm0,QWORD PTR [rip+0x2d58]        # 4054c0 <powers_of_10+0xa0>
-  402767:	00 
-  402768:	7a 06                	jp     402770 <get_normalized_components.isra.0+0xa0>
-  40276a:	75 04                	jne    402770 <get_normalized_components.isra.0+0xa0>
+  402770:	66 0f 2e 05 48 2d 00 	ucomisd xmm0,QWORD PTR [rip+0x2d48]        # 4054c0 <powers_of_10+0xa0>
+  402777:	00 
+  402778:	7a 06                	jp     402780 <get_normalized_components.isra.0+0xa0>
+  40277a:	75 04                	jne    402780 <get_normalized_components.isra.0+0xa0>
     components.fractional &= ~((int_fast64_t) 0x1);
-  40276c:	48 83 e0 fe          	and    rax,0xfffffffffffffffe
+  40277c:	48 83 e0 fe          	and    rax,0xfffffffffffffffe
   if ((double) components.fractional >= prec_power_of_10) {
-  402770:	66 0f ef c0          	pxor   xmm0,xmm0
-  402774:	f2 48 0f 2a c0       	cvtsi2sd xmm0,rax
-  402779:	66 0f 2f c4          	comisd xmm0,xmm4
-  40277d:	73 19                	jae    402798 <get_normalized_components.isra.0+0xc8>
+  402780:	66 0f ef c0          	pxor   xmm0,xmm0
+  402784:	f2 48 0f 2a c0       	cvtsi2sd xmm0,rax
+  402789:	66 0f 2f c4          	comisd xmm0,xmm4
+  40278d:	73 19                	jae    4027a8 <get_normalized_components.isra.0+0xc8>
   return components;
-  40277f:	49 89 41 08          	mov    QWORD PTR [r9+0x8],rax
+  40278f:	49 89 41 08          	mov    QWORD PTR [r9+0x8],rax
 }
-  402783:	4c 89 c8             	mov    rax,r9
+  402793:	4c 89 c8             	mov    rax,r9
   return components;
-  402786:	49 89 09             	mov    QWORD PTR [r9],rcx
-  402789:	45 88 51 10          	mov    BYTE PTR [r9+0x10],r10b
+  402796:	49 89 09             	mov    QWORD PTR [r9],rcx
+  402799:	45 88 51 10          	mov    BYTE PTR [r9+0x10],r10b
 }
-  40278d:	48 83 c4 08          	add    rsp,0x8
-  402791:	c3                   	ret    
-  402792:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
+  40279d:	48 83 c4 08          	add    rsp,0x8
+  4027a1:	c3                   	ret    
+  4027a2:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
     ++components.integral;
-  402798:	48 83 c1 01          	add    rcx,0x1
+  4027a8:	48 83 c1 01          	add    rcx,0x1
     components.fractional = 0;
-  40279c:	31 c0                	xor    eax,eax
-  40279e:	eb df                	jmp    40277f <get_normalized_components.isra.0+0xaf>
+  4027ac:	31 c0                	xor    eax,eax
+  4027ae:	eb df                	jmp    40278f <get_normalized_components.isra.0+0xaf>
     return get_components(negative ? -scaled : scaled, precision);
-  4027a0:	40 84 f6             	test   sil,sil
-  4027a3:	74 08                	je     4027ad <get_normalized_components.isra.0+0xdd>
-  4027a5:	66 0f 57 05 03 2d 00 	xorpd  xmm0,XMMWORD PTR [rip+0x2d03]        # 4054b0 <powers_of_10+0x90>
-  4027ac:	00 
-  4027ad:	89 d6                	mov    esi,edx
-  4027af:	4c 89 cf             	mov    rdi,r9
-  4027b2:	e8 f9 f7 ff ff       	call   401fb0 <get_components>
+  4027b0:	40 84 f6             	test   sil,sil
+  4027b3:	74 08                	je     4027bd <get_normalized_components.isra.0+0xdd>
+  4027b5:	66 0f 57 05 f3 2c 00 	xorpd  xmm0,XMMWORD PTR [rip+0x2cf3]        # 4054b0 <powers_of_10+0x90>
+  4027bc:	00 
+  4027bd:	89 d6                	mov    esi,edx
+  4027bf:	4c 89 cf             	mov    rdi,r9
+  4027c2:	e8 f9 f7 ff ff       	call   401fc0 <get_components>
 }
-  4027b7:	4c 89 c8             	mov    rax,r9
-  4027ba:	48 83 c4 08          	add    rsp,0x8
-  4027be:	c3                   	ret    
+  4027c7:	4c 89 c8             	mov    rax,r9
+  4027ca:	48 83 c4 08          	add    rsp,0x8
+  4027ce:	c3                   	ret    
 
 Disassembly of section .text.print_exponential_number:
 
-00000000004027c0 <print_exponential_number>:
+00000000004027d0 <print_exponential_number>:
 {
-  4027c0:	41 57                	push   r15
-  4027c2:	41 89 f3             	mov    r11d,esi
-  4027c5:	66 0f 28 f0          	movapd xmm6,xmm0
-  4027c9:	41 56                	push   r14
-  4027cb:	41 55                	push   r13
-  4027cd:	49 89 fd             	mov    r13,rdi
-  4027d0:	41 54                	push   r12
-  4027d2:	41 89 d4             	mov    r12d,edx
-  4027d5:	55                   	push   rbp
-  4027d6:	89 cd                	mov    ebp,ecx
-  4027d8:	53                   	push   rbx
-  4027d9:	48 83 ec 38          	sub    rsp,0x38
-  4027dd:	4c 89 04 24          	mov    QWORD PTR [rsp],r8
-  4027e1:	44 89 4c 24 08       	mov    DWORD PTR [rsp+0x8],r9d
+  4027d0:	41 57                	push   r15
+  4027d2:	41 89 f3             	mov    r11d,esi
+  4027d5:	66 0f 28 f0          	movapd xmm6,xmm0
+  4027d9:	41 56                	push   r14
+  4027db:	41 55                	push   r13
+  4027dd:	49 89 fd             	mov    r13,rdi
+  4027e0:	41 54                	push   r12
+  4027e2:	41 89 d4             	mov    r12d,edx
+  4027e5:	55                   	push   rbp
+  4027e6:	89 cd                	mov    ebp,ecx
+  4027e8:	53                   	push   rbx
+  4027e9:	48 83 ec 38          	sub    rsp,0x38
+  4027ed:	4c 89 04 24          	mov    QWORD PTR [rsp],r8
+  4027f1:	44 89 4c 24 08       	mov    DWORD PTR [rsp+0x8],r9d
   const bool negative = get_sign_bit(number);
-  4027e6:	e8 55 f1 ff ff       	call   401940 <get_sign_bit>
-  4027eb:	89 c6                	mov    esi,eax
+  4027f6:	e8 55 f1 ff ff       	call   401950 <get_sign_bit>
+  4027fb:	89 c6                	mov    esi,eax
   double abs_number =  negative ? -number : number;
-  4027ed:	85 c0                	test   eax,eax
-  4027ef:	74 08                	je     4027f9 <print_exponential_number+0x39>
-  4027f1:	66 0f 57 35 b7 2c 00 	xorpd  xmm6,XMMWORD PTR [rip+0x2cb7]        # 4054b0 <powers_of_10+0x90>
-  4027f8:	00 
+  4027fd:	85 c0                	test   eax,eax
+  4027ff:	74 08                	je     402809 <print_exponential_number+0x39>
+  402801:	66 0f 57 35 a7 2c 00 	xorpd  xmm6,XMMWORD PTR [rip+0x2ca7]        # 4054b0 <powers_of_10+0x90>
+  402808:	00 
   if (flags & FLAGS_ADAPT_EXP) {
-  4027f9:	41 89 e8             	mov    r8d,ebp
-  4027fc:	41 81 e0 00 10 00 00 	and    r8d,0x1000
+  402809:	41 89 e8             	mov    r8d,ebp
+  40280c:	41 81 e0 00 10 00 00 	and    r8d,0x1000
   if (abs_number == 0.0) {
-  402803:	66 0f 2e 35 ad 2c 00 	ucomisd xmm6,QWORD PTR [rip+0x2cad]        # 4054b8 <powers_of_10+0x98>
-  40280a:	00 
-  40280b:	0f 8a 9f 00 00 00    	jp     4028b0 <print_exponential_number+0xf0>
-  402811:	0f 85 99 00 00 00    	jne    4028b0 <print_exponential_number+0xf0>
+  402813:	66 0f 2e 35 9d 2c 00 	ucomisd xmm6,QWORD PTR [rip+0x2c9d]        # 4054b8 <powers_of_10+0x98>
+  40281a:	00 
+  40281b:	0f 8a 9f 00 00 00    	jp     4028c0 <print_exponential_number+0xf0>
+  402821:	0f 85 99 00 00 00    	jne    4028c0 <print_exponential_number+0xf0>
   if (flags & FLAGS_ADAPT_EXP) {
-  402817:	45 85 c0             	test   r8d,r8d
-  40281a:	0f 85 18 01 00 00    	jne    402938 <print_exponential_number+0x178>
+  402827:	45 85 c0             	test   r8d,r8d
+  40282a:	0f 85 18 01 00 00    	jne    402948 <print_exponential_number+0x178>
     get_components(negative ? -abs_number : abs_number, precision) :
-  402820:	85 f6                	test   esi,esi
-  402822:	0f 84 63 03 00 00    	je     402b8b <print_exponential_number+0x3cb>
+  402830:	85 f6                	test   esi,esi
+  402832:	0f 84 63 03 00 00    	je     402b9b <print_exponential_number+0x3cb>
     floored_exp10 = 0; // ... and no need to set a normalization factor or check the powers table
-  402828:	31 db                	xor    ebx,ebx
+  402838:	31 db                	xor    ebx,ebx
   bool fall_back_to_decimal_only_mode = false;
-  40282a:	45 31 ff             	xor    r15d,r15d
+  40283a:	45 31 ff             	xor    r15d,r15d
     get_components(negative ? -abs_number : abs_number, precision) :
-  40282d:	66 0f 57 35 7b 2c 00 	xorpd  xmm6,XMMWORD PTR [rip+0x2c7b]        # 4054b0 <powers_of_10+0x90>
-  402834:	00 
-  402835:	48 8d 7c 24 10       	lea    rdi,[rsp+0x10]
-  40283a:	44 89 de             	mov    esi,r11d
-  40283d:	66 0f 28 c6          	movapd xmm0,xmm6
-  402841:	e8 6a f7 ff ff       	call   401fb0 <get_components>
-  402846:	48 8b 7c 24 10       	mov    rdi,QWORD PTR [rsp+0x10]
-  40284b:	48 8b 74 24 18       	mov    rsi,QWORD PTR [rsp+0x18]
-  402850:	0f b6 54 24 20       	movzx  edx,BYTE PTR [rsp+0x20]
+  40283d:	66 0f 57 35 6b 2c 00 	xorpd  xmm6,XMMWORD PTR [rip+0x2c6b]        # 4054b0 <powers_of_10+0x90>
+  402844:	00 
+  402845:	48 8d 7c 24 10       	lea    rdi,[rsp+0x10]
+  40284a:	44 89 de             	mov    esi,r11d
+  40284d:	66 0f 28 c6          	movapd xmm0,xmm6
+  402851:	e8 6a f7 ff ff       	call   401fc0 <get_components>
+  402856:	48 8b 7c 24 10       	mov    rdi,QWORD PTR [rsp+0x10]
+  40285b:	48 8b 74 24 18       	mov    rsi,QWORD PTR [rsp+0x18]
+  402860:	0f b6 54 24 20       	movzx  edx,BYTE PTR [rsp+0x20]
   if (fall_back_to_decimal_only_mode) {
-  402855:	45 84 ff             	test   r15b,r15b
-  402858:	0f 84 49 01 00 00    	je     4029a7 <print_exponential_number+0x1e7>
+  402865:	45 84 ff             	test   r15b,r15b
+  402868:	0f 84 49 01 00 00    	je     4029b7 <print_exponential_number+0x1e7>
     if ((flags & FLAGS_ADAPT_EXP) && floored_exp10 >= -1 && ((double)decimal_part_components.integral == powers_of_10[floored_exp10 + 1])) {
-  40285e:	f7 c5 00 10 00 00    	test   ebp,0x1000
-  402864:	74 09                	je     40286f <print_exponential_number+0xaf>
-  402866:	83 fb ff             	cmp    ebx,0xffffffff
-  402869:	0f 8d d1 02 00 00    	jge    402b40 <print_exponential_number+0x380>
+  40286e:	f7 c5 00 10 00 00    	test   ebp,0x1000
+  402874:	74 09                	je     40287f <print_exponential_number+0xaf>
+  402876:	83 fb ff             	cmp    ebx,0xffffffff
+  402879:	0f 8d d1 02 00 00    	jge    402b50 <print_exponential_number+0x380>
         width - exp10_part_width :
-  40286f:	45 85 e4             	test   r12d,r12d
-  402872:	0f 84 98 02 00 00    	je     402b10 <print_exponential_number+0x350>
+  40287f:	45 85 e4             	test   r12d,r12d
+  402882:	0f 84 98 02 00 00    	je     402b20 <print_exponential_number+0x350>
   print_broken_up_decimal(decimal_part_components, output, precision, decimal_part_width, flags, buf, len);
-  402878:	48 83 ec 08          	sub    rsp,0x8
-  40287c:	45 89 e1             	mov    r9d,r12d
-  40287f:	45 89 d8             	mov    r8d,r11d
-  402882:	4c 89 e9             	mov    rcx,r13
-  402885:	8b 44 24 10          	mov    eax,DWORD PTR [rsp+0x10]
-  402889:	50                   	push   rax
-  40288a:	ff 74 24 10          	push   QWORD PTR [rsp+0x10]
-  40288e:	55                   	push   rbp
-  40288f:	e8 2c fa ff ff       	call   4022c0 <print_broken_up_decimal.isra.0>
-  402894:	48 83 c4 20          	add    rsp,0x20
+  402888:	48 83 ec 08          	sub    rsp,0x8
+  40288c:	45 89 e1             	mov    r9d,r12d
+  40288f:	45 89 d8             	mov    r8d,r11d
+  402892:	4c 89 e9             	mov    rcx,r13
+  402895:	8b 44 24 10          	mov    eax,DWORD PTR [rsp+0x10]
+  402899:	50                   	push   rax
+  40289a:	ff 74 24 10          	push   QWORD PTR [rsp+0x10]
+  40289e:	55                   	push   rbp
+  40289f:	e8 2c fa ff ff       	call   4022d0 <print_broken_up_decimal.isra.0>
+  4028a4:	48 83 c4 20          	add    rsp,0x20
 }
-  402898:	48 83 c4 38          	add    rsp,0x38
-  40289c:	5b                   	pop    rbx
-  40289d:	5d                   	pop    rbp
-  40289e:	41 5c                	pop    r12
-  4028a0:	41 5d                	pop    r13
-  4028a2:	41 5e                	pop    r14
-  4028a4:	41 5f                	pop    r15
-  4028a6:	c3                   	ret    
-  4028a7:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
-  4028ae:	00 00 
+  4028a8:	48 83 c4 38          	add    rsp,0x38
+  4028ac:	5b                   	pop    rbx
+  4028ad:	5d                   	pop    rbp
+  4028ae:	41 5c                	pop    r12
+  4028b0:	41 5d                	pop    r13
+  4028b2:	41 5e                	pop    r14
+  4028b4:	41 5f                	pop    r15
+  4028b6:	c3                   	ret    
+  4028b7:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+  4028be:	00 00 
     double exp10 = log10_of_positive(abs_number);
-  4028b0:	66 0f 28 c6          	movapd xmm0,xmm6
-  4028b4:	e8 07 f8 ff ff       	call   4020c0 <log10_of_positive>
+  4028c0:	66 0f 28 c6          	movapd xmm0,xmm6
+  4028c4:	e8 07 f8 ff ff       	call   4020d0 <log10_of_positive>
     floored_exp10 = bastardized_floor(exp10);
-  4028b9:	e8 d2 f7 ff ff       	call   402090 <bastardized_floor>
+  4028c9:	e8 d2 f7 ff ff       	call   4020a0 <bastardized_floor>
     double p10 = pow10_of_int(floored_exp10);
-  4028be:	89 c7                	mov    edi,eax
+  4028ce:	89 c7                	mov    edi,eax
     floored_exp10 = bastardized_floor(exp10);
-  4028c0:	89 c3                	mov    ebx,eax
+  4028d0:	89 c3                	mov    ebx,eax
     double p10 = pow10_of_int(floored_exp10);
-  4028c2:	e8 89 f8 ff ff       	call   402150 <pow10_of_int>
+  4028d2:	e8 89 f8 ff ff       	call   402160 <pow10_of_int>
     if (abs_number < p10) {
-  4028c7:	66 0f 2f c6          	comisd xmm0,xmm6
+  4028d7:	66 0f 2f c6          	comisd xmm0,xmm6
     double p10 = pow10_of_int(floored_exp10);
-  4028cb:	66 0f 28 c8          	movapd xmm1,xmm0
+  4028db:	66 0f 28 c8          	movapd xmm1,xmm0
     if (abs_number < p10) {
-  4028cf:	76 0b                	jbe    4028dc <print_exponential_number+0x11c>
+  4028df:	76 0b                	jbe    4028ec <print_exponential_number+0x11c>
       floored_exp10--;
-  4028d1:	83 eb 01             	sub    ebx,0x1
+  4028e1:	83 eb 01             	sub    ebx,0x1
       p10 /= 10;
-  4028d4:	f2 0f 5e 0d 44 2c 00 	divsd  xmm1,QWORD PTR [rip+0x2c44]        # 405520 <powers_of_10+0x100>
-  4028db:	00 
+  4028e4:	f2 0f 5e 0d 34 2c 00 	divsd  xmm1,QWORD PTR [rip+0x2c34]        # 405520 <powers_of_10+0x100>
+  4028eb:	00 
     abs_exp10_covered_by_powers_table = PRINTF_ABS(floored_exp10) < PRINTF_MAX_PRECOMPUTED_POWER_OF_10;
-  4028dc:	8d 43 11             	lea    eax,[rbx+0x11]
-  4028df:	83 f8 22             	cmp    eax,0x22
-  4028e2:	0f 96 c1             	setbe  cl
+  4028ec:	8d 43 11             	lea    eax,[rbx+0x11]
+  4028ef:	83 f8 22             	cmp    eax,0x22
+  4028f2:	0f 96 c1             	setbe  cl
     normalization.raw_factor = abs_exp10_covered_by_powers_table ? powers_of_10[PRINTF_ABS(floored_exp10)] : p10;
-  4028e5:	77 15                	ja     4028fc <print_exponential_number+0x13c>
-  4028e7:	89 d8                	mov    eax,ebx
-  4028e9:	48 8d 15 30 2b 00 00 	lea    rdx,[rip+0x2b30]        # 405420 <powers_of_10>
-  4028f0:	f7 d8                	neg    eax
-  4028f2:	0f 48 c3             	cmovs  eax,ebx
-  4028f5:	48 98                	cdqe   
-  4028f7:	f2 0f 10 0c c2       	movsd  xmm1,QWORD PTR [rdx+rax*8]
+  4028f5:	77 15                	ja     40290c <print_exponential_number+0x13c>
+  4028f7:	89 d8                	mov    eax,ebx
+  4028f9:	48 8d 15 20 2b 00 00 	lea    rdx,[rip+0x2b20]        # 405420 <powers_of_10>
+  402900:	f7 d8                	neg    eax
+  402902:	0f 48 c3             	cmovs  eax,ebx
+  402905:	48 98                	cdqe   
+  402907:	f2 0f 10 0c c2       	movsd  xmm1,QWORD PTR [rdx+rax*8]
   normalization.multiply = (floored_exp10 < 0 && abs_exp10_covered_by_powers_table);
-  4028fc:	89 d8                	mov    eax,ebx
-  4028fe:	c1 e8 1f             	shr    eax,0x1f
-  402901:	21 c1                	and    ecx,eax
+  40290c:	89 d8                	mov    eax,ebx
+  40290e:	c1 e8 1f             	shr    eax,0x1f
+  402911:	21 c1                	and    ecx,eax
   bool should_skip_normalization = (fall_back_to_decimal_only_mode || floored_exp10 == 0);
-  402903:	85 db                	test   ebx,ebx
-  402905:	0f 94 c2             	sete   dl
+  402913:	85 db                	test   ebx,ebx
+  402915:	0f 94 c2             	sete   dl
   bool fall_back_to_decimal_only_mode = false;
-  402908:	45 31 ff             	xor    r15d,r15d
+  402918:	45 31 ff             	xor    r15d,r15d
   if (flags & FLAGS_ADAPT_EXP) {
-  40290b:	45 85 c0             	test   r8d,r8d
-  40290e:	74 62                	je     402972 <print_exponential_number+0x1b2>
+  40291b:	45 85 c0             	test   r8d,r8d
+  40291e:	74 62                	je     402982 <print_exponential_number+0x1b2>
     fall_back_to_decimal_only_mode = (floored_exp10 >= -4 && floored_exp10 < required_significant_digits);
-  402910:	45 85 db             	test   r11d,r11d
-  402913:	b8 01 00 00 00       	mov    eax,0x1
-  402918:	41 0f 45 c3          	cmovne eax,r11d
-  40291c:	39 c3                	cmp    ebx,eax
-  40291e:	0f 9c c0             	setl   al
-  402921:	83 fb fc             	cmp    ebx,0xfffffffc
-  402924:	40 0f 9d c7          	setge  dil
-  402928:	21 f8                	and    eax,edi
-  40292a:	41 89 c7             	mov    r15d,eax
+  402920:	45 85 db             	test   r11d,r11d
+  402923:	b8 01 00 00 00       	mov    eax,0x1
+  402928:	41 0f 45 c3          	cmovne eax,r11d
+  40292c:	39 c3                	cmp    ebx,eax
+  40292e:	0f 9c c0             	setl   al
+  402931:	83 fb fc             	cmp    ebx,0xfffffffc
+  402934:	40 0f 9d c7          	setge  dil
+  402938:	21 f8                	and    eax,edi
+  40293a:	41 89 c7             	mov    r15d,eax
   bool should_skip_normalization = (fall_back_to_decimal_only_mode || floored_exp10 == 0);
-  40292d:	44 09 fa             	or     edx,r15d
-  402930:	eb 21                	jmp    402953 <print_exponential_number+0x193>
-  402932:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
+  40293d:	44 09 fa             	or     edx,r15d
+  402940:	eb 21                	jmp    402963 <print_exponential_number+0x193>
+  402942:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
     fall_back_to_decimal_only_mode = (floored_exp10 >= -4 && floored_exp10 < required_significant_digits);
-  402938:	45 85 db             	test   r11d,r11d
-  40293b:	b8 01 00 00 00       	mov    eax,0x1
-  402940:	ba 01 00 00 00       	mov    edx,0x1
-  402945:	41 0f 45 c3          	cmovne eax,r11d
-  402949:	85 c0                	test   eax,eax
-  40294b:	41 0f 9f c7          	setg   r15b
-  40294f:	31 c9                	xor    ecx,ecx
+  402948:	45 85 db             	test   r11d,r11d
+  40294b:	b8 01 00 00 00       	mov    eax,0x1
+  402950:	ba 01 00 00 00       	mov    edx,0x1
+  402955:	41 0f 45 c3          	cmovne eax,r11d
+  402959:	85 c0                	test   eax,eax
+  40295b:	41 0f 9f c7          	setg   r15b
+  40295f:	31 c9                	xor    ecx,ecx
     floored_exp10 = 0; // ... and no need to set a normalization factor or check the powers table
-  402951:	31 db                	xor    ebx,ebx
+  402961:	31 db                	xor    ebx,ebx
                      (int) precision - 1 - floored_exp10 :
-  402953:	41 83 eb 01          	sub    r11d,0x1
-  402957:	44 89 df             	mov    edi,r11d
-  40295a:	29 df                	sub    edi,ebx
-  40295c:	45 84 ff             	test   r15b,r15b
-  40295f:	44 0f 45 df          	cmovne r11d,edi
+  402963:	41 83 eb 01          	sub    r11d,0x1
+  402967:	44 89 df             	mov    edi,r11d
+  40296a:	29 df                	sub    edi,ebx
+  40296c:	45 84 ff             	test   r15b,r15b
+  40296f:	44 0f 45 df          	cmovne r11d,edi
     precision = (precision_ > 0 ? (unsigned) precision_ : 0U);
-  402963:	31 ff                	xor    edi,edi
-  402965:	45 85 db             	test   r11d,r11d
-  402968:	44 0f 48 df          	cmovs  r11d,edi
+  402973:	31 ff                	xor    edi,edi
+  402975:	45 85 db             	test   r11d,r11d
+  402978:	44 0f 48 df          	cmovs  r11d,edi
     flags |= FLAGS_PRECISION;   // make sure print_broken_up_decimal respects our choice above
-  40296c:	81 cd 00 08 00 00    	or     ebp,0x800
+  40297c:	81 cd 00 08 00 00    	or     ebp,0x800
   struct double_components decimal_part_components =
-  402972:	84 d2                	test   dl,dl
-  402974:	0f 85 86 01 00 00    	jne    402b00 <print_exponential_number+0x340>
+  402982:	84 d2                	test   dl,dl
+  402984:	0f 85 86 01 00 00    	jne    402b10 <print_exponential_number+0x340>
   const bool negative = get_sign_bit(number);
-  40297a:	85 f6                	test   esi,esi
+  40298a:	85 f6                	test   esi,esi
     get_normalized_components(negative, precision, abs_number, normalization, floored_exp10);
-  40297c:	48 8d 7c 24 10       	lea    rdi,[rsp+0x10]
-  402981:	44 89 da             	mov    edx,r11d
-  402984:	41 89 d8             	mov    r8d,ebx
+  40298c:	48 8d 7c 24 10       	lea    rdi,[rsp+0x10]
+  402991:	44 89 da             	mov    edx,r11d
+  402994:	41 89 d8             	mov    r8d,ebx
   const bool negative = get_sign_bit(number);
-  402987:	40 0f 95 c6          	setne  sil
+  402997:	40 0f 95 c6          	setne  sil
     get_normalized_components(negative, precision, abs_number, normalization, floored_exp10);
-  40298b:	66 0f 28 c6          	movapd xmm0,xmm6
+  40299b:	66 0f 28 c6          	movapd xmm0,xmm6
   const bool negative = get_sign_bit(number);
-  40298f:	40 0f b6 f6          	movzx  esi,sil
+  40299f:	40 0f b6 f6          	movzx  esi,sil
     get_normalized_components(negative, precision, abs_number, normalization, floored_exp10);
-  402993:	e8 38 fd ff ff       	call   4026d0 <get_normalized_components.isra.0>
-  402998:	48 8b 7c 24 10       	mov    rdi,QWORD PTR [rsp+0x10]
-  40299d:	48 8b 74 24 18       	mov    rsi,QWORD PTR [rsp+0x18]
-  4029a2:	0f b6 54 24 20       	movzx  edx,BYTE PTR [rsp+0x20]
+  4029a3:	e8 38 fd ff ff       	call   4026e0 <get_normalized_components.isra.0>
+  4029a8:	48 8b 7c 24 10       	mov    rdi,QWORD PTR [rsp+0x10]
+  4029ad:	48 8b 74 24 18       	mov    rsi,QWORD PTR [rsp+0x18]
+  4029b2:	0f b6 54 24 20       	movzx  edx,BYTE PTR [rsp+0x20]
     if (decimal_part_components.integral >= 10) {
-  4029a7:	48 83 ff 09          	cmp    rdi,0x9
-  4029ab:	7e 0a                	jle    4029b7 <print_exponential_number+0x1f7>
+  4029b7:	48 83 ff 09          	cmp    rdi,0x9
+  4029bb:	7e 0a                	jle    4029c7 <print_exponential_number+0x1f7>
       floored_exp10++;
-  4029ad:	83 c3 01             	add    ebx,0x1
+  4029bd:	83 c3 01             	add    ebx,0x1
       decimal_part_components.fractional = 0;
-  4029b0:	31 f6                	xor    esi,esi
+  4029c0:	31 f6                	xor    esi,esi
       decimal_part_components.integral = 1;
-  4029b2:	bf 01 00 00 00       	mov    edi,0x1
+  4029c2:	bf 01 00 00 00       	mov    edi,0x1
     ((flags & FLAGS_LEFT) && exp10_part_width) ?
-  4029b7:	41 89 ea             	mov    r10d,ebp
+  4029c7:	41 89 ea             	mov    r10d,ebp
   printf_size_t exp10_part_width = fall_back_to_decimal_only_mode ? 0U : (PRINTF_ABS(floored_exp10) < 100) ? 4U : 5U;
-  4029ba:	8d 4b 63             	lea    ecx,[rbx+0x63]
+  4029ca:	8d 4b 63             	lea    ecx,[rbx+0x63]
     ((flags & FLAGS_LEFT) && exp10_part_width) ?
-  4029bd:	41 83 e2 02          	and    r10d,0x2
+  4029cd:	41 83 e2 02          	and    r10d,0x2
   printf_size_t exp10_part_width = fall_back_to_decimal_only_mode ? 0U : (PRINTF_ABS(floored_exp10) < 100) ? 4U : 5U;
-  4029c1:	81 f9 c6 00 00 00    	cmp    ecx,0xc6
-  4029c7:	77 47                	ja     402a10 <print_exponential_number+0x250>
+  4029d1:	81 f9 c6 00 00 00    	cmp    ecx,0xc6
+  4029d7:	77 47                	ja     402a20 <print_exponential_number+0x250>
       0U :
-  4029c9:	45 85 d2             	test   r10d,r10d
-  4029cc:	0f 84 9e 01 00 00    	je     402b70 <print_exponential_number+0x3b0>
-  4029d2:	41 bf 03 00 00 00    	mov    r15d,0x3
-  4029d8:	44 89 54 24 0c       	mov    DWORD PTR [rsp+0xc],r10d
+  4029d9:	45 85 d2             	test   r10d,r10d
+  4029dc:	0f 84 9e 01 00 00    	je     402b80 <print_exponential_number+0x3b0>
+  4029e2:	41 bf 03 00 00 00    	mov    r15d,0x3
+  4029e8:	44 89 54 24 0c       	mov    DWORD PTR [rsp+0xc],r10d
   print_broken_up_decimal(decimal_part_components, output, precision, decimal_part_width, flags, buf, len);
-  4029dd:	48 83 ec 08          	sub    rsp,0x8
-  4029e1:	45 31 c9             	xor    r9d,r9d
-  4029e4:	45 89 d8             	mov    r8d,r11d
-  4029e7:	8b 44 24 10          	mov    eax,DWORD PTR [rsp+0x10]
-  4029eb:	4c 89 e9             	mov    rcx,r13
+  4029ed:	48 83 ec 08          	sub    rsp,0x8
+  4029f1:	45 31 c9             	xor    r9d,r9d
+  4029f4:	45 89 d8             	mov    r8d,r11d
+  4029f7:	8b 44 24 10          	mov    eax,DWORD PTR [rsp+0x10]
+  4029fb:	4c 89 e9             	mov    rcx,r13
   const printf_size_t printed_exponential_start_pos = output->pos;
-  4029ee:	45 8b 75 18          	mov    r14d,DWORD PTR [r13+0x18]
+  4029fe:	45 8b 75 18          	mov    r14d,DWORD PTR [r13+0x18]
   print_broken_up_decimal(decimal_part_components, output, precision, decimal_part_width, flags, buf, len);
-  4029f2:	50                   	push   rax
-  4029f3:	ff 74 24 10          	push   QWORD PTR [rsp+0x10]
-  4029f7:	55                   	push   rbp
-  4029f8:	e8 c3 f8 ff ff       	call   4022c0 <print_broken_up_decimal.isra.0>
-  4029fd:	48 83 c4 20          	add    rsp,0x20
-  402a01:	44 8b 54 24 0c       	mov    r10d,DWORD PTR [rsp+0xc]
-  402a06:	eb 61                	jmp    402a69 <print_exponential_number+0x2a9>
-  402a08:	0f 1f 84 00 00 00 00 	nop    DWORD PTR [rax+rax*1+0x0]
-  402a0f:	00 
+  402a02:	50                   	push   rax
+  402a03:	ff 74 24 10          	push   QWORD PTR [rsp+0x10]
+  402a07:	55                   	push   rbp
+  402a08:	e8 c3 f8 ff ff       	call   4022d0 <print_broken_up_decimal.isra.0>
+  402a0d:	48 83 c4 20          	add    rsp,0x20
+  402a11:	44 8b 54 24 0c       	mov    r10d,DWORD PTR [rsp+0xc]
+  402a16:	eb 61                	jmp    402a79 <print_exponential_number+0x2a9>
+  402a18:	0f 1f 84 00 00 00 00 	nop    DWORD PTR [rax+rax*1+0x0]
+  402a1f:	00 
   printf_size_t exp10_part_width = fall_back_to_decimal_only_mode ? 0U : (PRINTF_ABS(floored_exp10) < 100) ? 4U : 5U;
-  402a10:	b8 05 00 00 00       	mov    eax,0x5
+  402a20:	b8 05 00 00 00       	mov    eax,0x5
       0U :
-  402a15:	45 85 d2             	test   r10d,r10d
-  402a18:	0f 85 62 01 00 00    	jne    402b80 <print_exponential_number+0x3c0>
+  402a25:	45 85 d2             	test   r10d,r10d
+  402a28:	0f 85 62 01 00 00    	jne    402b90 <print_exponential_number+0x3c0>
         width - exp10_part_width :
-  402a1e:	45 89 e1             	mov    r9d,r12d
-  402a21:	b9 00 00 00 00       	mov    ecx,0x0
-  402a26:	89 44 24 0c          	mov    DWORD PTR [rsp+0xc],eax
+  402a2e:	45 89 e1             	mov    r9d,r12d
+  402a31:	b9 00 00 00 00       	mov    ecx,0x0
+  402a36:	89 44 24 0c          	mov    DWORD PTR [rsp+0xc],eax
   print_broken_up_decimal(decimal_part_components, output, precision, decimal_part_width, flags, buf, len);
-  402a2a:	45 89 d8             	mov    r8d,r11d
+  402a3a:	45 89 d8             	mov    r8d,r11d
         width - exp10_part_width :
-  402a2d:	41 29 c1             	sub    r9d,eax
-  402a30:	41 39 c4             	cmp    r12d,eax
+  402a3d:	41 29 c1             	sub    r9d,eax
+  402a40:	41 39 c4             	cmp    r12d,eax
   const printf_size_t printed_exponential_start_pos = output->pos;
-  402a33:	45 8b 75 18          	mov    r14d,DWORD PTR [r13+0x18]
+  402a43:	45 8b 75 18          	mov    r14d,DWORD PTR [r13+0x18]
         width - exp10_part_width :
-  402a37:	44 0f 46 c9          	cmovbe r9d,ecx
+  402a47:	44 0f 46 c9          	cmovbe r9d,ecx
   print_broken_up_decimal(decimal_part_components, output, precision, decimal_part_width, flags, buf, len);
-  402a3b:	48 83 ec 08          	sub    rsp,0x8
-  402a3f:	4c 89 e9             	mov    rcx,r13
-  402a42:	8b 44 24 10          	mov    eax,DWORD PTR [rsp+0x10]
-  402a46:	50                   	push   rax
-  402a47:	ff 74 24 10          	push   QWORD PTR [rsp+0x10]
-  402a4b:	55                   	push   rbp
-  402a4c:	e8 6f f8 ff ff       	call   4022c0 <print_broken_up_decimal.isra.0>
+  402a4b:	48 83 ec 08          	sub    rsp,0x8
+  402a4f:	4c 89 e9             	mov    rcx,r13
+  402a52:	8b 44 24 10          	mov    eax,DWORD PTR [rsp+0x10]
+  402a56:	50                   	push   rax
+  402a57:	ff 74 24 10          	push   QWORD PTR [rsp+0x10]
+  402a5b:	55                   	push   rbp
+  402a5c:	e8 6f f8 ff ff       	call   4022d0 <print_broken_up_decimal.isra.0>
   if (! fall_back_to_decimal_only_mode) {
-  402a51:	48 83 c4 20          	add    rsp,0x20
-  402a55:	45 84 ff             	test   r15b,r15b
-  402a58:	0f 85 3a fe ff ff    	jne    402898 <print_exponential_number+0xd8>
+  402a61:	48 83 c4 20          	add    rsp,0x20
+  402a65:	45 84 ff             	test   r15b,r15b
+  402a68:	0f 85 3a fe ff ff    	jne    4028a8 <print_exponential_number+0xd8>
     print_integer(output,
-  402a5e:	8b 44 24 0c          	mov    eax,DWORD PTR [rsp+0xc]
-  402a62:	45 31 d2             	xor    r10d,r10d
-  402a65:	44 8d 78 ff          	lea    r15d,[rax-0x1]
+  402a6e:	8b 44 24 0c          	mov    eax,DWORD PTR [rsp+0xc]
+  402a72:	45 31 d2             	xor    r10d,r10d
+  402a75:	44 8d 78 ff          	lea    r15d,[rax-0x1]
     putchar_via_gadget(output, (flags & FLAGS_UPPERCASE) ? 'E' : 'e');
-  402a69:	83 e5 20             	and    ebp,0x20
-  402a6c:	4c 89 ef             	mov    rdi,r13
-  402a6f:	44 89 14 24          	mov    DWORD PTR [rsp],r10d
-  402a73:	83 fd 01             	cmp    ebp,0x1
-  402a76:	19 f6                	sbb    esi,esi
-  402a78:	83 e6 20             	and    esi,0x20
-  402a7b:	83 c6 45             	add    esi,0x45
-  402a7e:	e8 ed ee ff ff       	call   401970 <putchar_via_gadget>
+  402a79:	83 e5 20             	and    ebp,0x20
+  402a7c:	4c 89 ef             	mov    rdi,r13
+  402a7f:	44 89 14 24          	mov    DWORD PTR [rsp],r10d
+  402a83:	83 fd 01             	cmp    ebp,0x1
+  402a86:	19 f6                	sbb    esi,esi
+  402a88:	83 e6 20             	and    esi,0x20
+  402a8b:	83 c6 45             	add    esi,0x45
+  402a8e:	e8 ed ee ff ff       	call   401980 <putchar_via_gadget>
     print_integer(output,
-  402a83:	48 63 c3             	movsxd rax,ebx
-  402a86:	89 da                	mov    edx,ebx
-  402a88:	45 89 f9             	mov    r9d,r15d
-  402a8b:	48 89 c6             	mov    rsi,rax
-  402a8e:	c1 ea 1f             	shr    edx,0x1f
-  402a91:	b9 0a 00 00 00       	mov    ecx,0xa
-  402a96:	4c 89 ef             	mov    rdi,r13
-  402a99:	48 f7 de             	neg    rsi
-  402a9c:	85 db                	test   ebx,ebx
-  402a9e:	48 0f 4f f0          	cmovg  rsi,rax
-  402aa2:	48 83 ec 08          	sub    rsp,0x8
-  402aa6:	45 31 c0             	xor    r8d,r8d
-  402aa9:	6a 05                	push   0x5
-  402aab:	e8 10 f4 ff ff       	call   401ec0 <print_integer>
+  402a93:	48 63 c3             	movsxd rax,ebx
+  402a96:	89 da                	mov    edx,ebx
+  402a98:	45 89 f9             	mov    r9d,r15d
+  402a9b:	48 89 c6             	mov    rsi,rax
+  402a9e:	c1 ea 1f             	shr    edx,0x1f
+  402aa1:	b9 0a 00 00 00       	mov    ecx,0xa
+  402aa6:	4c 89 ef             	mov    rdi,r13
+  402aa9:	48 f7 de             	neg    rsi
+  402aac:	85 db                	test   ebx,ebx
+  402aae:	48 0f 4f f0          	cmovg  rsi,rax
+  402ab2:	48 83 ec 08          	sub    rsp,0x8
+  402ab6:	45 31 c0             	xor    r8d,r8d
+  402ab9:	6a 05                	push   0x5
+  402abb:	e8 10 f4 ff ff       	call   401ed0 <print_integer>
     if (flags & FLAGS_LEFT) {
-  402ab0:	58                   	pop    rax
-  402ab1:	5a                   	pop    rdx
-  402ab2:	44 8b 14 24          	mov    r10d,DWORD PTR [rsp]
-  402ab6:	45 85 d2             	test   r10d,r10d
-  402ab9:	0f 84 d9 fd ff ff    	je     402898 <print_exponential_number+0xd8>
+  402ac0:	58                   	pop    rax
+  402ac1:	5a                   	pop    rdx
+  402ac2:	44 8b 14 24          	mov    r10d,DWORD PTR [rsp]
+  402ac6:	45 85 d2             	test   r10d,r10d
+  402ac9:	0f 84 d9 fd ff ff    	je     4028a8 <print_exponential_number+0xd8>
       while (output->pos - printed_exponential_start_pos < width) {
-  402abf:	41 8b 45 18          	mov    eax,DWORD PTR [r13+0x18]
-  402ac3:	44 29 f0             	sub    eax,r14d
-  402ac6:	44 39 e0             	cmp    eax,r12d
-  402ac9:	0f 83 c9 fd ff ff    	jae    402898 <print_exponential_number+0xd8>
-  402acf:	90                   	nop
+  402acf:	41 8b 45 18          	mov    eax,DWORD PTR [r13+0x18]
+  402ad3:	44 29 f0             	sub    eax,r14d
+  402ad6:	44 39 e0             	cmp    eax,r12d
+  402ad9:	0f 83 c9 fd ff ff    	jae    4028a8 <print_exponential_number+0xd8>
+  402adf:	90                   	nop
         putchar_via_gadget(output, ' ');
-  402ad0:	be 20 00 00 00       	mov    esi,0x20
-  402ad5:	4c 89 ef             	mov    rdi,r13
-  402ad8:	e8 93 ee ff ff       	call   401970 <putchar_via_gadget>
+  402ae0:	be 20 00 00 00       	mov    esi,0x20
+  402ae5:	4c 89 ef             	mov    rdi,r13
+  402ae8:	e8 93 ee ff ff       	call   401980 <putchar_via_gadget>
       while (output->pos - printed_exponential_start_pos < width) {
-  402add:	41 8b 45 18          	mov    eax,DWORD PTR [r13+0x18]
-  402ae1:	44 29 f0             	sub    eax,r14d
-  402ae4:	44 39 e0             	cmp    eax,r12d
-  402ae7:	72 e7                	jb     402ad0 <print_exponential_number+0x310>
+  402aed:	41 8b 45 18          	mov    eax,DWORD PTR [r13+0x18]
+  402af1:	44 29 f0             	sub    eax,r14d
+  402af4:	44 39 e0             	cmp    eax,r12d
+  402af7:	72 e7                	jb     402ae0 <print_exponential_number+0x310>
 }
-  402ae9:	48 83 c4 38          	add    rsp,0x38
-  402aed:	5b                   	pop    rbx
-  402aee:	5d                   	pop    rbp
-  402aef:	41 5c                	pop    r12
-  402af1:	41 5d                	pop    r13
-  402af3:	41 5e                	pop    r14
-  402af5:	41 5f                	pop    r15
-  402af7:	c3                   	ret    
-  402af8:	0f 1f 84 00 00 00 00 	nop    DWORD PTR [rax+rax*1+0x0]
-  402aff:	00 
+  402af9:	48 83 c4 38          	add    rsp,0x38
+  402afd:	5b                   	pop    rbx
+  402afe:	5d                   	pop    rbp
+  402aff:	41 5c                	pop    r12
+  402b01:	41 5d                	pop    r13
+  402b03:	41 5e                	pop    r14
+  402b05:	41 5f                	pop    r15
+  402b07:	c3                   	ret    
+  402b08:	0f 1f 84 00 00 00 00 	nop    DWORD PTR [rax+rax*1+0x0]
+  402b0f:	00 
     get_components(negative ? -abs_number : abs_number, precision) :
-  402b00:	85 f6                	test   esi,esi
-  402b02:	0f 84 2d fd ff ff    	je     402835 <print_exponential_number+0x75>
-  402b08:	e9 20 fd ff ff       	jmp    40282d <print_exponential_number+0x6d>
-  402b0d:	0f 1f 00             	nop    DWORD PTR [rax]
+  402b10:	85 f6                	test   esi,esi
+  402b12:	0f 84 2d fd ff ff    	je     402845 <print_exponential_number+0x75>
+  402b18:	e9 20 fd ff ff       	jmp    40283d <print_exponential_number+0x6d>
+  402b1d:	0f 1f 00             	nop    DWORD PTR [rax]
   print_broken_up_decimal(decimal_part_components, output, precision, decimal_part_width, flags, buf, len);
-  402b10:	48 83 ec 08          	sub    rsp,0x8
-  402b14:	4c 89 e9             	mov    rcx,r13
-  402b17:	45 31 c9             	xor    r9d,r9d
-  402b1a:	45 89 d8             	mov    r8d,r11d
-  402b1d:	8b 44 24 10          	mov    eax,DWORD PTR [rsp+0x10]
-  402b21:	50                   	push   rax
-  402b22:	ff 74 24 10          	push   QWORD PTR [rsp+0x10]
-  402b26:	55                   	push   rbp
-  402b27:	e8 94 f7 ff ff       	call   4022c0 <print_broken_up_decimal.isra.0>
-  402b2c:	48 83 c4 20          	add    rsp,0x20
+  402b20:	48 83 ec 08          	sub    rsp,0x8
+  402b24:	4c 89 e9             	mov    rcx,r13
+  402b27:	45 31 c9             	xor    r9d,r9d
+  402b2a:	45 89 d8             	mov    r8d,r11d
+  402b2d:	8b 44 24 10          	mov    eax,DWORD PTR [rsp+0x10]
+  402b31:	50                   	push   rax
+  402b32:	ff 74 24 10          	push   QWORD PTR [rsp+0x10]
+  402b36:	55                   	push   rbp
+  402b37:	e8 94 f7 ff ff       	call   4022d0 <print_broken_up_decimal.isra.0>
+  402b3c:	48 83 c4 20          	add    rsp,0x20
 }
-  402b30:	48 83 c4 38          	add    rsp,0x38
-  402b34:	5b                   	pop    rbx
-  402b35:	5d                   	pop    rbp
-  402b36:	41 5c                	pop    r12
-  402b38:	41 5d                	pop    r13
-  402b3a:	41 5e                	pop    r14
-  402b3c:	41 5f                	pop    r15
-  402b3e:	c3                   	ret    
-  402b3f:	90                   	nop
+  402b40:	48 83 c4 38          	add    rsp,0x38
+  402b44:	5b                   	pop    rbx
+  402b45:	5d                   	pop    rbp
+  402b46:	41 5c                	pop    r12
+  402b48:	41 5d                	pop    r13
+  402b4a:	41 5e                	pop    r14
+  402b4c:	41 5f                	pop    r15
+  402b4e:	c3                   	ret    
+  402b4f:	90                   	nop
     if ((flags & FLAGS_ADAPT_EXP) && floored_exp10 >= -1 && ((double)decimal_part_components.integral == powers_of_10[floored_exp10 + 1])) {
-  402b40:	83 c3 01             	add    ebx,0x1
-  402b43:	66 0f ef c0          	pxor   xmm0,xmm0
-  402b47:	48 8d 05 d2 28 00 00 	lea    rax,[rip+0x28d2]        # 405420 <powers_of_10>
-  402b4e:	48 63 db             	movsxd rbx,ebx
-  402b51:	f2 48 0f 2a c7       	cvtsi2sd xmm0,rdi
-  402b56:	66 0f 2e 04 d8       	ucomisd xmm0,QWORD PTR [rax+rbx*8]
-  402b5b:	0f 8a 0e fd ff ff    	jp     40286f <print_exponential_number+0xaf>
-  402b61:	0f 85 08 fd ff ff    	jne    40286f <print_exponential_number+0xaf>
+  402b50:	83 c3 01             	add    ebx,0x1
+  402b53:	66 0f ef c0          	pxor   xmm0,xmm0
+  402b57:	48 8d 05 c2 28 00 00 	lea    rax,[rip+0x28c2]        # 405420 <powers_of_10>
+  402b5e:	48 63 db             	movsxd rbx,ebx
+  402b61:	f2 48 0f 2a c7       	cvtsi2sd xmm0,rdi
+  402b66:	66 0f 2e 04 d8       	ucomisd xmm0,QWORD PTR [rax+rbx*8]
+  402b6b:	0f 8a 0e fd ff ff    	jp     40287f <print_exponential_number+0xaf>
+  402b71:	0f 85 08 fd ff ff    	jne    40287f <print_exponential_number+0xaf>
       precision--;
-  402b67:	41 83 eb 01          	sub    r11d,0x1
-  402b6b:	e9 ff fc ff ff       	jmp    40286f <print_exponential_number+0xaf>
+  402b77:	41 83 eb 01          	sub    r11d,0x1
+  402b7b:	e9 ff fc ff ff       	jmp    40287f <print_exponential_number+0xaf>
   printf_size_t exp10_part_width = fall_back_to_decimal_only_mode ? 0U : (PRINTF_ABS(floored_exp10) < 100) ? 4U : 5U;
-  402b70:	b8 04 00 00 00       	mov    eax,0x4
-  402b75:	e9 a4 fe ff ff       	jmp    402a1e <print_exponential_number+0x25e>
-  402b7a:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
+  402b80:	b8 04 00 00 00       	mov    eax,0x4
+  402b85:	e9 a4 fe ff ff       	jmp    402a2e <print_exponential_number+0x25e>
+  402b8a:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
       0U :
-  402b80:	41 bf 04 00 00 00    	mov    r15d,0x4
-  402b86:	e9 4d fe ff ff       	jmp    4029d8 <print_exponential_number+0x218>
+  402b90:	41 bf 04 00 00 00    	mov    r15d,0x4
+  402b96:	e9 4d fe ff ff       	jmp    4029e8 <print_exponential_number+0x218>
     get_components(negative ? -abs_number : abs_number, precision) :
-  402b8b:	48 8d 7c 24 10       	lea    rdi,[rsp+0x10]
-  402b90:	44 89 de             	mov    esi,r11d
-  402b93:	66 0f 28 c6          	movapd xmm0,xmm6
+  402b9b:	48 8d 7c 24 10       	lea    rdi,[rsp+0x10]
+  402ba0:	44 89 de             	mov    esi,r11d
+  402ba3:	66 0f 28 c6          	movapd xmm0,xmm6
     floored_exp10 = 0; // ... and no need to set a normalization factor or check the powers table
-  402b97:	31 db                	xor    ebx,ebx
+  402ba7:	31 db                	xor    ebx,ebx
     get_components(negative ? -abs_number : abs_number, precision) :
-  402b99:	e8 12 f4 ff ff       	call   401fb0 <get_components>
-  402b9e:	45 31 ff             	xor    r15d,r15d
-  402ba1:	48 8b 7c 24 10       	mov    rdi,QWORD PTR [rsp+0x10]
-  402ba6:	48 8b 74 24 18       	mov    rsi,QWORD PTR [rsp+0x18]
-  402bab:	0f b6 54 24 20       	movzx  edx,BYTE PTR [rsp+0x20]
+  402ba9:	e8 12 f4 ff ff       	call   401fc0 <get_components>
+  402bae:	45 31 ff             	xor    r15d,r15d
+  402bb1:	48 8b 7c 24 10       	mov    rdi,QWORD PTR [rsp+0x10]
+  402bb6:	48 8b 74 24 18       	mov    rsi,QWORD PTR [rsp+0x18]
+  402bbb:	0f b6 54 24 20       	movzx  edx,BYTE PTR [rsp+0x20]
   if (fall_back_to_decimal_only_mode) {
-  402bb0:	e9 f2 fd ff ff       	jmp    4029a7 <print_exponential_number+0x1e7>
+  402bc0:	e9 f2 fd ff ff       	jmp    4029b7 <print_exponential_number+0x1e7>
 
 Disassembly of section .text.print_floating_point:
 
-0000000000402bc0 <print_floating_point>:
+0000000000402bd0 <print_floating_point>:
   if (value != value) {
-  402bc0:	66 0f 2e c0          	ucomisd xmm0,xmm0
+  402bd0:	66 0f 2e c0          	ucomisd xmm0,xmm0
 {
-  402bc4:	41 89 d2             	mov    r10d,edx
+  402bd4:	41 89 d2             	mov    r10d,edx
   if (value != value) {
-  402bc7:	0f 8a eb 00 00 00    	jp     402cb8 <print_floating_point+0xf8>
+  402bd7:	0f 8a eb 00 00 00    	jp     402cc8 <print_floating_point+0xf8>
   if (value < -DBL_MAX) {
-  402bcd:	f2 0f 10 0d 6b 29 00 	movsd  xmm1,QWORD PTR [rip+0x296b]        # 405540 <powers_of_10+0x120>
-  402bd4:	00 
-  402bd5:	66 0f 2f c8          	comisd xmm1,xmm0
-  402bd9:	0f 87 21 01 00 00    	ja     402d00 <print_floating_point+0x140>
+  402bdd:	f2 0f 10 0d 5b 29 00 	movsd  xmm1,QWORD PTR [rip+0x295b]        # 405540 <powers_of_10+0x120>
+  402be4:	00 
+  402be5:	66 0f 2f c8          	comisd xmm1,xmm0
+  402be9:	0f 87 21 01 00 00    	ja     402d10 <print_floating_point+0x140>
   if (value > DBL_MAX) {
-  402bdf:	66 0f 2f 05 61 29 00 	comisd xmm0,QWORD PTR [rip+0x2961]        # 405548 <powers_of_10+0x128>
-  402be6:	00 
-  402be7:	77 57                	ja     402c40 <print_floating_point+0x80>
+  402bef:	66 0f 2f 05 51 29 00 	comisd xmm0,QWORD PTR [rip+0x2951]        # 405548 <powers_of_10+0x128>
+  402bf6:	00 
+  402bf7:	77 57                	ja     402c50 <print_floating_point+0x80>
 {
-  402be9:	48 83 ec 28          	sub    rsp,0x28
+  402bf9:	48 83 ec 28          	sub    rsp,0x28
   if (!prefer_exponential &&
-  402bed:	45 84 c0             	test   r8b,r8b
-  402bf0:	75 7e                	jne    402c70 <print_floating_point+0xb0>
-  402bf2:	66 0f 2f 05 56 29 00 	comisd xmm0,QWORD PTR [rip+0x2956]        # 405550 <powers_of_10+0x130>
-  402bf9:	00 
-  402bfa:	0f 87 e8 00 00 00    	ja     402ce8 <print_floating_point+0x128>
+  402bfd:	45 84 c0             	test   r8b,r8b
+  402c00:	75 7e                	jne    402c80 <print_floating_point+0xb0>
+  402c02:	66 0f 2f 05 46 29 00 	comisd xmm0,QWORD PTR [rip+0x2946]        # 405550 <powers_of_10+0x130>
+  402c09:	00 
+  402c0a:	0f 87 e8 00 00 00    	ja     402cf8 <print_floating_point+0x128>
       ((value > PRINTF_FLOAT_NOTATION_THRESHOLD) || (value < -PRINTF_FLOAT_NOTATION_THRESHOLD))) {
-  402c00:	f2 0f 10 0d 50 29 00 	movsd  xmm1,QWORD PTR [rip+0x2950]        # 405558 <powers_of_10+0x138>
-  402c07:	00 
-  402c08:	66 0f 2f c8          	comisd xmm1,xmm0
-  402c0c:	0f 87 d6 00 00 00    	ja     402ce8 <print_floating_point+0x128>
+  402c10:	f2 0f 10 0d 40 29 00 	movsd  xmm1,QWORD PTR [rip+0x2940]        # 405558 <powers_of_10+0x138>
+  402c17:	00 
+  402c18:	66 0f 2f c8          	comisd xmm1,xmm0
+  402c1c:	0f 87 d6 00 00 00    	ja     402cf8 <print_floating_point+0x128>
   if (!(flags & FLAGS_PRECISION)) {
-  402c12:	41 89 c9             	mov    r9d,ecx
-  402c15:	41 81 e1 00 08 00 00 	and    r9d,0x800
-  402c1c:	0f 85 fe 00 00 00    	jne    402d20 <print_floating_point+0x160>
+  402c22:	41 89 c9             	mov    r9d,ecx
+  402c25:	41 81 e1 00 08 00 00 	and    r9d,0x800
+  402c2c:	0f 85 fe 00 00 00    	jne    402d30 <print_floating_point+0x160>
     precision = PRINTF_DEFAULT_FLOAT_PRECISION;
-  402c22:	be 06 00 00 00       	mov    esi,0x6
+  402c32:	be 06 00 00 00       	mov    esi,0x6
     print_decimal_number(output, value, precision, width, flags, buf, len);
-  402c27:	49 89 e0             	mov    r8,rsp
-  402c2a:	44 89 d2             	mov    edx,r10d
-  402c2d:	e8 7e f9 ff ff       	call   4025b0 <print_decimal_number>
+  402c37:	49 89 e0             	mov    r8,rsp
+  402c3a:	44 89 d2             	mov    edx,r10d
+  402c3d:	e8 7e f9 ff ff       	call   4025c0 <print_decimal_number>
 }
-  402c32:	48 83 c4 28          	add    rsp,0x28
-  402c36:	c3                   	ret    
-  402c37:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
-  402c3e:	00 00 
+  402c42:	48 83 c4 28          	add    rsp,0x28
+  402c46:	c3                   	ret    
+  402c47:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+  402c4e:	00 00 
     out_rev_(output, (flags & FLAGS_PLUS) ? "fni+" : "fni", (flags & FLAGS_PLUS) ? 4U : 3U, width, flags);
-  402c40:	89 c8                	mov    eax,ecx
-  402c42:	48 8d 35 10 26 00 00 	lea    rsi,[rip+0x2610]        # 405259 <memcpy+0xdb9>
-  402c49:	41 89 c8             	mov    r8d,ecx
-  402c4c:	44 89 d1             	mov    ecx,r10d
-  402c4f:	83 e0 04             	and    eax,0x4
-  402c52:	83 f8 01             	cmp    eax,0x1
-  402c55:	19 d2                	sbb    edx,edx
-  402c57:	83 c2 04             	add    edx,0x4
-  402c5a:	85 c0                	test   eax,eax
-  402c5c:	48 8d 05 f1 25 00 00 	lea    rax,[rip+0x25f1]        # 405254 <memcpy+0xdb4>
-  402c63:	48 0f 45 f0          	cmovne rsi,rax
-  402c67:	e9 04 ef ff ff       	jmp    401b70 <out_rev_>
-  402c6c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+  402c50:	89 c8                	mov    eax,ecx
+  402c52:	48 8d 35 10 26 00 00 	lea    rsi,[rip+0x2610]        # 405269 <memcpy+0xdb9>
+  402c59:	41 89 c8             	mov    r8d,ecx
+  402c5c:	44 89 d1             	mov    ecx,r10d
+  402c5f:	83 e0 04             	and    eax,0x4
+  402c62:	83 f8 01             	cmp    eax,0x1
+  402c65:	19 d2                	sbb    edx,edx
+  402c67:	83 c2 04             	add    edx,0x4
+  402c6a:	85 c0                	test   eax,eax
+  402c6c:	48 8d 05 f1 25 00 00 	lea    rax,[rip+0x25f1]        # 405264 <memcpy+0xdb4>
+  402c73:	48 0f 45 f0          	cmovne rsi,rax
+  402c77:	e9 04 ef ff ff       	jmp    401b80 <out_rev_>
+  402c7c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
   if (!(flags & FLAGS_PRECISION)) {
-  402c70:	41 89 c9             	mov    r9d,ecx
-  402c73:	41 81 e1 00 08 00 00 	and    r9d,0x800
-  402c7a:	74 54                	je     402cd0 <print_floating_point+0x110>
+  402c80:	41 89 c9             	mov    r9d,ecx
+  402c83:	41 81 e1 00 08 00 00 	and    r9d,0x800
+  402c8a:	74 54                	je     402ce0 <print_floating_point+0x110>
   while ((len < PRINTF_DECIMAL_BUFFER_SIZE) && (precision > PRINTF_MAX_SUPPORTED_PRECISION)) {
-  402c7c:	b8 01 00 00 00       	mov    eax,0x1
-  402c81:	45 31 c9             	xor    r9d,r9d
-  402c84:	83 fe 11             	cmp    esi,0x11
-  402c87:	76 4c                	jbe    402cd5 <print_floating_point+0x115>
-  402c89:	48 8d 54 24 ff       	lea    rdx,[rsp-0x1]
-  402c8e:	66 90                	xchg   ax,ax
+  402c8c:	b8 01 00 00 00       	mov    eax,0x1
+  402c91:	45 31 c9             	xor    r9d,r9d
+  402c94:	83 fe 11             	cmp    esi,0x11
+  402c97:	76 4c                	jbe    402ce5 <print_floating_point+0x115>
+  402c99:	48 8d 54 24 ff       	lea    rdx,[rsp-0x1]
+  402c9e:	66 90                	xchg   ax,ax
     buf[len++] = '0'; // This respects the precision in terms of result length only
-  402c90:	41 89 c1             	mov    r9d,eax
-  402c93:	c6 04 02 30          	mov    BYTE PTR [rdx+rax*1],0x30
+  402ca0:	41 89 c1             	mov    r9d,eax
+  402ca3:	c6 04 02 30          	mov    BYTE PTR [rdx+rax*1],0x30
     precision--;
-  402c97:	83 ee 01             	sub    esi,0x1
+  402ca7:	83 ee 01             	sub    esi,0x1
   while ((len < PRINTF_DECIMAL_BUFFER_SIZE) && (precision > PRINTF_MAX_SUPPORTED_PRECISION)) {
-  402c9a:	48 83 c0 01          	add    rax,0x1
-  402c9e:	41 83 f9 1f          	cmp    r9d,0x1f
-  402ca2:	77 05                	ja     402ca9 <print_floating_point+0xe9>
-  402ca4:	83 fe 11             	cmp    esi,0x11
-  402ca7:	77 e7                	ja     402c90 <print_floating_point+0xd0>
+  402caa:	48 83 c0 01          	add    rax,0x1
+  402cae:	41 83 f9 1f          	cmp    r9d,0x1f
+  402cb2:	77 05                	ja     402cb9 <print_floating_point+0xe9>
+  402cb4:	83 fe 11             	cmp    esi,0x11
+  402cb7:	77 e7                	ja     402ca0 <print_floating_point+0xd0>
   if (prefer_exponential)
-  402ca9:	45 84 c0             	test   r8b,r8b
-  402cac:	0f 84 75 ff ff ff    	je     402c27 <print_floating_point+0x67>
-  402cb2:	eb 21                	jmp    402cd5 <print_floating_point+0x115>
-  402cb4:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+  402cb9:	45 84 c0             	test   r8b,r8b
+  402cbc:	0f 84 75 ff ff ff    	je     402c37 <print_floating_point+0x67>
+  402cc2:	eb 21                	jmp    402ce5 <print_floating_point+0x115>
+  402cc4:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
     out_rev_(output, "nan", 3, width, flags);
-  402cb8:	41 89 c8             	mov    r8d,ecx
-  402cbb:	48 8d 35 9b 25 00 00 	lea    rsi,[rip+0x259b]        # 40525d <memcpy+0xdbd>
-  402cc2:	89 d1                	mov    ecx,edx
-  402cc4:	ba 03 00 00 00       	mov    edx,0x3
-  402cc9:	e9 a2 ee ff ff       	jmp    401b70 <out_rev_>
-  402cce:	66 90                	xchg   ax,ax
+  402cc8:	41 89 c8             	mov    r8d,ecx
+  402ccb:	48 8d 35 9b 25 00 00 	lea    rsi,[rip+0x259b]        # 40526d <memcpy+0xdbd>
+  402cd2:	89 d1                	mov    ecx,edx
+  402cd4:	ba 03 00 00 00       	mov    edx,0x3
+  402cd9:	e9 a2 ee ff ff       	jmp    401b80 <out_rev_>
+  402cde:	66 90                	xchg   ax,ax
     precision = PRINTF_DEFAULT_FLOAT_PRECISION;
-  402cd0:	be 06 00 00 00       	mov    esi,0x6
+  402ce0:	be 06 00 00 00       	mov    esi,0x6
     print_exponential_number(output, value, precision, width, flags, buf, len);
-  402cd5:	49 89 e0             	mov    r8,rsp
-  402cd8:	44 89 d2             	mov    edx,r10d
-  402cdb:	e8 e0 fa ff ff       	call   4027c0 <print_exponential_number>
+  402ce5:	49 89 e0             	mov    r8,rsp
+  402ce8:	44 89 d2             	mov    edx,r10d
+  402ceb:	e8 e0 fa ff ff       	call   4027d0 <print_exponential_number>
 }
-  402ce0:	48 83 c4 28          	add    rsp,0x28
-  402ce4:	c3                   	ret    
-  402ce5:	0f 1f 00             	nop    DWORD PTR [rax]
+  402cf0:	48 83 c4 28          	add    rsp,0x28
+  402cf4:	c3                   	ret    
+  402cf5:	0f 1f 00             	nop    DWORD PTR [rax]
     print_exponential_number(output, value, precision, width, flags, buf, len);
-  402ce8:	45 31 c9             	xor    r9d,r9d
-  402ceb:	49 89 e0             	mov    r8,rsp
-  402cee:	44 89 d2             	mov    edx,r10d
-  402cf1:	e8 ca fa ff ff       	call   4027c0 <print_exponential_number>
+  402cf8:	45 31 c9             	xor    r9d,r9d
+  402cfb:	49 89 e0             	mov    r8,rsp
+  402cfe:	44 89 d2             	mov    edx,r10d
+  402d01:	e8 ca fa ff ff       	call   4027d0 <print_exponential_number>
     return;
-  402cf6:	e9 37 ff ff ff       	jmp    402c32 <print_floating_point+0x72>
-  402cfb:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
+  402d06:	e9 37 ff ff ff       	jmp    402c42 <print_floating_point+0x72>
+  402d0b:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
     out_rev_(output, "fni-", 4, width, flags);
-  402d00:	41 89 c8             	mov    r8d,ecx
-  402d03:	48 8d 35 57 25 00 00 	lea    rsi,[rip+0x2557]        # 405261 <memcpy+0xdc1>
-  402d0a:	89 d1                	mov    ecx,edx
-  402d0c:	ba 04 00 00 00       	mov    edx,0x4
-  402d11:	e9 5a ee ff ff       	jmp    401b70 <out_rev_>
-  402d16:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
-  402d1d:	00 00 00 
+  402d10:	41 89 c8             	mov    r8d,ecx
+  402d13:	48 8d 35 57 25 00 00 	lea    rsi,[rip+0x2557]        # 405271 <memcpy+0xdc1>
+  402d1a:	89 d1                	mov    ecx,edx
+  402d1c:	ba 04 00 00 00       	mov    edx,0x4
+  402d21:	e9 5a ee ff ff       	jmp    401b80 <out_rev_>
+  402d26:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
+  402d2d:	00 00 00 
   while ((len < PRINTF_DECIMAL_BUFFER_SIZE) && (precision > PRINTF_MAX_SUPPORTED_PRECISION)) {
-  402d20:	b8 01 00 00 00       	mov    eax,0x1
-  402d25:	45 31 c9             	xor    r9d,r9d
-  402d28:	83 fe 11             	cmp    esi,0x11
-  402d2b:	0f 87 58 ff ff ff    	ja     402c89 <print_floating_point+0xc9>
-  402d31:	e9 f1 fe ff ff       	jmp    402c27 <print_floating_point+0x67>
+  402d30:	b8 01 00 00 00       	mov    eax,0x1
+  402d35:	45 31 c9             	xor    r9d,r9d
+  402d38:	83 fe 11             	cmp    esi,0x11
+  402d3b:	0f 87 58 ff ff ff    	ja     402c99 <print_floating_point+0xc9>
+  402d41:	e9 f1 fe ff ff       	jmp    402c37 <print_floating_point+0x67>
 
 Disassembly of section .text.format_string_loop:
 
-0000000000402d40 <format_string_loop>:
+0000000000402d50 <format_string_loop>:
 
 static inline void format_string_loop(output_gadget_t* output, const char* format, va_list args)
 {
-  402d40:	41 57                	push   r15
-  402d42:	41 56                	push   r14
-  402d44:	41 55                	push   r13
-  402d46:	41 54                	push   r12
-  402d48:	55                   	push   rbp
-  402d49:	53                   	push   rbx
-  402d4a:	48 89 d3             	mov    rbx,rdx
+  402d50:	41 57                	push   r15
+  402d52:	41 56                	push   r14
+  402d54:	41 55                	push   r13
+  402d56:	41 54                	push   r12
+  402d58:	55                   	push   rbp
+  402d59:	53                   	push   rbx
+  402d5a:	48 89 d3             	mov    rbx,rdx
 #else
 #define ADVANCE_IN_FORMAT_STRING(cptr_) (cptr_)++
 #endif
 
 
   while (*format)
-  402d4d:	48 89 f2             	mov    rdx,rsi
+  402d5d:	48 89 f2             	mov    rdx,rsi
 {
-  402d50:	48 83 ec 28          	sub    rsp,0x28
-  402d54:	48 89 74 24 18       	mov    QWORD PTR [rsp+0x18],rsi
+  402d60:	48 83 ec 28          	sub    rsp,0x28
+  402d64:	48 89 74 24 18       	mov    QWORD PTR [rsp+0x18],rsi
   while (*format)
-  402d59:	0f be 36             	movsx  esi,BYTE PTR [rsi]
-  402d5c:	40 84 f6             	test   sil,sil
-  402d5f:	0f 84 e5 00 00 00    	je     402e4a <format_string_loop+0x10a>
-  402d65:	48 89 fd             	mov    rbp,rdi
+  402d69:	0f be 36             	movsx  esi,BYTE PTR [rsi]
+  402d6c:	40 84 f6             	test   sil,sil
+  402d6f:	0f 84 e5 00 00 00    	je     402e5a <format_string_loop+0x10a>
+  402d75:	48 89 fd             	mov    rbp,rdi
         ADVANCE_IN_FORMAT_STRING(format);
       }
     }
 
     // evaluate length field
     switch (*format) {
-  402d68:	4c 8d 2d 05 25 00 00 	lea    r13,[rip+0x2505]        # 405274 <memcpy+0xdd4>
-  402d6f:	90                   	nop
+  402d78:	4c 8d 2d 05 25 00 00 	lea    r13,[rip+0x2505]        # 405284 <memcpy+0xdd4>
+  402d7f:	90                   	nop
     if (*format != '%') {
-  402d70:	40 80 fe 25          	cmp    sil,0x25
-  402d74:	0f 85 ae 00 00 00    	jne    402e28 <format_string_loop+0xe8>
+  402d80:	40 80 fe 25          	cmp    sil,0x25
+  402d84:	0f 85 ae 00 00 00    	jne    402e38 <format_string_loop+0xe8>
     ADVANCE_IN_FORMAT_STRING(format);
-  402d7a:	48 8d 42 01          	lea    rax,[rdx+0x1]
-  402d7e:	48 89 44 24 18       	mov    QWORD PTR [rsp+0x18],rax
-  402d83:	80 7a 01 00          	cmp    BYTE PTR [rdx+0x1],0x0
-  402d87:	0f 84 bd 00 00 00    	je     402e4a <format_string_loop+0x10a>
+  402d8a:	48 8d 42 01          	lea    rax,[rdx+0x1]
+  402d8e:	48 89 44 24 18       	mov    QWORD PTR [rsp+0x18],rax
+  402d93:	80 7a 01 00          	cmp    BYTE PTR [rdx+0x1],0x0
+  402d97:	0f 84 bd 00 00 00    	je     402e5a <format_string_loop+0x10a>
     printf_flags_t flags = parse_flags(&format);
-  402d8d:	4c 8d 4c 24 18       	lea    r9,[rsp+0x18]
-  402d92:	4c 89 cf             	mov    rdi,r9
-  402d95:	e8 86 f4 ff ff       	call   402220 <parse_flags>
+  402d9d:	4c 8d 4c 24 18       	lea    r9,[rsp+0x18]
+  402da2:	4c 89 cf             	mov    rdi,r9
+  402da5:	e8 86 f4 ff ff       	call   402230 <parse_flags>
     if (is_digit_(*format)) {
-  402d9a:	48 8b 54 24 18       	mov    rdx,QWORD PTR [rsp+0x18]
+  402daa:	48 8b 54 24 18       	mov    rdx,QWORD PTR [rsp+0x18]
     printf_flags_t flags = parse_flags(&format);
-  402d9f:	41 89 c3             	mov    r11d,eax
+  402daf:	41 89 c3             	mov    r11d,eax
     if (is_digit_(*format)) {
-  402da2:	0f be 3a             	movsx  edi,BYTE PTR [rdx]
-  402da5:	89 fe                	mov    esi,edi
-  402da7:	e8 74 ed ff ff       	call   401b20 <is_digit_>
-  402dac:	84 c0                	test   al,al
-  402dae:	0f 85 ac 04 00 00    	jne    403260 <format_string_loop+0x520>
+  402db2:	0f be 3a             	movsx  edi,BYTE PTR [rdx]
+  402db5:	89 fe                	mov    esi,edi
+  402db7:	e8 74 ed ff ff       	call   401b30 <is_digit_>
+  402dbc:	84 c0                	test   al,al
+  402dbe:	0f 85 ac 04 00 00    	jne    403270 <format_string_loop+0x520>
     printf_size_t width = 0U;
-  402db4:	45 31 e4             	xor    r12d,r12d
+  402dc4:	45 31 e4             	xor    r12d,r12d
     else if (*format == '*') {
-  402db7:	40 80 fe 2a          	cmp    sil,0x2a
-  402dbb:	0f 84 bf 04 00 00    	je     403280 <format_string_loop+0x540>
+  402dc7:	40 80 fe 2a          	cmp    sil,0x2a
+  402dcb:	0f 84 bf 04 00 00    	je     403290 <format_string_loop+0x540>
     printf_size_t precision = 0U;
-  402dc1:	45 31 ff             	xor    r15d,r15d
+  402dd1:	45 31 ff             	xor    r15d,r15d
     if (*format == '.') {
-  402dc4:	40 80 fe 2e          	cmp    sil,0x2e
-  402dc8:	0f 84 52 04 00 00    	je     403220 <format_string_loop+0x4e0>
+  402dd4:	40 80 fe 2e          	cmp    sil,0x2e
+  402dd8:	0f 84 52 04 00 00    	je     403230 <format_string_loop+0x4e0>
     switch (*format) {
-  402dce:	8d 46 98             	lea    eax,[rsi-0x68]
-  402dd1:	3c 12                	cmp    al,0x12
-  402dd3:	77 2f                	ja     402e04 <format_string_loop+0xc4>
-  402dd5:	0f b6 c0             	movzx  eax,al
-  402dd8:	49 63 44 85 00       	movsxd rax,DWORD PTR [r13+rax*4+0x0]
-  402ddd:	4c 01 e8             	add    rax,r13
-  402de0:	3e ff e0             	notrack jmp rax
-  402de3:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
+  402dde:	8d 46 98             	lea    eax,[rsi-0x68]
+  402de1:	3c 12                	cmp    al,0x12
+  402de3:	77 2f                	ja     402e14 <format_string_loop+0xc4>
+  402de5:	0f b6 c0             	movzx  eax,al
+  402de8:	49 63 44 85 00       	movsxd rax,DWORD PTR [r13+rax*4+0x0]
+  402ded:	4c 01 e8             	add    rax,r13
+  402df0:	3e ff e0             	notrack jmp rax
+  402df3:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
         flags |= (sizeof(intmax_t) == sizeof(long) ? FLAGS_LONG : FLAGS_LONG_LONG);
         ADVANCE_IN_FORMAT_STRING(format);
         break;
       case 'z' :
         flags |= (sizeof(size_t) == sizeof(long) ? FLAGS_LONG : FLAGS_LONG_LONG);
         ADVANCE_IN_FORMAT_STRING(format);
-  402de8:	48 8d 42 01          	lea    rax,[rdx+0x1]
+  402df8:	48 8d 42 01          	lea    rax,[rdx+0x1]
         flags |= (sizeof(size_t) == sizeof(long) ? FLAGS_LONG : FLAGS_LONG_LONG);
-  402dec:	41 81 cb 00 02 00 00 	or     r11d,0x200
+  402dfc:	41 81 cb 00 02 00 00 	or     r11d,0x200
         ADVANCE_IN_FORMAT_STRING(format);
-  402df3:	48 89 44 24 18       	mov    QWORD PTR [rsp+0x18],rax
-  402df8:	0f be 72 01          	movsx  esi,BYTE PTR [rdx+0x1]
-  402dfc:	40 84 f6             	test   sil,sil
-  402dff:	74 49                	je     402e4a <format_string_loop+0x10a>
-  402e01:	48 89 c2             	mov    rdx,rax
+  402e03:	48 89 44 24 18       	mov    QWORD PTR [rsp+0x18],rax
+  402e08:	0f be 72 01          	movsx  esi,BYTE PTR [rdx+0x1]
+  402e0c:	40 84 f6             	test   sil,sil
+  402e0f:	74 49                	je     402e5a <format_string_loop+0x10a>
+  402e11:	48 89 c2             	mov    rdx,rax
       default:
         break;
     }
 
     // evaluate specifier
     switch (*format) {
-  402e04:	8d 46 db             	lea    eax,[rsi-0x25]
-  402e07:	3c 53                	cmp    al,0x53
-  402e09:	77 1d                	ja     402e28 <format_string_loop+0xe8>
-  402e0b:	48 8d 0d ae 24 00 00 	lea    rcx,[rip+0x24ae]        # 4052c0 <memcpy+0xe20>
-  402e12:	0f b6 c0             	movzx  eax,al
-  402e15:	48 63 04 81          	movsxd rax,DWORD PTR [rcx+rax*4]
-  402e19:	48 01 c8             	add    rax,rcx
-  402e1c:	3e ff e0             	notrack jmp rax
+  402e14:	8d 46 db             	lea    eax,[rsi-0x25]
+  402e17:	3c 53                	cmp    al,0x53
+  402e19:	77 1d                	ja     402e38 <format_string_loop+0xe8>
+  402e1b:	48 8d 0d ae 24 00 00 	lea    rcx,[rip+0x24ae]        # 4052d0 <memcpy+0xe20>
+  402e22:	0f b6 c0             	movzx  eax,al
+  402e25:	48 63 04 81          	movsxd rax,DWORD PTR [rcx+rax*4]
+  402e29:	48 01 c8             	add    rax,rcx
+  402e2c:	3e ff e0             	notrack jmp rax
         format++;
         break;
       }
 
       case '%' :
         putchar_via_gadget(output, '%');
-  402e1f:	be 25 00 00 00       	mov    esi,0x25
-  402e24:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+  402e2f:	be 25 00 00 00       	mov    esi,0x25
+  402e34:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
         break;
       }
 #endif // PRINTF_SUPPORT_WRITEBACK_SPECIFIER
 
       default :
         putchar_via_gadget(output, *format);
-  402e28:	48 89 ef             	mov    rdi,rbp
-  402e2b:	e8 40 eb ff ff       	call   401970 <putchar_via_gadget>
+  402e38:	48 89 ef             	mov    rdi,rbp
+  402e3b:	e8 40 eb ff ff       	call   401980 <putchar_via_gadget>
         format++;
-  402e30:	48 8b 44 24 18       	mov    rax,QWORD PTR [rsp+0x18]
-  402e35:	48 8d 50 01          	lea    rdx,[rax+0x1]
-  402e39:	48 89 54 24 18       	mov    QWORD PTR [rsp+0x18],rdx
+  402e40:	48 8b 44 24 18       	mov    rax,QWORD PTR [rsp+0x18]
+  402e45:	48 8d 50 01          	lea    rdx,[rax+0x1]
+  402e49:	48 89 54 24 18       	mov    QWORD PTR [rsp+0x18],rdx
   while (*format)
-  402e3e:	0f be 32             	movsx  esi,BYTE PTR [rdx]
-  402e41:	40 84 f6             	test   sil,sil
-  402e44:	0f 85 26 ff ff ff    	jne    402d70 <format_string_loop+0x30>
+  402e4e:	0f be 32             	movsx  esi,BYTE PTR [rdx]
+  402e51:	40 84 f6             	test   sil,sil
+  402e54:	0f 85 26 ff ff ff    	jne    402d80 <format_string_loop+0x30>
         break;
     }
   }
 }
-  402e4a:	48 83 c4 28          	add    rsp,0x28
-  402e4e:	5b                   	pop    rbx
-  402e4f:	5d                   	pop    rbp
-  402e50:	41 5c                	pop    r12
-  402e52:	41 5d                	pop    r13
-  402e54:	41 5e                	pop    r14
-  402e56:	41 5f                	pop    r15
-  402e58:	c3                   	ret    
-  402e59:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  402e5a:	48 83 c4 28          	add    rsp,0x28
+  402e5e:	5b                   	pop    rbx
+  402e5f:	5d                   	pop    rbp
+  402e60:	41 5c                	pop    r12
+  402e62:	41 5d                	pop    r13
+  402e64:	41 5e                	pop    r14
+  402e66:	41 5f                	pop    r15
+  402e68:	c3                   	ret    
+  402e69:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
         if (*format == 'd' || *format == 'i') {
-  402e60:	40 80 fe 64          	cmp    sil,0x64
-  402e64:	0f 84 6e 06 00 00    	je     4034d8 <format_string_loop+0x798>
-  402e6a:	40 80 fe 69          	cmp    sil,0x69
-  402e6e:	0f 84 64 06 00 00    	je     4034d8 <format_string_loop+0x798>
+  402e70:	40 80 fe 64          	cmp    sil,0x64
+  402e74:	0f 84 6e 06 00 00    	je     4034e8 <format_string_loop+0x798>
+  402e7a:	40 80 fe 69          	cmp    sil,0x69
+  402e7e:	0f 84 64 06 00 00    	je     4034e8 <format_string_loop+0x798>
         if (*format == 'x' || *format == 'X') {
-  402e74:	89 f0                	mov    eax,esi
-  402e76:	83 e0 df             	and    eax,0xffffffdf
-  402e79:	3c 58                	cmp    al,0x58
-  402e7b:	0f 84 37 06 00 00    	je     4034b8 <format_string_loop+0x778>
+  402e84:	89 f0                	mov    eax,esi
+  402e86:	83 e0 df             	and    eax,0xffffffdf
+  402e89:	3c 58                	cmp    al,0x58
+  402e8b:	0f 84 37 06 00 00    	je     4034c8 <format_string_loop+0x778>
         else if (*format == 'o') {
-  402e81:	b9 08 00 00 00       	mov    ecx,0x8
-  402e86:	40 80 fe 6f          	cmp    sil,0x6f
-  402e8a:	74 14                	je     402ea0 <format_string_loop+0x160>
+  402e91:	b9 08 00 00 00       	mov    ecx,0x8
+  402e96:	40 80 fe 6f          	cmp    sil,0x6f
+  402e9a:	74 14                	je     402eb0 <format_string_loop+0x160>
         else if (*format == 'b') {
-  402e8c:	b9 02 00 00 00       	mov    ecx,0x2
-  402e91:	40 80 fe 62          	cmp    sil,0x62
-  402e95:	74 09                	je     402ea0 <format_string_loop+0x160>
+  402e9c:	b9 02 00 00 00       	mov    ecx,0x2
+  402ea1:	40 80 fe 62          	cmp    sil,0x62
+  402ea5:	74 09                	je     402eb0 <format_string_loop+0x160>
           flags &= ~FLAGS_HASH; // decimal integers have no alternative presentation
-  402e97:	41 83 e3 ef          	and    r11d,0xffffffef
-  402e9b:	b9 0a 00 00 00       	mov    ecx,0xa
+  402ea7:	41 83 e3 ef          	and    r11d,0xffffffef
+  402eab:	b9 0a 00 00 00       	mov    ecx,0xa
           flags &= ~FLAGS_ZEROPAD;
-  402ea0:	44 89 d8             	mov    eax,r11d
+  402eb0:	44 89 d8             	mov    eax,r11d
         format++;
-  402ea3:	48 83 c2 01          	add    rdx,0x1
+  402eb3:	48 83 c2 01          	add    rdx,0x1
           flags &= ~FLAGS_ZEROPAD;
-  402ea7:	83 e0 fe             	and    eax,0xfffffffe
-  402eaa:	41 f7 c3 00 08 00 00 	test   r11d,0x800
+  402eb7:	83 e0 fe             	and    eax,0xfffffffe
+  402eba:	41 f7 c3 00 08 00 00 	test   r11d,0x800
         format++;
-  402eb1:	48 89 54 24 18       	mov    QWORD PTR [rsp+0x18],rdx
+  402ec1:	48 89 54 24 18       	mov    QWORD PTR [rsp+0x18],rdx
           flags &= ~FLAGS_ZEROPAD;
-  402eb6:	44 0f 45 d8          	cmovne r11d,eax
+  402ec6:	44 0f 45 d8          	cmovne r11d,eax
             const long long value = va_arg(args, long long);
-  402eba:	8b 03                	mov    eax,DWORD PTR [rbx]
+  402eca:	8b 03                	mov    eax,DWORD PTR [rbx]
           if (flags & FLAGS_LONG_LONG) {
-  402ebc:	44 89 da             	mov    edx,r11d
-  402ebf:	81 e2 00 04 00 00    	and    edx,0x400
+  402ecc:	44 89 da             	mov    edx,r11d
+  402ecf:	81 e2 00 04 00 00    	and    edx,0x400
         if (flags & FLAGS_SIGNED) {
-  402ec5:	41 f7 c3 00 40 00 00 	test   r11d,0x4000
-  402ecc:	0f 84 b6 04 00 00    	je     403388 <format_string_loop+0x648>
+  402ed5:	41 f7 c3 00 40 00 00 	test   r11d,0x4000
+  402edc:	0f 84 b6 04 00 00    	je     403398 <format_string_loop+0x648>
           if (flags & FLAGS_LONG_LONG) {
-  402ed2:	85 d2                	test   edx,edx
-  402ed4:	0f 85 be 06 00 00    	jne    403598 <format_string_loop+0x858>
+  402ee2:	85 d2                	test   edx,edx
+  402ee4:	0f 85 be 06 00 00    	jne    4035a8 <format_string_loop+0x858>
           else if (flags & FLAGS_LONG) {
-  402eda:	41 f7 c3 00 02 00 00 	test   r11d,0x200
-  402ee1:	0f 85 b1 06 00 00    	jne    403598 <format_string_loop+0x858>
+  402eea:	41 f7 c3 00 02 00 00 	test   r11d,0x200
+  402ef1:	0f 85 b1 06 00 00    	jne    4035a8 <format_string_loop+0x858>
               (flags & FLAGS_CHAR) ? (signed char) va_arg(args, int) :
-  402ee7:	41 f6 c3 40          	test   r11b,0x40
-  402eeb:	0f 84 51 08 00 00    	je     403742 <format_string_loop+0xa02>
-  402ef1:	83 f8 2f             	cmp    eax,0x2f
-  402ef4:	0f 87 bc 08 00 00    	ja     4037b6 <format_string_loop+0xa76>
-  402efa:	89 c2                	mov    edx,eax
-  402efc:	83 c0 08             	add    eax,0x8
-  402eff:	48 03 53 10          	add    rdx,QWORD PTR [rbx+0x10]
-  402f03:	89 03                	mov    DWORD PTR [rbx],eax
-  402f05:	0f be 02             	movsx  eax,BYTE PTR [rdx]
+  402ef7:	41 f6 c3 40          	test   r11b,0x40
+  402efb:	0f 84 51 08 00 00    	je     403752 <format_string_loop+0xa02>
+  402f01:	83 f8 2f             	cmp    eax,0x2f
+  402f04:	0f 87 bc 08 00 00    	ja     4037c6 <format_string_loop+0xa76>
+  402f0a:	89 c2                	mov    edx,eax
+  402f0c:	83 c0 08             	add    eax,0x8
+  402f0f:	48 03 53 10          	add    rdx,QWORD PTR [rbx+0x10]
+  402f13:	89 03                	mov    DWORD PTR [rbx],eax
+  402f15:	0f be 02             	movsx  eax,BYTE PTR [rdx]
             print_integer(output, ABS_FOR_PRINTING(value), value < 0, base, precision, width, flags);
-  402f08:	48 63 f8             	movsxd rdi,eax
-  402f0b:	89 c2                	mov    edx,eax
-  402f0d:	45 89 e1             	mov    r9d,r12d
-  402f10:	45 89 f8             	mov    r8d,r15d
-  402f13:	48 89 fe             	mov    rsi,rdi
-  402f16:	c1 ea 1f             	shr    edx,0x1f
-  402f19:	48 f7 de             	neg    rsi
-  402f1c:	85 c0                	test   eax,eax
-  402f1e:	48 0f 4f f7          	cmovg  rsi,rdi
-  402f22:	48 83 ec 08          	sub    rsp,0x8
-  402f26:	48 89 ef             	mov    rdi,rbp
-  402f29:	41 53                	push   r11
-  402f2b:	e8 90 ef ff ff       	call   401ec0 <print_integer>
+  402f18:	48 63 f8             	movsxd rdi,eax
+  402f1b:	89 c2                	mov    edx,eax
+  402f1d:	45 89 e1             	mov    r9d,r12d
+  402f20:	45 89 f8             	mov    r8d,r15d
+  402f23:	48 89 fe             	mov    rsi,rdi
+  402f26:	c1 ea 1f             	shr    edx,0x1f
+  402f29:	48 f7 de             	neg    rsi
+  402f2c:	85 c0                	test   eax,eax
+  402f2e:	48 0f 4f f7          	cmovg  rsi,rdi
+  402f32:	48 83 ec 08          	sub    rsp,0x8
+  402f36:	48 89 ef             	mov    rdi,rbp
+  402f39:	41 53                	push   r11
+  402f3b:	e8 90 ef ff ff       	call   401ed0 <print_integer>
   while (*format)
-  402f30:	48 8b 54 24 28       	mov    rdx,QWORD PTR [rsp+0x28]
-  402f35:	41 5a                	pop    r10
-  402f37:	41 5b                	pop    r11
-  402f39:	e9 00 ff ff ff       	jmp    402e3e <format_string_loop+0xfe>
-  402f3e:	66 90                	xchg   ax,ax
+  402f40:	48 8b 54 24 28       	mov    rdx,QWORD PTR [rsp+0x28]
+  402f45:	41 5a                	pop    r10
+  402f47:	41 5b                	pop    r11
+  402f49:	e9 00 ff ff ff       	jmp    402e4e <format_string_loop+0xfe>
+  402f4e:	66 90                	xchg   ax,ax
         ADVANCE_IN_FORMAT_STRING(format);
-  402f40:	48 8d 42 01          	lea    rax,[rdx+0x1]
-  402f44:	48 89 44 24 18       	mov    QWORD PTR [rsp+0x18],rax
-  402f49:	0f be 72 01          	movsx  esi,BYTE PTR [rdx+0x1]
-  402f4d:	40 84 f6             	test   sil,sil
-  402f50:	0f 84 f4 fe ff ff    	je     402e4a <format_string_loop+0x10a>
+  402f50:	48 8d 42 01          	lea    rax,[rdx+0x1]
+  402f54:	48 89 44 24 18       	mov    QWORD PTR [rsp+0x18],rax
+  402f59:	0f be 72 01          	movsx  esi,BYTE PTR [rdx+0x1]
+  402f5d:	40 84 f6             	test   sil,sil
+  402f60:	0f 84 f4 fe ff ff    	je     402e5a <format_string_loop+0x10a>
         if (*format == 'h') {
-  402f56:	40 80 fe 68          	cmp    sil,0x68
-  402f5a:	0f 84 d8 03 00 00    	je     403338 <format_string_loop+0x5f8>
+  402f66:	40 80 fe 68          	cmp    sil,0x68
+  402f6a:	0f 84 d8 03 00 00    	je     403348 <format_string_loop+0x5f8>
         flags |= FLAGS_SHORT;
-  402f60:	41 80 cb 80          	or     r11b,0x80
-  402f64:	48 89 c2             	mov    rdx,rax
-  402f67:	e9 98 fe ff ff       	jmp    402e04 <format_string_loop+0xc4>
-  402f6c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+  402f70:	41 80 cb 80          	or     r11b,0x80
+  402f74:	48 89 c2             	mov    rdx,rax
+  402f77:	e9 98 fe ff ff       	jmp    402e14 <format_string_loop+0xc4>
+  402f7c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
         ADVANCE_IN_FORMAT_STRING(format);
-  402f70:	48 8d 42 01          	lea    rax,[rdx+0x1]
-  402f74:	48 89 44 24 18       	mov    QWORD PTR [rsp+0x18],rax
-  402f79:	0f be 72 01          	movsx  esi,BYTE PTR [rdx+0x1]
-  402f7d:	40 84 f6             	test   sil,sil
-  402f80:	0f 84 c4 fe ff ff    	je     402e4a <format_string_loop+0x10a>
+  402f80:	48 8d 42 01          	lea    rax,[rdx+0x1]
+  402f84:	48 89 44 24 18       	mov    QWORD PTR [rsp+0x18],rax
+  402f89:	0f be 72 01          	movsx  esi,BYTE PTR [rdx+0x1]
+  402f8d:	40 84 f6             	test   sil,sil
+  402f90:	0f 84 c4 fe ff ff    	je     402e5a <format_string_loop+0x10a>
         if (*format == 'l') {
-  402f86:	40 80 fe 6c          	cmp    sil,0x6c
-  402f8a:	0f 84 d0 03 00 00    	je     403360 <format_string_loop+0x620>
+  402f96:	40 80 fe 6c          	cmp    sil,0x6c
+  402f9a:	0f 84 d0 03 00 00    	je     403370 <format_string_loop+0x620>
         flags |= FLAGS_LONG;
-  402f90:	41 81 cb 00 02 00 00 	or     r11d,0x200
-  402f97:	48 89 c2             	mov    rdx,rax
-  402f9a:	e9 65 fe ff ff       	jmp    402e04 <format_string_loop+0xc4>
-  402f9f:	90                   	nop
+  402fa0:	41 81 cb 00 02 00 00 	or     r11d,0x200
+  402fa7:	48 89 c2             	mov    rdx,rax
+  402faa:	e9 65 fe ff ff       	jmp    402e14 <format_string_loop+0xc4>
+  402faf:	90                   	nop
         if ((*format == 'g')||(*format == 'G')) flags |= FLAGS_ADAPT_EXP;
-  402fa0:	89 f2                	mov    edx,esi
-  402fa2:	44 89 d8             	mov    eax,r11d
-  402fa5:	83 e2 df             	and    edx,0xffffffdf
-  402fa8:	80 cc 10             	or     ah,0x10
-  402fab:	80 fa 47             	cmp    dl,0x47
-  402fae:	44 0f 44 d8          	cmove  r11d,eax
+  402fb0:	89 f2                	mov    edx,esi
+  402fb2:	44 89 d8             	mov    eax,r11d
+  402fb5:	83 e2 df             	and    edx,0xffffffdf
+  402fb8:	80 cc 10             	or     ah,0x10
+  402fbb:	80 fa 47             	cmp    dl,0x47
+  402fbe:	44 0f 44 d8          	cmove  r11d,eax
         if ((*format == 'E')||(*format == 'G')) flags |= FLAGS_UPPERCASE;
-  402fb2:	83 e6 fd             	and    esi,0xfffffffd
-  402fb5:	44 89 d8             	mov    eax,r11d
-  402fb8:	83 c8 20             	or     eax,0x20
-  402fbb:	40 80 fe 45          	cmp    sil,0x45
-  402fbf:	44 0f 44 d8          	cmove  r11d,eax
+  402fc2:	83 e6 fd             	and    esi,0xfffffffd
+  402fc5:	44 89 d8             	mov    eax,r11d
+  402fc8:	83 c8 20             	or     eax,0x20
+  402fcb:	40 80 fe 45          	cmp    sil,0x45
+  402fcf:	44 0f 44 d8          	cmove  r11d,eax
         print_floating_point(output, va_arg(args, double), precision, width, flags, PRINTF_PREFER_EXPONENTIAL);
-  402fc3:	8b 43 04             	mov    eax,DWORD PTR [rbx+0x4]
-  402fc6:	3d af 00 00 00       	cmp    eax,0xaf
-  402fcb:	0f 87 9f 03 00 00    	ja     403370 <format_string_loop+0x630>
-  402fd1:	89 c7                	mov    edi,eax
-  402fd3:	83 c0 10             	add    eax,0x10
-  402fd6:	48 03 7b 10          	add    rdi,QWORD PTR [rbx+0x10]
-  402fda:	89 43 04             	mov    DWORD PTR [rbx+0x4],eax
-  402fdd:	41 b8 01 00 00 00    	mov    r8d,0x1
-  402fe3:	f2 0f 10 07          	movsd  xmm0,QWORD PTR [rdi]
-  402fe7:	44 89 e2             	mov    edx,r12d
-  402fea:	44 89 d9             	mov    ecx,r11d
-  402fed:	44 89 fe             	mov    esi,r15d
-  402ff0:	48 89 ef             	mov    rdi,rbp
-  402ff3:	e8 c8 fb ff ff       	call   402bc0 <print_floating_point>
+  402fd3:	8b 43 04             	mov    eax,DWORD PTR [rbx+0x4]
+  402fd6:	3d af 00 00 00       	cmp    eax,0xaf
+  402fdb:	0f 87 9f 03 00 00    	ja     403380 <format_string_loop+0x630>
+  402fe1:	89 c7                	mov    edi,eax
+  402fe3:	83 c0 10             	add    eax,0x10
+  402fe6:	48 03 7b 10          	add    rdi,QWORD PTR [rbx+0x10]
+  402fea:	89 43 04             	mov    DWORD PTR [rbx+0x4],eax
+  402fed:	41 b8 01 00 00 00    	mov    r8d,0x1
+  402ff3:	f2 0f 10 07          	movsd  xmm0,QWORD PTR [rdi]
+  402ff7:	44 89 e2             	mov    edx,r12d
+  402ffa:	44 89 d9             	mov    ecx,r11d
+  402ffd:	44 89 fe             	mov    esi,r15d
+  403000:	48 89 ef             	mov    rdi,rbp
+  403003:	e8 c8 fb ff ff       	call   402bd0 <print_floating_point>
         format++;
-  402ff8:	48 8b 44 24 18       	mov    rax,QWORD PTR [rsp+0x18]
-  402ffd:	48 8d 50 01          	lea    rdx,[rax+0x1]
-  403001:	48 89 54 24 18       	mov    QWORD PTR [rsp+0x18],rdx
+  403008:	48 8b 44 24 18       	mov    rax,QWORD PTR [rsp+0x18]
+  40300d:	48 8d 50 01          	lea    rdx,[rax+0x1]
+  403011:	48 89 54 24 18       	mov    QWORD PTR [rsp+0x18],rdx
         break;
-  403006:	e9 33 fe ff ff       	jmp    402e3e <format_string_loop+0xfe>
-  40300b:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
+  403016:	e9 33 fe ff ff       	jmp    402e4e <format_string_loop+0xfe>
+  40301b:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
         if (*format == 'F') flags |= FLAGS_UPPERCASE;
-  403010:	44 89 d8             	mov    eax,r11d
-  403013:	83 c8 20             	or     eax,0x20
-  403016:	40 80 fe 46          	cmp    sil,0x46
-  40301a:	44 0f 44 d8          	cmove  r11d,eax
+  403020:	44 89 d8             	mov    eax,r11d
+  403023:	83 c8 20             	or     eax,0x20
+  403026:	40 80 fe 46          	cmp    sil,0x46
+  40302a:	44 0f 44 d8          	cmove  r11d,eax
         print_floating_point(output, va_arg(args, double), precision, width, flags, PRINTF_PREFER_DECIMAL);
-  40301e:	8b 43 04             	mov    eax,DWORD PTR [rbx+0x4]
-  403021:	3d af 00 00 00       	cmp    eax,0xaf
-  403026:	0f 87 74 04 00 00    	ja     4034a0 <format_string_loop+0x760>
-  40302c:	89 c7                	mov    edi,eax
-  40302e:	83 c0 10             	add    eax,0x10
-  403031:	48 03 7b 10          	add    rdi,QWORD PTR [rbx+0x10]
-  403035:	89 43 04             	mov    DWORD PTR [rbx+0x4],eax
-  403038:	45 31 c0             	xor    r8d,r8d
-  40303b:	eb a6                	jmp    402fe3 <format_string_loop+0x2a3>
+  40302e:	8b 43 04             	mov    eax,DWORD PTR [rbx+0x4]
+  403031:	3d af 00 00 00       	cmp    eax,0xaf
+  403036:	0f 87 74 04 00 00    	ja     4034b0 <format_string_loop+0x760>
+  40303c:	89 c7                	mov    edi,eax
+  40303e:	83 c0 10             	add    eax,0x10
+  403041:	48 03 7b 10          	add    rdi,QWORD PTR [rbx+0x10]
+  403045:	89 43 04             	mov    DWORD PTR [rbx+0x4],eax
+  403048:	45 31 c0             	xor    r8d,r8d
+  40304b:	eb a6                	jmp    402ff3 <format_string_loop+0x2a3>
         if (!(flags & FLAGS_LEFT)) {
-  40303d:	41 83 e3 02          	and    r11d,0x2
-  403041:	0f 84 b9 05 00 00    	je     403600 <format_string_loop+0x8c0>
+  40304d:	41 83 e3 02          	and    r11d,0x2
+  403051:	0f 84 b9 05 00 00    	je     403610 <format_string_loop+0x8c0>
         putchar_via_gadget(output, (char) va_arg(args, int) );
-  403047:	8b 03                	mov    eax,DWORD PTR [rbx]
-  403049:	83 f8 2f             	cmp    eax,0x2f
-  40304c:	0f 86 a9 06 00 00    	jbe    4036fb <format_string_loop+0x9bb>
-  403052:	48 8b 53 08          	mov    rdx,QWORD PTR [rbx+0x8]
-  403056:	48 8d 42 08          	lea    rax,[rdx+0x8]
-  40305a:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
-  40305e:	0f be 32             	movsx  esi,BYTE PTR [rdx]
-  403061:	48 89 ef             	mov    rdi,rbp
+  403057:	8b 03                	mov    eax,DWORD PTR [rbx]
+  403059:	83 f8 2f             	cmp    eax,0x2f
+  40305c:	0f 86 a9 06 00 00    	jbe    40370b <format_string_loop+0x9bb>
+  403062:	48 8b 53 08          	mov    rdx,QWORD PTR [rbx+0x8]
+  403066:	48 8d 42 08          	lea    rax,[rdx+0x8]
+  40306a:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
+  40306e:	0f be 32             	movsx  esi,BYTE PTR [rdx]
+  403071:	48 89 ef             	mov    rdi,rbp
           while (l++ < width) {
-  403064:	41 bf 02 00 00 00    	mov    r15d,0x2
+  403074:	41 bf 02 00 00 00    	mov    r15d,0x2
         putchar_via_gadget(output, (char) va_arg(args, int) );
-  40306a:	e8 01 e9 ff ff       	call   401970 <putchar_via_gadget>
+  40307a:	e8 01 e9 ff ff       	call   401980 <putchar_via_gadget>
           while (l++ < width) {
-  40306f:	41 83 fc 01          	cmp    r12d,0x1
-  403073:	0f 86 b7 fd ff ff    	jbe    402e30 <format_string_loop+0xf0>
-  403079:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  40307f:	41 83 fc 01          	cmp    r12d,0x1
+  403083:	0f 86 b7 fd ff ff    	jbe    402e40 <format_string_loop+0xf0>
+  403089:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
             putchar_via_gadget(output, ' ');
-  403080:	be 20 00 00 00       	mov    esi,0x20
-  403085:	48 89 ef             	mov    rdi,rbp
-  403088:	e8 e3 e8 ff ff       	call   401970 <putchar_via_gadget>
+  403090:	be 20 00 00 00       	mov    esi,0x20
+  403095:	48 89 ef             	mov    rdi,rbp
+  403098:	e8 e3 e8 ff ff       	call   401980 <putchar_via_gadget>
           while (l++ < width) {
-  40308d:	44 89 f8             	mov    eax,r15d
-  403090:	41 83 c7 01          	add    r15d,0x1
-  403094:	41 39 c4             	cmp    r12d,eax
-  403097:	75 e7                	jne    403080 <format_string_loop+0x340>
-  403099:	e9 92 fd ff ff       	jmp    402e30 <format_string_loop+0xf0>
+  40309d:	44 89 f8             	mov    eax,r15d
+  4030a0:	41 83 c7 01          	add    r15d,0x1
+  4030a4:	41 39 c4             	cmp    r12d,eax
+  4030a7:	75 e7                	jne    403090 <format_string_loop+0x340>
+  4030a9:	e9 92 fd ff ff       	jmp    402e40 <format_string_loop+0xf0>
         uintptr_t value = (uintptr_t)va_arg(args, void*);
-  40309e:	8b 03                	mov    eax,DWORD PTR [rbx]
+  4030ae:	8b 03                	mov    eax,DWORD PTR [rbx]
         flags |= FLAGS_ZEROPAD | FLAGS_POINTER;
-  4030a0:	41 81 cb 01 20 00 00 	or     r11d,0x2001
+  4030b0:	41 81 cb 01 20 00 00 	or     r11d,0x2001
         uintptr_t value = (uintptr_t)va_arg(args, void*);
-  4030a7:	83 f8 2f             	cmp    eax,0x2f
-  4030aa:	0f 87 b0 03 00 00    	ja     403460 <format_string_loop+0x720>
-  4030b0:	89 c2                	mov    edx,eax
-  4030b2:	83 c0 08             	add    eax,0x8
-  4030b5:	48 03 53 10          	add    rdx,QWORD PTR [rbx+0x10]
-  4030b9:	89 03                	mov    DWORD PTR [rbx],eax
-  4030bb:	48 8b 32             	mov    rsi,QWORD PTR [rdx]
+  4030b7:	83 f8 2f             	cmp    eax,0x2f
+  4030ba:	0f 87 b0 03 00 00    	ja     403470 <format_string_loop+0x720>
+  4030c0:	89 c2                	mov    edx,eax
+  4030c2:	83 c0 08             	add    eax,0x8
+  4030c5:	48 03 53 10          	add    rdx,QWORD PTR [rbx+0x10]
+  4030c9:	89 03                	mov    DWORD PTR [rbx],eax
+  4030cb:	48 8b 32             	mov    rsi,QWORD PTR [rdx]
           out_rev_(output, ")lin(", 5, width, flags) :
-  4030be:	48 85 f6             	test   rsi,rsi
-  4030c1:	0f 84 b1 03 00 00    	je     403478 <format_string_loop+0x738>
+  4030ce:	48 85 f6             	test   rsi,rsi
+  4030d1:	0f 84 b1 03 00 00    	je     403488 <format_string_loop+0x738>
           print_integer(output, (printf_unsigned_value_t) value, false, BASE_HEX, precision, width, flags);
-  4030c7:	48 83 ec 08          	sub    rsp,0x8
-  4030cb:	31 d2                	xor    edx,edx
-  4030cd:	41 b9 12 00 00 00    	mov    r9d,0x12
-  4030d3:	45 89 f8             	mov    r8d,r15d
-  4030d6:	41 53                	push   r11
-  4030d8:	b9 10 00 00 00       	mov    ecx,0x10
-  4030dd:	48 89 ef             	mov    rdi,rbp
-  4030e0:	e8 db ed ff ff       	call   401ec0 <print_integer>
-  4030e5:	58                   	pop    rax
-  4030e6:	5a                   	pop    rdx
+  4030d7:	48 83 ec 08          	sub    rsp,0x8
+  4030db:	31 d2                	xor    edx,edx
+  4030dd:	41 b9 12 00 00 00    	mov    r9d,0x12
+  4030e3:	45 89 f8             	mov    r8d,r15d
+  4030e6:	41 53                	push   r11
+  4030e8:	b9 10 00 00 00       	mov    ecx,0x10
+  4030ed:	48 89 ef             	mov    rdi,rbp
+  4030f0:	e8 db ed ff ff       	call   401ed0 <print_integer>
+  4030f5:	58                   	pop    rax
+  4030f6:	5a                   	pop    rdx
         format++;
-  4030e7:	e9 44 fd ff ff       	jmp    402e30 <format_string_loop+0xf0>
+  4030f7:	e9 44 fd ff ff       	jmp    402e40 <format_string_loop+0xf0>
         if       (flags & FLAGS_CHAR)      *(va_arg(args, char*))      = (char) output->pos;
-  4030ec:	8b 4d 18             	mov    ecx,DWORD PTR [rbp+0x18]
+  4030fc:	8b 4d 18             	mov    ecx,DWORD PTR [rbp+0x18]
             const long long value = va_arg(args, long long);
-  4030ef:	8b 03                	mov    eax,DWORD PTR [rbx]
+  4030ff:	8b 03                	mov    eax,DWORD PTR [rbx]
         if       (flags & FLAGS_CHAR)      *(va_arg(args, char*))      = (char) output->pos;
-  4030f1:	41 f6 c3 40          	test   r11b,0x40
-  4030f5:	0f 84 f5 02 00 00    	je     4033f0 <format_string_loop+0x6b0>
-  4030fb:	83 f8 2f             	cmp    eax,0x2f
-  4030fe:	0f 87 3c 04 00 00    	ja     403540 <format_string_loop+0x800>
-  403104:	89 c2                	mov    edx,eax
-  403106:	83 c0 08             	add    eax,0x8
-  403109:	48 03 53 10          	add    rdx,QWORD PTR [rbx+0x10]
-  40310d:	89 03                	mov    DWORD PTR [rbx],eax
-  40310f:	48 8b 02             	mov    rax,QWORD PTR [rdx]
-  403112:	88 08                	mov    BYTE PTR [rax],cl
+  403101:	41 f6 c3 40          	test   r11b,0x40
+  403105:	0f 84 f5 02 00 00    	je     403400 <format_string_loop+0x6b0>
+  40310b:	83 f8 2f             	cmp    eax,0x2f
+  40310e:	0f 87 3c 04 00 00    	ja     403550 <format_string_loop+0x800>
+  403114:	89 c2                	mov    edx,eax
+  403116:	83 c0 08             	add    eax,0x8
+  403119:	48 03 53 10          	add    rdx,QWORD PTR [rbx+0x10]
+  40311d:	89 03                	mov    DWORD PTR [rbx],eax
+  40311f:	48 8b 02             	mov    rax,QWORD PTR [rdx]
+  403122:	88 08                	mov    BYTE PTR [rax],cl
         format++;
-  403114:	48 8b 54 24 18       	mov    rdx,QWORD PTR [rsp+0x18]
-  403119:	48 83 c2 01          	add    rdx,0x1
-  40311d:	48 89 54 24 18       	mov    QWORD PTR [rsp+0x18],rdx
+  403124:	48 8b 54 24 18       	mov    rdx,QWORD PTR [rsp+0x18]
+  403129:	48 83 c2 01          	add    rdx,0x1
+  40312d:	48 89 54 24 18       	mov    QWORD PTR [rsp+0x18],rdx
         break;
-  403122:	e9 17 fd ff ff       	jmp    402e3e <format_string_loop+0xfe>
+  403132:	e9 17 fd ff ff       	jmp    402e4e <format_string_loop+0xfe>
         const char* p = va_arg(args, char*);
-  403127:	8b 03                	mov    eax,DWORD PTR [rbx]
-  403129:	83 f8 2f             	cmp    eax,0x2f
-  40312c:	0f 87 ee 02 00 00    	ja     403420 <format_string_loop+0x6e0>
-  403132:	89 c2                	mov    edx,eax
-  403134:	83 c0 08             	add    eax,0x8
-  403137:	48 03 53 10          	add    rdx,QWORD PTR [rbx+0x10]
-  40313b:	89 03                	mov    DWORD PTR [rbx],eax
-  40313d:	48 8b 02             	mov    rax,QWORD PTR [rdx]
-  403140:	48 89 04 24          	mov    QWORD PTR [rsp],rax
+  403137:	8b 03                	mov    eax,DWORD PTR [rbx]
+  403139:	83 f8 2f             	cmp    eax,0x2f
+  40313c:	0f 87 ee 02 00 00    	ja     403430 <format_string_loop+0x6e0>
+  403142:	89 c2                	mov    edx,eax
+  403144:	83 c0 08             	add    eax,0x8
+  403147:	48 03 53 10          	add    rdx,QWORD PTR [rbx+0x10]
+  40314b:	89 03                	mov    DWORD PTR [rbx],eax
+  40314d:	48 8b 02             	mov    rax,QWORD PTR [rdx]
+  403150:	48 89 04 24          	mov    QWORD PTR [rsp],rax
         if (p == NULL) {
-  403144:	48 85 c0             	test   rax,rax
-  403147:	0f 84 ef 02 00 00    	je     40343c <format_string_loop+0x6fc>
+  403154:	48 85 c0             	test   rax,rax
+  403157:	0f 84 ef 02 00 00    	je     40344c <format_string_loop+0x6fc>
           printf_size_t l = strnlen_s_(p, precision ? precision : PRINTF_MAX_POSSIBLE_BUFFER_SIZE);
-  40314d:	45 85 ff             	test   r15d,r15d
-  403150:	be ff ff ff 7f       	mov    esi,0x7fffffff
-  403155:	48 8b 3c 24          	mov    rdi,QWORD PTR [rsp]
-  403159:	41 0f 45 f7          	cmovne esi,r15d
-  40315d:	e8 7e e9 ff ff       	call   401ae0 <strnlen_s_>
+  40315d:	45 85 ff             	test   r15d,r15d
+  403160:	be ff ff ff 7f       	mov    esi,0x7fffffff
+  403165:	48 8b 3c 24          	mov    rdi,QWORD PTR [rsp]
+  403169:	41 0f 45 f7          	cmovne esi,r15d
+  40316d:	e8 7e e9 ff ff       	call   401af0 <strnlen_s_>
             l = (l < precision ? l : precision);
-  403162:	44 89 df             	mov    edi,r11d
-  403165:	44 39 f8             	cmp    eax,r15d
+  403172:	44 89 df             	mov    edi,r11d
+  403175:	44 39 f8             	cmp    eax,r15d
           printf_size_t l = strnlen_s_(p, precision ? precision : PRINTF_MAX_POSSIBLE_BUFFER_SIZE);
-  403168:	89 c1                	mov    ecx,eax
+  403178:	89 c1                	mov    ecx,eax
             l = (l < precision ? l : precision);
-  40316a:	41 0f 47 c7          	cmova  eax,r15d
-  40316e:	81 e7 00 08 00 00    	and    edi,0x800
-  403174:	41 89 fe             	mov    r14d,edi
-  403177:	0f 44 c1             	cmove  eax,ecx
+  40317a:	41 0f 47 c7          	cmova  eax,r15d
+  40317e:	81 e7 00 08 00 00    	and    edi,0x800
+  403184:	41 89 fe             	mov    r14d,edi
+  403187:	0f 44 c1             	cmove  eax,ecx
           if (!(flags & FLAGS_LEFT)) {
-  40317a:	41 83 e3 02          	and    r11d,0x2
-  40317e:	44 89 5c 24 10       	mov    DWORD PTR [rsp+0x10],r11d
+  40318a:	41 83 e3 02          	and    r11d,0x2
+  40318e:	44 89 5c 24 10       	mov    DWORD PTR [rsp+0x10],r11d
             l = (l < precision ? l : precision);
-  403183:	89 44 24 14          	mov    DWORD PTR [rsp+0x14],eax
+  403193:	89 44 24 14          	mov    DWORD PTR [rsp+0x14],eax
           if (!(flags & FLAGS_LEFT)) {
-  403187:	0f 84 c3 04 00 00    	je     403650 <format_string_loop+0x910>
+  403197:	0f 84 c3 04 00 00    	je     403660 <format_string_loop+0x910>
           while ((*p != 0) && (!(flags & FLAGS_PRECISION) || precision)) {
-  40318d:	48 8b 04 24          	mov    rax,QWORD PTR [rsp]
-  403191:	0f be 30             	movsx  esi,BYTE PTR [rax]
-  403194:	40 84 f6             	test   sil,sil
-  403197:	74 52                	je     4031eb <format_string_loop+0x4ab>
-  403199:	85 ff                	test   edi,edi
-  40319b:	0f 94 44 24 0c       	sete   BYTE PTR [rsp+0xc]
-  4031a0:	0f b6 44 24 0c       	movzx  eax,BYTE PTR [rsp+0xc]
-  4031a5:	45 85 ff             	test   r15d,r15d
-  4031a8:	75 04                	jne    4031ae <format_string_loop+0x46e>
-  4031aa:	84 c0                	test   al,al
-  4031ac:	74 3d                	je     4031eb <format_string_loop+0x4ab>
+  40319d:	48 8b 04 24          	mov    rax,QWORD PTR [rsp]
+  4031a1:	0f be 30             	movsx  esi,BYTE PTR [rax]
+  4031a4:	40 84 f6             	test   sil,sil
+  4031a7:	74 52                	je     4031fb <format_string_loop+0x4ab>
+  4031a9:	85 ff                	test   edi,edi
+  4031ab:	0f 94 44 24 0c       	sete   BYTE PTR [rsp+0xc]
+  4031b0:	0f b6 44 24 0c       	movzx  eax,BYTE PTR [rsp+0xc]
+  4031b5:	45 85 ff             	test   r15d,r15d
+  4031b8:	75 04                	jne    4031be <format_string_loop+0x46e>
+  4031ba:	84 c0                	test   al,al
+  4031bc:	74 3d                	je     4031fb <format_string_loop+0x4ab>
           printf_size_t l = strnlen_s_(p, precision ? precision : PRINTF_MAX_POSSIBLE_BUFFER_SIZE);
-  4031ae:	4c 8b 34 24          	mov    r14,QWORD PTR [rsp]
-  4031b2:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
+  4031be:	4c 8b 34 24          	mov    r14,QWORD PTR [rsp]
+  4031c2:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
             putchar_via_gadget(output, *(p++));
-  4031b8:	49 83 c6 01          	add    r14,0x1
-  4031bc:	48 89 ef             	mov    rdi,rbp
-  4031bf:	e8 ac e7 ff ff       	call   401970 <putchar_via_gadget>
+  4031c8:	49 83 c6 01          	add    r14,0x1
+  4031cc:	48 89 ef             	mov    rdi,rbp
+  4031cf:	e8 ac e7 ff ff       	call   401980 <putchar_via_gadget>
           while ((*p != 0) && (!(flags & FLAGS_PRECISION) || precision)) {
-  4031c4:	41 0f be 36          	movsx  esi,BYTE PTR [r14]
-  4031c8:	40 84 f6             	test   sil,sil
-  4031cb:	74 12                	je     4031df <format_string_loop+0x49f>
-  4031cd:	44 89 fa             	mov    edx,r15d
-  4031d0:	44 29 f2             	sub    edx,r14d
-  4031d3:	03 14 24             	add    edx,DWORD PTR [rsp]
-  4031d6:	75 e0                	jne    4031b8 <format_string_loop+0x478>
-  4031d8:	80 7c 24 0c 00       	cmp    BYTE PTR [rsp+0xc],0x0
-  4031dd:	75 d9                	jne    4031b8 <format_string_loop+0x478>
+  4031d4:	41 0f be 36          	movsx  esi,BYTE PTR [r14]
+  4031d8:	40 84 f6             	test   sil,sil
+  4031db:	74 12                	je     4031ef <format_string_loop+0x49f>
+  4031dd:	44 89 fa             	mov    edx,r15d
+  4031e0:	44 29 f2             	sub    edx,r14d
+  4031e3:	03 14 24             	add    edx,DWORD PTR [rsp]
+  4031e6:	75 e0                	jne    4031c8 <format_string_loop+0x478>
+  4031e8:	80 7c 24 0c 00       	cmp    BYTE PTR [rsp+0xc],0x0
+  4031ed:	75 d9                	jne    4031c8 <format_string_loop+0x478>
           if (flags & FLAGS_LEFT) {
-  4031df:	8b 4c 24 10          	mov    ecx,DWORD PTR [rsp+0x10]
-  4031e3:	85 c9                	test   ecx,ecx
-  4031e5:	0f 84 45 fc ff ff    	je     402e30 <format_string_loop+0xf0>
+  4031ef:	8b 4c 24 10          	mov    ecx,DWORD PTR [rsp+0x10]
+  4031f3:	85 c9                	test   ecx,ecx
+  4031f5:	0f 84 45 fc ff ff    	je     402e40 <format_string_loop+0xf0>
             while (l++ < width) {
-  4031eb:	8b 44 24 14          	mov    eax,DWORD PTR [rsp+0x14]
-  4031ef:	44 8d 78 01          	lea    r15d,[rax+0x1]
-  4031f3:	41 39 c4             	cmp    r12d,eax
-  4031f6:	0f 86 34 fc ff ff    	jbe    402e30 <format_string_loop+0xf0>
-  4031fc:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+  4031fb:	8b 44 24 14          	mov    eax,DWORD PTR [rsp+0x14]
+  4031ff:	44 8d 78 01          	lea    r15d,[rax+0x1]
+  403203:	41 39 c4             	cmp    r12d,eax
+  403206:	0f 86 34 fc ff ff    	jbe    402e40 <format_string_loop+0xf0>
+  40320c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
               putchar_via_gadget(output, ' ');
-  403200:	be 20 00 00 00       	mov    esi,0x20
-  403205:	48 89 ef             	mov    rdi,rbp
-  403208:	e8 63 e7 ff ff       	call   401970 <putchar_via_gadget>
+  403210:	be 20 00 00 00       	mov    esi,0x20
+  403215:	48 89 ef             	mov    rdi,rbp
+  403218:	e8 63 e7 ff ff       	call   401980 <putchar_via_gadget>
             while (l++ < width) {
-  40320d:	44 89 f8             	mov    eax,r15d
-  403210:	41 83 c7 01          	add    r15d,0x1
-  403214:	41 39 c4             	cmp    r12d,eax
-  403217:	75 e7                	jne    403200 <format_string_loop+0x4c0>
-  403219:	e9 12 fc ff ff       	jmp    402e30 <format_string_loop+0xf0>
-  40321e:	66 90                	xchg   ax,ax
+  40321d:	44 89 f8             	mov    eax,r15d
+  403220:	41 83 c7 01          	add    r15d,0x1
+  403224:	41 39 c4             	cmp    r12d,eax
+  403227:	75 e7                	jne    403210 <format_string_loop+0x4c0>
+  403229:	e9 12 fc ff ff       	jmp    402e40 <format_string_loop+0xf0>
+  40322e:	66 90                	xchg   ax,ax
       ADVANCE_IN_FORMAT_STRING(format);
-  403220:	48 8d 4a 01          	lea    rcx,[rdx+0x1]
+  403230:	48 8d 4a 01          	lea    rcx,[rdx+0x1]
       flags |= FLAGS_PRECISION;
-  403224:	41 81 cb 00 08 00 00 	or     r11d,0x800
+  403234:	41 81 cb 00 08 00 00 	or     r11d,0x800
       ADVANCE_IN_FORMAT_STRING(format);
-  40322b:	48 89 4c 24 18       	mov    QWORD PTR [rsp+0x18],rcx
-  403230:	0f be 72 01          	movsx  esi,BYTE PTR [rdx+0x1]
-  403234:	40 84 f6             	test   sil,sil
-  403237:	0f 84 0d fc ff ff    	je     402e4a <format_string_loop+0x10a>
+  40323b:	48 89 4c 24 18       	mov    QWORD PTR [rsp+0x18],rcx
+  403240:	0f be 72 01          	movsx  esi,BYTE PTR [rdx+0x1]
+  403244:	40 84 f6             	test   sil,sil
+  403247:	0f 84 0d fc ff ff    	je     402e5a <format_string_loop+0x10a>
       if (is_digit_(*format)) {
-  40323d:	40 0f be fe          	movsx  edi,sil
-  403241:	e8 da e8 ff ff       	call   401b20 <is_digit_>
-  403246:	84 c0                	test   al,al
-  403248:	0f 85 82 00 00 00    	jne    4032d0 <format_string_loop+0x590>
+  40324d:	40 0f be fe          	movsx  edi,sil
+  403251:	e8 da e8 ff ff       	call   401b30 <is_digit_>
+  403256:	84 c0                	test   al,al
+  403258:	0f 85 82 00 00 00    	jne    4032e0 <format_string_loop+0x590>
       else if (*format == '*') {
-  40324e:	40 80 fe 2a          	cmp    sil,0x2a
-  403252:	0f 84 98 00 00 00    	je     4032f0 <format_string_loop+0x5b0>
-  403258:	48 89 ca             	mov    rdx,rcx
-  40325b:	e9 6e fb ff ff       	jmp    402dce <format_string_loop+0x8e>
+  40325e:	40 80 fe 2a          	cmp    sil,0x2a
+  403262:	0f 84 98 00 00 00    	je     403300 <format_string_loop+0x5b0>
+  403268:	48 89 ca             	mov    rdx,rcx
+  40326b:	e9 6e fb ff ff       	jmp    402dde <format_string_loop+0x8e>
       width = (printf_size_t) atou_(&format);
-  403260:	4c 89 cf             	mov    rdi,r9
-  403263:	e8 c8 e8 ff ff       	call   401b30 <atou_>
+  403270:	4c 89 cf             	mov    rdi,r9
+  403273:	e8 c8 e8 ff ff       	call   401b40 <atou_>
     if (*format == '.') {
-  403268:	48 8b 54 24 18       	mov    rdx,QWORD PTR [rsp+0x18]
+  403278:	48 8b 54 24 18       	mov    rdx,QWORD PTR [rsp+0x18]
       width = (printf_size_t) atou_(&format);
-  40326d:	41 89 c4             	mov    r12d,eax
+  40327d:	41 89 c4             	mov    r12d,eax
     if (*format == '.') {
-  403270:	0f be 32             	movsx  esi,BYTE PTR [rdx]
-  403273:	e9 49 fb ff ff       	jmp    402dc1 <format_string_loop+0x81>
-  403278:	0f 1f 84 00 00 00 00 	nop    DWORD PTR [rax+rax*1+0x0]
-  40327f:	00 
+  403280:	0f be 32             	movsx  esi,BYTE PTR [rdx]
+  403283:	e9 49 fb ff ff       	jmp    402dd1 <format_string_loop+0x81>
+  403288:	0f 1f 84 00 00 00 00 	nop    DWORD PTR [rax+rax*1+0x0]
+  40328f:	00 
       const int w = va_arg(args, int);
-  403280:	8b 03                	mov    eax,DWORD PTR [rbx]
-  403282:	83 f8 2f             	cmp    eax,0x2f
-  403285:	77 39                	ja     4032c0 <format_string_loop+0x580>
-  403287:	89 c1                	mov    ecx,eax
-  403289:	83 c0 08             	add    eax,0x8
-  40328c:	48 03 4b 10          	add    rcx,QWORD PTR [rbx+0x10]
-  403290:	89 03                	mov    DWORD PTR [rbx],eax
-  403292:	44 8b 21             	mov    r12d,DWORD PTR [rcx]
+  403290:	8b 03                	mov    eax,DWORD PTR [rbx]
+  403292:	83 f8 2f             	cmp    eax,0x2f
+  403295:	77 39                	ja     4032d0 <format_string_loop+0x580>
+  403297:	89 c1                	mov    ecx,eax
+  403299:	83 c0 08             	add    eax,0x8
+  40329c:	48 03 4b 10          	add    rcx,QWORD PTR [rbx+0x10]
+  4032a0:	89 03                	mov    DWORD PTR [rbx],eax
+  4032a2:	44 8b 21             	mov    r12d,DWORD PTR [rcx]
       if (w < 0) {
-  403295:	45 85 e4             	test   r12d,r12d
-  403298:	79 07                	jns    4032a1 <format_string_loop+0x561>
+  4032a5:	45 85 e4             	test   r12d,r12d
+  4032a8:	79 07                	jns    4032b1 <format_string_loop+0x561>
         flags |= FLAGS_LEFT;    // reverse padding
-  40329a:	41 83 cb 02          	or     r11d,0x2
+  4032aa:	41 83 cb 02          	or     r11d,0x2
         width = (printf_size_t)-w;
-  40329e:	41 f7 dc             	neg    r12d
+  4032ae:	41 f7 dc             	neg    r12d
       ADVANCE_IN_FORMAT_STRING(format);
-  4032a1:	48 8d 42 01          	lea    rax,[rdx+0x1]
-  4032a5:	48 89 44 24 18       	mov    QWORD PTR [rsp+0x18],rax
-  4032aa:	0f be 72 01          	movsx  esi,BYTE PTR [rdx+0x1]
-  4032ae:	40 84 f6             	test   sil,sil
-  4032b1:	0f 84 93 fb ff ff    	je     402e4a <format_string_loop+0x10a>
-  4032b7:	48 89 c2             	mov    rdx,rax
-  4032ba:	e9 02 fb ff ff       	jmp    402dc1 <format_string_loop+0x81>
-  4032bf:	90                   	nop
+  4032b1:	48 8d 42 01          	lea    rax,[rdx+0x1]
+  4032b5:	48 89 44 24 18       	mov    QWORD PTR [rsp+0x18],rax
+  4032ba:	0f be 72 01          	movsx  esi,BYTE PTR [rdx+0x1]
+  4032be:	40 84 f6             	test   sil,sil
+  4032c1:	0f 84 93 fb ff ff    	je     402e5a <format_string_loop+0x10a>
+  4032c7:	48 89 c2             	mov    rdx,rax
+  4032ca:	e9 02 fb ff ff       	jmp    402dd1 <format_string_loop+0x81>
+  4032cf:	90                   	nop
       const int w = va_arg(args, int);
-  4032c0:	48 8b 4b 08          	mov    rcx,QWORD PTR [rbx+0x8]
-  4032c4:	48 8d 41 08          	lea    rax,[rcx+0x8]
-  4032c8:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
-  4032cc:	eb c4                	jmp    403292 <format_string_loop+0x552>
-  4032ce:	66 90                	xchg   ax,ax
+  4032d0:	48 8b 4b 08          	mov    rcx,QWORD PTR [rbx+0x8]
+  4032d4:	48 8d 41 08          	lea    rax,[rcx+0x8]
+  4032d8:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
+  4032dc:	eb c4                	jmp    4032a2 <format_string_loop+0x552>
+  4032de:	66 90                	xchg   ax,ax
         precision = (printf_size_t) atou_(&format);
-  4032d0:	4c 89 cf             	mov    rdi,r9
-  4032d3:	e8 58 e8 ff ff       	call   401b30 <atou_>
+  4032e0:	4c 89 cf             	mov    rdi,r9
+  4032e3:	e8 58 e8 ff ff       	call   401b40 <atou_>
     switch (*format) {
-  4032d8:	48 8b 54 24 18       	mov    rdx,QWORD PTR [rsp+0x18]
+  4032e8:	48 8b 54 24 18       	mov    rdx,QWORD PTR [rsp+0x18]
         precision = (printf_size_t) atou_(&format);
-  4032dd:	41 89 c7             	mov    r15d,eax
+  4032ed:	41 89 c7             	mov    r15d,eax
     switch (*format) {
-  4032e0:	0f be 32             	movsx  esi,BYTE PTR [rdx]
-  4032e3:	e9 e6 fa ff ff       	jmp    402dce <format_string_loop+0x8e>
-  4032e8:	0f 1f 84 00 00 00 00 	nop    DWORD PTR [rax+rax*1+0x0]
-  4032ef:	00 
+  4032f0:	0f be 32             	movsx  esi,BYTE PTR [rdx]
+  4032f3:	e9 e6 fa ff ff       	jmp    402dde <format_string_loop+0x8e>
+  4032f8:	0f 1f 84 00 00 00 00 	nop    DWORD PTR [rax+rax*1+0x0]
+  4032ff:	00 
         const int precision_ = va_arg(args, int);
-  4032f0:	8b 03                	mov    eax,DWORD PTR [rbx]
-  4032f2:	83 f8 2f             	cmp    eax,0x2f
-  4032f5:	0f 87 ed 01 00 00    	ja     4034e8 <format_string_loop+0x7a8>
-  4032fb:	89 c1                	mov    ecx,eax
-  4032fd:	83 c0 08             	add    eax,0x8
-  403300:	48 03 4b 10          	add    rcx,QWORD PTR [rbx+0x10]
-  403304:	89 03                	mov    DWORD PTR [rbx],eax
+  403300:	8b 03                	mov    eax,DWORD PTR [rbx]
+  403302:	83 f8 2f             	cmp    eax,0x2f
+  403305:	0f 87 ed 01 00 00    	ja     4034f8 <format_string_loop+0x7a8>
+  40330b:	89 c1                	mov    ecx,eax
+  40330d:	83 c0 08             	add    eax,0x8
+  403310:	48 03 4b 10          	add    rcx,QWORD PTR [rbx+0x10]
+  403314:	89 03                	mov    DWORD PTR [rbx],eax
         precision = precision_ > 0 ? (printf_size_t) precision_ : 0U;
-  403306:	44 8b 11             	mov    r10d,DWORD PTR [rcx]
-  403309:	31 c0                	xor    eax,eax
-  40330b:	45 85 d2             	test   r10d,r10d
-  40330e:	41 0f 49 c2          	cmovns eax,r10d
-  403312:	41 89 c7             	mov    r15d,eax
+  403316:	44 8b 11             	mov    r10d,DWORD PTR [rcx]
+  403319:	31 c0                	xor    eax,eax
+  40331b:	45 85 d2             	test   r10d,r10d
+  40331e:	41 0f 49 c2          	cmovns eax,r10d
+  403322:	41 89 c7             	mov    r15d,eax
         ADVANCE_IN_FORMAT_STRING(format);
-  403315:	48 8d 42 02          	lea    rax,[rdx+0x2]
-  403319:	48 89 44 24 18       	mov    QWORD PTR [rsp+0x18],rax
-  40331e:	0f be 72 02          	movsx  esi,BYTE PTR [rdx+0x2]
-  403322:	40 84 f6             	test   sil,sil
-  403325:	0f 84 1f fb ff ff    	je     402e4a <format_string_loop+0x10a>
-  40332b:	48 89 c2             	mov    rdx,rax
-  40332e:	e9 9b fa ff ff       	jmp    402dce <format_string_loop+0x8e>
-  403333:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
+  403325:	48 8d 42 02          	lea    rax,[rdx+0x2]
+  403329:	48 89 44 24 18       	mov    QWORD PTR [rsp+0x18],rax
+  40332e:	0f be 72 02          	movsx  esi,BYTE PTR [rdx+0x2]
+  403332:	40 84 f6             	test   sil,sil
+  403335:	0f 84 1f fb ff ff    	je     402e5a <format_string_loop+0x10a>
+  40333b:	48 89 c2             	mov    rdx,rax
+  40333e:	e9 9b fa ff ff       	jmp    402dde <format_string_loop+0x8e>
+  403343:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
           flags |= FLAGS_CHAR;
-  403338:	41 80 cb c0          	or     r11b,0xc0
+  403348:	41 80 cb c0          	or     r11b,0xc0
           ADVANCE_IN_FORMAT_STRING(format);
-  40333c:	48 8d 42 02          	lea    rax,[rdx+0x2]
-  403340:	48 89 44 24 18       	mov    QWORD PTR [rsp+0x18],rax
-  403345:	0f be 72 02          	movsx  esi,BYTE PTR [rdx+0x2]
-  403349:	40 84 f6             	test   sil,sil
-  40334c:	0f 85 af fa ff ff    	jne    402e01 <format_string_loop+0xc1>
-  403352:	e9 f3 fa ff ff       	jmp    402e4a <format_string_loop+0x10a>
-  403357:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
-  40335e:	00 00 
+  40334c:	48 8d 42 02          	lea    rax,[rdx+0x2]
+  403350:	48 89 44 24 18       	mov    QWORD PTR [rsp+0x18],rax
+  403355:	0f be 72 02          	movsx  esi,BYTE PTR [rdx+0x2]
+  403359:	40 84 f6             	test   sil,sil
+  40335c:	0f 85 af fa ff ff    	jne    402e11 <format_string_loop+0xc1>
+  403362:	e9 f3 fa ff ff       	jmp    402e5a <format_string_loop+0x10a>
+  403367:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+  40336e:	00 00 
           flags |= FLAGS_LONG_LONG;
-  403360:	41 81 cb 00 06 00 00 	or     r11d,0x600
+  403370:	41 81 cb 00 06 00 00 	or     r11d,0x600
           ADVANCE_IN_FORMAT_STRING(format);
-  403367:	eb d3                	jmp    40333c <format_string_loop+0x5fc>
-  403369:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  403377:	eb d3                	jmp    40334c <format_string_loop+0x5fc>
+  403379:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
         print_floating_point(output, va_arg(args, double), precision, width, flags, PRINTF_PREFER_EXPONENTIAL);
-  403370:	48 8b 7b 08          	mov    rdi,QWORD PTR [rbx+0x8]
-  403374:	48 8d 47 08          	lea    rax,[rdi+0x8]
-  403378:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
-  40337c:	e9 5c fc ff ff       	jmp    402fdd <format_string_loop+0x29d>
-  403381:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  403380:	48 8b 7b 08          	mov    rdi,QWORD PTR [rbx+0x8]
+  403384:	48 8d 47 08          	lea    rax,[rdi+0x8]
+  403388:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
+  40338c:	e9 5c fc ff ff       	jmp    402fed <format_string_loop+0x29d>
+  403391:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
           flags &= ~(FLAGS_PLUS | FLAGS_SPACE);
-  403388:	44 89 de             	mov    esi,r11d
-  40338b:	83 e6 f3             	and    esi,0xfffffff3
+  403398:	44 89 de             	mov    esi,r11d
+  40339b:	83 e6 f3             	and    esi,0xfffffff3
           if (flags & FLAGS_LONG_LONG) {
-  40338e:	85 d2                	test   edx,edx
-  403390:	0f 85 c2 01 00 00    	jne    403558 <format_string_loop+0x818>
+  40339e:	85 d2                	test   edx,edx
+  4033a0:	0f 85 c2 01 00 00    	jne    403568 <format_string_loop+0x818>
           else if (flags & FLAGS_LONG) {
-  403396:	41 f7 c3 00 02 00 00 	test   r11d,0x200
-  40339d:	0f 85 b5 01 00 00    	jne    403558 <format_string_loop+0x818>
+  4033a6:	41 f7 c3 00 02 00 00 	test   r11d,0x200
+  4033ad:	0f 85 b5 01 00 00    	jne    403568 <format_string_loop+0x818>
               (flags & FLAGS_CHAR) ? (unsigned char)va_arg(args, unsigned int) :
-  4033a3:	41 f6 c3 40          	test   r11b,0x40
-  4033a7:	0f 84 6f 03 00 00    	je     40371c <format_string_loop+0x9dc>
-  4033ad:	83 f8 2f             	cmp    eax,0x2f
-  4033b0:	0f 87 d7 03 00 00    	ja     40378d <format_string_loop+0xa4d>
-  4033b6:	89 c2                	mov    edx,eax
-  4033b8:	83 c0 08             	add    eax,0x8
-  4033bb:	48 03 53 10          	add    rdx,QWORD PTR [rbx+0x10]
-  4033bf:	89 03                	mov    DWORD PTR [rbx],eax
-  4033c1:	44 0f b6 1a          	movzx  r11d,BYTE PTR [rdx]
+  4033b3:	41 f6 c3 40          	test   r11b,0x40
+  4033b7:	0f 84 6f 03 00 00    	je     40372c <format_string_loop+0x9dc>
+  4033bd:	83 f8 2f             	cmp    eax,0x2f
+  4033c0:	0f 87 d7 03 00 00    	ja     40379d <format_string_loop+0xa4d>
+  4033c6:	89 c2                	mov    edx,eax
+  4033c8:	83 c0 08             	add    eax,0x8
+  4033cb:	48 03 53 10          	add    rdx,QWORD PTR [rbx+0x10]
+  4033cf:	89 03                	mov    DWORD PTR [rbx],eax
+  4033d1:	44 0f b6 1a          	movzx  r11d,BYTE PTR [rdx]
             print_integer(output, (printf_unsigned_value_t) value, false, base, precision, width, flags);
-  4033c5:	48 83 ec 08          	sub    rsp,0x8
-  4033c9:	31 d2                	xor    edx,edx
-  4033cb:	48 89 ef             	mov    rdi,rbp
-  4033ce:	45 89 e1             	mov    r9d,r12d
-  4033d1:	56                   	push   rsi
-  4033d2:	45 89 f8             	mov    r8d,r15d
-  4033d5:	4c 89 de             	mov    rsi,r11
-  4033d8:	e8 e3 ea ff ff       	call   401ec0 <print_integer>
+  4033d5:	48 83 ec 08          	sub    rsp,0x8
+  4033d9:	31 d2                	xor    edx,edx
+  4033db:	48 89 ef             	mov    rdi,rbp
+  4033de:	45 89 e1             	mov    r9d,r12d
+  4033e1:	56                   	push   rsi
+  4033e2:	45 89 f8             	mov    r8d,r15d
+  4033e5:	4c 89 de             	mov    rsi,r11
+  4033e8:	e8 e3 ea ff ff       	call   401ed0 <print_integer>
   while (*format)
-  4033dd:	48 8b 54 24 28       	mov    rdx,QWORD PTR [rsp+0x28]
-  4033e2:	5e                   	pop    rsi
-  4033e3:	5f                   	pop    rdi
-  4033e4:	e9 55 fa ff ff       	jmp    402e3e <format_string_loop+0xfe>
-  4033e9:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  4033ed:	48 8b 54 24 28       	mov    rdx,QWORD PTR [rsp+0x28]
+  4033f2:	5e                   	pop    rsi
+  4033f3:	5f                   	pop    rdi
+  4033f4:	e9 55 fa ff ff       	jmp    402e4e <format_string_loop+0xfe>
+  4033f9:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
         else if  (flags & FLAGS_SHORT)     *(va_arg(args, short*))     = (short) output->pos;
-  4033f0:	41 f6 c3 80          	test   r11b,0x80
-  4033f4:	0f 84 06 01 00 00    	je     403500 <format_string_loop+0x7c0>
-  4033fa:	83 f8 2f             	cmp    eax,0x2f
-  4033fd:	0f 87 08 03 00 00    	ja     40370b <format_string_loop+0x9cb>
-  403403:	89 c6                	mov    esi,eax
-  403405:	83 c0 08             	add    eax,0x8
-  403408:	48 03 73 10          	add    rsi,QWORD PTR [rbx+0x10]
-  40340c:	89 03                	mov    DWORD PTR [rbx],eax
-  40340e:	48 8b 06             	mov    rax,QWORD PTR [rsi]
-  403411:	66 89 08             	mov    WORD PTR [rax],cx
-  403414:	e9 00 fd ff ff       	jmp    403119 <format_string_loop+0x3d9>
-  403419:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  403400:	41 f6 c3 80          	test   r11b,0x80
+  403404:	0f 84 06 01 00 00    	je     403510 <format_string_loop+0x7c0>
+  40340a:	83 f8 2f             	cmp    eax,0x2f
+  40340d:	0f 87 08 03 00 00    	ja     40371b <format_string_loop+0x9cb>
+  403413:	89 c6                	mov    esi,eax
+  403415:	83 c0 08             	add    eax,0x8
+  403418:	48 03 73 10          	add    rsi,QWORD PTR [rbx+0x10]
+  40341c:	89 03                	mov    DWORD PTR [rbx],eax
+  40341e:	48 8b 06             	mov    rax,QWORD PTR [rsi]
+  403421:	66 89 08             	mov    WORD PTR [rax],cx
+  403424:	e9 00 fd ff ff       	jmp    403129 <format_string_loop+0x3d9>
+  403429:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
         const char* p = va_arg(args, char*);
-  403420:	48 8b 53 08          	mov    rdx,QWORD PTR [rbx+0x8]
-  403424:	48 8d 42 08          	lea    rax,[rdx+0x8]
-  403428:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
-  40342c:	48 8b 02             	mov    rax,QWORD PTR [rdx]
-  40342f:	48 89 04 24          	mov    QWORD PTR [rsp],rax
+  403430:	48 8b 53 08          	mov    rdx,QWORD PTR [rbx+0x8]
+  403434:	48 8d 42 08          	lea    rax,[rdx+0x8]
+  403438:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
+  40343c:	48 8b 02             	mov    rax,QWORD PTR [rdx]
+  40343f:	48 89 04 24          	mov    QWORD PTR [rsp],rax
         if (p == NULL) {
-  403433:	48 85 c0             	test   rax,rax
-  403436:	0f 85 11 fd ff ff    	jne    40314d <format_string_loop+0x40d>
+  403443:	48 85 c0             	test   rax,rax
+  403446:	0f 85 11 fd ff ff    	jne    40315d <format_string_loop+0x40d>
           out_rev_(output, ")llun(", 6, width, flags);
-  40343c:	45 89 d8             	mov    r8d,r11d
-  40343f:	44 89 e1             	mov    ecx,r12d
-  403442:	ba 06 00 00 00       	mov    edx,0x6
-  403447:	48 89 ef             	mov    rdi,rbp
-  40344a:	48 8d 35 15 1e 00 00 	lea    rsi,[rip+0x1e15]        # 405266 <memcpy+0xdc6>
-  403451:	e8 1a e7 ff ff       	call   401b70 <out_rev_>
-  403456:	e9 d5 f9 ff ff       	jmp    402e30 <format_string_loop+0xf0>
-  40345b:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
+  40344c:	45 89 d8             	mov    r8d,r11d
+  40344f:	44 89 e1             	mov    ecx,r12d
+  403452:	ba 06 00 00 00       	mov    edx,0x6
+  403457:	48 89 ef             	mov    rdi,rbp
+  40345a:	48 8d 35 15 1e 00 00 	lea    rsi,[rip+0x1e15]        # 405276 <memcpy+0xdc6>
+  403461:	e8 1a e7 ff ff       	call   401b80 <out_rev_>
+  403466:	e9 d5 f9 ff ff       	jmp    402e40 <format_string_loop+0xf0>
+  40346b:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
         uintptr_t value = (uintptr_t)va_arg(args, void*);
-  403460:	48 8b 53 08          	mov    rdx,QWORD PTR [rbx+0x8]
-  403464:	48 8d 42 08          	lea    rax,[rdx+0x8]
-  403468:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
-  40346c:	48 8b 32             	mov    rsi,QWORD PTR [rdx]
+  403470:	48 8b 53 08          	mov    rdx,QWORD PTR [rbx+0x8]
+  403474:	48 8d 42 08          	lea    rax,[rdx+0x8]
+  403478:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
+  40347c:	48 8b 32             	mov    rsi,QWORD PTR [rdx]
           out_rev_(output, ")lin(", 5, width, flags) :
-  40346f:	48 85 f6             	test   rsi,rsi
-  403472:	0f 85 4f fc ff ff    	jne    4030c7 <format_string_loop+0x387>
-  403478:	45 89 d8             	mov    r8d,r11d
-  40347b:	b9 12 00 00 00       	mov    ecx,0x12
-  403480:	ba 05 00 00 00       	mov    edx,0x5
-  403485:	48 89 ef             	mov    rdi,rbp
-  403488:	48 8d 35 de 1d 00 00 	lea    rsi,[rip+0x1dde]        # 40526d <memcpy+0xdcd>
-  40348f:	e8 dc e6 ff ff       	call   401b70 <out_rev_>
-  403494:	e9 97 f9 ff ff       	jmp    402e30 <format_string_loop+0xf0>
-  403499:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  40347f:	48 85 f6             	test   rsi,rsi
+  403482:	0f 85 4f fc ff ff    	jne    4030d7 <format_string_loop+0x387>
+  403488:	45 89 d8             	mov    r8d,r11d
+  40348b:	b9 12 00 00 00       	mov    ecx,0x12
+  403490:	ba 05 00 00 00       	mov    edx,0x5
+  403495:	48 89 ef             	mov    rdi,rbp
+  403498:	48 8d 35 de 1d 00 00 	lea    rsi,[rip+0x1dde]        # 40527d <memcpy+0xdcd>
+  40349f:	e8 dc e6 ff ff       	call   401b80 <out_rev_>
+  4034a4:	e9 97 f9 ff ff       	jmp    402e40 <format_string_loop+0xf0>
+  4034a9:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
         print_floating_point(output, va_arg(args, double), precision, width, flags, PRINTF_PREFER_DECIMAL);
-  4034a0:	48 8b 7b 08          	mov    rdi,QWORD PTR [rbx+0x8]
-  4034a4:	48 8d 47 08          	lea    rax,[rdi+0x8]
-  4034a8:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
-  4034ac:	e9 87 fb ff ff       	jmp    403038 <format_string_loop+0x2f8>
-  4034b1:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  4034b0:	48 8b 7b 08          	mov    rdi,QWORD PTR [rbx+0x8]
+  4034b4:	48 8d 47 08          	lea    rax,[rdi+0x8]
+  4034b8:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
+  4034bc:	e9 87 fb ff ff       	jmp    403048 <format_string_loop+0x2f8>
+  4034c1:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
           flags |= FLAGS_UPPERCASE;
-  4034b8:	44 89 d8             	mov    eax,r11d
-  4034bb:	41 83 cb 20          	or     r11d,0x20
-  4034bf:	40 80 fe 58          	cmp    sil,0x58
-  4034c3:	b9 10 00 00 00       	mov    ecx,0x10
-  4034c8:	44 0f 45 d8          	cmovne r11d,eax
-  4034cc:	e9 cf f9 ff ff       	jmp    402ea0 <format_string_loop+0x160>
-  4034d1:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  4034c8:	44 89 d8             	mov    eax,r11d
+  4034cb:	41 83 cb 20          	or     r11d,0x20
+  4034cf:	40 80 fe 58          	cmp    sil,0x58
+  4034d3:	b9 10 00 00 00       	mov    ecx,0x10
+  4034d8:	44 0f 45 d8          	cmovne r11d,eax
+  4034dc:	e9 cf f9 ff ff       	jmp    402eb0 <format_string_loop+0x160>
+  4034e1:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
           flags |= FLAGS_SIGNED;
-  4034d8:	41 81 cb 00 40 00 00 	or     r11d,0x4000
-  4034df:	e9 90 f9 ff ff       	jmp    402e74 <format_string_loop+0x134>
-  4034e4:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+  4034e8:	41 81 cb 00 40 00 00 	or     r11d,0x4000
+  4034ef:	e9 90 f9 ff ff       	jmp    402e84 <format_string_loop+0x134>
+  4034f4:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
         const int precision_ = va_arg(args, int);
-  4034e8:	48 8b 4b 08          	mov    rcx,QWORD PTR [rbx+0x8]
-  4034ec:	48 8d 41 08          	lea    rax,[rcx+0x8]
-  4034f0:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
-  4034f4:	e9 0d fe ff ff       	jmp    403306 <format_string_loop+0x5c6>
-  4034f9:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  4034f8:	48 8b 4b 08          	mov    rcx,QWORD PTR [rbx+0x8]
+  4034fc:	48 8d 41 08          	lea    rax,[rcx+0x8]
+  403500:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
+  403504:	e9 0d fe ff ff       	jmp    403316 <format_string_loop+0x5c6>
+  403509:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
         else if  (flags & FLAGS_LONG)      *(va_arg(args, long*))      = (long) output->pos;
-  403500:	41 f7 c3 00 02 00 00 	test   r11d,0x200
-  403507:	0f 85 d3 00 00 00    	jne    4035e0 <format_string_loop+0x8a0>
+  403510:	41 f7 c3 00 02 00 00 	test   r11d,0x200
+  403517:	0f 85 d3 00 00 00    	jne    4035f0 <format_string_loop+0x8a0>
         else if  (flags & FLAGS_LONG_LONG) *(va_arg(args, long long*)) = (long long int) output->pos;
-  40350d:	41 81 e3 00 04 00 00 	and    r11d,0x400
-  403514:	0f 85 c6 00 00 00    	jne    4035e0 <format_string_loop+0x8a0>
+  40351d:	41 81 e3 00 04 00 00 	and    r11d,0x400
+  403524:	0f 85 c6 00 00 00    	jne    4035f0 <format_string_loop+0x8a0>
         else                               *(va_arg(args, int*))       = (int) output->pos;
-  40351a:	83 f8 2f             	cmp    eax,0x2f
-  40351d:	0f 87 a4 02 00 00    	ja     4037c7 <format_string_loop+0xa87>
-  403523:	89 c6                	mov    esi,eax
-  403525:	83 c0 08             	add    eax,0x8
-  403528:	48 03 73 10          	add    rsi,QWORD PTR [rbx+0x10]
-  40352c:	89 03                	mov    DWORD PTR [rbx],eax
-  40352e:	48 8b 06             	mov    rax,QWORD PTR [rsi]
-  403531:	89 08                	mov    DWORD PTR [rax],ecx
-  403533:	e9 e1 fb ff ff       	jmp    403119 <format_string_loop+0x3d9>
-  403538:	0f 1f 84 00 00 00 00 	nop    DWORD PTR [rax+rax*1+0x0]
-  40353f:	00 
+  40352a:	83 f8 2f             	cmp    eax,0x2f
+  40352d:	0f 87 a4 02 00 00    	ja     4037d7 <format_string_loop+0xa87>
+  403533:	89 c6                	mov    esi,eax
+  403535:	83 c0 08             	add    eax,0x8
+  403538:	48 03 73 10          	add    rsi,QWORD PTR [rbx+0x10]
+  40353c:	89 03                	mov    DWORD PTR [rbx],eax
+  40353e:	48 8b 06             	mov    rax,QWORD PTR [rsi]
+  403541:	89 08                	mov    DWORD PTR [rax],ecx
+  403543:	e9 e1 fb ff ff       	jmp    403129 <format_string_loop+0x3d9>
+  403548:	0f 1f 84 00 00 00 00 	nop    DWORD PTR [rax+rax*1+0x0]
+  40354f:	00 
         if       (flags & FLAGS_CHAR)      *(va_arg(args, char*))      = (char) output->pos;
-  403540:	48 8b 53 08          	mov    rdx,QWORD PTR [rbx+0x8]
-  403544:	48 8d 42 08          	lea    rax,[rdx+0x8]
-  403548:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
-  40354c:	e9 be fb ff ff       	jmp    40310f <format_string_loop+0x3cf>
-  403551:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  403550:	48 8b 53 08          	mov    rdx,QWORD PTR [rbx+0x8]
+  403554:	48 8d 42 08          	lea    rax,[rdx+0x8]
+  403558:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
+  40355c:	e9 be fb ff ff       	jmp    40311f <format_string_loop+0x3cf>
+  403561:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
             print_integer(output, (printf_unsigned_value_t) va_arg(args, unsigned long), false, base, precision, width, flags);
-  403558:	83 f8 2f             	cmp    eax,0x2f
-  40355b:	0f 87 78 01 00 00    	ja     4036d9 <format_string_loop+0x999>
-  403561:	89 c7                	mov    edi,eax
-  403563:	83 c0 08             	add    eax,0x8
-  403566:	48 03 7b 10          	add    rdi,QWORD PTR [rbx+0x10]
-  40356a:	89 03                	mov    DWORD PTR [rbx],eax
-  40356c:	48 83 ec 08          	sub    rsp,0x8
-  403570:	45 89 e1             	mov    r9d,r12d
-  403573:	45 89 f8             	mov    r8d,r15d
-  403576:	31 d2                	xor    edx,edx
-  403578:	56                   	push   rsi
-  403579:	48 8b 37             	mov    rsi,QWORD PTR [rdi]
-  40357c:	48 89 ef             	mov    rdi,rbp
-  40357f:	e8 3c e9 ff ff       	call   401ec0 <print_integer>
+  403568:	83 f8 2f             	cmp    eax,0x2f
+  40356b:	0f 87 78 01 00 00    	ja     4036e9 <format_string_loop+0x999>
+  403571:	89 c7                	mov    edi,eax
+  403573:	83 c0 08             	add    eax,0x8
+  403576:	48 03 7b 10          	add    rdi,QWORD PTR [rbx+0x10]
+  40357a:	89 03                	mov    DWORD PTR [rbx],eax
+  40357c:	48 83 ec 08          	sub    rsp,0x8
+  403580:	45 89 e1             	mov    r9d,r12d
+  403583:	45 89 f8             	mov    r8d,r15d
+  403586:	31 d2                	xor    edx,edx
+  403588:	56                   	push   rsi
+  403589:	48 8b 37             	mov    rsi,QWORD PTR [rdi]
+  40358c:	48 89 ef             	mov    rdi,rbp
+  40358f:	e8 3c e9 ff ff       	call   401ed0 <print_integer>
   while (*format)
-  403584:	48 8b 54 24 28       	mov    rdx,QWORD PTR [rsp+0x28]
-  403589:	41 58                	pop    r8
-  40358b:	41 59                	pop    r9
-  40358d:	e9 ac f8 ff ff       	jmp    402e3e <format_string_loop+0xfe>
-  403592:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
+  403594:	48 8b 54 24 28       	mov    rdx,QWORD PTR [rsp+0x28]
+  403599:	41 58                	pop    r8
+  40359b:	41 59                	pop    r9
+  40359d:	e9 ac f8 ff ff       	jmp    402e4e <format_string_loop+0xfe>
+  4035a2:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
             const long value = va_arg(args, long);
-  403598:	83 f8 2f             	cmp    eax,0x2f
-  40359b:	0f 87 27 01 00 00    	ja     4036c8 <format_string_loop+0x988>
-  4035a1:	89 c2                	mov    edx,eax
-  4035a3:	83 c0 08             	add    eax,0x8
-  4035a6:	48 03 53 10          	add    rdx,QWORD PTR [rbx+0x10]
-  4035aa:	89 03                	mov    DWORD PTR [rbx],eax
-  4035ac:	48 8b 12             	mov    rdx,QWORD PTR [rdx]
+  4035a8:	83 f8 2f             	cmp    eax,0x2f
+  4035ab:	0f 87 27 01 00 00    	ja     4036d8 <format_string_loop+0x988>
+  4035b1:	89 c2                	mov    edx,eax
+  4035b3:	83 c0 08             	add    eax,0x8
+  4035b6:	48 03 53 10          	add    rdx,QWORD PTR [rbx+0x10]
+  4035ba:	89 03                	mov    DWORD PTR [rbx],eax
+  4035bc:	48 8b 12             	mov    rdx,QWORD PTR [rdx]
             print_integer(output, ABS_FOR_PRINTING(value), value < 0, base, precision, width, flags);
-  4035af:	45 89 e1             	mov    r9d,r12d
-  4035b2:	45 89 f8             	mov    r8d,r15d
-  4035b5:	48 89 ef             	mov    rdi,rbp
-  4035b8:	48 89 d6             	mov    rsi,rdx
-  4035bb:	48 f7 de             	neg    rsi
-  4035be:	48 0f 48 f2          	cmovs  rsi,rdx
-  4035c2:	48 83 ec 08          	sub    rsp,0x8
-  4035c6:	48 c1 ea 3f          	shr    rdx,0x3f
-  4035ca:	41 53                	push   r11
-  4035cc:	e8 ef e8 ff ff       	call   401ec0 <print_integer>
+  4035bf:	45 89 e1             	mov    r9d,r12d
+  4035c2:	45 89 f8             	mov    r8d,r15d
+  4035c5:	48 89 ef             	mov    rdi,rbp
+  4035c8:	48 89 d6             	mov    rsi,rdx
+  4035cb:	48 f7 de             	neg    rsi
+  4035ce:	48 0f 48 f2          	cmovs  rsi,rdx
+  4035d2:	48 83 ec 08          	sub    rsp,0x8
+  4035d6:	48 c1 ea 3f          	shr    rdx,0x3f
+  4035da:	41 53                	push   r11
+  4035dc:	e8 ef e8 ff ff       	call   401ed0 <print_integer>
   while (*format)
-  4035d1:	48 8b 54 24 28       	mov    rdx,QWORD PTR [rsp+0x28]
-  4035d6:	41 5c                	pop    r12
-  4035d8:	41 5e                	pop    r14
-  4035da:	e9 5f f8 ff ff       	jmp    402e3e <format_string_loop+0xfe>
-  4035df:	90                   	nop
+  4035e1:	48 8b 54 24 28       	mov    rdx,QWORD PTR [rsp+0x28]
+  4035e6:	41 5c                	pop    r12
+  4035e8:	41 5e                	pop    r14
+  4035ea:	e9 5f f8 ff ff       	jmp    402e4e <format_string_loop+0xfe>
+  4035ef:	90                   	nop
         else if  (flags & FLAGS_LONG_LONG) *(va_arg(args, long long*)) = (long long int) output->pos;
-  4035e0:	83 f8 2f             	cmp    eax,0x2f
-  4035e3:	0f 87 7b 01 00 00    	ja     403764 <format_string_loop+0xa24>
-  4035e9:	89 c6                	mov    esi,eax
-  4035eb:	83 c0 08             	add    eax,0x8
-  4035ee:	48 03 73 10          	add    rsi,QWORD PTR [rbx+0x10]
-  4035f2:	89 03                	mov    DWORD PTR [rbx],eax
-  4035f4:	48 8b 06             	mov    rax,QWORD PTR [rsi]
-  4035f7:	48 89 08             	mov    QWORD PTR [rax],rcx
-  4035fa:	e9 1a fb ff ff       	jmp    403119 <format_string_loop+0x3d9>
-  4035ff:	90                   	nop
+  4035f0:	83 f8 2f             	cmp    eax,0x2f
+  4035f3:	0f 87 7b 01 00 00    	ja     403774 <format_string_loop+0xa24>
+  4035f9:	89 c6                	mov    esi,eax
+  4035fb:	83 c0 08             	add    eax,0x8
+  4035fe:	48 03 73 10          	add    rsi,QWORD PTR [rbx+0x10]
+  403602:	89 03                	mov    DWORD PTR [rbx],eax
+  403604:	48 8b 06             	mov    rax,QWORD PTR [rsi]
+  403607:	48 89 08             	mov    QWORD PTR [rax],rcx
+  40360a:	e9 1a fb ff ff       	jmp    403129 <format_string_loop+0x3d9>
+  40360f:	90                   	nop
           while (l++ < width) {
-  403600:	41 83 fc 01          	cmp    r12d,0x1
-  403604:	76 23                	jbe    403629 <format_string_loop+0x8e9>
-  403606:	41 bf 02 00 00 00    	mov    r15d,0x2
-  40360c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+  403610:	41 83 fc 01          	cmp    r12d,0x1
+  403614:	76 23                	jbe    403639 <format_string_loop+0x8e9>
+  403616:	41 bf 02 00 00 00    	mov    r15d,0x2
+  40361c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
             putchar_via_gadget(output, ' ');
-  403610:	be 20 00 00 00       	mov    esi,0x20
-  403615:	48 89 ef             	mov    rdi,rbp
-  403618:	e8 53 e3 ff ff       	call   401970 <putchar_via_gadget>
+  403620:	be 20 00 00 00       	mov    esi,0x20
+  403625:	48 89 ef             	mov    rdi,rbp
+  403628:	e8 53 e3 ff ff       	call   401980 <putchar_via_gadget>
           while (l++ < width) {
-  40361d:	44 89 f8             	mov    eax,r15d
-  403620:	41 83 c7 01          	add    r15d,0x1
-  403624:	41 39 c4             	cmp    r12d,eax
-  403627:	75 e7                	jne    403610 <format_string_loop+0x8d0>
+  40362d:	44 89 f8             	mov    eax,r15d
+  403630:	41 83 c7 01          	add    r15d,0x1
+  403634:	41 39 c4             	cmp    r12d,eax
+  403637:	75 e7                	jne    403620 <format_string_loop+0x8d0>
         putchar_via_gadget(output, (char) va_arg(args, int) );
-  403629:	8b 03                	mov    eax,DWORD PTR [rbx]
-  40362b:	83 f8 2f             	cmp    eax,0x2f
-  40362e:	0f 87 b6 00 00 00    	ja     4036ea <format_string_loop+0x9aa>
-  403634:	89 c2                	mov    edx,eax
-  403636:	83 c0 08             	add    eax,0x8
-  403639:	48 03 53 10          	add    rdx,QWORD PTR [rbx+0x10]
-  40363d:	89 03                	mov    DWORD PTR [rbx],eax
-  40363f:	0f be 32             	movsx  esi,BYTE PTR [rdx]
-  403642:	48 89 ef             	mov    rdi,rbp
-  403645:	e8 26 e3 ff ff       	call   401970 <putchar_via_gadget>
+  403639:	8b 03                	mov    eax,DWORD PTR [rbx]
+  40363b:	83 f8 2f             	cmp    eax,0x2f
+  40363e:	0f 87 b6 00 00 00    	ja     4036fa <format_string_loop+0x9aa>
+  403644:	89 c2                	mov    edx,eax
+  403646:	83 c0 08             	add    eax,0x8
+  403649:	48 03 53 10          	add    rdx,QWORD PTR [rbx+0x10]
+  40364d:	89 03                	mov    DWORD PTR [rbx],eax
+  40364f:	0f be 32             	movsx  esi,BYTE PTR [rdx]
+  403652:	48 89 ef             	mov    rdi,rbp
+  403655:	e8 26 e3 ff ff       	call   401980 <putchar_via_gadget>
         if (flags & FLAGS_LEFT) {
-  40364a:	e9 e1 f7 ff ff       	jmp    402e30 <format_string_loop+0xf0>
-  40364f:	90                   	nop
+  40365a:	e9 e1 f7 ff ff       	jmp    402e40 <format_string_loop+0xf0>
+  40365f:	90                   	nop
             while (l++ < width) {
-  403650:	89 c1                	mov    ecx,eax
-  403652:	8d 40 01             	lea    eax,[rax+0x1]
-  403655:	41 39 cc             	cmp    r12d,ecx
-  403658:	0f 86 bc 01 00 00    	jbe    40381a <format_string_loop+0xada>
-  40365e:	41 8d 4c 24 01       	lea    ecx,[r12+0x1]
-  403663:	89 4c 24 14          	mov    DWORD PTR [rsp+0x14],ecx
-  403667:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
-  40366e:	00 00 
+  403660:	89 c1                	mov    ecx,eax
+  403662:	8d 40 01             	lea    eax,[rax+0x1]
+  403665:	41 39 cc             	cmp    r12d,ecx
+  403668:	0f 86 bc 01 00 00    	jbe    40382a <format_string_loop+0xada>
+  40366e:	41 8d 4c 24 01       	lea    ecx,[r12+0x1]
+  403673:	89 4c 24 14          	mov    DWORD PTR [rsp+0x14],ecx
+  403677:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+  40367e:	00 00 
               putchar_via_gadget(output, ' ');
-  403670:	be 20 00 00 00       	mov    esi,0x20
-  403675:	48 89 ef             	mov    rdi,rbp
-  403678:	89 44 24 0c          	mov    DWORD PTR [rsp+0xc],eax
-  40367c:	e8 ef e2 ff ff       	call   401970 <putchar_via_gadget>
+  403680:	be 20 00 00 00       	mov    esi,0x20
+  403685:	48 89 ef             	mov    rdi,rbp
+  403688:	89 44 24 0c          	mov    DWORD PTR [rsp+0xc],eax
+  40368c:	e8 ef e2 ff ff       	call   401980 <putchar_via_gadget>
             while (l++ < width) {
-  403681:	8b 44 24 0c          	mov    eax,DWORD PTR [rsp+0xc]
-  403685:	89 c2                	mov    edx,eax
-  403687:	83 c0 01             	add    eax,0x1
-  40368a:	41 39 d4             	cmp    r12d,edx
-  40368d:	75 e1                	jne    403670 <format_string_loop+0x930>
+  403691:	8b 44 24 0c          	mov    eax,DWORD PTR [rsp+0xc]
+  403695:	89 c2                	mov    edx,eax
+  403697:	83 c0 01             	add    eax,0x1
+  40369a:	41 39 d4             	cmp    r12d,edx
+  40369d:	75 e1                	jne    403680 <format_string_loop+0x930>
           while ((*p != 0) && (!(flags & FLAGS_PRECISION) || precision)) {
-  40368f:	48 8b 04 24          	mov    rax,QWORD PTR [rsp]
-  403693:	0f be 30             	movsx  esi,BYTE PTR [rax]
-  403696:	40 84 f6             	test   sil,sil
-  403699:	0f 84 91 f7 ff ff    	je     402e30 <format_string_loop+0xf0>
-  40369f:	45 85 f6             	test   r14d,r14d
-  4036a2:	0f 94 44 24 0c       	sete   BYTE PTR [rsp+0xc]
-  4036a7:	0f b6 44 24 0c       	movzx  eax,BYTE PTR [rsp+0xc]
-  4036ac:	45 85 ff             	test   r15d,r15d
-  4036af:	0f 85 f9 fa ff ff    	jne    4031ae <format_string_loop+0x46e>
-  4036b5:	84 c0                	test   al,al
-  4036b7:	0f 85 f1 fa ff ff    	jne    4031ae <format_string_loop+0x46e>
-  4036bd:	e9 6e f7 ff ff       	jmp    402e30 <format_string_loop+0xf0>
-  4036c2:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
+  40369f:	48 8b 04 24          	mov    rax,QWORD PTR [rsp]
+  4036a3:	0f be 30             	movsx  esi,BYTE PTR [rax]
+  4036a6:	40 84 f6             	test   sil,sil
+  4036a9:	0f 84 91 f7 ff ff    	je     402e40 <format_string_loop+0xf0>
+  4036af:	45 85 f6             	test   r14d,r14d
+  4036b2:	0f 94 44 24 0c       	sete   BYTE PTR [rsp+0xc]
+  4036b7:	0f b6 44 24 0c       	movzx  eax,BYTE PTR [rsp+0xc]
+  4036bc:	45 85 ff             	test   r15d,r15d
+  4036bf:	0f 85 f9 fa ff ff    	jne    4031be <format_string_loop+0x46e>
+  4036c5:	84 c0                	test   al,al
+  4036c7:	0f 85 f1 fa ff ff    	jne    4031be <format_string_loop+0x46e>
+  4036cd:	e9 6e f7 ff ff       	jmp    402e40 <format_string_loop+0xf0>
+  4036d2:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
             const long value = va_arg(args, long);
-  4036c8:	48 8b 53 08          	mov    rdx,QWORD PTR [rbx+0x8]
-  4036cc:	48 8d 42 08          	lea    rax,[rdx+0x8]
-  4036d0:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
-  4036d4:	e9 d3 fe ff ff       	jmp    4035ac <format_string_loop+0x86c>
+  4036d8:	48 8b 53 08          	mov    rdx,QWORD PTR [rbx+0x8]
+  4036dc:	48 8d 42 08          	lea    rax,[rdx+0x8]
+  4036e0:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
+  4036e4:	e9 d3 fe ff ff       	jmp    4035bc <format_string_loop+0x86c>
             print_integer(output, (printf_unsigned_value_t) va_arg(args, unsigned long), false, base, precision, width, flags);
-  4036d9:	48 8b 7b 08          	mov    rdi,QWORD PTR [rbx+0x8]
-  4036dd:	48 8d 47 08          	lea    rax,[rdi+0x8]
-  4036e1:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
-  4036e5:	e9 82 fe ff ff       	jmp    40356c <format_string_loop+0x82c>
+  4036e9:	48 8b 7b 08          	mov    rdi,QWORD PTR [rbx+0x8]
+  4036ed:	48 8d 47 08          	lea    rax,[rdi+0x8]
+  4036f1:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
+  4036f5:	e9 82 fe ff ff       	jmp    40357c <format_string_loop+0x82c>
         putchar_via_gadget(output, (char) va_arg(args, int) );
-  4036ea:	48 8b 53 08          	mov    rdx,QWORD PTR [rbx+0x8]
-  4036ee:	48 8d 42 08          	lea    rax,[rdx+0x8]
-  4036f2:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
-  4036f6:	e9 44 ff ff ff       	jmp    40363f <format_string_loop+0x8ff>
-  4036fb:	89 c2                	mov    edx,eax
-  4036fd:	83 c0 08             	add    eax,0x8
-  403700:	48 03 53 10          	add    rdx,QWORD PTR [rbx+0x10]
-  403704:	89 03                	mov    DWORD PTR [rbx],eax
-  403706:	e9 53 f9 ff ff       	jmp    40305e <format_string_loop+0x31e>
+  4036fa:	48 8b 53 08          	mov    rdx,QWORD PTR [rbx+0x8]
+  4036fe:	48 8d 42 08          	lea    rax,[rdx+0x8]
+  403702:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
+  403706:	e9 44 ff ff ff       	jmp    40364f <format_string_loop+0x8ff>
+  40370b:	89 c2                	mov    edx,eax
+  40370d:	83 c0 08             	add    eax,0x8
+  403710:	48 03 53 10          	add    rdx,QWORD PTR [rbx+0x10]
+  403714:	89 03                	mov    DWORD PTR [rbx],eax
+  403716:	e9 53 f9 ff ff       	jmp    40306e <format_string_loop+0x31e>
         else if  (flags & FLAGS_SHORT)     *(va_arg(args, short*))     = (short) output->pos;
-  40370b:	48 8b 73 08          	mov    rsi,QWORD PTR [rbx+0x8]
-  40370f:	48 8d 46 08          	lea    rax,[rsi+0x8]
-  403713:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
-  403717:	e9 f2 fc ff ff       	jmp    40340e <format_string_loop+0x6ce>
+  40371b:	48 8b 73 08          	mov    rsi,QWORD PTR [rbx+0x8]
+  40371f:	48 8d 46 08          	lea    rax,[rsi+0x8]
+  403723:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
+  403727:	e9 f2 fc ff ff       	jmp    40341e <format_string_loop+0x6ce>
               (flags & FLAGS_SHORT) ? (unsigned short int)va_arg(args, unsigned int) :
-  40371c:	41 81 e3 80 00 00 00 	and    r11d,0x80
-  403723:	74 79                	je     40379e <format_string_loop+0xa5e>
-  403725:	83 f8 2f             	cmp    eax,0x2f
-  403728:	0f 87 db 00 00 00    	ja     403809 <format_string_loop+0xac9>
-  40372e:	89 c2                	mov    edx,eax
-  403730:	83 c0 08             	add    eax,0x8
-  403733:	48 03 53 10          	add    rdx,QWORD PTR [rbx+0x10]
-  403737:	89 03                	mov    DWORD PTR [rbx],eax
-  403739:	44 0f b7 1a          	movzx  r11d,WORD PTR [rdx]
-  40373d:	e9 83 fc ff ff       	jmp    4033c5 <format_string_loop+0x685>
+  40372c:	41 81 e3 80 00 00 00 	and    r11d,0x80
+  403733:	74 79                	je     4037ae <format_string_loop+0xa5e>
+  403735:	83 f8 2f             	cmp    eax,0x2f
+  403738:	0f 87 db 00 00 00    	ja     403819 <format_string_loop+0xac9>
+  40373e:	89 c2                	mov    edx,eax
+  403740:	83 c0 08             	add    eax,0x8
+  403743:	48 03 53 10          	add    rdx,QWORD PTR [rbx+0x10]
+  403747:	89 03                	mov    DWORD PTR [rbx],eax
+  403749:	44 0f b7 1a          	movzx  r11d,WORD PTR [rdx]
+  40374d:	e9 83 fc ff ff       	jmp    4033d5 <format_string_loop+0x685>
               (flags & FLAGS_SHORT) ? (short int) va_arg(args, int) :
-  403742:	41 f6 c3 80          	test   r11b,0x80
-  403746:	74 2d                	je     403775 <format_string_loop+0xa35>
-  403748:	83 f8 2f             	cmp    eax,0x2f
-  40374b:	0f 87 a7 00 00 00    	ja     4037f8 <format_string_loop+0xab8>
-  403751:	89 c2                	mov    edx,eax
-  403753:	83 c0 08             	add    eax,0x8
-  403756:	48 03 53 10          	add    rdx,QWORD PTR [rbx+0x10]
-  40375a:	89 03                	mov    DWORD PTR [rbx],eax
-  40375c:	0f bf 02             	movsx  eax,WORD PTR [rdx]
-  40375f:	e9 a4 f7 ff ff       	jmp    402f08 <format_string_loop+0x1c8>
+  403752:	41 f6 c3 80          	test   r11b,0x80
+  403756:	74 2d                	je     403785 <format_string_loop+0xa35>
+  403758:	83 f8 2f             	cmp    eax,0x2f
+  40375b:	0f 87 a7 00 00 00    	ja     403808 <format_string_loop+0xab8>
+  403761:	89 c2                	mov    edx,eax
+  403763:	83 c0 08             	add    eax,0x8
+  403766:	48 03 53 10          	add    rdx,QWORD PTR [rbx+0x10]
+  40376a:	89 03                	mov    DWORD PTR [rbx],eax
+  40376c:	0f bf 02             	movsx  eax,WORD PTR [rdx]
+  40376f:	e9 a4 f7 ff ff       	jmp    402f18 <format_string_loop+0x1c8>
         else if  (flags & FLAGS_LONG_LONG) *(va_arg(args, long long*)) = (long long int) output->pos;
-  403764:	48 8b 73 08          	mov    rsi,QWORD PTR [rbx+0x8]
-  403768:	48 8d 46 08          	lea    rax,[rsi+0x8]
-  40376c:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
-  403770:	e9 7f fe ff ff       	jmp    4035f4 <format_string_loop+0x8b4>
+  403774:	48 8b 73 08          	mov    rsi,QWORD PTR [rbx+0x8]
+  403778:	48 8d 46 08          	lea    rax,[rsi+0x8]
+  40377c:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
+  403780:	e9 7f fe ff ff       	jmp    403604 <format_string_loop+0x8b4>
               (flags & FLAGS_SHORT) ? (short int) va_arg(args, int) :
-  403775:	83 f8 2f             	cmp    eax,0x2f
-  403778:	76 6c                	jbe    4037e6 <format_string_loop+0xaa6>
-  40377a:	48 8b 53 08          	mov    rdx,QWORD PTR [rbx+0x8]
-  40377e:	48 8d 42 08          	lea    rax,[rdx+0x8]
-  403782:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
-  403786:	8b 02                	mov    eax,DWORD PTR [rdx]
-  403788:	e9 7b f7 ff ff       	jmp    402f08 <format_string_loop+0x1c8>
+  403785:	83 f8 2f             	cmp    eax,0x2f
+  403788:	76 6c                	jbe    4037f6 <format_string_loop+0xaa6>
+  40378a:	48 8b 53 08          	mov    rdx,QWORD PTR [rbx+0x8]
+  40378e:	48 8d 42 08          	lea    rax,[rdx+0x8]
+  403792:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
+  403796:	8b 02                	mov    eax,DWORD PTR [rdx]
+  403798:	e9 7b f7 ff ff       	jmp    402f18 <format_string_loop+0x1c8>
               (flags & FLAGS_CHAR) ? (unsigned char)va_arg(args, unsigned int) :
-  40378d:	48 8b 53 08          	mov    rdx,QWORD PTR [rbx+0x8]
-  403791:	48 8d 42 08          	lea    rax,[rdx+0x8]
-  403795:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
-  403799:	e9 23 fc ff ff       	jmp    4033c1 <format_string_loop+0x681>
+  40379d:	48 8b 53 08          	mov    rdx,QWORD PTR [rbx+0x8]
+  4037a1:	48 8d 42 08          	lea    rax,[rdx+0x8]
+  4037a5:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
+  4037a9:	e9 23 fc ff ff       	jmp    4033d1 <format_string_loop+0x681>
               (flags & FLAGS_SHORT) ? (unsigned short int)va_arg(args, unsigned int) :
-  40379e:	83 f8 2f             	cmp    eax,0x2f
-  4037a1:	77 35                	ja     4037d8 <format_string_loop+0xa98>
-  4037a3:	89 c2                	mov    edx,eax
-  4037a5:	83 c0 08             	add    eax,0x8
-  4037a8:	48 03 53 10          	add    rdx,QWORD PTR [rbx+0x10]
-  4037ac:	89 03                	mov    DWORD PTR [rbx],eax
-  4037ae:	44 8b 1a             	mov    r11d,DWORD PTR [rdx]
-  4037b1:	e9 0f fc ff ff       	jmp    4033c5 <format_string_loop+0x685>
+  4037ae:	83 f8 2f             	cmp    eax,0x2f
+  4037b1:	77 35                	ja     4037e8 <format_string_loop+0xa98>
+  4037b3:	89 c2                	mov    edx,eax
+  4037b5:	83 c0 08             	add    eax,0x8
+  4037b8:	48 03 53 10          	add    rdx,QWORD PTR [rbx+0x10]
+  4037bc:	89 03                	mov    DWORD PTR [rbx],eax
+  4037be:	44 8b 1a             	mov    r11d,DWORD PTR [rdx]
+  4037c1:	e9 0f fc ff ff       	jmp    4033d5 <format_string_loop+0x685>
               (flags & FLAGS_CHAR) ? (signed char) va_arg(args, int) :
-  4037b6:	48 8b 53 08          	mov    rdx,QWORD PTR [rbx+0x8]
-  4037ba:	48 8d 42 08          	lea    rax,[rdx+0x8]
-  4037be:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
-  4037c2:	e9 3e f7 ff ff       	jmp    402f05 <format_string_loop+0x1c5>
+  4037c6:	48 8b 53 08          	mov    rdx,QWORD PTR [rbx+0x8]
+  4037ca:	48 8d 42 08          	lea    rax,[rdx+0x8]
+  4037ce:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
+  4037d2:	e9 3e f7 ff ff       	jmp    402f15 <format_string_loop+0x1c5>
         else                               *(va_arg(args, int*))       = (int) output->pos;
-  4037c7:	48 8b 73 08          	mov    rsi,QWORD PTR [rbx+0x8]
-  4037cb:	48 8d 46 08          	lea    rax,[rsi+0x8]
-  4037cf:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
-  4037d3:	e9 56 fd ff ff       	jmp    40352e <format_string_loop+0x7ee>
+  4037d7:	48 8b 73 08          	mov    rsi,QWORD PTR [rbx+0x8]
+  4037db:	48 8d 46 08          	lea    rax,[rsi+0x8]
+  4037df:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
+  4037e3:	e9 56 fd ff ff       	jmp    40353e <format_string_loop+0x7ee>
               (flags & FLAGS_SHORT) ? (unsigned short int)va_arg(args, unsigned int) :
-  4037d8:	48 8b 53 08          	mov    rdx,QWORD PTR [rbx+0x8]
-  4037dc:	48 8d 42 08          	lea    rax,[rdx+0x8]
-  4037e0:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
-  4037e4:	eb c8                	jmp    4037ae <format_string_loop+0xa6e>
+  4037e8:	48 8b 53 08          	mov    rdx,QWORD PTR [rbx+0x8]
+  4037ec:	48 8d 42 08          	lea    rax,[rdx+0x8]
+  4037f0:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
+  4037f4:	eb c8                	jmp    4037be <format_string_loop+0xa6e>
               (flags & FLAGS_SHORT) ? (short int) va_arg(args, int) :
-  4037e6:	89 c2                	mov    edx,eax
-  4037e8:	83 c0 08             	add    eax,0x8
-  4037eb:	48 03 53 10          	add    rdx,QWORD PTR [rbx+0x10]
-  4037ef:	89 03                	mov    DWORD PTR [rbx],eax
-  4037f1:	8b 02                	mov    eax,DWORD PTR [rdx]
-  4037f3:	e9 10 f7 ff ff       	jmp    402f08 <format_string_loop+0x1c8>
-  4037f8:	48 8b 53 08          	mov    rdx,QWORD PTR [rbx+0x8]
-  4037fc:	48 8d 42 08          	lea    rax,[rdx+0x8]
-  403800:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
-  403804:	e9 53 ff ff ff       	jmp    40375c <format_string_loop+0xa1c>
+  4037f6:	89 c2                	mov    edx,eax
+  4037f8:	83 c0 08             	add    eax,0x8
+  4037fb:	48 03 53 10          	add    rdx,QWORD PTR [rbx+0x10]
+  4037ff:	89 03                	mov    DWORD PTR [rbx],eax
+  403801:	8b 02                	mov    eax,DWORD PTR [rdx]
+  403803:	e9 10 f7 ff ff       	jmp    402f18 <format_string_loop+0x1c8>
+  403808:	48 8b 53 08          	mov    rdx,QWORD PTR [rbx+0x8]
+  40380c:	48 8d 42 08          	lea    rax,[rdx+0x8]
+  403810:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
+  403814:	e9 53 ff ff ff       	jmp    40376c <format_string_loop+0xa1c>
               (flags & FLAGS_SHORT) ? (unsigned short int)va_arg(args, unsigned int) :
-  403809:	48 8b 53 08          	mov    rdx,QWORD PTR [rbx+0x8]
-  40380d:	48 8d 42 08          	lea    rax,[rdx+0x8]
-  403811:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
-  403815:	e9 1f ff ff ff       	jmp    403739 <format_string_loop+0x9f9>
+  403819:	48 8b 53 08          	mov    rdx,QWORD PTR [rbx+0x8]
+  40381d:	48 8d 42 08          	lea    rax,[rdx+0x8]
+  403821:	48 89 43 08          	mov    QWORD PTR [rbx+0x8],rax
+  403825:	e9 1f ff ff ff       	jmp    403749 <format_string_loop+0x9f9>
             while (l++ < width) {
-  40381a:	89 44 24 14          	mov    DWORD PTR [rsp+0x14],eax
-  40381e:	e9 6c fe ff ff       	jmp    40368f <format_string_loop+0x94f>
+  40382a:	89 44 24 14          	mov    DWORD PTR [rsp+0x14],eax
+  40382e:	e9 6c fe ff ff       	jmp    40369f <format_string_loop+0x94f>
 
 Disassembly of section .text.vsnprintf_impl:
 
-0000000000403830 <vsnprintf_impl>:
+0000000000403840 <vsnprintf_impl>:
 
 // internal vsnprintf - used for implementing _all library functions
 static int vsnprintf_impl(output_gadget_t* output, const char* format, va_list args)
 {
-  403830:	53                   	push   rbx
-  403831:	48 89 fb             	mov    rbx,rdi
+  403840:	53                   	push   rbx
+  403841:	48 89 fb             	mov    rbx,rdi
   // Note: The library only calls vsnprintf_impl() with output->pos being 0. However, it is
   // possible to call this function with a non-zero pos value for some "remedial printing".
   format_string_loop(output, format, args);
-  403834:	e8 07 f5 ff ff       	call   402d40 <format_string_loop>
+  403844:	e8 07 f5 ff ff       	call   402d50 <format_string_loop>
 
   // termination
   append_termination_with_gadget(output);
-  403839:	48 89 df             	mov    rdi,rbx
-  40383c:	e8 6f e1 ff ff       	call   4019b0 <append_termination_with_gadget>
+  403849:	48 89 df             	mov    rdi,rbx
+  40384c:	e8 6f e1 ff ff       	call   4019c0 <append_termination_with_gadget>
 
   // return written chars without terminating \0
   return (int)output->pos;
-  403841:	8b 43 18             	mov    eax,DWORD PTR [rbx+0x18]
+  403851:	8b 43 18             	mov    eax,DWORD PTR [rbx+0x18]
 }
-  403844:	5b                   	pop    rbx
-  403845:	c3                   	ret    
+  403854:	5b                   	pop    rbx
+  403855:	c3                   	ret    
 
 Disassembly of section .text.vprintf:
 
-0000000000403850 <vprintf>:
+0000000000403860 <vprintf>:
 
 ///////////////////////////////////////////////////////////////////////////////
 
 int vprintf_(const char* format, va_list arg)
 {
-  403850:	f3 0f 1e fa          	endbr64 
-  403854:	55                   	push   rbp
-  403855:	49 89 f3             	mov    r11,rsi
-  403858:	49 89 fa             	mov    r10,rdi
-  40385b:	48 83 ec 20          	sub    rsp,0x20
+  403860:	f3 0f 1e fa          	endbr64 
+  403864:	55                   	push   rbp
+  403865:	49 89 f3             	mov    r11,rsi
+  403868:	49 89 fa             	mov    r10,rdi
+  40386b:	48 83 ec 20          	sub    rsp,0x20
   output_gadget_t gadget = extern_putchar_gadget();
-  40385f:	48 89 e5             	mov    rbp,rsp
-  403862:	48 89 ef             	mov    rdi,rbp
-  403865:	e8 56 e2 ff ff       	call   401ac0 <extern_putchar_gadget>
+  40386f:	48 89 e5             	mov    rbp,rsp
+  403872:	48 89 ef             	mov    rdi,rbp
+  403875:	e8 56 e2 ff ff       	call   401ad0 <extern_putchar_gadget>
   return vsnprintf_impl(&gadget, format, arg);
-  40386a:	48 89 ef             	mov    rdi,rbp
-  40386d:	4c 89 da             	mov    rdx,r11
-  403870:	4c 89 d6             	mov    rsi,r10
-  403873:	e8 b8 ff ff ff       	call   403830 <vsnprintf_impl>
+  40387a:	48 89 ef             	mov    rdi,rbp
+  40387d:	4c 89 da             	mov    rdx,r11
+  403880:	4c 89 d6             	mov    rsi,r10
+  403883:	e8 b8 ff ff ff       	call   403840 <vsnprintf_impl>
 }
-  403878:	48 83 c4 20          	add    rsp,0x20
-  40387c:	5d                   	pop    rbp
-  40387d:	c3                   	ret    
+  403888:	48 83 c4 20          	add    rsp,0x20
+  40388c:	5d                   	pop    rbp
+  40388d:	c3                   	ret    
 
 Disassembly of section .text.vsnprintf:
 
-0000000000403880 <vsnprintf>:
+0000000000403890 <vsnprintf>:
 
 int vsnprintf_(char* s, size_t n, const char* format, va_list arg)
 {
-  403880:	f3 0f 1e fa          	endbr64 
-  403884:	55                   	push   rbp
-  403885:	49 89 d1             	mov    r9,rdx
-  403888:	49 89 ca             	mov    r10,rcx
+  403890:	f3 0f 1e fa          	endbr64 
+  403894:	55                   	push   rbp
+  403895:	49 89 d1             	mov    r9,rdx
+  403898:	49 89 ca             	mov    r10,rcx
   output_gadget_t gadget = buffer_gadget(s, n);
-  40388b:	48 89 f2             	mov    rdx,rsi
-  40388e:	48 89 fe             	mov    rsi,rdi
+  40389b:	48 89 f2             	mov    rdx,rsi
+  40389e:	48 89 fe             	mov    rsi,rdi
 {
-  403891:	48 83 ec 20          	sub    rsp,0x20
+  4038a1:	48 83 ec 20          	sub    rsp,0x20
   output_gadget_t gadget = buffer_gadget(s, n);
-  403895:	48 89 e5             	mov    rbp,rsp
-  403898:	48 89 ef             	mov    rdi,rbp
-  40389b:	e8 80 e1 ff ff       	call   401a20 <buffer_gadget>
+  4038a5:	48 89 e5             	mov    rbp,rsp
+  4038a8:	48 89 ef             	mov    rdi,rbp
+  4038ab:	e8 80 e1 ff ff       	call   401a30 <buffer_gadget>
   return vsnprintf_impl(&gadget, format, arg);
-  4038a0:	48 89 ef             	mov    rdi,rbp
-  4038a3:	4c 89 d2             	mov    rdx,r10
-  4038a6:	4c 89 ce             	mov    rsi,r9
-  4038a9:	e8 82 ff ff ff       	call   403830 <vsnprintf_impl>
+  4038b0:	48 89 ef             	mov    rdi,rbp
+  4038b3:	4c 89 d2             	mov    rdx,r10
+  4038b6:	4c 89 ce             	mov    rsi,r9
+  4038b9:	e8 82 ff ff ff       	call   403840 <vsnprintf_impl>
 }
-  4038ae:	48 83 c4 20          	add    rsp,0x20
-  4038b2:	5d                   	pop    rbp
-  4038b3:	c3                   	ret    
+  4038be:	48 83 c4 20          	add    rsp,0x20
+  4038c2:	5d                   	pop    rbp
+  4038c3:	c3                   	ret    
 
 Disassembly of section .text.vsprintf:
 
-00000000004038c0 <vsprintf>:
+00000000004038d0 <vsprintf>:
 
 int vsprintf_(char* s, const char* format, va_list arg)
 {
-  4038c0:	f3 0f 1e fa          	endbr64 
-  4038c4:	48 89 d1             	mov    rcx,rdx
+  4038d0:	f3 0f 1e fa          	endbr64 
+  4038d4:	48 89 d1             	mov    rcx,rdx
   return vsnprintf_(s, PRINTF_MAX_POSSIBLE_BUFFER_SIZE, format, arg);
-  4038c7:	48 89 f2             	mov    rdx,rsi
-  4038ca:	be ff ff ff 7f       	mov    esi,0x7fffffff
-  4038cf:	e9 ac ff ff ff       	jmp    403880 <vsnprintf>
+  4038d7:	48 89 f2             	mov    rdx,rsi
+  4038da:	be ff ff ff 7f       	mov    esi,0x7fffffff
+  4038df:	e9 ac ff ff ff       	jmp    403890 <vsnprintf>
 
 Disassembly of section .text.vfctprintf:
 
-00000000004038e0 <vfctprintf>:
+00000000004038f0 <vfctprintf>:
 }
 
 int vfctprintf(void (*out)(char c, void* extra_arg), void* extra_arg, const char* format, va_list arg)
 {
-  4038e0:	f3 0f 1e fa          	endbr64 
-  4038e4:	55                   	push   rbp
-  4038e5:	49 89 d1             	mov    r9,rdx
+  4038f0:	f3 0f 1e fa          	endbr64 
+  4038f4:	55                   	push   rbp
+  4038f5:	49 89 d1             	mov    r9,rdx
   output_gadget_t gadget = function_gadget(out, extra_arg);
-  4038e8:	48 89 f2             	mov    rdx,rsi
-  4038eb:	48 89 fe             	mov    rsi,rdi
+  4038f8:	48 89 f2             	mov    rdx,rsi
+  4038fb:	48 89 fe             	mov    rsi,rdi
 {
-  4038ee:	48 83 ec 20          	sub    rsp,0x20
+  4038fe:	48 83 ec 20          	sub    rsp,0x20
   output_gadget_t gadget = function_gadget(out, extra_arg);
-  4038f2:	48 89 e5             	mov    rbp,rsp
-  4038f5:	48 89 ef             	mov    rdi,rbp
-  4038f8:	e8 83 e1 ff ff       	call   401a80 <function_gadget>
+  403902:	48 89 e5             	mov    rbp,rsp
+  403905:	48 89 ef             	mov    rdi,rbp
+  403908:	e8 83 e1 ff ff       	call   401a90 <function_gadget>
   return vsnprintf_impl(&gadget, format, arg);
-  4038fd:	48 89 ef             	mov    rdi,rbp
-  403900:	48 89 ca             	mov    rdx,rcx
-  403903:	4c 89 ce             	mov    rsi,r9
-  403906:	e8 25 ff ff ff       	call   403830 <vsnprintf_impl>
+  40390d:	48 89 ef             	mov    rdi,rbp
+  403910:	48 89 ca             	mov    rdx,rcx
+  403913:	4c 89 ce             	mov    rsi,r9
+  403916:	e8 25 ff ff ff       	call   403840 <vsnprintf_impl>
 }
-  40390b:	48 83 c4 20          	add    rsp,0x20
-  40390f:	5d                   	pop    rbp
-  403910:	c3                   	ret    
+  40391b:	48 83 c4 20          	add    rsp,0x20
+  40391f:	5d                   	pop    rbp
+  403920:	c3                   	ret    
 
 Disassembly of section .text.printf:
 
-0000000000403920 <printf>:
+0000000000403930 <printf>:
 
 int printf_(const char* format, ...)
 {
-  403920:	f3 0f 1e fa          	endbr64 
-  403924:	48 81 ec d8 00 00 00 	sub    rsp,0xd8
-  40392b:	48 89 74 24 28       	mov    QWORD PTR [rsp+0x28],rsi
-  403930:	48 89 54 24 30       	mov    QWORD PTR [rsp+0x30],rdx
-  403935:	48 89 4c 24 38       	mov    QWORD PTR [rsp+0x38],rcx
-  40393a:	4c 89 44 24 40       	mov    QWORD PTR [rsp+0x40],r8
-  40393f:	4c 89 4c 24 48       	mov    QWORD PTR [rsp+0x48],r9
-  403944:	84 c0                	test   al,al
-  403946:	74 37                	je     40397f <printf+0x5f>
-  403948:	0f 29 44 24 50       	movaps XMMWORD PTR [rsp+0x50],xmm0
-  40394d:	0f 29 4c 24 60       	movaps XMMWORD PTR [rsp+0x60],xmm1
-  403952:	0f 29 54 24 70       	movaps XMMWORD PTR [rsp+0x70],xmm2
-  403957:	0f 29 9c 24 80 00 00 	movaps XMMWORD PTR [rsp+0x80],xmm3
-  40395e:	00 
-  40395f:	0f 29 a4 24 90 00 00 	movaps XMMWORD PTR [rsp+0x90],xmm4
-  403966:	00 
-  403967:	0f 29 ac 24 a0 00 00 	movaps XMMWORD PTR [rsp+0xa0],xmm5
+  403930:	f3 0f 1e fa          	endbr64 
+  403934:	48 81 ec d8 00 00 00 	sub    rsp,0xd8
+  40393b:	48 89 74 24 28       	mov    QWORD PTR [rsp+0x28],rsi
+  403940:	48 89 54 24 30       	mov    QWORD PTR [rsp+0x30],rdx
+  403945:	48 89 4c 24 38       	mov    QWORD PTR [rsp+0x38],rcx
+  40394a:	4c 89 44 24 40       	mov    QWORD PTR [rsp+0x40],r8
+  40394f:	4c 89 4c 24 48       	mov    QWORD PTR [rsp+0x48],r9
+  403954:	84 c0                	test   al,al
+  403956:	74 37                	je     40398f <printf+0x5f>
+  403958:	0f 29 44 24 50       	movaps XMMWORD PTR [rsp+0x50],xmm0
+  40395d:	0f 29 4c 24 60       	movaps XMMWORD PTR [rsp+0x60],xmm1
+  403962:	0f 29 54 24 70       	movaps XMMWORD PTR [rsp+0x70],xmm2
+  403967:	0f 29 9c 24 80 00 00 	movaps XMMWORD PTR [rsp+0x80],xmm3
   40396e:	00 
-  40396f:	0f 29 b4 24 b0 00 00 	movaps XMMWORD PTR [rsp+0xb0],xmm6
+  40396f:	0f 29 a4 24 90 00 00 	movaps XMMWORD PTR [rsp+0x90],xmm4
   403976:	00 
-  403977:	0f 29 bc 24 c0 00 00 	movaps XMMWORD PTR [rsp+0xc0],xmm7
+  403977:	0f 29 ac 24 a0 00 00 	movaps XMMWORD PTR [rsp+0xa0],xmm5
   40397e:	00 
+  40397f:	0f 29 b4 24 b0 00 00 	movaps XMMWORD PTR [rsp+0xb0],xmm6
+  403986:	00 
+  403987:	0f 29 bc 24 c0 00 00 	movaps XMMWORD PTR [rsp+0xc0],xmm7
+  40398e:	00 
   va_list args;
   va_start(args, format);
-  40397f:	48 8d 84 24 e0 00 00 	lea    rax,[rsp+0xe0]
-  403986:	00 
+  40398f:	48 8d 84 24 e0 00 00 	lea    rax,[rsp+0xe0]
+  403996:	00 
   const int ret = vprintf_(format, args);
-  403987:	48 8d 74 24 08       	lea    rsi,[rsp+0x8]
+  403997:	48 8d 74 24 08       	lea    rsi,[rsp+0x8]
   va_start(args, format);
-  40398c:	c7 44 24 08 08 00 00 	mov    DWORD PTR [rsp+0x8],0x8
-  403993:	00 
-  403994:	48 89 44 24 10       	mov    QWORD PTR [rsp+0x10],rax
-  403999:	48 8d 44 24 20       	lea    rax,[rsp+0x20]
-  40399e:	c7 44 24 0c 30 00 00 	mov    DWORD PTR [rsp+0xc],0x30
-  4039a5:	00 
-  4039a6:	48 89 44 24 18       	mov    QWORD PTR [rsp+0x18],rax
+  40399c:	c7 44 24 08 08 00 00 	mov    DWORD PTR [rsp+0x8],0x8
+  4039a3:	00 
+  4039a4:	48 89 44 24 10       	mov    QWORD PTR [rsp+0x10],rax
+  4039a9:	48 8d 44 24 20       	lea    rax,[rsp+0x20]
+  4039ae:	c7 44 24 0c 30 00 00 	mov    DWORD PTR [rsp+0xc],0x30
+  4039b5:	00 
+  4039b6:	48 89 44 24 18       	mov    QWORD PTR [rsp+0x18],rax
   const int ret = vprintf_(format, args);
-  4039ab:	e8 a0 fe ff ff       	call   403850 <vprintf>
+  4039bb:	e8 a0 fe ff ff       	call   403860 <vprintf>
   va_end(args);
   return ret;
 }
-  4039b0:	48 81 c4 d8 00 00 00 	add    rsp,0xd8
-  4039b7:	c3                   	ret    
+  4039c0:	48 81 c4 d8 00 00 00 	add    rsp,0xd8
+  4039c7:	c3                   	ret    
 
 Disassembly of section .text.sprintf:
 
-00000000004039c0 <sprintf>:
+00000000004039d0 <sprintf>:
 
 int sprintf_(char* s, const char* format, ...)
 {
-  4039c0:	f3 0f 1e fa          	endbr64 
-  4039c4:	48 81 ec d8 00 00 00 	sub    rsp,0xd8
-  4039cb:	48 89 54 24 30       	mov    QWORD PTR [rsp+0x30],rdx
-  4039d0:	48 89 4c 24 38       	mov    QWORD PTR [rsp+0x38],rcx
-  4039d5:	4c 89 44 24 40       	mov    QWORD PTR [rsp+0x40],r8
-  4039da:	4c 89 4c 24 48       	mov    QWORD PTR [rsp+0x48],r9
-  4039df:	84 c0                	test   al,al
-  4039e1:	74 37                	je     403a1a <sprintf+0x5a>
-  4039e3:	0f 29 44 24 50       	movaps XMMWORD PTR [rsp+0x50],xmm0
-  4039e8:	0f 29 4c 24 60       	movaps XMMWORD PTR [rsp+0x60],xmm1
-  4039ed:	0f 29 54 24 70       	movaps XMMWORD PTR [rsp+0x70],xmm2
-  4039f2:	0f 29 9c 24 80 00 00 	movaps XMMWORD PTR [rsp+0x80],xmm3
-  4039f9:	00 
-  4039fa:	0f 29 a4 24 90 00 00 	movaps XMMWORD PTR [rsp+0x90],xmm4
-  403a01:	00 
-  403a02:	0f 29 ac 24 a0 00 00 	movaps XMMWORD PTR [rsp+0xa0],xmm5
+  4039d0:	f3 0f 1e fa          	endbr64 
+  4039d4:	48 81 ec d8 00 00 00 	sub    rsp,0xd8
+  4039db:	48 89 54 24 30       	mov    QWORD PTR [rsp+0x30],rdx
+  4039e0:	48 89 4c 24 38       	mov    QWORD PTR [rsp+0x38],rcx
+  4039e5:	4c 89 44 24 40       	mov    QWORD PTR [rsp+0x40],r8
+  4039ea:	4c 89 4c 24 48       	mov    QWORD PTR [rsp+0x48],r9
+  4039ef:	84 c0                	test   al,al
+  4039f1:	74 37                	je     403a2a <sprintf+0x5a>
+  4039f3:	0f 29 44 24 50       	movaps XMMWORD PTR [rsp+0x50],xmm0
+  4039f8:	0f 29 4c 24 60       	movaps XMMWORD PTR [rsp+0x60],xmm1
+  4039fd:	0f 29 54 24 70       	movaps XMMWORD PTR [rsp+0x70],xmm2
+  403a02:	0f 29 9c 24 80 00 00 	movaps XMMWORD PTR [rsp+0x80],xmm3
   403a09:	00 
-  403a0a:	0f 29 b4 24 b0 00 00 	movaps XMMWORD PTR [rsp+0xb0],xmm6
+  403a0a:	0f 29 a4 24 90 00 00 	movaps XMMWORD PTR [rsp+0x90],xmm4
   403a11:	00 
-  403a12:	0f 29 bc 24 c0 00 00 	movaps XMMWORD PTR [rsp+0xc0],xmm7
+  403a12:	0f 29 ac 24 a0 00 00 	movaps XMMWORD PTR [rsp+0xa0],xmm5
   403a19:	00 
+  403a1a:	0f 29 b4 24 b0 00 00 	movaps XMMWORD PTR [rsp+0xb0],xmm6
+  403a21:	00 
+  403a22:	0f 29 bc 24 c0 00 00 	movaps XMMWORD PTR [rsp+0xc0],xmm7
+  403a29:	00 
   va_list args;
   va_start(args, format);
-  403a1a:	48 8d 84 24 e0 00 00 	lea    rax,[rsp+0xe0]
-  403a21:	00 
+  403a2a:	48 8d 84 24 e0 00 00 	lea    rax,[rsp+0xe0]
+  403a31:	00 
   const int ret = vsprintf_(s, format, args);
-  403a22:	48 8d 54 24 08       	lea    rdx,[rsp+0x8]
+  403a32:	48 8d 54 24 08       	lea    rdx,[rsp+0x8]
   va_start(args, format);
-  403a27:	c7 44 24 08 10 00 00 	mov    DWORD PTR [rsp+0x8],0x10
-  403a2e:	00 
-  403a2f:	48 89 44 24 10       	mov    QWORD PTR [rsp+0x10],rax
-  403a34:	48 8d 44 24 20       	lea    rax,[rsp+0x20]
-  403a39:	c7 44 24 0c 30 00 00 	mov    DWORD PTR [rsp+0xc],0x30
-  403a40:	00 
-  403a41:	48 89 44 24 18       	mov    QWORD PTR [rsp+0x18],rax
+  403a37:	c7 44 24 08 10 00 00 	mov    DWORD PTR [rsp+0x8],0x10
+  403a3e:	00 
+  403a3f:	48 89 44 24 10       	mov    QWORD PTR [rsp+0x10],rax
+  403a44:	48 8d 44 24 20       	lea    rax,[rsp+0x20]
+  403a49:	c7 44 24 0c 30 00 00 	mov    DWORD PTR [rsp+0xc],0x30
+  403a50:	00 
+  403a51:	48 89 44 24 18       	mov    QWORD PTR [rsp+0x18],rax
   const int ret = vsprintf_(s, format, args);
-  403a46:	e8 75 fe ff ff       	call   4038c0 <vsprintf>
+  403a56:	e8 75 fe ff ff       	call   4038d0 <vsprintf>
   va_end(args);
   return ret;
 }
-  403a4b:	48 81 c4 d8 00 00 00 	add    rsp,0xd8
-  403a52:	c3                   	ret    
+  403a5b:	48 81 c4 d8 00 00 00 	add    rsp,0xd8
+  403a62:	c3                   	ret    
 
 Disassembly of section .text.snprintf:
 
-0000000000403a60 <snprintf>:
+0000000000403a70 <snprintf>:
 
 int snprintf_(char* s, size_t n, const char* format, ...)
 {
-  403a60:	f3 0f 1e fa          	endbr64 
-  403a64:	48 81 ec d8 00 00 00 	sub    rsp,0xd8
-  403a6b:	48 89 4c 24 38       	mov    QWORD PTR [rsp+0x38],rcx
-  403a70:	4c 89 44 24 40       	mov    QWORD PTR [rsp+0x40],r8
-  403a75:	4c 89 4c 24 48       	mov    QWORD PTR [rsp+0x48],r9
-  403a7a:	84 c0                	test   al,al
-  403a7c:	74 37                	je     403ab5 <snprintf+0x55>
-  403a7e:	0f 29 44 24 50       	movaps XMMWORD PTR [rsp+0x50],xmm0
-  403a83:	0f 29 4c 24 60       	movaps XMMWORD PTR [rsp+0x60],xmm1
-  403a88:	0f 29 54 24 70       	movaps XMMWORD PTR [rsp+0x70],xmm2
-  403a8d:	0f 29 9c 24 80 00 00 	movaps XMMWORD PTR [rsp+0x80],xmm3
-  403a94:	00 
-  403a95:	0f 29 a4 24 90 00 00 	movaps XMMWORD PTR [rsp+0x90],xmm4
-  403a9c:	00 
-  403a9d:	0f 29 ac 24 a0 00 00 	movaps XMMWORD PTR [rsp+0xa0],xmm5
+  403a70:	f3 0f 1e fa          	endbr64 
+  403a74:	48 81 ec d8 00 00 00 	sub    rsp,0xd8
+  403a7b:	48 89 4c 24 38       	mov    QWORD PTR [rsp+0x38],rcx
+  403a80:	4c 89 44 24 40       	mov    QWORD PTR [rsp+0x40],r8
+  403a85:	4c 89 4c 24 48       	mov    QWORD PTR [rsp+0x48],r9
+  403a8a:	84 c0                	test   al,al
+  403a8c:	74 37                	je     403ac5 <snprintf+0x55>
+  403a8e:	0f 29 44 24 50       	movaps XMMWORD PTR [rsp+0x50],xmm0
+  403a93:	0f 29 4c 24 60       	movaps XMMWORD PTR [rsp+0x60],xmm1
+  403a98:	0f 29 54 24 70       	movaps XMMWORD PTR [rsp+0x70],xmm2
+  403a9d:	0f 29 9c 24 80 00 00 	movaps XMMWORD PTR [rsp+0x80],xmm3
   403aa4:	00 
-  403aa5:	0f 29 b4 24 b0 00 00 	movaps XMMWORD PTR [rsp+0xb0],xmm6
+  403aa5:	0f 29 a4 24 90 00 00 	movaps XMMWORD PTR [rsp+0x90],xmm4
   403aac:	00 
-  403aad:	0f 29 bc 24 c0 00 00 	movaps XMMWORD PTR [rsp+0xc0],xmm7
+  403aad:	0f 29 ac 24 a0 00 00 	movaps XMMWORD PTR [rsp+0xa0],xmm5
   403ab4:	00 
+  403ab5:	0f 29 b4 24 b0 00 00 	movaps XMMWORD PTR [rsp+0xb0],xmm6
+  403abc:	00 
+  403abd:	0f 29 bc 24 c0 00 00 	movaps XMMWORD PTR [rsp+0xc0],xmm7
+  403ac4:	00 
   va_list args;
   va_start(args, format);
-  403ab5:	48 8d 84 24 e0 00 00 	lea    rax,[rsp+0xe0]
-  403abc:	00 
+  403ac5:	48 8d 84 24 e0 00 00 	lea    rax,[rsp+0xe0]
+  403acc:	00 
   const int ret = vsnprintf_(s, n, format, args);
-  403abd:	48 8d 4c 24 08       	lea    rcx,[rsp+0x8]
+  403acd:	48 8d 4c 24 08       	lea    rcx,[rsp+0x8]
   va_start(args, format);
-  403ac2:	c7 44 24 08 18 00 00 	mov    DWORD PTR [rsp+0x8],0x18
-  403ac9:	00 
-  403aca:	48 89 44 24 10       	mov    QWORD PTR [rsp+0x10],rax
-  403acf:	48 8d 44 24 20       	lea    rax,[rsp+0x20]
-  403ad4:	c7 44 24 0c 30 00 00 	mov    DWORD PTR [rsp+0xc],0x30
-  403adb:	00 
-  403adc:	48 89 44 24 18       	mov    QWORD PTR [rsp+0x18],rax
+  403ad2:	c7 44 24 08 18 00 00 	mov    DWORD PTR [rsp+0x8],0x18
+  403ad9:	00 
+  403ada:	48 89 44 24 10       	mov    QWORD PTR [rsp+0x10],rax
+  403adf:	48 8d 44 24 20       	lea    rax,[rsp+0x20]
+  403ae4:	c7 44 24 0c 30 00 00 	mov    DWORD PTR [rsp+0xc],0x30
+  403aeb:	00 
+  403aec:	48 89 44 24 18       	mov    QWORD PTR [rsp+0x18],rax
   const int ret = vsnprintf_(s, n, format, args);
-  403ae1:	e8 9a fd ff ff       	call   403880 <vsnprintf>
+  403af1:	e8 9a fd ff ff       	call   403890 <vsnprintf>
   va_end(args);
   return ret;
 }
-  403ae6:	48 81 c4 d8 00 00 00 	add    rsp,0xd8
-  403aed:	c3                   	ret    
+  403af6:	48 81 c4 d8 00 00 00 	add    rsp,0xd8
+  403afd:	c3                   	ret    
 
 Disassembly of section .text.fctprintf:
 
-0000000000403af0 <fctprintf>:
+0000000000403b00 <fctprintf>:
 
 int fctprintf(void (*out)(char c, void* extra_arg), void* extra_arg, const char* format, ...)
 {
-  403af0:	f3 0f 1e fa          	endbr64 
-  403af4:	48 81 ec d8 00 00 00 	sub    rsp,0xd8
-  403afb:	48 89 4c 24 38       	mov    QWORD PTR [rsp+0x38],rcx
-  403b00:	4c 89 44 24 40       	mov    QWORD PTR [rsp+0x40],r8
-  403b05:	4c 89 4c 24 48       	mov    QWORD PTR [rsp+0x48],r9
-  403b0a:	84 c0                	test   al,al
-  403b0c:	74 37                	je     403b45 <fctprintf+0x55>
-  403b0e:	0f 29 44 24 50       	movaps XMMWORD PTR [rsp+0x50],xmm0
-  403b13:	0f 29 4c 24 60       	movaps XMMWORD PTR [rsp+0x60],xmm1
-  403b18:	0f 29 54 24 70       	movaps XMMWORD PTR [rsp+0x70],xmm2
-  403b1d:	0f 29 9c 24 80 00 00 	movaps XMMWORD PTR [rsp+0x80],xmm3
-  403b24:	00 
-  403b25:	0f 29 a4 24 90 00 00 	movaps XMMWORD PTR [rsp+0x90],xmm4
-  403b2c:	00 
-  403b2d:	0f 29 ac 24 a0 00 00 	movaps XMMWORD PTR [rsp+0xa0],xmm5
+  403b00:	f3 0f 1e fa          	endbr64 
+  403b04:	48 81 ec d8 00 00 00 	sub    rsp,0xd8
+  403b0b:	48 89 4c 24 38       	mov    QWORD PTR [rsp+0x38],rcx
+  403b10:	4c 89 44 24 40       	mov    QWORD PTR [rsp+0x40],r8
+  403b15:	4c 89 4c 24 48       	mov    QWORD PTR [rsp+0x48],r9
+  403b1a:	84 c0                	test   al,al
+  403b1c:	74 37                	je     403b55 <fctprintf+0x55>
+  403b1e:	0f 29 44 24 50       	movaps XMMWORD PTR [rsp+0x50],xmm0
+  403b23:	0f 29 4c 24 60       	movaps XMMWORD PTR [rsp+0x60],xmm1
+  403b28:	0f 29 54 24 70       	movaps XMMWORD PTR [rsp+0x70],xmm2
+  403b2d:	0f 29 9c 24 80 00 00 	movaps XMMWORD PTR [rsp+0x80],xmm3
   403b34:	00 
-  403b35:	0f 29 b4 24 b0 00 00 	movaps XMMWORD PTR [rsp+0xb0],xmm6
+  403b35:	0f 29 a4 24 90 00 00 	movaps XMMWORD PTR [rsp+0x90],xmm4
   403b3c:	00 
-  403b3d:	0f 29 bc 24 c0 00 00 	movaps XMMWORD PTR [rsp+0xc0],xmm7
+  403b3d:	0f 29 ac 24 a0 00 00 	movaps XMMWORD PTR [rsp+0xa0],xmm5
   403b44:	00 
+  403b45:	0f 29 b4 24 b0 00 00 	movaps XMMWORD PTR [rsp+0xb0],xmm6
+  403b4c:	00 
+  403b4d:	0f 29 bc 24 c0 00 00 	movaps XMMWORD PTR [rsp+0xc0],xmm7
+  403b54:	00 
   va_list args;
   va_start(args, format);
-  403b45:	48 8d 84 24 e0 00 00 	lea    rax,[rsp+0xe0]
-  403b4c:	00 
+  403b55:	48 8d 84 24 e0 00 00 	lea    rax,[rsp+0xe0]
+  403b5c:	00 
   const int ret = vfctprintf(out, extra_arg, format, args);
-  403b4d:	48 8d 4c 24 08       	lea    rcx,[rsp+0x8]
+  403b5d:	48 8d 4c 24 08       	lea    rcx,[rsp+0x8]
   va_start(args, format);
-  403b52:	c7 44 24 08 18 00 00 	mov    DWORD PTR [rsp+0x8],0x18
-  403b59:	00 
-  403b5a:	48 89 44 24 10       	mov    QWORD PTR [rsp+0x10],rax
-  403b5f:	48 8d 44 24 20       	lea    rax,[rsp+0x20]
-  403b64:	c7 44 24 0c 30 00 00 	mov    DWORD PTR [rsp+0xc],0x30
-  403b6b:	00 
-  403b6c:	48 89 44 24 18       	mov    QWORD PTR [rsp+0x18],rax
+  403b62:	c7 44 24 08 18 00 00 	mov    DWORD PTR [rsp+0x8],0x18
+  403b69:	00 
+  403b6a:	48 89 44 24 10       	mov    QWORD PTR [rsp+0x10],rax
+  403b6f:	48 8d 44 24 20       	lea    rax,[rsp+0x20]
+  403b74:	c7 44 24 0c 30 00 00 	mov    DWORD PTR [rsp+0xc],0x30
+  403b7b:	00 
+  403b7c:	48 89 44 24 18       	mov    QWORD PTR [rsp+0x18],rax
   const int ret = vfctprintf(out, extra_arg, format, args);
-  403b71:	e8 6a fd ff ff       	call   4038e0 <vfctprintf>
+  403b81:	e8 6a fd ff ff       	call   4038f0 <vfctprintf>
   va_end(args);
   return ret;
 }
-  403b76:	48 81 c4 d8 00 00 00 	add    rsp,0xd8
-  403b7d:	c3                   	ret    
+  403b86:	48 81 c4 d8 00 00 00 	add    rsp,0xd8
+  403b8d:	c3                   	ret    
 
 Disassembly of section .text.putchar:
 
-0000000000403b80 <putchar>:
+0000000000403b90 <putchar>:
 #include <printf.h>
 #include <stdio.h>
 
 int putchar(int c)
 {
-  403b80:	f3 0f 1e fa          	endbr64 
-  403b84:	41 54                	push   r12
-  403b86:	41 89 fc             	mov    r12d,edi
+  403b90:	f3 0f 1e fa          	endbr64 
+  403b94:	41 54                	push   r12
+  403b96:	41 89 fc             	mov    r12d,edi
 	putchar_((char)c);
-  403b89:	40 0f be ff          	movsx  edi,dil
-  403b8d:	e8 0e 00 00 00       	call   403ba0 <putchar_>
+  403b99:	40 0f be ff          	movsx  edi,dil
+  403b9d:	e8 0e 00 00 00       	call   403bb0 <putchar_>
 	return c;
 }
-  403b92:	44 89 e0             	mov    eax,r12d
-  403b95:	41 5c                	pop    r12
-  403b97:	c3                   	ret    
+  403ba2:	44 89 e0             	mov    eax,r12d
+  403ba5:	41 5c                	pop    r12
+  403ba7:	c3                   	ret    
 
 Disassembly of section .text.putchar_:
 
-0000000000403ba0 <putchar_>:
+0000000000403bb0 <putchar_>:
 #include "stdio.h"
 void putchar_(char c){
-  403ba0:	f3 0f 1e fa          	endbr64 
-  403ba4:	48 83 ec 18          	sub    rsp,0x18
+  403bb0:	f3 0f 1e fa          	endbr64 
+  403bb4:	48 83 ec 18          	sub    rsp,0x18
     write(1,&c,1);
-  403ba8:	ba 01 00 00 00       	mov    edx,0x1
-  403bad:	31 c0                	xor    eax,eax
+  403bb8:	ba 01 00 00 00       	mov    edx,0x1
+  403bbd:	31 c0                	xor    eax,eax
 void putchar_(char c){
-  403baf:	40 88 7c 24 0c       	mov    BYTE PTR [rsp+0xc],dil
+  403bbf:	40 88 7c 24 0c       	mov    BYTE PTR [rsp+0xc],dil
     write(1,&c,1);
-  403bb4:	48 8d 74 24 0c       	lea    rsi,[rsp+0xc]
-  403bb9:	bf 01 00 00 00       	mov    edi,0x1
-  403bbe:	e8 6d d4 ff ff       	call   401030 <write>
-  403bc3:	48 83 c4 18          	add    rsp,0x18
-  403bc7:	c3                   	ret    
+  403bc4:	48 8d 74 24 0c       	lea    rsi,[rsp+0xc]
+  403bc9:	bf 01 00 00 00       	mov    edi,0x1
+  403bce:	e8 5d d4 ff ff       	call   401030 <write>
+  403bd3:	48 83 c4 18          	add    rsp,0x18
+  403bd7:	c3                   	ret    
 
 Disassembly of section .text.max:
 
-0000000000403bd0 <max>:
+0000000000403be0 <max>:
 #define ASSERT_EQ(a, b) ASSERT((a) == (b))
 
 unsigned long long __heap_base = 0;
 static inline size_t max(size_t a, size_t b)
 {
 	return a < b ? b : a;
-  403bd0:	48 39 f7             	cmp    rdi,rsi
-  403bd3:	48 89 f0             	mov    rax,rsi
-  403bd6:	48 0f 43 c7          	cmovae rax,rdi
+  403be0:	48 39 f7             	cmp    rdi,rsi
+  403be3:	48 89 f0             	mov    rax,rsi
+  403be6:	48 0f 43 c7          	cmovae rax,rdi
 }
-  403bda:	c3                   	ret    
+  403bea:	c3                   	ret    
 
 Disassembly of section .text.align:
 
-0000000000403be0 <align>:
+0000000000403bf0 <align>:
 static inline uintptr_t align(uintptr_t val, uintptr_t alignment)
 {
 	return (val + alignment - 1) & ~(alignment - 1);
-  403be0:	48 8d 44 3e ff       	lea    rax,[rsi+rdi*1-0x1]
-  403be5:	48 f7 de             	neg    rsi
-  403be8:	48 21 f0             	and    rax,rsi
+  403bf0:	48 8d 44 3e ff       	lea    rax,[rsi+rdi*1-0x1]
+  403bf5:	48 f7 de             	neg    rsi
+  403bf8:	48 21 f0             	and    rax,rsi
 }
-  403beb:	c3                   	ret    
+  403bfb:	c3                   	ret    
 
 Disassembly of section .text.granules_to_chunk_kind:
 
-0000000000403bf0 <granules_to_chunk_kind>:
+0000000000403c00 <granules_to_chunk_kind>:
 static enum chunk_kind granules_to_chunk_kind(unsigned granules)
 {
 #define TEST_GRANULE_SIZE(i) \
 	if(granules <= i)        \
 		return GRANULES_##i;
 	FOR_EACH_SMALL_OBJECT_GRANULES(TEST_GRANULE_SIZE);
-  403bf0:	31 c0                	xor    eax,eax
-  403bf2:	83 ff 01             	cmp    edi,0x1
-  403bf5:	76 4e                	jbe    403c45 <granules_to_chunk_kind+0x55>
-  403bf7:	b8 01 00 00 00       	mov    eax,0x1
-  403bfc:	83 ff 02             	cmp    edi,0x2
-  403bff:	74 44                	je     403c45 <granules_to_chunk_kind+0x55>
-  403c01:	83 ff 03             	cmp    edi,0x3
-  403c04:	74 5a                	je     403c60 <granules_to_chunk_kind+0x70>
-  403c06:	83 ff 04             	cmp    edi,0x4
-  403c09:	74 45                	je     403c50 <granules_to_chunk_kind+0x60>
-  403c0b:	83 ff 05             	cmp    edi,0x5
-  403c0e:	74 60                	je     403c70 <granules_to_chunk_kind+0x80>
-  403c10:	83 ff 06             	cmp    edi,0x6
-  403c13:	74 2b                	je     403c40 <granules_to_chunk_kind+0x50>
-  403c15:	b8 06 00 00 00       	mov    eax,0x6
-  403c1a:	83 ff 08             	cmp    edi,0x8
-  403c1d:	76 26                	jbe    403c45 <granules_to_chunk_kind+0x55>
-  403c1f:	b8 07 00 00 00       	mov    eax,0x7
-  403c24:	83 ff 0a             	cmp    edi,0xa
-  403c27:	76 1c                	jbe    403c45 <granules_to_chunk_kind+0x55>
-  403c29:	b8 08 00 00 00       	mov    eax,0x8
-  403c2e:	83 ff 10             	cmp    edi,0x10
-  403c31:	76 12                	jbe    403c45 <granules_to_chunk_kind+0x55>
-  403c33:	83 ff 21             	cmp    edi,0x21
-  403c36:	19 c0                	sbb    eax,eax
-  403c38:	24 0a                	and    al,0xa
-  403c3a:	05 ff 00 00 00       	add    eax,0xff
-  403c3f:	c3                   	ret    
-  403c40:	b8 05 00 00 00       	mov    eax,0x5
+  403c00:	31 c0                	xor    eax,eax
+  403c02:	83 ff 01             	cmp    edi,0x1
+  403c05:	76 4e                	jbe    403c55 <granules_to_chunk_kind+0x55>
+  403c07:	b8 01 00 00 00       	mov    eax,0x1
+  403c0c:	83 ff 02             	cmp    edi,0x2
+  403c0f:	74 44                	je     403c55 <granules_to_chunk_kind+0x55>
+  403c11:	83 ff 03             	cmp    edi,0x3
+  403c14:	74 5a                	je     403c70 <granules_to_chunk_kind+0x70>
+  403c16:	83 ff 04             	cmp    edi,0x4
+  403c19:	74 45                	je     403c60 <granules_to_chunk_kind+0x60>
+  403c1b:	83 ff 05             	cmp    edi,0x5
+  403c1e:	74 60                	je     403c80 <granules_to_chunk_kind+0x80>
+  403c20:	83 ff 06             	cmp    edi,0x6
+  403c23:	74 2b                	je     403c50 <granules_to_chunk_kind+0x50>
+  403c25:	b8 06 00 00 00       	mov    eax,0x6
+  403c2a:	83 ff 08             	cmp    edi,0x8
+  403c2d:	76 26                	jbe    403c55 <granules_to_chunk_kind+0x55>
+  403c2f:	b8 07 00 00 00       	mov    eax,0x7
+  403c34:	83 ff 0a             	cmp    edi,0xa
+  403c37:	76 1c                	jbe    403c55 <granules_to_chunk_kind+0x55>
+  403c39:	b8 08 00 00 00       	mov    eax,0x8
+  403c3e:	83 ff 10             	cmp    edi,0x10
+  403c41:	76 12                	jbe    403c55 <granules_to_chunk_kind+0x55>
+  403c43:	83 ff 21             	cmp    edi,0x21
+  403c46:	19 c0                	sbb    eax,eax
+  403c48:	24 0a                	and    al,0xa
+  403c4a:	05 ff 00 00 00       	add    eax,0xff
+  403c4f:	c3                   	ret    
+  403c50:	b8 05 00 00 00       	mov    eax,0x5
 #undef TEST_GRANULE_SIZE
 	return LARGE_OBJECT;
 }
-  403c45:	c3                   	ret    
-  403c46:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
-  403c4d:	00 00 00 
-	FOR_EACH_SMALL_OBJECT_GRANULES(TEST_GRANULE_SIZE);
-  403c50:	b8 03 00 00 00       	mov    eax,0x3
   403c55:	c3                   	ret    
   403c56:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
   403c5d:	00 00 00 
-  403c60:	b8 02 00 00 00       	mov    eax,0x2
+	FOR_EACH_SMALL_OBJECT_GRANULES(TEST_GRANULE_SIZE);
+  403c60:	b8 03 00 00 00       	mov    eax,0x3
   403c65:	c3                   	ret    
   403c66:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
   403c6d:	00 00 00 
-  403c70:	b8 04 00 00 00       	mov    eax,0x4
+  403c70:	b8 02 00 00 00       	mov    eax,0x2
   403c75:	c3                   	ret    
+  403c76:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
+  403c7d:	00 00 00 
+  403c80:	b8 04 00 00 00       	mov    eax,0x4
+  403c85:	c3                   	ret    
 
 Disassembly of section .text.chunk_kind_to_granules:
 
-0000000000403c80 <chunk_kind_to_granules>:
+0000000000403c90 <chunk_kind_to_granules>:
 
 static unsigned chunk_kind_to_granules(enum chunk_kind kind)
 {
-  403c80:	b8 ff ff ff ff       	mov    eax,0xffffffff
-  403c85:	83 ff 09             	cmp    edi,0x9
-  403c88:	77 0c                	ja     403c96 <chunk_kind_to_granules+0x16>
-  403c8a:	89 ff                	mov    edi,edi
-  403c8c:	48 8d 05 cd 18 00 00 	lea    rax,[rip+0x18cd]        # 405560 <CSWTCH.34>
-  403c93:	8b 04 b8             	mov    eax,DWORD PTR [rax+rdi*4]
+  403c90:	b8 ff ff ff ff       	mov    eax,0xffffffff
+  403c95:	83 ff 09             	cmp    edi,0x9
+  403c98:	77 0c                	ja     403ca6 <chunk_kind_to_granules+0x16>
+  403c9a:	89 ff                	mov    edi,edi
+  403c9c:	48 8d 05 bd 18 00 00 	lea    rax,[rip+0x18bd]        # 405560 <CSWTCH.34>
+  403ca3:	8b 04 b8             	mov    eax,DWORD PTR [rax+rdi*4]
 		FOR_EACH_SMALL_OBJECT_GRANULES(CHUNK_KIND_GRANULE_SIZE);
 #undef CHUNK_KIND_GRANULE_SIZE
 		default:
 			return -1;
 	}
 }
-  403c96:	c3                   	ret    
+  403ca6:	c3                   	ret    
 
 Disassembly of section .text.get_page:
 
-0000000000403ca0 <get_page>:
+0000000000403cb0 <get_page>:
 #define FIRST_ALLOCATABLE_CHUNK 1
 STATIC_ASSERT_EQ(PAGE_HEADER_SIZE, FIRST_ALLOCATABLE_CHUNK* CHUNK_SIZE);
 
 static struct page* get_page(void* ptr)
 {
 	return (struct page*)(char*)(((uintptr_t)ptr) & ~PAGE_MASK);
-  403ca0:	48 89 f8             	mov    rax,rdi
-  403ca3:	66 31 c0             	xor    ax,ax
+  403cb0:	48 89 f8             	mov    rax,rdi
+  403cb3:	66 31 c0             	xor    ax,ax
 }
-  403ca6:	c3                   	ret    
+  403cb6:	c3                   	ret    
 
 Disassembly of section .text.get_chunk_index:
 
-0000000000403cb0 <get_chunk_index>:
+0000000000403cc0 <get_chunk_index>:
 static unsigned get_chunk_index(void* ptr)
 {
 	return (((uintptr_t)ptr) & PAGE_MASK) / CHUNK_SIZE;
-  403cb0:	89 f8                	mov    eax,edi
-  403cb2:	0f b6 c4             	movzx  eax,ah
+  403cc0:	89 f8                	mov    eax,edi
+  403cc2:	0f b6 c4             	movzx  eax,ah
 }
-  403cb5:	c3                   	ret    
+  403cc5:	c3                   	ret    
 
 Disassembly of section .text.get_large_object_payload:
 
-0000000000403cc0 <get_large_object_payload>:
+0000000000403cd0 <get_large_object_payload>:
 
 #define LARGE_OBJECT_HEADER_SIZE (sizeof(struct large_object))
 
 static inline void* get_large_object_payload(struct large_object* obj)
 {
 	return ((char*)obj) + LARGE_OBJECT_HEADER_SIZE;
-  403cc0:	48 8d 47 10          	lea    rax,[rdi+0x10]
-}
-  403cc4:	c3                   	ret    
-
-Disassembly of section .text.get_large_object:
-
-0000000000403cd0 <get_large_object>:
-static inline struct large_object* get_large_object(void* ptr)
-{
-	return (struct large_object*)(((char*)ptr) - LARGE_OBJECT_HEADER_SIZE);
-  403cd0:	48 8d 47 f0          	lea    rax,[rdi-0x10]
+  403cd0:	48 8d 47 10          	lea    rax,[rdi+0x10]
 }
   403cd4:	c3                   	ret    
 
+Disassembly of section .text.get_large_object:
+
+0000000000403ce0 <get_large_object>:
+static inline struct large_object* get_large_object(void* ptr)
+{
+	return (struct large_object*)(((char*)ptr) - LARGE_OBJECT_HEADER_SIZE);
+  403ce0:	48 8d 47 f0          	lea    rax,[rdi-0x10]
+}
+  403ce4:	c3                   	ret    
+
 Disassembly of section .text.allocate_chunk:
 
-0000000000403ce0 <allocate_chunk>:
+0000000000403cf0 <allocate_chunk>:
 	return ret;
 }
 
 static char* allocate_chunk(struct page* page, unsigned idx, enum chunk_kind kind)
 {
 	page->header.chunk_kinds[idx] = kind;
-  403ce0:	89 f6                	mov    esi,esi
-  403ce2:	88 14 37             	mov    BYTE PTR [rdi+rsi*1],dl
+  403cf0:	89 f6                	mov    esi,esi
+  403cf2:	88 14 37             	mov    BYTE PTR [rdi+rsi*1],dl
 	return page->chunks[idx].data;
-  403ce5:	48 c1 e6 08          	shl    rsi,0x8
-  403ce9:	48 8d 04 37          	lea    rax,[rdi+rsi*1]
+  403cf5:	48 c1 e6 08          	shl    rsi,0x8
+  403cf9:	48 8d 04 37          	lea    rax,[rdi+rsi*1]
 }
-  403ced:	c3                   	ret    
+  403cfd:	c3                   	ret    
 
 Disassembly of section .text.maybe_repurpose_single_chunk_large_objects_head:
 
-0000000000403cf0 <maybe_repurpose_single_chunk_large_objects_head>:
+0000000000403d00 <maybe_repurpose_single_chunk_large_objects_head>:
 // It's possible for splitting to produce a large object of size 248 (256 minus
 // the header size) -- i.e. spanning a single chunk.  In that case, push the
 // chunk back on the GRANULES_32 small object freelist.
 static void maybe_repurpose_single_chunk_large_objects_head(void)
 {
 	if(large_objects->size < CHUNK_SIZE)
-  403cf0:	48 8b 0d f1 1a 00 00 	mov    rcx,QWORD PTR [rip+0x1af1]        # 4057e8 <large_objects>
-  403cf7:	48 81 79 08 ff 00 00 	cmp    QWORD PTR [rcx+0x8],0xff
-  403cfe:	00 
-  403cff:	76 07                	jbe    403d08 <maybe_repurpose_single_chunk_large_objects_head+0x18>
+  403d00:	48 8b 0d e1 1a 00 00 	mov    rcx,QWORD PTR [rip+0x1ae1]        # 4057e8 <large_objects>
+  403d07:	48 81 79 08 ff 00 00 	cmp    QWORD PTR [rcx+0x8],0xff
+  403d0e:	00 
+  403d0f:	76 07                	jbe    403d18 <maybe_repurpose_single_chunk_large_objects_head+0x18>
 		large_objects = large_objects->next;
 		struct freelist* head = (struct freelist*)ptr;
 		head->next = small_object_freelists[GRANULES_32];
 		small_object_freelists[GRANULES_32] = head;
 	}
 }
-  403d01:	c3                   	ret    
-  403d02:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
+  403d11:	c3                   	ret    
+  403d12:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
 		unsigned idx = get_chunk_index(large_objects);
-  403d08:	48 89 cf             	mov    rdi,rcx
+  403d18:	48 89 cf             	mov    rdi,rcx
 		char* ptr = allocate_chunk(get_page(large_objects), idx, GRANULES_32);
-  403d0b:	ba 09 00 00 00       	mov    edx,0x9
+  403d1b:	ba 09 00 00 00       	mov    edx,0x9
 		unsigned idx = get_chunk_index(large_objects);
-  403d10:	e8 9b ff ff ff       	call   403cb0 <get_chunk_index>
-  403d15:	89 c6                	mov    esi,eax
+  403d20:	e8 9b ff ff ff       	call   403cc0 <get_chunk_index>
+  403d25:	89 c6                	mov    esi,eax
 		char* ptr = allocate_chunk(get_page(large_objects), idx, GRANULES_32);
-  403d17:	e8 84 ff ff ff       	call   403ca0 <get_page>
-  403d1c:	48 89 c7             	mov    rdi,rax
-  403d1f:	e8 bc ff ff ff       	call   403ce0 <allocate_chunk>
+  403d27:	e8 84 ff ff ff       	call   403cb0 <get_page>
+  403d2c:	48 89 c7             	mov    rdi,rax
+  403d2f:	e8 bc ff ff ff       	call   403cf0 <allocate_chunk>
 		large_objects = large_objects->next;
-  403d24:	48 8b 11             	mov    rdx,QWORD PTR [rcx]
-  403d27:	48 89 15 ba 1a 00 00 	mov    QWORD PTR [rip+0x1aba],rdx        # 4057e8 <large_objects>
+  403d34:	48 8b 11             	mov    rdx,QWORD PTR [rcx]
+  403d37:	48 89 15 aa 1a 00 00 	mov    QWORD PTR [rip+0x1aaa],rdx        # 4057e8 <large_objects>
 		head->next = small_object_freelists[GRANULES_32];
-  403d2e:	48 8b 15 13 1b 00 00 	mov    rdx,QWORD PTR [rip+0x1b13]        # 405848 <small_object_freelists+0x48>
-  403d35:	48 89 10             	mov    QWORD PTR [rax],rdx
+  403d3e:	48 8b 15 03 1b 00 00 	mov    rdx,QWORD PTR [rip+0x1b03]        # 405848 <small_object_freelists+0x48>
+  403d45:	48 89 10             	mov    QWORD PTR [rax],rdx
 		small_object_freelists[GRANULES_32] = head;
-  403d38:	48 89 05 09 1b 00 00 	mov    QWORD PTR [rip+0x1b09],rax        # 405848 <small_object_freelists+0x48>
+  403d48:	48 89 05 f9 1a 00 00 	mov    QWORD PTR [rip+0x1af9],rax        # 405848 <small_object_freelists+0x48>
 }
-  403d3f:	c3                   	ret    
+  403d4f:	c3                   	ret    
 
 Disassembly of section .text.size_to_granules:
 
-0000000000403d40 <size_to_granules>:
+0000000000403d50 <size_to_granules>:
 	return next;
 }
 
 static inline size_t size_to_granules(size_t size)
 {
 	return (size + GRANULE_SIZE - 1) >> GRANULE_SIZE_LOG_2;
-  403d40:	48 8d 47 07          	lea    rax,[rdi+0x7]
-  403d44:	48 c1 e8 03          	shr    rax,0x3
+  403d50:	48 8d 47 07          	lea    rax,[rdi+0x7]
+  403d54:	48 c1 e8 03          	shr    rax,0x3
 }
-  403d48:	c3                   	ret    
+  403d58:	c3                   	ret    
 
 Disassembly of section .text.unlikely.maybe_merge_free_large_object:
 
-0000000000403d49 <maybe_merge_free_large_object.cold>:
+0000000000403d59 <maybe_merge_free_large_object.cold>:
 		ASSERT_ALIGNED((uintptr_t)end, CHUNK_SIZE);
-  403d49:	0f 0b                	ud2    
+  403d59:	0f 0b                	ud2    
 
 Disassembly of section .text.maybe_merge_free_large_object:
 
-0000000000403d50 <maybe_merge_free_large_object>:
+0000000000403d60 <maybe_merge_free_large_object>:
 {
-  403d50:	53                   	push   rbx
+  403d60:	53                   	push   rbx
 	struct large_object* obj = *prev;
-  403d51:	4c 8b 1f             	mov    r11,QWORD PTR [rdi]
+  403d61:	4c 8b 1f             	mov    r11,QWORD PTR [rdi]
 {
-  403d54:	49 89 f9             	mov    r9,rdi
+  403d64:	49 89 f9             	mov    r9,rdi
 		struct large_object **prev_prev = &large_objects, *walk = large_objects;
-  403d57:	48 8d 1d 8a 1a 00 00 	lea    rbx,[rip+0x1a8a]        # 4057e8 <large_objects>
+  403d67:	48 8d 1d 7a 1a 00 00 	lea    rbx,[rip+0x1a7a]        # 4057e8 <large_objects>
 		char* end = get_large_object_payload(obj) + obj->size;
-  403d5e:	4c 89 df             	mov    rdi,r11
-  403d61:	e8 5a ff ff ff       	call   403cc0 <get_large_object_payload>
-  403d66:	4d 8b 43 08          	mov    r8,QWORD PTR [r11+0x8]
-  403d6a:	49 89 c2             	mov    r10,rax
-  403d6d:	0f 1f 00             	nop    DWORD PTR [rax]
-  403d70:	4b 8d 14 02          	lea    rdx,[r10+r8*1]
+  403d6e:	4c 89 df             	mov    rdi,r11
+  403d71:	e8 5a ff ff ff       	call   403cd0 <get_large_object_payload>
+  403d76:	4d 8b 43 08          	mov    r8,QWORD PTR [r11+0x8]
+  403d7a:	49 89 c2             	mov    r10,rax
+  403d7d:	0f 1f 00             	nop    DWORD PTR [rax]
+  403d80:	4b 8d 14 02          	lea    rdx,[r10+r8*1]
 		ASSERT_ALIGNED((uintptr_t)end, CHUNK_SIZE);
-  403d74:	be 00 01 00 00       	mov    esi,0x100
-  403d79:	48 89 d7             	mov    rdi,rdx
-  403d7c:	e8 5f fe ff ff       	call   403be0 <align>
-  403d81:	48 39 c2             	cmp    rdx,rax
-  403d84:	0f 85 bf ff ff ff    	jne    403d49 <maybe_merge_free_large_object.cold>
+  403d84:	be 00 01 00 00       	mov    esi,0x100
+  403d89:	48 89 d7             	mov    rdi,rdx
+  403d8c:	e8 5f fe ff ff       	call   403bf0 <align>
+  403d91:	48 39 c2             	cmp    rdx,rax
+  403d94:	0f 85 bf ff ff ff    	jne    403d59 <maybe_merge_free_large_object.cold>
 		unsigned chunk = get_chunk_index(end);
-  403d8a:	e8 21 ff ff ff       	call   403cb0 <get_chunk_index>
-  403d8f:	89 c1                	mov    ecx,eax
+  403d9a:	e8 21 ff ff ff       	call   403cc0 <get_chunk_index>
+  403d9f:	89 c1                	mov    ecx,eax
 		if(chunk < FIRST_ALLOCATABLE_CHUNK)
-  403d91:	85 c9                	test   ecx,ecx
-  403d93:	74 53                	je     403de8 <maybe_merge_free_large_object+0x98>
+  403da1:	85 c9                	test   ecx,ecx
+  403da3:	74 53                	je     403df8 <maybe_merge_free_large_object+0x98>
 		struct page* page = get_page(end);
-  403d95:	e8 06 ff ff ff       	call   403ca0 <get_page>
+  403da5:	e8 06 ff ff ff       	call   403cb0 <get_page>
 		if(page->header.chunk_kinds[chunk] != FREE_LARGE_OBJECT)
-  403d9a:	80 3c 08 fe          	cmp    BYTE PTR [rax+rcx*1],0xfe
-  403d9e:	75 48                	jne    403de8 <maybe_merge_free_large_object+0x98>
+  403daa:	80 3c 08 fe          	cmp    BYTE PTR [rax+rcx*1],0xfe
+  403dae:	75 48                	jne    403df8 <maybe_merge_free_large_object+0x98>
 		struct large_object **prev_prev = &large_objects, *walk = large_objects;
-  403da0:	48 8b 05 41 1a 00 00 	mov    rax,QWORD PTR [rip+0x1a41]        # 4057e8 <large_objects>
+  403db0:	48 8b 05 31 1a 00 00 	mov    rax,QWORD PTR [rip+0x1a31]        # 4057e8 <large_objects>
 			ASSERT(walk);
-  403da7:	48 85 c0             	test   rax,rax
-  403daa:	0f 84 99 ff ff ff    	je     403d49 <maybe_merge_free_large_object.cold>
+  403db7:	48 85 c0             	test   rax,rax
+  403dba:	0f 84 99 ff ff ff    	je     403d59 <maybe_merge_free_large_object.cold>
 			if(walk == next)
-  403db0:	48 39 c2             	cmp    rdx,rax
-  403db3:	74 3b                	je     403df0 <maybe_merge_free_large_object+0xa0>
-  403db5:	0f 1f 00             	nop    DWORD PTR [rax]
+  403dc0:	48 39 c2             	cmp    rdx,rax
+  403dc3:	74 3b                	je     403e00 <maybe_merge_free_large_object+0xa0>
+  403dc5:	0f 1f 00             	nop    DWORD PTR [rax]
 			walk = walk->next;
-  403db8:	48 89 c1             	mov    rcx,rax
-  403dbb:	48 8b 00             	mov    rax,QWORD PTR [rax]
+  403dc8:	48 89 c1             	mov    rcx,rax
+  403dcb:	48 8b 00             	mov    rax,QWORD PTR [rax]
 			ASSERT(walk);
-  403dbe:	48 85 c0             	test   rax,rax
-  403dc1:	74 32                	je     403df5 <maybe_merge_free_large_object+0xa5>
+  403dce:	48 85 c0             	test   rax,rax
+  403dd1:	74 32                	je     403e05 <maybe_merge_free_large_object+0xa5>
 			if(walk == next)
-  403dc3:	48 39 c2             	cmp    rdx,rax
-  403dc6:	75 f0                	jne    403db8 <maybe_merge_free_large_object+0x68>
+  403dd3:	48 39 c2             	cmp    rdx,rax
+  403dd6:	75 f0                	jne    403dc8 <maybe_merge_free_large_object+0x68>
 				obj->size += LARGE_OBJECT_HEADER_SIZE + walk->size;
-  403dc8:	48 8b 50 08          	mov    rdx,QWORD PTR [rax+0x8]
+  403dd8:	48 8b 50 08          	mov    rdx,QWORD PTR [rax+0x8]
 				if(prev == &walk->next)
-  403dcc:	4c 39 c8             	cmp    rax,r9
-  403dcf:	4c 0f 44 c9          	cmove  r9,rcx
+  403ddc:	4c 39 c8             	cmp    rax,r9
+  403ddf:	4c 0f 44 c9          	cmove  r9,rcx
 				obj->size += LARGE_OBJECT_HEADER_SIZE + walk->size;
-  403dd3:	4d 8d 44 10 10       	lea    r8,[r8+rdx*1+0x10]
+  403de3:	4d 8d 44 10 10       	lea    r8,[r8+rdx*1+0x10]
 				*prev_prev = walk->next;
-  403dd8:	48 8b 10             	mov    rdx,QWORD PTR [rax]
+  403de8:	48 8b 10             	mov    rdx,QWORD PTR [rax]
 				obj->size += LARGE_OBJECT_HEADER_SIZE + walk->size;
-  403ddb:	4d 89 43 08          	mov    QWORD PTR [r11+0x8],r8
+  403deb:	4d 89 43 08          	mov    QWORD PTR [r11+0x8],r8
 				*prev_prev = walk->next;
-  403ddf:	48 89 11             	mov    QWORD PTR [rcx],rdx
+  403def:	48 89 11             	mov    QWORD PTR [rcx],rdx
 				if(prev == &walk->next)
-  403de2:	eb 8c                	jmp    403d70 <maybe_merge_free_large_object+0x20>
-  403de4:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+  403df2:	eb 8c                	jmp    403d80 <maybe_merge_free_large_object+0x20>
+  403df4:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
 }
-  403de8:	4c 89 c8             	mov    rax,r9
-  403deb:	5b                   	pop    rbx
-  403dec:	c3                   	ret    
-  403ded:	0f 1f 00             	nop    DWORD PTR [rax]
+  403df8:	4c 89 c8             	mov    rax,r9
+  403dfb:	5b                   	pop    rbx
+  403dfc:	c3                   	ret    
+  403dfd:	0f 1f 00             	nop    DWORD PTR [rax]
 		struct large_object **prev_prev = &large_objects, *walk = large_objects;
-  403df0:	48 89 d9             	mov    rcx,rbx
-  403df3:	eb d3                	jmp    403dc8 <maybe_merge_free_large_object+0x78>
-  403df5:	e9 4f ff ff ff       	jmp    403d49 <maybe_merge_free_large_object.cold>
+  403e00:	48 89 d9             	mov    rcx,rbx
+  403e03:	eb d3                	jmp    403dd8 <maybe_merge_free_large_object+0x78>
+  403e05:	e9 4f ff ff ff       	jmp    403d59 <maybe_merge_free_large_object.cold>
 
 Disassembly of section .text.maybe_compact_free_large_objects:
 
-0000000000403e00 <maybe_compact_free_large_objects>:
+0000000000403e10 <maybe_compact_free_large_objects>:
 	if(pending_large_object_compact)
-  403e00:	8b 05 d6 19 00 00    	mov    eax,DWORD PTR [rip+0x19d6]        # 4057dc <pending_large_object_compact>
-  403e06:	85 c0                	test   eax,eax
-  403e08:	74 2c                	je     403e36 <maybe_compact_free_large_objects+0x36>
+  403e10:	8b 05 c6 19 00 00    	mov    eax,DWORD PTR [rip+0x19c6]        # 4057dc <pending_large_object_compact>
+  403e16:	85 c0                	test   eax,eax
+  403e18:	74 2c                	je     403e46 <maybe_compact_free_large_objects+0x36>
 		while(*prev)
-  403e0a:	48 83 3d d6 19 00 00 	cmp    QWORD PTR [rip+0x19d6],0x0        # 4057e8 <large_objects>
-  403e11:	00 
+  403e1a:	48 83 3d c6 19 00 00 	cmp    QWORD PTR [rip+0x19c6],0x0        # 4057e8 <large_objects>
+  403e21:	00 
 		pending_large_object_compact = 0;
-  403e12:	c7 05 c0 19 00 00 00 	mov    DWORD PTR [rip+0x19c0],0x0        # 4057dc <pending_large_object_compact>
-  403e19:	00 00 00 
+  403e22:	c7 05 b0 19 00 00 00 	mov    DWORD PTR [rip+0x19b0],0x0        # 4057dc <pending_large_object_compact>
+  403e29:	00 00 00 
 		while(*prev)
-  403e1c:	74 18                	je     403e36 <maybe_compact_free_large_objects+0x36>
+  403e2c:	74 18                	je     403e46 <maybe_compact_free_large_objects+0x36>
 		struct large_object** prev = &large_objects;
-  403e1e:	48 8d 3d c3 19 00 00 	lea    rdi,[rip+0x19c3]        # 4057e8 <large_objects>
-  403e25:	0f 1f 00             	nop    DWORD PTR [rax]
+  403e2e:	48 8d 3d b3 19 00 00 	lea    rdi,[rip+0x19b3]        # 4057e8 <large_objects>
+  403e35:	0f 1f 00             	nop    DWORD PTR [rax]
 			prev = &(*maybe_merge_free_large_object(prev))->next;
-  403e28:	e8 23 ff ff ff       	call   403d50 <maybe_merge_free_large_object>
-  403e2d:	48 8b 38             	mov    rdi,QWORD PTR [rax]
+  403e38:	e8 23 ff ff ff       	call   403d60 <maybe_merge_free_large_object>
+  403e3d:	48 8b 38             	mov    rdi,QWORD PTR [rax]
 		while(*prev)
-  403e30:	48 83 3f 00          	cmp    QWORD PTR [rdi],0x0
-  403e34:	75 f2                	jne    403e28 <maybe_compact_free_large_objects+0x28>
+  403e40:	48 83 3f 00          	cmp    QWORD PTR [rdi],0x0
+  403e44:	75 f2                	jne    403e38 <maybe_compact_free_large_objects+0x28>
 }
-  403e36:	c3                   	ret    
+  403e46:	c3                   	ret    
 
 Disassembly of section .text.unlikely.get_small_object_freelist:
 
-0000000000403e37 <get_small_object_freelist.cold>:
+0000000000403e47 <get_small_object_freelist.cold>:
 static struct freelist** get_small_object_freelist(enum chunk_kind kind)
 {
 	ASSERT(kind < SMALL_OBJECT_CHUNK_KINDS);
-  403e37:	0f 0b                	ud2    
+  403e47:	0f 0b                	ud2    
 
 Disassembly of section .text.get_small_object_freelist:
 
-0000000000403e40 <get_small_object_freelist>:
-  403e40:	83 ff 09             	cmp    edi,0x9
-  403e43:	0f 87 ee ff ff ff    	ja     403e37 <get_small_object_freelist.cold>
+0000000000403e50 <get_small_object_freelist>:
+  403e50:	83 ff 09             	cmp    edi,0x9
+  403e53:	0f 87 ee ff ff ff    	ja     403e47 <get_small_object_freelist.cold>
 	return &small_object_freelists[kind];
-  403e49:	89 ff                	mov    edi,edi
-  403e4b:	48 8d 05 ae 19 00 00 	lea    rax,[rip+0x19ae]        # 405800 <small_object_freelists>
-  403e52:	48 8d 04 f8          	lea    rax,[rax+rdi*8]
+  403e59:	89 ff                	mov    edi,edi
+  403e5b:	48 8d 05 9e 19 00 00 	lea    rax,[rip+0x199e]        # 405800 <small_object_freelists>
+  403e62:	48 8d 04 f8          	lea    rax,[rax+rdi*8]
 }
-  403e56:	c3                   	ret    
+  403e66:	c3                   	ret    
 
 Disassembly of section .text.free:
 
-0000000000403e60 <free>:
+0000000000403e70 <free>:
 	enum chunk_kind kind = granules_to_chunk_kind(granules);
 	return (kind == LARGE_OBJECT) ? allocate_large(size) : allocate_small(kind);
 }
 
 void free(void* ptr)
 {
-  403e60:	f3 0f 1e fa          	endbr64 
-  403e64:	49 89 f8             	mov    r8,rdi
+  403e70:	f3 0f 1e fa          	endbr64 
+  403e74:	49 89 f8             	mov    r8,rdi
 	if(!ptr)
-  403e67:	48 85 ff             	test   rdi,rdi
-  403e6a:	74 2a                	je     403e96 <free+0x36>
+  403e77:	48 85 ff             	test   rdi,rdi
+  403e7a:	74 2a                	je     403ea6 <free+0x36>
 		return;
 	struct page* page = get_page(ptr);
-  403e6c:	e8 2f fe ff ff       	call   403ca0 <get_page>
-  403e71:	49 89 c1             	mov    r9,rax
+  403e7c:	e8 2f fe ff ff       	call   403cb0 <get_page>
+  403e81:	49 89 c1             	mov    r9,rax
 	unsigned chunk = get_chunk_index(ptr);
-  403e74:	e8 37 fe ff ff       	call   403cb0 <get_chunk_index>
-  403e79:	89 c6                	mov    esi,eax
+  403e84:	e8 37 fe ff ff       	call   403cc0 <get_chunk_index>
+  403e89:	89 c6                	mov    esi,eax
 	uint8_t kind = page->header.chunk_kinds[chunk];
-  403e7b:	89 c0                	mov    eax,eax
-  403e7d:	41 0f b6 3c 01       	movzx  edi,BYTE PTR [r9+rax*1]
+  403e8b:	89 c0                	mov    eax,eax
+  403e8d:	41 0f b6 3c 01       	movzx  edi,BYTE PTR [r9+rax*1]
 	if(kind == LARGE_OBJECT)
-  403e82:	40 80 ff ff          	cmp    dil,0xff
-  403e86:	74 18                	je     403ea0 <free+0x40>
+  403e92:	40 80 ff ff          	cmp    dil,0xff
+  403e96:	74 18                	je     403eb0 <free+0x40>
 		pending_large_object_compact = 1;
 	}
 	else
 	{
 		size_t granules = kind;
 		struct freelist** loc = get_small_object_freelist(granules);
-  403e88:	e8 b3 ff ff ff       	call   403e40 <get_small_object_freelist>
+  403e98:	e8 b3 ff ff ff       	call   403e50 <get_small_object_freelist>
 		struct freelist* obj = ptr;
 		obj->next = *loc;
-  403e8d:	48 8b 10             	mov    rdx,QWORD PTR [rax]
-  403e90:	49 89 10             	mov    QWORD PTR [r8],rdx
+  403e9d:	48 8b 10             	mov    rdx,QWORD PTR [rax]
+  403ea0:	49 89 10             	mov    QWORD PTR [r8],rdx
 		*loc = obj;
-  403e93:	4c 89 00             	mov    QWORD PTR [rax],r8
+  403ea3:	4c 89 00             	mov    QWORD PTR [rax],r8
 	}
 }
-  403e96:	c3                   	ret    
-  403e97:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
-  403e9e:	00 00 
+  403ea6:	c3                   	ret    
+  403ea7:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+  403eae:	00 00 
 		struct large_object* obj = get_large_object(ptr);
-  403ea0:	4c 89 c7             	mov    rdi,r8
-  403ea3:	e8 28 fe ff ff       	call   403cd0 <get_large_object>
+  403eb0:	4c 89 c7             	mov    rdi,r8
+  403eb3:	e8 28 fe ff ff       	call   403ce0 <get_large_object>
 		obj->next = large_objects;
-  403ea8:	48 8b 15 39 19 00 00 	mov    rdx,QWORD PTR [rip+0x1939]        # 4057e8 <large_objects>
+  403eb8:	48 8b 15 29 19 00 00 	mov    rdx,QWORD PTR [rip+0x1929]        # 4057e8 <large_objects>
 		allocate_chunk(page, chunk, FREE_LARGE_OBJECT);
-  403eaf:	4c 89 cf             	mov    rdi,r9
+  403ebf:	4c 89 cf             	mov    rdi,r9
 		obj->next = large_objects;
-  403eb2:	48 89 10             	mov    QWORD PTR [rax],rdx
+  403ec2:	48 89 10             	mov    QWORD PTR [rax],rdx
 		allocate_chunk(page, chunk, FREE_LARGE_OBJECT);
-  403eb5:	ba fe 00 00 00       	mov    edx,0xfe
+  403ec5:	ba fe 00 00 00       	mov    edx,0xfe
 		large_objects = obj;
-  403eba:	48 89 05 27 19 00 00 	mov    QWORD PTR [rip+0x1927],rax        # 4057e8 <large_objects>
+  403eca:	48 89 05 17 19 00 00 	mov    QWORD PTR [rip+0x1917],rax        # 4057e8 <large_objects>
 		allocate_chunk(page, chunk, FREE_LARGE_OBJECT);
-  403ec1:	e8 1a fe ff ff       	call   403ce0 <allocate_chunk>
+  403ed1:	e8 1a fe ff ff       	call   403cf0 <allocate_chunk>
 		pending_large_object_compact = 1;
-  403ec6:	c7 05 0c 19 00 00 01 	mov    DWORD PTR [rip+0x190c],0x1        # 4057dc <pending_large_object_compact>
-  403ecd:	00 00 00 
-  403ed0:	c3                   	ret    
+  403ed6:	c7 05 fc 18 00 00 01 	mov    DWORD PTR [rip+0x18fc],0x1        # 4057dc <pending_large_object_compact>
+  403edd:	00 00 00 
+  403ee0:	c3                   	ret    
 
 Disassembly of section .text.heap_size_in_pages:
 
-0000000000403ee0 <heap_size_in_pages>:
+0000000000403ef0 <heap_size_in_pages>:
 int heap_size_in_pages()
 {
-  403ee0:	f3 0f 1e fa          	endbr64 
-  403ee4:	48 83 ec 08          	sub    rsp,0x8
+  403ef0:	f3 0f 1e fa          	endbr64 
+  403ef4:	48 83 ec 08          	sub    rsp,0x8
 	return (int)sbrk(0) - __heap_base;
-  403ee8:	31 ff                	xor    edi,edi
-  403eea:	e8 91 d2 ff ff       	call   401180 <sbrk>
-  403eef:	48 c7 c2 50 58 40 00 	mov    rdx,0x405850
-  403ef6:	2b 02                	sub    eax,DWORD PTR [rdx]
-  403ef8:	48 83 c4 08          	add    rsp,0x8
-  403efc:	c3                   	ret    
+  403ef8:	31 ff                	xor    edi,edi
+  403efa:	e8 81 d2 ff ff       	call   401180 <sbrk>
+  403eff:	48 c7 c2 50 58 40 00 	mov    rdx,0x405850
+  403f06:	2b 02                	sub    eax,DWORD PTR [rdx]
+  403f08:	48 83 c4 08          	add    rsp,0x8
+  403f0c:	c3                   	ret    
 
 Disassembly of section .text.unlikely.allocate_pages.constprop.0:
 
-0000000000403efd <allocate_pages.constprop.0.cold>:
+0000000000403f0d <allocate_pages.constprop.0.cold>:
 		ASSERT(grow);
-  403efd:	0f 0b                	ud2    
+  403f0d:	0f 0b                	ud2    
 
 Disassembly of section .text.allocate_pages.constprop.0:
 
-0000000000403f00 <allocate_pages.constprop.0>:
+0000000000403f10 <allocate_pages.constprop.0>:
 static struct page* allocate_pages(size_t payload_size, size_t* n_allocated)
-  403f00:	41 55                	push   r13
+  403f10:	41 55                	push   r13
 	size_t heap_size = heap_size_in_pages() * PAGE_SIZE;
-  403f02:	31 c0                	xor    eax,eax
+  403f12:	31 c0                	xor    eax,eax
 static struct page* allocate_pages(size_t payload_size, size_t* n_allocated)
-  403f04:	41 54                	push   r12
+  403f14:	41 54                	push   r12
 	size_t needed = payload_size + PAGE_HEADER_SIZE;
-  403f06:	4c 8d a7 00 01 00 00 	lea    r12,[rdi+0x100]
+  403f16:	4c 8d a7 00 01 00 00 	lea    r12,[rdi+0x100]
 static struct page* allocate_pages(size_t payload_size, size_t* n_allocated)
-  403f0d:	55                   	push   rbp
-  403f0e:	48 89 f5             	mov    rbp,rsi
-  403f11:	53                   	push   rbx
-  403f12:	48 83 ec 08          	sub    rsp,0x8
+  403f1d:	55                   	push   rbp
+  403f1e:	48 89 f5             	mov    rbp,rsi
+  403f21:	53                   	push   rbx
+  403f22:	48 83 ec 08          	sub    rsp,0x8
 	size_t heap_size = heap_size_in_pages() * PAGE_SIZE;
-  403f16:	e8 c5 ff ff ff       	call   403ee0 <heap_size_in_pages>
+  403f26:	e8 c5 ff ff ff       	call   403ef0 <heap_size_in_pages>
 	if(!walloc_heap_size)
-  403f1b:	48 8b 3d be 18 00 00 	mov    rdi,QWORD PTR [rip+0x18be]        # 4057e0 <walloc_heap_size>
+  403f2b:	48 8b 3d ae 18 00 00 	mov    rdi,QWORD PTR [rip+0x18ae]        # 4057e0 <walloc_heap_size>
 	size_t heap_size = heap_size_in_pages() * PAGE_SIZE;
-  403f22:	c1 e0 10             	shl    eax,0x10
-  403f25:	48 63 d8             	movsxd rbx,eax
+  403f32:	c1 e0 10             	shl    eax,0x10
+  403f35:	48 63 d8             	movsxd rbx,eax
 	if(!walloc_heap_size)
-  403f28:	48 85 ff             	test   rdi,rdi
-  403f2b:	75 63                	jne    403f90 <allocate_pages.constprop.0+0x90>
+  403f38:	48 85 ff             	test   rdi,rdi
+  403f3b:	75 63                	jne    403fa0 <allocate_pages.constprop.0+0x90>
 		uintptr_t heap_base = align((uintptr_t)&__heap_base, PAGE_SIZE);
-  403f2d:	48 c7 c7 50 58 40 00 	mov    rdi,0x405850
-  403f34:	be 00 00 01 00       	mov    esi,0x10000
-  403f39:	e8 a2 fc ff ff       	call   403be0 <align>
+  403f3d:	48 c7 c7 50 58 40 00 	mov    rdi,0x405850
+  403f44:	be 00 00 01 00       	mov    esi,0x10000
+  403f49:	e8 a2 fc ff ff       	call   403bf0 <align>
 		walloc_heap_size = preallocated;
-  403f3e:	48 89 1d 9b 18 00 00 	mov    QWORD PTR [rip+0x189b],rbx        # 4057e0 <walloc_heap_size>
+  403f4e:	48 89 1d 8b 18 00 00 	mov    QWORD PTR [rip+0x188b],rbx        # 4057e0 <walloc_heap_size>
 		uintptr_t heap_base = align((uintptr_t)&__heap_base, PAGE_SIZE);
-  403f45:	49 89 c0             	mov    r8,rax
+  403f55:	49 89 c0             	mov    r8,rax
 	if(preallocated < needed)
-  403f48:	49 39 dc             	cmp    r12,rbx
-  403f4b:	0f 87 94 00 00 00    	ja     403fe5 <allocate_pages.constprop.0+0xe5>
+  403f58:	49 39 dc             	cmp    r12,rbx
+  403f5b:	0f 87 94 00 00 00    	ja     403ff5 <allocate_pages.constprop.0+0xe5>
 	ASSERT(size);
-  403f51:	48 85 db             	test   rbx,rbx
-  403f54:	0f 84 a3 ff ff ff    	je     403efd <allocate_pages.constprop.0.cold>
+  403f61:	48 85 db             	test   rbx,rbx
+  403f64:	0f 84 a3 ff ff ff    	je     403f0d <allocate_pages.constprop.0.cold>
 	ASSERT_ALIGNED(size, PAGE_SIZE);
-  403f5a:	be 00 00 01 00       	mov    esi,0x10000
-  403f5f:	48 89 df             	mov    rdi,rbx
-  403f62:	e8 79 fc ff ff       	call   403be0 <align>
-  403f67:	48 39 c3             	cmp    rbx,rax
-  403f6a:	0f 85 8d ff ff ff    	jne    403efd <allocate_pages.constprop.0.cold>
+  403f6a:	be 00 00 01 00       	mov    esi,0x10000
+  403f6f:	48 89 df             	mov    rdi,rbx
+  403f72:	e8 79 fc ff ff       	call   403bf0 <align>
+  403f77:	48 39 c3             	cmp    rbx,rax
+  403f7a:	0f 85 8d ff ff ff    	jne    403f0d <allocate_pages.constprop.0.cold>
 	*n_allocated = size / PAGE_SIZE;
-  403f70:	48 c1 eb 10          	shr    rbx,0x10
-  403f74:	48 89 5d 00          	mov    QWORD PTR [rbp+0x0],rbx
+  403f80:	48 c1 eb 10          	shr    rbx,0x10
+  403f84:	48 89 5d 00          	mov    QWORD PTR [rbp+0x0],rbx
 }
-  403f78:	48 83 c4 08          	add    rsp,0x8
-  403f7c:	4c 89 c0             	mov    rax,r8
-  403f7f:	5b                   	pop    rbx
-  403f80:	5d                   	pop    rbp
-  403f81:	41 5c                	pop    r12
-  403f83:	41 5d                	pop    r13
-  403f85:	c3                   	ret    
-  403f86:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
-  403f8d:	00 00 00 
+  403f88:	48 83 c4 08          	add    rsp,0x8
+  403f8c:	4c 89 c0             	mov    rax,r8
+  403f8f:	5b                   	pop    rbx
+  403f90:	5d                   	pop    rbp
+  403f91:	41 5c                	pop    r12
+  403f93:	41 5d                	pop    r13
+  403f95:	c3                   	ret    
+  403f96:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
+  403f9d:	00 00 00 
 	if(preallocated < needed)
-  403f90:	4d 85 e4             	test   r12,r12
-  403f93:	74 5e                	je     403ff3 <allocate_pages.constprop.0+0xf3>
+  403fa0:	4d 85 e4             	test   r12,r12
+  403fa3:	74 5e                	je     404003 <allocate_pages.constprop.0+0xf3>
 	uintptr_t preallocated = 0, grow = 0;
-  403f95:	45 31 ed             	xor    r13d,r13d
+  403fa5:	45 31 ed             	xor    r13d,r13d
 		grow = align(max(walloc_heap_size / 2, needed - preallocated), PAGE_SIZE);
-  403f98:	4c 89 e6             	mov    rsi,r12
-  403f9b:	48 d1 ef             	shr    rdi,1
-  403f9e:	e8 2d fc ff ff       	call   403bd0 <max>
-  403fa3:	be 00 00 01 00       	mov    esi,0x10000
-  403fa8:	48 89 c7             	mov    rdi,rax
-  403fab:	e8 30 fc ff ff       	call   403be0 <align>
-  403fb0:	49 89 c4             	mov    r12,rax
+  403fa8:	4c 89 e6             	mov    rsi,r12
+  403fab:	48 d1 ef             	shr    rdi,1
+  403fae:	e8 2d fc ff ff       	call   403be0 <max>
+  403fb3:	be 00 00 01 00       	mov    esi,0x10000
+  403fb8:	48 89 c7             	mov    rdi,rax
+  403fbb:	e8 30 fc ff ff       	call   403bf0 <align>
+  403fc0:	49 89 c4             	mov    r12,rax
 		ASSERT(grow);
-  403fb3:	48 85 c0             	test   rax,rax
-  403fb6:	0f 84 41 ff ff ff    	je     403efd <allocate_pages.constprop.0.cold>
+  403fc3:	48 85 c0             	test   rax,rax
+  403fc6:	0f 84 41 ff ff ff    	je     403f0d <allocate_pages.constprop.0.cold>
 		if(sbrk(grow) == -1) // >> PAGE_SIZE_LOG_2
-  403fbc:	48 89 c7             	mov    rdi,rax
-  403fbf:	e8 bc d1 ff ff       	call   401180 <sbrk>
-  403fc4:	48 83 f8 ff          	cmp    rax,0xffffffffffffffff
-  403fc8:	74 16                	je     403fe0 <allocate_pages.constprop.0+0xe0>
+  403fcc:	48 89 c7             	mov    rdi,rax
+  403fcf:	e8 ac d1 ff ff       	call   401180 <sbrk>
+  403fd4:	48 83 f8 ff          	cmp    rax,0xffffffffffffffff
+  403fd8:	74 16                	je     403ff0 <allocate_pages.constprop.0+0xe0>
 	size_t size = grow + preallocated;
-  403fca:	49 89 d8             	mov    r8,rbx
+  403fda:	49 89 d8             	mov    r8,rbx
 		walloc_heap_size += grow;
-  403fcd:	4c 01 25 0c 18 00 00 	add    QWORD PTR [rip+0x180c],r12        # 4057e0 <walloc_heap_size>
+  403fdd:	4c 01 25 fc 17 00 00 	add    QWORD PTR [rip+0x17fc],r12        # 4057e0 <walloc_heap_size>
 	size_t size = grow + preallocated;
-  403fd4:	4b 8d 1c 2c          	lea    rbx,[r12+r13*1]
-  403fd8:	e9 74 ff ff ff       	jmp    403f51 <allocate_pages.constprop.0+0x51>
-  403fdd:	0f 1f 00             	nop    DWORD PTR [rax]
+  403fe4:	4b 8d 1c 2c          	lea    rbx,[r12+r13*1]
+  403fe8:	e9 74 ff ff ff       	jmp    403f61 <allocate_pages.constprop.0+0x51>
+  403fed:	0f 1f 00             	nop    DWORD PTR [rax]
 			return NULL;
-  403fe0:	45 31 c0             	xor    r8d,r8d
-  403fe3:	eb 93                	jmp    403f78 <allocate_pages.constprop.0+0x78>
+  403ff0:	45 31 c0             	xor    r8d,r8d
+  403ff3:	eb 93                	jmp    403f88 <allocate_pages.constprop.0+0x78>
 		grow = align(max(walloc_heap_size / 2, needed - preallocated), PAGE_SIZE);
-  403fe5:	49 29 dc             	sub    r12,rbx
-  403fe8:	48 89 df             	mov    rdi,rbx
-  403feb:	49 89 dd             	mov    r13,rbx
+  403ff5:	49 29 dc             	sub    r12,rbx
+  403ff8:	48 89 df             	mov    rdi,rbx
+  403ffb:	49 89 dd             	mov    r13,rbx
 		base = heap_base;
-  403fee:	48 89 c3             	mov    rbx,rax
-  403ff1:	eb a5                	jmp    403f98 <allocate_pages.constprop.0+0x98>
-  403ff3:	e9 05 ff ff ff       	jmp    403efd <allocate_pages.constprop.0.cold>
+  403ffe:	48 89 c3             	mov    rbx,rax
+  404001:	eb a5                	jmp    403fa8 <allocate_pages.constprop.0+0x98>
+  404003:	e9 05 ff ff ff       	jmp    403f0d <allocate_pages.constprop.0.cold>
 
 Disassembly of section .text.unlikely.allocate_large_object:
 
-0000000000403ff8 <allocate_large_object.cold>:
+0000000000404008 <allocate_large_object.cold>:
 		ASSERT(best_size >= size_with_header);
-  403ff8:	0f 0b                	ud2    
+  404008:	0f 0b                	ud2    
 
 Disassembly of section .text.allocate_large_object:
 
-0000000000404000 <allocate_large_object>:
+0000000000404010 <allocate_large_object>:
 {
-  404000:	41 54                	push   r12
-  404002:	55                   	push   rbp
-  404003:	53                   	push   rbx
-  404004:	48 89 fb             	mov    rbx,rdi
-  404007:	48 83 ec 10          	sub    rsp,0x10
+  404010:	41 54                	push   r12
+  404012:	55                   	push   rbp
+  404013:	53                   	push   rbx
+  404014:	48 89 fb             	mov    rbx,rdi
+  404017:	48 83 ec 10          	sub    rsp,0x10
 	maybe_compact_free_large_objects();
-  40400b:	e8 f0 fd ff ff       	call   403e00 <maybe_compact_free_large_objects>
+  40401b:	e8 f0 fd ff ff       	call   403e10 <maybe_compact_free_large_objects>
 	for(struct large_object **prev = &large_objects, *walk = large_objects; walk;
-  404010:	48 8b 15 d1 17 00 00 	mov    rdx,QWORD PTR [rip+0x17d1]        # 4057e8 <large_objects>
-  404017:	48 85 d2             	test   rdx,rdx
-  40401a:	0f 84 da 01 00 00    	je     4041fa <allocate_large_object+0x1fa>
-  404020:	4c 8d 0d c1 17 00 00 	lea    r9,[rip+0x17c1]        # 4057e8 <large_objects>
+  404020:	48 8b 15 c1 17 00 00 	mov    rdx,QWORD PTR [rip+0x17c1]        # 4057e8 <large_objects>
+  404027:	48 85 d2             	test   rdx,rdx
+  40402a:	0f 84 da 01 00 00    	je     40420a <allocate_large_object+0x1fa>
+  404030:	4c 8d 0d b1 17 00 00 	lea    r9,[rip+0x17b1]        # 4057e8 <large_objects>
 	size_t best_size = -1;
-  404027:	49 c7 c0 ff ff ff ff 	mov    r8,0xffffffffffffffff
+  404037:	49 c7 c0 ff ff ff ff 	mov    r8,0xffffffffffffffff
 			   align(size + LARGE_OBJECT_HEADER_SIZE, CHUNK_SIZE))
-  40402e:	48 8d 7b 10          	lea    rdi,[rbx+0x10]
+  40403e:	48 8d 7b 10          	lea    rdi,[rbx+0x10]
 	struct large_object *best = NULL, **best_prev = &large_objects;
-  404032:	45 31 d2             	xor    r10d,r10d
-  404035:	4c 89 cd             	mov    rbp,r9
-  404038:	eb 11                	jmp    40404b <allocate_large_object+0x4b>
-  40403a:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
+  404042:	45 31 d2             	xor    r10d,r10d
+  404045:	4c 89 cd             	mov    rbp,r9
+  404048:	eb 11                	jmp    40405b <allocate_large_object+0x4b>
+  40404a:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
 		prev = &walk->next, walk = walk->next)
-  404040:	49 89 d1             	mov    r9,rdx
-  404043:	48 8b 12             	mov    rdx,QWORD PTR [rdx]
+  404050:	49 89 d1             	mov    r9,rdx
+  404053:	48 8b 12             	mov    rdx,QWORD PTR [rdx]
 	for(struct large_object **prev = &large_objects, *walk = large_objects; walk;
-  404046:	48 85 d2             	test   rdx,rdx
-  404049:	74 39                	je     404084 <allocate_large_object+0x84>
+  404056:	48 85 d2             	test   rdx,rdx
+  404059:	74 39                	je     404094 <allocate_large_object+0x84>
 		if(walk->size >= size && walk->size < best_size)
-  40404b:	48 8b 4a 08          	mov    rcx,QWORD PTR [rdx+0x8]
-  40404f:	4c 39 c1             	cmp    rcx,r8
-  404052:	73 ec                	jae    404040 <allocate_large_object+0x40>
-  404054:	48 39 d9             	cmp    rcx,rbx
-  404057:	72 e7                	jb     404040 <allocate_large_object+0x40>
+  40405b:	48 8b 4a 08          	mov    rcx,QWORD PTR [rdx+0x8]
+  40405f:	4c 39 c1             	cmp    rcx,r8
+  404062:	73 ec                	jae    404050 <allocate_large_object+0x40>
+  404064:	48 39 d9             	cmp    rcx,rbx
+  404067:	72 e7                	jb     404050 <allocate_large_object+0x40>
 			   align(size + LARGE_OBJECT_HEADER_SIZE, CHUNK_SIZE))
-  404059:	be 00 01 00 00       	mov    esi,0x100
-  40405e:	e8 7d fb ff ff       	call   403be0 <align>
+  404069:	be 00 01 00 00       	mov    esi,0x100
+  40406e:	e8 7d fb ff ff       	call   403bf0 <align>
 			if(best_size + LARGE_OBJECT_HEADER_SIZE ==
-  404063:	48 8d 71 10          	lea    rsi,[rcx+0x10]
-  404067:	48 39 c6             	cmp    rsi,rax
-  40406a:	0f 84 88 02 00 00    	je     4042f8 <allocate_large_object+0x2f8>
-  404070:	4c 89 cd             	mov    rbp,r9
-  404073:	49 89 d2             	mov    r10,rdx
+  404073:	48 8d 71 10          	lea    rsi,[rcx+0x10]
+  404077:	48 39 c6             	cmp    rsi,rax
+  40407a:	0f 84 88 02 00 00    	je     404308 <allocate_large_object+0x2f8>
+  404080:	4c 89 cd             	mov    rbp,r9
+  404083:	49 89 d2             	mov    r10,rdx
 		prev = &walk->next, walk = walk->next)
-  404076:	49 89 d1             	mov    r9,rdx
-  404079:	48 8b 12             	mov    rdx,QWORD PTR [rdx]
-  40407c:	49 89 c8             	mov    r8,rcx
+  404086:	49 89 d1             	mov    r9,rdx
+  404089:	48 8b 12             	mov    rdx,QWORD PTR [rdx]
+  40408c:	49 89 c8             	mov    r8,rcx
 	for(struct large_object **prev = &large_objects, *walk = large_objects; walk;
-  40407f:	48 85 d2             	test   rdx,rdx
-  404082:	75 c7                	jne    40404b <allocate_large_object+0x4b>
+  40408f:	48 85 d2             	test   rdx,rdx
+  404092:	75 c7                	jne    40405b <allocate_large_object+0x4b>
 	if(!best)
-  404084:	4d 85 d2             	test   r10,r10
-  404087:	0f 84 7b 01 00 00    	je     404208 <allocate_large_object+0x208>
+  404094:	4d 85 d2             	test   r10,r10
+  404097:	0f 84 7b 01 00 00    	je     404218 <allocate_large_object+0x208>
 	allocate_chunk(get_page(best), get_chunk_index(best), LARGE_OBJECT);
-  40408d:	4c 89 d7             	mov    rdi,r10
-  404090:	ba ff 00 00 00       	mov    edx,0xff
+  40409d:	4c 89 d7             	mov    rdi,r10
+  4040a0:	ba ff 00 00 00       	mov    edx,0xff
 	size_t tail_size = (best_size - size) & ~CHUNK_MASK;
-  404095:	4c 89 c1             	mov    rcx,r8
+  4040a5:	4c 89 c1             	mov    rcx,r8
 	allocate_chunk(get_page(best), get_chunk_index(best), LARGE_OBJECT);
-  404098:	e8 13 fc ff ff       	call   403cb0 <get_chunk_index>
+  4040a8:	e8 13 fc ff ff       	call   403cc0 <get_chunk_index>
 	size_t tail_size = (best_size - size) & ~CHUNK_MASK;
-  40409d:	48 29 d9             	sub    rcx,rbx
+  4040ad:	48 29 d9             	sub    rcx,rbx
 	allocate_chunk(get_page(best), get_chunk_index(best), LARGE_OBJECT);
-  4040a0:	89 c6                	mov    esi,eax
-  4040a2:	e8 f9 fb ff ff       	call   403ca0 <get_page>
-  4040a7:	48 89 c7             	mov    rdi,rax
-  4040aa:	49 89 c1             	mov    r9,rax
-  4040ad:	e8 2e fc ff ff       	call   403ce0 <allocate_chunk>
+  4040b0:	89 c6                	mov    esi,eax
+  4040b2:	e8 f9 fb ff ff       	call   403cb0 <get_page>
+  4040b7:	48 89 c7             	mov    rdi,rax
+  4040ba:	49 89 c1             	mov    r9,rax
+  4040bd:	e8 2e fc ff ff       	call   403cf0 <allocate_chunk>
 	struct large_object* next = best->next;
-  4040b2:	49 8b 02             	mov    rax,QWORD PTR [r10]
+  4040c2:	49 8b 02             	mov    rax,QWORD PTR [r10]
 	*best_prev = next;
-  4040b5:	48 89 45 00          	mov    QWORD PTR [rbp+0x0],rax
+  4040c5:	48 89 45 00          	mov    QWORD PTR [rbp+0x0],rax
 	if(tail_size)
-  4040b9:	48 81 e1 00 ff ff ff 	and    rcx,0xffffffffffffff00
-  4040c0:	75 36                	jne    4040f8 <allocate_large_object+0xf8>
+  4040c9:	48 81 e1 00 ff ff ff 	and    rcx,0xffffffffffffff00
+  4040d0:	75 36                	jne    404108 <allocate_large_object+0xf8>
 	ASSERT_ALIGNED((uintptr_t)(get_large_object_payload(best) + best->size), CHUNK_SIZE);
-  4040c2:	49 8b 52 08          	mov    rdx,QWORD PTR [r10+0x8]
-  4040c6:	4c 89 d7             	mov    rdi,r10
-  4040c9:	be 00 01 00 00       	mov    esi,0x100
-  4040ce:	e8 ed fb ff ff       	call   403cc0 <get_large_object_payload>
-  4040d3:	48 01 c2             	add    rdx,rax
-  4040d6:	48 89 d7             	mov    rdi,rdx
-  4040d9:	e8 02 fb ff ff       	call   403be0 <align>
-  4040de:	48 39 c2             	cmp    rdx,rax
-  4040e1:	0f 85 11 ff ff ff    	jne    403ff8 <allocate_large_object.cold>
+  4040d2:	49 8b 52 08          	mov    rdx,QWORD PTR [r10+0x8]
+  4040d6:	4c 89 d7             	mov    rdi,r10
+  4040d9:	be 00 01 00 00       	mov    esi,0x100
+  4040de:	e8 ed fb ff ff       	call   403cd0 <get_large_object_payload>
+  4040e3:	48 01 c2             	add    rdx,rax
+  4040e6:	48 89 d7             	mov    rdi,rdx
+  4040e9:	e8 02 fb ff ff       	call   403bf0 <align>
+  4040ee:	48 39 c2             	cmp    rdx,rax
+  4040f1:	0f 85 11 ff ff ff    	jne    404008 <allocate_large_object.cold>
 }
-  4040e7:	48 83 c4 10          	add    rsp,0x10
-  4040eb:	4c 89 d0             	mov    rax,r10
-  4040ee:	5b                   	pop    rbx
-  4040ef:	5d                   	pop    rbp
-  4040f0:	41 5c                	pop    r12
-  4040f2:	c3                   	ret    
-  4040f3:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
+  4040f7:	48 83 c4 10          	add    rsp,0x10
+  4040fb:	4c 89 d0             	mov    rax,r10
+  4040fe:	5b                   	pop    rbx
+  4040ff:	5d                   	pop    rbp
+  404100:	41 5c                	pop    r12
+  404102:	c3                   	ret    
+  404103:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
 		char* start = get_large_object_payload(best);
-  4040f8:	4c 89 d7             	mov    rdi,r10
-  4040fb:	e8 c0 fb ff ff       	call   403cc0 <get_large_object_payload>
+  404108:	4c 89 d7             	mov    rdi,r10
+  40410b:	e8 c0 fb ff ff       	call   403cd0 <get_large_object_payload>
 		if(start_page == get_page(end - tail_size - 1))
-  404100:	48 89 cf             	mov    rdi,rcx
+  404110:	48 89 cf             	mov    rdi,rcx
 		char* end = start + best_size;
-  404103:	4e 8d 1c 00          	lea    r11,[rax+r8*1]
+  404113:	4e 8d 1c 00          	lea    r11,[rax+r8*1]
 		if(start_page == get_page(end - tail_size - 1))
-  404107:	48 f7 d7             	not    rdi
+  404117:	48 f7 d7             	not    rdi
 		char* start = get_large_object_payload(best);
-  40410a:	48 89 c5             	mov    rbp,rax
+  40411a:	48 89 c5             	mov    rbp,rax
 		if(start_page == get_page(end - tail_size - 1))
-  40410d:	4c 01 df             	add    rdi,r11
-  404110:	e8 8b fb ff ff       	call   403ca0 <get_page>
-  404115:	49 39 c1             	cmp    r9,rax
-  404118:	0f 84 e8 01 00 00    	je     404306 <allocate_large_object+0x306>
+  40411d:	4c 01 df             	add    rdi,r11
+  404120:	e8 8b fb ff ff       	call   403cb0 <get_page>
+  404125:	49 39 c1             	cmp    r9,rax
+  404128:	0f 84 e8 01 00 00    	je     404316 <allocate_large_object+0x306>
 			ASSERT_ALIGNED((uintptr_t)end, PAGE_SIZE);
-  40411e:	be 00 00 01 00       	mov    esi,0x10000
-  404123:	4c 89 df             	mov    rdi,r11
-  404126:	e8 b5 fa ff ff       	call   403be0 <align>
+  40412e:	be 00 00 01 00       	mov    esi,0x10000
+  404133:	4c 89 df             	mov    rdi,r11
+  404136:	e8 b5 fa ff ff       	call   403bf0 <align>
 		else if(size < PAGE_SIZE - LARGE_OBJECT_HEADER_SIZE - CHUNK_SIZE)
-  40412b:	48 81 fb ef fe 00 00 	cmp    rbx,0xfeef
-  404132:	0f 86 38 01 00 00    	jbe    404270 <allocate_large_object+0x270>
+  40413b:	48 81 fb ef fe 00 00 	cmp    rbx,0xfeef
+  404142:	0f 86 38 01 00 00    	jbe    404280 <allocate_large_object+0x270>
 			ASSERT_ALIGNED((uintptr_t)end, PAGE_SIZE);
-  404138:	4c 39 d8             	cmp    rax,r11
-  40413b:	0f 85 b7 fe ff ff    	jne    403ff8 <allocate_large_object.cold>
+  404148:	4c 39 d8             	cmp    rax,r11
+  40414b:	0f 85 b7 fe ff ff    	jne    404008 <allocate_large_object.cold>
 			size_t first_page_size = PAGE_SIZE - (((uintptr_t)start) & PAGE_MASK);
-  404141:	0f b7 ed             	movzx  ebp,bp
+  404151:	0f b7 ed             	movzx  ebp,bp
 			size_t tail_pages_size = align(size - first_page_size, PAGE_SIZE);
-  404144:	be 00 00 01 00       	mov    esi,0x10000
-  404149:	48 8d bc 1d 00 00 ff 	lea    rdi,[rbp+rbx*1-0x10000]
-  404150:	ff 
+  404154:	be 00 00 01 00       	mov    esi,0x10000
+  404159:	48 8d bc 1d 00 00 ff 	lea    rdi,[rbp+rbx*1-0x10000]
+  404160:	ff 
 			tail_size = best_size - size;
-  404151:	4a 8d 8c 05 00 00 ff 	lea    rcx,[rbp+r8*1-0x10000]
-  404158:	ff 
+  404161:	4a 8d 8c 05 00 00 ff 	lea    rcx,[rbp+r8*1-0x10000]
+  404168:	ff 
 			size_t tail_pages_size = align(size - first_page_size, PAGE_SIZE);
-  404159:	e8 82 fa ff ff       	call   403be0 <align>
+  404169:	e8 82 fa ff ff       	call   403bf0 <align>
 		best->size -= tail_size;
-  40415e:	49 8b 52 08          	mov    rdx,QWORD PTR [r10+0x8]
+  40416e:	49 8b 52 08          	mov    rdx,QWORD PTR [r10+0x8]
 			tail_size = best_size - size;
-  404162:	48 29 c1             	sub    rcx,rax
+  404172:	48 29 c1             	sub    rcx,rax
 		best->size -= tail_size;
-  404165:	48 29 ca             	sub    rdx,rcx
+  404175:	48 29 ca             	sub    rdx,rcx
 		unsigned tail_idx = get_chunk_index(end - tail_size);
-  404168:	4c 89 df             	mov    rdi,r11
+  404178:	4c 89 df             	mov    rdi,r11
 		best->size -= tail_size;
-  40416b:	49 89 52 08          	mov    QWORD PTR [r10+0x8],rdx
+  40417b:	49 89 52 08          	mov    QWORD PTR [r10+0x8],rdx
 		unsigned tail_idx = get_chunk_index(end - tail_size);
-  40416f:	48 29 cf             	sub    rdi,rcx
-  404172:	e8 39 fb ff ff       	call   403cb0 <get_chunk_index>
-  404177:	89 c6                	mov    esi,eax
+  40417f:	48 29 cf             	sub    rdi,rcx
+  404182:	e8 39 fb ff ff       	call   403cc0 <get_chunk_index>
+  404187:	89 c6                	mov    esi,eax
 		while(tail_idx < FIRST_ALLOCATABLE_CHUNK && tail_size)
-  404179:	48 85 c9             	test   rcx,rcx
-  40417c:	0f 84 44 ff ff ff    	je     4040c6 <allocate_large_object+0xc6>
-  404182:	85 c0                	test   eax,eax
-  404184:	75 0c                	jne    404192 <allocate_large_object+0x192>
+  404189:	48 85 c9             	test   rcx,rcx
+  40418c:	0f 84 44 ff ff ff    	je     4040d6 <allocate_large_object+0xc6>
+  404192:	85 c0                	test   eax,eax
+  404194:	75 0c                	jne    4041a2 <allocate_large_object+0x192>
 			tail_size -= CHUNK_SIZE;
-  404186:	48 81 e9 00 01 00 00 	sub    rcx,0x100
+  404196:	48 81 e9 00 01 00 00 	sub    rcx,0x100
 			tail_idx++;
-  40418d:	be 01 00 00 00       	mov    esi,0x1
+  40419d:	be 01 00 00 00       	mov    esi,0x1
 		if(tail_size)
-  404192:	48 85 c9             	test   rcx,rcx
-  404195:	0f 84 2b ff ff ff    	je     4040c6 <allocate_large_object+0xc6>
+  4041a2:	48 85 c9             	test   rcx,rcx
+  4041a5:	0f 84 2b ff ff ff    	je     4040d6 <allocate_large_object+0xc6>
 			struct page* page = get_page(end - tail_size);
-  40419b:	4c 89 df             	mov    rdi,r11
+  4041ab:	4c 89 df             	mov    rdi,r11
 			char* tail_ptr = allocate_chunk(page, tail_idx, FREE_LARGE_OBJECT);
-  40419e:	ba fe 00 00 00       	mov    edx,0xfe
+  4041ae:	ba fe 00 00 00       	mov    edx,0xfe
 			struct page* page = get_page(end - tail_size);
-  4041a3:	48 29 cf             	sub    rdi,rcx
+  4041b3:	48 29 cf             	sub    rdi,rcx
 			tail->size = tail_size - LARGE_OBJECT_HEADER_SIZE;
-  4041a6:	48 83 e9 10          	sub    rcx,0x10
+  4041b6:	48 83 e9 10          	sub    rcx,0x10
 			struct page* page = get_page(end - tail_size);
-  4041aa:	e8 f1 fa ff ff       	call   403ca0 <get_page>
-  4041af:	48 89 c7             	mov    rdi,rax
+  4041ba:	e8 f1 fa ff ff       	call   403cb0 <get_page>
+  4041bf:	48 89 c7             	mov    rdi,rax
 			char* tail_ptr = allocate_chunk(page, tail_idx, FREE_LARGE_OBJECT);
-  4041b2:	e8 29 fb ff ff       	call   403ce0 <allocate_chunk>
+  4041c2:	e8 29 fb ff ff       	call   403cf0 <allocate_chunk>
 			ASSERT_ALIGNED((uintptr_t)(get_large_object_payload(tail) + tail->size), CHUNK_SIZE);
-  4041b7:	be 00 01 00 00       	mov    esi,0x100
+  4041c7:	be 00 01 00 00       	mov    esi,0x100
 			char* tail_ptr = allocate_chunk(page, tail_idx, FREE_LARGE_OBJECT);
-  4041bc:	48 89 c2             	mov    rdx,rax
+  4041cc:	48 89 c2             	mov    rdx,rax
 			tail->next = large_objects;
-  4041bf:	48 8b 05 22 16 00 00 	mov    rax,QWORD PTR [rip+0x1622]        # 4057e8 <large_objects>
+  4041cf:	48 8b 05 12 16 00 00 	mov    rax,QWORD PTR [rip+0x1612]        # 4057e8 <large_objects>
 			tail->size = tail_size - LARGE_OBJECT_HEADER_SIZE;
-  4041c6:	48 89 4a 08          	mov    QWORD PTR [rdx+0x8],rcx
+  4041d6:	48 89 4a 08          	mov    QWORD PTR [rdx+0x8],rcx
 			ASSERT_ALIGNED((uintptr_t)(get_large_object_payload(tail) + tail->size), CHUNK_SIZE);
-  4041ca:	48 89 d7             	mov    rdi,rdx
+  4041da:	48 89 d7             	mov    rdi,rdx
 			tail->next = large_objects;
-  4041cd:	48 89 02             	mov    QWORD PTR [rdx],rax
+  4041dd:	48 89 02             	mov    QWORD PTR [rdx],rax
 			ASSERT_ALIGNED((uintptr_t)(get_large_object_payload(tail) + tail->size), CHUNK_SIZE);
-  4041d0:	e8 eb fa ff ff       	call   403cc0 <get_large_object_payload>
-  4041d5:	48 01 c1             	add    rcx,rax
-  4041d8:	48 89 cf             	mov    rdi,rcx
-  4041db:	e8 00 fa ff ff       	call   403be0 <align>
-  4041e0:	48 39 c1             	cmp    rcx,rax
-  4041e3:	0f 85 0f fe ff ff    	jne    403ff8 <allocate_large_object.cold>
+  4041e0:	e8 eb fa ff ff       	call   403cd0 <get_large_object_payload>
+  4041e5:	48 01 c1             	add    rcx,rax
+  4041e8:	48 89 cf             	mov    rdi,rcx
+  4041eb:	e8 00 fa ff ff       	call   403bf0 <align>
+  4041f0:	48 39 c1             	cmp    rcx,rax
+  4041f3:	0f 85 0f fe ff ff    	jne    404008 <allocate_large_object.cold>
 			large_objects = tail;
-  4041e9:	48 89 15 f8 15 00 00 	mov    QWORD PTR [rip+0x15f8],rdx        # 4057e8 <large_objects>
+  4041f9:	48 89 15 e8 15 00 00 	mov    QWORD PTR [rip+0x15e8],rdx        # 4057e8 <large_objects>
 			maybe_repurpose_single_chunk_large_objects_head();
-  4041f0:	e8 fb fa ff ff       	call   403cf0 <maybe_repurpose_single_chunk_large_objects_head>
-  4041f5:	e9 c8 fe ff ff       	jmp    4040c2 <allocate_large_object+0xc2>
+  404200:	e8 fb fa ff ff       	call   403d00 <maybe_repurpose_single_chunk_large_objects_head>
+  404205:	e9 c8 fe ff ff       	jmp    4040d2 <allocate_large_object+0xc2>
 	struct large_object *best = NULL, **best_prev = &large_objects;
-  4041fa:	48 8d 2d e7 15 00 00 	lea    rbp,[rip+0x15e7]        # 4057e8 <large_objects>
-  404201:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  40420a:	48 8d 2d d7 15 00 00 	lea    rbp,[rip+0x15d7]        # 4057e8 <large_objects>
+  404211:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
 		size_t size_with_header = size + sizeof(struct large_object);
-  404208:	4c 8d 63 10          	lea    r12,[rbx+0x10]
+  404218:	4c 8d 63 10          	lea    r12,[rbx+0x10]
 		struct page* page = allocate_pages(size_with_header, &n_allocated);
-  40420c:	48 8d 74 24 08       	lea    rsi,[rsp+0x8]
+  40421c:	48 8d 74 24 08       	lea    rsi,[rsp+0x8]
 		size_t n_allocated = 0;
-  404211:	48 c7 44 24 08 00 00 	mov    QWORD PTR [rsp+0x8],0x0
-  404218:	00 00 
+  404221:	48 c7 44 24 08 00 00 	mov    QWORD PTR [rsp+0x8],0x0
+  404228:	00 00 
 		struct page* page = allocate_pages(size_with_header, &n_allocated);
-  40421a:	4c 89 e7             	mov    rdi,r12
-  40421d:	e8 de fc ff ff       	call   403f00 <allocate_pages.constprop.0>
-  404222:	48 89 c1             	mov    rcx,rax
+  40422a:	4c 89 e7             	mov    rdi,r12
+  40422d:	e8 de fc ff ff       	call   403f10 <allocate_pages.constprop.0>
+  404232:	48 89 c1             	mov    rcx,rax
 		if(!page)
-  404225:	48 85 c0             	test   rax,rax
-  404228:	0f 84 10 01 00 00    	je     40433e <allocate_large_object+0x33e>
+  404235:	48 85 c0             	test   rax,rax
+  404238:	0f 84 10 01 00 00    	je     40434e <allocate_large_object+0x33e>
 		char* ptr = allocate_chunk(page, FIRST_ALLOCATABLE_CHUNK, LARGE_OBJECT);
-  40422e:	ba ff 00 00 00       	mov    edx,0xff
-  404233:	be 01 00 00 00       	mov    esi,0x1
-  404238:	48 89 c7             	mov    rdi,rax
-  40423b:	e8 a0 fa ff ff       	call   403ce0 <allocate_chunk>
-  404240:	49 89 c2             	mov    r10,rax
+  40423e:	ba ff 00 00 00       	mov    edx,0xff
+  404243:	be 01 00 00 00       	mov    esi,0x1
+  404248:	48 89 c7             	mov    rdi,rax
+  40424b:	e8 a0 fa ff ff       	call   403cf0 <allocate_chunk>
+  404250:	49 89 c2             	mov    r10,rax
 		best->next = large_objects;
-  404243:	48 8b 05 9e 15 00 00 	mov    rax,QWORD PTR [rip+0x159e]        # 4057e8 <large_objects>
+  404253:	48 8b 05 8e 15 00 00 	mov    rax,QWORD PTR [rip+0x158e]        # 4057e8 <large_objects>
 		size_t page_header = ptr - ((char*)page);
-  40424a:	4c 29 d1             	sub    rcx,r10
+  40425a:	4c 29 d1             	sub    rcx,r10
 		best->next = large_objects;
-  40424d:	49 89 02             	mov    QWORD PTR [r10],rax
+  40425d:	49 89 02             	mov    QWORD PTR [r10],rax
 		best->size = best_size = n_allocated * PAGE_SIZE - page_header - LARGE_OBJECT_HEADER_SIZE;
-  404250:	48 8b 44 24 08       	mov    rax,QWORD PTR [rsp+0x8]
-  404255:	48 c1 e0 10          	shl    rax,0x10
-  404259:	4c 8d 44 01 f0       	lea    r8,[rcx+rax*1-0x10]
-  40425e:	4d 89 42 08          	mov    QWORD PTR [r10+0x8],r8
+  404260:	48 8b 44 24 08       	mov    rax,QWORD PTR [rsp+0x8]
+  404265:	48 c1 e0 10          	shl    rax,0x10
+  404269:	4c 8d 44 01 f0       	lea    r8,[rcx+rax*1-0x10]
+  40426e:	4d 89 42 08          	mov    QWORD PTR [r10+0x8],r8
 		ASSERT(best_size >= size_with_header);
-  404262:	4d 39 c4             	cmp    r12,r8
-  404265:	0f 86 22 fe ff ff    	jbe    40408d <allocate_large_object+0x8d>
-  40426b:	e9 88 fd ff ff       	jmp    403ff8 <allocate_large_object.cold>
+  404272:	4d 39 c4             	cmp    r12,r8
+  404275:	0f 86 22 fe ff ff    	jbe    40409d <allocate_large_object+0x8d>
+  40427b:	e9 88 fd ff ff       	jmp    404008 <allocate_large_object.cold>
 			ASSERT_ALIGNED((uintptr_t)end, PAGE_SIZE);
-  404270:	4c 39 d8             	cmp    rax,r11
-  404273:	0f 85 7f fd ff ff    	jne    403ff8 <allocate_large_object.cold>
+  404280:	4c 39 d8             	cmp    rax,r11
+  404283:	0f 85 7f fd ff ff    	jne    404008 <allocate_large_object.cold>
 			allocate_chunk(start_page, get_chunk_index(start), FREE_LARGE_OBJECT);
-  404279:	48 89 ef             	mov    rdi,rbp
-  40427c:	ba fe 00 00 00       	mov    edx,0xfe
+  404289:	48 89 ef             	mov    rdi,rbp
+  40428c:	ba fe 00 00 00       	mov    edx,0xfe
 			size_t first_page_size = PAGE_SIZE - (((uintptr_t)start) & PAGE_MASK);
-  404281:	44 0f b7 e5          	movzx  r12d,bp
+  404291:	44 0f b7 e5          	movzx  r12d,bp
 			allocate_chunk(start_page, get_chunk_index(start), FREE_LARGE_OBJECT);
-  404285:	e8 26 fa ff ff       	call   403cb0 <get_chunk_index>
-  40428a:	4c 89 cf             	mov    rdi,r9
-  40428d:	89 c6                	mov    esi,eax
-  40428f:	e8 4c fa ff ff       	call   403ce0 <allocate_chunk>
+  404295:	e8 26 fa ff ff       	call   403cc0 <get_chunk_index>
+  40429a:	4c 89 cf             	mov    rdi,r9
+  40429d:	89 c6                	mov    esi,eax
+  40429f:	e8 4c fa ff ff       	call   403cf0 <allocate_chunk>
 			size_t first_page_size = PAGE_SIZE - (((uintptr_t)start) & PAGE_MASK);
-  404294:	b8 00 00 01 00       	mov    eax,0x10000
-  404299:	4c 29 e0             	sub    rax,r12
-  40429c:	49 89 42 08          	mov    QWORD PTR [r10+0x8],rax
+  4042a4:	b8 00 00 01 00       	mov    eax,0x10000
+  4042a9:	4c 29 e0             	sub    rax,r12
+  4042ac:	49 89 42 08          	mov    QWORD PTR [r10+0x8],rax
 			head->next = large_objects;
-  4042a0:	48 8b 05 41 15 00 00 	mov    rax,QWORD PTR [rip+0x1541]        # 4057e8 <large_objects>
-  4042a7:	49 89 02             	mov    QWORD PTR [r10],rax
+  4042b0:	48 8b 05 31 15 00 00 	mov    rax,QWORD PTR [rip+0x1531]        # 4057e8 <large_objects>
+  4042b7:	49 89 02             	mov    QWORD PTR [r10],rax
 			large_objects = head;
-  4042aa:	4c 89 15 37 15 00 00 	mov    QWORD PTR [rip+0x1537],r10        # 4057e8 <large_objects>
+  4042ba:	4c 89 15 27 15 00 00 	mov    QWORD PTR [rip+0x1527],r10        # 4057e8 <large_objects>
 			maybe_repurpose_single_chunk_large_objects_head();
-  4042b1:	e8 3a fa ff ff       	call   403cf0 <maybe_repurpose_single_chunk_large_objects_head>
+  4042c1:	e8 3a fa ff ff       	call   403d00 <maybe_repurpose_single_chunk_large_objects_head>
 			char* ptr = allocate_chunk(next_page, FIRST_ALLOCATABLE_CHUNK, LARGE_OBJECT);
-  4042b6:	ba ff 00 00 00       	mov    edx,0xff
-  4042bb:	be 01 00 00 00       	mov    esi,0x1
+  4042c6:	ba ff 00 00 00       	mov    edx,0xff
+  4042cb:	be 01 00 00 00       	mov    esi,0x1
 			struct page* next_page = start_page + 1;
-  4042c0:	49 8d b9 00 00 01 00 	lea    rdi,[r9+0x10000]
+  4042d0:	49 8d b9 00 00 01 00 	lea    rdi,[r9+0x10000]
 			char* ptr = allocate_chunk(next_page, FIRST_ALLOCATABLE_CHUNK, LARGE_OBJECT);
-  4042c7:	e8 14 fa ff ff       	call   403ce0 <allocate_chunk>
+  4042d7:	e8 14 fa ff ff       	call   403cf0 <allocate_chunk>
 			best->size = best_size =
-  4042cc:	4b 8d 94 04 f0 fe fe 	lea    rdx,[r12+r8*1-0x10110]
-  4042d3:	ff 
-  4042d4:	48 89 50 08          	mov    QWORD PTR [rax+0x8],rdx
+  4042dc:	4b 8d 94 04 f0 fe fe 	lea    rdx,[r12+r8*1-0x10110]
+  4042e3:	ff 
+  4042e4:	48 89 50 08          	mov    QWORD PTR [rax+0x8],rdx
 			char* ptr = allocate_chunk(next_page, FIRST_ALLOCATABLE_CHUNK, LARGE_OBJECT);
-  4042d8:	49 89 c2             	mov    r10,rax
+  4042e8:	49 89 c2             	mov    r10,rax
 			ASSERT(best_size >= size);
-  4042db:	48 39 d3             	cmp    rbx,rdx
-  4042de:	0f 87 14 fd ff ff    	ja     403ff8 <allocate_large_object.cold>
+  4042eb:	48 39 d3             	cmp    rbx,rdx
+  4042ee:	0f 87 14 fd ff ff    	ja     404008 <allocate_large_object.cold>
 			tail_size = (best_size - size) & ~CHUNK_MASK;
-  4042e4:	48 89 d1             	mov    rcx,rdx
-  4042e7:	48 29 d9             	sub    rcx,rbx
-  4042ea:	30 c9                	xor    cl,cl
-  4042ec:	e9 74 fe ff ff       	jmp    404165 <allocate_large_object+0x165>
-  4042f1:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
-  4042f8:	4c 89 cd             	mov    rbp,r9
-  4042fb:	49 89 c8             	mov    r8,rcx
-  4042fe:	49 89 d2             	mov    r10,rdx
-  404301:	e9 87 fd ff ff       	jmp    40408d <allocate_large_object+0x8d>
+  4042f4:	48 89 d1             	mov    rcx,rdx
+  4042f7:	48 29 d9             	sub    rcx,rbx
+  4042fa:	30 c9                	xor    cl,cl
+  4042fc:	e9 74 fe ff ff       	jmp    404175 <allocate_large_object+0x165>
+  404301:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  404308:	4c 89 cd             	mov    rbp,r9
+  40430b:	49 89 c8             	mov    r8,rcx
+  40430e:	49 89 d2             	mov    r10,rdx
+  404311:	e9 87 fd ff ff       	jmp    40409d <allocate_large_object+0x8d>
 			ASSERT_ALIGNED((uintptr_t)end, CHUNK_SIZE);
-  404306:	be 00 01 00 00       	mov    esi,0x100
-  40430b:	4c 89 df             	mov    rdi,r11
-  40430e:	e8 cd f8 ff ff       	call   403be0 <align>
-  404313:	49 39 c3             	cmp    r11,rax
-  404316:	0f 85 dc fc ff ff    	jne    403ff8 <allocate_large_object.cold>
+  404316:	be 00 01 00 00       	mov    esi,0x100
+  40431b:	4c 89 df             	mov    rdi,r11
+  40431e:	e8 cd f8 ff ff       	call   403bf0 <align>
+  404323:	49 39 c3             	cmp    r11,rax
+  404326:	0f 85 dc fc ff ff    	jne    404008 <allocate_large_object.cold>
 		best->size -= tail_size;
-  40431c:	49 8b 52 08          	mov    rdx,QWORD PTR [r10+0x8]
+  40432c:	49 8b 52 08          	mov    rdx,QWORD PTR [r10+0x8]
 		unsigned tail_idx = get_chunk_index(end - tail_size);
-  404320:	48 29 cf             	sub    rdi,rcx
+  404330:	48 29 cf             	sub    rdi,rcx
 		best->size -= tail_size;
-  404323:	48 29 ca             	sub    rdx,rcx
-  404326:	49 89 52 08          	mov    QWORD PTR [r10+0x8],rdx
+  404333:	48 29 ca             	sub    rdx,rcx
+  404336:	49 89 52 08          	mov    QWORD PTR [r10+0x8],rdx
 		unsigned tail_idx = get_chunk_index(end - tail_size);
-  40432a:	e8 81 f9 ff ff       	call   403cb0 <get_chunk_index>
-  40432f:	89 c6                	mov    esi,eax
+  40433a:	e8 81 f9 ff ff       	call   403cc0 <get_chunk_index>
+  40433f:	89 c6                	mov    esi,eax
 		while(tail_idx < FIRST_ALLOCATABLE_CHUNK && tail_size)
-  404331:	85 c0                	test   eax,eax
-  404333:	0f 84 4d fe ff ff    	je     404186 <allocate_large_object+0x186>
-  404339:	e9 5d fe ff ff       	jmp    40419b <allocate_large_object+0x19b>
+  404341:	85 c0                	test   eax,eax
+  404343:	0f 84 4d fe ff ff    	je     404196 <allocate_large_object+0x186>
+  404349:	e9 5d fe ff ff       	jmp    4041ab <allocate_large_object+0x19b>
 			return NULL;
-  40433e:	45 31 d2             	xor    r10d,r10d
-  404341:	e9 a1 fd ff ff       	jmp    4040e7 <allocate_large_object+0xe7>
+  40434e:	45 31 d2             	xor    r10d,r10d
+  404351:	e9 a1 fd ff ff       	jmp    4040f7 <allocate_large_object+0xe7>
 
 Disassembly of section .text.allocate_large:
 
-0000000000404350 <allocate_large>:
+0000000000404360 <allocate_large>:
 {
-  404350:	48 83 ec 08          	sub    rsp,0x8
+  404360:	48 83 ec 08          	sub    rsp,0x8
 	struct large_object* obj = allocate_large_object(size);
-  404354:	e8 a7 fc ff ff       	call   404000 <allocate_large_object>
+  404364:	e8 a7 fc ff ff       	call   404010 <allocate_large_object>
 	return obj ? get_large_object_payload(obj) : NULL;
-  404359:	48 85 c0             	test   rax,rax
-  40435c:	74 12                	je     404370 <allocate_large+0x20>
-  40435e:	48 89 c7             	mov    rdi,rax
+  404369:	48 85 c0             	test   rax,rax
+  40436c:	74 12                	je     404380 <allocate_large+0x20>
+  40436e:	48 89 c7             	mov    rdi,rax
 }
-  404361:	48 83 c4 08          	add    rsp,0x8
+  404371:	48 83 c4 08          	add    rsp,0x8
 	return obj ? get_large_object_payload(obj) : NULL;
-  404365:	e9 56 f9 ff ff       	jmp    403cc0 <get_large_object_payload>
-  40436a:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
+  404375:	e9 56 f9 ff ff       	jmp    403cd0 <get_large_object_payload>
+  40437a:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
 }
-  404370:	31 c0                	xor    eax,eax
-  404372:	48 83 c4 08          	add    rsp,0x8
-  404376:	c3                   	ret    
+  404380:	31 c0                	xor    eax,eax
+  404382:	48 83 c4 08          	add    rsp,0x8
+  404386:	c3                   	ret    
 
 Disassembly of section .text.obtain_small_objects:
 
-0000000000404380 <obtain_small_objects>:
+0000000000404390 <obtain_small_objects>:
 {
-  404380:	55                   	push   rbp
-  404381:	89 fd                	mov    ebp,edi
+  404390:	55                   	push   rbp
+  404391:	89 fd                	mov    ebp,edi
 	if(*whole_chunk_freelist)
-  404383:	48 8b 3d be 14 00 00 	mov    rdi,QWORD PTR [rip+0x14be]        # 405848 <small_object_freelists+0x48>
-  40438a:	48 85 ff             	test   rdi,rdi
-  40438d:	74 71                	je     404400 <obtain_small_objects+0x80>
+  404393:	48 8b 3d ae 14 00 00 	mov    rdi,QWORD PTR [rip+0x14ae]        # 405848 <small_object_freelists+0x48>
+  40439a:	48 85 ff             	test   rdi,rdi
+  40439d:	74 71                	je     404410 <obtain_small_objects+0x80>
 		*whole_chunk_freelist = (*whole_chunk_freelist)->next;
-  40438f:	48 8b 07             	mov    rax,QWORD PTR [rdi]
-  404392:	48 89 05 af 14 00 00 	mov    QWORD PTR [rip+0x14af],rax        # 405848 <small_object_freelists+0x48>
+  40439f:	48 8b 07             	mov    rax,QWORD PTR [rdi]
+  4043a2:	48 89 05 9f 14 00 00 	mov    QWORD PTR [rip+0x149f],rax        # 405848 <small_object_freelists+0x48>
 	char* ptr = allocate_chunk(get_page(chunk), get_chunk_index(chunk), kind);
-  404399:	e8 12 f9 ff ff       	call   403cb0 <get_chunk_index>
-  40439e:	89 ea                	mov    edx,ebp
-  4043a0:	89 c6                	mov    esi,eax
-  4043a2:	e8 f9 f8 ff ff       	call   403ca0 <get_page>
-  4043a7:	48 89 c7             	mov    rdi,rax
-  4043aa:	e8 31 f9 ff ff       	call   403ce0 <allocate_chunk>
+  4043a9:	e8 12 f9 ff ff       	call   403cc0 <get_chunk_index>
+  4043ae:	89 ea                	mov    edx,ebp
+  4043b0:	89 c6                	mov    esi,eax
+  4043b2:	e8 f9 f8 ff ff       	call   403cb0 <get_page>
+  4043b7:	48 89 c7             	mov    rdi,rax
+  4043ba:	e8 31 f9 ff ff       	call   403cf0 <allocate_chunk>
 	size_t size = chunk_kind_to_granules(kind) * GRANULE_SIZE;
-  4043af:	89 ef                	mov    edi,ebp
+  4043bf:	89 ef                	mov    edi,ebp
 	char* ptr = allocate_chunk(get_page(chunk), get_chunk_index(chunk), kind);
-  4043b1:	48 89 c2             	mov    rdx,rax
+  4043c1:	48 89 c2             	mov    rdx,rax
 	size_t size = chunk_kind_to_granules(kind) * GRANULE_SIZE;
-  4043b4:	e8 c7 f8 ff ff       	call   403c80 <chunk_kind_to_granules>
-  4043b9:	8d 34 c5 00 00 00 00 	lea    esi,[rax*8+0x0]
+  4043c4:	e8 c7 f8 ff ff       	call   403c90 <chunk_kind_to_granules>
+  4043c9:	8d 34 c5 00 00 00 00 	lea    esi,[rax*8+0x0]
 	for(size_t i = size; i <= CHUNK_SIZE; i += size)
-  4043c0:	48 81 fe 00 01 00 00 	cmp    rsi,0x100
-  4043c7:	77 46                	ja     40440f <obtain_small_objects+0x8f>
-  4043c9:	48 89 d0             	mov    rax,rdx
-  4043cc:	48 89 f1             	mov    rcx,rsi
-  4043cf:	48 29 f0             	sub    rax,rsi
-  4043d2:	48 8d 90 00 01 00 00 	lea    rdx,[rax+0x100]
+  4043d0:	48 81 fe 00 01 00 00 	cmp    rsi,0x100
+  4043d7:	77 46                	ja     40441f <obtain_small_objects+0x8f>
+  4043d9:	48 89 d0             	mov    rax,rdx
+  4043dc:	48 89 f1             	mov    rcx,rsi
+  4043df:	48 29 f0             	sub    rax,rsi
+  4043e2:	48 8d 90 00 01 00 00 	lea    rdx,[rax+0x100]
 	struct freelist* next = NULL;
-  4043d9:	31 c0                	xor    eax,eax
-  4043db:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
+  4043e9:	31 c0                	xor    eax,eax
+  4043eb:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
 		struct freelist* head = (struct freelist*)(end - i);
-  4043e0:	48 89 c7             	mov    rdi,rax
+  4043f0:	48 89 c7             	mov    rdi,rax
 	for(size_t i = size; i <= CHUNK_SIZE; i += size)
-  4043e3:	48 01 f1             	add    rcx,rsi
+  4043f3:	48 01 f1             	add    rcx,rsi
 		struct freelist* head = (struct freelist*)(end - i);
-  4043e6:	48 89 d0             	mov    rax,rdx
+  4043f6:	48 89 d0             	mov    rax,rdx
 		head->next = next;
-  4043e9:	48 89 3a             	mov    QWORD PTR [rdx],rdi
+  4043f9:	48 89 3a             	mov    QWORD PTR [rdx],rdi
 	for(size_t i = size; i <= CHUNK_SIZE; i += size)
-  4043ec:	48 29 f2             	sub    rdx,rsi
-  4043ef:	48 81 f9 00 01 00 00 	cmp    rcx,0x100
-  4043f6:	76 e8                	jbe    4043e0 <obtain_small_objects+0x60>
+  4043fc:	48 29 f2             	sub    rdx,rsi
+  4043ff:	48 81 f9 00 01 00 00 	cmp    rcx,0x100
+  404406:	76 e8                	jbe    4043f0 <obtain_small_objects+0x60>
 }
-  4043f8:	5d                   	pop    rbp
-  4043f9:	c3                   	ret    
-  4043fa:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
+  404408:	5d                   	pop    rbp
+  404409:	c3                   	ret    
+  40440a:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
 		chunk = allocate_large_object(0);
-  404400:	31 ff                	xor    edi,edi
-  404402:	e8 f9 fb ff ff       	call   404000 <allocate_large_object>
-  404407:	48 89 c7             	mov    rdi,rax
+  404410:	31 ff                	xor    edi,edi
+  404412:	e8 f9 fb ff ff       	call   404010 <allocate_large_object>
+  404417:	48 89 c7             	mov    rdi,rax
 		if(!chunk)
-  40440a:	48 85 c0             	test   rax,rax
-  40440d:	75 8a                	jne    404399 <obtain_small_objects+0x19>
+  40441a:	48 85 c0             	test   rax,rax
+  40441d:	75 8a                	jne    4043a9 <obtain_small_objects+0x19>
 			return NULL;
-  40440f:	31 c0                	xor    eax,eax
+  40441f:	31 c0                	xor    eax,eax
 }
-  404411:	5d                   	pop    rbp
-  404412:	c3                   	ret    
+  404421:	5d                   	pop    rbp
+  404422:	c3                   	ret    
 
 Disassembly of section .text.allocate_small:
 
-0000000000404420 <allocate_small>:
+0000000000404430 <allocate_small>:
 {
-  404420:	53                   	push   rbx
-  404421:	41 89 f8             	mov    r8d,edi
+  404430:	53                   	push   rbx
+  404431:	41 89 f8             	mov    r8d,edi
 	struct freelist** loc = get_small_object_freelist(kind);
-  404424:	e8 17 fa ff ff       	call   403e40 <get_small_object_freelist>
-  404429:	48 89 c3             	mov    rbx,rax
+  404434:	e8 17 fa ff ff       	call   403e50 <get_small_object_freelist>
+  404439:	48 89 c3             	mov    rbx,rax
 	if(!*loc)
-  40442c:	48 8b 00             	mov    rax,QWORD PTR [rax]
-  40442f:	48 85 c0             	test   rax,rax
-  404432:	74 0c                	je     404440 <allocate_small+0x20>
+  40443c:	48 8b 00             	mov    rax,QWORD PTR [rax]
+  40443f:	48 85 c0             	test   rax,rax
+  404442:	74 0c                	je     404450 <allocate_small+0x20>
 	*loc = ret->next;
-  404434:	48 8b 10             	mov    rdx,QWORD PTR [rax]
-  404437:	48 89 13             	mov    QWORD PTR [rbx],rdx
+  404444:	48 8b 10             	mov    rdx,QWORD PTR [rax]
+  404447:	48 89 13             	mov    QWORD PTR [rbx],rdx
 }
-  40443a:	5b                   	pop    rbx
-  40443b:	c3                   	ret    
-  40443c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+  40444a:	5b                   	pop    rbx
+  40444b:	c3                   	ret    
+  40444c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
 		struct freelist* freelist = obtain_small_objects(kind);
-  404440:	44 89 c7             	mov    edi,r8d
-  404443:	e8 38 ff ff ff       	call   404380 <obtain_small_objects>
+  404450:	44 89 c7             	mov    edi,r8d
+  404453:	e8 38 ff ff ff       	call   404390 <obtain_small_objects>
 		if(!freelist)
-  404448:	48 85 c0             	test   rax,rax
-  40444b:	74 ed                	je     40443a <allocate_small+0x1a>
+  404458:	48 85 c0             	test   rax,rax
+  40445b:	74 ed                	je     40444a <allocate_small+0x1a>
 		*loc = freelist;
-  40444d:	48 89 03             	mov    QWORD PTR [rbx],rax
-  404450:	eb e2                	jmp    404434 <allocate_small+0x14>
+  40445d:	48 89 03             	mov    QWORD PTR [rbx],rax
+  404460:	eb e2                	jmp    404444 <allocate_small+0x14>
 
 Disassembly of section .text.malloc:
 
-0000000000404460 <malloc>:
+0000000000404470 <malloc>:
 {
-  404460:	f3 0f 1e fa          	endbr64 
-  404464:	48 83 ec 08          	sub    rsp,0x8
-  404468:	49 89 f8             	mov    r8,rdi
+  404470:	f3 0f 1e fa          	endbr64 
+  404474:	48 83 ec 08          	sub    rsp,0x8
+  404478:	49 89 f8             	mov    r8,rdi
 	size_t granules = size_to_granules(size);
-  40446b:	e8 d0 f8 ff ff       	call   403d40 <size_to_granules>
+  40447b:	e8 d0 f8 ff ff       	call   403d50 <size_to_granules>
 	enum chunk_kind kind = granules_to_chunk_kind(granules);
-  404470:	89 c7                	mov    edi,eax
-  404472:	e8 79 f7 ff ff       	call   403bf0 <granules_to_chunk_kind>
+  404480:	89 c7                	mov    edi,eax
+  404482:	e8 79 f7 ff ff       	call   403c00 <granules_to_chunk_kind>
 	return (kind == LARGE_OBJECT) ? allocate_large(size) : allocate_small(kind);
-  404477:	3d ff 00 00 00       	cmp    eax,0xff
-  40447c:	74 12                	je     404490 <malloc+0x30>
-  40447e:	89 c7                	mov    edi,eax
+  404487:	3d ff 00 00 00       	cmp    eax,0xff
+  40448c:	74 12                	je     4044a0 <malloc+0x30>
+  40448e:	89 c7                	mov    edi,eax
 }
-  404480:	48 83 c4 08          	add    rsp,0x8
+  404490:	48 83 c4 08          	add    rsp,0x8
 	return (kind == LARGE_OBJECT) ? allocate_large(size) : allocate_small(kind);
-  404484:	e9 97 ff ff ff       	jmp    404420 <allocate_small>
-  404489:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
-  404490:	4c 89 c7             	mov    rdi,r8
+  404494:	e9 97 ff ff ff       	jmp    404430 <allocate_small>
+  404499:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  4044a0:	4c 89 c7             	mov    rdi,r8
 }
-  404493:	48 83 c4 08          	add    rsp,0x8
+  4044a3:	48 83 c4 08          	add    rsp,0x8
 	return (kind == LARGE_OBJECT) ? allocate_large(size) : allocate_small(kind);
-  404497:	e9 b4 fe ff ff       	jmp    404350 <allocate_large>
+  4044a7:	e9 b4 fe ff ff       	jmp    404360 <allocate_large>
 
 Disassembly of section .text.memcpy:
 
-00000000004044a0 <memcpy>:
+00000000004044b0 <memcpy>:
  * Copy a block of memory, handling overlap.
  * This is the routine that actually implements
  * (the portable versions of) bcopy, memcpy, and memmove.
  */
 void* memcpy(void* dst0, const void* src0, size_t length)
 {
-  4044a0:	f3 0f 1e fa          	endbr64 
-  4044a4:	49 89 f8             	mov    r8,rdi
+  4044b0:	f3 0f 1e fa          	endbr64 
+  4044b4:	49 89 f8             	mov    r8,rdi
 	char* dst = dst0;
 	const char* src = src0;
 	size_t t;
 
 	if(length == 0 || dst == src)
-  4044a7:	48 85 d2             	test   rdx,rdx
-  4044aa:	74 6c                	je     404518 <memcpy+0x78>
-  4044ac:	48 89 f0             	mov    rax,rsi
-  4044af:	48 39 f7             	cmp    rdi,rsi
-  4044b2:	74 64                	je     404518 <memcpy+0x78>
-  4044b4:	48 89 d1             	mov    rcx,rdx
+  4044b7:	48 85 d2             	test   rdx,rdx
+  4044ba:	74 6c                	je     404528 <memcpy+0x78>
+  4044bc:	48 89 f0             	mov    rax,rsi
+  4044bf:	48 39 f7             	cmp    rdi,rsi
+  4044c2:	74 64                	je     404528 <memcpy+0x78>
+  4044c4:	48 89 d1             	mov    rcx,rdx
 // clang-format off
 #define	TLOOP(s) if (t) TLOOP1(s)
 #define	TLOOP1(s) do { s; } while (--t)
 	// clang-format on
 
 	if((uintptr_t)dst < (uintptr_t)src)
-  4044b7:	73 67                	jae    404520 <memcpy+0x80>
+  4044c7:	73 67                	jae    404530 <memcpy+0x80>
 	{
 		/*
 		 * Copy forward.
 		 */
 		t = (uintptr_t)src; /* only need low bits */
 		if((t | (uintptr_t)dst) & wmask)
-  4044b9:	48 89 fa             	mov    rdx,rdi
-  4044bc:	48 09 f2             	or     rdx,rsi
-  4044bf:	83 e2 03             	and    edx,0x3
-  4044c2:	0f 85 e8 00 00 00    	jne    4045b0 <memcpy+0x110>
+  4044c9:	48 89 fa             	mov    rdx,rdi
+  4044cc:	48 09 f2             	or     rdx,rsi
+  4044cf:	83 e2 03             	and    edx,0x3
+  4044d2:	0f 85 e8 00 00 00    	jne    4045c0 <memcpy+0x110>
 
 			length -= t;
 			TLOOP1(*--dst = *--src);
 		}
 
 		t = length / wsize;
-  4044c8:	48 89 cf             	mov    rdi,rcx
+  4044d8:	48 89 cf             	mov    rdi,rcx
 		// Silence warning for alignment change by casting to void*
 		TLOOP(src -= wsize; dst -= wsize; *(word*)(void*)dst = *(const word*)(const void*)src);
 		t = length & wmask;
-  4044cb:	49 89 c9             	mov    r9,rcx
-  4044ce:	4c 89 c6             	mov    rsi,r8
-  4044d1:	49 89 ca             	mov    r10,rcx
+  4044db:	49 89 c9             	mov    r9,rcx
+  4044de:	4c 89 c6             	mov    rsi,r8
+  4044e1:	49 89 ca             	mov    r10,rcx
 		t = length / wsize;
-  4044d4:	48 c1 ef 02          	shr    rdi,0x2
+  4044e4:	48 c1 ef 02          	shr    rdi,0x2
 		t = length & wmask;
-  4044d8:	41 83 e1 03          	and    r9d,0x3
+  4044e8:	41 83 e1 03          	and    r9d,0x3
 		TLOOP(*(word*)(void*)dst = *(const word*)(const void*)src; src += wsize; dst += wsize);
-  4044dc:	49 83 fa 03          	cmp    r10,0x3
-  4044e0:	76 1f                	jbe    404501 <memcpy+0x61>
-  4044e2:	31 d2                	xor    edx,edx
-  4044e4:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
-  4044e8:	8b 0c 90             	mov    ecx,DWORD PTR [rax+rdx*4]
-  4044eb:	89 0c 96             	mov    DWORD PTR [rsi+rdx*4],ecx
-  4044ee:	48 83 c2 01          	add    rdx,0x1
-  4044f2:	48 39 d7             	cmp    rdi,rdx
-  4044f5:	75 f1                	jne    4044e8 <memcpy+0x48>
-  4044f7:	48 c1 e7 02          	shl    rdi,0x2
-  4044fb:	48 01 f8             	add    rax,rdi
-  4044fe:	48 01 fe             	add    rsi,rdi
+  4044ec:	49 83 fa 03          	cmp    r10,0x3
+  4044f0:	76 1f                	jbe    404511 <memcpy+0x61>
+  4044f2:	31 d2                	xor    edx,edx
+  4044f4:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+  4044f8:	8b 0c 90             	mov    ecx,DWORD PTR [rax+rdx*4]
+  4044fb:	89 0c 96             	mov    DWORD PTR [rsi+rdx*4],ecx
+  4044fe:	48 83 c2 01          	add    rdx,0x1
+  404502:	48 39 d7             	cmp    rdi,rdx
+  404505:	75 f1                	jne    4044f8 <memcpy+0x48>
+  404507:	48 c1 e7 02          	shl    rdi,0x2
+  40450b:	48 01 f8             	add    rax,rdi
+  40450e:	48 01 fe             	add    rsi,rdi
 		TLOOP(*dst++ = *src++);
-  404501:	4d 85 c9             	test   r9,r9
-  404504:	74 12                	je     404518 <memcpy+0x78>
-  404506:	31 d2                	xor    edx,edx
-  404508:	0f b6 0c 10          	movzx  ecx,BYTE PTR [rax+rdx*1]
-  40450c:	88 0c 16             	mov    BYTE PTR [rsi+rdx*1],cl
-  40450f:	48 83 c2 01          	add    rdx,0x1
-  404513:	49 39 d1             	cmp    r9,rdx
-  404516:	75 f0                	jne    404508 <memcpy+0x68>
+  404511:	4d 85 c9             	test   r9,r9
+  404514:	74 12                	je     404528 <memcpy+0x78>
+  404516:	31 d2                	xor    edx,edx
+  404518:	0f b6 0c 10          	movzx  ecx,BYTE PTR [rax+rdx*1]
+  40451c:	88 0c 16             	mov    BYTE PTR [rsi+rdx*1],cl
+  40451f:	48 83 c2 01          	add    rdx,0x1
+  404523:	49 39 d1             	cmp    r9,rdx
+  404526:	75 f0                	jne    404518 <memcpy+0x68>
 		TLOOP(*--dst = *--src);
 	}
 done:
 	return (dst0);
 }
-  404518:	4c 89 c0             	mov    rax,r8
-  40451b:	c3                   	ret    
-  40451c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+  404528:	4c 89 c0             	mov    rax,r8
+  40452b:	c3                   	ret    
+  40452c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
 		dst += length;
-  404520:	4c 8d 0c 17          	lea    r9,[rdi+rdx*1]
+  404530:	4c 8d 0c 17          	lea    r9,[rdi+rdx*1]
 		src += length;
-  404524:	48 01 d0             	add    rax,rdx
+  404534:	48 01 d0             	add    rax,rdx
 {
-  404527:	55                   	push   rbp
+  404537:	55                   	push   rbp
 		if((t | (uintptr_t)dst) & wmask)
-  404528:	4c 89 ca             	mov    rdx,r9
-{
-  40452b:	53                   	push   rbx
-		if((t | (uintptr_t)dst) & wmask)
-  40452c:	48 09 c2             	or     rdx,rax
-  40452f:	83 e2 03             	and    edx,0x3
-  404532:	0f 84 b8 00 00 00    	je     4045f0 <memcpy+0x150>
-			if((t ^ (uintptr_t)dst) & wmask || length <= wsize)
   404538:	4c 89 ca             	mov    rdx,r9
-  40453b:	48 31 c2             	xor    rdx,rax
-  40453e:	83 e2 03             	and    edx,0x3
-  404541:	75 0a                	jne    40454d <memcpy+0xad>
-  404543:	48 83 f9 04          	cmp    rcx,0x4
-  404547:	0f 87 13 01 00 00    	ja     404660 <memcpy+0x1c0>
-  40454d:	31 db                	xor    ebx,ebx
-  40454f:	31 d2                	xor    edx,edx
-  404551:	31 ed                	xor    ebp,ebp
+{
+  40453b:	53                   	push   rbx
+		if((t | (uintptr_t)dst) & wmask)
+  40453c:	48 09 c2             	or     rdx,rax
+  40453f:	83 e2 03             	and    edx,0x3
+  404542:	0f 84 b8 00 00 00    	je     404600 <memcpy+0x150>
+			if((t ^ (uintptr_t)dst) & wmask || length <= wsize)
+  404548:	4c 89 ca             	mov    rdx,r9
+  40454b:	48 31 c2             	xor    rdx,rax
+  40454e:	83 e2 03             	and    edx,0x3
+  404551:	75 0a                	jne    40455d <memcpy+0xad>
+  404553:	48 83 f9 04          	cmp    rcx,0x4
+  404557:	0f 87 13 01 00 00    	ja     404670 <memcpy+0x1c0>
+  40455d:	31 db                	xor    ebx,ebx
+  40455f:	31 d2                	xor    edx,edx
+  404561:	31 ed                	xor    ebp,ebp
 			length -= t;
-  404553:	48 89 ce             	mov    rsi,rcx
-  404556:	48 f7 de             	neg    rsi
-  404559:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  404563:	48 89 ce             	mov    rsi,rcx
+  404566:	48 f7 de             	neg    rsi
+  404569:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
 			TLOOP1(*--dst = *--src);
-  404560:	4c 8d 1c 30          	lea    r11,[rax+rsi*1]
-  404564:	4d 8d 14 31          	lea    r10,[r9+rsi*1]
-  404568:	41 0f b6 7c 0b ff    	movzx  edi,BYTE PTR [r11+rcx*1-0x1]
-  40456e:	41 88 7c 0a ff       	mov    BYTE PTR [r10+rcx*1-0x1],dil
-  404573:	48 83 e9 01          	sub    rcx,0x1
-  404577:	75 e7                	jne    404560 <memcpy+0xc0>
+  404570:	4c 8d 1c 30          	lea    r11,[rax+rsi*1]
+  404574:	4d 8d 14 31          	lea    r10,[r9+rsi*1]
+  404578:	41 0f b6 7c 0b ff    	movzx  edi,BYTE PTR [r11+rcx*1-0x1]
+  40457e:	41 88 7c 0a ff       	mov    BYTE PTR [r10+rcx*1-0x1],dil
+  404583:	48 83 e9 01          	sub    rcx,0x1
+  404587:	75 e7                	jne    404570 <memcpy+0xc0>
 		TLOOP(src -= wsize; dst -= wsize; *(word*)(void*)dst = *(const word*)(const void*)src);
-  404579:	48 83 fd 03          	cmp    rbp,0x3
-  40457d:	0f 87 8d 00 00 00    	ja     404610 <memcpy+0x170>
+  404589:	48 83 fd 03          	cmp    rbp,0x3
+  40458d:	0f 87 8d 00 00 00    	ja     404620 <memcpy+0x170>
 		TLOOP(*--dst = *--src);
-  404583:	48 85 db             	test   rbx,rbx
-  404586:	74 1c                	je     4045a4 <memcpy+0x104>
-  404588:	48 f7 d3             	not    rbx
-  40458b:	48 c7 c0 ff ff ff ff 	mov    rax,0xffffffffffffffff
-  404592:	41 0f b6 14 03       	movzx  edx,BYTE PTR [r11+rax*1]
-  404597:	41 88 14 02          	mov    BYTE PTR [r10+rax*1],dl
-  40459b:	48 83 e8 01          	sub    rax,0x1
-  40459f:	48 39 d8             	cmp    rax,rbx
-  4045a2:	75 ee                	jne    404592 <memcpy+0xf2>
+  404593:	48 85 db             	test   rbx,rbx
+  404596:	74 1c                	je     4045b4 <memcpy+0x104>
+  404598:	48 f7 d3             	not    rbx
+  40459b:	48 c7 c0 ff ff ff ff 	mov    rax,0xffffffffffffffff
+  4045a2:	41 0f b6 14 03       	movzx  edx,BYTE PTR [r11+rax*1]
+  4045a7:	41 88 14 02          	mov    BYTE PTR [r10+rax*1],dl
+  4045ab:	48 83 e8 01          	sub    rax,0x1
+  4045af:	48 39 d8             	cmp    rax,rbx
+  4045b2:	75 ee                	jne    4045a2 <memcpy+0xf2>
 }
-  4045a4:	4c 89 c0             	mov    rax,r8
-  4045a7:	5b                   	pop    rbx
-  4045a8:	5d                   	pop    rbp
-  4045a9:	c3                   	ret    
-  4045aa:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
+  4045b4:	4c 89 c0             	mov    rax,r8
+  4045b7:	5b                   	pop    rbx
+  4045b8:	5d                   	pop    rbp
+  4045b9:	c3                   	ret    
+  4045ba:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
 			if((t ^ (uintptr_t)dst) & wmask || length < wsize)
-  4045b0:	48 89 fa             	mov    rdx,rdi
-  4045b3:	48 31 f2             	xor    rdx,rsi
-  4045b6:	83 e2 03             	and    edx,0x3
-  4045b9:	75 06                	jne    4045c1 <memcpy+0x121>
-  4045bb:	48 83 f9 03          	cmp    rcx,0x3
-  4045bf:	77 77                	ja     404638 <memcpy+0x198>
-  4045c1:	45 31 c9             	xor    r9d,r9d
-  4045c4:	31 ff                	xor    edi,edi
-  4045c6:	45 31 d2             	xor    r10d,r10d
+  4045c0:	48 89 fa             	mov    rdx,rdi
+  4045c3:	48 31 f2             	xor    rdx,rsi
+  4045c6:	83 e2 03             	and    edx,0x3
+  4045c9:	75 06                	jne    4045d1 <memcpy+0x121>
+  4045cb:	48 83 f9 03          	cmp    rcx,0x3
+  4045cf:	77 77                	ja     404648 <memcpy+0x198>
+  4045d1:	45 31 c9             	xor    r9d,r9d
+  4045d4:	31 ff                	xor    edi,edi
+  4045d6:	45 31 d2             	xor    r10d,r10d
 				t = wsize - (t & wmask);
-  4045c9:	31 d2                	xor    edx,edx
-  4045cb:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
+  4045d9:	31 d2                	xor    edx,edx
+  4045db:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
 			TLOOP1(*dst++ = *src++);
-  4045d0:	0f b6 34 10          	movzx  esi,BYTE PTR [rax+rdx*1]
-  4045d4:	41 88 34 10          	mov    BYTE PTR [r8+rdx*1],sil
-  4045d8:	48 83 c2 01          	add    rdx,0x1
-  4045dc:	48 39 d1             	cmp    rcx,rdx
-  4045df:	75 ef                	jne    4045d0 <memcpy+0x130>
-  4045e1:	48 01 c8             	add    rax,rcx
-  4045e4:	49 8d 34 08          	lea    rsi,[r8+rcx*1]
-  4045e8:	e9 ef fe ff ff       	jmp    4044dc <memcpy+0x3c>
-  4045ed:	0f 1f 00             	nop    DWORD PTR [rax]
+  4045e0:	0f b6 34 10          	movzx  esi,BYTE PTR [rax+rdx*1]
+  4045e4:	41 88 34 10          	mov    BYTE PTR [r8+rdx*1],sil
+  4045e8:	48 83 c2 01          	add    rdx,0x1
+  4045ec:	48 39 d1             	cmp    rcx,rdx
+  4045ef:	75 ef                	jne    4045e0 <memcpy+0x130>
+  4045f1:	48 01 c8             	add    rax,rcx
+  4045f4:	49 8d 34 08          	lea    rsi,[r8+rcx*1]
+  4045f8:	e9 ef fe ff ff       	jmp    4044ec <memcpy+0x3c>
+  4045fd:	0f 1f 00             	nop    DWORD PTR [rax]
 		t = length / wsize;
-  4045f0:	48 89 ca             	mov    rdx,rcx
+  404600:	48 89 ca             	mov    rdx,rcx
 		t = length & wmask;
-  4045f3:	48 89 cb             	mov    rbx,rcx
-  4045f6:	48 89 cd             	mov    rbp,rcx
+  404603:	48 89 cb             	mov    rbx,rcx
+  404606:	48 89 cd             	mov    rbp,rcx
 		src += length;
-  4045f9:	49 89 c3             	mov    r11,rax
+  404609:	49 89 c3             	mov    r11,rax
 		t = length / wsize;
-  4045fc:	48 c1 ea 02          	shr    rdx,0x2
+  40460c:	48 c1 ea 02          	shr    rdx,0x2
 		t = length & wmask;
-  404600:	83 e3 03             	and    ebx,0x3
+  404610:	83 e3 03             	and    ebx,0x3
 		dst += length;
-  404603:	4d 89 ca             	mov    r10,r9
+  404613:	4d 89 ca             	mov    r10,r9
 		TLOOP(src -= wsize; dst -= wsize; *(word*)(void*)dst = *(const word*)(const void*)src);
-  404606:	48 83 fd 03          	cmp    rbp,0x3
-  40460a:	0f 86 73 ff ff ff    	jbe    404583 <memcpy+0xe3>
-  404610:	48 89 d0             	mov    rax,rdx
-  404613:	48 f7 d8             	neg    rax
-  404616:	48 c1 e0 02          	shl    rax,0x2
-  40461a:	49 01 c3             	add    r11,rax
-  40461d:	49 01 c2             	add    r10,rax
-  404620:	41 8b 44 93 fc       	mov    eax,DWORD PTR [r11+rdx*4-0x4]
-  404625:	41 89 44 92 fc       	mov    DWORD PTR [r10+rdx*4-0x4],eax
-  40462a:	48 83 ea 01          	sub    rdx,0x1
-  40462e:	75 f0                	jne    404620 <memcpy+0x180>
-  404630:	e9 4e ff ff ff       	jmp    404583 <memcpy+0xe3>
-  404635:	0f 1f 00             	nop    DWORD PTR [rax]
+  404616:	48 83 fd 03          	cmp    rbp,0x3
+  40461a:	0f 86 73 ff ff ff    	jbe    404593 <memcpy+0xe3>
+  404620:	48 89 d0             	mov    rax,rdx
+  404623:	48 f7 d8             	neg    rax
+  404626:	48 c1 e0 02          	shl    rax,0x2
+  40462a:	49 01 c3             	add    r11,rax
+  40462d:	49 01 c2             	add    r10,rax
+  404630:	41 8b 44 93 fc       	mov    eax,DWORD PTR [r11+rdx*4-0x4]
+  404635:	41 89 44 92 fc       	mov    DWORD PTR [r10+rdx*4-0x4],eax
+  40463a:	48 83 ea 01          	sub    rdx,0x1
+  40463e:	75 f0                	jne    404630 <memcpy+0x180>
+  404640:	e9 4e ff ff ff       	jmp    404593 <memcpy+0xe3>
+  404645:	0f 1f 00             	nop    DWORD PTR [rax]
 				t = wsize - (t & wmask);
-  404638:	48 89 f2             	mov    rdx,rsi
-  40463b:	83 e2 03             	and    edx,0x3
+  404648:	48 89 f2             	mov    rdx,rsi
+  40464b:	83 e2 03             	and    edx,0x3
 			length -= t;
-  40463e:	4c 8d 54 0a fc       	lea    r10,[rdx+rcx*1-0x4]
+  40464e:	4c 8d 54 0a fc       	lea    r10,[rdx+rcx*1-0x4]
 				t = wsize - (t & wmask);
-  404643:	b9 04 00 00 00       	mov    ecx,0x4
+  404653:	b9 04 00 00 00       	mov    ecx,0x4
 		t = length / wsize;
-  404648:	4c 89 d7             	mov    rdi,r10
+  404658:	4c 89 d7             	mov    rdi,r10
 		t = length & wmask;
-  40464b:	4d 89 d1             	mov    r9,r10
+  40465b:	4d 89 d1             	mov    r9,r10
 				t = wsize - (t & wmask);
-  40464e:	48 29 d1             	sub    rcx,rdx
+  40465e:	48 29 d1             	sub    rcx,rdx
 		t = length / wsize;
-  404651:	48 c1 ef 02          	shr    rdi,0x2
+  404661:	48 c1 ef 02          	shr    rdi,0x2
 		t = length & wmask;
-  404655:	41 83 e1 03          	and    r9d,0x3
-  404659:	e9 6b ff ff ff       	jmp    4045c9 <memcpy+0x129>
-  40465e:	66 90                	xchg   ax,ax
+  404665:	41 83 e1 03          	and    r9d,0x3
+  404669:	e9 6b ff ff ff       	jmp    4045d9 <memcpy+0x129>
+  40466e:	66 90                	xchg   ax,ax
 				t &= wmask;
-  404660:	48 89 c6             	mov    rsi,rax
-  404663:	83 e6 03             	and    esi,0x3
+  404670:	48 89 c6             	mov    rsi,rax
+  404673:	83 e6 03             	and    esi,0x3
 			length -= t;
-  404666:	48 29 f1             	sub    rcx,rsi
+  404676:	48 29 f1             	sub    rcx,rsi
 		t = length / wsize;
-  404669:	48 89 ca             	mov    rdx,rcx
+  404679:	48 89 ca             	mov    rdx,rcx
 		t = length & wmask;
-  40466c:	48 89 cb             	mov    rbx,rcx
+  40467c:	48 89 cb             	mov    rbx,rcx
 			length -= t;
-  40466f:	48 89 cd             	mov    rbp,rcx
+  40467f:	48 89 cd             	mov    rbp,rcx
 				t &= wmask;
-  404672:	48 89 f1             	mov    rcx,rsi
+  404682:	48 89 f1             	mov    rcx,rsi
 		t = length / wsize;
-  404675:	48 c1 ea 02          	shr    rdx,0x2
+  404685:	48 c1 ea 02          	shr    rdx,0x2
 		t = length & wmask;
-  404679:	83 e3 03             	and    ebx,0x3
-  40467c:	e9 d2 fe ff ff       	jmp    404553 <memcpy+0xb3>
+  404689:	83 e3 03             	and    ebx,0x3
+  40468c:	e9 d2 fe ff ff       	jmp    404563 <memcpy+0xb3>

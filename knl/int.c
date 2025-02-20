@@ -139,7 +139,9 @@ void coprocessor_notexist()
 }
 void double_ints()
 {
-    comprintf("double interrupts\n");
+    comprintf("FATAL:double interrupts\n");
+
+    while (1) {}
 }
 void coprocessor_seg_overbound()
 {

@@ -60,7 +60,7 @@ void                  init_blkdev(void);
 extern struct blk_dev blk_devs[MAX_BLKDEVS];
 extern struct request requests[MAX_REQUESTS];
 extern struct blk_dev bd_ramdisk;
-extern int            dev_ramdisk;
+extern int            drv_ramdisk;
 
 __attribute__((always_inline)) void inline end_request(unsigned short dev)
 {

@@ -52,3 +52,4 @@ void display(char ch);
 void offset_cursor(int dx, int dy);
 
 extern struct file_operations framebuffer_fops;
+extern int                    drv_framebuffer;

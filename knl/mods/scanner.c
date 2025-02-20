@@ -1,5 +1,7 @@
 #include "scanner.h"
+#include "devman.h"
 #include "driverman.h"
+#include "ioctlarg.h"
 #include "volume.h"
 #include "disk.h"
 #include "errno.h"
@@ -189,22 +191,15 @@ unsigned char type_guids[MAX_TYPE_GUIDS][16] = {
 
 volume_list* scan_disk(int dev)
 {
-    volume_list* list = KMALLOC(sizeof(volume_list));
-    list->head        = NULL;
-    list->tail        = NULL;
-    struct arg_pack
-    {
-        int   lba;
-        int   count;
-        char* buf;
-        int   non_async;
-        int   diski;
-    } ioctlarg;
-    ioctlarg.diski     = DISK_MAJOR_MAJOR;
-    ioctlarg.lba       = 0;
-    ioctlarg.count     = 1;
-    ioctlarg.buf       = KMALLOC(512);
-    ioctlarg.non_async = 0;   //让硬盘中断使用同步的读写功能
+    volume_list* list         = KMALLOC(sizeof(volume_list));
+    list->head                = NULL;
+    list->tail                = NULL;
+    drvioctlarg_read ioctlarg = {
+        .dev   = dev,
+        .lba   = 0,
+        .count = 1,
+        .buf   = KMALLOC(512),
+    };
     if (ioctlarg.buf == NULL) {
 #ifdef DEBUG
         KPRINTF("Test failed: Failed to allocate memory for buffer.\n");
@@ -215,7 +210,8 @@ volume_list* scan_disk(int dev)
     //查看分区，如果是MBR分区表，那么就按照这个分区表注册即可，如果是GPT分区表，那么就按照GPT分区表注册
 
     // 读取第一个扇区（MBR）
-    if (drv_ioctl(dev, DRIVER_CMD_READ, 2, &ioctlarg) != 0) {
+
+    if (dev_ioctl(dev, DRIVER_CMD_READ, 2, &ioctlarg) != 0) {
 #ifdef DEBUG
         KPRINTF("Test failed: Failed to read MBR sector.\n");
 #endif
@@ -309,7 +305,8 @@ volume_list* scan_disk(int dev)
 scan_gpt:
     // 不是 MBR 分区表，尝试读取 GPT 分区表头
     ioctlarg.lba = 1;
-    if (drv_ioctl(dev, DRIVER_CMD_READ, 2, &ioctlarg) != 0) {
+
+    if (dev_ioctl(dev, DRIVER_CMD_READ, 2, &ioctlarg) != 0) {
 #ifdef DEBUG
         KPRINTF("Test failed: Failed to read GPT header sector.\n");
 #endif
@@ -333,7 +330,8 @@ scan_gpt:
     size_t nr_entries = header->num_part_entries;
     KFREE(ioctlarg.buf);
     ioctlarg.buf = KMALLOC(512 * GPT_TABLE_SECTOR_COUNT);
-    if (drv_ioctl(dev, DRIVER_CMD_READ, 2, &ioctlarg) != 0) {
+
+    if (dev_ioctl(dev, DRIVER_CMD_READ, 2, &ioctlarg) != 0) {
 #ifdef DEBUG
         KPRINTF("Test failed: Failed to read GPT partition table.\n");
 #endif
@@ -457,7 +455,7 @@ int unregister_volume_list(volume_list* list)
     }
     return ret;
 }
-int dev_scanner;
+int drv_scanner;
 int scanner_mod_init(int drvid)
 {
     // dev_scanner = drvid;
@@ -482,14 +480,14 @@ drvret_t scanner_mod_ioctl(int command, unsigned long long arg)
             return -EFAULT;
         }
     }
-    change_driver_stat(dev_scanner, DRIVER_STAT_DONE);
-    next_request(dev_scanner);
+    change_driver_stat(drv_scanner, DRIVER_STAT_DONE);
+    next_request(drv_scanner);
     return 0;
 }
 
 int init_scanner()
 {
-    if ((dev_scanner = register_driver(scanner_mod_init, scanner_mod_exit, scanner_mod_ioctl)) <
+    if ((drv_scanner = register_driver(scanner_mod_init, scanner_mod_exit, scanner_mod_ioctl)) <
         0) {
         return -EFAULT;
     }

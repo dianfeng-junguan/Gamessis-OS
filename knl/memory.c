@@ -330,6 +330,10 @@ void page_err(unsigned long long* rbp)
     //这里对esp的加法是必要的，因为page fault多push了一个错误码，但是iret识别不了
     // __asm__ volatile("leave\n add $8,%rsp \n iretq");
 }
+
+size_t nr_kmallocs = 0;
+size_t sz_kmallocs = 0;
+
 void init_memory()
 {
     extern addr_t _knl_end, _knl_start;   // lds中声明的内核的结尾地址，放置位图
@@ -342,7 +346,8 @@ void init_memory()
     }
     usr_mem_pa = PAGE_4K_ALIGN(mem_size / 2);
 
-
+    nr_kmallocs = 0;
+    sz_kmallocs = 0;
     //计算出所需内存页数量
     /*
      * 注：物理内存的一半会分给内核。
@@ -518,7 +523,16 @@ void* kmalloc(off_t addr, size_t size)
         off_t ret_base = mh->base;
         //向前合并属性相同的分配头
         mhdr_merge(mh->prev, mh);
-
+        if (ret_base >= KNL_BASE + 0x40300000) {
+            // full
+            comprintf("caught err: kmalloc full\n");
+            comprintf("kmallocs count:%d\nused kmalloc size:0x%x\n", nr_kmallocs, sz_kmallocs);
+            while (1) {
+                __asm__ volatile("hlt");
+            }
+        }
+        nr_kmallocs++;
+        sz_kmallocs += size;
         // memset(ret_base, 0, size);
         return ret_base;
     }
@@ -546,6 +560,7 @@ int kfree(off_t addr)
         //     mp->next->prev=mp;
         //     mp->next=mp->next->next;
         // }
+        sz_kmallocs -= mh->len;
         return 1;
     }
     return 0;
@@ -824,7 +839,7 @@ void* do_mmap(void* addr, size_t len, int prot, int flags, int fildes, off_t off
         mmps->flen = 0;   //匿名映射flen=0，这样page err会填充剩下空间
     else
         mmps->flen = flen;
-    if (fildes > 0)
+    if (fildes >= 0)
         mmps->file = current->openf[fildes];
     else
         mmps->file = NULL;

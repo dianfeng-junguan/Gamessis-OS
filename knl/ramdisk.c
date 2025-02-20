@@ -5,6 +5,7 @@
 #include "ramdisk.h"
 #include "devman.h"
 #include "driverman.h"
+#include "ioctlarg.h"
 #include "memory.h"
 #include "log.h"
 #include "mem.h"
@@ -17,7 +18,7 @@ extern char _binary_rd_img_start[], _binary_rd_img_end[];
 extern char _binary_bin_test_elf_start[], _binary_bin_test_elf_end[];
 char*       ramdisk_base;
 long        ramdisk_size;
-int         dev_ramdisk = -1;
+int         drv_ramdisk = -1;
 // struct blk_dev bd_ramdisk  = {.do_request = ramdisk_do_req};
 /* void ramdisk_do_req(struct request* req)
 {
@@ -40,7 +41,7 @@ int         dev_ramdisk = -1;
     default: break;
     }
     end_request(req->dev);
-    ramdisk_do_req(blk_devs[dev_ramdisk].current_request);
+    ramdisk_do_req(blk_devs[drv_ramdisk].current_request);
 } */
 /**
     @brief
@@ -69,16 +70,10 @@ int ramdisk_mod_exit()
  */
 int ramdisk_mod_ioctl(int cmd, unsigned long long arg)
 {
-    struct arg_pack
-    {
-        int   lba;
-        int   count;
-        char* buf;
-    } * ioctlarg;
-    ioctlarg     = (struct arg_pack*)arg;
-    int   len    = ioctlarg->count * 512;
-    int   base   = ioctlarg->lba * 512;
-    char* buffer = (char*)((unsigned long long)ioctlarg->buf);
+    drvioctlarg_read* ioctlarg = (drvioctlarg_read*)arg;
+    int               len      = ioctlarg->count * 512;
+    int               base     = ioctlarg->lba * 512;
+    char*             buffer   = (char*)((unsigned long long)ioctlarg->buf);
     switch (cmd) {
     case DRIVER_CMD_READ:
         for (int i = 0; i < len; i++) {
@@ -92,8 +87,8 @@ int ramdisk_mod_ioctl(int cmd, unsigned long long arg)
         break;
     default: break;
     }
-    change_driver_stat(dev_ramdisk, DRIVER_STAT_DONE);
-    next_request(dev_ramdisk);
+    change_driver_stat(drv_ramdisk, DRIVER_STAT_DONE);
+    next_request(drv_ramdisk);
     return 0;
 }
 void init_ramdisk()
@@ -105,11 +100,11 @@ void init_ramdisk()
         return;
     }
     ramdisk_size = (char*)_binary_rd_img_end - (char*)_binary_rd_img_start;   // PAGE_4K_SIZE*100;
-    /* if ((dev_ramdisk = reg_blkdev(&bd_ramdisk)) < 0) {
+    /* if ((drv_ramdisk = reg_blkdev(&bd_ramdisk)) < 0) {
         comprintf("no place for more blkdev.\n");
         return;
     } */
-    if ((dev_ramdisk = register_driver(ramdisk_mod_init, ramdisk_mod_exit, ramdisk_mod_ioctl)) <
+    if ((drv_ramdisk = register_driver(ramdisk_mod_init, ramdisk_mod_exit, ramdisk_mod_ioctl)) <
         0) {
         comprintf("no place for more blkdev.\n");
         return;

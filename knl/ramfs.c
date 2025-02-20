@@ -33,7 +33,7 @@ void                         init_ramfs()
     ramfs_sb.sb_ops = &ramfs_fops;
     ramfs_sb.root   = dmnt;
     // ramfs_sb.p_dev  = &bd_ramdisk;
-    ramfs_sb.dev = dev_ramdisk;
+    ramfs_sb.dev = drv_ramdisk;
     //解压img里面的test程序
     // memcpy(ramdisk_base, _binary_bin_test_elf_start, (char*)_binary_bin_test_elf_end -
     // (char*)_binary_bin_test_elf_start); test= (struct index_node *) kmalloc(0,PAGE_4K_SIZE);
@@ -80,7 +80,7 @@ long read_ramfs(struct file* filp, char* buf, unsigned long count, long* positio
     ioctlarg.count = (count + 511) / 512;
     char* tmpbuf   = kmalloc(0, ioctlarg.count * 512);
     ioctlarg.buf   = tmpbuf;
-    drv_ioctl(dev_ramdisk, DRIVER_CMD_READ, 1, &ioctlarg);
+    drv_ioctl(drv_ramdisk, DRIVER_CMD_READ, 1, &ioctlarg);
     memcpy(buf, tmpbuf + (*position % 512), count);
     kfree(tmpbuf);
     *position += count;
