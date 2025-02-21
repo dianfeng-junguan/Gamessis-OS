@@ -2,6 +2,7 @@
 // Created by Oniar_Pie on 2024/11/15.
 //
 #include <ramdisk.h>
+#include "memman.h"
 #include "ramfs.h"
 #include "devman.h"
 #include "driverman.h"
@@ -36,10 +37,9 @@ void                         init_ramfs()
     ramfs_sb.dev = drv_ramdisk;
     //解压img里面的test程序
     // memcpy(ramdisk_base, _binary_bin_test_elf_start, (char*)_binary_bin_test_elf_end -
-    // (char*)_binary_bin_test_elf_start); test= (struct index_node *) kmalloc(0,PAGE_4K_SIZE);
-    // test->f_ops=&ramfs_fops;
-    // test->file_size= (char*)_binary_bin_test_elf_end - (char*)_binary_bin_test_elf_start;
-    // test->sb=&ramfs_sb;
+    // (char*)_binary_bin_test_elf_start); test= (struct index_node *)
+    // kmalloc(PAGE_4K_SIZE,NO_ALIGN); test->f_ops=&ramfs_fops; test->file_size=
+    // (char*)_binary_bin_test_elf_end - (char*)_binary_bin_test_elf_start; test->sb=&ramfs_sb;
     // test->attribute=FS_ATTR_FILE;
     // test->inode_ops=&ramfs_iops;
     //设置一下dmnt的inode的操作，查找的时候会用到
@@ -78,7 +78,7 @@ long read_ramfs(struct file* filp, char* buf, unsigned long count, long* positio
     } ioctlarg;
     ioctlarg.lba   = *position / 512;
     ioctlarg.count = (count + 511) / 512;
-    char* tmpbuf   = kmalloc(0, ioctlarg.count * 512);
+    char* tmpbuf   = kmalloc(ioctlarg.count * 512, NO_ALIGN);
     ioctlarg.buf   = tmpbuf;
     drv_ioctl(drv_ramdisk, DRIVER_CMD_READ, 1, &ioctlarg);
     memcpy(buf, tmpbuf + (*position % 512), count);

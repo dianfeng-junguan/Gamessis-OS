@@ -1,4 +1,5 @@
 #include "ioctlarg.h"
+#include "memman.h"
 #include "tty.h"
 #include "com.h"
 #include "driverman.h"
@@ -55,11 +56,11 @@ long open_tty(int dev)
     if (!t_tty) {
         return -ENOMEM;
     }
-    tty_openbufs* ntty = (tty_openbufs*)kmalloc(0, PAGE_4K_SIZE);
+    tty_openbufs* ntty = (tty_openbufs*)kmalloc(PAGE_4K_SIZE, NO_ALIGN);
     //创建三个缓冲区
-    ntty->stdin_buf.data  = (char*)kmalloc(0, PAGE_4K_SIZE);
-    ntty->stdout_buf.data = (char*)kmalloc(0, PAGE_4K_SIZE);
-    ntty->stderr_buf.data = (char*)kmalloc(0, PAGE_4K_SIZE);
+    ntty->stdin_buf.data  = (char*)kmalloc(PAGE_4K_SIZE, NO_ALIGN);
+    ntty->stdout_buf.data = (char*)kmalloc(PAGE_4K_SIZE, NO_ALIGN);
+    ntty->stderr_buf.data = (char*)kmalloc(PAGE_4K_SIZE, NO_ALIGN);
     ntty->stdin_buf.wptr  = 0;
     ntty->stdout_buf.wptr = 0;
     ntty->stderr_buf.wptr = 0;
@@ -280,7 +281,7 @@ drvret_t tty_mod_ioctl(int command, unsigned long long arg)
 //初始化主控制台。
 int init_console()
 {
-    l_tty = kmalloc(0, sizeof(tty_t) * MAX_TTYS);
+    l_tty = kmalloc(sizeof(tty_t) * MAX_TTYS, NO_ALIGN);
     for (int i = 0; i < MAX_TTYS; i++) {
         l_tty[i].stds          = NULL;
         l_tty[i].text_buf      = NULL;
@@ -484,7 +485,7 @@ int register_tty(tty_t* tty)
 
     int page_size = tty->chars_height * tty->chars_width;
 
-    target->text_buf = kmalloc(0, 2 * page_size);
+    target->text_buf = kmalloc(2 * page_size, NO_ALIGN);
     memset(target->text_buf, 0, 2 * page_size);
     target->text_buf_size = 2 * page_size;
     target->show          = 1;

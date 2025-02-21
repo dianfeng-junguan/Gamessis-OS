@@ -19,7 +19,8 @@ KNL_OFILES = int.o main.o log.o \
 			gdt.o gdta.o clock.o clocka.o exe.o \
 			syscalla.o framebuffer.o vfs.o sys.o ramfs.o ramdisk.o \
 			kallsyms.o signal.o int_handlera.o driverman.o \
-			binload.o drvload.o volume.o floata.o float.o  callinga.o
+			binload.o drvload.o volume.o floata.o float.o  callinga.o slab.o \
+			buddy.o
 MODS_OFILES = kb.o disk.o diska.o fat32.o \
 				tty.o com.o rd.o elfbin.o scanner.o#test.o
 COM_OFILES = mem.o str.o types.o proca.o font.o wchar.o

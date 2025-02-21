@@ -1,4 +1,5 @@
 #include "signal.h"
+#include "memman.h"
 #include "memory.h"
 #include "proc.h"
 #include "sys/types.h"
@@ -18,7 +19,7 @@ int send_signal(pid_t pid, int sig)
         set_errno(-ENOENT);
         return -1;
     }
-    struct List* l = kmalloc(0, sizeof(struct List));
+    struct List* l = kmalloc(sizeof(struct List), NO_ALIGN);
     list_init(l);
     l->data = sig;
     if (!p->signal_queue)

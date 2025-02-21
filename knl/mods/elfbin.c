@@ -4,6 +4,7 @@
  */
 #include "elfbin.h"
 #include "elf.h"
+#include "memman.h"
 #include "vfs.h"
 #include "log.h"
 #include "memory.h"
@@ -45,7 +46,8 @@ ready:
     Elf64_Ehdr*        ehdr = (Elf64_Ehdr*)image->base;
     unsigned short     entn = ehdr->e_shnum;
     unsigned short     ents = ehdr->e_shentsize;
-    unsigned long long shla = (unsigned long long)kmalloc(0, ehdr->e_shnum * ehdr->e_shentsize);
+    unsigned long long shla =
+        (unsigned long long)kmalloc(ehdr->e_shnum * ehdr->e_shentsize, NO_ALIGN);
     kread(fp, ehdr->e_shoff, ehdr->e_shnum * ehdr->e_shentsize, (char*)shla);
     struct Elf64_Shdr* sh         = (struct Elf64_Shdr*)(shla);
     int                reloc_flag = 0;
@@ -92,7 +94,7 @@ ready:
     //构建符号表
     //分配还没分配的符号SHN_COMMON
     // bss节这些还没有分配，要自己计算出来
-    image->symtab        = kmalloc(0, (symtabsz + 1) * sizeof(exec_symbol));
+    image->symtab        = kmalloc(symtabsz + 1 * sizeof(exec_symbol), NO_ALIGN);
     exec_symbol* symp    = image->symtab;
     size_t       toalloc = 0;
     image->nr_sym        = 0;
@@ -149,7 +151,7 @@ tokfree:
 }
 int elf_get_header_info(struct file* fp, exec_image* image)
 {
-    Elf64_Ehdr* ehdr = kmalloc(0, sizeof(Elf64_Ehdr));
+    Elf64_Ehdr* ehdr = kmalloc(sizeof(Elf64_Ehdr), NO_ALIGN);
     int         vret = 0;
     if (kread(fp, 0, sizeof(Elf64_Ehdr), ehdr) < 0) {
         vret = -1;
@@ -169,7 +171,7 @@ int elf_get_header_info(struct file* fp, exec_image* image)
         image->type = BIN_TYPE_EXEC;
     calc_memsz:;
         size_t      phtotsz = ehdr->e_phentsize * ehdr->e_phnum;
-        Elf64_Phdr* phs     = kmalloc(0, phtotsz);
+        Elf64_Phdr* phs     = kmalloc(phtotsz, NO_ALIGN);
         if (kread(fp, ehdr->e_phoff, phtotsz, phs) < 0) {
             kfree(phs);
             vret = -1;
@@ -197,7 +199,7 @@ int elf_get_header_info(struct file* fp, exec_image* image)
         image->base = 0;
         //根据shdr计算大小
         size_t             shtotsz = ehdr->e_shentsize * ehdr->e_shnum;
-        struct Elf64_Shdr* shs     = kmalloc(0, shtotsz);
+        struct Elf64_Shdr* shs     = kmalloc(shtotsz, NO_ALIGN);
         if (kread(fp, ehdr->e_shoff, shtotsz, shs) < 0) {
             kfree(shs);
             vret = -1;
@@ -223,7 +225,7 @@ int elf_get_header_info(struct file* fp, exec_image* image)
         size_t toalloc = 0;
 #define ALIGN(a, b) ((a) + (b) - (a) % (b))
         for (int i = 0; i < ptr; i++) {
-            struct Elf64_Sym* sym = kmalloc(0, shs[symtabndx[i]].sh_size);
+            struct Elf64_Sym* sym = kmalloc(shs[symtabndx[i]].sh_size, NO_ALIGN);
             kread(fp, shs[symtabndx[i]].sh_offset, shs[symtabndx[i]].sh_size, sym);
             for (int j = 0; j < shs[symtabndx[i]].sh_size / shs[symtabndx[i]].sh_entsize; j++) {
                 if (sym[j].st_shndx == SHN_COMMON) {

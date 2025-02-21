@@ -2,6 +2,7 @@
 
 #include "driverman.h"
 #include "ioctlarg.h"
+#include "memman.h"
 #include "ramdisk.h"
 #include "syscall.h"
 #include "memory.h"
@@ -113,7 +114,7 @@ int make_default_devfiles()
 int init_devman()
 {
 
-    dev_list = kmalloc(0, MAX_DEVICES * sizeof(device_t));
+    dev_list = kmalloc(MAX_DEVICES * sizeof(device_t), NO_ALIGN);
     return 0;
 }
 int init_devfs()
@@ -250,7 +251,7 @@ int reg_device(char* name, int type, int drv, int flag)
     for (; i < MAX_DEVICES; i++) {
         if (!dev_list[i].flag) {
             dev_list[i].drv  = drv;
-            dev_list[i].name = kmalloc(0, strlenk(name));
+            dev_list[i].name = kmalloc(strlenk(name), NO_ALIGN);
             strcpyk(dev_list[i].name, name);
             dev_list[i].flag = 1;
             dev_list[i].type = type;
@@ -389,7 +390,7 @@ void make_devf(char* name, int dev)
 }
 struct super_block* devfs_read_superblock(volume* PDTE, void* buf)
 {
-    struct super_block* sb = kmalloc(0, PAGE_4K_SIZE);
+    struct super_block* sb = kmalloc(PAGE_4K_SIZE, NO_ALIGN);
     sb->dev                = 0;   //不存在具体的存储设备
     // sb->p_dev              = 0;
     sb->root   = sb + 1;
@@ -399,7 +400,7 @@ struct super_block* devfs_read_superblock(volume* PDTE, void* buf)
     sb->root->dir_ops   = &devfs_dops;
     list_init(&sb->root->child_node);
     list_init(&sb->root->subdirs_list);
-    sb->root->name = kmalloc(0, 4);
+    sb->root->name = kmalloc(4, NO_ALIGN);
     strcpyk(sb->root->name, "dev");
     sb->root->name_length = 3;
 

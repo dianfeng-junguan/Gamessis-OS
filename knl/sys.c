@@ -1,6 +1,7 @@
 //
 // Created by Oniar_Pie on 2024/10/7.
 //
+#include "memman.h"
 #include "sys/types.h"
 #include "vfs.h"
 #include "errno.h"
@@ -66,7 +67,7 @@ unsigned long sys_open(char* filename, int flags)
         strcpyk(cwd, "/");
     }
  */
-    path = (char*)kmalloc(0, PAGE_4K_SIZE);
+    path = (char*)kmalloc(PAGE_4K_SIZE, NO_ALIGN);
     if (path == NULL)
         return -ENOMEM;
     memset(path, 0, PAGE_4K_SIZE);
@@ -151,7 +152,7 @@ unsigned long sys_open(char* filename, int flags)
 
     dentry->link++;   //这样哪怕长时间不path walk，也不会被释放
 
-    filp = (struct file*)kmalloc(0, sizeof(struct file));
+    filp = (struct file*)kmalloc(sizeof(struct file), NO_ALIGN);
     memset(filp, 0, sizeof(struct file));
     filp->dentry = dentry;
     filp->mode   = flags;
@@ -500,7 +501,7 @@ unsigned long sys_chdir(char* filename)
 
     printfk("sys_chdir\n");
     pathlen = strlenk(filename);
-    path    = (char*)kmalloc(0, pathlen);
+    path    = (char*)kmalloc(pathlen, NO_ALIGN);
 
     if (path == NULL)
         return -ENOMEM;
@@ -684,11 +685,11 @@ int sys_rename(char* oldpath, char* newpath)
     default: return -EINVAL;
     }
     //创建数据结构
-    struct dir_entry*  new_dentry = kmalloc(0, sizeof(struct dir_entry));
-    struct index_node* new_inode  = kmalloc(0, sizeof(struct index_node));
+    struct dir_entry*  new_dentry = kmalloc(sizeof(struct dir_entry), NO_ALIGN);
+    struct index_node* new_inode  = kmalloc(sizeof(struct index_node), NO_ALIGN);
     new_dentry->dir_inode         = new_inode;
     new_dentry->parent            = old_dentry->parent;
-    new_dentry->name              = kmalloc(0, strlenk(newpath) + 1);
+    new_dentry->name              = kmalloc(strlenk(newpath) + 1, NO_ALIGN);
     strcpyk(new_dentry->name, newpath);
     new_inode->attribute          = old_dentry->dir_inode->attribute;
     new_inode->sb                 = old_dentry->dir_inode->sb;

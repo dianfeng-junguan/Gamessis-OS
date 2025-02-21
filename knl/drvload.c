@@ -1,5 +1,6 @@
 #include "drvload.h"
 #include "driverman.h"
+#include "memman.h"
 #include "vfs.h"
 #include "memory.h"
 #include "mem.h"
@@ -8,7 +9,7 @@ mod_obj* mods;
 
 int init_drvload()
 {
-    mods = (mod_obj*)kmalloc(0, sizeof(mod_obj) * MAX_MODULES);
+    mods = (mod_obj*)kmalloc(sizeof(mod_obj) * MAX_MODULES, NO_ALIGN);
     memset(mods, 0, sizeof(mod_obj) * MAX_MODULES);
     if (!mods) {
         return -1;
@@ -20,7 +21,7 @@ mod_obj* get_spare_module()
     for (int i = 0; i < MAX_MODULES; i++) {
         if (!mods[i].flags) {
             mods[i].flags = 1;
-            mods[i].img   = (exec_image*)kmalloc(0, sizeof(exec_image));
+            mods[i].img   = (exec_image*)kmalloc(sizeof(exec_image), NO_ALIGN);
             mods[i].fp    = NULL;
             if (!mods[i].img) {
                 return NULL;
@@ -82,7 +83,7 @@ mod_obj* load_module(char* path)
         goto relsmod;
     }
     size_t             memsz     = spare->img->memsz;
-    unsigned long long load_addr = kmalloc(0, memsz);
+    unsigned long long load_addr = kmalloc(memsz, NO_ALIGN);
     if (!load_addr) {
         vret = -1;
         goto relsmod;

@@ -86,7 +86,7 @@ int init_scanner();
 #define SNPRINTF(fmt, ...) snprintf(fmt, ##__VA_ARGS__)
 #define STRLEN(str) strlen(str)
 #else
-#define KMALLOC(size) kmalloc(0, size)
+#define KMALLOC(size) kmalloc( size,0)
 #define KFREE(ptr) kfree(ptr)
 #define KPRINTF(fmt, ...) comprintfk(KERN_INFO fmt, ##__VA_ARGS__)
 #define STRNCPY(dst, src, len) strncpyk(dst, src, len)

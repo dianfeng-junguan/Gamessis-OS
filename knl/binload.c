@@ -1,4 +1,5 @@
 #include "binload.h"
+#include "memman.h"
 #include "memory.h"
 #include "vfs.h"
 #include "mem.h"
@@ -9,7 +10,7 @@ exec_format* formats;
 
 int init_binload()
 {
-    if ((formats = kmalloc(0, sizeof(exec_format) * MAX_BIN_FORMATS)) == 0)
+    if ((formats = kmalloc(sizeof(exec_format) * MAX_BIN_FORMATS, NO_ALIGN)) == 0)
         return -1;
     memset(formats, 0, sizeof(exec_format) * MAX_BIN_FORMATS);
     return 0;

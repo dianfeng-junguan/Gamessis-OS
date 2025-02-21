@@ -1,6 +1,7 @@
 #include <log.h>
 #include <stdarg.h>
 #include "framebuffer.h"
+#include "memman.h"
 #include "memory.h"
 #include "str.h"
 
@@ -82,7 +83,7 @@ void printfk(const char* format, ...)
 {
     if (strlenk(format) >= 1024)
         return;   //一次性输出不了太长
-    char*   tmp = (char*)kmalloc(0, PAGE_4K_SIZE);
+    char*   tmp = (char*)kmalloc(PAGE_4K_SIZE, NO_ALIGN);
     va_list vargs;
     va_start(vargs, format);
     vsnprintfk(tmp, PAGE_4K_SIZE, format, vargs);

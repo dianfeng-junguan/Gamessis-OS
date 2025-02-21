@@ -6,6 +6,7 @@
 #include "driverman.h"
 #include "errno.h"
 #include "int.h"
+#include "memman.h"
 #include "memory.h"
 #include "log.h"
 #include "mem.h"
@@ -125,10 +126,10 @@ struct dir_entry* path_walk(char* name, unsigned long flags)
         }
         if (!path) {
             //缓存中没有，再读取介质
-            path = (struct dir_entry*)kmalloc(0, sizeof(struct dir_entry));
+            path = (struct dir_entry*)kmalloc(sizeof(struct dir_entry), NO_ALIGN);
             memset(path, 0, sizeof(struct dir_entry));
 
-            path->name = kmalloc(0, tmpnamelen + 1);
+            path->name = kmalloc(tmpnamelen + 1, NO_ALIGN);
             memset(path->name, 0, tmpnamelen + 1);
             memcpy(path->name, tmpname, tmpnamelen);
             path->name_length = tmpnamelen;
@@ -205,7 +206,7 @@ struct super_block* mount_fs(char* name, volume* vol, void* buf)
 struct super_block* try_mount_fs(volume* vol)
 {
     struct file_system_type* p      = NULL;
-    void*                    buffer = kmalloc(0, PAGE_4K_SIZE);
+    void*                    buffer = kmalloc(PAGE_4K_SIZE, NO_ALIGN);
     struct _ioctlarg
     {
         unsigned int lba;         //起始扇区
@@ -303,10 +304,10 @@ struct dir_entry* root_lookup(struct index_node* parent_inode, struct dir_entry*
 struct index_node_operations root_iops = {.lookup = root_lookup};
 void                         init_rootfs()
 {
-    /* root_sb=(struct super_block*) kmalloc(0,PAGE_4K_SIZE);
+    /* root_sb=(struct super_block*) kmalloc(PAGE_4K_SIZE,NO_ALIGN);
     root_sb->root=root_sb+1;//紧凑跟在后面
     root_sb->sb_ops=NULL; */
-    droot = kmalloc(0, sizeof(struct dir_entry));
+    droot = kmalloc(sizeof(struct dir_entry), NO_ALIGN);
 
     /* struct index_node* ir=droot+1;
     droot->dir_inode=ir;
@@ -326,7 +327,7 @@ void                         init_rootfs()
     droot->child_node.data = droot;
 
     //创建inode
-    struct index_node* inode  = kmalloc(0, sizeof(struct index_node));
+    struct index_node* inode  = kmalloc(sizeof(struct index_node), NO_ALIGN);
     droot->dir_inode          = inode;
     inode->sb                 = root_sb;
     inode->attribute          = FS_ATTR_DIR;
@@ -354,7 +355,7 @@ struct dir_entry* create_node(char* pathname, mode_t mode, unsigned short dev)
     for (; p > pathname && *p != '/'; p--)
         ;
     int   pplen = p - pathname;
-    char* path  = kmalloc(0, pplen + 1);
+    char* path  = kmalloc(pplen + 1, NO_ALIGN);
     memcpy(path, pathname, pplen);
     path[pplen]              = '\0';
     struct dir_entry* parent = path_walk(path, 1);
@@ -363,7 +364,7 @@ struct dir_entry* create_node(char* pathname, mode_t mode, unsigned short dev)
     }
     p++;
     kfree(path);
-    struct dir_entry*  new_noded = kmalloc(0, PAGE_4K_SIZE);
+    struct dir_entry*  new_noded = kmalloc(PAGE_4K_SIZE, NO_ALIGN);
     struct index_node* new_nodei = new_noded + 1;
     new_noded->name              = new_nodei + 1;
     new_noded->name_length       = strlenk(p);

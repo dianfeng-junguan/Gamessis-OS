@@ -2,6 +2,7 @@
 #include <memory.h>
 #include <typename.h>
 #include "driverman.h"
+#include "memman.h"
 #include "sys/types.h"
 #include "mem.h"
 #include "syscall.h"
@@ -86,7 +87,7 @@ void init_font()
     max_ch_nr_y               = framebuffer.common.framebuffer_height / font_height;
     font_size                 = 1;
     max_chs                   = max_ch_nr_x * max_ch_nr_y * 2;
-    text_buffer               = kmalloc(0, max_chs);
+    text_buffer               = kmalloc(max_chs, NO_ALIGN);
     txtbfh                    = 0;
     txtbft                    = 0;
     tty_t tty                 = {.chars_height = max_ch_nr_y, .chars_width = max_ch_nr_x, .dev = 2};
@@ -392,7 +393,7 @@ long close_framebuffer(struct index_node* inode, struct file* filp) {}
 long read_framebuffer(struct file* filp, char* buf, unsigned long count, long* position) {}
 long write_framebuffer(struct file* filp, char* buf, unsigned long count, long* position)
 {
-    char* tmp = (char*)kmalloc(0, PAGE_4K_SIZE);
+    char* tmp = (char*)kmalloc(PAGE_4K_SIZE, NO_ALIGN);
     int   c = count / (PAGE_4K_SIZE - 1), p = 0;
     //一块一块输出
     for (int i = 0; i < (c ? c : 1); i++) {

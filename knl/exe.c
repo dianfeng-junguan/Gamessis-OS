@@ -5,6 +5,7 @@
 #include "int.h"
 #include "log.h"
 #include "mem.h"
+#include "memman.h"
 #include "memory.h"
 #include "page.h"
 #include "pe.h"
@@ -213,15 +214,15 @@ int sys_execve(char* path, char** argv, char** environ)
         return -1;
     }
     //拷贝三个指针的数据，因为之后就会释放用户区内存
-    char* path_copy = kmalloc(0, PAGE_4K_SIZE);
+    char* path_copy = kmalloc(PAGE_4K_SIZE, NO_ALIGN);
     strncpyk(path_copy, path, RECOMMENDED_MAXSTRLEN);
     path = path_copy;
     //指针数组先拷贝数组，然后拷贝数组指向的内容
     int   argc = 0, environc = 0, arg_memsz = 0, environ_memsz = 0;
-    char* argv_copy = kmalloc(0, PAGE_4K_SIZE);
+    char* argv_copy = kmalloc(PAGE_4K_SIZE, NO_ALIGN);
 
     memcpy(argv_copy, argv, (argc = pointer_array_len(argv, 512)) * sizeof(char*));
-    char* environ_copy = kmalloc(0, PAGE_4K_SIZE);
+    char* environ_copy = kmalloc(PAGE_4K_SIZE, NO_ALIGN);
     memcpy(environ_copy, environ, (environc = pointer_array_len(environ, 512)) * sizeof(char*));
     argv    = argv_copy;   //替换原来的指针数组
     environ = environ_copy;
@@ -229,14 +230,14 @@ int sys_execve(char* path, char** argv, char** environ)
     for (int i = 0; i < argc; i++) {
         size_t argl = strnlenk(argv[i], RECOMMENDED_MAXSTRLEN);
         arg_memsz += argl;
-        char* move_to = kmalloc(0, argl);
+        char* move_to = kmalloc(argl, NO_ALIGN);
         strncpyk(move_to, argv[i], RECOMMENDED_MAXSTRLEN);
         argv[i] = move_to;
     }
     for (int i = 0; i < environc; i++) {
         size_t argl = strnlenk(environ[i], RECOMMENDED_MAXSTRLEN);
         environ_memsz += argl;
-        char* move_to = kmalloc(0, argl);
+        char* move_to = kmalloc(argl, NO_ALIGN);
         strncpyk(move_to, environ[i], RECOMMENDED_MAXSTRLEN);
         environ[i] = move_to;
     }
@@ -637,7 +638,7 @@ off_t load_elf(int fildes)
     // 读取文件头
     struct file* elf         = current->openf[fildes];
     struct file* elf_storage = elf;
-    off_t        tmpla       = kmalloc(0, PAGE_4K_SIZE);
+    off_t        tmpla       = kmalloc(PAGE_4K_SIZE, NO_ALIGN);
 ready:
     if (tmpla == -1) {
         current->regs.errcode = -ENOMEM;
@@ -651,7 +652,7 @@ ready:
     u16         entn = ehdr->e_phnum;
     u16         ents = ehdr->e_phentsize;
     elf->position    = ehdr->e_shoff;
-    off_t shla       = kmalloc(0, ehdr->e_shnum * ehdr->e_shentsize);
+    off_t shla       = kmalloc(ehdr->e_shnum * ehdr->e_shentsize, NO_ALIGN);
     sys_lseek(fildes, ehdr->e_shoff, SEEK_SET);
     sys_read(fildes, shla, ehdr->e_shnum * ehdr->e_shentsize);
     // elf->f_ops->read(elf,(char*)shla,ehdr->e_shnum*ehdr->e_shentsize,&elf->position);

@@ -132,8 +132,11 @@ void main(unsigned int magic, void* addr)
         }
     }
     tag = (struct multiboot_tag*)((multiboot_uint8_t*)tag + ((tag->size + 7) & ~7));
-    init_memory();
     init_int();
+    //初始化区域
+    init_paging();
+    init_gdt();
+    init_memory();
     if (is_sse_supported())
         init_sse();
     init_driver_man();
@@ -142,9 +145,6 @@ void main(unsigned int magic, void* addr)
     init_framebuffer();
 
     init_font();
-    //初始化区域
-    init_paging();
-    init_gdt();
 
     init_disk();
     init_scanner();

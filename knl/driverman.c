@@ -1,4 +1,5 @@
 #include "driverman.h"
+#include "memman.h"
 #include "memory.h"
 #include "mem.h"
 #include "log.h"
@@ -21,7 +22,7 @@ stat_t drvman_unreg(int index)
 stat_t init_driver_man()
 {
     _drv_ioctl_block_type = 0;
-    if ((drivers = kmalloc(0, MAX_DRIVERS * sizeof(driver_t))) == NULL) {
+    if ((drivers = kmalloc(MAX_DRIVERS * sizeof(driver_t), NO_ALIGN)) == NULL) {
         return -1;
     }
     memset(drivers, 0, MAX_DRIVERS * sizeof(driver_t));
@@ -122,7 +123,7 @@ int drv_ioctl(int drv, int command, int block, unsigned long long arg)
         //设置为准备好下一个请求的状态
         drivers[drv].stat = DRIVER_STAT_AVAILABLE;
     }
-    driver_request* new_req = kmalloc(0, sizeof(driver_request));
+    driver_request* new_req = kmalloc(sizeof(driver_request), NO_ALIGN);
     memset(new_req, 0, sizeof(new_req));
     if (!new_req) {
         debug_log("err: cannot make a new request due to failed malloc/\n");

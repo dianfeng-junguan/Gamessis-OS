@@ -121,10 +121,10 @@ void page_err(unsigned long long* int_stk);
 // addr用于指定内核缓存地址，
 // size和addr都会做4K对齐之后分配。
 //*addr参数已经废弃不用。
-void*  kmalloc(off_t addr, size_t size);
-addr_t kmallocat(addr_t addr, int pgc);
-int    kfree(off_t addr);
-int    chk_vm(int base, int pgn);
+// void*  kmalloc(off_t addr, size_t size);
+// addr_t kmallocat(addr_t addr, int pgc);
+// int kfree(off_t addr);
+int chk_vm(int base, int pgn);
 
 int init_paging();
 int do_munmap(void* addr, int len);
