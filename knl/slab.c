@@ -26,7 +26,7 @@ slab_t* create_slab(slab_cache_t* cache)
     // 初始化空闲链表
     slab_object_t* prev = NULL;
     slab_object_t* curr = slab->free_list;
-    for (int i = 0; i < num_objects - 1; i++) {
+    for (int i = 0; i < num_objects; i++) {
         curr->next = (slab_object_t*)((char*)curr + align_up(cache->object_size, 1 << align_order));
         prev       = curr;
         curr       = curr->next;
@@ -103,6 +103,7 @@ void* kmalloc(size_t size, int align_order)
     slab_cache_t* best_cache = cache;
     while (cache - slab_cache_manager->slab_caches < 32) {
         if (cache->object_size == size && cache->align_order >= align_order) {
+            best_cache = cache;
             break;
         }
         else if (cache->object_size > size && cache->object_size < best_cache->object_size &&

@@ -154,7 +154,7 @@ char* copy_to_stack(addr_t* stktop, char** argv, size_t arrsz, addr_t* new_arr)
     addr_t* arr = stktop - arrsz - 1;   //指向填充argv的位置
     char*   p   = arr;
     int     i   = 0;
-    for (; argv[i] && i < 512; i++) {
+    for (; argv[i] && i < arrsz; i++) {
         p -= strlenk(argv[i]) + 1;
         strcpyk(p, argv[i]);
         arr[i] = p;
@@ -324,7 +324,8 @@ int do_execve(char* path, char** argv, char** environ, int argc, int environc)
     unsigned long* stp = ep;
     stp -= 2;
     // syscall返回依赖这个
-    tss->rsp2 = stp;
+    //做16字节的向下对齐，因为有的指令要求rsp 16字节对齐，否则会出错
+    tss->rsp2 = (unsigned long long)stp & ~0xfull;
     stp[0]    = 0;   // rbp占位符-反正返回到main,会mov rbp,rsp
     stp[1]    = proc_end;
 

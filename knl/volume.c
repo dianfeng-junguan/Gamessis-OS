@@ -1,4 +1,5 @@
 #include "volume.h"
+#include "memman.h"
 #ifdef DEBUG
 #    include <errno.h>
 #    include <stdio.h>

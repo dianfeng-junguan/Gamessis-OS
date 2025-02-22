@@ -1,3 +1,4 @@
+#include "memman.h"
 #include "scanner.h"
 #include "devman.h"
 #include "driverman.h"

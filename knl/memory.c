@@ -82,7 +82,7 @@ stat_t smmap(addr_t pa, addr_t la, u32 attr, page_item* pml4p)
     page_item* pdptp = (page_item*)(pml4p[la / PML4E_SIZE]);   //指向的pdpt表
     int        pml4i = la / PML4E_SIZE;
     if (!((unsigned long long)pdptp & PAGE_PRESENT)) {
-        pdptp = (page_item*)kmalloc(PAGE_4K_SIZE, NO_ALIGN);
+        pdptp = (page_item*)kmalloc(PAGE_4K_SIZE, ALIGN_4096);
         memset(pdptp, 0, 4096);
         //这里使用了狡猾的技巧：kmalloc的内存-KNL_BASE直接就是实际的物理地址
         pml4p[pml4i] = ((addr_t)pdptp & ~KNL_BASE) | attr;
@@ -95,7 +95,7 @@ stat_t smmap(addr_t pa, addr_t la, u32 attr, page_item* pml4p)
     page_item* pdp   = (page_item*)pdptp[pdpti];   //指向的pd
     //检查pdptp是否被占用
     if (!((unsigned long long)pdp & PAGE_PRESENT)) {
-        pdp = (page_item*)kmalloc(PAGE_4K_SIZE, NO_ALIGN);
+        pdp = (page_item*)kmalloc(PAGE_4K_SIZE, ALIGN_4096);
         memset(pdp, 0, 4096);
         pdptp[pdpti] = ((addr_t)pdp & ~KNL_BASE) | attr;
     }
@@ -105,7 +105,7 @@ stat_t smmap(addr_t pa, addr_t la, u32 attr, page_item* pml4p)
     //在pd中找到la指向的pt
     page_item* pt = (page_item*)pdp[la % PDPTE_SIZE / PDE_SIZE];
     if (!((unsigned long long)pt & PAGE_PRESENT)) {
-        pt = (page_item*)kmalloc(PAGE_4K_SIZE, NO_ALIGN);
+        pt = (page_item*)kmalloc(PAGE_4K_SIZE, ALIGN_4096);
         memset(pt, 0, 4096);
         pdp[la % PDPTE_SIZE / PDE_SIZE] = ((addr_t)pt & ~KNL_BASE) | attr;
     }
@@ -279,67 +279,6 @@ void page_err(unsigned long long* rbp)
     // __asm__ volatile("leave\n add $8,%rsp \n iretq");
 }
 
-size_t nr_kmallocs = 0;
-size_t sz_kmallocs = 0;
-#define MAGIC_FREEDKM_LEN 19
-char magic_freedkm[MAGIC_FREEDKM_LEN] = "THIS IS A FREED KM";
-void km_constructor8192(void* addr)
-{
-    memset(addr, 0, 8192);
-}
-void km_destructor8192(void* addr)
-{
-    memcpy(addr, magic_freedkm, MAGIC_FREEDKM_LEN);
-}
-void km_constructor4096(void* addr)
-{
-    memset(addr, 0, 4096);
-}
-void km_destructor4096(void* addr)
-{
-    memcpy(addr, magic_freedkm, MAGIC_FREEDKM_LEN);
-}
-void km_constructor2048(void* addr)
-{
-    memset(addr, 0, 2048);
-}
-void km_destructor2048(void* addr)
-{
-    memcpy(addr, magic_freedkm, MAGIC_FREEDKM_LEN);
-}
-void km_constructor1024(void* addr)
-{
-    memset(addr, 0, 1024);
-}
-void km_destructor1024(void* addr)
-{
-    memcpy(addr, magic_freedkm, MAGIC_FREEDKM_LEN);
-}
-void km_constructor512(void* addr)
-{
-    memset(addr, 0, 512);
-}
-void km_destructor512(void* addr)
-{
-    memcpy(addr, magic_freedkm, MAGIC_FREEDKM_LEN);
-}
-void km_constructor64(void* addr)
-{
-    memset(addr, 0, 64);
-}
-void km_destructor64(void* addr)
-{
-    memcpy(addr, magic_freedkm, MAGIC_FREEDKM_LEN);
-}
-void km_constructor32(void* addr)
-{
-    memset(addr, 0, 32);
-}
-void km_destructor32(void* addr)
-{
-    memcpy(addr, magic_freedkm, MAGIC_FREEDKM_LEN);
-}
-
 slab_cache_t *km8192, *km4096, *km2048, *km1024, *km512, *km128, *km64, *km32;
 
 void init_memory()
@@ -354,8 +293,6 @@ void init_memory()
     }
     usr_mem_pa = PAGE_4K_ALIGN(mem_size / 2);
 
-    nr_kmallocs = 0;
-    sz_kmallocs = 0;
     //计算出所需内存页数量
     /*
      * 注：物理内存的一半会分给内核。
@@ -385,7 +322,7 @@ void init_memory()
     init_slab_caches(space_for_slab);
 
     km8192 = create_slab_cache(8192, 0);
-    km4096 = create_slab_cache(4096, 4096);
+    km4096 = create_slab_cache(4096, ALIGN_4096);
     km2048 = create_slab_cache(2048, 0);
     km512  = create_slab_cache(512, 0);
     km64   = create_slab_cache(64, 0);
@@ -531,66 +468,6 @@ malloc_hdr* mhdr_merge(malloc_hdr* prev, malloc_hdr* next)
         // comprintf("merged mhdr: base %l new size%l\n", prev->base, prev->len);
     }
     return prev;
-}
-void* _kmalloc(off_t addr, size_t size)
-{
-    addr = PAGE_4K_ALIGN(addr);
-    size = PAGE_4K_ALIGN(size);
-    for (malloc_hdr* mh = kmalloc_mhdr; mh; mh = mh->next) {
-
-        if (mh->type != MEM_TYPE_AVAILABLE || mh->len < size)
-            continue;
-        //以下为符合要求
-        //分割空闲内存
-        malloc_hdr* nmh = mhdr_split(mh, mh->base + size, kmhdrs, MAX_KMHDRS);
-        // malloc_hdr* top=mhdr_split(nmh,addr+size,kmhdrs,MAX_KMHDRS);
-        mh->type = MEM_TYPE_USED;
-        mh->flag |= MEM_FLAG_W | MEM_FLAG_X | MEM_FLAG_R;
-
-        off_t ret_base = mh->base;
-        //向前合并属性相同的分配头
-        mhdr_merge(mh->prev, mh);
-        if (ret_base >= KNL_BASE + 0x40300000) {
-            // full
-            comprintf("caught err: kmalloc full\n");
-            comprintf("kmallocs count:%d\nused kmalloc size:0x%x\n", nr_kmallocs, sz_kmallocs);
-            while (1) {
-                __asm__ volatile("hlt");
-            }
-        }
-        nr_kmallocs++;
-        sz_kmallocs += size;
-        // memset(ret_base, 0, size);
-        return ret_base;
-    }
-    // kmalloc绝不应该出问题
-    comprintf("FATAL ERR:kmalloc failed!\n");
-    die();
-    return NULL;
-}
-int _kfree(off_t addr)
-{
-    for (malloc_hdr* mh = kmalloc_mhdr; mh; mh = mh->next) {
-        if (mh->base != addr)
-            continue;
-        mh->type = MEM_TYPE_AVAILABLE;
-        mh->flag = 0;
-        //合并空闲项
-        mhdr_merge(mh->prev, mh);
-        // malloc_hdr* mp;
-        // for(mp=mh;mp->prev&&mh->type==MEM_TYPE_AVAILABLE;mp=mp->prev);
-        // while (mp->next&&mp->next==MEM_TYPE_AVAILABLE)
-        // {
-        //     mp->len+=mp->next->len;
-        //     //drop the next
-        //     mp->next->type=-1;
-        //     mp->next->prev=mp;
-        //     mp->next=mp->next->next;
-        // }
-        sz_kmallocs -= mh->len;
-        return 1;
-    }
-    return 0;
 }
 void* pmalloc(size_t size)
 {

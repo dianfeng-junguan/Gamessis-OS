@@ -190,7 +190,7 @@ int init_proc0()
     pz->fg_pgid         = pz->pid;
     pz->in_bgpg         = 0;
     pz->stat            = TASK_READY;
-    pz->regs.float_regs = kmalloc(512, NO_ALIGN);
+    pz->regs.float_regs = kmalloc(512, ALIGN_4096);
 
     //设置tcb
     smmap(pmalloc(PAGE_4K_SIZE), STACK_TOP, PAGE_PRESENT | PAGE_RWX | PAGE_FOR_ALL, PML4_ADDR);
@@ -1049,7 +1049,7 @@ int sys_fork(void)
     //中断使用的栈空间
     // ist一页就够
     //系统中断ist
-    addr_t new_stkpg = kmalloc(PAGE_4K_SIZE, NO_ALIGN);
+    addr_t new_stkpg = kmalloc(PAGE_4K_SIZE, ALIGN_4096);
     memcpy(new_stkpg,
            current->tss.ists[1] - PAGE_4K_SIZE,
            PAGE_4K_SIZE);   //把当前进程的栈空间复制到新栈里面
@@ -1064,7 +1064,7 @@ int sys_fork(void)
     //此时处于syscall调用中，原来的用户栈已经保存在当前ctx_dup中
     task[pid].regs.rsp = ctx_dup;
     //其他中断ist
-    new_stkpg = kmalloc(PAGE_4K_SIZE, NO_ALIGN);
+    new_stkpg = kmalloc(PAGE_4K_SIZE, ALIGN_4096);
     memcpy(new_stkpg,
            current->tss.ists[0] - PAGE_4K_SIZE,
            PAGE_4K_SIZE);   //把当前进程的栈空间复制到新栈里面
@@ -1076,7 +1076,7 @@ int sys_fork(void)
     task[pid].tss.ists[6] = new_stkpg + PAGE_4K_SIZE;
 
     //分配浮点寄存器上下文
-    task[pid].regs.float_regs = kmalloc(512, NO_ALIGN);
+    task[pid].regs.float_regs = kmalloc(512, ALIGN_4096);
     //堆
     addr_t hp = task[pid].mem_struct.heap_top - PAGE_4K_SIZE;
     for (; hp >= task[pid].mem_struct.heap_base; hp -= PAGE_4K_SIZE) {
@@ -1090,7 +1090,8 @@ int sys_fork(void)
     smmap(0, tmpla, 0, current->pml4);   //解除映射
     //复制映射数据结构
     mmap_struct* mp = current->mmaps;
-    for (; mp; mp = mp->node.next) {
+    task[pid].mmaps = NULL;   //清空新进程的映射数据结构
+    for (; mp; mp = list_next(mp, &mp->node)) {
         mmap_struct* new_mp = kmalloc(sizeof(mmap_struct), NO_ALIGN);
         memcpy(new_mp, mp, sizeof(mmap_struct));
         list_init(&new_mp->node);
@@ -1193,7 +1194,7 @@ void release_mmap(struct process* p)
 //拷贝页表。页表指向的物理地址没有改变，需要后面自己更改。
 void copy_mmap(struct process* from, struct process* to)
 {
-    page_item* pml4p = kmalloc(PAGE_4K_SIZE, NO_ALIGN);
+    page_item* pml4p = kmalloc(PAGE_4K_SIZE, ALIGN_4096);
     memcpy(pml4p, (unsigned char*)from->pml4, PAGE_4K_SIZE);   //复制pml4
     to->regs.cr3 = (unsigned long)pml4p & ~KNL_BASE;
     to->pml4     = pml4p;
@@ -1204,7 +1205,7 @@ void copy_mmap(struct process* from, struct process* to)
         if ((pml4e[i] & PAGE_PRESENT) == 0)
             continue;
         addr_t old_data = pml4e[i];   //旧的数据，里面保存了属性和要拷贝的数据的地址
-        addr_t m4       = kmalloc(PAGE_4K_SIZE, NO_ALIGN);
+        addr_t m4       = kmalloc(PAGE_4K_SIZE, ALIGN_4096);
         pml4e[i]        = (m4 & ~KNL_BASE) | (old_data & ~PAGE_4K_MASK);
         memcpy((unsigned char*)m4,
                old_data & PAGE_4K_MASK | KNL_BASE,
@@ -1214,7 +1215,7 @@ void copy_mmap(struct process* from, struct process* to)
             if ((pdpte[j] & PAGE_PRESENT) == 0 || (pdpte[j] & PDPTE_1GB) != 0)
                 continue;
             addr_t old_data2 = pdpte[j];   //旧的数据，里面保存了属性和要拷贝的数据的地址
-            addr_t m3 = kmalloc(PAGE_4K_SIZE, NO_ALIGN);
+            addr_t m3 = kmalloc(PAGE_4K_SIZE, ALIGN_4096);
             pdpte[j]  = (m3 & ~KNL_BASE) | (old_data2 & ~PAGE_4K_MASK);
             memcpy((unsigned char*)m3,
                    old_data2 & PAGE_4K_MASK | KNL_BASE,
@@ -1224,7 +1225,7 @@ void copy_mmap(struct process* from, struct process* to)
                 if ((pde[k] & PAGE_PRESENT) == 0 || (pde[k] & PDE_2MB) != 0)
                     continue;
                 addr_t old_data3 = pde[k];   //旧的数据，里面保存了属性和要拷贝的数据的地址
-                addr_t m2 = kmalloc(PAGE_4K_SIZE, NO_ALIGN);
+                addr_t m2 = kmalloc(PAGE_4K_SIZE, ALIGN_4096);
                 pde[k]    = (m2 & ~KNL_BASE) | (old_data3 & ~PAGE_4K_MASK);
                 memcpy((unsigned char*)m2,
                        old_data3 & PAGE_4K_MASK | KNL_BASE,

@@ -94,12 +94,15 @@ long read_tty(int dev, char* buf, unsigned long count, long* position)
         if (b->rptr == b->size)
             b->rptr = 0;
         if (b->rptr == b->wptr) {
-            break;   //缓冲区为空，为了不过长逗留在系统调用内先跳出
+            sti();
+            continue;
         }
+        cli();
         buf[i++] = b->data[b->rptr];
         b->rptr++;
         *position++;
     }
+    cli();
     return i;
 }
 long write_tty(int dev, char* buf, unsigned long count, long* position)

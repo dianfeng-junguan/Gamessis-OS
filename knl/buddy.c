@@ -57,9 +57,9 @@ Block* find_suitable_free(size_t size, int alignment)
     Block* current = allocator->free_list;
     while (current != NULL) {
         // 确保数据区地址对齐且大小满足申请大小
-        int data_offset    = sizeof(Block);
-        int aligned_offset = align_up(data_offset, alignment);
-        int usable_size    = current->size - aligned_offset;
+        size_t data_offset    = sizeof(Block);
+        size_t aligned_offset = align_up(data_offset, alignment);
+        size_t usable_size = (current->size >= aligned_offset) ? current->size - aligned_offset : 0;
         if (usable_size >= size && !current->allocated) {
             return current;
         }

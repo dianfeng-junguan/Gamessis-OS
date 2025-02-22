@@ -202,6 +202,10 @@ unsigned long sys_close(int fd)
         return -EBADF;
 
     filp = current->openf[fd];
+    if (!filp || filp < KNL_BASE) {
+        current->openf[fd] = NULL;
+        return -EBADF;
+    }
     if (filp->f_ops && filp->f_ops->close)
         filp->f_ops->close(filp->dentry->dir_inode, filp);
     filp->dentry->link--;

@@ -339,8 +339,8 @@ void                         init_rootfs()
     // root_sb->dev=drv_ramdisk<<8;
     // root_sb->p_dev=&bd_ramdisk;
     // TODO 以后要直接拿设备号，这个设备号通过devman创建设备文件（节点）分配。
-    extern int drv_hd;
-    ROOT_DEV = 3;   // ramdisk的设备号
+    extern int dev_ramdisk;
+    ROOT_DEV = dev_ramdisk;   // ramdisk的设备号
 
     for (int i = 0; i < 48; i++) {
         history_dentry[i] = 0;

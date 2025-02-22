@@ -77,7 +77,7 @@ struct file             ftty;
 struct file_system_type fs_devfs = {
     .name = "devfs", .next = 0, .read_superblock = devfs_read_superblock};
 
-
+int dev_ramdisk = 0;
 int reg_default_devices()
 {
 
@@ -91,7 +91,8 @@ int reg_default_devices()
     //初始化一下
 
     // ramdisk- ramdisk.c
-    reg_device("ram", S_IFBLK, drv_ramdisk, drv_ramdisk);
+    dev_ramdisk = reg_device("ram", S_IFBLK, drv_ramdisk, drv_ramdisk);
+    ROOT_DEV    = dev_ramdisk;
     return 0;
 }
 /**
@@ -115,6 +116,7 @@ int init_devman()
 {
 
     dev_list = kmalloc(MAX_DEVICES * sizeof(device_t), NO_ALIGN);
+    memset(dev_list, 0, MAX_DEVICES * sizeof(device_t));
     return 0;
 }
 int init_devfs()
