@@ -315,7 +315,7 @@ void switch_proc_tss(int pnr)
 {
     int sel  = _TSS_IND(pnr) * 8;
     cur_proc = pnr;
-    switch_proc_asm(sel);
+    // switch_proc_asm(sel);
 }
 void switch_proc(int pnr)
 {

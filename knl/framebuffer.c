@@ -13,8 +13,8 @@
 struct multiboot_tag_framebuffer framebuffer;
 
 //内核内嵌字体
-extern char _binary_res_font_psf_start[];
-extern char _binary_res_font_psf_end[];
+extern char __attribute__((weak)) _binary_res_font_psf_start[];
+extern char __attribute__((weak)) _binary_res_font_psf_end[];
 
 /* char output info */
 

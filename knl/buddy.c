@@ -26,11 +26,28 @@ BuddyAllocator* buddy_allocator_init(void* space, size_t total_size)
         return NULL;
     }
 
-    allocator->free_list            = (Block*)allocator->memory;
-    allocator->free_list->size      = total_size;
-    allocator->free_list->allocated = 0;
-    allocator->free_list->next      = NULL;
+    // allocator->free_list            = (Block*)allocator->memory;
+    // allocator->free_list->size      = total_size;
+    // allocator->free_list->allocated = 0;
+    // allocator->free_list->next      = NULL;
 
+    allocator->free_list  = NULL;
+    size_t max_block_size = prev_pow2(total_size - BLOCK_SIZE);
+    size_t rest           = total_size - BLOCK_SIZE;
+    Block* block          = (Block*)allocator->memory;
+    //从大到小插入块，使得尽量塞满
+    for (size_t i = max_block_size; i >= MIN_BLOCK_SIZE; i >>= 1) {
+        if (rest < i) {
+            continue;
+        }
+        block->size          = i;
+        block->allocated     = 0;
+        block->next          = allocator->free_list;
+        allocator->free_list = block;
+        rest -= i;
+        log("Block at %p size 0x%x\n", block, i);
+        block = (Block*)((char*)block + i);
+    }
     return allocator;
 }
 
@@ -139,5 +156,5 @@ size_t prev_pow2(size_t n)
     while (n > i) {
         i <<= 1;
     }
-    return i;
+    return i >> 1;
 }

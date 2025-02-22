@@ -110,7 +110,8 @@ typedef struct
 } __attribute__((packed)) ksym;
 binload_addr_t get_kernel_symbol(char* name)
 {
-    extern char        _binary_bin_kallsyms_bin_start[], _binary_bin_kallsyms_bin_end[];
+    extern char __attribute__((weak)) _binary_bin_kallsyms_bin_start[],
+        __attribute__((weak)) _binary_bin_kallsyms_bin_end[];
     ksym *             sym = _binary_bin_kallsyms_bin_start, *bef = sym;
     unsigned long long func_belonged = sym->addr;   //所属函数
     while (sym < _binary_bin_kallsyms_bin_end && strncmpk(sym + 1, name, sym->namelen) != 0) {

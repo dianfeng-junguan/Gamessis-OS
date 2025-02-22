@@ -60,7 +60,7 @@ discard_context:
 ;    iret
 ;.done:
 ;    ret
-%include "knl/gdtdefine.inc"
+%include "gdtdefine.inc"
 desc:
     GDTdescriptor 0,0,0
 global ret_sys_call

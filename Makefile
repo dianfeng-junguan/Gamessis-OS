@@ -130,5 +130,8 @@ grub:
 clean:
 	@rm bin/*.o
 include knl/Makefile
-proto_knl: KNL_OFILES
-	$(LD) $^ -o $(BUILD)/gmsknl.elf
+# proto_knl: KNL_OFILES
+# 	$(LD) $^ -o $(BUILD)/gmsknl.elf
+protoknl_cmake:
+	make -C bin clean
+	make -C bin

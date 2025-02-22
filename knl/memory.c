@@ -369,7 +369,9 @@ void init_memory()
     //初始化vmalloc内存位图
     //计算位图需要多少个int
     // size_t vmec= (mem_size/2-0x1000000)/PAGE_4K_SIZE/32;//去掉内核代码16M
-    size_t vmms = (mem_size / 2 - 0x1000000) & ~0xfff;
+    void*  kmalloc_base = align_up(&_knl_end, PAGE_4K_SIZE);
+    size_t vmms         = KNL_BASE + 0x40000000ul -
+                  (size_t)kmalloc_base;   // 0x40000000;   //(mem_size / 2 - 0x1000000) & ~0xfff;
     comprintf("tot memsize:0x%l,available size 0x%l,kmalloc bitmap taking %l bytes\n",
               tot_mem_size,
               mem_size,
@@ -378,7 +380,7 @@ void init_memory()
     //初始化kmalloc
 
     extern BuddyAllocator* allocator;
-    buddy_allocator_init(VMALLOC_BASE, prev_pow2(vmms));
+    buddy_allocator_init(kmalloc_base, vmms);
     void* space_for_slab = buddy_alloc(sizeof(slab_cache_manager_t), NO_ALIGN);
     init_slab_caches(space_for_slab);
 
