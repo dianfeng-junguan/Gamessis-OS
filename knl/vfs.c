@@ -239,9 +239,10 @@ int mount_fs_on(struct dir_entry* d_to_mount, struct super_block* fs)
 {
     for (int i = 0; i < MAX_MOUNTPOINTS; i++) {
         if (!mp_mount_points[i].sb) {
-            mp_mount_points[i].sb           = fs;
-            mp_mount_points[i].dmount_point = d_to_mount;
-            d_to_mount->mount_point         = mp_mount_points + i;
+            mp_mount_points[i].sb               = fs;
+            mp_mount_points[i].dmount_point     = d_to_mount;
+            d_to_mount->mount_point             = mp_mount_points + i;
+            mp_mount_points[i].sb->root->parent = d_to_mount;
             return 1;
         }
     }
@@ -424,39 +425,59 @@ int remove(char* pathname)
     return 0;
 }
 
-int to_abs_path(char* path, char* output, size_t max_path_len)
+char* do_getcwd(char* buf, size_t size)
 {
-    char* cwdspace = KMALLOC(PAGE_4K_SIZE);
+    if (!size) {
+        return NULL;
+    }
+    char* cwdspace = KMALLOC(RECOMMENDED_MAXSTRLEN);
     char* cwd      = cwdspace + PAGE_4K_SIZE - 1;
-    int   retv     = 0;
     *cwd           = '\0';
-    if (path[0] != '/' && path[0] != '\\') {
-        for (struct dir_entry* p = current->cwd; p->parent && p->parent != p; p = p->parent) {
-            cwd--;
-            memcpy(cwd, "/", 1);
-            cwd -= strlenk(p->name);
-            memcpy(cwd, p->name, p->name_length);
-            if (cwd < cwdspace) {
-                retv = -EFAULT;
-                goto end;
-            }
+    for (struct dir_entry* p = current->cwd; p->parent && p->parent != p; p = p->parent) {
+        if (p->parent->mount_point) {
+            continue;
         }
-        cwd -= 1;
-        *cwd = '/';
+        *--cwd = '/';
+        cwd -= p->name_length;
+        memcpy(cwd, p->name, p->name_length);
+        if (cwd < cwdspace) {
+            kfree(cwdspace);
+            return NULL;
+        }
     }
-    else {
-        strncpyk(output, path, max_path_len);
-        goto end;
-    }
+    *--cwd = '/';
+
     if (strlenk(cwd) == 0) {
         //根目录
-        cwd--;
-        strcpyk(cwd, "/");
+        *--cwd = '/';
+    }
+    strncpyk(buf, cwd, size);
+    kfree(cwdspace);
+    return buf;
+}
+int to_abs_path(char* path, char* output, size_t max_path_len)
+{
+    if (!path) {
+        return -EINVAL;
+    }
+    if (*path == '/' || *path == '\\') {
+        strcpyk(output, path);
+        return 0;
+    }
+    int retv = 0;
+    *output  = 0;
+    //不是绝对路径
+    char* cwd = KMALLOC(PAGE_4K_SIZE);
+    if (!do_getcwd(cwd, PAGE_4K_SIZE)) {
+        retv = -ENOMEM;
+        kfree(cwd);
+        goto end;
     }
     strcpyk(output, cwd);
+    kfree(cwd);
     //开始分析path
     char* p          = path;
-    char* op         = output + strlenk(cwd);
+    char* op         = output + strlenk(output);
     int   slash_flag = 0;
     while (*p && op < output + max_path_len) {
         if (*p == '/' || *p == '\\') {
@@ -503,6 +524,5 @@ int to_abs_path(char* path, char* output, size_t max_path_len)
         retv = -ENAMETOOLONG;
     }
 end:
-    kfree(cwdspace);
     return retv;
 }

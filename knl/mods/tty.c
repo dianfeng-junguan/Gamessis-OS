@@ -89,15 +89,18 @@ long read_tty(int dev, char* buf, unsigned long count, long* position)
     }
     tty_openbufs* opbf = tty->stds;
     stdbuf_t*     b    = &opbf->stdin_buf;
-    int           i    = 0;
+    if (b < KNL_BASE) {
+        printfk("error read_tty: invalid stdin:%x\n", b);
+        return -1;
+    }
+    int i = 0;
+    sti();
     while (i < count) {
         if (b->rptr == b->size)
             b->rptr = 0;
         if (b->rptr == b->wptr) {
-            sti();
             continue;
         }
-        cli();
         buf[i++] = b->data[b->rptr];
         b->rptr++;
         *position++;
@@ -184,12 +187,6 @@ int tty_mod_init(int drvid)
 int      tty_mod_exit() {}
 drvret_t tty_mod_ioctl(int command, unsigned long long arg)
 {
-    /*
-    arg格式:
-    command: 0x01 - 扫描硬盘，并注册
-    arg: 设备号
-
-    */
     int rv = 1;
     switch (command) {
     case DRIVER_CMD_READ:
@@ -280,7 +277,10 @@ drvret_t tty_mod_ioctl(int command, unsigned long long arg)
     next_request(drv_tty);
     return rv;
 }
-
+// void __attribute__((interrupt)) _key_proc(void* arg, unsigned long long code)
+// {
+//     key_proc();
+// }
 //初始化主控制台。
 int init_console()
 {
@@ -292,8 +292,9 @@ int init_console()
         l_tty[i].text_buf_tail = 0;
         l_tty[i].dev           = -1;
     }
-
-    set_gate(0x21, (addr_t)key_proc, GDT_SEL_CODE, GATE_PRESENT | INT_GATE);
+    extern void _key_proc();
+    // set_gate(0x21, (addr_t)key_proc, GDT_SEL_CODE, GATE_PRESENT | INT_GATE);
+    register_int(0x21, _key_proc, key_proc, GATE_PRESENT | INT_GATE);
     if ((drv_tty = register_driver(tty_mod_init, tty_mod_exit, tty_mod_ioctl)) < 0) {
         return -1;
     }
@@ -398,7 +399,6 @@ int get_key(int bit, unsigned int kmap)
 }
 int key_proc()
 {
-    cli();
     // comprintf("key proc\n");
     //获取完整的扫描码
     unsigned char scan1 = 0, scan2 = 0, ch = 0;
@@ -448,8 +448,6 @@ int key_proc()
             flush_textbuf(tty);
         }
     }
-    eoi();
-    __asm__ volatile("leave\r\n iretq");
 }
 
 void flush_textbuf(tty_t* tty)

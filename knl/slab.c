@@ -24,17 +24,13 @@ slab_t* create_slab(slab_cache_t* cache)
     slab->in_use      = 0;
 
     // 初始化空闲链表
-    slab_object_t* prev = NULL;
     slab_object_t* curr = slab->free_list;
-    for (int i = 0; i < num_objects; i++) {
+    for (int i = 0; i < num_objects - 1; i++) {
         curr->next = (slab_object_t*)((char*)curr + align_up(cache->object_size, 1 << align_order));
-        prev       = curr;
         curr       = curr->next;
     }
-    if (prev) {
-        prev->next = NULL;
-    }
-
+    curr->next = NULL;
+    cache->num_slabs++;
     return slab;
 }
 int destroy_slab(slab_t* slab)
@@ -137,6 +133,12 @@ void* kmalloc(size_t size, int align_order)
         best_cache->slabs = slab;
     }
 
+    if (!slab->free_list && slab->in_use < slab->num_objects) {
+        printfk("FATAL:kmalloc slab->free_list is null before slab->in_use reaches "
+                "slab->num_objects\nThis indicates some mem overwriting has happened.\n");
+        printfk("This error might be caused by a overbound memsetting an area with 0.\n");
+        die();
+    }
     // 从空闲链表中取出一个对象
     slab_object_t* obj = slab->free_list;
     if (obj != NULL) {

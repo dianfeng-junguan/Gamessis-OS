@@ -147,7 +147,11 @@ int init_devfs()
 //
 long open_dev(struct index_node* inode, struct file* filp)
 {
-    filp->f_ops               = inode->f_ops;
+    filp->f_ops = inode->f_ops;
+    if (inode->attribute == FS_ATTR_DIR) {
+        //文件夹到此为止
+        return 1;
+    }
     drvioctlarg_open ioctlarg = {
         .dev = inode->dev,
     };
@@ -164,6 +168,10 @@ long close_dev(struct index_node* inode, struct file* filp)
     }
     else if (dev_list[dev].stat != DEV_STAT_AVAILABLE) {
         return -EBUSY;
+    }
+    if (inode->attribute == FS_ATTR_DIR) {
+        //文件夹到此为止
+        return 1;
     }
     dev_list[dev].link--;
     drvioctlarg_close ioctlarg = {
@@ -324,11 +332,13 @@ void devfs_put_superblock(struct super_block* sb) {}
 void devfs_write_inode(struct index_node* inode) {}
 
 struct file_operations devfs_fops = {
-    .open  = open_dev,
-    .close = close_dev,
-    .ioctl = ioctl_dev,
-    .read  = read_dev,
-    .write = write_dev,
+    .open    = open_dev,
+    .close   = close_dev,
+    .ioctl   = ioctl_dev,
+    .read    = read_dev,
+    .write   = write_dev,
+    .readdir = readdir_dev,
+    .lseek   = lseek_dev,
 };
 
 struct dir_entry_operations devfs_dops = {
@@ -417,152 +427,33 @@ struct super_block* devfs_read_superblock(volume* PDTE, void* buf)
 
     return sb;
 }
-/*
-int reg_driver(driver *drv)
+long readdir_dev(struct file* filp, void* dirent, filldir_t filler)
 {
-    for(int i=0;i<MAX_DRIVERS;i++)
-    {
-        if(drvs[i].flag==DRV_FLAG_EMPTY)
-        {
-            drvs[i]=*drv;
-            drvs[i].flag=DRV_FLAG_USED;
-            return i;
+    struct List*      lp = filp->dentry->subdirs_list.next;
+    struct dir_entry* d  = ((char*)lp - ((char*)&filp->dentry->child_node - (char*)filp->dentry));
+    int               dentryi = filp->position / sizeof(struct dir_entry);
+    for (int i = 0; d && i < dentryi; i++) {
+        d = list_next(d, &d->child_node);
+        if (!d) {
+            return -1;
         }
     }
-    return -1;
+    filp->position += sizeof(struct dir_entry);
+    return filler(dirent, d->name, d->name_length, 0, 0);
 }
-
-int sys_find_dev(char *name)
+long lseek_dev(struct file* filp, long offset, int whence)
 {
-    for(int i=0;i<MAX_DEVICES;i++)
-    {
-        if(devs[i].flag!=DEV_FLAG_EMPTY&&strcmpk(name,devs[i].name)==0)
-            return i;
+    comprintf("lseek not yet supported for devices.\n");
+    return -EINVAL;
+    if (whence == SEEK_SET) {
+        filp->position = 0;
     }
-    return -1;
-}
-
-int sys_operate_dev(char *name,int func,driver_args* args)
-{
-    int i=0;
-    for(;i<MAX_DEVICES;i++)
-    {
-        if(devs[i].flag!=DEV_FLAG_EMPTY&&strcmpk(name,devs[i].name)==0)
-            break;
+    else if (whence == SEEK_CUR) {
+        ;
     }
-    if(i==MAX_DEVICES)return -1;
-    switch (func) {
-        case DRVF_OPEN :return devs[i].drv->open(args);
-        case DRVF_CLOSE:return devs[i].drv->close(args);
-        case DRVF_READ :return devs[i].drv->read(args);
-        case DRVF_WRITE:return devs[i].drv->write(args);
-        case DRVF_CHK  :return devs[i].drv->check(args);
-        case DRVF_RSVD :return devs[i].drv->reserved(args);
-        case DRVF_INT  :return devs[i].drv->inthandler(args);
-        case DRVF_FIND :return devs[i].drv->find(args);
-        case DRVF_RM   :return devs[i].drv->rm(args);
-        case DRVF_TOUCH:return devs[i].drv->touch(args);
-        case DRVF_MKDIR:return devs[i].drv->mkdir(args);
-        case DRVF_LS:return    devs[i].drv->ls(args);
+    else if (whence == SEEK_END) {
+        // comprintf("SEEK_END not supported for devices.\n");
+        return -EINVAL;
     }
-    return -1;
+    return filp->position;
 }
-int call_drv_func(int drv_n,int func_n,driver_args *args)
-{
-    if(drvs[drv_n].flag==DRV_FLAG_EMPTY)return -1;
-    /*driverfunc f=drvs[drv_n].func_thunk[func_n];
-    return f(args);
-    switch (func_n) {
-        case DRVF_OPEN :return drvs[drv_n].open(args);
-        case DRVF_CLOSE:return drvs[drv_n].close(args);
-        case DRVF_READ :return drvs[drv_n].read(args);
-        case DRVF_WRITE:return drvs[drv_n].write(args);
-        case DRVF_CHK  :return drvs[drv_n].check(args);
-        case DRVF_RSVD :return drvs[drv_n].reserved(args);
-        case DRVF_INT  :return drvs[drv_n].inthandler(args);
-        case DRVF_FIND :return drvs[drv_n].find(args);
-        case DRVF_RM   :return drvs[drv_n].rm(args);
-        case DRVF_TOUCH:return drvs[drv_n].touch(args);
-        case DRVF_MKDIR:return drvs[drv_n].mkdir(args);
-        case DRVF_LS:return drvs[drv_n].ls(args);
-    }
-    return -1;
-}
-int dispose_device(int dev){
-    if(devs[dev].flag!=DEV_FLAG_USED)return -1;
-    device* p=&devs[dev];
-    //从链表删除
-    if(p->prev)p->prev->next=p->next;
-    p->flag=DEV_FLAG_EMPTY;
-    return 0;
-}
-int dispose_driver(driver *drv){
-
-}
-
-device *get_dev(int devi)
-{
-    return &devs[devi];
-}
-driver *get_drv(int drvi)
-{
-    return &drvs[drvi];
-}
-
-//发送一个操作设备的申请
-int make_request(driver_args* args)
-{
-    //在数组中寻找空项
-    int i=0;
-    for(;i<NR_REQS;i++)
-    {
-        if(reqs[i].stat==REQ_STAT_EMPTY)break;
-    }
-    if(i==NR_REQS)return -1;//满了
-    reqs[i]=*args;//放入数组
-    //插入具体设备的等待链表中
-    device* dev=&devs[args->dev];
-    if(!dev->waiting_reqs)//空的等待队列
-        dev->waiting_reqs=&reqs[i];
-    else{
-        driver_args* p=dev->waiting_reqs;
-        for(;p->next;p=p->next);
-        p->next=&reqs[i];
-        reqs[i].next=NULL;
-    }
-
-    return i;
-}
-//取出一个申请并且执行
-int do_req()
-{
-    //查看每个设备的请求情况
-    //块设备
-    for(int i=0;i<3;i++)
-    {
-        device* p=dev_tree[i];
-        for(;p;p=p->next)
-        {
-            //如果没有请求运行而且有请求要运行
-            if(!p->running_req&&p->waiting_reqs)
-            {
-                p->running_req=p->waiting_reqs;
-                p->waiting_reqs=p->waiting_reqs->next;//取出一个
-                // dev_funcs[p->operi](p->running_req);
-            }
-            //如果还在运行（DONE的状态不能直接覆盖，因为里面的运行结果可能还没被拿走）
-        }
-    }
-
-    return 0;
-}
-
-
-void wait_on_req(int reqi)
-{
-    while(reqs[reqi].stat!=REQ_STAT_DONE);
-}
-void clear_req(int reqi)
-{
-    reqs[reqi].stat=REQ_STAT_EMPTY;
-} */

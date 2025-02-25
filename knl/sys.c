@@ -505,11 +505,11 @@ unsigned long sys_chdir(char* filename)
 
     printfk("sys_chdir\n");
     pathlen = strlenk(filename);
-    path    = (char*)kmalloc(pathlen, NO_ALIGN);
+    path    = (char*)kmalloc(pathlen + 1, NO_ALIGN);
 
     if (path == NULL)
         return -ENOMEM;
-    memset(path, 0, PAGE_4K_SIZE);
+    memset(path, 0, pathlen + 1);
     if (pathlen <= 0) {
         kfree(path);
         return -EFAULT;
@@ -518,11 +518,11 @@ unsigned long sys_chdir(char* filename)
         kfree(path);
         return -ENAMETOOLONG;
     }
+    strcpyk(path, filename);
     if (to_abs_path(filename, path, RECOMMENDED_MAXSTRLEN) < 0) {
         kfree(path);
         return -ENAMETOOLONG;
     }
-    // strcpyk(path, filename);
 
     dentry = path_walk(path, 0);
     kfree(path);
@@ -701,4 +701,11 @@ int sys_rename(char* oldpath, char* newpath)
 
     return old_dentry->dir_inode->inode_ops->rename(
         old_dentry->dir_inode, old_dentry, new_dentry->dir_inode, new_dentry);
+}
+char* sys_getcwd(char* buf, size_t size)
+{
+    if (!size) {
+        return NULL;
+    }
+    return do_getcwd(buf, size);
 }

@@ -252,7 +252,8 @@ int kread(struct file* fp, unsigned long long offset, size_t len, char* buf);
     @param max_path_len 输出缓冲区长度
     @return 错误码，成功为0
 */
-int to_abs_path(char* path, char* output, size_t max_path_len);
+int   to_abs_path(char* path, char* output, size_t max_path_len);
+char* do_getcwd(char* buf, size_t size);
 
 extern struct dir_entry* droot;
 extern int               ROOT_DEV;

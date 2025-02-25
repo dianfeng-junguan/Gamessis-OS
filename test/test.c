@@ -37,7 +37,8 @@ int main(int argc, char** argv, char** environ)
         }
         else if (strcmp(cmd, "ls") == 0) {
             // ls
-            DIR*           dp = opendir(".");
+            getcwd(path, 128);
+            DIR*           dp = opendir(path);
             struct dirent* dirp;
             if (!dp) {
                 printf("error opening directory\n");
@@ -63,7 +64,7 @@ int main(int argc, char** argv, char** environ)
             //要考虑..和.的情况
             //..的时候，要路径缩短
             //.的时候，不用动
-            if (strcmp(path, "..") == 0) {
+            if (strcmp(tmppath, "..") == 0) {
                 char* p = tmppath + strlen(tmppath) - 1;
                 while (p > tmppath && *p == '/') {
                     *p-- = 0;
@@ -72,12 +73,12 @@ int main(int argc, char** argv, char** environ)
                     *p-- = 0;
                 }
             }
-            else if (strcmp(path, ".") == 0) {
+            else if (strcmp(tmppath, ".") == 0) {
                 continue;
             }
             else {
-                strcat(tmppath, path);
-                strcat(tmppath, "/");
+                strcat(path, tmppath);
+                strcat(path, "/");
             }
             printf("current directory:%s\n", tmppath);
         }

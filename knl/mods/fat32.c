@@ -1435,6 +1435,7 @@ struct super_block* fat32_read_superblock(volume* vol, void* buf)
     sbp->root->dir_ops     = &FAT32_dentry_ops;
     sbp->root->name        = (char*)kmalloc(2, NO_ALIGN);
     sbp->root->name[0]     = '/';
+    sbp->root->name[1]     = '\0';
     sbp->root->name_length = 1;
 
     ////index node

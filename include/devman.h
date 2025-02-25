@@ -63,6 +63,8 @@ long open_dev(struct index_node* inode, struct file* filp);
 long close_dev(struct index_node* inode, struct file* filp);
 long read_dev(struct file* filp, char* buf, unsigned long count, long* position);
 long write_dev(struct file* filp, char* buf, unsigned long count, long* position);
+long readdir_dev(struct file* filp, void* dirent, filldir_t filler);
+long lseek_dev(struct file* filp, long offset, int whence);
 /**
     @brief 面向用户(vfs层)的设备控制函数
 */

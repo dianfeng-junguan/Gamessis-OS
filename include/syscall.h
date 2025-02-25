@@ -41,6 +41,7 @@
 #define SYSCALL_RENAME 39
 #define SYSCALL_DRV_IOCTL 40
 #define SYSCALL_REBOOT 41
+#define SYSCALL_GETCWD 42
 #define SYSCALL_KB_READC 100
 
 
@@ -135,3 +136,4 @@ int sys_mknod(const char* path, mode_t mode, dev_t dev);
 int blank_syscall();
 
 unsigned long sys_chdir(char* filename);
+char*         sys_getcwd(char* buf, size_t size);

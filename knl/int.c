@@ -211,6 +211,7 @@ syscall_func_t syscall_table[MAX_SYSCALLS] = {
     [SYSCALL_REMOVE]         = (syscall_func_t)sys_remove,
     [SYSCALL_DRV_IOCTL]      = (syscall_func_t)drv_ioctl,
     [SYSCALL_REBOOT]         = (syscall_func_t)sys_reboot,
+    [SYSCALL_GETCWD]         = sys_getcwd,
 };
 int blank_syscall()
 {

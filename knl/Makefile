@@ -3,7 +3,7 @@ knlmodsrc=knl/mods
 loadersrc=loader
 modobj = kb.o disk.o fat32.o \
 				tty.o elfbin.o scanner.o
-modobjasm=diska.o
+modobjasm=diska.o ttya.o
 kernelobj = int.o main.o log.o \
 			memory.o devman.o proc.o \
 			gdt.o clock.o exe.o \

@@ -861,7 +861,7 @@ void* do_brk(off_t brk)
                  (n - old_n),
                  PROT_READ | PROT_WRITE,
                  MAP_ANNONYMOUS | MAP_PRIVATE | MAP_FIXED,
-                 0,
+                 -1,
                  0);
     }
     return brk;
