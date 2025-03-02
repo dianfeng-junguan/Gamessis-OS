@@ -22,7 +22,23 @@ struct psf2_header
     unsigned int height;          /* height in pixels */
     unsigned int width;           /* width in pixels */
 };
-
+#define COLOR_BLACK 0x000000
+#define COLOR_BLUE 0x0000FF
+#define COLOR_GREEN 0x00FF00
+#define COLOR_CYAN 0x00FFFF
+#define COLOR_RED 0xFF0000
+#define COLOR_MAGENTA 0xFF00FF
+#define COLOR_YELLOW 0xFFFF00
+#define COLOR_WHITE 0xFFFFFF
+#define COLOR_GREY 0x808080
+#define COLOR_LIGHTBLUE 0xADD8E6
+#define COLOR_LIGHTGREEN 0x90EE90
+#define COLOR_LIGHTCYAN 0xDA70D6
+#define COLOR_LIGHTRED 0xFFA07A
+#define COLOR_LIGHTMAGENTA 0xFFA07A
+#define COLOR_LIGHTYELLOW 0xFFFFE0
+#define COLOR_LIGHTWHITE 0xFFFFFF
+#define COLOR_DARKBLUE 0x00008B
 //映射页帧缓冲区
 void init_framebuffer();
 void set_framebuffer(struct multiboot_tag_framebuffer tag);
@@ -30,8 +46,10 @@ void set_framebuffer(struct multiboot_tag_framebuffer tag);
 //图形绘制
 void init_font();
 void fill_rect(int x, int y, int w, int h, unsigned int color);
-void draw_text(int x, int y, int size, char* str);
-void draw_letter(int x, int y, int size, char c);
+void draw_text(int x, int y, int size, char* str, unsigned int fgcolor, int flags);
+void draw_line(int x1, int y1, int x2, int y2, int width, unsigned int color);
+#define TEXT_BG_TRANSPARENT 1
+void draw_letter(int x, int y, int size, char c, unsigned int fgcolor, int flags);
 void print(char* s);
 void printl(char* s, int len);
 void framebuffer_set_curpos(int x, int y);

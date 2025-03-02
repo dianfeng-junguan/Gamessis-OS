@@ -292,9 +292,11 @@ int init_console()
         l_tty[i].text_buf_tail = 0;
         l_tty[i].dev           = -1;
     }
-    extern void _key_proc();
+    extern void _key_proc(), _mouse_proc();
     // set_gate(0x21, (addr_t)key_proc, GDT_SEL_CODE, GATE_PRESENT | INT_GATE);
     register_int(0x21, _key_proc, key_proc, GATE_PRESENT | INT_GATE);
+    register_int(0x2c, _mouse_proc, mouse_proc, GATE_PRESENT | INT_GATE);
+    ps2_init();
     if ((drv_tty = register_driver(tty_mod_init, tty_mod_exit, tty_mod_ioctl)) < 0) {
         return -1;
     }
@@ -402,8 +404,11 @@ int key_proc()
     // comprintf("key proc\n");
     //获取完整的扫描码
     unsigned char scan1 = 0, scan2 = 0, ch = 0;
-    tty_t*        tty = get_tty(current->openf[current->tty_fd]->dentry->dir_inode->dev);
-    scan1             = inb(0x60);
+    if (!current->openf[current->tty_fd]) {
+        return 0;
+    }
+    tty_t* tty = get_tty(current->openf[current->tty_fd]->dentry->dir_inode->dev);
+    scan1      = inb(0x60);
     ch =
         to_ascii(scan1, get_key(CTLK_CAPSLOCK, tty->ctl_kmap) | get_key(CTLK_SHIFT, tty->ctl_kmap));
     if (scan1 == 0xe0 || scan1 == 0xe1) {
@@ -447,6 +452,12 @@ int key_proc()
             write_textbuf(ch, tty);
             flush_textbuf(tty);
         }
+    }
+    if (scan1 & FLAG_BREAK) {
+        _on_key_up(ch);
+    }
+    else {
+        _on_key_down(ch);
     }
 }
 
@@ -505,4 +516,88 @@ int unreigster_tty(int dev)
         }
     }
     return -1;
+}
+int prev_mouse_button = -1;
+int mouse_btns[3]     = {0, 0, 0};
+int mouse_x           = 0;
+int mouse_y           = 0;
+int mouse_sens        = 60;
+int mouse_maxspeed    = 3;
+int clamp(int v, int min, int max)
+{
+    return v < min ? min : (v > max ? max : v);
+}
+void mouse_proc()
+{
+    char b = inb(0x60);
+    if ((b & 0x8) == 0) {
+        //不是开头
+        return;
+    }
+    unsigned char x = inb(0x60);
+    unsigned char y = inb(0x60);
+    for (int i = 0; i < 1; i++) {
+        int newstat = b & (1 << i) ? 1 : 0;
+        if (mouse_btns[i] != newstat) {
+            if (newstat) {
+                _on_mouse_down(x, y, i);
+            }
+            else {
+                _on_mouse_up(x, y, i);
+            }
+            mouse_btns[i] = newstat;
+        }
+    }
+    if (x || y) {
+        //鼠标移动
+        int xsign = (b & (1 << 4) ? -1 : 1);
+        int ysign = (b & (1 << 5) ? -1 : 1);
+        int dx    = xsign * (int)x * mouse_sens / 100;
+        int dy    = ysign * (int)y * mouse_sens / 100;
+        dx        = clamp(dx, -mouse_maxspeed, mouse_maxspeed);
+        dy        = clamp(dy, -mouse_maxspeed, mouse_maxspeed);
+        mouse_x += dx;
+        mouse_y -= dy;
+        mouse_x = clamp(mouse_x, 0, 1023);
+        mouse_y = clamp(mouse_y, 0, 767);
+        _on_mouse_move(mouse_x, mouse_y);
+    }
+}
+// 初始化 PS/2 控制器
+void ps2_init()
+{
+    // 等待输入缓冲区为空
+    while (inb(PS2_COMMAND) & 0x02)
+        ;
+
+    // 发送命令，启用鼠标
+    outb(PS2_COMMAND, 0xA8);
+
+    // 等待输入缓冲区为空
+    while (inb(PS2_COMMAND) & 0x02)
+        ;
+
+    // 读取控制器状态
+    outb(PS2_COMMAND, 0x20);
+    char status = inb(PS2_DATA);
+
+    // 设置状态寄存器，启用鼠标和键盘中断
+    status |= 0x02;
+    status |= 0x01;
+
+    // 等待输入缓冲区为空
+    while (inb(PS2_COMMAND) & 0x02)
+        ;
+
+    // 写入新的状态寄存器值
+    outb(PS2_COMMAND, 0x60);
+    outb(PS2_DATA, status);
+
+    // 等待输入缓冲区为空
+    while (inb(PS2_COMMAND) & 0x02)
+        ;
+
+    // 向鼠标发送激活命令
+    outb(PS2_COMMAND, 0xD4);
+    outb(PS2_DATA, 0xF4);
 }

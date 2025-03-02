@@ -10,7 +10,7 @@ kernelobj = int.o main.o log.o \
 			framebuffer.o vfs.o sys.o ramfs.o ramdisk.o \
 			signal.o driverman.o \
 			binload.o drvload.o com.o volume.o float.o slab.o \
-			buddy.o
+			buddy.o wndman.o
 loaderobj=reloc.o
 loaderobjasm64= setup64.o
 kernelobjasm=inta.o gdta.o clocka.o syscalla.o int_handlera.o floata.o callinga.o

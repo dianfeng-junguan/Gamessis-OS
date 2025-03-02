@@ -7,6 +7,25 @@
 #define TTY_WRKEYBUF 14
 
 #define FLAG_BREAK 0x80
+#define PIC1_COMMAND 0x20
+#define PIC1_DATA 0x21
+#define PIC2_COMMAND 0xA0
+#define PIC2_DATA 0xA1
+
+#define PS2_COMMAND 0x64
+#define PS2_DATA 0x60
+
+#define ICW1_ICW4 0x01        // ICW4 (not) needed
+#define ICW1_SINGLE 0x02      // Single (cascade) mode
+#define ICW1_INTERVAL4 0x04   // Call address interval 4 (8)
+#define ICW1_LEVEL 0x08       // Level triggered (edge) mode
+#define ICW1_INIT 0x10        // Initialization - required!
+
+#define ICW4_8086 0x01         // 8086/88 (MCS-80/85) mode
+#define ICW4_AUTO 0x02         // Auto (normal) EOI
+#define ICW4_BUF_SLAVE 0x08    // Buffered mode/slave
+#define ICW4_BUF_MASTER 0x0C   // Buffered mode/master
+#define ICW4_SFNM 0x10         // Special fully nested (not)
 #include "vfs.h"
 //
 typedef struct
@@ -59,8 +78,10 @@ void switch_key(int bit, unsigned int* p_kmap);
 //获取特殊按键状态
 int get_key(int bit, unsigned int kmap);
 
+void ps2_init();
 void flush_textbuf(tty_t* tty);
 int  key_proc();
+void mouse_proc();
 /**
     @brief 注册一个tty数据结构，要求tty中预先填好dev（关联的tty设备）, chars width 和chars height。
     @param tty 指向一个tty数据结构的指针。

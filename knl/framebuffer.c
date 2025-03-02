@@ -100,10 +100,22 @@ void set_framebuffer(struct multiboot_tag_framebuffer tag)
 
 void fill_rect(int x, int y, int w, int h, unsigned int color)
 {
+    int t = x;
+    x     = y;
+    y     = t;
+    x     = x > 0 ? x : 0;
+    y     = y > 0 ? y : 0;
+    w     = w < framebuffer.common.framebuffer_width ? w : framebuffer.common.framebuffer_width;
+    h     = h < framebuffer.common.framebuffer_height ? h : framebuffer.common.framebuffer_height;
+    int maxy = h + x < framebuffer.common.framebuffer_height
+                   ? h + x
+                   : framebuffer.common.framebuffer_height;
+    int maxx =
+        w + y < framebuffer.common.framebuffer_width ? w + y : framebuffer.common.framebuffer_width;
     unsigned int* fb = (unsigned int*)FRAMEBUFFER_ADDR;
     //目前只写32bpp
-    for (int py = x; py < h + x; py++) {
-        for (int px = y; px < w + y; px++) {
+    for (int py = x; py < maxy; py++) {
+        for (int px = y; px < maxx; px++) {
             addr_t ptr = FRAMEBUFFER_ADDR + py * framebuffer.common.framebuffer_pitch +
                          px * framebuffer.common.framebuffer_bpp / 8;
             fb  = (unsigned int*)ptr;
@@ -111,8 +123,34 @@ void fill_rect(int x, int y, int w, int h, unsigned int color)
         }
     }
 }
+void draw_line(int x1, int y1, int x2, int y2, int width, unsigned int color)
+{
+    if (x1 > x2) {
+        int t = x1;
+        x1    = x2;
+        x2    = t;
+    }
+    if (y1 > y2) {
+        int t = y1;
+        y1    = y2;
+        y2    = t;
+    }
+    if (x1 == x2) {
+        for (int py = y1; py < y2; py++) {
+            int px = x1 + (py - y1) * (x2 - x1) / (y2 - y1);
+            fill_rect(px, py, width, width, color);
+        }
+    }
+    else {
+        for (int py = x1; py < x2; py++) {
+            int px = y1 + (py - x1) * (y2 - y1) / (x2 - x1);
+            fill_rect(py, px, width, width, color);
+        }
+    }
+}
+
 unsigned char letters[];
-void          draw_text(int x, int y, int size, char* str)
+void          draw_text(int x, int y, int size, char* str, unsigned int fgcolor, int flags)
 {
     int tx = x;
     while (*str != '\0') {
@@ -121,7 +159,7 @@ void          draw_text(int x, int y, int size, char* str)
             tx = x;
         }
         else {
-            draw_letter(tx, y, size, *str);
+            draw_letter(tx, y, size, *str, fgcolor, flags);
             tx += size * font_width;
         }
         str++;
@@ -134,14 +172,20 @@ void erase()
     draw_letter(fb_cursor_x * font_width * font_size,
                 fb_cursor_y * font_height * font_size,
                 font_size,
-                ' ');
+                ' ',
+                COLOR_BLACK,
+                0);
 }
 
 //立即在屏幕上当前光标位置显示字符，但是不会修改文本缓冲区
 void display(char ch)
 {
-    draw_letter(
-        fb_cursor_x * font_width * font_size, fb_cursor_y * font_height * font_size, font_size, ch);
+    draw_letter(fb_cursor_x * font_width * font_size,
+                fb_cursor_y * font_height * font_size,
+                font_size,
+                ch,
+                COLOR_WHITE,
+                0);
 }
 void offset_cursor(int dx, int dy)
 {
@@ -162,7 +206,7 @@ void offset_cursor(int dx, int dy)
         fb_cursor_y = 0;
     }
 }
-void draw_letter(int x, volatile int y, int size, char c)
+void draw_letter(int x, volatile int y, int size, char c, unsigned int fgcolor, int flags)
 {
     u8* glyph = glyph_table;
     if (c < glyph_nr) {
@@ -178,9 +222,9 @@ void draw_letter(int x, volatile int y, int size, char c)
             int* ptr = FRAMEBUFFER_ADDR + py * framebuffer.common.framebuffer_pitch +
                        px * framebuffer.common.framebuffer_bpp / 8;
             if ((*(glyph + ch_x / 8) & mask) != 0) {
-                *ptr = -1;
+                *ptr = fgcolor;
             }
-            else {
+            else if (!(flags & TEXT_BG_TRANSPARENT)) {
                 *ptr = 0;
             }
 
@@ -205,7 +249,9 @@ void print_textbuffer()
                 draw_letter(fb_cursor_x * font_width * font_size,
                             fb_cursor_y * font_height * font_size,
                             font_size,
-                            ' ');
+                            ' ',
+                            COLOR_WHITE,
+                            0);
 
             fb_cursor_y += 1;
             fb_cursor_x = 0;
@@ -222,7 +268,9 @@ void print_textbuffer()
         draw_letter(fb_cursor_x * font_width * font_size,
                     fb_cursor_y * font_height * font_size,
                     font_size,
-                    text_buffer[i]);
+                    text_buffer[i],
+                    COLOR_WHITE,
+                    0);
         fb_cursor_x += 1;
         c++;
         if (c >= max_chs)
@@ -293,7 +341,9 @@ void print(char* s)
                 draw_letter(fb_cursor_x * font_width * font_size,
                             fb_cursor_y * font_height * font_size,
                             font_size,
-                            ' ');
+                            ' ',
+                            COLOR_WHITE,
+                            0);
 
             fb_cursor_y += 1;
             fb_cursor_x = 0;
@@ -313,7 +363,9 @@ void print(char* s)
         draw_letter(fb_cursor_x * font_width * font_size,
                     fb_cursor_y * font_height * font_size,
                     font_size,
-                    *s);
+                    *s,
+                    COLOR_WHITE,
+                    0);
         fb_cursor_x += 1;
     }
 }
@@ -338,8 +390,12 @@ void framebuffer_putchar(char c)
         fb_cursor_y = max_ch_nr_y - 1;
         //    scr_up();
     }
-    draw_letter(
-        fb_cursor_x * font_width * font_size, fb_cursor_y * font_height * font_size, font_size, c);
+    draw_letter(fb_cursor_x * font_width * font_size,
+                fb_cursor_y * font_height * font_size,
+                font_size,
+                c,
+                COLOR_WHITE,
+                0);
     fb_cursor_x += 1;
 }
 void printl(char* s, int len)
@@ -354,7 +410,9 @@ void printl(char* s, int len)
                 draw_letter(fb_cursor_x * font_width * font_size,
                             fb_cursor_y * font_height * font_size,
                             font_size,
-                            ' ');
+                            ' ',
+                            COLOR_WHITE,
+                            0);
 
             fb_cursor_y += 1;
             fb_cursor_x = 0;
@@ -374,7 +432,9 @@ void printl(char* s, int len)
         draw_letter(fb_cursor_x * font_width * font_size,
                     fb_cursor_y * font_height * font_size,
                     font_size,
-                    *s);
+                    *s,
+                    COLOR_WHITE,
+                    0);
         fb_cursor_x += 1;
     }
 }

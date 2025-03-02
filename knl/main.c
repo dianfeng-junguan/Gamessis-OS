@@ -24,6 +24,7 @@
 #include "drvload.h"
 #include "elfbin.h"
 #include "float.h"
+#include "wndman.h"
 
 int  manage_proc_lock = 1;
 void main(unsigned int magic, void* addr)
@@ -172,6 +173,11 @@ void main(unsigned int magic, void* addr)
     init_devfs();
     make_default_devfiles();
     further_init_proc0();
+
+    init_wndman();
+
+    windowptr_t wnd = create_window("gamessis os", WNDTYPE_WINDOW);
+    show_window(wnd);
 
     // init_ramfs();
 
