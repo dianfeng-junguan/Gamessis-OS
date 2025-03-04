@@ -527,10 +527,73 @@ int clamp(int v, int min, int max)
 {
     return v < min ? min : (v > max ? max : v);
 }
+int           mouse_int_phase = 0;
+unsigned char mouse_buf[3];
+
 void mouse_proc()
 {
-    char b = inb(0x60);
-    if ((b & 0x8) == 0) {
+    unsigned char b = inb(0x60);
+    if (mouse_int_phase == 0) {
+
+        if (b == 0xfa) {
+            mouse_int_phase = 1;
+        }
+    }
+    else if (mouse_int_phase == 1) {
+
+        if ((b & 0xc8) == 0x08) {
+
+            mouse_buf[0]    = b;
+            mouse_int_phase = 2;
+        }
+    }
+    else if (mouse_int_phase == 2) {
+
+        mouse_buf[1]    = b;
+        mouse_int_phase = 3;
+    }
+    else if (mouse_int_phase == 3) {
+
+        mouse_buf[2]               = b;
+        mouse_int_phase            = 1;
+        unsigned char mouse_button = mouse_buf[0] & 0x07;
+
+        int x = mouse_buf[1];
+        int y = mouse_buf[2];
+        if ((mouse_buf[0] & 0x10) != 0) {
+            x |= 0xffffff00;
+        }
+        if ((mouse_buf[0] & 0x20) != 0) {
+            y |= 0xffffff00;
+        }
+
+        for (int i = 0; i < 1; i++) {
+            int newstat = mouse_button & (1 << i) ? 1 : 0;
+            if (mouse_btns[i] != newstat) {
+                if (newstat) {
+                    _on_mouse_down(x, y, i);
+                }
+                else {
+                    _on_mouse_up(x, y, i);
+                }
+                mouse_btns[i] = newstat;
+            }
+        }
+
+        if (x || y) {
+            //鼠标移动
+            int dx = x * mouse_sens / 100;
+            int dy = y * mouse_sens / 100;
+            dx     = clamp(dx, -mouse_maxspeed, mouse_maxspeed);
+            dy     = clamp(dy, -mouse_maxspeed, mouse_maxspeed);
+            mouse_x += dx;
+            mouse_y -= dy;
+            mouse_x = clamp(mouse_x, 0, 1023);
+            mouse_y = clamp(mouse_y, 0, 767);
+            _on_mouse_move(mouse_x, mouse_y);
+        }
+    }
+    /* if ((b & 0x8) == 0) {
         //不是开头
         return;
     }
@@ -561,7 +624,7 @@ void mouse_proc()
         mouse_x = clamp(mouse_x, 0, 1023);
         mouse_y = clamp(mouse_y, 0, 767);
         _on_mouse_move(mouse_x, mouse_y);
-    }
+    } */
 }
 // 初始化 PS/2 控制器
 void ps2_init()

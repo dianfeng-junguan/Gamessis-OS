@@ -649,7 +649,7 @@ windowptr_t last_mouse_down_wndptr                    = NULL;
 int         last_mouse_down_button                    = -1;
 windowptr_t g_focused_wndptr                          = NULL;
 static int  last_key_code_down                        = -1;
-static int  mouse_down_flag                           = 0;
+static int  mouse_down_flags[3]                       = {0, 0, 0};
 void        _on_clock_int()
 {
     if (++mouse_click_timer >= g_setted_mouse_consecutive_click_max_time) {
@@ -663,11 +663,11 @@ void        _on_clock_int()
 }
 void _on_mouse_down(int x, int y, int button)
 {
-    mouse_down_x           = x;
-    mouse_down_y           = y;
-    mouse_down_button      = button;
-    mouse_down_flag        = 1;
-    last_mouse_down_button = button;
+    mouse_down_x             = x;
+    mouse_down_y             = y;
+    mouse_down_button        = button;
+    mouse_down_flags[button] = 1;
+    last_mouse_down_button   = button;
     windowptr_t wndptr = last_mouse_down_wndptr = get_window_by_pos(x, y, 0);
     g_focused_wndptr                            = wndptr;
     if (wndptr) {
@@ -693,8 +693,8 @@ void _on_mouse_down(int x, int y, int button)
 }
 void _on_mouse_up(int x, int y, int button)
 {
-    mouse_down_flag    = 0;
-    windowptr_t wndptr = get_window_by_pos(x, y, 0);
+    mouse_down_flags[button] = 0;
+    windowptr_t wndptr       = get_window_by_pos(x, y, 0);
     if (wndptr) {
         window_event_t event = {
             .event_type   = WND_EVENT_MOUSE_UP,
@@ -726,7 +726,7 @@ void _on_mouse_move(int x, int y)
             .y          = y,
         };
         send_window_event(wndptr, &event);
-        if (mouse_down_flag && wndptr->type == WNDTYPE_WINDOW) {
+        if (mouse_down_flags[0] && wndptr->type == WNDTYPE_WINDOW) {
             window_event_t window_move_event = {
                 .event_type = WND_EVENT_WINDOW_MOVE,
                 .sender     = wndptr,
