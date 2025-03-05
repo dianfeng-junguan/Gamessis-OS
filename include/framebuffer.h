@@ -22,6 +22,16 @@ struct psf2_header
     unsigned int height;          /* height in pixels */
     unsigned int width;           /* width in pixels */
 };
+typedef struct _bitmap_buffer
+{
+    char*                  buffer;
+    unsigned int           width;
+    unsigned int           height;
+    unsigned int           pitch;
+    unsigned int           bpp;
+    size_t                 size;
+    struct _bitmap_buffer* next;
+} bitmap_buffer;
 #define COLOR_BLACK 0x000000
 #define COLOR_BLUE 0x0000FF
 #define COLOR_GREEN 0x00FF00
@@ -61,6 +71,26 @@ long write_framebuffer(struct file* filp, char* buf, unsigned long count, long* 
 long ioctl_framebuffer(struct index_node* inode, struct file* filp, unsigned long cmd,
                        unsigned long arg);
 
+void         set_pixel(bitmap_buffer* buffer, int x, int y, unsigned int color);
+unsigned int get_pixel(bitmap_buffer* buffer, int x, int y);
+void         clear_framebuffer(bitmap_buffer* buffer, unsigned int color);
+/**
+ * @brief 复制位图缓冲区到显示屏
+ * @param buffer 位图缓冲区
+ * @param x 位图左上角横坐标
+ * @param y 位图左上角纵坐标
+ * @param w 位图宽度
+ * @param h 位图高度
+ * @param dx 显示屏左上角横坐标
+ * @param dy 显示屏左上角纵坐标
+ */
+void copy_to_display(bitmap_buffer* buffer, int x, int y, int w, int h, int dx, int dy);
+void update_display();
+
+bitmap_buffer* create_bitmap_buffer(int width, int height, int bpp, int pitch, int size);
+int  _create_display_bitmap_buffer(int* bufaddr, int width, int height, int bpp, int pitch,
+                                   int size);
+void free_bitmap_buffer(bitmap_buffer* buffer);
 
 void framebuffer_putchar(char c);
 void scr_up();

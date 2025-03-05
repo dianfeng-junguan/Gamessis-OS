@@ -176,8 +176,13 @@ void main(unsigned int magic, void* addr)
 
     init_wndman();
 
-    windowptr_t wnd = create_window("gamessis os", WNDTYPE_WINDOW);
+    windowptr_t wnd    = create_window("gamessis os", WNDTYPE_WINDOW);
+    windowptr_t button = create_window("button", WNDTYPE_BUTTON);
     show_window(wnd);
+    resize_window(button, 200, 100);
+    move_window(button, 100, 100);
+    attach_window(button, wnd);
+    show_window(button);
 
     // init_ramfs();
 

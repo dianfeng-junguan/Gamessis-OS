@@ -20,7 +20,8 @@ extern HDC     hMemDC;
 extern HBITMAP hBitmap;
 extern HWND    hWnd;
 #endif
-static int listener_id_gen = 0;
+static int listener_id_gen        = 0;
+int        need_to_update_display = 0;
 #define LISTENER_ID (listener_id_gen++)
 window_t*                g_windows;
 window_event_listener_t* g_event_listeners                        = NULL;
@@ -663,15 +664,16 @@ void        _on_clock_int()
 }
 void _on_mouse_down(int x, int y, int button)
 {
-    mouse_down_x             = x;
-    mouse_down_y             = y;
+    mouse_down_x             = last_mouse_move_x;   // x;
+    mouse_down_y             = last_mouse_move_y;   // y;
     mouse_down_button        = button;
     mouse_down_flags[button] = 1;
     last_mouse_down_button   = button;
-    windowptr_t wndptr = last_mouse_down_wndptr = get_window_by_pos(x, y, 0);
+    windowptr_t wndptr = last_mouse_down_wndptr = get_window_by_pos(mouse_down_x, mouse_down_y, 0);
     g_focused_wndptr                            = wndptr;
     if (wndptr) {
-        window_event_t event = {
+        need_to_update_display = 1;
+        window_event_t event   = {
             .event_type   = WND_EVENT_MOUSE_DOWN,
             .sender       = wndptr,
             .mouse_button = button,
@@ -694,9 +696,10 @@ void _on_mouse_down(int x, int y, int button)
 void _on_mouse_up(int x, int y, int button)
 {
     mouse_down_flags[button] = 0;
-    windowptr_t wndptr       = get_window_by_pos(x, y, 0);
+    windowptr_t wndptr       = get_window_by_pos(last_mouse_move_x, last_mouse_move_y, 0);
     if (wndptr) {
-        window_event_t event = {
+        need_to_update_display = 1;
+        window_event_t event   = {
             .event_type   = WND_EVENT_MOUSE_UP,
             .sender       = wndptr,
             .mouse_button = button,
@@ -738,9 +741,9 @@ void _on_mouse_move(int x, int y)
             send_window_event(wndptr, &window_move_event);
         }
     }
-    last_mouse_move_x = x;
-    last_mouse_move_y = y;
-    fill_rect(x, y, 10, 10, COLOR_GREY);
+    last_mouse_move_x      = x;
+    last_mouse_move_y      = y;
+    need_to_update_display = 1;
 }
 void _on_mouse_click(windowptr_t wndptr, int x, int y, int button)
 {
@@ -821,10 +824,18 @@ void _render_window(window_t* wndi)
 }
 void _render_windows()
 {
+    if (!need_to_update_display) {
+        return;
+    }
+    extern bitmap_buffer* backstage_buffer;
+    clear_framebuffer(backstage_buffer, COLOR_BLACK);
     window_t* wnd = g_windows;
     for (; wnd; wnd = wnd->next_as_child) {
         _render_window(wnd);
     }
+    fill_rect(last_mouse_move_x, last_mouse_move_y, 10, 10, COLOR_GREY);
+    update_display();
+    need_to_update_display = 0;
 }
 void _wndpresethandler_closebutton_clicked(windowptr_t wndptr, int event_type,
                                            window_event_t* event)

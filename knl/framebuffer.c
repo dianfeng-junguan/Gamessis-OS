@@ -12,6 +12,9 @@
 
 struct multiboot_tag_framebuffer framebuffer;
 
+bitmap_buffer* list_bitmap_buffers;
+bitmap_buffer* display_buffer;
+bitmap_buffer* backstage_buffer;
 //内核内嵌字体
 extern char __attribute__((weak)) _binary_res_font_psf_start[];
 extern char __attribute__((weak)) _binary_res_font_psf_end[];
@@ -65,6 +68,17 @@ void init_framebuffer()
         pp += PAGE_SIZE;
         p += PAGE_SIZE;
     }
+    //申请位图缓冲区
+    _create_display_bitmap_buffer(FRAMEBUFFER_ADDR,
+                                  framebuffer.common.framebuffer_width,
+                                  framebuffer.common.framebuffer_height,
+                                  framebuffer.common.framebuffer_bpp,
+                                  framebuffer.common.framebuffer_pitch,
+                                  size);
+    if ((backstage_buffer = create_bitmap_buffer(w, h, bypp * 8, inter, size)) == NULL) {
+        comprintf("FATAL: backstage buffer create failed\n");
+        die();
+    }
     if ((drv_framebuffer = register_driver(
              framebuffer_mod_init, framebuffer_mod_exit, framebuffer_mod_ioctl)) < 0) {
         return;
@@ -97,8 +111,29 @@ void set_framebuffer(struct multiboot_tag_framebuffer tag)
 {
     framebuffer = tag;
 }
-
 void fill_rect(int x, int y, int w, int h, unsigned int color)
+{
+
+    int t = x;
+    x     = y;
+    y     = t;
+    x     = x > 0 ? x : 0;
+    y     = y > 0 ? y : 0;
+    w     = w < framebuffer.common.framebuffer_width ? w : framebuffer.common.framebuffer_width;
+    h     = h < framebuffer.common.framebuffer_height ? h : framebuffer.common.framebuffer_height;
+    int maxy = h + x < framebuffer.common.framebuffer_height
+                   ? h + x
+                   : framebuffer.common.framebuffer_height;
+    int maxx =
+        w + y < framebuffer.common.framebuffer_width ? w + y : framebuffer.common.framebuffer_width;
+    //目前只写32bpp
+    for (int py = x; py < maxy; py++) {
+        for (int px = y; px < maxx; px++) {
+            set_pixel(backstage_buffer, px, py, color);
+        }
+    }
+}
+void fill_rect_old(int x, int y, int w, int h, unsigned int color)
 {
     int t = x;
     x     = y;
@@ -219,7 +254,7 @@ void draw_letter(int x, volatile int y, int size, char c, unsigned int fgcolor, 
         for (u32 ch_x = 0; ch_x < font_width; ch_x++) {
             int  px  = x + ch_x * size;
             int  py  = y + ch_y * size;
-            int* ptr = FRAMEBUFFER_ADDR + py * framebuffer.common.framebuffer_pitch +
+            int* ptr = backstage_buffer->buffer + py * framebuffer.common.framebuffer_pitch +
                        px * framebuffer.common.framebuffer_bpp / 8;
             if ((*(glyph + ch_x / 8) & mask) != 0) {
                 *ptr = fgcolor;
@@ -473,4 +508,91 @@ void framebuffer_set_curpos(int x, int y)
 {
     fb_cursor_x = x;
     fb_cursor_y = y;
+}
+void set_pixel(bitmap_buffer* buffer, int x, int y, unsigned int color)
+{
+    if (y * buffer->pitch + x * buffer->bpp / 8 >= buffer->size) {
+        return;
+    }
+    unsigned int* p1 = (char*)buffer->buffer + y * buffer->pitch + x * buffer->bpp / 8;
+    *p1              = color;
+}
+unsigned int get_pixel(bitmap_buffer* buffer, int x, int y)
+{
+    unsigned int* p1 = (char*)buffer->buffer + y * buffer->pitch + x * buffer->bpp / 8;
+    return *p1;
+}
+void clear_framebuffer(bitmap_buffer* buffer, unsigned int color)
+{
+    for (int py = 0; py < buffer->height; py++) {
+        for (int px = 0; px < buffer->width; px++) {
+            set_pixel(buffer, px, py, color);
+        }
+    }
+}
+void update_display()
+{
+    copy_to_display(backstage_buffer, 0, 0, display_buffer->width, display_buffer->height, 0, 0);
+}
+void copy_to_display(bitmap_buffer* buffer, int x, int y, int w, int h, int dx, int dy)
+{
+    for (int py = 0; py < w; py++) {
+        for (int px = 0; px < h; px++) {
+            unsigned int pbuf = get_pixel(buffer, px + x, py + y);
+            set_pixel(display_buffer, px + dx, py + dy, pbuf);
+        }
+    }
+}
+
+int _create_display_bitmap_buffer(int* bufaddr, int width, int height, int bpp, int pitch, int size)
+{
+    display_buffer = (bitmap_buffer*)kmalloc(size, NO_ALIGN);
+    if (!display_buffer)
+        return -1;
+    display_buffer->width  = width;
+    display_buffer->height = height;
+    display_buffer->bpp    = bpp;
+    display_buffer->pitch  = pitch;
+    display_buffer->size   = size;
+    display_buffer->buffer = bufaddr;
+    display_buffer->next   = NULL;
+    list_bitmap_buffers    = display_buffer;
+    return 0;
+}
+bitmap_buffer* create_bitmap_buffer(int width, int height, int bpp, int pitch, int size)
+{
+    bitmap_buffer* buffer = (bitmap_buffer*)kmalloc(size, NO_ALIGN);
+    if (!buffer)
+        return -1;
+    buffer->width  = width;
+    buffer->height = height;
+    buffer->bpp    = bpp;
+    buffer->pitch  = pitch;
+    buffer->size   = size;
+    // framebuffer太大了，不能用kmalloc
+    buffer->buffer = (int*)buddy_alloc(size, NO_ALIGN);
+    if (!buffer->buffer) {
+        buddy_free(buffer);
+        return -1;
+    }
+    buffer->next        = list_bitmap_buffers;
+    list_bitmap_buffers = buffer;
+    return buffer;
+}
+void free_bitmap_buffer(bitmap_buffer* buffer)
+{
+    bitmap_buffer *p = list_bitmap_buffers, *q = 0;
+    while (p) {
+        if (p == buffer) {
+            if (q)
+                q->next = p->next;
+            else
+                list_bitmap_buffers = p->next;
+            kfree(p->buffer);
+            kfree(p);
+            return;
+        }
+        q = p;
+        p = p->next;
+    }
 }

@@ -593,38 +593,6 @@ void mouse_proc()
             _on_mouse_move(mouse_x, mouse_y);
         }
     }
-    /* if ((b & 0x8) == 0) {
-        //不是开头
-        return;
-    }
-    unsigned char x = inb(0x60);
-    unsigned char y = inb(0x60);
-    for (int i = 0; i < 1; i++) {
-        int newstat = b & (1 << i) ? 1 : 0;
-        if (mouse_btns[i] != newstat) {
-            if (newstat) {
-                _on_mouse_down(x, y, i);
-            }
-            else {
-                _on_mouse_up(x, y, i);
-            }
-            mouse_btns[i] = newstat;
-        }
-    }
-    if (x || y) {
-        //鼠标移动
-        int xsign = (b & (1 << 4) ? -1 : 1);
-        int ysign = (b & (1 << 5) ? -1 : 1);
-        int dx    = xsign * (int)x * mouse_sens / 100;
-        int dy    = ysign * (int)y * mouse_sens / 100;
-        dx        = clamp(dx, -mouse_maxspeed, mouse_maxspeed);
-        dy        = clamp(dy, -mouse_maxspeed, mouse_maxspeed);
-        mouse_x += dx;
-        mouse_y -= dy;
-        mouse_x = clamp(mouse_x, 0, 1023);
-        mouse_y = clamp(mouse_y, 0, 767);
-        _on_mouse_move(mouse_x, mouse_y);
-    } */
 }
 // 初始化 PS/2 控制器
 void ps2_init()
