@@ -19,8 +19,12 @@ int main(int argc, char** argv, char** environ)
     // write(2, as, strlenk(as));
     char* prepared_environ = {"os=gms"};
     puts("Gamessis OS shell\n");
-    char cmd[128]  = {0};
-    char path[128] = "/";
+    char        cmd[128]  = {0};
+    char        path[128] = "/";
+    windowptr_t window    = create_window("Shell", WNDTYPE_WINDOW);
+    // resize_window(window, 200, 180);
+    // move_window(window, 20, 20);
+    show_window(window);
     while (1) {
         memset(cmd, 0, 128);
         int p = 0;

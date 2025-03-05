@@ -185,33 +185,45 @@ void coprocessor_err()
 }
 
 syscall_func_t syscall_table[MAX_SYSCALLS] = {
-    [0 ... MAX_SYSCALLS - 1] = (syscall_func_t)blank_syscall,
-    [SYSCALL_EXIT]           = (syscall_func_t)sys_exit,
-    [SYSCALL_OPEN]           = (syscall_func_t)sys_open,
-    [SYSCALL_CLOSE]          = (syscall_func_t)sys_close,
-    [SYSCALL_READ]           = (syscall_func_t)sys_read,
-    [SYSCALL_WRITE]          = (syscall_func_t)sys_write,
-    [SYSCALL_SEEK]           = (syscall_func_t)sys_lseek,
-    [SYSCALL_TELL]           = (syscall_func_t)sys_tell,
-    [SYSCALL_EXIT]           = (syscall_func_t)sys_exit,
-    [SYSCALL_CALL]           = (syscall_func_t)exec_call,
-    [SYSCALL_BRK]            = (syscall_func_t)sys_brk,
-    [SYSCALL_FREE]           = (syscall_func_t)sys_free,
-    [SYSCALL_FORK]           = (syscall_func_t)sys_fork,
-    [SYSCALL_EXECVE]         = (syscall_func_t)sys_execve,
-    [SYSCALL_WAIT]           = (syscall_func_t)sys_wait,
-    [SYSCALL_MMAP]           = (syscall_func_t)sys_mmap,
-    [SYSCALL_MUNMAP]         = (syscall_func_t)sys_munmap,
-    [SYSCALL_MKNOD]          = (syscall_func_t)sys_mknod,
-    [SYSCALL_CHKMMAP]        = (syscall_func_t)sys_chk_mmap,
-    [SYSCALL_SBRK]           = (syscall_func_t)sys_sbrk,
-    [SYSCALL_READDIR]        = (syscall_func_t)sys_readdir,
-    [SYSCALL_CHDIR]          = (syscall_func_t)sys_chdir,
-    [SYSCALL_RENAME]         = (syscall_func_t)sys_rename,
-    [SYSCALL_REMOVE]         = (syscall_func_t)sys_remove,
-    [SYSCALL_DRV_IOCTL]      = (syscall_func_t)drv_ioctl,
-    [SYSCALL_REBOOT]         = (syscall_func_t)sys_reboot,
-    [SYSCALL_GETCWD]         = sys_getcwd,
+    [0 ... MAX_SYSCALLS - 1]               = (syscall_func_t)blank_syscall,
+    [SYSCALL_EXIT]                         = (syscall_func_t)sys_exit,
+    [SYSCALL_OPEN]                         = (syscall_func_t)sys_open,
+    [SYSCALL_CLOSE]                        = (syscall_func_t)sys_close,
+    [SYSCALL_READ]                         = (syscall_func_t)sys_read,
+    [SYSCALL_WRITE]                        = (syscall_func_t)sys_write,
+    [SYSCALL_SEEK]                         = (syscall_func_t)sys_lseek,
+    [SYSCALL_TELL]                         = (syscall_func_t)sys_tell,
+    [SYSCALL_EXIT]                         = (syscall_func_t)sys_exit,
+    [SYSCALL_CALL]                         = (syscall_func_t)exec_call,
+    [SYSCALL_BRK]                          = (syscall_func_t)sys_brk,
+    [SYSCALL_FREE]                         = (syscall_func_t)sys_free,
+    [SYSCALL_FORK]                         = (syscall_func_t)sys_fork,
+    [SYSCALL_EXECVE]                       = (syscall_func_t)sys_execve,
+    [SYSCALL_WAIT]                         = (syscall_func_t)sys_wait,
+    [SYSCALL_MMAP]                         = (syscall_func_t)sys_mmap,
+    [SYSCALL_MUNMAP]                       = (syscall_func_t)sys_munmap,
+    [SYSCALL_MKNOD]                        = (syscall_func_t)sys_mknod,
+    [SYSCALL_CHKMMAP]                      = (syscall_func_t)sys_chk_mmap,
+    [SYSCALL_SBRK]                         = (syscall_func_t)sys_sbrk,
+    [SYSCALL_READDIR]                      = (syscall_func_t)sys_readdir,
+    [SYSCALL_CHDIR]                        = (syscall_func_t)sys_chdir,
+    [SYSCALL_RENAME]                       = (syscall_func_t)sys_rename,
+    [SYSCALL_REMOVE]                       = (syscall_func_t)sys_remove,
+    [SYSCALL_DRV_IOCTL]                    = (syscall_func_t)drv_ioctl,
+    [SYSCALL_REBOOT]                       = (syscall_func_t)sys_reboot,
+    [SYSCALL_GETCWD]                       = sys_getcwd,
+    [SYSCALL_CREATE_WINDOW]                = sys_create_window,
+    [SYSCALL_DESTROY_WINDOW]               = sys_destroy_window,
+    [SYSCALL_SHOW_WINDOW]                  = sys_show_window,
+    [SYSCALL_HIDE_WINDOW]                  = sys_hide_window,
+    [SYSCALL_RESIZE_WINDOW]                = sys_resize_window,
+    [SYSCALL_MOVE_WINDOW]                  = sys_move_window,
+    [SYSCALL_SET_WINDOW_TEXT]              = sys_set_window_text,
+    [SYSCALL_ATTACH_WINDOW]                = sys_attach_window,
+    [SYSCALL_DETACH_WINDOW]                = sys_detach_window,
+    [SYSCALL_ADD_WINDOW_EVENT_LISTENER]    = sys_add_window_event_listener,
+    [SYSCALL_REMOVE_WINDOW_EVENT_LISTENER] = sys_remove_window_event_listener,
+    [SYSCALL_SEND_WINDOW_EVENT]            = sys_send_window_event,
 };
 int blank_syscall()
 {
@@ -233,14 +245,14 @@ syscall need rcx(rip) r11(rflags)
 xchg rcx to r10
 
 */
-int syscall(long a, long b, long c, long d, long e, long f)
+unsigned long long syscall(long a, long b, long c, long d, long e, long f)
 {
     unsigned long num;
     __asm__ volatile("" : "=a"(num));   //这样rax中存的参数就到这了
     if (num >= MAX_SYSCALLS) {
         return -1;
     }
-    int retv = syscall_table[num](a, b, c, d, e, f);
+    unsigned long long retv = syscall_table[num](a, b, c, d, e, f);
     do_signals();
     //处理信号之后，可能进程状态被改变,需要重新调度。
     while (current && current->stat == TASK_SUSPENDED) {

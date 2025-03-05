@@ -521,8 +521,8 @@ int prev_mouse_button = -1;
 int mouse_btns[3]     = {0, 0, 0};
 int mouse_x           = 0;
 int mouse_y           = 0;
-int mouse_sens        = 60;
-int mouse_maxspeed    = 3;
+int mouse_sens        = 80;
+int mouse_maxspeed    = 15;
 int clamp(int v, int min, int max)
 {
     return v < min ? min : (v > max ? max : v);

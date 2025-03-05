@@ -20,6 +20,7 @@
 #include "sys/stat.h"
 #include "dirent.h"
 #include "volume.h"
+#include "wndman.h"
 
 // #ifdef DEBUG
 // typedef int mode_t;
@@ -708,4 +709,55 @@ char* sys_getcwd(char* buf, size_t size)
         return NULL;
     }
     return do_getcwd(buf, size);
+}
+windowptr_t sys_create_window(char* title, int type)
+{
+    windowptr_t wnd = create_window(title, type);
+    return wnd;
+}
+int sys_destroy_window(windowptr_t wnd)
+{
+    return destroy_window(wnd);
+}
+int sys_show_window(windowptr_t wnd)
+{
+    return show_window(wnd);
+}
+int sys_hide_window(windowptr_t wnd)
+{
+    return hide_window(wnd);
+}
+int sys_resize_window(windowptr_t wnd, int w, int h)
+{
+    return resize_window(wnd, w, h);
+}
+int sys_move_window(windowptr_t wnd, int x, int y)
+{
+    return move_window(wnd, x, y);
+}
+int sys_set_window_text(windowptr_t wnd, char* text)
+{
+    return set_window_text(wnd, text);
+}
+int sys_attach_window(windowptr_t wnd, windowptr_t parent)
+{
+    return attach_window(wnd, parent);
+}
+int sys_detach_window(windowptr_t wnd)
+{
+    return detach_window(wnd);
+}
+int sys_add_window_event_listener(windowptr_t wndptr, int event_type,
+                                  window_event_handler_t listener)
+{
+    return add_window_event_listener(wndptr, event_type, listener);
+}
+int sys_remove_window_event_listener(windowptr_t wndptr, int event_type,
+                                     window_event_handler_t listener)
+{
+    return remove_window_event_listener(wndptr, event_type, listener);
+}
+int sys_send_window_event(windowptr_t wndptr, window_event_t* event)
+{
+    return send_window_event(wndptr, event);
 }

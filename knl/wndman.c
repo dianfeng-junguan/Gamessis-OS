@@ -179,7 +179,7 @@ void default_window_close_event_handler(windowptr_t wndptr, int event_type, wind
     while (wndptr->parent) {
         wndptr = wndptr->parent;
     }
-    destroy_windowk(wndptr);
+    destroy_window(wndptr);
 #ifdef DEBUG
     RedrawWindow(hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 #endif
@@ -272,7 +272,7 @@ windowptr_t _create_control(char* title, int wnd_type)
     @param wndptr 要销毁的窗口
     @return 0 成功，-1 失败
 */
-int destroy_windowk(windowptr_t wndptr)
+int destroy_window(windowptr_t wndptr)
 {
     if (!wndptr) {
         return -1;
@@ -290,7 +290,7 @@ int destroy_windowk(windowptr_t wndptr)
         window_t* p = wndptr->children;
         while (p) {
             window_t* q = p->next_as_child;
-            destroy_windowk(p);
+            destroy_window(p);
             p = q;
         }
     }
@@ -718,6 +718,7 @@ void _on_mouse_up(int x, int y, int button)
         clicked_times = 0;
     }
 }
+void _redraw_area(int x, int y, int w, int h) {}
 void _on_mouse_move(int x, int y)
 {
     windowptr_t wndptr = get_window_by_pos(x, y, 0);
@@ -744,6 +745,10 @@ void _on_mouse_move(int x, int y)
     last_mouse_move_x      = x;
     last_mouse_move_y      = y;
     need_to_update_display = 1;
+    fill_rect(last_mouse_move_x, last_mouse_move_y, 10, 10, COLOR_GREY);
+    extern bitmap_buffer* backstage_buffer;
+    //局部重绘
+    copy_to_display(backstage_buffer, x, y, 10, 10, x, y);
 }
 void _on_mouse_click(windowptr_t wndptr, int x, int y, int button)
 {

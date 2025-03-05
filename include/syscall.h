@@ -1,5 +1,6 @@
 #include "sys/types.h"
 #include "dirent.h"
+#include "wndman.h"
 #define SYSCALL_REG_DEV 0
 #define SYSCALL_DISPOSE_DEV 1
 #define SYSCALL_REG_DRV 2
@@ -43,7 +44,18 @@
 #define SYSCALL_REBOOT 41
 #define SYSCALL_GETCWD 42
 #define SYSCALL_KB_READC 100
-
+#define SYSCALL_CREATE_WINDOW 101
+#define SYSCALL_DESTROY_WINDOW 102
+#define SYSCALL_SHOW_WINDOW 103
+#define SYSCALL_HIDE_WINDOW 104
+#define SYSCALL_RESIZE_WINDOW 105
+#define SYSCALL_MOVE_WINDOW 106
+#define SYSCALL_SET_WINDOW_TEXT 107
+#define SYSCALL_ATTACH_WINDOW 108
+#define SYSCALL_DETACH_WINDOW 109
+#define SYSCALL_ADD_WINDOW_EVENT_LISTENER 110
+#define SYSCALL_REMOVE_WINDOW_EVENT_LISTENER 111
+#define SYSCALL_SEND_WINDOW_EVENT 112
 
 
 #define DRVF_OPEN 0
@@ -70,8 +82,8 @@
 #define SYSTEM_REBOOT (1UL << 0)
 #define SYSTEM_POWEROFF (1UL << 1)
 
-#define MAX_SYSCALLS 100
-typedef int (*syscall_func_t)();
+#define MAX_SYSCALLS 200
+typedef unsigned long long (*syscall_func_t)();
 __attribute__((__always_inline__)) inline int do_syscall(long func, long a1, long a2, long a3,
                                                          long a4, long a5, long a6)
 {
@@ -90,8 +102,8 @@ __attribute__((__always_inline__)) inline int do_syscall(long func, long a1, lon
     __asm__ volatile("mov %%rax,%0" ::"r"(ret));
     return ret;
 }
-int syscall(long a, long b, long c, long d, long e, long f);
-int exec(char* path);
+unsigned long long syscall(long a, long b, long c, long d, long e, long f);
+int                exec(char* path);
 
 unsigned long sys_open(char* filename, int flags);
 unsigned long sys_close(int fd);
@@ -137,3 +149,17 @@ int blank_syscall();
 
 unsigned long sys_chdir(char* filename);
 char*         sys_getcwd(char* buf, size_t size);
+
+windowptr_t sys_create_window(char* title, int type);
+int         sys_destroy_window(windowptr_t wnd);
+int         sys_show_window(windowptr_t wnd);
+int         sys_hide_window(windowptr_t wnd);
+int         sys_resize_window(windowptr_t wnd, int w, int h);
+int         sys_move_window(windowptr_t wnd, int x, int y);
+int         sys_set_window_text(windowptr_t wnd, char* text);
+int         sys_attach_window(windowptr_t wnd, windowptr_t parent);
+int         sys_detach_window(windowptr_t wnd);
+int sys_add_window_event_listener(windowptr_t wnd, int event_type, window_event_handler_t listener);
+int sys_remove_window_event_listener(windowptr_t wnd, int event_type,
+                                     window_event_handler_t listener);
+int sys_send_window_event(windowptr_t wnd, window_event_t* event_data);
