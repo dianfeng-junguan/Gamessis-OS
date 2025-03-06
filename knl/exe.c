@@ -328,7 +328,8 @@ int do_execve(char* path, char** argv, char** environ, int argc, int environc)
     tss->rsp2 = (unsigned long long)stp & ~0xfull;
     stp[0]    = 0;   // rbp占位符-反正返回到main,会mov rbp,rsp
     stp[1]    = proc_end;
-
+#define RFLAGS_IF (1 << 9)
+    rs->r11 |= RFLAGS_IF;   // rflags存在r11里面
 
     //第一个参数argc
     if (current->dl) {

@@ -761,3 +761,16 @@ int sys_send_window_event(windowptr_t wndptr, window_event_t* event)
 {
     return send_window_event(wndptr, event);
 }
+int sys_get_window_text(windowptr_t wnd, char* text, size_t size)
+{
+    return get_window_text(wnd, text, size);
+}
+int sys_fetch_event(window_event_t* event)
+{
+    extern int cur_proc;
+    return do_fetch_event(cur_proc, event);
+}
+int sys_default_deal_window_event(window_event_t* event)
+{
+    return default_deal_window_event(event);
+}

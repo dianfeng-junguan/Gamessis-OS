@@ -1,6 +1,7 @@
 #pragma once
 
 #include "wndman.h"
+#include <sys/types.h>
 #define DEFAULT_WINDOW_WIDTH 640
 #define DEFAULT_WINDOW_HEIGHT 480
 #define DEFAULT_WINDOW_TITLE "Window"
@@ -40,6 +41,7 @@ typedef struct _window{
     int type;
     char title[128];
     int state;
+    int owner_pid;
     struct _window* next_as_child;
     struct _window* prev_as_child;
     struct _window* children;
@@ -183,6 +185,8 @@ int add_window_event_listener(windowptr_t wndptr,int event_type,window_event_han
     @return 0 成功，-1 失败
 */
 int remove_window_event_listener(windowptr_t wndptr,int event_type,int listener_id);
+int do_fetch_event(pid_t proc_id, window_event_t* event);
+int default_deal_window_event(window_event_t* event);
 
 /**
     @brief 处理事件

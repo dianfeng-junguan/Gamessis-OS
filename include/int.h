@@ -110,7 +110,7 @@ void _general_protect();
 void _coprocessor_err();
 
 /// @brief 在错误发生时，输出函数调用堆栈。
-/// @param ret_stack 错误发生时rbp的值
+/// @param ret_stack 错误发生时ist的值
 void backtrace();
 //让系统死机。
 void die();

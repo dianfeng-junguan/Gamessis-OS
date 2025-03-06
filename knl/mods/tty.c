@@ -449,8 +449,8 @@ int key_proc()
         //回显到屏幕上
         if (tty->show) {
             com_putchar(ch, PORT_COM1);
-            write_textbuf(ch, tty);
-            flush_textbuf(tty);
+            // write_textbuf(ch, tty);
+            // flush_textbuf(tty);
         }
     }
     if (scan1 & FLAG_BREAK) {

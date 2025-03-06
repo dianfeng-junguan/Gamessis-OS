@@ -3,6 +3,7 @@
 #include "memman.h"
 #include "framebuffer.h"
 #include "str.h"
+#include "proc.h"
 #ifdef DEBUG
 #    include <stdio.h>
 #    include <stdlib.h>
@@ -194,7 +195,6 @@ int  init_wndman()
 {
     g_windows = NULL;   //(int)KMALLOC(sizeof(window_t) * MAX_WINDOWS);s
     // TODO 向时钟中断注册处理消息的函数
-
     return 0;
 }
 windowptr_t create_window(char* title, int wnd_type)
@@ -240,6 +240,8 @@ windowptr_t _create_control(char* title, int wnd_type)
     wndp->prev_as_child = NULL;
     wndp->destructor    = NULL;
     wndp->specific_data = NULL;
+    extern int cur_proc;
+    wndp->owner_pid = cur_proc;
     // 复制窗口标题
     strncpyk(wndp->title, title, sizeof(wndp->title) - 1);
     wndp->title[sizeof(wndp->title) - 1] = '\0';
@@ -657,7 +659,7 @@ void        _on_clock_int()
         mouse_click_timer = 0;
         clicked_times     = 0;
     }
-    deal_events();
+    // deal_events();
 #ifndef DEBUG
     _render_windows();
 #endif
@@ -1031,4 +1033,37 @@ void _draw_window(windowptr_t wndptr)
     int titleX = x + 5;
     int titleY = y;   // 假设字体大小为 1
     draw_text(titleX, titleY, 1, (char*)(title), COLOR_BLACK, TEXT_BG_TRANSPARENT);
+}
+int do_fetch_event(pid_t proc_id, window_event_t* event)
+{
+    //取某个拥有窗口的进程的事件
+    window_event_t *e = g_event_queue, *prev = NULL;
+    while (e) {
+        if (e->sender->owner_pid == proc_id) {
+            *event = *e;
+            if (!prev) {
+                g_event_queue = e->next;
+            }
+            else {
+                prev->next = e->next;
+            }
+            KFREE(e);
+            return 0;
+        }
+        prev = e;
+        e    = e->next;
+    }
+    return -1;
+}
+int default_deal_window_event(window_event_t* event)
+{
+    //执行handler
+    window_t* wnd = event->sender;
+    if (!event->sender) {
+        return -1;
+    }
+    if (wnd->event_handlers[event->event_type]) {
+        wnd->event_handlers[event->event_type](event->sender, event->event_type, event);
+    }
+    return 0;
 }

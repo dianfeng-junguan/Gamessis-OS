@@ -224,6 +224,9 @@ syscall_func_t syscall_table[MAX_SYSCALLS] = {
     [SYSCALL_ADD_WINDOW_EVENT_LISTENER]    = sys_add_window_event_listener,
     [SYSCALL_REMOVE_WINDOW_EVENT_LISTENER] = sys_remove_window_event_listener,
     [SYSCALL_SEND_WINDOW_EVENT]            = sys_send_window_event,
+    [SYSCALL_GET_WINDOW_TEXT]              = sys_get_window_text,
+    [SYSCALL_GET_EVENT]                    = sys_fetch_event,
+    [SYSCALL_DEFAULT_DEAL_WINDOW_EVENT]    = sys_default_deal_window_event,
 };
 int blank_syscall()
 {
@@ -302,6 +305,8 @@ void backtrace(unsigned long long* rbp)
     // __asm__ volatile("mov %%rbp,%0" : "=m"(ret_stack));
     // ret_stack  = current->tss.ists[0] - 48;
     comprintf("Backtrace:\n");
+    unsigned long long* pc = current->tss.ists[0] - 40;
+    print_ksym(*pc);
     print_ksym(rbp[1]);
     rbp = rbp[0];
     //回到用户栈，回溯

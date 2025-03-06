@@ -12,20 +12,44 @@
 int a = 1, b = 2, c = 0;
 // unsigned long long __bss_start__ = 0, __bss_end__ = 0;
 
-int __main() {}
+int         __main() {}
+char        text[128];
+windowptr_t window, shellcontent;
+
+void on_enter_pressed(struct _window* wndptr, int event_type, window_event_t* event)
+{
+    get_window_text(shellcontent, text, 128);
+    strcat(text, "enter pressed\n");
+    set_window_text(shellcontent, text);
+}
 // int   __stack_chk_fail() {}
 int main(int argc, char** argv, char** environ)
 {
     // write(2, as, strlenk(as));
     char* prepared_environ = {"os=gms"};
     puts("Gamessis OS shell\n");
-    char        cmd[128]  = {0};
-    char        path[128] = "/";
-    windowptr_t window    = create_window("Shell", WNDTYPE_WINDOW);
-    // resize_window(window, 200, 180);
-    // move_window(window, 20, 20);
+    char cmd[128]  = {0};
+    char path[128] = "/";
+    window         = create_window("Shell", WNDTYPE_WINDOW);
+    shellcontent   = create_window("SHELL", WNDTYPE_EDITBOX);
+    resize_window(shellcontent, 200, 190);
+    move_window(shellcontent, 0, 30);
+    attach_window(shellcontent, window);
+    show_window(shellcontent);
     show_window(window);
+    // add_window_event_listener(shellcontent, WND_EVENT_KEY_DOWN, on_enter_pressed);
     while (1) {
+        window_event_t event;
+        if (fetch_event(&event) == 0) {
+            switch (event.event_type) {
+            case WND_EVENT_KEY_DOWN:
+                on_enter_pressed(shellcontent, event.event_type, &event);
+                break;
+            default: default_deal_window_event(&event); break;
+            }
+        }
+    }
+    while (0) {
         memset(cmd, 0, 128);
         int p = 0;
         printf("%s:>", path);

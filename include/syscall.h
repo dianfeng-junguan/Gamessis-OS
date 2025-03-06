@@ -56,6 +56,9 @@
 #define SYSCALL_ADD_WINDOW_EVENT_LISTENER 110
 #define SYSCALL_REMOVE_WINDOW_EVENT_LISTENER 111
 #define SYSCALL_SEND_WINDOW_EVENT 112
+#define SYSCALL_GET_WINDOW_TEXT 113
+#define SYSCALL_GET_EVENT 114
+#define SYSCALL_DEFAULT_DEAL_WINDOW_EVENT 115
 
 
 #define DRVF_OPEN 0
@@ -163,3 +166,6 @@ int sys_add_window_event_listener(windowptr_t wnd, int event_type, window_event_
 int sys_remove_window_event_listener(windowptr_t wnd, int event_type,
                                      window_event_handler_t listener);
 int sys_send_window_event(windowptr_t wnd, window_event_t* event_data);
+int sys_get_window_text(windowptr_t wnd, char* text, size_t size);
+int sys_fetch_event(window_event_t* event);
+int sys_default_deal_window_event(window_event_t* event);
