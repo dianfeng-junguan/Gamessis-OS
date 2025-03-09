@@ -71,3 +71,17 @@
     pop rbx
     add rsp, 8 ;恢复栈指针
 %endmacro
+%macro SAVE_SEGS 0
+    ;保存段寄存器
+    push gs
+    push fs
+    push es
+    push ds
+%endmacro
+%macro RESTORE_SEGS 0
+    ;恢复段寄存器
+    pop ds
+    pop es
+    pop fs
+    pop gs
+%endmacro

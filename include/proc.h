@@ -218,8 +218,13 @@ struct process
     struct List*      signal_queue;   //等待处理的信号
     void*             dl;             // dl的文件描述符
     sigset_t          sigmask;        //信号屏蔽位图
+    int               level;          //特权级别
 } __attribute__((packed));            // 208 bytes
 #endif
+#define TASK_USER 0
+#define TASK_KTASK 1
+
+#define RFLAGS_IF (1 << 9)
 typedef struct
 {
     unsigned int proc_end_addr;
@@ -379,6 +384,18 @@ int sys_tcsetpgrp(int fildes, pid_t pgid_id);
 pid_t sys_tcgetpgrp(int fildes);
 
 struct process* get_proc(pid_t pid);
+
+#define CLONE_VM 0x00000001
+#define CLONE_FD 0x00000002
+#define CLONE_KTASK 0x00000004
+#define CLONE_STACK 0x00000008
+/**
+    @brief 克隆或者创建一个任务
+    @param entry 新进程的入口函数，如果为NULL，则意味着从创建者进程执行到的位置开始执行。
+    @param flags 标志位
+    @return 新进程的进程描述符
+*/
+pid_t clone_task(int (*entry)(void*), int flags);
 
 extern struct process* current;
 extern mmap_struct*    all_mmaps;

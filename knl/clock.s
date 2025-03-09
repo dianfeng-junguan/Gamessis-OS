@@ -12,7 +12,6 @@ extern restore_float
 %include "context.inc"
 clock:
     cli
-
     SAVE_GENERALS
     
     ;易变寄存器入栈

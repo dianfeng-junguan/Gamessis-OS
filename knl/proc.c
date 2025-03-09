@@ -192,6 +192,8 @@ int init_proc0()
     pz->stat            = TASK_READY;
     pz->regs.float_regs = kmalloc(512, ALIGN_4096);
 
+    pz->level = TASK_KTASK;
+
     //设置tcb
     smmap(pmalloc(PAGE_4K_SIZE), STACK_TOP, PAGE_PRESENT | PAGE_RWX | PAGE_FOR_ALL, PML4_ADDR);
     tcbhead_t* tcb   = STACK_TOP;
@@ -1415,4 +1417,204 @@ void wait_for_signal()
 void store_rbp(unsigned long rbp)
 {
     current->regs.rbp = rbp;
+}
+//创建内核线程
+pid_t create_kernel_thread(int (*func)(), int flags)
+{
+    int pid  = req_proc();
+    int pids = task[pid].pid;
+    if (pid == -1)
+        return -1;
+    //复制0号进程
+    memcpy(task + pid, task, sizeof(struct process));
+    task[pid].pid  = pids;
+    task[pid].stat = TASK_ZOMBIE;
+
+
+    task[pid].parent_pid = task->pid;
+    //设置父子关系以及初始化子进程的的list节点
+    list_init(&task[pid].node);
+    task[pid].child_procs = NULL;
+    task[pid].node.data   = &task[pid];
+    if (!task->child_procs)
+        task->child_procs = &task[pid].node;
+    else
+        list_add(task->child_procs, &task[pid].node);
+
+    //
+}
+
+pid_t clone_task(int (*entry)(void*), int flags)
+{
+    int pid  = req_proc();
+    int pids = task[pid].pid;
+    if (pid == -1)
+        return -1;
+    if (flags & CLONE_KTASK && current->level != TASK_KTASK) {
+        //特权级不够
+        return -2;
+    }
+    //首先完全复制
+    memcpy(task + pid, current, sizeof(struct process));
+    task[pid].pid  = pids;
+    task[pid].stat = TASK_ZOMBIE;
+
+
+    task[pid].parent_pid = current->pid;
+    //设置父子关系以及初始化子进程的的list节点
+    list_init(&task[pid].node);
+    task[pid].child_procs = NULL;
+    task[pid].node.data   = &task[pid];
+    if (!current->child_procs)
+        current->child_procs = &task[pid].node;
+    else
+        list_add(current->child_procs, &task[pid].node);
+
+    task[pid].utime = 0;
+
+
+    addr_t tmpla = KNL_BASE + 0x80000000;
+    if (flags & CLONE_KTASK) {
+        //内核任务，直接KMALLOC
+        if (flags & CLONE_STACK) {
+            size_t old_stack_size =
+                task[pid].mem_struct.stack_top - task[pid].mem_struct.stack_bottom;
+            void* new_stk = kmalloc(old_stack_size, ALIGN_4096);
+            memcpy(new_stk, task[pid].mem_struct.stack_bottom, old_stack_size);
+            task[pid].mem_struct.stack_bottom = new_stk;
+            task[pid].mem_struct.stack_top    = task[pid].mem_struct.stack_bottom + old_stack_size;
+        }
+        else {
+            void* new_stk                     = kmalloc(PAGE_4K_SIZE, ALIGN_4096);
+            task[pid].mem_struct.stack_bottom = new_stk;
+            task[pid].mem_struct.stack_top    = task[pid].mem_struct.stack_bottom + PAGE_4K_SIZE;
+            unsigned long long* new_stk_ptr   = (unsigned long long*)(new_stk + PAGE_4K_SIZE);
+            new_stk_ptr--;
+            *new_stk_ptr = _proc_end;   //设置返回地址
+        }
+    }
+    else {
+
+        if (flags & CLONE_STACK) {
+            //栈
+            //首先获取物理内存，然后临时映射到一个地方，然后拷贝数据，再解除映射，再映射到目标进程的页表。
+            addr_t stk = task[pid].mem_struct.stack_top - PAGE_4K_SIZE;
+            for (; stk >= task[pid].mem_struct.stack_bottom; stk -= PAGE_4K_SIZE) {
+                addr_t new_stkpg = pmalloc(PAGE_4K_SIZE);
+                if (flags & CLONE_STACK) {
+                    smmap(new_stkpg, tmpla, PAGE_PRESENT | PAGE_RWX, current->pml4);
+                    memcpy(tmpla, stk, PAGE_4K_SIZE);   //把当前进程的栈空间复制到新栈里面
+                }
+
+                //把新的页面映射到进程页表里
+                smmap(new_stkpg, stk, PAGE_PRESENT | PAGE_RWX | PAGE_FOR_ALL, task[pid].pml4);
+            }
+            if (task[pid].mem_struct.stack_top <= task[pid].mem_struct.stack_bottom) {
+                //父进程没有栈空间（一般是不可能的，这个几乎就是为了内核进程fork而写）
+                //开辟一页空栈。
+                addr_t new_stkpg = (addr_t)pmalloc(PAGE_4K_SIZE);
+                stk              = task[pid].mem_struct.stack_top - PAGE_4K_SIZE;
+                //把新的页面映射到进程页表里
+                smmap(new_stkpg, stk, PAGE_PRESENT | PAGE_RWX | PAGE_FOR_ALL, task[pid].pml4);
+                //给新进程分配一页栈
+                task[pid].mem_struct.stack_bottom = stk;
+                //给这页新的栈填上恢复上下文需要的内容
+            }
+        }
+        else {
+            //无需复制栈
+            addr_t stk                        = task[pid].mem_struct.stack_top - PAGE_4K_SIZE;
+            task[pid].mem_struct.stack_bottom = stk;
+            addr_t new_stkpg                  = pmalloc(PAGE_4K_SIZE);
+            //把新的页面映射到进程页表里
+            smmap(new_stkpg, stk, PAGE_PRESENT | PAGE_RWX | PAGE_FOR_ALL, task[pid].pml4);
+            unsigned long long* new_stk_ptr = (unsigned long long*)(new_stkpg + PAGE_4K_SIZE);
+            new_stk_ptr--;
+            // TODO 设置用户态的返回地址
+            *new_stk_ptr = _proc_end;   //设置返回地址
+        }
+    }
+
+    //中断使用的栈空间
+    // ist一页就够
+    //系统中断ist
+    addr_t new_stkpg = kmalloc(PAGE_4K_SIZE, ALIGN_4096);
+    memcpy(new_stkpg,
+           current->tss.ists[1] - PAGE_4K_SIZE,
+           PAGE_4K_SIZE);   //把当前进程的栈空间复制到新栈里面
+    task[pid].tss.ists[1] = new_stkpg + PAGE_4K_SIZE;
+    stack_store_regs* ctx_dup =
+        new_stkpg + PAGE_4K_SIZE - sizeof(stack_store_regs);   //拷贝的上下文
+    //这样进程切换到子进程的done标签，从时钟中断返回弹出堆栈的时候rax弹出来的就是0，成为返回值。
+    ctx_dup->rax = 0;
+    ctx_dup->rflags |= RFLAGS_IF;
+    if (entry) {
+        ctx_dup->rip = (unsigned long long)entry;
+    }
+    if (flags & CLONE_KTASK) {
+        ctx_dup->cs = 0x8;
+        ctx_dup->ds = 0x10;
+        ctx_dup->ss = 0x10;
+        ctx_dup->es = 0x10;
+    }
+    if (!(flags & CLONE_STACK)) {
+        ctx_dup->rsp = task[pid].mem_struct.stack_top - 8;
+    }
+    //设置iret时的堆栈
+    // 这里让进程回到clock_ret是为了恢复上下文。否则切换到新进程时，没有任何通用寄存器会被更改。
+    task[pid].regs.rip = clock_ret;
+    //此时处于syscall调用中，原来的用户栈已经保存在当前ctx_dup中
+    task[pid].regs.rsp = ctx_dup;
+    //其他中断ist
+    new_stkpg = kmalloc(PAGE_4K_SIZE, ALIGN_4096);
+    memcpy(new_stkpg,
+           current->tss.ists[0] - PAGE_4K_SIZE,
+           PAGE_4K_SIZE);   //把当前进程的栈空间复制到新栈里面
+    task[pid].tss.ists[0] = new_stkpg + PAGE_4K_SIZE;
+    task[pid].tss.ists[2] = new_stkpg + PAGE_4K_SIZE;
+    task[pid].tss.ists[3] = new_stkpg + PAGE_4K_SIZE;
+    task[pid].tss.ists[4] = new_stkpg + PAGE_4K_SIZE;
+    task[pid].tss.ists[5] = new_stkpg + PAGE_4K_SIZE;
+    task[pid].tss.ists[6] = new_stkpg + PAGE_4K_SIZE;
+
+    //分配浮点寄存器上下文
+    task[pid].regs.float_regs = kmalloc(512, ALIGN_4096);
+    if (!(flags & CLONE_VM)) {
+        //复制父进程的内存映射到子进程，然后重新映射并复制子进程的堆栈和数据段
+        copy_mmap(current, &task[pid]);
+        //堆
+        addr_t hp = task[pid].mem_struct.heap_top - PAGE_4K_SIZE;
+        for (; hp >= task[pid].mem_struct.heap_base; hp -= PAGE_4K_SIZE) {
+            addr_t new_hppg = pmalloc(PAGE_4K_SIZE);
+            smmap(new_hppg, tmpla, PAGE_PRESENT | PAGE_RWX, current->pml4);
+
+            memcpy(tmpla, hp, PAGE_4K_SIZE);   //把当前进程的栈空间复制到新栈里面
+            //把新的页面映射到进程页表里
+            smmap(new_hppg, hp, PAGE_PRESENT | PAGE_RWX | PAGE_FOR_ALL, task[pid].pml4);
+        }
+        smmap(0, tmpla, 0, current->pml4);   //解除映射
+        //复制映射数据结构
+        mmap_struct* mp = current->mmaps;
+        task[pid].mmaps = NULL;   //清空新进程的映射数据结构
+        for (; mp; mp = list_next(mp, &mp->node)) {
+            mmap_struct* new_mp = kmalloc(sizeof(mmap_struct), NO_ALIGN);
+            memcpy(new_mp, mp, sizeof(mmap_struct));
+            list_init(&new_mp->node);
+            new_mp->node.data = new_mp;
+            if (!task[pid].mmaps) {
+                task[pid].mmaps = new_mp;
+            }
+            else {
+                list_add(&task[pid].mmaps->node, &new_mp->node);
+            }
+        }
+    }
+
+    task[pid].stat = TASK_READY;
+
+
+    //如果父进程没有堆，不开辟。留给load_xx函数。
+    //父进程运行到这里
+    comprintf("new cloned pid=%d\n", task[pid].pid);
+    return task[pid].pid;
 }
