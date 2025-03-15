@@ -26,13 +26,6 @@
 #include "float.h"
 #include "wndman.h"
 
-int test_ktask(void* arg)
-{
-    comprintf("ktask started\n");
-    while (1) {
-        comprintf("ktask running\n");
-    }
-}
 int  manage_proc_lock = 1;
 void main(unsigned int magic, void* addr)
 {
@@ -200,7 +193,6 @@ void main(unsigned int magic, void* addr)
     sti();
     manage_proc_lock = 0;
 
-    clone_task(test_ktask, CLONE_KTASK);
     move_to_user_mode();
 
     //扫描硬盘

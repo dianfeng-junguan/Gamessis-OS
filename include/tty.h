@@ -90,3 +90,19 @@ void mouse_proc();
 int        register_tty(tty_t* tty);
 int        unreigster_tty(int dev);
 extern int drv_tty;
+#include "wndman.h"
+typedef struct _console
+{
+    tty_t*           tty;
+    windowptr_t      console_wnd;
+    dev_t            tty_dev;               //所创建的tty设备
+    pid_t            last_attaching_task;   //上一个依附该控制台的任务
+    int              link;
+    struct _console* next;
+} console_t;
+int        init_conhost();
+console_t* create_console();
+int        destroy_console(console_t* console);
+void       conhost_thread();
+int        attach_to_console(pid_t pid, console_t* console);
+int        detach_console(pid_t pid);

@@ -18,7 +18,7 @@ void clock_c()
         if (current && current->stat == TASK_SUSPENDED) {
             manage_proc();
         }
-        _on_clock_int();
-        deal_events();
+        // _on_clock_int();
+        // deal_events();
     }
 }

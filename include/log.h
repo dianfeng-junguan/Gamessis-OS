@@ -24,3 +24,8 @@ void comprintf(char* fmt, ...);
 #else
 #    define debug_log(s, ...)
 #endif
+#define panic(fmt, ...)                \
+    do {                               \
+        comprintf(fmt, ##__VA_ARGS__); \
+        die();                         \
+    } while (0)

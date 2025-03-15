@@ -1,9 +1,11 @@
 #include "wndman.h"
+#include "threading.h"
 #include "typename.h"
 #include "memman.h"
 #include "framebuffer.h"
 #include "str.h"
 #include "proc.h"
+#include "int.h"
 #ifdef DEBUG
 #    include <stdio.h>
 #    include <stdlib.h>
@@ -23,10 +25,13 @@ extern HWND    hWnd;
 #endif
 static int listener_id_gen        = 0;
 int        need_to_update_display = 0;
+spinlock_t need_to_update_display_lock;
+
 #define LISTENER_ID (listener_id_gen++)
 window_t*                g_windows;
-window_event_listener_t* g_event_listeners                        = NULL;
-window_event_t*          g_event_queue                            = NULL;
+window_event_listener_t* g_event_listeners = NULL;
+window_event_t*          g_event_queue     = NULL;
+mutex_t                  g_event_queue_lock;
 window_event_handler_t   g_default_event_handlers[WNDEVENT_COUNT] = {
     [WND_EVENT_MOUSE_MOVE]         = default_mouse_move_event_handler,
     [WND_EVENT_MOUSE_DOWN]         = default_mouse_down_event_handler,
@@ -195,6 +200,12 @@ int  init_wndman()
 {
     g_windows = NULL;   //(int)KMALLOC(sizeof(window_t) * MAX_WINDOWS);s
     // TODO 向时钟中断注册处理消息的函数
+    if (create_kthread(wndman_thread) < 0) {
+        comprintf("failed creating wndman thread\n");
+        die();
+    }
+    init_spinlock(&need_to_update_display_lock);
+    init_mutex(&g_event_queue_lock);
     return 0;
 }
 windowptr_t create_window(char* title, int wnd_type)
@@ -552,6 +563,7 @@ int send_window_event(windowptr_t wndptr, window_event_t* event)
     }
     memcpy(new_event, event, sizeof(window_event_t));
     if (!g_event_queue) {
+        //此函数在被调用时都是关中断的，在目前单CPU环境下不需要锁操作
         g_event_queue = new_event;
     }
     else {
@@ -641,7 +653,9 @@ void deal_events()
         KFREE(event);
         event = next;
     }
+    get_mutex(&g_event_queue_lock);
     g_event_queue = NULL;
+    release_mutex(&g_event_queue_lock);
 }
 static int  clicked_times = 0;
 int         mouse_down_x, mouse_down_y, mouse_down_button;
@@ -653,13 +667,20 @@ int         last_mouse_down_button                    = -1;
 windowptr_t g_focused_wndptr                          = NULL;
 static int  last_key_code_down                        = -1;
 static int  mouse_down_flags[3]                       = {0, 0, 0};
-void        _on_clock_int()
+
+void wndman_thread()
+{
+    while (1) {
+        _on_clock_int();
+    }
+}
+void _on_clock_int()
 {
     if (++mouse_click_timer >= g_setted_mouse_consecutive_click_max_time) {
         mouse_click_timer = 0;
         clicked_times     = 0;
     }
-    // deal_events();
+    deal_events();
 #ifndef DEBUG
     _render_windows();
 #endif
@@ -674,8 +695,10 @@ void _on_mouse_down(int x, int y, int button)
     windowptr_t wndptr = last_mouse_down_wndptr = get_window_by_pos(mouse_down_x, mouse_down_y, 0);
     g_focused_wndptr                            = wndptr;
     if (wndptr) {
+        get_spinlock(&need_to_update_display_lock);
         need_to_update_display = 1;
-        window_event_t event   = {
+        release_spinlock(&need_to_update_display_lock);
+        window_event_t event = {
             .event_type   = WND_EVENT_MOUSE_DOWN,
             .sender       = wndptr,
             .mouse_button = button,
@@ -700,8 +723,10 @@ void _on_mouse_up(int x, int y, int button)
     mouse_down_flags[button] = 0;
     windowptr_t wndptr       = get_window_by_pos(last_mouse_move_x, last_mouse_move_y, 0);
     if (wndptr) {
+        get_spinlock(&need_to_update_display_lock);
         need_to_update_display = 1;
-        window_event_t event   = {
+        release_spinlock(&need_to_update_display_lock);
+        window_event_t event = {
             .event_type   = WND_EVENT_MOUSE_UP,
             .sender       = wndptr,
             .mouse_button = button,
@@ -744,9 +769,11 @@ void _on_mouse_move(int x, int y)
             send_window_event(wndptr, &window_move_event);
         }
     }
-    last_mouse_move_x      = x;
-    last_mouse_move_y      = y;
+    last_mouse_move_x = x;
+    last_mouse_move_y = y;
+    get_spinlock(&need_to_update_display_lock);
     need_to_update_display = 1;
+    release_spinlock(&need_to_update_display_lock);
     fill_rect(last_mouse_move_x, last_mouse_move_y, 10, 10, COLOR_GREY);
     extern bitmap_buffer* backstage_buffer;
     //局部重绘
@@ -842,7 +869,12 @@ void _render_windows()
     }
     fill_rect(last_mouse_move_x, last_mouse_move_y, 10, 10, COLOR_GREY);
     update_display();
+    //此函数在线程非中断程序中，还需防止鼠标中断同时试图获取该变量
+    cli();
+    get_spinlock(&need_to_update_display_lock);
     need_to_update_display = 0;
+    release_spinlock(&need_to_update_display_lock);
+    sti();
 }
 void _wndpresethandler_closebutton_clicked(windowptr_t wndptr, int event_type,
                                            window_event_t* event)

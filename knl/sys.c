@@ -341,8 +341,7 @@ unsigned long sys_vfork()
 
 unsigned long sys_wait(pid_t pid, int* stat_loc, int options)
 {
-    struct process*       waitee = NULL;
-    extern struct process task[];
+    struct process* waitee = NULL;
     comprintf("wait pid:%d\n", pid);
     if (!current->child_procs)
         return -ECHILD;   //没有子进程可以等
