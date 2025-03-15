@@ -565,7 +565,7 @@ void _proc_end(long v_ret)
     // printf("proc #%d ended with retv %d.\n",cur_proc,ret);
     //切换堆栈
     //__asm__ volatile("mov %0,%%rsp"::"r"(task[0].tss.esp));
-    // del_proc(cur_proc);
+    // kill_task(cur_proc);
     // if (task[cur_proc].parent_pid != -1) {
     //     task[task[cur_proc].parent_pid].stat = TASK_READY;
     //     switch_proc_tss(task[cur_proc].parent_pid);
@@ -574,58 +574,70 @@ void _proc_end(long v_ret)
     //     switch_proc_tss(0);
     // syscall(SYSCALL_DEL_PROC,cur_proc,0,0,0,0);
 }
-void del_proc(int pnr)
+void kill_task(int pnr)
 {
     task[pnr].stat = TASK_ZOMBIE;
     //    task[pnr].pid=-1;
-    //释放申请的页面
-    release_pm(&task[pnr]);
-    //释放存放页目录的页面
-    kfree(task[pnr].pml4);
-    //关闭打开的文件
-    for (int i = 3; i < MAX_PROC_OPENF; i++) {
-        if (task[pnr].openf[i]) {
-            sys_close(i);
+    if (!(task[pnr].clone_flags & CLONE_VM)) {
+        //释放申请的页面
+        release_pm(&task[pnr]);
+        //释放存放页目录的页面
+        kfree(task[pnr].pml4);
+        //释放映射控制块
+        for (mmap_struct* l = task[pnr].mmaps; l; l = l->node.next) {
+            // TODO 这里没有考虑公共映射，直接释放了，以后实现so共享映射的时候应该要修改
+            mmap_struct* mp = l;
+            sys_munmap(mp->base, mp->len);
+            kfree(l);
         }
     }
-    //释放映射控制块
-    for (mmap_struct* l = task[pnr].mmaps; l; l = l->node.next) {
-        // TODO 这里没有考虑公共映射，直接释放了，以后实现so共享映射的时候应该要修改
-        mmap_struct* mp = l;
-        sys_munmap(mp->base, mp->len);
-        kfree(l);
+    else {
+        //栈空间还是要释放的
+        addr_t stk     = task[pnr].mem_struct.stack_bottom;
+        addr_t stk_top = task[pnr].mem_struct.stack_top;
+        for (addr_t p = stk; p < stk_top; p += PAGE_SIZE) {
+            smmap(0, p, 0, current->pml4);
+        }
+    }
+    if (!(task[pnr].clone_flags & CLONE_FD)) {
+        //关闭打开的文件
+        for (int i = 3; i < MAX_PROC_OPENF; i++) {
+            if (task[pnr].openf[i]) {
+                sys_close(i);
+            }
+        }
+        //三个std判断一下是否是会话leader，是的话再关闭
+        if (task[pnr].sid == task[pnr].pid) {
+            // tty和console断联
+            sys_close(0);
+            sys_close(1);
+            sys_close(2);
+            //然后,关闭所有前台进程组的进程
+            for (int i = 0; i < MAX_TASKS; i++) {
+                if (task[i].gpid == task[pnr].pid && i != pnr) {
+                    //发送SIGHUP信号使进程终结
+                    send_signal(task[i].pid, SIGHUP);
+                }
+            }
+        }
     }
     //释放信号队列
     for (struct List* l = task[pnr].signal_queue; l; l = l->next) {
         kfree(l);
     }
-    //三个std判断一下是否是会话leader，是的话再关闭
-    if (task[pnr].sid == task[pnr].pid) {
-        // tty和console断联
-        sys_close(0);
-        sys_close(1);
-        sys_close(2);
-        //然后,关闭所有前台进程组的进程
-        for (int i = 0; i < MAX_TASKS; i++) {
-            if (task[i].gpid == task[pnr].pid && i != pnr) {
-                //发送SIGHUP信号使进程终结
-                send_signal(task[i].pid, SIGHUP);
-            }
-        }
-    }
-    //给子进程发送SIGHUP信号结束他们
+    //给子任务发送SIGHUP信号结束他们
     for (struct process* p = task[pnr].child_procs; p;) {
         send_signal(p->pid, SIGHUP);
         void* tmp = p->node.next;
         //下面这部分是用来推算下一项的地址的
         p = list_next(p, &p->node);
     }
-    //向父进程发送信号告知进程结束
+    //向父任务发送信号告知任务结束
     if (current->parent_pid > 0)
         send_signal(current->parent_pid, SIGCHLD);
     //释放浮点寄存器上下文
     kfree(task[pnr].regs.float_regs);
-    //从进程中解除cr3,tss和ldt
+    //从任务中解除cr3,tss和ldt
     // switch_proc_tss(task[pnr]);
 }
 
@@ -677,7 +689,7 @@ int exec_call(char * path,int priority)
 int sys_exit(int code)
 {
     current->exit_code = code;
-    del_proc(cur_proc);
+    kill_task(cur_proc);
     while (1)
         manage_proc();
     return code;
@@ -1419,29 +1431,9 @@ void store_rbp(unsigned long rbp)
     current->regs.rbp = rbp;
 }
 //创建内核线程
-pid_t create_kernel_thread(int (*func)(), int flags)
+pid_t create_kthread(int (*func)())
 {
-    int pid  = req_proc();
-    int pids = task[pid].pid;
-    if (pid == -1)
-        return -1;
-    //复制0号进程
-    memcpy(task + pid, task, sizeof(struct process));
-    task[pid].pid  = pids;
-    task[pid].stat = TASK_ZOMBIE;
-
-
-    task[pid].parent_pid = task->pid;
-    //设置父子关系以及初始化子进程的的list节点
-    list_init(&task[pid].node);
-    task[pid].child_procs = NULL;
-    task[pid].node.data   = &task[pid];
-    if (!task->child_procs)
-        task->child_procs = &task[pid].node;
-    else
-        list_add(task->child_procs, &task[pid].node);
-
-    //
+    return clone_task(func, CLONE_KTASK | CLONE_VM);
 }
 
 pid_t clone_task(int (*entry)(void*), int flags)
@@ -1609,8 +1601,8 @@ pid_t clone_task(int (*entry)(void*), int flags)
             }
         }
     }
-
-    task[pid].stat = TASK_READY;
+    task[pid].clone_flags = flags;
+    task[pid].stat        = TASK_READY;
 
 
     //如果父进程没有堆，不开辟。留给load_xx函数。

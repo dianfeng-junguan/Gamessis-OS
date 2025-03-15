@@ -140,7 +140,6 @@ int execute(char* path, char** argv)
         *p = '/';
     }
     // extern struct file opened[];
-    extern struct process task[];
     // int pi= reg_proc(proc_start, &opened[cwd_fno], &opened[fno]);
     return 0;
 }
@@ -361,10 +360,9 @@ int do_execve(char* path, char** argv, char** environ, int argc, int environc)
 }
 int exec_call(char* path)
 {
-    int                   pi  = execute(path, NULL);
-    int                   tss = _TSS_IND(pi) * 8;
-    extern struct process task[];
-    extern int            cur_proc;
+    int        pi  = execute(path, NULL);
+    int        tss = _TSS_IND(pi) * 8;
+    extern int cur_proc;
     switch_proc_tss(pi);
     while (task[pi].stat != TASK_ZOMBIE)
         ;
@@ -372,8 +370,7 @@ int exec_call(char* path)
 }
 int proc_start()
 {
-    extern struct process task[];
-    extern int            cur_proc;
+    extern int cur_proc;
     load_pe(&task[cur_proc]);
     //释放进程资源
     sys_exit(0);
@@ -539,8 +536,7 @@ int load_pe(struct process* proc)
             relp = (int)relp + 0x1000;
         }
     }
-    extern struct process task[];
-    extern int            cur_proc;
+    extern int cur_proc;
     //初始化堆
     chunk_header hdrtmp = {.alloc = 0, .next = NULL, .pgn = 0, .prev = NULL};   //空堆
     //拷贝触发页中断然后分配

@@ -240,3 +240,4 @@ void _draw_window(windowptr_t wndptr);
 void _draw_button(windowptr_t wndptr);
 void _draw_label(windowptr_t wndptr);
 void _draw_editbox(windowptr_t wndptr);
+void wndman_thread();

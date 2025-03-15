@@ -212,14 +212,16 @@ struct process
     struct file*      openf[MAX_PROC_OPENF];
     TSS               tss;
     regs_t            regs;
-    mmap_struct*      mmaps;          //内存空间的映射
-    struct List       node;           //本进程的节点
-    struct List*      child_procs;    //子进程
-    struct List*      signal_queue;   //等待处理的信号
-    void*             dl;             // dl的文件描述符
-    sigset_t          sigmask;        //信号屏蔽位图
-    int               level;          //特权级别
-} __attribute__((packed));            // 208 bytes
+    mmap_struct*      mmaps;              //内存空间的映射
+    struct List       node;               //本进程的节点
+    struct List*      child_procs;        //子进程
+    struct List*      signal_queue;       //等待处理的信号
+    void*             dl;                 // dl的文件描述符
+    sigset_t          sigmask;            //信号屏蔽位图
+    int               level;              //特权级别
+    int               clone_flags;        //被创建的时候的CLONE标志位
+    void*             attached_console;   //进程所附着的控制台(windowptr_t)
+} __attribute__((packed));                // 208 bytes
 #endif
 #define TASK_USER 0
 #define TASK_KTASK 1
@@ -274,7 +276,7 @@ void schedule();
 void switch_proc_tss(int pnr);
 // tss_ind:tss在gdt中的索引
 void switch_proc_asm(int tss_ind);
-void del_proc(int pnr);
+void kill_task(int pnr);
 int  set_proc_stat(int pid, int stat);
 //内核将dll加载到指定地方
 int load_dll_at(char* path, int addr);
@@ -396,8 +398,10 @@ struct process* get_proc(pid_t pid);
     @return 新进程的进程描述符
 */
 pid_t clone_task(int (*entry)(void*), int flags);
+pid_t create_kthread(int (*func)());
 
 extern struct process* current;
 extern mmap_struct*    all_mmaps;
+extern struct process* task;
 #pragma pack()
 #endif   // SRC_PROC_H
