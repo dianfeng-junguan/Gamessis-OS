@@ -10,10 +10,10 @@ ASM=nasm
 CC=gcc
 BUILD=bin
 LD=ld
-include loader/loader.mk
-include test/test.mk
-include usrlib/lib.mk
-include dl/dl.mk
+include arch/loader/loader.mk
+include usr/test/test.mk
+include usr/usrlib/lib.mk
+include usr/dl/dl.mk
 include tools/kallsyms/kallsyms.mk
 KNL_OFILES = int.o main.o log.o \
 			memory.o devman.o proc.o inta.o \
@@ -43,7 +43,15 @@ knl:protoknl font
 	debugedit bin/gmsknl.elf -b /mnt/d/Code/Comprehensive/OS/workspace/64 -d D://Code/Comprehensive/OS/workspace/64
 	@cp bin/gmsknl.elf bin/gmsknlm.elf
 	@objcopy bin/gmsknl.elf -I binary -O elf64-x86-64 bin/gmsknl.o -B i386
-	@objdump -l -S -d bin/gmsknl.elf -M intel > disas/knl.s
+	@objdump -l -S -d bin/gmsknl.elf -M intel > bin/knl.s
+link_kernel:
+	@ld -T knl.lds -o bin/gmsknl.elf $(addprefix $(BUILD)/,$(KNL_OFILES)) $(addprefix $(BUILD)/,$(MODS_OFILES)) $(addprefix $(BUILD)/,$(COM_OFILES)) --emit-relocs
+	make kallsyms
+	@ld -T knl.lds -o bin/gmsknl.elf $(addprefix $(BUILD)/,$(KNL_OFILES)) $(addprefix $(BUILD)/,$(MODS_OFILES)) $(addprefix $(BUILD)/,$(COM_OFILES)) --emit-relocs
+	debugedit bin/gmsknl.elf -b /mnt/d/Code/Comprehensive/OS/workspace/64 -d D://Code/Comprehensive/OS/workspace/64
+	@cp bin/gmsknl.elf bin/gmsknlm.elf
+	@objcopy bin/gmsknl.elf -I binary -O elf64-x86-64 bin/gmsknl.o -B i386
+	@objdump -l -S -d bin/gmsknl.elf -M intel > bin/knl.s
 font: res/font.psf
 	@objcopy -O elf64-x86-64 -B i386 -I binary res/font.psf bin/font.o
 boot:

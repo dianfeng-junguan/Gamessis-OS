@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.18.4)
 project(gms)
 enable_language(ASM_NASM)
 # set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c17 -pedantic")
@@ -6,6 +6,7 @@ set(CMAKE_ASM_COMPILER nasm)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY bin)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 SET(CMAKE_ASM_NASM_SOURCE_FILE_EXTENSIONS s)  # 设置NASM的文件扩展名为s
 include_directories(include)
 file(GLOB_RECURSE KNL_ASM knl/*.s)
@@ -15,60 +16,64 @@ set(KNL_COMS com/str.c com/mem.c com/types.c com/wchar.c)
 set(OTHER_OBJS rd.o)
 set(CFLAGS -g -fno-pie -fno-pic -nostdlib -fno-stack-protector -nostartfiles -I include -m64 -O0 -fno-strict-aliasing -mcmodel=large -fPIC)
 
+add_compile_options(-w)
+
+#com
 add_library(libcom OBJECT ${KNL_COMS})
 set_target_properties(libcom PROPERTIES POSITION_INDEPENDENT_CODE ON)
 target_compile_options(libcom PRIVATE -w -g -fno-pie -fno-pic -nostdlib -fno-stack-protector -nostartfiles -I include -m64 -O0 -fno-strict-aliasing -mcmodel=large -fPIC)
 
+#knl
 add_library(protoknlasm OBJECT ${KNL_ASM})
 set_source_files_properties(${KNL_ASM} PROPERTIES LANGUAGE ASM_NASM)
 target_compile_options(protoknlasm PRIVATE -g -f elf64 -w-zext-reloc -w-zeroing -Iinclude -Iknl)
 
 
-add_library(protoknlc OBJECT ${KNL_SRC} ${KNL_COMS})
+add_library(protoknlc OBJECT ${KNL_SRC})
 target_compile_options(protoknlc PRIVATE ${CFLAGS})
 
 
-
+#rd
 add_custom_target(rd COMMAND objcopy rd.img bin/rd.o -B i386 -O elf64-x86-64 -I binary
     DEPENDS rd.img WORKING_DIRECTORY ../)
 
+#font
 add_custom_target(font ALL COMMAND objcopy -O elf64-x86-64 -B i386 -I binary ../res/font.psf font.o DEPENDS ../res/font.psf)
 
-add_executable(protoknl $<TARGET_OBJECTS:protoknlasm> $<TARGET_OBJECTS:protoknlc> ${OTHER_OBJS})
+
+#drivers
+file(GLOB_RECURSE SRC_DRIVERS drivers/*.c)
+file(GLOB_RECURSE SRC_DRIVERS_ASM drivers/*.s)
+set_source_files_properties(${SRC_DRIVERS_ASM} PROPERTIES LANGUAGE ASM_NASM)
+add_library(drivers OBJECT ${SRC_DRIVERS})
+add_library(driversasm OBJECT ${SRC_DRIVERS_ASM})
+target_compile_options(driversasm PRIVATE -g -f elf64 -w-zext-reloc -w-zeroing -Iinclude)
+
+#mm
+file(GLOB_RECURSE SRC_MM mm/*.c)
+add_library(mm OBJECT ${SRC_MM})
+
+#arch
+file(GLOB SRC_ARCH arch/*.c)
+file(GLOB SRC_ARCH_ASM arch/*.s)
+set_source_files_properties(${SRC_ARCH_ASM} PROPERTIES LANGUAGE ASM_NASM)
+add_library(arch OBJECT ${SRC_ARCH})
+add_library(archasm OBJECT ${SRC_ARCH_ASM})
+target_compile_options(archasm PRIVATE -g -f elf64 -w-zext-reloc -w-zeroing -Iinclude)
+
+#fs
+file(GLOB_RECURSE SRC_FS fs/*.c)
+add_library(fs OBJECT ${SRC_FS})
+
+#gui
+file(GLOB_RECURSE SRC_GUI gui/*.c)
+add_library(gui OBJECT ${SRC_GUI})
+
+
+add_executable(protoknl $<TARGET_OBJECTS:protoknlasm> $<TARGET_OBJECTS:protoknlc> 
+$<TARGET_OBJECTS:libcom> $<TARGET_OBJECTS:fs> $<TARGET_OBJECTS:mm> $<TARGET_OBJECTS:drivers> $<TARGET_OBJECTS:driversasm> 
+$<TARGET_OBJECTS:arch> $<TARGET_OBJECTS:archasm> $<TARGET_OBJECTS:gui> ${OTHER_OBJS})
 set_target_properties(protoknl PROPERTIES OUTPUT_NAME gmsknl.elf)
 target_link_options(protoknl PRIVATE -Wl,-T../knl.lds -Wl,--emit-relocs)
 
-
-# kallsyms()
-# function(kallsyms)
-#     add_custom_command(OUTPUT bin/kallsyms.o COMMAND nm -n bin/gmsknl.elf>bin/kallsyms.txt --defined-only
-# 	COMMAND ./ksyms bin/kallsyms.txt
-# 	COMMAND objcopy bin/kallsyms.bin bin/kallsyms.o -O elf64-x86-64 -I binary -B i386
-#     WORKING_DIRECTORY ../ DEPENDS protoknl)
-# endfunction(kallsyms)
-# process_knl()
-# function(process_knl)
-#     add_custom_command(OUTPUT gmsknl.elf 
-#     COMMAND ld -T knl.lds -o bin/gmsknl.elf $<TARGET_OBJECTS:protoknlasm> $<TARGET_OBJECTS:protoknlc> ${OTHER_OBJS} bin/kallsyms.o --emit-relocs
-# 	COMMAND debugedit bin/gmsknl.elf -b /mnt/d/Code/Comprehensive/OS/workspace/64 -d D://Code/Comprehensive/OS/workspace/64
-# 	COMMAND cp bin/gmsknl.elf bin/gmsknlm.elf
-# 	COMMAND objcopy bin/gmsknl.elf -I binary -O elf64-x86-64 bin/gmsknl.o -B i386
-# 	COMMAND objdump -l -S -d bin/gmsknl.elf -M intel > disas/knl.s
-#     WORKING_DIRECTORY ../ DEPENDS protoknl)
-# endfunction(process_knl)
-
-#loader
-# add_library(libloader32p OBJECT loader/setup.s)
-# target_compile_options(libloader32p PRIVATE -g -f elf32 -w-zext-reloc -w-zeroing)
-
-# add_custom_target(libloader32 ALL COMMAND objcopy -I elf32-i386 -O elf64-x86-64 $<TARGET_OBJECTS:libloader32p> setup.o)
-
-# add_library(libloader OBJECT loader/setup64.s loader/reloc.c)
-# target_compile_options(libloader PRIVATE "$<COMPILE_LANGUAGE:C>: -g -fno-pie -fno-pic -nostdlib -fno-stack-protector -nostartfiles -I include -m64 -O0 -fno-strict-aliasing -mcmodel=large"
-#  "$<COMPILE_LANGUAGE:ASM_NASM>: -g -f elf64 -w-zext-reloc -w-zeroing -Iinclude -Iknl")
-
-# add_custom_target(loader ALL WORKING_DIRECTORY ../ COMMAND ld -T loader/loader.lds -o bin/gmsknl.img  bin/setup.o $<TARGET_OBJECTS:libloader> bin/gmsknl.o)
-
-
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
