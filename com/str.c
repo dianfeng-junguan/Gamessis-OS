@@ -1,4 +1,4 @@
-#include "str.h"
+#include "com/str.h"
 #include "typename.h"
 #include <stdarg.h>
 static char strtokkee[512], *strtokkeeptr = strtokkee;

@@ -60,9 +60,6 @@ discard_context:
 ;    iret
 ;.done:
 ;    ret
-%include "gdtdefine.inc"
-desc:
-    GDTdescriptor 0,0,0
 global ret_sys_call
 ret_sys_call:
 

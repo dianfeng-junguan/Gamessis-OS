@@ -6,7 +6,7 @@
 #include <proc.h>
 #include <gdt.h>
 #include <framebuffer.h>
-#include <mem.h>
+#include <com/mem.h>
 #include <vfs.h>
 
 #include <disk.h>

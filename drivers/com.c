@@ -3,9 +3,9 @@
 //
 #include "com.h"
 #include "int.h"
-#include "mem.h"
+#include "com/mem.h"
 #include "memory.h"
-#include "str.h"
+#include "com/str.h"
 #include <stdarg.h>
 
 

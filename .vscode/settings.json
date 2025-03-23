@@ -50,17 +50,18 @@
     "C_Cpp.default.compilerPath": "E:\\Mingw\\bin\\gcc.exe",
     "clangd.fallbackFlags": [
         "-I${workspaceFolder}/usrlib/include",
-        "-ID:/Code/Comprehensive/轻量级libc/back/libc/include",
-        "-ID:/Code/Comprehensive/轻量级libc/back/libc/printf/src",
-        "-ID:/Code/Comprehensive/轻量级libc/back/libc/arch/x86_64/include"
+        "-I${workspaceFolder}/include"
     ],
     "clangd.arguments": [
-        "--header-insertion=never"
+        "--header-insertion=never",
+        "--cross-file-rename"
     ],
     "clang-tidy.buildPath": "bin",
     "clang-tidy.compilerArgs": [
         "-Iinclude",
-        "-nostdinc"
+        "-nostdinc",
+        "--clang-tidy-checks=performance-*,bugprone-*",
+        "-extra-arg=-Wno-drv_argument_not_allowed_with"
     ],
     "clang-tidy.fixOnSave": false,
     "terminal.integrated.suggest.enabled": true,

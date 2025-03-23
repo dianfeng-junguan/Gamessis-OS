@@ -50,6 +50,7 @@ typedef struct
 } __attribute__((packed)) ksym;
 
 #endif
+// TODO 转到寄存器部分
 void outb(u16 device, u8 value);
 void outw(u16 dev, u16 v);
 void io_delay();

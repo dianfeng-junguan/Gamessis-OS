@@ -6,13 +6,13 @@
 #include "ramdisk.h"
 #include "syscall.h"
 #include "memory.h"
-#include "str.h"
+#include "com/str.h"
 #include "typename.h"
 #include "fcntl.h"
 #include <disk.h>
 #include <tty.h>
 #include "proc.h"
-#include "mem.h"
+#include "com/mem.h"
 #include "framebuffer.h"
 #include "log.h"
 #include <vfs.h>

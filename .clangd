@@ -2,3 +2,6 @@ Index:
   StandardLibrary: No
 CompileFlags: 
  Add: [-Iinclude,-nostdinc]
+Diagnostics: 
+  Suppress: 
+    - drv_argument_not_allowed_with

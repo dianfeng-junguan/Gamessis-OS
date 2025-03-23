@@ -11,7 +11,7 @@
 #include "signal.h"
 #include "syscall.h"
 #include "kb.h"
-#include "mem.h"
+#include "com/mem.h"
 #include "errno.h"
 #include "log.h"
 #include "wndman.h"

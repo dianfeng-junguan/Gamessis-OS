@@ -3,7 +3,7 @@
 #include "typename.h"
 #include "memman.h"
 #include "framebuffer.h"
-#include "str.h"
+#include "com/str.h"
 #include "proc.h"
 #include "int.h"
 #ifdef DEBUG

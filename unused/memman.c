@@ -7,8 +7,8 @@
 #include "int.h"
 #include "memory.h"
 #include "log.h"
-#include "str.h"
-#include "mem.h"
+#include "com/str.h"
+#include "com/mem.h"
 #ifdef _DEBUG
 #    include <Windows.h>
 #    include <math.h>

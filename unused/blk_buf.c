@@ -2,7 +2,7 @@
 #include "signal.h"
 #include <blk_buf.h>
 #include <blk_dev.h>
-#include <mem.h>
+#include <com/mem.h>
 #include <errno.h>
 #include <memory.h>
 #include "int.h"
