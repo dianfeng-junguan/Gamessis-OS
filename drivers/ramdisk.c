@@ -8,7 +8,7 @@
 #include "ioctlarg.h"
 #include "memory.h"
 #include "log.h"
-#include "mem.h"
+#include "com/mem.h"
 #include "proc.h"
 
 /*

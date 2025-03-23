@@ -8,11 +8,11 @@
 #include "memman.h"
 #include "memory.h"
 #include "proc.h"
-#include "str.h"
+#include "com/str.h"
 #include "vfs.h"
 #include "volume.h"
 #include "sys/stat.h"
-#include "kwchar.h"
+#include "com/kwchar.h"
 #ifdef DEBUG
 #    include <stdio.h>
 #    include <string.h>

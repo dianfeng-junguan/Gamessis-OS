@@ -8,7 +8,7 @@
 #include "driverman.h"
 #include "memory.h"
 #include "log.h"
-#include "mem.h"
+#include "com/mem.h"
 
 /*
  * 这部分主要是测试用，之后也可能用上（如果之后设计了initrd之类的话）

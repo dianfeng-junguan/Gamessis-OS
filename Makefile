@@ -35,7 +35,7 @@ k:
 	make knl
 	sync
 	make cpknl
-knl:protoknl font
+knl:protoknl_cmake font
 	objcopy rd.img bin/rd.o -B i386 -O elf64-x86-64 -I binary
 	@ld -T knl.lds -o bin/gmsknl.elf $(addprefix $(BUILD)/,$(KNL_OFILES)) $(addprefix $(BUILD)/,$(MODS_OFILES)) $(addprefix $(BUILD)/,$(COM_OFILES)) --emit-relocs
 	make kallsyms
@@ -142,5 +142,5 @@ include knl/Makefile
 # proto_knl: KNL_OFILES
 # 	$(LD) $^ -o $(BUILD)/gmsknl.elf
 protoknl_cmake:
-	make -C bin clean
+	# make -C bin clean
 	make -C bin

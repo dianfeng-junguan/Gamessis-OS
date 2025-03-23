@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.18.4)
 project(gms)
 enable_language(ASM_NASM)
-# set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c17 -pedantic")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11 -pedantic")
 set(CMAKE_ASM_COMPILER nasm)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY bin)

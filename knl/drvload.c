@@ -3,7 +3,7 @@
 #include "memman.h"
 #include "vfs.h"
 #include "memory.h"
-#include "mem.h"
+#include "com/mem.h"
 #define DRVLOAD_RETV_FAILED_OPEN 1
 mod_obj* mods;
 

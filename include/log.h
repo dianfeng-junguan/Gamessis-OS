@@ -1,5 +1,4 @@
 /* 与显示相关的设置。 */
-#include <stdarg.h>
 
 #define COLUMNS 80
 #define LINES 24

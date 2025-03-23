@@ -9,9 +9,9 @@
 #include "memman.h"
 #include "memory.h"
 #include "log.h"
-#include "mem.h"
+#include "com/mem.h"
 #include "proc.h"
-#include "str.h"
+#include "com/str.h"
 #include "sys/types.h"
 #include <ramdisk.h>
 #include "sys/stat.h"

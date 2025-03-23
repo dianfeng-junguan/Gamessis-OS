@@ -6,13 +6,13 @@
 #include "vfs.h"
 #include "errno.h"
 #include "fcntl.h"
-#include "mem.h"
+#include "com/mem.h"
 #include "memory.h"
 #include "fat32.h"
 #include "fcntl.h"
 #include "proc.h"
 #include "log.h"
-#include "str.h"
+#include "com/str.h"
 #include "exe.h"
 #include "syscall.h"
 #include "int.h"
@@ -110,7 +110,7 @@ unsigned long sys_open(char* filename, int flags)
         return -EEXIST;
     }
     if (dentry == NULL) {
-        if (flags & O_CREAT == 0)
+        if ((flags & O_CREAT) == 0)
             return -ENOENT;
         //创建文件
         //找到上一级目录
