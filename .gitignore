@@ -2,8 +2,6 @@
 
 *.bin
 
-*.img
-
 *.elf
 
 *.obj
@@ -20,9 +18,10 @@ OVMF.fd
 
 log/
 
-*.s
 
 *.txt
+
+!CMakeLists.txt
 
 disas/
 

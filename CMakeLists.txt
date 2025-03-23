@@ -71,8 +71,9 @@ add_library(gui OBJECT ${SRC_GUI})
 
 
 add_executable(protoknl $<TARGET_OBJECTS:protoknlasm> $<TARGET_OBJECTS:protoknlc> 
-$<TARGET_OBJECTS:libcom> $<TARGET_OBJECTS:fs> $<TARGET_OBJECTS:mm> $<TARGET_OBJECTS:drivers> $<TARGET_OBJECTS:driversasm> 
-$<TARGET_OBJECTS:arch> $<TARGET_OBJECTS:archasm> $<TARGET_OBJECTS:gui> ${OTHER_OBJS})
+$<TARGET_OBJECTS:libcom> $<TARGET_OBJECTS:fs> $<TARGET_OBJECTS:mm> $<TARGET_OBJECTS:drivers>
+$<TARGET_OBJECTS:driversasm> $<TARGET_OBJECTS:arch> $<TARGET_OBJECTS:archasm>
+ $<TARGET_OBJECTS:gui> ${OTHER_OBJS})
 set_target_properties(protoknl PROPERTIES OUTPUT_NAME gmsknl.elf)
 target_link_options(protoknl PRIVATE -Wl,-T../knl.lds -Wl,--emit-relocs)
 
