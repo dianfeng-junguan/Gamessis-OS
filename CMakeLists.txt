@@ -78,3 +78,11 @@ set_target_properties(protoknl PROPERTIES OUTPUT_NAME gmsknl.elf)
 target_link_options(protoknl PRIVATE -Wl,-T../knl.lds -Wl,--emit-relocs)
 
 
+# file(GLOB_RECURSE SRC_LIB usr/usrlib/*.c)
+# file(GLOB_RECURSE SRC_LIB_ASM usr/usrlib/syscalls.asm)
+# set_source_files_properties(${SRC_LIB_ASM} PROPERTIES LANGUAGE ASM_NASM)
+# set_source_files_properties(${SRC_LIB_ASM} PROPERTIES COMPILE_FLAGS "-f elf64")
+# set_source_files_properties(${SRC_LIB} PROPERTIES COMPILE_FLAGS "-I include -w -nostdlib -nostdinc -nostartfiles -nodefaultlibs -fno-stack-protector")
+# add_library(usrlib STATIC ${SRC_LIB} ${SRC_LIB_ASM})
+# target_include_directories(usrlib PUBLIC usr/usrlib/include include)
+# target_link_options(usrlib PRIVATE OUTPUT_NAME libgms.a)

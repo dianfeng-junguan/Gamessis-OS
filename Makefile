@@ -12,7 +12,7 @@ BUILD=bin
 LD=ld
 include arch/loader/loader.mk
 include usr/test/test.mk
-include usr/usrlib/lib.mk
+include usr/usrlib/Makefile
 include usr/dl/dl.mk
 include tools/kallsyms/kallsyms.mk
 KNL_OFILES = int.o main.o log.o \
