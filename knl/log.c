@@ -3,7 +3,7 @@
 #include "framebuffer.h"
 #include "memman.h"
 #include "memory.h"
-#include "str.h"
+#include "com/str.h"
 
 static unsigned char* video;
 static int            xpos, ypos;

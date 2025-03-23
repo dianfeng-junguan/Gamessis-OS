@@ -8,7 +8,7 @@
 #include "int.h"
 #include "kb.h"
 #include "log.h"
-#include "mem.h"
+#include "com/mem.h"
 #include "memman.h"
 #include "memory.h"
 #include "multiboot2.h"

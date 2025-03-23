@@ -4,8 +4,8 @@
 #else
 #include "sys/types.h"
 #include "memory.h"
-#include "mem.h"
-#include "str.h"
+#include "com/mem.h"
+#include "com/str.h"
 #endif
 #define MAX_VOLUMES  100   //最大卷数
 #define VOLUME_FLAG_BOOTABLE  0x0001  //可引导分区

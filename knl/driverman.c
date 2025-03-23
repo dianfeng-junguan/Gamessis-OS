@@ -1,7 +1,7 @@
 #include "driverman.h"
 #include "memman.h"
 #include "memory.h"
-#include "mem.h"
+#include "com/mem.h"
 #include "log.h"
 #include "proc.h"
 #include "int.h"

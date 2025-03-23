@@ -1,4 +1,4 @@
-#include "kwchar.h"
+#include "com/kwchar.h"
 #include "typename.h"
 
 size_t mbstowcsk(wchar_t* wcstr, const char* mbstr, size_t count)

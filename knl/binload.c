@@ -2,8 +2,8 @@
 #include "memman.h"
 #include "memory.h"
 #include "vfs.h"
-#include "mem.h"
-#include "str.h"
+#include "com/mem.h"
+#include "com/str.h"
 #include "log.h"
 exec_format* formats;
 

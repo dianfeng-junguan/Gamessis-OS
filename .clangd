@@ -1,4 +1,0 @@
-Index:
-  StandardLibrary: No
-CompileFlags: 
- Add: [-Iinclude,-nostdinc]

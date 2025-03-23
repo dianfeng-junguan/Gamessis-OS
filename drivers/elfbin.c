@@ -8,7 +8,7 @@
 #include "vfs.h"
 #include "log.h"
 #include "memory.h"
-#include "mem.h"
+#include "com/mem.h"
 exec_format* elf_format;
 /**
     @brief 加载obj类型文件。

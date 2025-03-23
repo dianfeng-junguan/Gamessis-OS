@@ -1,6 +1,6 @@
 #pragma once
 #include "sys/types.h"
-#include <stdarg.h>
+typedef __builtin_va_list va_list;
 #define RECOMMENDED_MAXSTRLEN 4096
 int strcpyk(unsigned char* dest, unsigned char* buf);
 //返回实际拷贝了多少字符

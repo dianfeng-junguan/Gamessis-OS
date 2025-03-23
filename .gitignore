@@ -2,8 +2,6 @@
 
 *.bin
 
-*.img
-
 *.elf
 
 *.obj
@@ -20,9 +18,10 @@ OVMF.fd
 
 log/
 
-*.s
 
 *.txt
+
+!CMakeLists.txt
 
 disas/
 
@@ -32,4 +31,22 @@ disas/
 
 .clangd-tidy
 
-subproj/thinfat32
+subproj/
+
+日志.md
+
+unused/
+
+.vscode/
+
+.ssh/
+
+.git/
+
+calltree.dot
+
+reloccheat.py
+
+gdb.sh
+
+gen_inthandler.py

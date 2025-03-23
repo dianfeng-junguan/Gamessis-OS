@@ -23,15 +23,15 @@ __attribute__((always_inline)) inline void list_init(struct List* list)
 }
 
 __attribute__((always_inline)) inline void list_add_to_behind(
-    struct List* entry, struct List* new)   ////add to entry behind
+    struct List* entry, struct List* newe)   ////add to entry behind
 {
-    new->next = entry->next;
-    new->prev = entry;
-    if (new->next)
-        new->next->prev = new;
-    entry->next = new;
+    newe->next = entry->next;
+    newe->prev = entry;
+    if (newe->next)
+        newe->next->prev = newe;
+    entry->next = newe;
 }
-void list_add(struct List* entry, struct List* new);
+void list_add(struct List* entry, struct List* newe);
 
 //根据list结构体成员在结构体内的偏移，计算链表中下一项的位置。如果下一项为null，则返回null。
 // list_as_member:在结构体内list的指针

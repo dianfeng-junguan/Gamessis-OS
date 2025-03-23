@@ -4,7 +4,7 @@
 #include "framebuffer.h"
 #include "int.h"
 #include "log.h"
-#include "mem.h"
+#include "com/mem.h"
 #include "proc.h"
 #include "signal.h"
 #include "sys/mman.h"

@@ -4,7 +4,7 @@
 #include "driverman.h"
 #include "memman.h"
 #include "sys/types.h"
-#include "mem.h"
+#include "com/mem.h"
 #include "syscall.h"
 #include "sys/mman.h"
 #include "log.h"
