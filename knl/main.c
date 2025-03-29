@@ -174,7 +174,7 @@ void main(unsigned int magic, void* addr)
     make_default_devfiles();
     further_init_proc0();
 
-    init_wndman();
+    // init_wndman();
 
     /* windowptr_t wnd    = create_window("gamessis os", WNDTYPE_WINDOW);
     windowptr_t button = create_window("button", WNDTYPE_BUTTON);

@@ -401,6 +401,7 @@ pid_t clone_task(int (*entry)(void*), int flags);
 pid_t create_kthread(int (*func)());
 
 extern struct process* current;
+extern pid_t           cur_proc;
 extern mmap_struct*    all_mmaps;
 extern struct process* task;
 #pragma pack()

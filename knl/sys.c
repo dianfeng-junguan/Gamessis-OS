@@ -773,3 +773,19 @@ int sys_default_deal_window_event(window_event_t* event)
 {
     return default_deal_window_event(event);
 }
+void* sys_create_console()
+{
+    return create_console();
+}
+int sys_destroy_console(void* console)
+{
+    return destroy_console(console);
+}
+int sys_attach_console(void* console)
+{
+    return attach_console(cur_proc, console);
+}
+int sys_detach_console()
+{
+    return detach_console(cur_proc);
+}

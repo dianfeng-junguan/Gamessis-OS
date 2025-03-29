@@ -11,10 +11,16 @@ CC=gcc
 BUILD=bin
 LD=ld
 include arch/loader/loader.mk
+include arch/Makefile
 include usr/test/test.mk
 include usr/usrlib/Makefile
 include usr/dl/dl.mk
 include tools/kallsyms/kallsyms.mk
+include mm/Makefile
+include fs/Makefile
+include drivers/Makefile
+include com/Makefile
+include gui/Makefile
 KNL_OFILES = int.o main.o log.o \
 			memory.o devman.o proc.o inta.o \
 			gdt.o gdta.o clock.o clocka.o exe.o \
@@ -27,6 +33,8 @@ MODS_OFILES = kb.o disk.o diska.o fat32.o \
 COM_OFILES = mem.o str.o types.o proca.o font.o wchar.o
 PH_MODIFIER = /mnt/d/Code/Python/elfph/elf.py
 QEMU_LOG = -d int,cpu_reset,guest_errors,page -D log/log.txt -cpu qemu64,+sse4.1,+sse4.2,+sse3,+ssse3
+kernel_needed=$(kernelobj) $(kernelobjasm) $(fsobjs) $(driverobjs) $(driverobjsasm) \
+	$(comobjs) $(archobjs) $(archobjsasm) $(mmobjs) $(guiobjs) rd.o font.o
 all:
 	make knl
 	make loader
@@ -35,11 +43,11 @@ k:
 	make knl
 	sync
 	make cpknl
-knl:protoknl_cmake font
+knl:mm arch kernel fs drivers gui mm com font
 	objcopy rd.img bin/rd.o -B i386 -O elf64-x86-64 -I binary
-	@ld -T knl.lds -o bin/gmsknl.elf $(addprefix $(BUILD)/,$(KNL_OFILES)) $(addprefix $(BUILD)/,$(MODS_OFILES)) $(addprefix $(BUILD)/,$(COM_OFILES)) --emit-relocs
+	@ld -T knl.lds -o bin/gmsknl.elf $(addprefix $(BUILD)/,$(kernel_needed)) --emit-relocs
 	make kallsyms
-	@ld -T knl.lds -o bin/gmsknl.elf $(addprefix $(BUILD)/,$(KNL_OFILES)) $(addprefix $(BUILD)/,$(MODS_OFILES)) $(addprefix $(BUILD)/,$(COM_OFILES)) --emit-relocs
+	@ld -T knl.lds -o bin/gmsknl.elf $(addprefix $(BUILD)/,$(kernel_needed)) bin/kallsyms.o --emit-relocs
 	debugedit bin/gmsknl.elf -b /mnt/d/Code/Comprehensive/OS/workspace/64 -d D://Code/Comprehensive/OS/workspace/64
 	@cp bin/gmsknl.elf bin/gmsknlm.elf
 	@objcopy bin/gmsknl.elf -I binary -O elf64-x86-64 bin/gmsknl.o -B i386

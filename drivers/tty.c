@@ -35,15 +35,11 @@ tty_t* get_tty(int dev)
 }
 long close_tty(int dev)
 {
-    tty_t*        tty  = get_tty(dev);
-    tty_openbufs* opbf = tty->stds;
-    stdbuf_t*     bi   = &opbf->stdin_buf;
-    stdbuf_t*     bo   = &opbf->stdout_buf;
-    stdbuf_t*     be   = &opbf->stderr_buf;
-    kfree((addr_t)bi);
-    kfree((addr_t)bo);
-    kfree((addr_t)be);
-    // kfree((addr_t) filp->private_data);
+    tty_t* tty = get_tty(dev);
+    tty->link--;
+    if (tty->link == 0) {
+        // kfree((addr_t) filp->private_data);
+    }
     return 1;
 }
 
@@ -61,27 +57,8 @@ long open_tty(int dev)
     if (!t_tty) {
         return -ENOMEM;
     }
-    tty_openbufs* ntty = (tty_openbufs*)kmalloc(PAGE_4K_SIZE, NO_ALIGN);
-    //创建三个缓冲区
-    ntty->stdin_buf.data  = (char*)kmalloc(PAGE_4K_SIZE, NO_ALIGN);
-    ntty->stdout_buf.data = (char*)kmalloc(PAGE_4K_SIZE, NO_ALIGN);
-    ntty->stderr_buf.data = (char*)kmalloc(PAGE_4K_SIZE, NO_ALIGN);
-    ntty->stdin_buf.wptr  = 0;
-    ntty->stdout_buf.wptr = 0;
-    ntty->stderr_buf.wptr = 0;
-    ntty->stdin_buf.rptr  = 0;
-    ntty->stdout_buf.rptr = 0;
-    ntty->stderr_buf.rptr = 0;
-    ntty->stdin_buf.size  = PAGE_4K_SIZE;
-    ntty->stdout_buf.size = PAGE_4K_SIZE;
-    ntty->stderr_buf.size = PAGE_4K_SIZE;
-    //设置inode文件操作方式为tty方式
-    // inode->f_ops = &tty_fops;
-    // filp->f_ops  = &tty_fops;
-    ntty->next = NULL;
-    // filp->private_data=ntty;
-
-    t_tty->stds = ntty;
+    t_tty->link++;
+    if (t_tty->link == 1) {}
     return 1;
 }
 
@@ -301,7 +278,7 @@ int init_console()
     // set_gate(0x21, (addr_t)key_proc, GDT_SEL_CODE, GATE_PRESENT | INT_GATE);
     register_int(0x21, _key_proc, key_proc, GATE_PRESENT | INT_GATE);
     register_int(0x2c, _mouse_proc, mouse_proc, GATE_PRESENT | INT_GATE);
-    ps2_init();
+    // ps2_init();
     if ((drv_tty = register_driver(tty_mod_init, tty_mod_exit, tty_mod_ioctl)) < 0) {
         return -1;
     }
@@ -439,6 +416,7 @@ int key_proc()
         break;
     default: break;
     }
+    // TODO key_proc剥离出来变成键盘驱动，向tty发送数据
     //发送到std
     if (!(scan1 & FLAG_BREAK) && ch < 0x80 && !tty->readonly) {
         if ((ch == 'c' || ch == 'C') && get_key(CTLK_CTRL, tty->ctl_kmap)) {
@@ -507,6 +485,29 @@ int register_tty(tty_t* tty)
     target->text_buf_size = 2 * page_size;
     target->show          = 1;
     target->readonly      = 0;
+    // target->stds          = kmalloc(sizeof(tty_openbufs),NO_ALIGN);
+
+    //创建三个缓冲区
+    tty_openbufs* ntty    = (tty_openbufs*)kmalloc(PAGE_4K_SIZE, NO_ALIGN);
+    ntty->stdin_buf.data  = (char*)kmalloc(PAGE_4K_SIZE, NO_ALIGN);
+    ntty->stdout_buf.data = (char*)kmalloc(PAGE_4K_SIZE, NO_ALIGN);
+    ntty->stderr_buf.data = (char*)kmalloc(PAGE_4K_SIZE, NO_ALIGN);
+    ntty->stdin_buf.wptr  = 0;
+    ntty->stdout_buf.wptr = 0;
+    ntty->stderr_buf.wptr = 0;
+    ntty->stdin_buf.rptr  = 0;
+    ntty->stdout_buf.rptr = 0;
+    ntty->stderr_buf.rptr = 0;
+    ntty->stdin_buf.size  = PAGE_4K_SIZE;
+    ntty->stdout_buf.size = PAGE_4K_SIZE;
+    ntty->stderr_buf.size = PAGE_4K_SIZE;
+    //设置inode文件操作方式为tty方式
+    // inode->f_ops = &tty_fops;
+    // filp->f_ops  = &tty_fops;
+    ntty->next = NULL;
+    // filp->private_data=ntty;
+
+    target->stds = ntty;
     return i;
 }
 int unreigster_tty(int dev)
@@ -517,6 +518,14 @@ int unreigster_tty(int dev)
             kfree(t_tty->text_buf);
             t_tty->text_buf = NULL;
             t_tty->dev      = -1;
+
+            tty_openbufs* opbf = t_tty->stds;
+            stdbuf_t*     bi   = &opbf->stdin_buf;
+            stdbuf_t*     bo   = &opbf->stdout_buf;
+            stdbuf_t*     be   = &opbf->stderr_buf;
+            kfree((addr_t)bi);
+            kfree((addr_t)bo);
+            kfree((addr_t)be);
             return 0;
         }
     }
@@ -636,135 +645,4 @@ void ps2_init()
     // 向鼠标发送激活命令
     outb(PS2_COMMAND, 0xD4);
     outb(PS2_DATA, 0xF4);
-}
-console_t* all_consoles;
-
-int init_conhost()
-{
-    all_consoles = 0;
-    if (create_kthread(conhost_thread) < 0) {
-        panic("create conhost thread failed");
-    }
-    return 0;
-}
-static int _tty_nameid = 0;
-/**
-    @brief 创建控制台窗口，作为新进程的窗口
-*/
-console_t* create_console()
-{
-    console_t* console = kmalloc(sizeof(console_t), NO_ALIGN);
-    if (!console) {
-        return NULL;
-    }
-
-    console->console_wnd = create_window("Console", WNDTYPE_WINDOW);
-    if (!console->console_wnd) {
-        close_tty(console->tty);
-        kfree(console);
-        return NULL;
-    }
-    windowptr_t displaycontent_editbox = create_window("console", WNDTYPE_EDITBOX);
-    move_window(displaycontent_editbox, 0, 0);
-    attach_window(displaycontent_editbox, console->console_wnd);
-    show_window(displaycontent_editbox);
-
-    char name[16]  = "tty";
-    int  i         = 3;
-    int  new_ttyid = _tty_nameid++;
-    for (; i < 16; i++) {
-        name[i] = '0' + (new_ttyid % 10);
-        new_ttyid /= 10;
-    }
-    name[i] = 0;
-
-    dev_t new_ttydev = reg_device(name, S_IFCHR, drv_tty, drv_tty);
-    console->tty_dev = new_ttydev;
-    console->tty     = open_tty(new_ttydev);
-    if (!all_consoles) {
-        all_consoles = console;
-    }
-    else {
-        console_t* p = all_consoles;
-        while (p->next) {
-            p = p->next;
-        }
-        p->next = console;
-    }
-    return console;
-}
-int destroy_console(console_t* console)
-{
-    if (!console) {
-        return -1;
-    }
-    if (console == all_consoles) {
-        all_consoles = console->next;
-    }
-    else {
-        console_t* p = all_consoles;
-        while (p->next != console) {
-            p = p->next;
-        }
-        p->next = console->next;
-    }
-    destroy_window(console->console_wnd);
-    unreg_device(console->tty_dev);
-    close_tty(console->tty);
-    kfree(console);
-    return 0;
-}
-void conhost_thread()
-{
-    while (1) {
-        console_t* console = all_consoles;
-        while (console) {
-            window_event_t event;
-            //控制台窗口只使用简单地gets,scanf等函数获取输入，因此需要conhost托管处理事件
-            if (do_fetch_event(console->last_attaching_task, &event) < 0)
-                continue;
-            if (event.event_type == WND_EVENT_KEY_DOWN) {
-                char              ch        = event.key_code;
-                drvioctlarg_write ioctl_arg = {
-                    .buf   = &ch,
-                    .count = 1,
-                    .dev   = console->tty_dev,
-                };
-                tty_mod_ioctl(DRIVER_CMD_WRITE, &ioctl_arg);
-            }
-            default_deal_window_event(&event);
-
-            console = console->next;
-        }
-    }
-}
-/**
-    @brief 将一个进程附着到一个控制台窗口上，该进程将使用该控制台的std
-    @param pid 要附着的进程id
-    @param console 要附着到的控制台窗口
-    @return 成功返回0，失败返回-1
-*/
-int attach_to_console(pid_t pid, console_t* console)
-{
-    task[pid].attached_console = console;
-    // TODO 切换std，即重新设置前三个opened files
-    console->last_attaching_task = pid;
-    console->link++;
-    return 0;
-}
-int detach_console(pid_t pid)
-{
-    console_t* console = task[pid].attached_console;
-    console->link--;
-    task[pid].attached_console = NULL;
-    // 切换std，即重新设置前三个opened files
-    for (int i = 0; i < 3; i++) {
-        task[pid].openf[i] = NULL;
-    }
-
-    // 检查该控制台是否已经没有进程在用了，如果是就释放这个控制台
-    if (console->link == 0) {
-        destroy_console(console);
-    }
-    return 0;
 }

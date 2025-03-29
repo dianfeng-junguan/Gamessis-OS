@@ -227,6 +227,10 @@ syscall_func_t syscall_table[MAX_SYSCALLS] = {
     [SYSCALL_GET_WINDOW_TEXT]              = sys_get_window_text,
     [SYSCALL_GET_EVENT]                    = sys_fetch_event,
     [SYSCALL_DEFAULT_DEAL_WINDOW_EVENT]    = sys_default_deal_window_event,
+    [SYSCALL_CREATE_CONSOLE]               = sys_create_console,
+    [SYSCALL_DESTROY_CONSOLE]              = sys_destroy_console,
+    [SYSCALL_ATTACH_CONSOLE]               = sys_attach_console,
+    [SYSCALL_DETACH_CONSOLE]               = sys_detach_console,
 };
 int blank_syscall()
 {

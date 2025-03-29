@@ -129,7 +129,7 @@ void fill_rect(int x, int y, int w, int h, unsigned int color)
     //目前只写32bpp
     for (int py = x; py < maxy; py++) {
         for (int px = y; px < maxx; px++) {
-            set_pixel(backstage_buffer, px, py, color);
+            set_pixel(display_buffer, px, py, color);
         }
     }
 }
@@ -254,7 +254,7 @@ void draw_letter(int x, volatile int y, int size, char c, unsigned int fgcolor, 
         for (u32 ch_x = 0; ch_x < font_width; ch_x++) {
             int  px  = x + ch_x * size;
             int  py  = y + ch_y * size;
-            int* ptr = backstage_buffer->buffer + py * framebuffer.common.framebuffer_pitch +
+            int* ptr = display_buffer->buffer + py * framebuffer.common.framebuffer_pitch +
                        px * framebuffer.common.framebuffer_bpp / 8;
             if ((*(glyph + ch_x / 8) & mask) != 0) {
                 *ptr = fgcolor;

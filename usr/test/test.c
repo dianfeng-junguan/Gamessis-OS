@@ -6,7 +6,6 @@
 #include "sys/wait.h"
 #include "c/stdio.h"
 #include "c/string.h"
-#include <sys/unistd.h>
 
 
 int a = 1, b = 2, c = 0;
@@ -30,15 +29,18 @@ int main(int argc, char** argv, char** environ)
     puts("Gamessis OS shell\n");
     char cmd[128]  = {0};
     char path[128] = "/";
-    window         = create_window("Shell", WNDTYPE_WINDOW);
+
+    /* window         = create_window("Shell", WNDTYPE_WINDOW);
     shellcontent   = create_window("SHELL", WNDTYPE_EDITBOX);
     resize_window(shellcontent, 200, 190);
     move_window(shellcontent, 0, 30);
     attach_window(shellcontent, window);
     show_window(shellcontent);
-    show_window(window);
+    show_window(window); */
     // add_window_event_listener(shellcontent, WND_EVENT_KEY_DOWN, on_enter_pressed);
-    while (1) {
+    // void* console = create_console();
+    // attach_console(console);
+    /* while (1) {
         window_event_t event;
         if (fetch_event(&event) == 0) {
             switch (event.event_type) {
@@ -48,8 +50,8 @@ int main(int argc, char** argv, char** environ)
             default: default_deal_window_event(&event); break;
             }
         }
-    }
-    while (0) {
+    } */
+    while (1) {
         memset(cmd, 0, 128);
         int p = 0;
         printf("%s:>", path);

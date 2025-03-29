@@ -57,6 +57,7 @@ typedef struct
     tty_openbufs* stds;
     int chars_width, chars_height;   //控制台显示屏的长宽参数，以字符为单位。
     int dev;                         //所属的tty设备设备号
+    int link;                        //控制台的链接数
 } tty_t;
 #define MAX_TTYS 32
 // long open_tty(struct index_node* inode, struct file* filp);
@@ -90,19 +91,3 @@ void mouse_proc();
 int        register_tty(tty_t* tty);
 int        unreigster_tty(int dev);
 extern int drv_tty;
-#include "wndman.h"
-typedef struct _console
-{
-    tty_t*           tty;
-    windowptr_t      console_wnd;
-    dev_t            tty_dev;               //所创建的tty设备
-    pid_t            last_attaching_task;   //上一个依附该控制台的任务
-    int              link;
-    struct _console* next;
-} console_t;
-int        init_conhost();
-console_t* create_console();
-int        destroy_console(console_t* console);
-void       conhost_thread();
-int        attach_to_console(pid_t pid, console_t* console);
-int        detach_console(pid_t pid);

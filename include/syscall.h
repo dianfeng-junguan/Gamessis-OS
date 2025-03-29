@@ -59,7 +59,10 @@
 #define SYSCALL_GET_WINDOW_TEXT 113
 #define SYSCALL_GET_EVENT 114
 #define SYSCALL_DEFAULT_DEAL_WINDOW_EVENT 115
-
+#define SYSCALL_CREATE_CONSOLE 116
+#define SYSCALL_DESTROY_CONSOLE 117
+#define SYSCALL_ATTACH_CONSOLE 118
+#define SYSCALL_DETACH_CONSOLE 119
 
 #define DRVF_OPEN 0
 #define DRVF_CLOSE 1
@@ -105,8 +108,8 @@ __attribute__((__always_inline__)) inline int do_syscall(long func, long a1, lon
     __asm__ volatile("mov %%rax,%0" ::"r"(ret));
     return ret;
 }
-unsigned long long syscall(long a, long b, long c, long d, long e, long f);
-int                exec(char* path);
+// unsigned long long syscall(long a, long b, long c, long d, long e, long f);
+int exec(char* path);
 
 unsigned long sys_open(char* filename, int flags);
 unsigned long sys_close(int fd);
@@ -169,3 +172,8 @@ int sys_send_window_event(windowptr_t wnd, window_event_t* event_data);
 int sys_get_window_text(windowptr_t wnd, char* text, size_t size);
 int sys_fetch_event(window_event_t* event);
 int sys_default_deal_window_event(window_event_t* event);
+
+void* sys_create_console();
+int   sys_destroy_console(void* console);
+int   sys_attach_console(void* console);
+int   sys_detach_console();
