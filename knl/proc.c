@@ -994,7 +994,14 @@ int fork_child_ret()
     return 0;
 }
 
-int sys_fork(void)
+int sys_fork()
+{
+    cli();
+    return clone_task(NULL, CLONE_FD | CLONE_STACK);
+}
+
+//以下函数被废弃
+int __sys_fork(void)
 {
     cli();
     int pid  = req_proc();
@@ -1072,6 +1079,7 @@ int sys_fork(void)
         new_stkpg + PAGE_4K_SIZE - sizeof(stack_store_regs);   //拷贝的上下文
     //这样进程切换到子进程的done标签，从时钟中断返回弹出堆栈的时候rax弹出来的就是0，成为返回值。
     ctx_dup->rax = 0;
+    ctx_dup->rflags |= RFLAGS_IF;
     //设置iret时的堆栈
     // 这里让进程回到clock_ret是为了恢复上下文。否则切换到新进程时，没有任何通用寄存器会被更改。
     task[pid].regs.rip = clock_ret;
@@ -1081,7 +1089,12 @@ int sys_fork(void)
     new_stkpg = kmalloc(PAGE_4K_SIZE, ALIGN_4096);
     memcpy(new_stkpg,
            current->tss.ists[0] - PAGE_4K_SIZE,
-           PAGE_4K_SIZE);   //把当前进程的栈空间复制到新栈里面
+           PAGE_4K_SIZE);   //把当前进程的栈空间复制到新栈里面stack_store_regs* ctx_dup =
+    /* stack_store_regs* ctx_dup2 =
+        new_stkpg + PAGE_4K_SIZE - sizeof(stack_store_regs);   //拷贝的上下文
+    //这样进程切换到子进程的done标签，从时钟中断返回弹出堆栈的时候rax弹出来的就是0，成为返回值。
+    ctx_dup2->rax = 0;
+    ctx_dup2->rflags |= RFLAGS_IF; */
     task[pid].tss.ists[0] = new_stkpg + PAGE_4K_SIZE;
     task[pid].tss.ists[2] = new_stkpg + PAGE_4K_SIZE;
     task[pid].tss.ists[3] = new_stkpg + PAGE_4K_SIZE;
@@ -1604,6 +1617,13 @@ pid_t clone_task(int (*entry)(void*), int flags)
     task[pid].clone_flags = flags;
     task[pid].stat        = TASK_READY;
 
+    //复制信号队列
+    if (flags & SHARE_SIGNALS) {
+        //共用
+    }
+    else {
+        task[pid].signal_queue = NULL;
+    }
 
     //如果父进程没有堆，不开辟。留给load_xx函数。
     //父进程运行到这里

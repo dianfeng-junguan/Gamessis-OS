@@ -789,3 +789,7 @@ int sys_detach_console()
 {
     return detach_console(cur_proc);
 }
+int sys_send_signal(pid_t pid, int sig)
+{
+    return send_signal(pid, sig);
+}

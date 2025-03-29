@@ -63,6 +63,7 @@
 #define SYSCALL_DESTROY_CONSOLE 117
 #define SYSCALL_ATTACH_CONSOLE 118
 #define SYSCALL_DETACH_CONSOLE 119
+#define SYSCALL_SEND_SIGNAL 120
 
 #define DRVF_OPEN 0
 #define DRVF_CLOSE 1
@@ -177,3 +178,4 @@ void* sys_create_console();
 int   sys_destroy_console(void* console);
 int   sys_attach_console(void* console);
 int   sys_detach_console();
+int   sys_send_signal(pid_t pid, int sig);

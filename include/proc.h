@@ -391,6 +391,7 @@ struct process* get_proc(pid_t pid);
 #define CLONE_FD 0x00000002
 #define CLONE_KTASK 0x00000004
 #define CLONE_STACK 0x00000008
+#define SHARE_SIGNALS 0x00000010
 /**
     @brief 克隆或者创建一个任务
     @param entry 新进程的入口函数，如果为NULL，则意味着从创建者进程执行到的位置开始执行。

@@ -6,6 +6,7 @@
 #include "sys/wait.h"
 #include "c/stdio.h"
 #include "c/string.h"
+#include <signal.h>
 
 
 int a = 1, b = 2, c = 0;
@@ -51,6 +52,17 @@ int main(int argc, char** argv, char** environ)
             }
         }
     } */
+    int child = fork();
+    if (child != 0) {
+        // parent
+        send_signal(child, SIGINT);
+        int stat = 0;
+        waitpid(child, &stat, 0);
+        printf("Child process exited with status %d\n", stat);
+    }
+    else {
+        while (1) {}
+    }
     while (1) {
         memset(cmd, 0, 128);
         int p = 0;

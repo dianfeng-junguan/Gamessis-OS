@@ -432,16 +432,16 @@ int key_proc()
         //回显到屏幕上
         if (tty->show) {
             com_putchar(ch, PORT_COM1);
-            // write_textbuf(ch, tty);
-            // flush_textbuf(tty);
+            write_textbuf(ch, tty);
+            flush_textbuf(tty);
         }
     }
-    if (scan1 & FLAG_BREAK) {
-        _on_key_up(ch);
-    }
-    else {
-        _on_key_down(ch);
-    }
+    // if (scan1 & FLAG_BREAK) {
+    //     _on_key_up(ch);
+    // }
+    // else {
+    //     _on_key_down(ch);
+    // }
 }
 
 void flush_textbuf(tty_t* tty)
