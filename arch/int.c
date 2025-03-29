@@ -232,6 +232,7 @@ syscall_func_t syscall_table[MAX_SYSCALLS] = {
     [SYSCALL_ATTACH_CONSOLE]               = sys_attach_console,
     [SYSCALL_DETACH_CONSOLE]               = sys_detach_console,
     [SYSCALL_SEND_SIGNAL]                  = sys_send_signal,
+    [SYSCALL_MKFIFO]                       = sys_mkfifo,
 
 };
 int blank_syscall()
